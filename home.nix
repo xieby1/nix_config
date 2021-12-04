@@ -1,5 +1,8 @@
 { config, pkgs, stdenv, lib, ... }:
 {
+  # allow unfree software
+  nixpkgs.config.allowUnfree = true;
+
   home.packages = with pkgs; [
     # gnome extensions
     gnome40Extensions."BingWallpaper@ineffable-gmail.com"
@@ -14,6 +17,8 @@
 
     # tools
     gitui
+    gnome.meld
+    google-chrome
   ];
 
   programs.home-manager.enable = true;
@@ -39,9 +44,10 @@
 
   # dconf
   dconf.settings = {
-    "org/gnome" = {
+    "org/gnome/shell" = {
       ## enabled gnome extensions
-      enabled-extension = [
+      disable-user-extensions = false;
+      enabled-extensions = [
         "BingWallpaper@ineffable-gmail.com"
         "clipboard-indicator@tudmotu.com"
         "dash-to-dock@micxgx.gmail.com"
@@ -51,6 +57,42 @@
         "system-monitor@paradoxxx.zero.gmail.com"
         "vertical-overview@RensAlthuis.github.com"
       ];
+
+      ## dock icons
+      favorite-apps = [
+        "org.gnome.Nautilus.desktop"
+        "google-chrome.desktop"
+        "org.gnome.Epiphany.desktop"
+        #"firefox.desktop"
+        ];
+    };
+    ## extensions settings
+    "org/gnome/shell/extensions/system-monitor" = {
+      compact-display=true;
+      cpu-show-text=false;
+      cpu-style="digit";
+      icon-display=false;
+      memory-show-text=false;
+      memory-style="digit";
+      net-show-text=false;
+      net-style="digit";
+      swap-display=false;
+      swap-style="digit";
+    };
+    "org/gnome/shell/extensions/vertical-overview" = {
+      override-dash=false;
+    };
+
+    "org/gnome/desktop/session" = {
+      idle-delay=lib.hm.gvariant.mkUint32 0; # never turn off screen
+    };
+    "org/gnome/settings-daemon/plugins/power" = {
+      ambient-enabled=false;
+      idle-dim=false;
+      power-button-action="suspend";
+      sleep-inactive-ac-timeout=3600;
+      sleep-inactive-ac-type="nothing";
+      sleep-inactive-battery-type="suspend";
     };
   };
 
