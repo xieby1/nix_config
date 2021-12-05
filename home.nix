@@ -131,6 +131,22 @@ in
     "org/gnome/shell/extensions/vertical-overview" = {
       override-dash=false;
     };
+    "org/gnome/shell/extensions/gtile" = {
+      animation=true;
+      global-presets=true;
+      grid-sizes="6x4,8x6";
+      preset-resize-1=["<Super>bracketright"];
+      preset-resize-2=["<Super>backslash"];
+      preset-resize-3=["<Super>period"];
+      preset-resize-4=["<Super>slash"];
+      preset-resize-5=["<Super>apostrophe"];
+      resize1="2x2 0:0 0:0";
+      resize2="2x2 1:0 1:0";
+      resize3="2x2 0:1 0:1";
+      resize4="2x2 1:1 1:1";
+      resize5="4x8 1:1 2:6";
+      show-icon=false;
+    };
 
     "org/gnome/desktop/session" = {
       idle-delay=lib.hm.gvariant.mkUint32 0; # never turn off screen
