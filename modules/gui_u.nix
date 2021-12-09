@@ -14,6 +14,8 @@
     gnomeExtensions.vertical-overview
 
     google-chrome
+
+    gnome.meld
   ];
 
   # gnome-terminal

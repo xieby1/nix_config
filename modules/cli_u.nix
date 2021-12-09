@@ -8,7 +8,6 @@
   home.packages = with pkgs; [
     # tools
     gitui
-    gnome.meld
     unar
   ];
 
