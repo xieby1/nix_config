@@ -2,8 +2,8 @@
 
 {
   imports = [
-    ./modules/cli.nix
-    ./modules/gui.nix
+    ./modules/cli_u.nix
+    ./modules/gui_u.nix
   ];
 
   # allow unfree software
