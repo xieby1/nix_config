@@ -3,8 +3,8 @@
 
 {
   imports = [
-    ./modules/cli_s.nix
-    ./modules/gui_s.nix
+    ./sys/cli.nix
+    ./sys/gui.nix
   ];
 
   # Use the GRUB 2 boot loader.
