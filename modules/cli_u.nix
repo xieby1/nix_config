@@ -1,14 +1,15 @@
 { config, pkgs, stdenv, lib, ... }:
 
 {
-  imports = [
-    ./vim.nix
-  ];
+  #imports = [
+  #  ./vim.nix
+  #];
 
   home.packages = with pkgs; [
     # tools
     gitui
     unar
+    vim_configurable
   ];
 
   # git
