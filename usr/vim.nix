@@ -25,6 +25,26 @@ let
 in
 
 {
+  # neovim
+  programs.neovim.enable = true;
+  programs.neovim.viAlias = true;
+  programs.neovim.vimAlias = true;
+  programs.neovim.coc.enable = true;
+  programs.neovim.extraConfig = builtins.readFile ./cfg/nvim;
+  programs.neovim.plugins = with pkgs.vimPlugins; [
+    vim-gitgutter
+    vim-smoothie
+    vim-mark
+    vim-ingo-library
+    #ale
+    #YouCompleteMe
+    vim-fugitive
+    git-messenger-vim
+    DrawIt
+    vim-nix
+  ];
+  programs.neovim.vimdiffAlias = true;
+
   # 1.
   #home.packages = with pkgs; [
   #  # refer to https://nixos.wiki/wiki/Vim#Add_a_new_custom_plugin_to_the_users_packages

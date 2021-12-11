@@ -37,12 +37,17 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim_configurable # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     git
     file
     wget
     home-manager
   ];
+
+  # neovim
+  programs.neovim.enable = true;
+  programs.neovim.defaultEditor = true;
+  programs.neovim.viAlias = true;
+  programs.neovim.vimAlias = true;
 
   #system.autoUpgrade.channel = ""
 
