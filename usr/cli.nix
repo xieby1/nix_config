@@ -22,4 +22,10 @@
       };
     };
   };
+
+  # bash
+  programs.bash.enable = true;
+  programs.bash.shellAliases = {
+    view = "nvim -R";
+  };
 }
