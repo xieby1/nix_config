@@ -37,13 +37,21 @@ in
     vim-mark
     vim-ingo-library
     #ale
-    #YouCompleteMe
     vim-fugitive
     git-messenger-vim
     DrawIt
     vim-nix
+    coc-nvim
   ];
   programs.neovim.vimdiffAlias = true;
+
+  # coc
+  programs.neovim.withNodeJs = true;
+  programs.neovim.coc.settings = {
+    "suggest.noselect" = true;
+    "suggest.enablePreview" = true;
+    "suggest.enablePreselect" = false;
+  };
 
   # 1.
   #home.packages = with pkgs; [
