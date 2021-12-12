@@ -34,6 +34,6 @@
   programs.bash.enable = true;
   programs.bash.shellAliases = {
     view = "nvim -R";
-    mr = "mr -d ~" # mr status not work in non-home dir
+    mr = "mr -d ~"; # mr status not work in non-home dir
   };
 }
