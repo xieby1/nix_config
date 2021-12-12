@@ -16,4 +16,8 @@
   programs.neovim.defaultEditor = true;
   programs.neovim.viAlias = true;
   programs.neovim.vimAlias = true;
+
+  # ssh
+  services.openssh.enable = true;
+  programs.ssh.extraConfig = builtins.readFile ./cfg/ssh;
 }

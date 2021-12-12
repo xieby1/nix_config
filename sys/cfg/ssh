@@ -1,0 +1,162 @@
+# ssh_config file
+# place this file to /etc/ssh/ssh_config.d/
+
+# localhost
+## qemu
+### x64
+Host q.alpine.x64.xieby1
+    HostName localhost
+    User xieby1
+    Port 5555
+Host q.alpine.x64
+    HostName localhost
+    User root
+    Port 5555
+
+Host q.nix.x64.nixos
+    HostName localhost
+    User nixos
+    Port 5556
+
+Host q.nix.x64
+    HostName localhost
+    User xieby1
+    Port 5556
+
+
+### la
+Host q.loongnix.la
+    HostName localhost
+    User xieby1
+    Port 5566
+
+### mips
+Host q.debian.mips
+    HostName localhost
+    User xieby1
+    Port 5577
+
+### 3a4
+Host q.alpine.3a4
+    HostName localhost
+    User root
+    Port 5585
+Host q.loongnix.3a4
+    HostName localhost
+    User xieby1
+    Port 5586
+
+
+# public
+Host vultr
+    HostName 149.28.197.247
+    User root
+    ServerAliveInterval 60
+
+# loongson network
+## to y50-70
+Host y50
+    HostName 10.90.50.33
+    User xieby1
+
+## to loongson 57 server
+Host loongson57
+    HostName 172.17.103.57
+    User loongson
+
+## to my 3a5000, borrowed from xiaojunhua
+Host my3a5
+    HostName 10.90.50.39
+    User xieby1
+    ServerAliveInterval 60
+## to my 3a4000
+Host my3a4
+    HostName 10.90.50.122
+    User xieby1
+    ServerAliveInterval 60
+## to my 3a5000, wangliangpu gave which to me
+Host my3a5000-wlp
+    HostName 10.90.50.42
+    User loongson
+## to li hanlu's 3a5000
+Host lhl
+    HostName 10.20.4.241
+    User loongson
+## to niugen's 3a5000
+Host ng3a5000
+    HostName 10.90.50.112
+    User xby
+
+## to loongson kernel group server, loongson123
+Host k
+    HostName 10.2.5.5
+    User huqi
+
+## to loongson 56 server
+Host loongson56
+    HostName 172.17.103.56
+    User loongson
+
+## to loongson 55 server
+Host loongson55
+    HostName 172.17.103.55
+    User loongson
+Host myloongson55
+    HostName 172.17.103.55
+    User xiebenyi
+
+## to loongson 58 server
+Host loongson58
+    HostName 172.17.103.58
+    User loongson
+Host myloongson58
+    HostName 172.17.103.58
+    User xiebenyi
+
+Host 3a4000-7
+    HostName 114.242.206.180
+    Port 32472
+    User xiebenyi
+    ServerAliveInterval 60
+
+Host 3a4000-6
+    HostName 114.242.206.180
+    Port 32462
+    User xiebenyi
+
+Host 3a4000-5
+    HostName 114.242.206.180
+    Port 32452
+    User xiebenyi
+    ServerAliveInterval 60
+
+Host 3a4000-forward 3a4000-8-forward
+    HostName 114.242.206.180
+    Port 32482
+    User xiebenyi
+    ServerAliveInterval 60
+    # Fotward qemu gdb port
+    LocalForward 1235 localhost:1235
+
+Host 3a4000 3a4000-8
+    HostName 10.90.50.110
+    User xiebenyi
+    ServerAliveInterval 60
+
+Host my3a4000
+    HostName 10.90.50.122
+    User xieby1
+    ServerAliveInterval 60
+    ForwardX11 yes
+
+# ICT@Lab Wifi
+## to raspberry pi 4b
+Host myrpb4
+    HostName 192.168.1.122
+    User xieby1
+
+## to matepad-pro termux
+Host matepad
+    HostName 192.168.1.106
+    User u0_a307
+    Port 8022
