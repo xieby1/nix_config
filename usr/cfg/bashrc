@@ -39,7 +39,12 @@ export PROXYCHAINS_SOCKS5=1080
 ## proxy
 case ${MACHINE} in
     x86_64)
-        export HTTP_PROXY="http://127.0.0.1:8889/"
+        if [[ "${HOSTNAME}" == "qemu" ]]
+        then
+            export HTTP_PROXY="http://10.0.2.2:8889/"
+        else
+            export HTTP_PROXY="http://127.0.0.1:8889/"
+        fi
         export HTTPS_PROXY="${HTTP_PROXY}"
         export FTP_PROXY="${HTTP_PROXY}"
         ;;
