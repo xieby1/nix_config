@@ -1,7 +1,7 @@
 { config, pkgs, ... }:
 
 {
-  # networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "yoga14s"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
