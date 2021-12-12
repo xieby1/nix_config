@@ -42,6 +42,7 @@ set backspace=indent,eol,start
 : endif
 :endfunction
 nnoremap <F9> :call ToggleWrap()<CR>
+set updatetime=400
 
 " vim-mark
 "" clear highlight created by vim-mark

@@ -1,0 +1,9 @@
+
+[Codes/MyRepos/markdown_cheatsheet]
+checkout = git clone 'git@github.com:xieby1/markdown_cheatsheet.git' 'markdown_cheatsheet'
+
+[Codes/MyRepos/markdown_revealjs]
+checkout = git clone 'git@github.com:xieby1/markdown_revealjs.git' 'markdown_revealjs'
+
+[.config/nixpkgs]
+checkout = git clone 'git@github.com:xieby1/nix_home.git' 'nixpkgs'

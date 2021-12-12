@@ -8,6 +8,7 @@
   home.packages = with pkgs; [
     # tools
     gitui
+    mr
     unar
   ];
 
@@ -23,9 +24,16 @@
     };
   };
 
+  # mr
+  home.file.mr = {
+    source = ./cfg/mrconfig;
+    target = ".mrconfig";
+  };
+
   # bash
   programs.bash.enable = true;
   programs.bash.shellAliases = {
     view = "nvim -R";
+    mr = "mr -d ~" # mr status not work in non-home dir
   };
 }
