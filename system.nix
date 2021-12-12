@@ -7,7 +7,7 @@
     ./sys/gui.nix
   ];
 
-  networking.hostName = "yoga14s"; # Define your hostname.
+  networking.hostName = "qemu"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Set your time zone.
@@ -78,6 +78,10 @@
         id = "7BIZFII-EDY7UJ2-4XCEIKZ-ORC23JL-5QYXCQL-2MSLSPI-MNFOKGL-6ASXSQK";
         addresses = ["dynamic"];
       };
+      qemu = {
+        id = "2SHHM4X-Q3WKRXD-5TUFXSE-BFXJ2M6-75XSW7V-J37IGTN-C6UM2HS-TK2V6QT";
+        addresses = ["dynamic"];
+      };
     };
     folders = {
       Gist = {
@@ -90,6 +94,7 @@
           "y50_70"
           "matepad"
           "honor"
+          "qemu"
         ];
         versioning = {
           type = "simple";
