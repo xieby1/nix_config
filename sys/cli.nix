@@ -8,6 +8,7 @@
     file
     wget
     home-manager
+    fzf
   ];
 
   # neovim

@@ -1,0 +1,84 @@
+MACHINE=$(uname -m)
+
+# rewrite prompt format
+u_green="\[\033[01;32m\]"
+u_blue="\[\033[01;34m\]"
+u_white="\[\033[00m\]"
+PS1="${debian_chroot:+($debian_chroot)}"
+if [[ $MACHINE == aarch64 ]]
+then
+PS1+="${u_green}\u${u_white}:"
+else
+PS1+="${u_green}\u@\h${u_white}:"
+fi
+PS1+="${u_blue}\w${u_white}"
+PS1+="\n${u_green}\$${u_white} "
+unset u_green u_blue u_white
+
+# If this is an xterm set the title to user@host:dir
+case "$TERM" in
+xterm* | rxvt*)
+    PS1="\[\e]0;${debian_chroot:+($debian_chroot)}\W :\u@\h\a\]$PS1"
+    ;;
+*) ;;
+
+esac
+
+# Enviroment Variables
+## my scripts
+export XBY_BASH="${HOME}/Gist/script/bash"
+XBY_BASH_EXTRA="${HOME}/Codes/MyRepos/markdown_cheatsheet"
+XBY_BASH_EXTRA+=":${HOME}/Codes/MyRepos/markdown_revealjs"
+XBY_BASH_EXTRA+=":${HOME}/Gist/script/python"
+## Add my shell scripts directory to PATH
+export PATH="${PATH}:${HOME}/.local/bin:${XBY_BASH}:${XBY_BASH_EXTRA}"
+## FZF top-down display
+export FZF_DEFAULT_OPTS="--reverse"
+## proxychains4
+export PROXYCHAINS_SOCKS5=1080
+## proxy
+case ${MACHINE} in
+    x86_64)
+        export HTTP_PROXY="http://127.0.0.1:8889/"
+        export HTTPS_PROXY="${HTTP_PROXY}"
+        export FTP_PROXY="${HTTP_PROXY}"
+        ;;
+    aarch64)
+        # not need proxy env, use clash
+        ;;
+    *) # lx
+        export HTTP_PROXY="http://10.90.50.33:8889/"
+        export HTTPS_PROXY="${HTTP_PROXY}"
+        export FTP_PROXY="${HTTP_PROXY}"
+        ;;
+esac
+
+# alias
+alias o="xdg-open"
+alias a="br \${HOME}/Documents/Config/autokey"
+
+# auto complete
+_qemu_x_sh() {
+    local opts cur
+    opts="$(bash $1 -l)"
+    cur="${COMP_WORDS[COMP_CWORD]}"
+    COMPREPLY=( $(compgen -W "$opts" -- ${cur}) )
+    return 0
+}
+complete -F _qemu_x_sh qemu-run.sh
+complete -F _qemu_x_sh qemu-conf.sh
+
+###### temp ######
+# QEMU
+export LD_LIBRARY_PATH="${LD_LIBRARY_PATH}:/usr/lib64"
+# WINE
+## export PATH="${PATH}:${HOME}/wine-build/arch-dep/bin/"
+export PATH="${HOME}/wine-5.0-build/bin/:${PATH}"
+export C_INCLUDE_PATH="${HOME}/wine-build/arch-indep/include/:/home/xieby1/wine-build/arch-indep/include/wine/"
+export CPLUS_INCLUDE_PATH="${C_INCLUDE_PATH}"
+# pinPageUnionAnalysor
+export PPUA_ROOT="${HOME}/Codes/MyRepos/pinPageUnionAnalysor/"
+export PIN_ROOT="${HOME}/Softwares/pin-3.19-98425-gd666b2bee-gcc-linux/"
+#################
+# 3a4
+export QEMU_LD_PREFIX="/home/xieby1/"
