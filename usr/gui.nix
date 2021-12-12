@@ -16,6 +16,8 @@
     google-chrome
 
     gnome.meld
+
+    qv2ray
   ];
 
   # gnome-terminal
@@ -117,5 +119,14 @@
       command="gnome-terminal";
       name="terminal";
     };
+  };
+
+  home.file.v2ray_core = {
+    source = pkgs.fetchzip {
+      url = "https://github.com/v2fly/v2ray-core/releases/download/v4.44.0/v2ray-linux-64.zip";
+      sha256 = "dn7AZzkvUNDYVyZv4MZGwE+lDesm3fc0ul+64K41bTE=";
+      stripRoot = false;
+    };
+    target = "Softwares/v2ray-core";
   };
 }
