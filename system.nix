@@ -89,6 +89,19 @@
       };
     };
     folders = {
+      Vault = {
+        enable = true;
+        id = "tcaa6-xk2jp";
+        path = "/home/xieby1/Vault";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "qemu"
+        ];
+      };
       Documents = {
         enable = true;
         id = "qjodx-kzvmj";

@@ -3,6 +3,10 @@
 
 # localhost
 ## qemu
+Host q.host
+    HostName 10.0.2.2
+    User xieby1
+
 ### x64
 Host q.alpine.x64.xieby1
     HostName localhost
