@@ -29,6 +29,8 @@
     qv2ray
 
     wpsoffice
+
+    marktext
   ];
 
   # gnome-terminal

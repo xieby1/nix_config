@@ -10,6 +10,7 @@
     gitui
     mr
     unar
+    htop
   ];
 
   # git
