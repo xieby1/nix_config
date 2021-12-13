@@ -9,7 +9,16 @@
     gnome40Extensions."gTile@vibou"
     gnome40Extensions."hidetopbar@mathieu.bidon.ca"
     ## not work
-    gnomeExtensions.no-title-bar
+    (gnomeExtensions.no-title-bar.overrideAttrs (old: {
+      version = "gnome-41";
+      src = pkgs.fetchFromGitHub {
+        # forked from poehlerj
+        owner = "rkitover";
+        repo = "no-title-bar";
+        rev = "gnome-41";
+        sha256 = "0d31hcb2s5i4f1c38dhhdswvip9jp91kbfrkbb1akl5hnmlccffs";
+      };
+    }))
     gnomeExtensions.system-monitor
     gnomeExtensions.vertical-overview
 
@@ -52,6 +61,7 @@
         "dash-to-dock@micxgx.gmail.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
+        "no-title-bar@jonaspoehler.de"
         "Resource_Monitor@Ory0n"
         "system-monitor@paradoxxx.zero.gmail.com"
         "vertical-overview@RensAlthuis.github.com"
@@ -108,6 +118,14 @@
       sleep-inactive-ac-timeout=3600;
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
+    };
+    "org/gnome/shell/extensions/no-title-bar" = {
+      button-position="after-status-area";
+      buttons-for-all-win=true;
+      buttons-for-snapped=true;
+      change-appmenu=true;
+      hide-buttons=true;
+      only-main-monitor=true;
     };
 
     # customized keyboard shortcuts
