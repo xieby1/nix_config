@@ -110,7 +110,7 @@
       sleep-inactive-battery-type="suspend";
     };
 
-    # keyboard shortcuts
+    # customized keyboard shortcuts
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings=[
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
@@ -120,6 +120,12 @@
       binding="<Primary><Alt>t";
       command="gnome-terminal";
       name="terminal";
+    };
+
+    # predefined keyboard shortcuts
+    "org/gnome/desktop/wm/keybindings" = {
+      switch-windows=["<Alt>Tab"];
+      switch-windows-backward=["<Shift><Alt>Tab"];
     };
   };
 
