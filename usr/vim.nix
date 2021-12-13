@@ -3,23 +3,29 @@
 let
   vim-ingo-library = pkgs.vimUtils.buildVimPlugin {
     name = "vim-ingo-library";
-    src = builtins.fetchGit {
-      url = "https://github.com/inkarkat/vim-ingo-library";
-      ref = "master";
+    src = pkgs.fetchFromGitHub {
+      owner = "inkarkat";
+      repo = "vim-ingo-library";
+      rev = "8ea0e934d725a0339f16375f248fbf1235ced5f6";
+      sha256 = "1rabyhayxswwh85lp4rzi2w1x1zbp5j0v025vsknzbqi0lqy32nk";
     };
   };
   vim-mark = pkgs.vimUtils.buildVimPlugin {
     name = "vim-mark";
-    src = builtins.fetchGit {
-      url = "https://github.com/inkarkat/vim-mark";
-      ref = "master";
+    src = pkgs.fetchFromGitHub {
+      owner = "inkarkat";
+      repo = "vim-mark";
+      rev = "7f90d80d0d7a0b3696f4dfa0f8639bba4906d037";
+      sha256 = "0n8r0ks58ixqv7y1afliabiqwi55nxsslwls7hni4583w1v1bbly";
     };
   };
   DrawIt = pkgs.vimUtils.buildVimPlugin {
     name = "DrawIt";
-    src = builtins.fetchGit {
-      url = "https://github.com/vim-scripts/DrawIt";
-      ref = "master";
+    src = pkgs.fetchFromGitHub {
+      owner = "vim-scripts";
+      repo = "DrawIt";
+      rev = "master"; # I believe it wont update ^_*, so its safe
+      sha256 = "0yn985pj8dn0bzalwfc8ssx62m01307ic1ypymil311m4gzlfy60";
     };
   };
 in
@@ -36,12 +42,13 @@ in
     vim-smoothie
     vim-mark
     vim-ingo-library
-    #ale
+    ale
     vim-fugitive
     git-messenger-vim
     DrawIt
     vim-nix
     coc-nvim
+    vim-floaterm
   ];
   programs.neovim.vimdiffAlias = true;
 
