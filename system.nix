@@ -7,6 +7,11 @@
     ./sys/gui.nix
   ];
 
+  nix.binaryCaches = [
+    "https://mirrors.tuna.tsinghua.edu.cn/nix-channels/store"
+    "https://cache.nixos.org/"
+  ];
+
   networking.hostName = "qemu"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 

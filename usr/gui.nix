@@ -127,6 +127,6 @@
       sha256 = "dn7AZzkvUNDYVyZv4MZGwE+lDesm3fc0ul+64K41bTE=";
       stripRoot = false;
     };
-    target = "Softwares/v2ray-core";
+    target = ".config/qv2ray/vcore";
   };
 }
