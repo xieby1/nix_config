@@ -18,6 +18,8 @@
     gnome.meld
 
     qv2ray
+
+    wpsoffice
   ];
 
   # gnome-terminal

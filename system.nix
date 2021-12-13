@@ -89,6 +89,27 @@
       };
     };
     folders = {
+      Documents = {
+        enable = true;
+        id = "qjodx-kzvmj";
+        path = "/home/xieby1/Documents";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "qemu"
+        ];
+        versioning = {
+          type = "simple";
+          params = {
+            keep = "5";
+            cleanoutDays = "0";
+          };
+        };
+
+      };
       Gist = {
         enable = true;
         id = "7noud-qsr3m";
@@ -104,8 +125,8 @@
         versioning = {
           type = "simple";
           params = {
-            keep = "10";
-            cleanoutDays = "1000";
+            keep = "5";
+            cleanoutDays = "0";
           };
         };
       };
