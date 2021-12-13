@@ -157,4 +157,16 @@
     };
     target = ".config/qv2ray/vcore";
   };
+  systemd.user.services.qv2ray = {
+    Unit = {
+      Description = "Auto start qv2ray";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.qv2ray.outPath}/bin/qv2ray";
+    };
+  };
+
 }
