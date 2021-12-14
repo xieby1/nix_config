@@ -1,6 +1,6 @@
 # xieby1的nixos home-manager配置
 
-目前的配置出来的操作系统，已经达到基本可用水平[狗头]
+目前的配置出来的操作系统，已经达到基本可用水平<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />。
 
 从ubunt20迁移到nixos，软件的选择和配置习惯会倾向于ubuntu20。
 
@@ -53,7 +53,6 @@ sudo nix-channel --add https://github.com/nix-community/home-manager/archive/mas
 sudo nixos-rebuild switch
 home-manager switch
 ```
-
 
 
 
