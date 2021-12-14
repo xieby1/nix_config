@@ -2,7 +2,7 @@
 
 {
   imports = [
-    ./vim.nix
+    ./cli/vim.nix
   ];
 
   home.packages = with pkgs; [
