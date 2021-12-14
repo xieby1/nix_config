@@ -1,15 +1,9 @@
 { config, pkgs, stdenv, lib, ... }:
 # gnome extensions and settings
-{
-  home.packages = with pkgs; [
-    gnome.meld
-
-    gnome40Extensions."BingWallpaper@ineffable-gmail.com"
-    gnome40Extensions."clipboard-indicator@tudmotu.com"
-    gnomeExtensions.dash-to-dock
-    gnome40Extensions."gTile@vibou"
-    gnome40Extensions."hidetopbar@mathieu.bidon.ca"
-    (gnomeExtensions.no-title-bar.overrideAttrs (old: {
+let
+  exts = with pkgs.gnomeExtensions; [
+    dash-to-dock
+    (no-title-bar.overrideAttrs (old: {
       version = "gnome-41";
       src = pkgs.fetchFromGitHub {
         # forked from poehlerj
@@ -19,9 +13,22 @@
         sha256 = "0d31hcb2s5i4f1c38dhhdswvip9jp91kbfrkbb1akl5hnmlccffs";
       };
     }))
-    gnomeExtensions.system-monitor
-    gnomeExtensions.vertical-overview
+    system-monitor
+    vertical-overview
   ];
+  exts40 = with pkgs; [
+    gnome40Extensions."BingWallpaper@ineffable-gmail.com"
+    gnome40Extensions."clipboard-indicator@tudmotu.com"
+    gnome40Extensions."gTile@vibou"
+    gnome40Extensions."hidetopbar@mathieu.bidon.ca"
+  ];
+in
+{
+  home.packages = (with pkgs; [
+    gnome.meld
+  ])
+  ++ exts
+  ++ exts40;
 
   # gnome-terminal
   ## dconf dump /org/gnome/terminal/legacy/profiles:/
