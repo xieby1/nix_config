@@ -1,13 +1,24 @@
 # xieby1的nixos home-manager配置
 
-基本思路：
+目前的配置出来的操作系统，已经达到基本可用水平[狗头]
+
+从ubunt20迁移到nixos，软件的选择和配置习惯会倾向于ubuntu20。
+
+配置基本思路：
 
 * 系统配置`system.nix`和用户配置`home.nix`分开
 * 图形`gui`和命令行`cli`分开
-* 尽可能复用已有的配置
-  * vim支持的不好，用neovim代替
 * 先在虚拟机qemu中踩坑，之后再迁移到物理机
 * 先用好nix expression，之后再学习flake
+
+部分软件配置：
+
+* x11 gnome桌面
+  * gnome extensions、gnome的快捷键等，通过dconf配置
+* qv2ray科学上网
+* vim支持的不好，用neovim代替
+  * nixpkgs未支持的vim插件，通过buildVimPlugin添加
+* 输入法使用fcitx
 
 ## QEMU中安装NixOS
 
@@ -37,7 +48,7 @@ qemu-system-x86_64 -display gtk,window-close=off -vga virtio -device e1000,netde
 将仓库放到在`~/.config/nixpkgs`，
 
 ```bash
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixosnix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixosnix-channel nixos
 sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 sudo nixos-rebuild switch
 home-manager switch
