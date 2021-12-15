@@ -7,10 +7,22 @@
 
   home.packages = with pkgs; [
     # tools
+    ## repo
     gitui
     mr
+    ## archive
     unar
+    ## manage
     htop
+    ## text
+    pandoc
+    ## compile
+    gnumake
+    makefile2graph
+    ## draw
+    graphviz
+    ## manual
+    tldr
   ];
 
   # git
