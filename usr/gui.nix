@@ -11,7 +11,6 @@
     wpsoffice
     marktext
     autokey
-    (makeAutostartItem { name = "autokey-gtk"; package = autokey; })
   ];
 
   home.file.v2ray_core = {
@@ -35,6 +34,7 @@
   };
 
   # cannot find `ps` command, I dk why.
+  # ok I add PATH env where ps located, problem solved!
   systemd.user.services.autokey = {
     Unit = {
       Description = "Auto start autokey";
@@ -44,9 +44,9 @@
     };
     Service = {
       # https://stackoverflow.com/questions/31902846/how-to-fix-error-xlib-error-displayconnectionerror-cant-connect-to-display-0
-      ExecStart = "${pkgs.xorg.xhost.outPath}/bin/xhost +";
-      #ExecStartPre = "${pkgs.xorg.xhost.outPath}/bin/xhost +";
-      #ExecStart = "${pkgs.autokey.outPath}/bin/autokey-gtk -l";
+      Environment="\"PATH=/run/current-system/sw/bin\"";
+      ExecStartPre = "${pkgs.xorg.xhost.outPath}/bin/xhost +";
+      ExecStart = "${pkgs.autokey.outPath}/bin/autokey-gtk -l";
     };
   };
 }
