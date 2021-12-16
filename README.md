@@ -2,6 +2,10 @@
 
 目前的配置出来的操作系统，已经达到基本可用水平<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />。
 
+接下来
+
+* 把基本可用变成好用<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />！
+
 从ubunt20迁移到nixos，软件的选择和配置习惯会倾向于ubuntu20。
 
 配置基本思路：
@@ -19,6 +23,7 @@
 * vim支持的不好，用neovim代替
   * nixpkgs未支持的vim插件，通过buildVimPlugin添加
 * 输入法使用fcitx
+* autokey自动键盘脚本
 
 ## QEMU中安装NixOS
 
