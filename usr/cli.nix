@@ -16,6 +16,7 @@
     htop
     ## text
     pandoc
+    hugo
     ## compile
     gnumake
     makefile2graph
@@ -23,6 +24,11 @@
     graphviz
     ## manual
     tldr
+    ## file system
+    tree
+
+    # lang
+    python3
   ];
 
   # git
