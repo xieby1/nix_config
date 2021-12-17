@@ -144,5 +144,10 @@ in
       switch-windows=["<Alt>Tab"];
       switch-windows-backward=["<Shift><Alt>Tab"];
     };
+
+    # nautilus
+    "org/gtk/settings/file-chooser" = {
+      sort-directories-first=true;
+    };
   };
 }
