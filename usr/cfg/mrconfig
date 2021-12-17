@@ -1,3 +1,5 @@
+[Codes/MyRepos/xieby1.github.io]
+checkout = git clone 'git@github.com:xieby1/xieby1.github.io.git' 'xieby1.github.io'
 
 [Codes/MyRepos/markdown_cheatsheet]
 checkout = git clone 'git@github.com:xieby1/markdown_cheatsheet.git' 'markdown_cheatsheet'
