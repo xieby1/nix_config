@@ -145,6 +145,8 @@ in
       switch-applications-backward=[];
       switch-windows=["<Alt>Tab"];
       switch-windows-backward=["<Shift><Alt>Tab"];
+      maximize=["<Super>Up"];
+      unmaximize=["<Super>Down"];
     };
 
     # nautilus
