@@ -27,8 +27,18 @@
     ## file system
     tree
 
-    # lang
+    # programming
+    ## python
     python3
+    ## c
+    gcc
+    #gccStdenv
+    bear
+    ## xml
+    libxml2
+
+    # chroot
+    debootstrap
   ];
 
   # git

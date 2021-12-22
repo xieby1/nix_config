@@ -6,11 +6,18 @@
   ];
 
   home.packages = with pkgs; [
+    # browser
     google-chrome
+    # network
     qv2ray
+    # text
     wpsoffice
+    libreoffice
     marktext
+    # script
     autokey
+    # draw
+    drawio
   ];
 
   home.file.v2ray_core = {
