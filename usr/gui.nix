@@ -14,6 +14,7 @@
     wpsoffice
     libreoffice
     marktext
+    texmaker
     # script
     autokey
     # draw
