@@ -25,43 +25,106 @@
 * 输入法使用fcitx
 * autokey自动键盘脚本
 
-## QEMU中安装NixOS
+## 安装NixOS
+
+### QEMU中安装NixOS（MBR）
+
+下载minimal ISO镜像：https://nixos.org/download.html
+
+创建qemu硬盘（大小32GB）
 
 ```bash
-qemu-system-x86_64 -display gtk,window-close=off -vga virtio -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5556-:22,smb=/home/xieby1/ -m 4G -smp 3 -enable-kvm -hda ~/Img/nix.qcow2 &
+qemu-img create -f qcow2 <output/path/to/nix.qcow2> 32G
+```
+
+将ISO安装到qemu硬盘
+
+```bash
+qemu-system-x86_64 -display gtk,window-close=off -vga virtio -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5556-:22,smb=/home/xieby1/ -m 4G -smp 3 -enable-kvm -hda </path/to/nix.qcow2> -cdrom </path/to/nixos-minial.iso> -boot d &
 ```
 
 参考官方的步骤[NixOS - NixOS 21.11 manual](https://nixos.org/manual/nixos/stable/#sec-installation)安装，使用MBR，如下
 
 ```bash
-# mkfs.ext4 -L nixos /dev/sda1
-# mkswap -L swap /dev/sda2
-# swapon /dev/sda2
-# mount /dev/disk/by-label/nixos /mnt
-# nixos-generate-config --root /mnt
-
-# 在imports中添加system.nix的路径
-# nano /mnt/etc/nixos/configuration.nix
-
-# 替换为清华的unstable
-# nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixos
-
-# nixos-install
-# reboot
+# 需要sudo，或者root用户执行
+mkfs.ext4 -L nixos /dev/sda1
+mkswap -L swap /dev/sda2
+swapon /dev/sda2
+mount /dev/disk/by-label/nixos /mnt
+nixos-generate-config --root /mnt
+nano /mnt/etc/nixos/configuration.nix # 修改如下
+  # 取消以下注释以开起代理
+  # 将代理设置为自己的服务器，qemu中宿主机器的ip为10.0.2.2
+  # 安装过程中需要借助别的计算机或宿主机的的代理服务
+  # 部署完我的nixos配置后，将会有qv2ray服务，可以用虚拟机的代理服务
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # 取消以下注释以开启grub支持
+  # boot.loader.grub.device = "/dev/sda";
+nixos-install
+reboot
 ```
 
-将仓库放到在`~/.config/nixpkgs`，
+### 物理机中安装NixOS（UEFI）
+
+TODO: 暂时未探究命令行连接wifi的方法？所以目前使用gnome版ISO，而非minimal ISO。
+
+下载gnome ISO镜像：https://nixos.org/download.html
+
+启动U盘制作
 
 ```bash
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable nixosnix-channel nixos
+sudo dd if=<path/to/nixos.iso> of=</dev/your_usb>
+sync
+```
+
+参考官方的步骤[NixOS - NixOS 21.11 manual](https://nixos.org/manual/nixos/stable/#sec-installation)安装，使用UEFI，如下
+
+安装nixos到物理机的/dev/sda
+
+```bash
+sudo bash
+mkfs.ext4 -L nixos /dev/sda1
+mkswap -L swap /dev/sda2
+swapon /dev/sda2
+mkfs.fat -F 32 -n boot /dev/sda3        # (for UEFI systems only)
+mount /dev/disk/by-label/nixos /mnt
+mkdir -p /mnt/boot                      # (for UEFI systems only)
+mount /dev/disk/by-label/boot /mnt/boot # (for UEFI systems only)
+nixos-generate-config --root /mnt
+nano /mnt/etc/nixos/configuration.nix # 修改如下
+  # 取消以下注释以开起代理
+  # 将代理设置为自己的服务器
+  # 安装过程中需要借助别的计算机的代理服务
+  # 部署完我的nixos配置后，将会有qv2ray服务，可以用自己电脑的代理服务
+  # networking.proxy.default = "http://user:password@proxy:port/";
+  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
+  # 取消以下注释以开启UEFI的支持
+  # boot.loader.grub.efiSupport = true;
+  # boot.loader.grub.efiInstallAsRemovable = true;
+  # 添加
+  boot.loader.grub.device = "nodev";
+  boot.loader.systemd-boot.enable = true;
+nixos-install
+reboot
+```
+## 部署我的nixos配置
+
+```bash
+git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
+
+vim /etc/nixos/configuration.nix
+# 在imports中添加system.nix的路径
+# 添加Vault若无，则注释syncthing相关配置
+
+# 替换为清华的unstable
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable  nixos
+# 添加home manager源
 sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+sudo nix-channel --update
 sudo nixos-rebuild switch
 home-manager switch
 ```
-
-
-
-
 
 
 
