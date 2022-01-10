@@ -36,7 +36,12 @@ in
   programs.neovim.viAlias = true;
   programs.neovim.vimAlias = true;
   programs.neovim.coc.enable = true;
-  programs.neovim.extraConfig = builtins.readFile ./xvimrc;
+  programs.neovim.extraConfig =
+    if builtins.pathExists ~/Codes/MyRepos/vimrc/xvimrc
+    then
+      builtins.readFile ~/Codes/MyRepos/vimrc/xvimrc
+    else
+      "";
   programs.neovim.plugins = with pkgs.vimPlugins; [
     vim-gitgutter
     vim-smoothie
