@@ -75,5 +75,10 @@
     view = "nvim -R";
     mr = "mr -d ~"; # mr status not work in non-home dir
   };
-  programs.bash.bashrcExtra = builtins.readFile ./cfg/bashrc;
+  programs.bash.bashrcExtra =
+    if builtins.pathExists ~/Gist/Config/bashrc
+    then
+      builtins.readFile ~/Gist/Config/bashrc
+    else
+      "";
 }
