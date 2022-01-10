@@ -19,5 +19,10 @@
 
   # ssh
   services.openssh.enable = true;
-  programs.ssh.extraConfig = builtins.readFile ./cfg/ssh;
+  programs.ssh.extraConfig =
+    if builtins.pathExists ~/Gist/Config/ssh.conf
+    then
+      builtins.readFile ~/Gist/Config/ssh.conf
+    else
+      "";
 }
