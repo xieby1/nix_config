@@ -56,10 +56,18 @@
   };
 
   # mr
-  home.file.mr = {
-    source = ./cfg/mrconfig;
-    target = ".mrconfig";
-  };
+  home.file.mr =
+    if builtins.pathExists ~/Gist/Config/mrconfig
+    then
+    {
+      source = ~/Gist/Config/mrconfig;
+      target = ".mrconfig";
+    }
+    else
+    {
+      text = "";
+      target = ".mrconfig";
+    };
 
   # bash
   programs.bash.enable = true;
