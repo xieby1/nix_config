@@ -25,4 +25,6 @@
       builtins.readFile ~/Gist/Config/ssh.conf
     else
       "";
+
+  virtualisation.docker.enable = true;
 }
