@@ -26,6 +26,8 @@
     tldr
     ## file system
     tree
+    ## network
+    frp
 
     # programming
     ## python
