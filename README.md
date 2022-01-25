@@ -53,6 +53,7 @@ swapon /dev/sda2
 mount /dev/disk/by-label/nixos /mnt
 nixos-generate-config --root /mnt
 nano /mnt/etc/nixos/configuration.nix # 修改如下
+  # 修改名字networking.hostName
   # 取消以下注释以开起代理
   # 将代理设置为自己的服务器，qemu中宿主机器的ip为10.0.2.2
   # 安装过程中需要借助别的计算机或宿主机的的代理服务
@@ -93,6 +94,7 @@ mkdir -p /mnt/boot                      # (for UEFI systems only)
 mount /dev/disk/by-label/boot /mnt/boot # (for UEFI systems only)
 nixos-generate-config --root /mnt
 nano /mnt/etc/nixos/configuration.nix # 修改如下
+  # 修改名字networking.hostName
   # 取消以下注释以开起代理
   # 将代理设置为自己的服务器
   # 安装过程中需要借助别的计算机的代理服务
