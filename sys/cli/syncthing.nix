@@ -30,6 +30,10 @@
         id = "2SHHM4X-Q3WKRXD-5TUFXSE-BFXJ2M6-75XSW7V-J37IGTN-C6UM2HS-TK2V6QT";
         addresses = ["dynamic"];
       };
+      hisense = {
+        id = "EJSHR4B-TLI65SS-SO3NJ2I-PRU7OK2-7UY6BBW-VFWWNWH-46GRYTL-QY6V7AK";
+        addresses = ["dynamic"];
+      };
     };
     folders = {
       Vault = {
@@ -43,6 +47,7 @@
           "matepad"
           "honor"
           "qemu"
+          "hisense"
         ];
       };
       Documents = {
@@ -56,6 +61,7 @@
           "matepad"
           "honor"
           "qemu"
+          "hisense"
         ];
         versioning = {
           type = "simple";
@@ -77,6 +83,7 @@
           "matepad"
           "honor"
           "qemu"
+          "hisense"
         ];
         versioning = {
           type = "simple";
@@ -85,6 +92,58 @@
             cleanoutDays = "0";
           };
         };
+      };
+      Camera = {
+        enable = true;
+        id = "ngemd-3ipss";
+        path = "/home/xieby1/DCIM/Camera";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "hisense"
+        ];
+      };
+      Canon = {
+        enable = true;
+        id = "di054-gz15s";
+        path = "/home/xieby1/Canon";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "hisense"
+        ];
+      };
+      Pictures = {
+        enable = true;
+        id = "desktop-Pictures";
+        path = "/home/xieby1/Pictures";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "hisense"
+        ];
+      };
+      Roms = {
+        enable = true;
+        id = "5uxyp-rfrjv";
+        path = "/home/xieby1/Roms";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "hisense"
+        ];
       };
     };
   };
