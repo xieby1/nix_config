@@ -15,6 +15,7 @@
     libreoffice
     marktext
     texmaker
+    meld
     # script
     autokey
     # draw

@@ -25,7 +25,6 @@ let
 in
 {
   home.packages = (with pkgs; [
-    gnome.meld
   ])
   ++ exts
   ++ exts40;
