@@ -41,8 +41,10 @@
     ## latex
     texlive.combined.scheme-full # HUGE SIZE!
 
-    # chroot
+    # runXonY
     debootstrap
+    qemu_kvm
+    #qemu-utils
   ];
 
   # git
