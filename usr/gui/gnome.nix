@@ -25,6 +25,7 @@ let
 in
 {
   home.packages = (with pkgs; [
+    gnome.gnome-sound-recorder
   ])
   ++ exts
   ++ exts40;
