@@ -147,6 +147,10 @@ in
       switch-windows-backward=["<Shift><Alt>Tab"];
       maximize=["<Super>Up"];
       unmaximize=["<Super>Down"];
+      move-to-workspace-up=["<Primary>Page_Up"];
+      move-to-workspace-down=["<Primary>Page_Down"];
+      switch-to-workspace-up=["<Primary><Alt>Up"];
+      switch-to-workspace-down=["<Primary><Alt>Down"];
     };
 
     # nautilus
