@@ -62,6 +62,8 @@ nano /mnt/etc/nixos/configuration.nix # 修改如下
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
   # 取消以下注释以开启grub支持
   # boot.loader.grub.device = "/dev/sda";
+  # 取消防火墙，以便kdeconnect正常运行
+  # networking.firewall.enable = false;
 nixos-install
 reboot
 ```
@@ -107,6 +109,8 @@ nano /mnt/etc/nixos/configuration.nix # 修改如下
   # 添加
   boot.loader.grub.device = "nodev";
   boot.loader.systemd-boot.enable = true;
+  # 取消防火墙，以便kdeconnect正常运行
+  # networking.firewall.enable = false;
 nixos-install
 reboot
 ```

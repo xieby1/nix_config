@@ -10,6 +10,7 @@
     google-chrome
     # network
     qv2ray
+    kdeconnect
     # text
     wpsoffice
     libreoffice
