@@ -145,6 +145,19 @@
           "hisense"
         ];
       };
+      FFXIV = {
+        enable = true;
+        id = "z7bsy-nbwf6";
+        path = "/home/xieby1/FFXIV";
+        ignorePerms = false;
+        devices = [
+          "yoga14s"
+          "y50_70"
+          "matepad"
+          "honor"
+          "hisense"
+        ];
+      };
     };
   };
 
