@@ -45,6 +45,8 @@
     debootstrap
     qemu_kvm
     #qemu-utils
+    ## docker
+    skopeo
   ];
 
   # git

@@ -30,4 +30,6 @@
       "";
 
   virtualisation.docker.enable = true;
+  # skopeo need this
+  virtualisation.containers.enable = true;
 }
