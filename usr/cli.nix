@@ -14,6 +14,7 @@
     unar
     ## manage
     htop
+    tmux
     ## text
     pandoc
     hugo
