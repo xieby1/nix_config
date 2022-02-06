@@ -81,6 +81,8 @@ sudo dd if=<path/to/nixos.iso> of=</dev/your_usb>
 sync
 ```
 
+注：需要在BIOS中取消secure boot，否则U盘无法启动。
+
 参考官方的步骤[NixOS - NixOS 21.11 manual](https://nixos.org/manual/nixos/stable/#sec-installation)安装，使用UEFI，如下
 
 安装nixos到物理机的/dev/sda
@@ -114,6 +116,16 @@ nano /mnt/etc/nixos/configuration.nix # 修改如下
 nixos-install
 reboot
 ```
+
+#### 双系统
+
+仅测试了NixOS-Windows双系统。
+在/mnt/etc/nixos/configuration.nix中添加
+
+```
+boot.loader.grub.useOSProber = true;
+```
+
 ## 部署我的nixos配置
 
 ```bash
