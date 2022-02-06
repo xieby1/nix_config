@@ -1,29 +1,36 @@
+<!-- vim-markdown-toc GFM -->
+
+* [xieby1的nixos home-manager配置](#xieby1的nixos-home-manager配置)
+    * [配置基本思路](#配置基本思路)
+    * [安装NixOS](#安装nixos)
+        * [QEMU中安装NixOS（MBR）](#qemu中安装nixosmbr)
+        * [物理机中安装NixOS（UEFI）](#物理机中安装nixosuefi)
+            * [双系统](#双系统)
+    * [部署我的nixos配置](#部署我的nixos配置)
+    * [部分软件配置思路](#部分软件配置思路)
+        * [x11 gnome桌面](#x11-gnome桌面)
+        * [qv2ray科学上网](#qv2ray科学上网)
+        * [vim支持的不好，用neovim代替](#vim支持的不好用neovim代替)
+        * [输入法使用fcitx](#输入法使用fcitx)
+        * [autokey自动键盘脚本](#autokey自动键盘脚本)
+        * [使用docker提供ubuntu命令行环境](#使用docker提供ubuntu命令行环境)
+
+<!-- vim-markdown-toc -->
+
 # xieby1的nixos home-manager配置
 
-目前的配置出来的操作系统，已经达到基本可用水平<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />。
-
-接下来
-
-* 把基本可用变成好用<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />！
-
 从ubunt20迁移到nixos，软件的选择和配置习惯会倾向于ubuntu20。
+目前的配置出来的操作系统，已经达到基本可用水平<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />。
+接下来把基本可用变成好用<img src="https://www.emojiall.com/img/platform/wechat/wx035.png" style="height: 1em;" />！
 
-配置基本思路：
+## 配置基本思路
 
-* 系统配置`system.nix`和用户配置`home.nix`分开
-* 图形`gui`和命令行`cli`分开
-* 先在虚拟机qemu中踩坑，之后再迁移到物理机
-* 先用好nix expression，之后再学习flake
-
-部分软件配置：
-
-* x11 gnome桌面
-  * gnome extensions、gnome的快捷键等，通过dconf配置
-* qv2ray科学上网
-* vim支持的不好，用neovim代替
-  * nixpkgs未支持的vim插件，通过buildVimPlugin添加
-* 输入法使用fcitx
-* autokey自动键盘脚本
+- [x] 系统配置`system.nix`和用户配置`home.nix`分开
+- [x] 图形`gui`和命令行`cli`分开
+- [x] 先在虚拟机qemu中踩坑，之后再迁移到物理机
+  - [x] 迁移到NixOS单系统物理机
+  - [x] 迁移到NixOS-Windows双系统物理机
+- [ ] 先用好nix expression，之后再学习flake
 
 ## 安装NixOS
 
@@ -144,7 +151,21 @@ sudo nixos-rebuild switch
 home-manager switch
 ```
 
+## 部分软件配置思路
 
+### x11 gnome桌面
 
+gnome extensions、gnome的快捷键等，通过dconf配置
 
+### qv2ray科学上网
+
+### vim支持的不好，用neovim代替
+
+nixpkgs未支持的vim插件，通过buildVimPlugin添加
+
+### 输入法使用fcitx
+
+### autokey自动键盘脚本
+
+### 使用docker提供ubuntu命令行环境
 

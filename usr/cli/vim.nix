@@ -54,6 +54,7 @@ in
     vim-nix
     coc-nvim
     vim-floaterm
+    vim-markdown-toc
   ];
   programs.neovim.vimdiffAlias = true;
 
