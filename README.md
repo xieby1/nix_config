@@ -7,7 +7,7 @@
         * [物理机中安装NixOS（UEFI）](#物理机中安装nixosuefi)
             * [双系统](#双系统)
     * [部署我的nixos配置](#部署我的nixos配置)
-    * [部分软件配置思路](#部分软件配置思路)
+    * [[TODO]部分软件配置思路](#todo部分软件配置思路)
         * [x11 gnome桌面](#x11-gnome桌面)
         * [qv2ray科学上网](#qv2ray科学上网)
         * [vim支持的不好，用neovim代替](#vim支持的不好用neovim代替)
@@ -151,7 +151,7 @@ sudo nixos-rebuild switch
 home-manager switch
 ```
 
-## 部分软件配置思路
+## [TODO]部分软件配置思路
 
 ### x11 gnome桌面
 
