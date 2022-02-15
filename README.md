@@ -148,6 +148,8 @@ sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-un
 sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
 sudo nix-channel --update
 sudo nixos-rebuild switch
+# 安装home-manager
+nix-shell '<home-manager>' -A install
 home-manager switch
 ```
 

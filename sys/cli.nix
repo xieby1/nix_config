@@ -10,7 +10,6 @@
     git
     file
     wget
-    home-manager
     fzf
   ];
 
