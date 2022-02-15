@@ -1,9 +1,6 @@
 { config, pkgs, ... }:
 
 {
-  imports = [
-    ./cli/syncthing.nix
-  ];
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -31,4 +28,15 @@
   virtualisation.docker.enable = true;
   # skopeo need this
   virtualisation.containers.enable = true;
+
+  # syncthing
+  services.syncthing = {
+    enable = true;
+    systemService = true;
+    relay.enable = true;
+    user = "xieby1";
+    dataDir = "/home/xieby1";
+    overrideDevices = false;
+    overrideFolders = false;
+  };
 }
