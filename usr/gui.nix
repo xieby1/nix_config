@@ -12,7 +12,7 @@
     qv2ray
     kdeconnect
     # text
-    wpsoffice
+    #wpsoffice
     libreoffice
     marktext
     texmaker
@@ -21,6 +21,16 @@
     autokey
     # draw
     drawio
+    # management
+    zotero
+    # entertainment
+    mgba
+    ## icon miss?
+    (retroarch.override {
+      cores = with libretro; [
+        libretro.beetle-gba
+      ];
+    })
   ];
 
   home.file.v2ray_core = {
