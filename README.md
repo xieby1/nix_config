@@ -140,12 +140,11 @@ git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
 
 vim /etc/nixos/configuration.nix
 # 在imports中添加system.nix的路径
-# 添加Vault若无，则注释syncthing相关配置
 
-# 替换为清华的unstable
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-unstable  nixos
+# 替换为清华的最新稳定源
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos
 # 添加home manager源
-sudo nix-channel --add https://github.com/nix-community/home-manager/archive/master.tar.gz home-manager
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
 sudo nix-channel --update
 sudo nixos-rebuild switch
 # 安装home-manager

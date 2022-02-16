@@ -26,8 +26,4 @@
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
   };
 
-  nix.extraOptions = ''
-    experimental-features = nix-command
-  '';
-
 }
