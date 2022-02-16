@@ -126,6 +126,9 @@ in
       hide-buttons=true;
       only-main-monitor=true;
     };
+    "org/gnome/shell/extensions/hidetopbar" = {
+      mouse-sensitive = true;
+    };
 
     # customized keyboard shortcuts
     "org/gnome/settings-daemon/plugins/media-keys" = {
@@ -156,6 +159,10 @@ in
     # nautilus
     "org/gtk/settings/file-chooser" = {
       sort-directories-first=true;
+    };
+
+    "org/gnome/desktop/interface" = {
+      show-battery-percentage=true;
     };
   };
 }
