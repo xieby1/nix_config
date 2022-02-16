@@ -21,16 +21,17 @@
     autokey
     # draw
     drawio
+    aseprite-unfree
     # management
     zotero
     # entertainment
     mgba
     ## icon miss?
-    (retroarch.override {
-      cores = with libretro; [
-        libretro.beetle-gba
-      ];
-    })
+    #(retroarch.override {
+    #  cores = with libretro; [
+    #    libretro.beetle-gba
+    #  ];
+    #})
   ];
 
   home.file.v2ray_core = {
