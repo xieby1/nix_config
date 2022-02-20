@@ -39,4 +39,37 @@
     overrideDevices = false;
     overrideFolders = false;
   };
+
+  # refers to https://www.golinuxcloud.com/automount-file-system-systemd-rhel-centos-7-8/
+  systemd.mounts = if "${config.networking.hostName}" == "jumper"
+  then [{
+    enable = true;
+    # [Unit]
+    description = "My SD Card";
+    unitConfig = {
+      DefaultDependencies = "no";
+      Conflicts = "umount.target";
+    };
+    before = ["local-fs.target" "umount.target"];
+    after = ["swap.target"];
+    # [Mount]
+    what = "/dev/disk/by-label/home";
+    where = "/home";
+    type = "ext4";
+    options = "defaults";
+    # [Install]
+    wantedBy = ["multi-user.target"];
+  }] else [];
+
+  systemd.automounts = if "${config.networking.hostName}" == "jumper"
+  then [{
+    enable = true;
+    # [Unit]
+    description = "automount sdcard";
+    # [Automount]
+    where = "/home";
+    # [Install]
+    wantedBy = ["multi-user.target"];
+  }] else [];
+
 }
