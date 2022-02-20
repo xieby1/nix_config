@@ -23,6 +23,7 @@
     makefile2graph
     ## draw
     graphviz
+    gnuclad
     ## manual
     tldr
     ## file system
