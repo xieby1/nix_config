@@ -71,7 +71,7 @@ in
         "org.gnome.Nautilus.desktop"
         "google-chrome.desktop"
         "org.gnome.Epiphany.desktop"
-        #"firefox.desktop"
+        "spotify.desktop"
         ];
     };
     ## extensions settings

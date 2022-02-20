@@ -32,6 +32,8 @@
     #    libretro.beetle-gba
     #  ];
     #})
+    # music
+    spotify
   ];
 
   home.file.v2ray_core = {
