@@ -94,8 +94,8 @@ in
       animation=true;
       global-presets=true;
       grid-sizes="6x4,8x6";
-      preset-resize-1=["<Super>bracketright"];
-      preset-resize-2=["<Super>backslash"];
+      preset-resize-1=["<Super>bracketleft"];
+      preset-resize-2=["<Super>bracketright"];
       preset-resize-3=["<Super>period"];
       preset-resize-4=["<Super>slash"];
       preset-resize-5=["<Super>apostrophe"];
