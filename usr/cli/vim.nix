@@ -55,6 +55,8 @@ in
     coc-nvim
     vim-floaterm
     vim-markdown-toc
+    vista-vim
+    vim-commentary
   ];
   programs.neovim.vimdiffAlias = true;
 
