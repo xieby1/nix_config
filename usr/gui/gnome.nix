@@ -108,14 +108,6 @@ in
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
     };
-    "org/gnome/shell/extensions/no-title-bar" = {
-      button-position="after-status-area";
-      buttons-for-all-win=true;
-      buttons-for-snapped=true;
-      change-appmenu=true;
-      hide-buttons=true;
-      only-main-monitor=true;
-    };
     "org/gnome/shell/extensions/hidetopbar" = {
       mouse-sensitive = true;
     };
