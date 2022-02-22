@@ -3,18 +3,9 @@
 let
   exts = with pkgs.gnomeExtensions; [
     dash-to-dock
-    (no-title-bar.overrideAttrs (old: {
-      version = "gnome-41";
-      src = pkgs.fetchFromGitHub {
-        # forked from poehlerj
-        owner = "rkitover";
-        repo = "no-title-bar";
-        rev = "gnome-41";
-        sha256 = "0d31hcb2s5i4f1c38dhhdswvip9jp91kbfrkbb1akl5hnmlccffs";
-      };
-    }))
     system-monitor
     vertical-overview
+    unite
   ];
   exts40 = with pkgs; [
     gnome40Extensions."BingWallpaper@ineffable-gmail.com"
@@ -60,10 +51,9 @@ in
         "dash-to-dock@micxgx.gmail.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
-        "no-title-bar@jonaspoehler.de"
-        "Resource_Monitor@Ory0n"
         "system-monitor@paradoxxx.zero.gmail.com"
         "vertical-overview@RensAlthuis.github.com"
+        "unite@hardpixel.eu"
       ];
 
       ## dock icons
@@ -128,6 +118,17 @@ in
     };
     "org/gnome/shell/extensions/hidetopbar" = {
       mouse-sensitive = true;
+    };
+    "org/gnome/shell/extensions/unite" = {
+      app-menu-ellipsize-mode="end";
+      greyscale-tray-icons=false;
+      hide-app-menu-icon=false;
+      hide-dropdown-arrows=true;
+      hide-window-titlebars="both";
+      reduce-panel-spacing=true;
+      show-window-buttons="always";
+      window-buttons-placement="last";
+      window-buttons-theme="materia";
     };
 
     # customized keyboard shortcuts
