@@ -113,6 +113,7 @@ in
     };
     "org/gnome/shell/extensions/unite" = {
       app-menu-ellipsize-mode="end";
+      extend-left-box=false;
       greyscale-tray-icons=false;
       hide-app-menu-icon=false;
       hide-dropdown-arrows=true;
