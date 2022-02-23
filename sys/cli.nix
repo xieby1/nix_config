@@ -72,4 +72,6 @@
     wantedBy = ["multi-user.target"];
   }] else [];
 
+  boot.supportedFilesystems = [ "ntfs" ];
+
 }
