@@ -118,6 +118,7 @@ in
       hide-app-menu-icon=false;
       hide-dropdown-arrows=true;
       hide-window-titlebars="both";
+      notifications-position="center";
       reduce-panel-spacing=true;
       show-window-buttons="always";
       window-buttons-placement="last";
