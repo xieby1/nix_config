@@ -18,6 +18,7 @@
     ## text
     pandoc
     hugo
+    espanso
     ## compile
     gnumake
     makefile2graph

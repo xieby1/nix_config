@@ -74,4 +74,5 @@
 
   boot.supportedFilesystems = [ "ntfs" ];
 
+  services.espanso.enable = true;
 }
