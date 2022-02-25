@@ -40,7 +40,8 @@ in
     };
   };
 
-  # dconf
+  # Setting: `gsettings set <key(dot)> <value>`
+  # Getting: `dconf dump /<key(path)>`
   dconf.settings = {
     "org/gnome/shell" = {
       ## enabled gnome extensions
@@ -110,6 +111,8 @@ in
     };
     "org/gnome/shell/extensions/hidetopbar" = {
       mouse-sensitive = true;
+      enable-active-window=false;
+      enable-intellihide=false;
     };
     "org/gnome/shell/extensions/unite" = {
       app-menu-ellipsize-mode="end";
