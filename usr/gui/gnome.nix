@@ -127,6 +127,9 @@ in
       window-buttons-placement="last";
       window-buttons-theme="materia";
     };
+    "org/gnome/shell/extensions/bingwallpaper" = {
+      market="zh-CN";
+    };
 
     # customized keyboard shortcuts
     "org/gnome/settings-daemon/plugins/media-keys" = {
