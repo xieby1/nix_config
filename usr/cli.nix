@@ -91,4 +91,18 @@
       builtins.readFile ~/Gist/Config/bashrc
     else
       "";
+
+  # espanso
+  home.file.espanso =
+    if builtins.pathExists ~/Gist/Config/espanso.yml
+    then
+    {
+      source = ~/Gist/Config/espanso.yml;
+      target = ".config/espanso/user/espanso.yml";
+    }
+    else
+    {
+      text = "";
+      target = ".config/espanso/user/espanso.yml";
+    };
 }
