@@ -14,7 +14,7 @@
     # text
     #wpsoffice
     libreoffice
-    marktext
+    obsidian
     texmaker
     meld
     # script
