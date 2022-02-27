@@ -111,8 +111,8 @@ in
     };
     "org/gnome/shell/extensions/hidetopbar" = {
       mouse-sensitive = true;
-      enable-active-window=false;
-      enable-intellihide=false;
+      enable-active-window=true;
+      enable-intellihide=true;
     };
     "org/gnome/shell/extensions/unite" = {
       app-menu-ellipsize-mode="end";
