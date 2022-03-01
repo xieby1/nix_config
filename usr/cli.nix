@@ -105,4 +105,16 @@
       text = "";
       target = ".config/espanso/user/espanso.yml";
     };
+
+  systemd.user.services.espanso = {
+    Unit = {
+      Description = "Espanso daemon";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.espanso}/bin/espanso daemon";
+    };
+  };
 }
