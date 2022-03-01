@@ -14,6 +14,7 @@
   # services.xserver.xkbOptions = "eurosign:e";
 
   # Enable CUPS to print documents.
+  # https://nixos.wiki/wiki/Printing
   services.printing.enable = true;
   services.printing.drivers = [pkgs.hplip];
   services.avahi.enable = true;
