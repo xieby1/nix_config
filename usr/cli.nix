@@ -112,6 +112,7 @@
       Description = "Espanso daemon";
     };
     Install = {
+      # services.espanso.enable uses "default.target" which not work
       WantedBy = [ "graphical-session.target" ];
     };
     Service = {

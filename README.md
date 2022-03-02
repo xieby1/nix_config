@@ -171,7 +171,9 @@ home-manager switch
 
 autokey依赖于x11，在wayland中无法运行，因此选用x11。
 
-gnome extensions、gnome的快捷键等，通过dconf配置
+我使用的部分软件依赖于x11，在wayland中无法运行，因此选用x11。
+例如autokey（尝试espanso代替autokey）。
+在找到合适的替代品前，仍然保持x11。
 
 ### qv2ray科学上网
 
@@ -182,4 +184,3 @@ nixpkgs未支持的vim插件，通过buildVimPlugin添加
 ### 输入法使用fcitx
 
 ### 使用docker提供ubuntu命令行环境
-
