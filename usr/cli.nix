@@ -33,6 +33,7 @@
     frp
 
     # programming
+    universal-ctags
     ## python
     python3
     ## c
