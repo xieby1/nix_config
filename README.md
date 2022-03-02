@@ -10,11 +10,14 @@
             * [基础配置](#基础配置)
     * [部署我的配置](#部署我的配置)
     * [部分软件配置思路](#部分软件配置思路)
-        * [x11 gnome桌面](#x11-gnome桌面)
+        * [gnome桌面](#gnome桌面)
+            * [Wayland or X11?](#wayland-or-x11)
         * [qv2ray科学上网](#qv2ray科学上网)
-        * [neovim代替vim](#neovim代替vim)
-        * [输入法使用fcitx](#输入法使用fcitx)
-        * [使用docker提供ubuntu命令行环境](#使用docker提供ubuntu命令行环境)
+        * [文本编辑器](#文本编辑器)
+            * [NeoVim or Vim?](#neovim-or-vim)
+            * [Typora替代品？（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
+        * [输入法](#输入法)
+        * [chroot or docker?](#chroot-or-docker)
 
 <!-- vim-markdown-toc -->
 
@@ -167,20 +170,64 @@ home-manager switch
 
 ## 部分软件配置思路
 
-### x11 gnome桌面
+### gnome桌面
 
-autokey依赖于x11，在wayland中无法运行，因此选用x11。
+#### Wayland or X11?
 
 我使用的部分软件依赖于x11，在wayland中无法运行，因此选用x11。
 例如autokey（尝试espanso代替autokey）。
 在找到合适的替代品前，仍然保持x11。
 
+界面、插件、快捷键等影响桌面系统使用体验的直观感受。
+使用gui/gnome.nix中的配置gnome桌面系统。
+其中的大量设置可以通过dconf查看/修改，以辅助修改。
+
 ### qv2ray科学上网
 
-### neovim代替vim
+qv2ray已经停止更新，对高分辨率屏幕的适配不好。
+暂时没有找到合适的GUI替代品。
 
-nixpkgs未支持的vim插件，通过buildVimPlugin添加
+qv2ray需要v2ray core。
+通过usr/gui.nix: home.file.v2ray_core，
+将v2ray core放在qv2ray默认的地址.config/qv2ray/，
+由此让qv2ray开箱即用。
 
-### 输入法使用fcitx
+### 文本编辑器
 
-### 使用docker提供ubuntu命令行环境
+#### NeoVim or Vim?
+
+NixOS社区对NeoVim和Vim的支持是不平等的，
+从插件管理就能看出。
+
+配置vim插件需要vim_configurable.customize，
+十分繁杂，
+详细可见git commit: 3feff06b4dee3fd59312204eee0a2af948098376。
+
+NeoVim使用programs.neovim.plugins即可，
+因此选用NeoVim。
+
+#### Typora替代品？（Obsidian or Marktext）
+
+[Typora加入"anti-user encryption"](https://github.com/NixOS/nixpkgs/issues/138329)后，
+nixpkgs社区停止对typora的支持。
+
+Marktext更新慢，至今仍未支持插件。
+每次关闭文件，不管是否编辑，
+都会提示是否保存。
+
+Obsidian体验还不错！
+
+### 输入法
+
+沿用ubuntu的使用习惯，采用fcitx。
+* 中文：cloudpinyin（支持模糊音、自动联网词库）
+* 日文：mozc
+* 韩文：hangul
+
+### chroot or docker?
+
+chroot需要挂载诸多目录，才能使ubuntu正常运行。
+但是NixOS并不提供FHS需要的众多目录。
+
+因此使用docker提供ubuntu命令行环境。
+
