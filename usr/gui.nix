@@ -34,6 +34,9 @@
     #})
     # music
     spotify
+    # runXonY
+    wine
+    winetricks
   ];
 
   home.file.v2ray_core = {
