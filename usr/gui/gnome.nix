@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 # gnome extensions and settings
+# no need log out to reload extension: <alt>+F2 r
 let
   exts = with pkgs.gnomeExtensions; [
     dash-to-dock
@@ -155,6 +156,10 @@ in
       move-to-workspace-down=["<Primary>Page_Down"];
       switch-to-workspace-up=["<Primary><Alt>Up"];
       switch-to-workspace-down=["<Primary><Alt>Down"];
+    };
+    "org/gnome/shell/extensions/clipboard-indicator" =
+    {
+      move-item-first=true;
     };
 
     # nautilus
