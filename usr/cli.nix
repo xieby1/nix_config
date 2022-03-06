@@ -50,8 +50,6 @@
     debootstrap
     qemu_kvm
     #qemu-utils
-    buildah
-    podman
   ];
 
   # git

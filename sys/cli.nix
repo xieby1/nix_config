@@ -69,4 +69,6 @@
   }] else [];
 
   boot.supportedFilesystems = [ "ntfs" ];
+
+  virtualisation.podman.enable = true;
 }
