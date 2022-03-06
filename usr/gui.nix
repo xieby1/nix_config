@@ -35,7 +35,7 @@
     # music
     spotify
     # runXonY
-    wine
+    wineWowPackages.stable
     winetricks
   ];
 
