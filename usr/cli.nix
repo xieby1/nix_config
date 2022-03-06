@@ -50,8 +50,8 @@
     debootstrap
     qemu_kvm
     #qemu-utils
-    ## docker
-    skopeo
+    buildah
+    podman
   ];
 
   # git

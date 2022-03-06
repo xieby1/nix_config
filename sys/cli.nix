@@ -25,10 +25,6 @@
     else
       "";
 
-  virtualisation.docker.enable = true;
-  # skopeo need this
-  virtualisation.containers.enable = true;
-
   # syncthing
   services.syncthing = {
     enable = true;
