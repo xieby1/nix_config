@@ -118,4 +118,18 @@
       ExecStart = "${pkgs.espanso}/bin/espanso daemon";
     };
   };
+
+  # tmux
+  home.file.tmux =
+    if builtins.pathExists ~/Gist/Config/tmux.conf
+    then
+    {
+      source = ~/Gist/Config/tmux.conf;
+      target = ".tmux.conf";
+    }
+    else
+    {
+      text = "";
+      target = ".tmux.conf";
+    };
 }
