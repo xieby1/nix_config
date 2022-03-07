@@ -35,6 +35,7 @@
     # programming
     universal-ctags
     cscope
+    clang-tools
     ## python
     python3
     ## c
