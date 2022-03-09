@@ -22,6 +22,8 @@
     # draw
     drawio
     aseprite-unfree
+    # viewer
+    xdot
     # management
     zotero
     # entertainment
@@ -73,6 +75,13 @@
       Environment="\"PATH=/run/current-system/sw/bin\"";
       ExecStartPre = "${pkgs.xorg.xhost.outPath}/bin/xhost +";
       ExecStart = "${pkgs.autokey.outPath}/bin/autokey-gtk -l";
+    };
+  };
+
+  xdg.desktopEntries = {
+    xdot = {
+      name = "xdot";
+      exec = "xdot %U";
     };
   };
 }
