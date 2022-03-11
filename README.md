@@ -23,6 +23,7 @@
 
 # xieby1的nixos配置
 
+* 使用nix expression，而非nix flakes
 * 基于ubuntu的使用习惯
 * QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
 
