@@ -41,4 +41,10 @@
   ];
 
   nixpkgs.config.allowUnfree = true;
+
+  # vim vista need nerd fonts
+  # https://github.com/liuchengxu/vista.vim/issues/74
+  fonts.fonts = with pkgs; [
+    nerdfonts
+  ];
 }
