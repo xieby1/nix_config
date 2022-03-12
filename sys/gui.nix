@@ -44,7 +44,16 @@
 
   # vim vista need nerd fonts
   # https://github.com/liuchengxu/vista.vim/issues/74
+  # https://github.com/liuchengxu/space-vim/wiki/tips#programming-fonts
+  # available nerd fonts: nixpkgs/pkgs/data/fonts/nerdfonts/shas.nix
   fonts.fonts = with pkgs; [
-    nerdfonts
+    (nerdfonts.override {
+      fonts = [
+        "SourceCodePro"
+        "Iosevka"
+        "FiraCode"
+        "FantasqueSansMono"
+      ];
+    })
   ];
 }
