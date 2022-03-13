@@ -1,8 +1,8 @@
 { config, pkgs, stdenv, lib, ... }:
-
 {
   imports = [
     ./gui/gnome.nix
+    ./gui/mime.nix
   ];
 
   home.packages = with pkgs; [
@@ -82,6 +82,21 @@
     xdot = {
       name = "xdot";
       exec = "xdot %U";
+    };
+  };
+
+  xdg.mime.types = {
+    dot = {
+      name = "graphviz-dot";
+      type = "text/graphviz-dot";
+      pattern = "*.dot";
+      defaultApp = "xdot.desktop";
+    };
+    drawio = {
+      name = "draw-io";
+      type = "text/draw-io";
+      pattern = "*.drawio";
+      defaultApp = "drawio.desktop";
     };
   };
 }
