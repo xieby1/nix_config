@@ -2,6 +2,9 @@
 
 * [xieby1的nixos配置](#xieby1的nixos配置)
     * [目录结构](#目录结构)
+    * [我的包和模块](#我的包和模块)
+        * [包](#包)
+        * [模块](#模块)
     * [安装](#安装)
         * [安装NixOS](#安装nixos)
             * [准备镜像](#准备镜像)
@@ -27,6 +30,9 @@
 * 基于ubuntu的使用习惯
 * QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
 
+你可以使用仓库的配置，配置出完整NixOS操作系统。
+也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
+
 ## 目录结构
 
 * system.nix: 系统总体配置（nixos-rebuild的配置）
@@ -35,6 +41,20 @@
 * home.nix: 用户总体配置（home-manager的配置）
   * usr/cli.nix: 用户命令行配置
   * usr/gui.nix: 用户图形配置
+
+## 我的包和模块
+
+在nixpkgs和home-manager的基础上，我新增的包(package)和模块(module)。
+
+TODO: 使用方法
+
+### 包
+
+### 模块
+
+* mime.nix:
+  配置文件类型和默认打开程序。
+  通过xdg-mime实现类型设置和默认程序设置。
 
 ## 安装
 
