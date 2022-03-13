@@ -19,7 +19,7 @@ in
       default = {};
       description = "Set MIME types and default applications.";
       example = ''
-        dot = {
+        xdg.mime.types.dot = {
           name = "graphviz-dot";
           type = "text/graphviz-dot";
           pattern = "*.dot";
