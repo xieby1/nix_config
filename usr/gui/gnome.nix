@@ -30,6 +30,7 @@ in
       visibleName = "xieby1";
       default = true;
       font = "Monospace 18";
+      showScrollbar = false;
       # Tango
       colors = {
         foregroundColor = "rgb(211,215,207)";
