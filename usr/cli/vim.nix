@@ -37,9 +37,9 @@ in
   programs.neovim.vimAlias = true;
   programs.neovim.coc.enable = true;
   programs.neovim.extraConfig =
-    if builtins.pathExists ~/Codes/MyRepos/vimrc/xvimrc
+    if builtins.pathExists ~/Gist/Config/xvimrc
     then
-      builtins.readFile ~/Codes/MyRepos/vimrc/xvimrc
+      builtins.readFile ~/Gist/Config/xvimrc
     else
       "";
   programs.neovim.plugins = with pkgs.vimPlugins; [
