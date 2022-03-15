@@ -40,6 +40,9 @@
     python3
     ## c
     gcc
+    ### docs
+    stdmanpages
+    man-pages
     #gccStdenv
     bear
     ## xml
