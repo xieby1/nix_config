@@ -17,7 +17,7 @@ let
 in
 {
   imports = [
-    ./gsetting.nix
+    ./gsettings.nix
   ];
 
   home.packages = (with pkgs; [
