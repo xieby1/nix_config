@@ -1,5 +1,7 @@
 # xieby1的nixos配置
 
+[English](./README-en.md)
+
 * 使用nix expression，而非nix flakes
 * 使用NixOS稳定源（目前版本21.11），而非非稳定源（unstable）
 * 基于ubuntu的使用习惯
