@@ -1,9 +1,9 @@
 # NixOS configuration of xieby1
 
-* Use nix expression，not nix flakes
-* Use NixOS stable channel (current version 21.11)，not unstable channel
+* Use nix expression,not nix flakes
+* Use NixOS stable channel (current version 21.11),not unstable channel
 * Ubuntu-based usage habits
-* Multiplatform：QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅
+* Multiplatform: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅
 
 You can use the configuration of this repository to configure a complete NixOS.
 You can also use some of the packages and modules to expand your own Nix/NixOS.
@@ -133,7 +133,7 @@ mount /dev/disk/by-label/boot /mnt/boot     # for single boot and dual boot
 ```bash
 nixos-generate-config --root /mnt
 ```
-* modify /mnt/etc/nixos/configuration.nix，
+* modify /mnt/etc/nixos/configuration.nix,
   * change `networking.hostName`
   * enable proxy (if you are not bothered by GFW, skip this step)
     * The host machine ip in QEMU is 10.0.2.2
