@@ -132,6 +132,7 @@ in
       show-window-buttons="always";
       window-buttons-placement="last";
       window-buttons-theme="materia";
+      restrict-to-primary-screen=false;
     };
     "org/gnome/shell/extensions/bingwallpaper" = {
       market="zh-CN";
