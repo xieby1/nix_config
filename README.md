@@ -2,19 +2,21 @@
 
 * [xieby1的nixos配置](#xieby1的nixos配置)
     * [目录结构](#目录结构)
-    * [我的包和模块](#我的包和模块)
-        * [包](#包)
-        * [模块](#模块)
     * [安装](#安装)
         * [安装NixOS](#安装nixos)
             * [准备镜像](#准备镜像)
             * [分区](#分区)
             * [文件系统](#文件系统)
             * [基础配置](#基础配置)
-    * [部署我的配置](#部署我的配置)
-    * [部分软件配置思路](#部分软件配置思路)
+        * [安装我的配置](#安装我的配置)
+            * [导入配置](#导入配置)
+            * [设置软件源](#设置软件源)
+            * [部署配置](#部署配置)
+    * [软件配置思路](#软件配置思路)
         * [gnome桌面](#gnome桌面)
             * [Wayland or X11?](#wayland-or-x11)
+            * [新增模块mime.nix](#新增模块mimenix)
+            * [新增模块gsettings.nix](#新增模块gsettingsnix)
         * [qv2ray科学上网](#qv2ray科学上网)
         * [文本编辑器](#文本编辑器)
             * [NeoVim or Vim?](#neovim-or-vim)
@@ -42,29 +44,16 @@
   * usr/cli.nix: 用户命令行配置
   * usr/gui.nix: 用户图形配置
 
-## 我的包和模块
-
-在nixpkgs和home-manager的基础上，我新增的包(package)和模块(module)。
-
-TODO: 使用方法
-
-### 包
-
-### 模块
-
-* mime.nix:
-  配置文件类型和默认打开程序。
-  通过xdg-mime实现类型设置和默认程序设置。
-
 ## 安装
 
 安装分两步，
 第一步安装NixOS，
-第二步部署我的配置。
+第二步安装我的配置。
 
 ### 安装NixOS
 
 安装过程采用[官方安装文档](https://nixos.org/manual/nixos/stable/#sec-installation)。
+若已安装NixOS，则可跳过该步骤，直接看安装我的配置。
 
 #### 准备镜像
 
@@ -168,28 +157,38 @@ nixos-install
 reboot
 ```
 
-## 部署我的配置
+### 安装我的配置
 
 重启之后，进入NixOS。
 
+#### 导入配置
+
 ```bash
 git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
-
 vim /etc/nixos/configuration.nix
 # 在imports中添加system.nix的路径
+```
 
+#### 设置软件源
+
+```bash
 # 替换为清华的最新稳定源
 sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos
 # 添加home manager源
 sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
 sudo nix-channel --update
+```
+
+#### 部署配置
+
+```bash
 sudo nixos-rebuild switch
 # 安装home-manager
 nix-shell '<home-manager>' -A install
 home-manager switch
 ```
 
-## 部分软件配置思路
+## 软件配置思路
 
 ### gnome桌面
 
@@ -202,6 +201,17 @@ home-manager switch
 界面、插件、快捷键等影响桌面系统使用体验的直观感受。
 使用gui/gnome.nix中的配置gnome桌面系统。
 其中的大量设置可以通过dconf查看/修改，以辅助修改。
+
+#### 新增模块mime.nix
+
+该模块用于配置文件类型和默认打开程序。
+通过xdg-mime实现类型设置和默认程序设置。
+
+#### 新增模块gsettings.nix
+
+该模块用于gsettings配置。
+现有的dconf.settings并不能完成所有gsettings的功能。
+比如gnome-termimal的顶部栏需要通过gsettings隐藏。
 
 ### qv2ray科学上网
 
