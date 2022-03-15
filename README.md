@@ -1,39 +1,39 @@
-<!-- vim-markdown-toc GFM -->
-
-* [xieby1的nixos配置](#xieby1的nixos配置)
-    * [目录结构](#目录结构)
-    * [安装](#安装)
-        * [安装NixOS](#安装nixos)
-            * [准备镜像](#准备镜像)
-            * [分区](#分区)
-            * [文件系统](#文件系统)
-            * [基础配置](#基础配置)
-        * [安装我的配置](#安装我的配置)
-            * [导入配置](#导入配置)
-            * [设置软件源](#设置软件源)
-            * [部署配置](#部署配置)
-    * [软件配置思路](#软件配置思路)
-        * [gnome桌面](#gnome桌面)
-            * [Wayland or X11](#wayland-or-x11)
-            * [新增模块mime.nix](#新增模块mimenix)
-            * [新增模块gsettings.nix](#新增模块gsettingsnix)
-        * [qv2ray科学上网](#qv2ray科学上网)
-        * [文本编辑器](#文本编辑器)
-            * [NeoVim or Vim](#neovim-or-vim)
-            * [Typora替代品（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
-        * [输入法](#输入法)
-        * [chroot or docker](#chroot-or-docker)
-
-<!-- vim-markdown-toc -->
-
 # xieby1的nixos配置
 
 * 使用nix expression，而非nix flakes
+* 使用NixOS稳定源（目前版本21.11），而非非稳定源（unstable）
 * 基于ubuntu的使用习惯
-* QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
+* 多平台：QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
 
-你可以使用仓库的配置，配置出完整NixOS操作系统。
+你可以使用该仓库的配置，配置出完整NixOS操作系统。
 也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
+
+<!-- vim-markdown-toc GFM -->
+
+* [目录结构](#目录结构)
+* [安装](#安装)
+    * [安装NixOS](#安装nixos)
+        * [准备镜像](#准备镜像)
+        * [分区](#分区)
+        * [文件系统](#文件系统)
+        * [基础配置](#基础配置)
+    * [安装我的配置](#安装我的配置)
+        * [导入配置](#导入配置)
+        * [设置软件源](#设置软件源)
+        * [部署配置](#部署配置)
+* [软件配置思路](#软件配置思路)
+    * [gnome桌面](#gnome桌面)
+        * [Wayland or X11](#wayland-or-x11)
+        * [新增模块mime.nix](#新增模块mimenix)
+        * [新增模块gsettings.nix](#新增模块gsettingsnix)
+    * [qv2ray科学上网](#qv2ray科学上网)
+    * [文本编辑器](#文本编辑器)
+        * [NeoVim or Vim](#neovim-or-vim)
+        * [Typora替代品（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
+    * [输入法](#输入法)
+    * [chroot or docker](#chroot-or-docker)
+
+<!-- vim-markdown-toc -->
 
 ## 目录结构
 
