@@ -16,6 +16,10 @@ let
   ];
 in
 {
+  imports = [
+    ./gsetting.nix
+  ];
+
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
   ])
@@ -171,6 +175,13 @@ in
     "org/gnome/desktop/interface" = {
       enable-hot-corners=false;
       show-battery-percentage=true;
+    };
+  };
+
+  gsettings = {
+    "org.gnome.Terminal.Legacy.Settings" = {
+      "headerbar" = "false";
+      "default-show-menubar" = "false";
     };
   };
 }
