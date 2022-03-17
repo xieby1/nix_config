@@ -36,6 +36,7 @@
     universal-ctags
     cscope
     clang-tools
+    ccls
     ## python
     python3
     ## c

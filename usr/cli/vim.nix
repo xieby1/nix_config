@@ -47,7 +47,6 @@ in
     vim-smoothie
     vim-mark
     vim-ingo-library
-    ale
     vim-fugitive
     git-messenger-vim
     DrawIt
@@ -66,6 +65,20 @@ in
     "suggest.noselect" = true;
     "suggest.enablePreview" = true;
     "suggest.enablePreselect" = false;
+    # language server config refers to:
+    # https://github.com/neoclide/coc.nvim/wiki/Language-servers
+    "languageserver" = {
+      "ccls" = {
+        "command" = "ccls";
+        "filetypes" = ["c" "cc" "cpp" "c++" "objc" "objcpp"];
+        "rootPatterns" = [".ccls" "compile_commands.json" ".git/" ".hg/"];
+        "initializationOptions" = {
+          "cache" = {
+            "directory" = "/tmp/ccls";
+          };
+        };
+      };
+    };
   };
 
   # 1.
