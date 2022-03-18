@@ -56,6 +56,27 @@ in
     vim-markdown-toc
     vista-vim
     vim-commentary
+    # TODO: declarative way to add nvim-treesitter's plugins
+    # https://nixos.wiki/wiki/Tree_sitters
+    # (
+    #   nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars)
+    # )
+    {
+      plugin = nvim-treesitter;
+      config = ''
+        packadd! nvim-treesitter
+        lua << EOF
+        require 'nvim-treesitter.configs'.setup {
+          ensure_installed = "maintained",
+          sync_install = false,
+          highlight = {
+            enable = true,
+            additional_vim_regex_highlighting = false,
+          },
+        }
+        EOF
+      '';
+    }
   ];
   programs.neovim.vimdiffAlias = true;
 
