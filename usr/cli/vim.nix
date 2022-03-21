@@ -72,6 +72,9 @@ in
           highlight = {
             enable = true,
             additional_vim_regex_highlighting = false,
+            disable = {
+              "nix",
+            },
           },
         }
         EOF
