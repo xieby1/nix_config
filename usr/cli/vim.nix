@@ -67,7 +67,7 @@ in
         packadd! nvim-treesitter
         lua << EOF
         require 'nvim-treesitter.configs'.setup {
-          ensure_installed = "maintained",
+          ensure_installed = {"c", "cpp"},
           sync_install = false,
           highlight = {
             enable = true,
