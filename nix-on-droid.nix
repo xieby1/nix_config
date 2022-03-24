@@ -81,7 +81,7 @@ in
   '';
   build.activation.termux = ''
     mkdir -p ${config.user.home}/.termux
-    if [[ -f ${config.user.home}/Gist/Config/termux.properties ]]
+    if [[ ! -e ${config.user.home}/Gist/Config/termux.properties ]]
     then
       ln -s ${config.user.home}/Gist/Config/termux.properties ${config.user.home}/.termux/
     fi
