@@ -29,8 +29,11 @@
     tldr
     ## file system
     tree
+    file
+    fzf
     ## network
     frp
+    wget
 
     # programming
     ## There is a bug in aarch64
