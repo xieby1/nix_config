@@ -81,9 +81,13 @@ in
   '';
   build.activation.termux = ''
     mkdir -p ${config.user.home}/.termux
-    if [[ ! -e ${config.user.home}/Gist/Config/termux.properties ]]
+    if [[ -e ${config.user.home}/Gist/Config/termux.properties ]]
     then
-      ln -s ${config.user.home}/Gist/Config/termux.properties ${config.user.home}/.termux/
+      ln -sf ${config.user.home}/Gist/Config/termux.properties ${config.user.home}/.termux/
+    fi
+    if [[ -e ${config.user.home}/Gist/Config/colors.properties ]]
+    then
+      ln -sf ${config.user.home}/Gist/Config/colors.properties ${config.user.home}/.termux/
     fi
   '';
 }
