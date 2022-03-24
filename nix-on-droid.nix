@@ -79,6 +79,13 @@ in
       $DRY_RUN_CMD mv $VERBOSE_ARG "${sshdTmpDirectory}" "${sshdDirectory}"
     fi
   '';
+  build.activation.termux = ''
+    mkdir -p ${config.user.home}/.termux
+    if [[ -f ${config.user.home}/Gist/Config/termux.properties ]]
+    then
+      ln -s ${config.user.home}/Gist/Config/termux.properties ${config.user.home}/.termux/
+    fi
+  '';
 }
 
 # vim: ft=nix
