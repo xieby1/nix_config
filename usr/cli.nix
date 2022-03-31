@@ -62,8 +62,6 @@
     bear
     ## xml
     libxml2
-    ## latex
-    texlive.combined.scheme-full # HUGE SIZE!
 
     # runXonY
     debootstrap
