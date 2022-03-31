@@ -28,88 +28,91 @@ let
       sha256 = "0yn985pj8dn0bzalwfc8ssx62m01307ic1ypymil311m4gzlfy60";
     };
   };
-in
-
-{
-  # neovim
-  programs.neovim.enable = true;
-  programs.neovim.viAlias = true;
-  programs.neovim.vimAlias = true;
-  programs.neovim.coc.enable = true;
-  programs.neovim.extraConfig =
-    if builtins.pathExists ~/Gist/Config/xvimrc
-    then
-      builtins.readFile ~/Gist/Config/xvimrc
-    else
-      "";
-  programs.neovim.plugins = with pkgs.vimPlugins; [
-    vim-gitgutter
-    vim-smoothie
-    vim-mark
-    vim-ingo-library
-    vim-fugitive
-    git-messenger-vim
-    DrawIt
-    vim-nix
-    coc-nvim
-    vim-floaterm
-    vim-markdown-toc
-    vista-vim
-    vim-commentary
+  myTreesitters = with pkgs.vimPlugins; {
     # TODO: declarative way to add nvim-treesitter's plugins
     # https://nixos.wiki/wiki/Tree_sitters
     # (
     #   nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars)
     # )
-    {
-      plugin = nvim-treesitter;
-      config = ''
-        packadd! nvim-treesitter
-        lua << EOF
-        require 'nvim-treesitter.configs'.setup {
-          ensure_installed = {"c", "cpp"},
-          sync_install = false,
-          highlight = {
-            enable = true,
-            additional_vim_regex_highlighting = false,
-            disable = {
-              "nix",
-            },
+    plugin = nvim-treesitter;
+    config = ''
+      packadd! nvim-treesitter
+      lua << EOF
+      require 'nvim-treesitter.configs'.setup {
+        ensure_installed = {"c", "cpp"},
+        sync_install = false,
+        highlight = {
+          enable = true,
+          additional_vim_regex_highlighting = false,
+          disable = {
+            "nix",
           },
-        }
-        EOF
-      '';
-    }
-    # python lsp support:
-    #   coc related info:
-    #     https://github.com/neoclide/coc.nvim/wiki/Language-servers#python
-    #       https://github.com/fannheyward/coc-pyright
-    #   nixos vim related info:
-    #     https://nixos.wiki/wiki/Vim
-    #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
-    coc-pyright
-  ];
-  programs.neovim.vimdiffAlias = true;
-  programs.neovim.extraPackages = with pkgs; [
-    ccls
-  ];
+        },
+      }
+      EOF
+    '';
+  };
+in
 
-  # coc
-  programs.neovim.withNodeJs = true;
-  programs.neovim.coc.settings = {
-    "suggest.noselect" = true;
-    "suggest.enablePreview" = true;
-    "suggest.enablePreselect" = false;
-    # language server config refers to:
-    # https://github.com/neoclide/coc.nvim/wiki/Language-servers
-    "languageserver" = {
-      "ccls" = {
-        "command" = "ccls";
-        "filetypes" = ["c" "cc" "cpp" "c++" "objc" "objcpp"];
-        "rootPatterns" = [".ccls" "compile_commands.json" ".git/" ".hg/"];
-        "initializationOptions" = {
-          "cache" = {
-            "directory" = "/tmp/ccls";
+{
+  # neovim
+  programs.neovim = {
+    enable = true;
+    viAlias = true;
+    vimAlias = true;
+    extraConfig =
+      if builtins.pathExists ~/Gist/Config/xvimrc
+      then
+        builtins.readFile ~/Gist/Config/xvimrc
+      else
+        "";
+    plugins = with pkgs.vimPlugins; [
+      vim-gitgutter
+      vim-smoothie
+      vim-mark
+      vim-ingo-library
+      vim-fugitive
+      git-messenger-vim
+      DrawIt
+      vim-nix
+      coc-nvim
+      vim-floaterm
+      vim-markdown-toc
+      vista-vim
+      vim-commentary
+      myTreesitters
+      # python lsp support:
+      #   coc related info:
+      #     https://github.com/neoclide/coc.nvim/wiki/Language-servers#python
+      #       https://github.com/fannheyward/coc-pyright
+      #   nixos vim related info:
+      #     https://nixos.wiki/wiki/Vim
+      #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
+      coc-pyright
+    ];
+    vimdiffAlias = true;
+    extraPackages = with pkgs; [
+      ccls
+    ];
+
+    # coc
+    withNodeJs = true;
+    coc.enable = true;
+    coc.settings = {
+      "suggest.noselect" = true;
+      "suggest.enablePreview" = true;
+      "suggest.enablePreselect" = false;
+      # language server config refers to:
+      # https://github.com/neoclide/coc.nvim/wiki/Language-servers
+      "languageserver" = {
+        "ccls" = {
+          "command" = "ccls";
+          "filetypes" = ["c" "cc" "cpp" "c++" "objc" "objcpp"];
+          "rootPatterns" = [".ccls" "compile_commands.json" ".git/" ".hg/"];
+          "initializationOptions" = {
+            "cache" = {
+              "directory" = "/tmp/ccls";
+            };
           };
         };
       };
