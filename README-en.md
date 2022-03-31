@@ -42,6 +42,7 @@ You can also use some of the packages and modules to expand your own Nix/NixOS.
 * system.nix: system configuration (nixos-rebuild configuration)
   * sys/cli.nix: system CLI configuration
   * sys/gui.nix: system GUI configuration
+* nix-on-droid.nix: android configuration (with home-manager configuration)
 * home.nix: user configuration (home-manager configuration)
   * usr/cli.nix: user CLI configuration
   * usr/gui.nix: user GUI configuration
