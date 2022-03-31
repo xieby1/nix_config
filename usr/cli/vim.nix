@@ -82,6 +82,9 @@ in
     }
   ];
   programs.neovim.vimdiffAlias = true;
+  programs.neovim.extraPackages = with pkgs; [
+    ccls
+  ];
 
   # coc
   programs.neovim.withNodeJs = true;
