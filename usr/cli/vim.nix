@@ -90,6 +90,8 @@ in
       #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
       coc-pyright
       nerdtree
+      vim-markdown
+      tabular
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
