@@ -1,5 +1,14 @@
 { config, pkgs, stdenv, lib, ... }:
-
+let
+  comma = import ( pkgs.fetchFromGitHub {
+    owner = "nix-community";
+    repo = "comma";
+    # master branch arm not work, wait for fixing, see:
+    # https://github.com/nix-community/comma/issues/17
+    rev = "54149dc417819af14ddc0d59216d4add5280ad14";
+    sha256 = "1xjyn42w18w2mn16i7xl0dvay60w82ghayan1ia7v1qqr0a0fac9";
+  }) {};
+in
 {
   imports = [
     ./cli/vim.nix
@@ -8,6 +17,7 @@
   home.packages = with pkgs; [
     # tools
     parallel
+    comma
     ## repo
     gitui
     mr
