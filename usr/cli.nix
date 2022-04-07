@@ -56,6 +56,7 @@
     python3
     ## c
     gcc
+    gdb
     ### docs
     stdmanpages
     man-pages
