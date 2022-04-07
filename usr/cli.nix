@@ -7,6 +7,7 @@
 
   home.packages = with pkgs; [
     # tools
+    parallel
     ## repo
     gitui
     mr
