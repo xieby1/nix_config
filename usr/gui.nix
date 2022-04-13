@@ -17,8 +17,6 @@
     obsidian
     texmaker
     meld
-    # script
-    autokey
     # draw
     drawio
     aseprite-unfree
@@ -58,23 +56,6 @@
     };
     Service = {
       ExecStart = "${pkgs.qv2ray.outPath}/bin/qv2ray";
-    };
-  };
-
-  # cannot find `ps` command, I dk why.
-  # ok I add PATH env where ps located, problem solved!
-  systemd.user.services.autokey = {
-    Unit = {
-      Description = "Auto start autokey";
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-    Service = {
-      # https://stackoverflow.com/questions/31902846/how-to-fix-error-xlib-error-displayconnectionerror-cant-connect-to-display-0
-      Environment="\"PATH=/run/current-system/sw/bin\"";
-      ExecStartPre = "${pkgs.xorg.xhost.outPath}/bin/xhost +";
-      ExecStart = "${pkgs.autokey.outPath}/bin/autokey-gtk -l";
     };
   };
 
