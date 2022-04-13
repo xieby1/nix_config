@@ -28,7 +28,7 @@ in
     tmux
     ## text
     pandoc
-    hugo
+    mdbook
     espanso
     ## compile
     gnumake
