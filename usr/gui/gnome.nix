@@ -144,6 +144,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -155,6 +156,11 @@ in
       binding="<Alt>space";
       command="~/Gist/script/bash/quteapp.sh cheatsheet ~/Documents/Manuals-Sheets/my_cheatsheet.html";
       name="cheatsheet";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
+      binding="<Alt>c";
+      command="gnome-terminal -- vim ${config.home.homeDirectory}/Documents/Manuals-Sheets/my_cheatsheet.md";
+      name="edit cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       binding="<Alt>b";
