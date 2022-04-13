@@ -20,6 +20,7 @@
     # draw
     drawio
     aseprite-unfree
+    inkscape
     # viewer
     xdot
     # management
