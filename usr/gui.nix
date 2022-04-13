@@ -85,7 +85,7 @@
     enable = true;
     # https://qutebrowser.org/doc/help/settings.html
     settings = {
-      zoom.default = "200%";
+      qt.highdpi = true;
       new_instance_open_target = "window";
     };
   };
