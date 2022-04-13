@@ -86,6 +86,7 @@
     # https://qutebrowser.org/doc/help/settings.html
     settings = {
       zoom.default = "200%";
+      new_instance_open_target = "window";
     };
   };
 }

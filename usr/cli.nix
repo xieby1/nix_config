@@ -45,6 +45,8 @@ in
     ## network
     frp
     wget
+    ## x11
+    xdotool
 
     # programming
     ## There is a bug in aarch64

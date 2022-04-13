@@ -143,6 +143,7 @@ in
       custom-keybindings=[
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -152,8 +153,13 @@ in
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding="<Alt>space";
-      command="qutebrowser ~/Documents/Manuals-Sheets/my_cheatsheet.html";
+      command="~/Gist/script/bash/quteapp.sh cheatsheet ~/Documents/Manuals-Sheets/my_cheatsheet.html";
       name="cheatsheet";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
+      binding="<Alt>b";
+      command="~/Gist/script/bash/quteapp.sh bing https://cn.bing.com/dict/";
+      name="bing dict";
     };
 
     # predefined keyboard shortcuts
