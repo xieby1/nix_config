@@ -142,12 +142,18 @@ in
     "org/gnome/settings-daemon/plugins/media-keys" = {
       custom-keybindings=[
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding="<Primary><Alt>t";
       command="gnome-terminal";
       name="terminal";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
+      binding="<Alt>space";
+      command="qutebrowser ~/Documents/Manuals-Sheets/my_cheatsheet.html";
+      name="cheatsheet";
     };
 
     # predefined keyboard shortcuts

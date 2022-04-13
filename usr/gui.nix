@@ -80,4 +80,12 @@
       defaultApp = "drawio.desktop";
     };
   };
+
+  programs.qutebrowser = {
+    enable = true;
+    # https://qutebrowser.org/doc/help/settings.html
+    settings = {
+      zoom.default = "200%";
+    };
+  };
 }
