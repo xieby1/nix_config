@@ -67,7 +67,7 @@ in
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "google-chrome.desktop"
-        "org.gnome.Epiphany.desktop"
+        "org.qutebrowser.qutebrowser.desktop"
         "spotify.desktop"
         ];
     };
