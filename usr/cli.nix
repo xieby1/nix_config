@@ -8,6 +8,9 @@ let
     rev = "54149dc417819af14ddc0d59216d4add5280ad14";
     sha256 = "1xjyn42w18w2mn16i7xl0dvay60w82ghayan1ia7v1qqr0a0fac9";
   }) {};
+  nix-alien-pkgs = import (
+    fetchTarball "https://github.com/thiagokokada/nix-alien/tarball/master"
+  ) {};
 in
 {
   imports = [
@@ -81,6 +84,8 @@ in
     debootstrap
     qemu_kvm
     #qemu-utils
+    nix-alien-pkgs.nix-alien
+    nix-alien-pkgs.nix-index-update
   ];
 
   # git
