@@ -135,18 +135,10 @@ in
       "";
 
   # espanso
-  home.file.espanso =
-    if builtins.pathExists ~/Gist/Config/espanso.yml
-    then
-    {
-      source = ~/Gist/Config/espanso.yml;
-      target = ".config/espanso/user/espanso.yml";
-    }
-    else
-    {
-      text = "";
-      target = ".config/espanso/user/espanso.yml";
-    };
+  home.file.espanso = {
+    source = ./cli/espanso.yml;
+    target = ".config/espanso/user/espanso.yml";
+  };
 
   systemd.user.services.espanso = {
     Unit = {

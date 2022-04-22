@@ -1,0 +1,82 @@
+name: xieby1
+parent: default
+
+matches:
+  # not work?
+  - trigger: "'test"
+    replace: "{{yesterday}}"
+    vars:
+      - name: yesterday
+        type: shell
+        params:
+          cmd: "env LC_TIME=en_DK date --date=yesterday +%y%b%d"
+
+  - trigger: "'ht" # html time stamp
+    replace: <div style="text-align:right; font-size:3em;">{{today}}</div>
+    vars:
+      - name: today
+        type: date
+        params:
+          format: "%Y.%m.%d"
+
+  - trigger: "'st"
+    replace: |
+      "{{today}}$|$+" -> "{{today}}-" -> "{{today}}+";
+      subgraph cluster_{{today}}
+      {
+      x{{today}}_
+      }
+      {rank=same;
+      "{{today}}-";
+      x{{today}}_
+      }
+      {rank=same;
+      "{{today}}+";
+      }
+    vars:
+      - name: today
+        type: date
+        params:
+          format: "%y%b%d"
+
+  - trigger: "'sa"
+    replace: |
+      // command line:
+      //   dot -Tsvg -O sixu.dot
+
+
+      digraph {
+      // attributes
+      /// graph
+      rankdir=BT;
+      /// subgraph
+      newrank=true;
+      style=filled;
+      //// color name: https://graphviz.org/doc/info/colors.html
+      color=whitesmoke;
+      /// node
+      node[
+      shape=box,
+      style="filled, solid",
+      color=black,
+      fillcolor=white,
+      ];
+      /// edge
+      edge[
+      minlen=1,
+      //weight=1,
+      // If false, the edge is not used in ranking the nodes.
+      //constraint=true,
+      ];
+
+
+
+      }
+  - trigger: "'mc" # markdown columns
+    replace: |
+      ::: {.container}
+      :::: {.col}
+      ::::
+      :::: {.col}
+      ::::
+      :::
