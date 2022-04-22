@@ -60,12 +60,7 @@ in
     enable = true;
     viAlias = true;
     vimAlias = true;
-    extraConfig =
-      if builtins.pathExists ~/Gist/Config/xvimrc
-      then
-        builtins.readFile ~/Gist/Config/xvimrc
-      else
-        "";
+    extraConfig = builtins.readFile ./xvimrc;
     plugins = with pkgs.vimPlugins; [
       vim-gitgutter
       vim-smoothie
