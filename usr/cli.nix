@@ -154,16 +154,8 @@ in
   };
 
   # tmux
-  home.file.tmux =
-    if builtins.pathExists ~/Gist/Config/tmux.conf
-    then
-    {
-      source = ~/Gist/Config/tmux.conf;
-      target = ".tmux.conf";
-    }
-    else
-    {
-      text = "";
-      target = ".tmux.conf";
-    };
+  home.file.tmux = {
+    source = ./cli/tmux.conf;
+    target = ".tmux.conf";
+  };
 }
