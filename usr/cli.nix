@@ -8,9 +8,13 @@ let
     rev = "54149dc417819af14ddc0d59216d4add5280ad14";
     sha256 = "1xjyn42w18w2mn16i7xl0dvay60w82ghayan1ia7v1qqr0a0fac9";
   }) {};
-  nix-alien-pkgs = import (
-    fetchTarball "https://github.com/thiagokokada/nix-alien/tarball/master"
-  ) {};
+  nix-alien-pkgs = import ( pkgs.fetchFromGitHub {
+    owner = "thiagokokada";
+    repo = "nix-alien";
+    # master needs to build python3, so pin to a stable version
+    rev = "2820f11c5a3e0ccae4fa705cc9898084ec1f523c";
+    sha256 = "141da8c4zqp52imwyffs0hnx1b71qfic8nah6djqdh154693fw7z";
+  }) {};
 in
 {
   imports = [
