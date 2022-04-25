@@ -101,13 +101,6 @@ in
       core = {
         editor = "vim";
       };
-      # android uses global proxy
-      # TODO: more specific, aarch64-linux may not be android
-      http.proxy = if builtins.currentSystem == "aarch64-linux"
-        then
-          ""
-        else
-          "http://127.0.0.1:8889";
     };
   };
 
