@@ -15,7 +15,6 @@
     #wpsoffice
     libreoffice
     obsidian
-    texmaker
     meld
     # draw
     drawio
