@@ -142,6 +142,7 @@ let g:floaterm_height = 0.8
 
 " vista.vim
 let g:vista_update_on_text_changed = 1
+let g:vista_default_executive = 'coc'
 
 " set terminal title
 "" https://stackoverflow.com/questions/15123477/tmux-tabs-with-name-of-file-open-in-vim
