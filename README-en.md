@@ -3,7 +3,7 @@
 * Use nix expression,not nix flakes
 * Use NixOS stable channel (current version 21.11),not unstable channel
 * Ubuntu-based usage habits
-* Multiplatform: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅, Android (nix-on-droid)✅
+* Multiplatform: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅, Android (nix-on-droid)✅, WSL2✅
 
 You can use the configuration of this repository to configure a complete NixOS.
 You can also use some of the packages and modules to expand your own Nix/NixOS.
