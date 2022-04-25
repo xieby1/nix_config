@@ -145,6 +145,7 @@ in
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -166,6 +167,10 @@ in
       binding="<Alt>b";
       command="~/Gist/script/bash/quteapp.sh bing https://cn.bing.com/dict/";
       name="bing dict";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
+      binding="<Alt>j"; command="~/Gist/script/bash/quteapp.sh 日语词典 https://dict.hjenglish.com/jp/";
+      name="日语词典";
     };
 
     # predefined keyboard shortcuts
