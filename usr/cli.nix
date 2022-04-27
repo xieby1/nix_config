@@ -86,8 +86,7 @@ in
 
     # runXonY
     debootstrap
-    qemu_kvm
-    #qemu-utils
+    qemu
     nix-alien-pkgs.nix-alien
     nix-alien-pkgs.nix-index-update
   ];
