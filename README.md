@@ -2,29 +2,56 @@
 
 [English](./README-en.md)
 
+## Nix和NixOS的关系
+
+Nix是一个先进的包管理系统，用来管理软件包。
+其目标和常见的apt、rpm等包管理器一致。
+相对于这些包管理器，Nix采用了纯函数构建模型、使用哈希存储软件包等思想。
+这使得Nix能够轻松做到做到可重现构建、解决依赖地域（dependency hell）。
+Nix源自于Dolstra博士期间的研究内容。
+其详细理论由他的博士论文支撑，
+
+> Dolstra, Eelco. “The purely functional software deployment model.” (2006).
+
+NixOS则是把整个Linux操作系统看作一系列软件包（包括内核），采用Nix来进行管理。
+换句话说，NixOS是一个的使用Nix包管理器的Linux发行版。
+
+你可以单独使用Nix包管理器，用它来管理你的用户程序。
+你也可以使用NixOS，让你的整个操作系统都由Nix管理。
+Nix/NixOS带来的最直观的优势就是，只要保留着Nix/NixOS的配置文件，
+就能恢复出一个一模一样的软件环境/操作系统。
+（当然这是理想情况下。
+nix 2.8的impure特性，home-manager等在打破这一特性。
+不过不用担心。
+只要保留配置文件，Nix/NixOS上能够生成一个几乎一模一样的软件环境/操作系统）
+
+该仓库存放着我的Nix/NixOS配置。
+其中包含了大量我对各种软件的配置，
+比如gnome桌面，比如vim等等。
+你可以使用该仓库的配置，配置出完整NixOS操作系统。
+也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
+若你想尝试使用NixOS，可参考下面的[安装NixOS](#安装nixos)和[配置Nix](#配置nix)。
+若你只想尝试Nix，则可跳过[安装NixOS](#安装nixos)，直接阅读[配置Nix](#配置nix)。
+
 * 使用nix expression，而非nix flakes
 * 使用NixOS稳定源（目前版本21.11），而非非稳定源（unstable）
 * 基于ubuntu的使用习惯
 * 多平台：QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅，安卓（nix-on-droid）✅，WSL2✅
-
-你可以使用该仓库的配置，配置出完整NixOS操作系统。
-也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
 
 ## 目录
 
 <!-- vim-markdown-toc GFM -->
 
 * [文件夹结构](#文件夹结构)
-* [安装](#安装)
-    * [安装NixOS](#安装nixos)
-        * [准备镜像](#准备镜像)
-        * [分区](#分区)
-        * [文件系统](#文件系统)
-        * [基础配置](#基础配置)
-    * [安装我的配置](#安装我的配置)
-        * [导入配置](#导入配置)
-        * [设置软件源](#设置软件源)
-        * [部署配置](#部署配置)
+* [安装NixOS](#安装nixos)
+    * [准备镜像](#准备镜像)
+    * [分区](#分区)
+    * [文件系统](#文件系统)
+    * [基础配置](#基础配置)
+* [配置Nix](#配置nix)
+    * [导入配置](#导入配置)
+    * [设置软件源](#设置软件源)
+    * [部署配置](#部署配置)
 * [软件配置思路](#软件配置思路)
     * [gnome桌面](#gnome桌面)
         * [Wayland or X11](#wayland-or-x11)
@@ -49,18 +76,12 @@
   * usr/cli.nix: 用户命令行配置
   * usr/gui.nix: 用户图形配置
 
-## 安装
-
-安装分两步，
-第一步安装NixOS，
-第二步安装我的配置。
-
-### 安装NixOS
+## 安装NixOS
 
 安装过程采用[官方安装文档](https://nixos.org/manual/nixos/stable/#sec-installation)。
 若已安装NixOS，则可跳过该步骤，直接看安装我的配置。
 
-#### 准备镜像
+### 准备镜像
 
 QEMU:
 
@@ -85,7 +106,7 @@ sync
 # 注：需要在BIOS中取消secure boot，否则U盘无法启动。
 ```
 
-#### 分区
+### 分区
 
 进入ISO系统后，创建分区。
 一共需要3个分区：启动分区，操作系统分区，swap分区。
@@ -118,7 +139,7 @@ parted /dev/sda -- set 3 esp on
 * 创建Ext4分区，取名为nixos
 * 创建Other->swap分区
 
-#### 文件系统
+### 文件系统
 
 ```bash
 mkfs.ext4 -L nixos /dev/<系统分区>
@@ -130,7 +151,7 @@ mkdir -p /mnt/boot                          # 物理机单系统&双系统
 mount /dev/disk/by-label/boot /mnt/boot     # 物理机单系统&双系统
 ```
 
-#### 基础配置
+### 基础配置
 
 * 生成配置文件
 ```bash
@@ -162,11 +183,13 @@ nixos-install
 reboot
 ```
 
-### 安装我的配置
-
 重启之后，进入NixOS。
 
-#### 导入配置
+## 配置Nix
+
+安装Nix参考https://nixos.org/download.html
+
+### 导入配置
 
 在基础配置中，导入我的配置。
 
@@ -176,7 +199,7 @@ vim /etc/nixos/configuration.nix
 # 在imports中添加system.nix的路径
 ```
 
-#### 设置软件源
+### 设置软件源
 
 ```bash
 # 替换为清华的最新稳定源
@@ -186,7 +209,7 @@ sudo nix-channel --add https://github.com/nix-community/home-manager/archive/rel
 sudo nix-channel --update
 ```
 
-#### 部署配置
+### 部署配置
 
 ```bash
 sudo nixos-rebuild switch

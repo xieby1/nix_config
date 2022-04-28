@@ -1,28 +1,55 @@
 # NixOS configuration of xieby1
 
+## Relationship between Nix and NixOS
+
+Nix is an advanced package management system for managing software packages.
+Its target is the same as that of common package managers such as apt and rpm.
+Comparing with these package managers, Nix adopts a pure function construction model, uses hashes to store packages and adopts other ideas.
+These ideas make it easy for Nix to do reproducible builds and resolve dependency hell.
+Nix is born from research conducted during Dolstra's PhD.
+Which is detailed in his doctor dissertation,
+
+> Dolstra, Eelco. “The purely functional software deployment model.” (2006).
+
+NixOS regards the entire Linux operating system (including the kernel) as a collection of software packages and uses Nix to manage it.
+In other words, NixOS is a Linux distribution that uses the Nix package manager.
+
+You can use the Nix package manager alone to manage your user programs.
+You can also use NixOS to have your entire operating system managed by Nix.
+The most intuitive advantage brought by Nix/NixOS is that as long as the Nix/NixOS configuration files are kept,
+an identical software environment/OS can be restored.
+(Of course this is only ideal.
+The impure feature of nix 2.8, home-manager etc. are breaking this.
+But don't worry.
+As long as the configuration files are kept, an almost identical software environment/OS can be generated on Nix/NixOS)
+
+This repository keeps my Nix/NixOS configuration.
+It contains a lot of my configuration of various software,
+Such as gnome desktop, such as vim and so on.
+You can use the configuration of this repository to configure a complete NixOS.
+You can also use some of the packages and modules to expand your own Nix/NixOS.
+If you want to try NixOS, refer to [Install NixOS](#install-nixos) and [Configure Nix](#configure-nix).
+If you just want to try Nix, you can skip [Install NixOS](#install-nixos) and go directly to [Configure Nix](#configure-nix).
+
 * Use nix expression,not nix flakes
 * Use NixOS stable channel (current version 21.11),not unstable channel
 * Ubuntu-based usage habits
 * Multiplatform: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅, Android (nix-on-droid)✅, WSL2✅
-
-You can use the configuration of this repository to configure a complete NixOS.
-You can also use some of the packages and modules to expand your own Nix/NixOS.
 
 ## Table of contents
 
 <!-- vim-markdown-toc GFM -->
 
 * [Folder structure](#folder-structure)
-* [Install](#install)
-    * [Install NixOS](#install-nixos)
-        * [Prepare an image](#prepare-an-image)
-        * [Partition](#partition)
-        * [File system](#file-system)
-        * [Basic configuration](#basic-configuration)
-    * [Install my configuration](#install-my-configuration)
-        * [Import configuration](#import-configuration)
-        * [Config nix channels](#config-nix-channels)
-        * [Deploy configuration](#deploy-configuration)
+* [Install NixOS](#install-nixos)
+    * [Prepare an image](#prepare-an-image)
+    * [Partition](#partition)
+    * [File system](#file-system)
+    * [Basic configuration](#basic-configuration)
+* [Configure Nix](#configure-nix)
+    * [Import configuration](#import-configuration)
+    * [Config nix channels](#config-nix-channels)
+    * [Deploy configuration](#deploy-configuration)
 * [Ideas behind my configuration](#ideas-behind-my-configuration)
     * [Gnome desktop](#gnome-desktop)
         * [Wayland or X11](#wayland-or-x11)
@@ -47,18 +74,12 @@ You can also use some of the packages and modules to expand your own Nix/NixOS.
   * usr/cli.nix: user CLI configuration
   * usr/gui.nix: user GUI configuration
 
-## Install
-
-The installation is divided into two steps.,
-firstly, install NixOS,
-secondly, install my configuration.
-
-### Install NixOS
+## Install NixOS
 
 The installation refers to the [official installation documentation](https://nixos.org/manual/nixos/stable/#sec-installation).
 If you have already installed NixOS, you can skip this step and go directly to Install My Configuration.
 
-#### Prepare an image
+### Prepare an image
 
 QEMU:
 
@@ -83,7 +104,7 @@ sync
 # Noted: You need to cancel the secure boot in the BIOS, in some case the usb cannot boot.
 ```
 
-#### Partition
+### Partition
 
 After entering the ISO system, create the partitions.
 3 partitions are needed: a boot partition, an OS partition, a swap partition.
@@ -116,7 +137,7 @@ The detailed usage of parted has not yet been explored, and the `disk` software 
 * Create an Ext4 partition and name it nixos
 * Create Other->swap partition
 
-#### File system
+### File system
 
 ```bash
 mkfs.ext4 -L nixos /dev/<os partition>
@@ -128,7 +149,7 @@ mkdir -p /mnt/boot                          # for single boot and dual boot
 mount /dev/disk/by-label/boot /mnt/boot     # for single boot and dual boot
 ```
 
-#### Basic configuration
+### Basic configuration
 
 * Generate configuration file
 ```bash
@@ -160,11 +181,13 @@ nixos-install
 reboot
 ```
 
-### Install my configuration
-
 After rebooting, enter NixOS.
 
-#### Import configuration
+## Configure Nix
+
+Nix installation refers to https://nixos.org/download.html
+
+### Import configuration
 
 Import my configuration into the basic configuration.
 
@@ -174,7 +197,7 @@ vim /etc/nixos/configuration.nix
 # Add the path of system.nix to imports
 ```
 
-#### Config nix channels
+### Config nix channels
 
 ```bash
 # (For users in mainland China) replace with Tsinghua tuna mirror
@@ -184,7 +207,7 @@ sudo nix-channel --add https://github.com/nix-community/home-manager/archive/rel
 sudo nix-channel --update
 ```
 
-#### Deploy configuration
+### Deploy configuration
 
 ```bash
 sudo nixos-rebuild switch
