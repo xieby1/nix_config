@@ -56,19 +56,6 @@ in
     xdotool
 
     # programming
-    ## There is a bug in aarch64
-    ## refers to https://github.com/NixOS/nixpkgs/pull/151904
-    ## TODO: remove this compromise after fix being merged in nixpkgs
-    (
-      if builtins.currentSystem == "aarch64-linux"
-      then
-        universal-ctags.overrideAttrs (
-          oldAttrs: rec {
-            depsBuildBuild = [ pkgs.buildPackages.stdenv.cc ];
-        })
-      else
-        universal-ctags
-    )
     cscope
     clang-tools
     ## python
