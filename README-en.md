@@ -34,7 +34,9 @@ If you just want to try Nix, you can skip [Install NixOS](#install-nixos) and go
 * Use nix expression,not nix flakes
 * Use NixOS stable channel (current version 21.11),not unstable channel
 * Ubuntu-based usage habits
-* Multiplatform: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅, Android (nix-on-droid)✅, WSL2✅
+* Multiplatform
+  * NixOS: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅
+  * Nix: Android (nix-on-droid)✅, WSL2✅
 
 ## Table of contents
 

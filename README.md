@@ -36,7 +36,9 @@ nix 2.8的impure特性，home-manager等在打破这一特性。
 * 使用nix expression，而非nix flakes
 * 使用NixOS稳定源（目前版本21.11），而非非稳定源（unstable）
 * 基于ubuntu的使用习惯
-* 多平台：QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅，安卓（nix-on-droid）✅，WSL2✅
+* 多平台
+  * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
+  * Nix: 安卓（nix-on-droid）✅，WSL2✅
 
 ## 目录
 
