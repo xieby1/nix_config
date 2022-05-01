@@ -38,7 +38,7 @@ nix 2.8的impure特性，home-manager等在打破这一特性。
 * 基于ubuntu的使用习惯
 * 多平台
   * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
-  * Nix: 安卓（nix-on-droid）✅，WSL2✅
+  * Nix: Linux✅，安卓（nix-on-droid）✅，WSL2✅
 
 ## 目录
 
@@ -203,9 +203,12 @@ vim /etc/nixos/configuration.nix
 
 ### 设置软件源
 
+注：在Nix中`sudo`可以省掉。
+
 ```bash
 # 替换为清华的最新稳定源
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos # 对于NixOS
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixpkgs # 对于Nix
 # 添加home manager源
 sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
 sudo nix-channel --update
@@ -214,7 +217,7 @@ sudo nix-channel --update
 ### 部署配置
 
 ```bash
-sudo nixos-rebuild switch
+sudo nixos-rebuild switch # 仅NixOS
 # 安装home-manager
 nix-shell '<home-manager>' -A install
 home-manager switch

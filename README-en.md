@@ -36,7 +36,7 @@ If you just want to try Nix, you can skip [Install NixOS](#install-nixos) and go
 * Ubuntu-based usage habits
 * Multiplatform
   * NixOS: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅
-  * Nix: Android (nix-on-droid)✅, WSL2✅
+  * Nix: Linux✅, Android (nix-on-droid)✅, WSL2✅
 
 ## Table of contents
 
@@ -201,9 +201,12 @@ vim /etc/nixos/configuration.nix
 
 ### Config nix channels
 
+Noted: `sudo` may be omitted in Nix.
+
 ```bash
 # (For users in mainland China) replace with Tsinghua tuna mirror
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos # for NixOS
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixpkgs # for Nix
 # Add home manager channel
 sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
 sudo nix-channel --update
@@ -212,7 +215,7 @@ sudo nix-channel --update
 ### Deploy configuration
 
 ```bash
-sudo nixos-rebuild switch
+sudo nixos-rebuild switch # Only for NixOS
 # Install home-manager
 nix-shell '<home-manager>' -A install
 home-manager switch
