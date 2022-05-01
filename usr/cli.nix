@@ -63,6 +63,7 @@ in
     ## c
     gcc
     gdb
+    cling # c/cpp repl
     ### docs
     stdmanpages
     man-pages
