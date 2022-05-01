@@ -110,12 +110,7 @@ in
     view = "nvim -R";
     mr = "mr -d ~"; # mr status not work in non-home dir
   };
-  programs.bash.bashrcExtra =
-    if builtins.pathExists ~/Gist/Config/bashrc
-    then
-      builtins.readFile ~/Gist/Config/bashrc
-    else
-      "";
+  programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc;
 
   # espanso
   home.file.espanso = {

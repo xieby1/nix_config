@@ -1,0 +1,85 @@
+MACHINE=$(uname -m)
+KERNEL_RELEASE=$(uname -r)
+
+# rewrite prompt format
+u_green="\[\033[01;32m\]"
+u_blue="\[\033[01;34m\]"
+u_white="\[\033[00m\]"
+PS1="${debian_chroot:+($debian_chroot)}"
+case "${HOSTNAME}" in
+qemu*)
+    PS1+="(qemu)"
+;;
+esac
+if [[ $MACHINE == aarch64 ]]
+then
+PS1+="${u_green}\u${u_white}:"
+else
+PS1+="${u_green}\u@\h${u_white}:"
+fi
+PS1+="${u_blue}\w${u_white}"
+PS1+="\n${u_green}\$${u_white} "
+unset u_green u_blue u_white
+
+# change title
+# https://unix.stackexchange.com/questions/177572/
+PS1+="\[\e]2;\w\a\]"
+
+# FZF top-down display
+export FZF_DEFAULT_OPTS="--reverse"
+
+# proxychains4
+#export PROXYCHAINS_SOCKS5=1080
+
+# proxy
+case ${MACHINE} in
+x86_64)
+    case ${HOSTNAME} in
+    container*)
+        # export HTTP_PROXY="http://172.17.0.1:8889/"
+        export HTTP_PROXY="http://127.0.0.1:8889/"
+        ;;
+    *)
+        export HTTP_PROXY="http://127.0.0.1:8889/"
+        ;;
+    esac
+    ;;
+aarch64)
+    # not need proxy env, use clash
+    ;;
+esac
+# microsoft wsl
+if [[ ${KERNEL_RELEASE} == *"microsoft"* ]]
+then
+    hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
+    export HTTP_PROXY="http://${hostip}:8889"
+    source ~/.nix-profile/etc/profile.d/nix.sh
+fi
+export HTTPS_PROXY="${HTTP_PROXY}"
+export FTP_PROXY="${HTTP_PROXY}"
+export http_proxy="${HTTP_PROXY}"
+export https_proxy="${HTTP_PROXY}"
+export ftp_proxy="${HTTP_PROXY}"
+
+# alias
+alias o="xdg-open"
+alias a="broot \${HOME}/Documents/Config/autokey"
+alias ll="ls --color -l"
+alias ls="ls --color"
+
+# nvim as manpager
+command -v nvim &> /dev/null
+if [[ $? -eq 0 ]]
+then
+    # see nvim `:h :Man`
+    export MANPAGER='nvim +Man!'
+fi
+
+# nixos obsidian
+export NIXPKGS_ALLOW_INSECURE=1
+
+# source my bashrc
+if [[ -f ~/Gist/Config/bashrc ]]
+then
+    source ~/Gist/Config/bashrc
+fi
