@@ -75,9 +75,11 @@ in
     # runXonY
     debootstrap
     qemu
+  ] ++ (if builtins.currentSystem == "x86_64-linux"
+  then [
     nix-alien-pkgs.nix-alien
     nix-alien-pkgs.nix-index-update
-  ];
+  ] else []);
 
   # git
   programs.git = {
