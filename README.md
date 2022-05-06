@@ -59,7 +59,7 @@ nix 2.8的impure特性，home-manager等在打破这一特性。
         * [Wayland or X11](#wayland-or-x11)
         * [新增模块mime.nix](#新增模块mimenix)
         * [新增模块gsettings.nix](#新增模块gsettingsnix)
-    * [qv2ray科学上网](#qv2ray科学上网)
+    * [科学上网](#科学上网)
     * [文本编辑器](#文本编辑器)
         * [NeoVim or Vim](#neovim-or-vim)
         * [Typora替代品（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
@@ -164,7 +164,7 @@ nixos-generate-config --root /mnt
   * 启用代理
     * QEMU中宿主机器的ip为10.0.2.2
     * 安装过程中需要借助别的计算机或宿主机的的代理服务
-    * 部署完我的nixos配置后，将会有qv2ray服务，可以用虚拟机的代理服务
+    * 部署完我的nixos配置后，将会有clash服务，可以用虚拟机的代理服务
     * `networking.proxy.default = "http://user:password@proxy:port/";`
     * `networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";`
   * （QEMU和物理机单系统）取消以下注释以开启grub支持
@@ -250,15 +250,10 @@ home-manager switch
 原因参考[该回答](https://askubuntu.com/questions/416556/shouldnt-dconf-editor-and-gsettings-access-the-same-database)
 gsettings(schema id)和dconf(schema path)存在区别。
 
-### qv2ray科学上网
+### 科学上网
 
-qv2ray已经停止更新，对高分辨率屏幕的适配不好。
-可能的GUI替代品v2rayA。
-
-qv2ray需要v2ray core。
-通过usr/gui.nix: home.file.v2ray_core，
-将v2ray core放在qv2ray默认的地址.config/qv2ray/，
-由此让qv2ray开箱即用。
+使用clash。
+手动将机场提供clash的config.yaml放在`~/.config/clash/config.yaml`即可。
 
 ### 文本编辑器
 

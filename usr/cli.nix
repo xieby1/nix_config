@@ -52,6 +52,7 @@ in
     ## network
     frp
     wget
+    clash
     ## x11
     xdotool
 
@@ -147,4 +148,16 @@ in
       builtins.readFile ~/Gist/Config/ssh.conf
     else
       "";
+
+  systemd.user.services.clash = {
+    Unit = {
+      Description = "Auto start clash";
+    };
+    Install = {
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.clash.outPath}/bin/clash";
+    };
+  };
 }

@@ -9,7 +9,6 @@
     # browser
     google-chrome
     # network
-    qv2ray
     kdeconnect
     # text
     #wpsoffice
@@ -39,26 +38,6 @@
     winetricks
   ];
 
-  home.file.v2ray_core = {
-    source = pkgs.fetchzip {
-      url = "https://github.com/v2fly/v2ray-core/releases/download/v4.44.0/v2ray-linux-64.zip";
-      sha256 = "dn7AZzkvUNDYVyZv4MZGwE+lDesm3fc0ul+64K41bTE=";
-      stripRoot = false;
-    };
-    target = ".config/qv2ray/vcore";
-  };
-  systemd.user.services.qv2ray = {
-    Unit = {
-      Description = "Auto start qv2ray";
-    };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.qv2ray.outPath}/bin/qv2ray";
-    };
-  };
-
   xdg.desktopEntries = {
     xdot = {
       name = "xdot";
@@ -87,6 +66,13 @@
     settings = {
       qt.highdpi = true;
       new_instance_open_target = "window";
+    };
+  };
+
+  xdg.desktopEntries = {
+    clash = {
+      name = "clash";
+      exec = "qutebrowser http://clash.razord.top";
     };
   };
 }
