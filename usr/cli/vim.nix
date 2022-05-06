@@ -85,7 +85,7 @@ in
       #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
       coc-pyright
       nerdtree
-      vim-markdown
+      vim-markdown # format table
       tabular
     ];
     vimdiffAlias = true;
