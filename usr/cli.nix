@@ -15,6 +15,12 @@ let
     rev = "2820f11c5a3e0ccae4fa705cc9898084ec1f523c";
     sha256 = "141da8c4zqp52imwyffs0hnx1b71qfic8nah6djqdh154693fw7z";
   }) {};
+  gdb-dashboard-src = pkgs.fetchFromGitHub {
+    owner = "cyrus-and";
+    repo = "gdb-dashboard";
+    rev = "2b107b27949d13f6ef041de6eec1ad2e5f7b4cbf";
+    sha256 = "1g261dv0x23rrn5nywm6i91wwq6ypsa8nrc9g6dnd5bxh0y28fn7";
+  };
 in
 {
   imports = [
@@ -159,5 +165,14 @@ in
     Service = {
       ExecStart = "${pkgs.clash.outPath}/bin/clash";
     };
+  };
+
+  home.file.gdbinit = {
+    source = "${gdb-dashboard-src.outPath}/.gdbinit";
+    target = ".gdbinit";
+  };
+  home.file.gdb_dashboard_init = {
+    source = ./cli/gdbinit;
+    target = ".gdbinit.d/init";
   };
 }
