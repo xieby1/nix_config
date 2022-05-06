@@ -139,4 +139,12 @@ in
     source = ./cli/tmux.conf;
     target = ".tmux.conf";
   };
+
+  programs.ssh.enable = true;
+  programs.ssh.extraConfig =
+    if builtins.pathExists ~/Gist/Config/ssh.conf
+    then
+      builtins.readFile ~/Gist/Config/ssh.conf
+    else
+      "";
 }
