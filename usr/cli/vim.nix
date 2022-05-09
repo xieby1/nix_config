@@ -52,10 +52,30 @@ let
       -- only fold compound_statement
       -- https://github.com/nvim-treesitter/nvim-treesitter/issues/1565
       if require("nvim-treesitter.parsers").has_parser "c" and require("nvim-treesitter.parsers").has_parser "cpp" then
+        -- based on nvim-treesitter/queries/c/folds.scm
+        -- Make compound_statement highest priority.
+        -- TODO: to simplify this folds_query. Add (compound_statement) priority to existed query.
         local folds_query = [[
-        [
-           (compound_statement)
-        ] @fold
+          [
+            (compound_statement)
+
+            (for_statement)
+            (if_statement)
+            (while_statement)
+            (switch_statement)
+            (case_statement)
+            (function_definition)
+            (struct_specifier)
+            (enum_specifier)
+            (comment)
+            (preproc_if)
+            (preproc_elif)
+            (preproc_else)
+            (preproc_ifdef)
+            (initializer_list)
+          ] @fold
+          (compound_statement
+            (compound_statement) @fold)
         ]]
         require("vim.treesitter.query").set_query("c", "folds", folds_query)
         require("vim.treesitter.query").set_query("cpp", "folds", folds_query)
