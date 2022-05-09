@@ -49,6 +49,17 @@ let
           },
         },
       }
+      -- only fold compound_statement
+      -- https://github.com/nvim-treesitter/nvim-treesitter/issues/1565
+      if require("nvim-treesitter.parsers").has_parser "c" and require("nvim-treesitter.parsers").has_parser "cpp" then
+        local folds_query = [[
+        [
+           (compound_statement)
+        ] @fold
+        ]]
+        require("vim.treesitter.query").set_query("c", "folds", folds_query)
+        require("vim.treesitter.query").set_query("cpp", "folds", folds_query)
+      end
       EOF
     '';
   };
