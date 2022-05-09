@@ -20,6 +20,29 @@ nnoremap z<right> 4zl
 "" tags support, ';' means upward search, refering to http://vimdoc.sourceforge.net/htmldoc/editing.html#file-searching
 set tags=./tags;
 "" Fold
+""" fold text to be the first and last line
+""" refer to sbernheim4's reply at
+""" https://github.com/nvim-treesitter/nvim-treesitter/pull/390
+function! GetSpaces(foldLevel)
+    if &expandtab == 1
+        " Indenting with spaces
+        let str = repeat(" ", a:foldLevel / (&shiftwidth + 1) - 1)
+        return str
+    elseif &expandtab == 0
+        " Indenting with tabs
+        return repeat(" ", indent(v:foldstart) - (indent(v:foldstart) / &shiftwidth))
+    endif
+endfunction
+function! MyFoldText()
+    let startLineText = getline(v:foldstart)
+    let endLineText = trim(getline(v:foldend))
+    let indentation = GetSpaces(foldlevel("."))
+    let spaces = repeat(" ", 200)
+    let str = indentation . startLineText . " …… " . endLineText . spaces
+    return str
+endfunction
+" Custom display for text when folding
+set foldtext=MyFoldText()
 """ tree-sitter
 set foldmethod=expr
 set foldexpr=nvim_treesitter#foldexpr()
