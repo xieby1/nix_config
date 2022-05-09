@@ -85,6 +85,7 @@ in
   # git
   programs.git = {
     enable = true;
+    package = pkgs.gitFull;
     userEmail = "xieby1@outlook.com";
     userName = "xieby1";
     extraConfig = {
