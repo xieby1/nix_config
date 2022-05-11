@@ -1,4 +1,7 @@
 { config, pkgs, stdenv, lib, ... }:
+let
+  feishu = pkgs.callPackage ./gui/feishu.nix {};
+in
 {
   imports = [
     ./gui/gnome.nix
@@ -10,6 +13,8 @@
     google-chrome
     # network
     kdeconnect
+    feishu
+    skypeforlinux
     # text
     #wpsoffice
     libreoffice
