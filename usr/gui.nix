@@ -14,7 +14,6 @@ in
     # network
     kdeconnect
     feishu
-    skypeforlinux
     # text
     #wpsoffice
     libreoffice
