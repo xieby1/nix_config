@@ -1,27 +1,4 @@
-# NixOS configuration of xieby1
-
-## Relationship between Nix and NixOS
-
-Nix is an advanced package management system for managing software packages.
-Its target is the same as that of common package managers such as apt and rpm.
-Comparing with these package managers, Nix adopts a pure function construction model, uses hashes to store packages and adopts other ideas.
-These ideas make it easy for Nix to do reproducible builds and resolve dependency hell.
-Nix is born from research conducted during Dolstra's PhD.
-Which is detailed in his doctor dissertation,
-
-> Dolstra, Eelco. “The purely functional software deployment model.” (2006).
-
-NixOS regards the entire Linux operating system (including the kernel) as a collection of software packages and uses Nix to manage it.
-In other words, NixOS is a Linux distribution that uses the Nix package manager.
-
-You can use the Nix package manager alone to manage your user programs.
-You can also use NixOS to have your entire operating system managed by Nix.
-The most intuitive advantage brought by Nix/NixOS is that as long as the Nix/NixOS configuration files are kept,
-an identical software environment/OS can be restored.
-(Of course this is only ideal.
-The impure feature of nix 2.8, home-manager etc. are breaking this.
-But don't worry.
-As long as the configuration files are kept, an almost identical software environment/OS can be generated on Nix/NixOS)
+# Nix/NixOS configuration of xieby1
 
 This repository keeps my Nix/NixOS configuration.
 It contains a lot of my configuration of various software,
@@ -30,6 +7,8 @@ You can use the configuration of this repository to configure a complete NixOS.
 You can also use some of the packages and modules to expand your own Nix/NixOS.
 If you want to try NixOS, refer to [Install NixOS](#install-nixos) and [Configure Nix](#configure-nix).
 If you just want to try Nix, you can skip [Install NixOS](#install-nixos) and go directly to [Configure Nix](#configure-nix).
+If you not only want to install Nix/NixOS, but also want to know more about Nix/NixOS,
+welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](https://xieby1.github.io/Distro/Nix/README-en.html).
 
 * Use nix expression,not nix flakes
 * Use NixOS stable channel (current version 21.11),not unstable channel
