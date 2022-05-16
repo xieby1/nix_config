@@ -66,14 +66,10 @@ alias o="xdg-open"
 alias a="broot \${HOME}/Documents/Config/autokey"
 alias ll="ls --color -l"
 alias ls="ls --color"
-
 # nvim as manpager
-command -v nvim &> /dev/null
-if [[ $? -eq 0 ]]
-then
-    # see nvim `:h :Man`
-    export MANPAGER='nvim +Man!'
-fi
+## see nvim `:h :Man`
+## nvim manpage huge mange is SLOW! E.g. man configuration.nix
+alias nman="env MANPAGER='nvim +Man!' man"
 
 # nixos obsidian
 export NIXPKGS_ALLOW_INSECURE=1
