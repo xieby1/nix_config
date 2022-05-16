@@ -59,9 +59,12 @@ in
     # programming
     cscope
     clang-tools
+    cmake
+    capstone
     ## python
     python3
     ## c
+    binutils
     gcc
     gdb
     cling # c/cpp repl
