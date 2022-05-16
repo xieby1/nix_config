@@ -118,6 +118,7 @@ in
       nerdtree
       vim-markdown # format table
       tabular
+      vim-hexokinase
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
