@@ -4,7 +4,7 @@
 #   stack registers history assembly
 #   breakpoints expressions memory
 #   source threads variables
-dashboard -layout stack registers
+dashboard -layout source
 
 # https://en.wikipedia.org/wiki/ANSI_escape_code
 #dashboard -style prompt
