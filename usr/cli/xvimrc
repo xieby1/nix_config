@@ -43,9 +43,7 @@ function! MyFoldText()
 endfunction
 " Custom display for text when folding
 set foldtext=MyFoldText()
-""" tree-sitter
-set foldmethod=expr
-set foldexpr=nvim_treesitter#foldexpr()
+set foldmethod=manual
 """ Set the foldlevel to a high setting,
 """ files are always loaded with opened folds.
 set foldlevel=20
