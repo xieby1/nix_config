@@ -96,6 +96,9 @@ nnoremap <leader>M :Marks<CR>
 " gitgutter
 let g:gitgutter_signs = 1
 let g:gitgutter_highlight_lines = 1
+let g:gitgutter_sign_added = '+'
+let g:gitgutter_sign_modified = '~'
+let g:gitgutter_sign_removed = '-'
 nnoremap <Leader>g :GitGutterLineHighlightsToggle<CR>:GitGutterSignsToggle<CR>
 
 augroup filetype
@@ -316,6 +319,7 @@ nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 " vim-markdown
 let g:vim_markdown_new_list_item_indent = 2
 let g:vim_markdown_no_default_key_mappings = 1
+
 " hexokinase
 let g:Hexokinase_highlighters = ['backgroundfull']
 nnoremap <leader>c :set termguicolors!<CR>
