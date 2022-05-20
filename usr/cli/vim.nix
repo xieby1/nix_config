@@ -1,6 +1,16 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
+  # TODO: remove after nixpkgs contain this feature
+  vim-gitgutter-difforig = pkgs.vimUtils.buildVimPlugin {
+    name = "vim-gitgutter";
+    src = pkgs.fetchFromGitHub {
+      owner = "airblade";
+      repo = "vim-gitgutter";
+      rev = "719d4ec06a0fb0aa9f1dfaebcf4f9691e8dc3f73";
+      sha256 = "1mdpds4xpjcwfsm6r9w65hxwjsxm7pcr3dnkfh6v8xx0kyflmijp";
+    };
+  };
   vim-ingo-library = pkgs.vimUtils.buildVimPlugin {
     name = "vim-ingo-library";
     src = pkgs.fetchFromGitHub {
@@ -62,7 +72,7 @@ in
     vimAlias = true;
     extraConfig = builtins.readFile ./xvimrc;
     plugins = with pkgs.vimPlugins; [
-      vim-gitgutter
+      vim-gitgutter-difforig
       vim-smoothie
       vim-mark
       vim-ingo-library
