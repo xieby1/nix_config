@@ -77,6 +77,8 @@ in
     bear
     ## xml
     libxml2
+    ## bash
+    bc
 
     # runXonY
     debootstrap
