@@ -66,8 +66,11 @@ in
       ipython
     ]))
     ## c
-    binutils
-    gcc
+    (lib.setPrio # make bintools less prior
+      (bintools-unwrapped.meta.priority + 1)
+      bintools-unwrapped
+    )
+    gcc_multi
     gdb
     cling # c/cpp repl
     ### docs
