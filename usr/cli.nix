@@ -70,7 +70,10 @@ in
       (bintools-unwrapped.meta.priority + 1)
       bintools-unwrapped
     )
-    gcc_multi
+    (if builtins.currentSystem != "x86_64"
+      then gcc
+      else gcc_multi
+    )
     gdb
     cling # c/cpp repl
     ### docs
