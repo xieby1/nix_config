@@ -98,13 +98,13 @@ in
       preset-resize-5=["<Super>apostrophe"];
       preset-resize-6=["<Super>semicolon"];
       preset-resize-7=["<Super>comma"];
-      resize1="2x2 0:0 0:0";
-      resize2="2x2 1:0 1:0";
-      resize3="2x2 0:1 0:1";
-      resize4="2x2 1:1 1:1";
-      resize5="4x8 1:1 2:6";
-      resize6="1x2 0:0 0:0";
-      resize7="1x2 0:1 0:1";
+      resize1="2x2 1:1 1:1";
+      resize2="2x2 2:1 2:1";
+      resize3="2x2 1:2 1:2";
+      resize4="2x2 2:2 2:2";
+      resize5="4x8 2:2 3:7";
+      resize6="1x2 1:1 1:1";
+      resize7="1x2 1:2 1:2";
       show-icon=false;
     };
 
