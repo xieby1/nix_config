@@ -38,7 +38,7 @@
   libglvnd,
   libgpg-error,
   libjpeg_turbo,
-  libpng_apng,
+  libpng,
   libselinux,
   libtasn1,
   libthai,
@@ -99,7 +99,7 @@ let
     libglvnd
     libgpg-error
     libjpeg_turbo
-    libpng_apng
+    libpng
     libselinux
     libtasn1
     libthai
