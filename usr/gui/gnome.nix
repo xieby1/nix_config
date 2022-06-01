@@ -160,12 +160,12 @@ in
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding="<Alt>space";
-      command="~/Gist/script/bash/quteapp.sh cheatsheet ~/Documents/Manuals-Sheets/my_cheatsheet.html";
+      command="~/Gist/script/bash/quteapp.sh cheatsheet ~/Documents/Tech/my_cheatsheet.html";
       name="cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding="<Alt>c";
-      command="gnome-terminal -- vim ${config.home.homeDirectory}/Documents/Manuals-Sheets/my_cheatsheet.md";
+      command="gnome-terminal -- vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
       name="edit cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
