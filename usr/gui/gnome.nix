@@ -2,18 +2,12 @@
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
 let
-  exts = with pkgs.gnomeExtensions; [
-    dash-to-dock
-    system-monitor
-    vertical-overview
-    unite
-  ];
-  exts40 = with pkgs; [
-    gnome40Extensions."BingWallpaper@ineffable-gmail.com"
-    gnome40Extensions."clipboard-indicator@tudmotu.com"
-    gnome40Extensions."gTile@vibou"
-    gnome40Extensions."hidetopbar@mathieu.bidon.ca"
-  ];
+  pkgsUnstable = import (pkgs.fetchFromGitHub {
+    owner = "NixOS";
+    repo = "nixpkgs";
+    rev = "236cc2971ac72acd90f0ae3a797f9f83098b17ec";
+    sha256 = "06ydhcmzrzbvs675ycv7whhp3sjg3d76pdp27jlhx8vw9izp0ngi";
+  }) {};
 in
 {
   imports = [
@@ -23,8 +17,18 @@ in
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
   ])
-  ++ exts
-  ++ exts40;
+  ++ (with pkgs.gnomeExtensions; [
+    dash-to-dock
+    system-monitor
+    # current stable pkgs not support vertical-overview version 9
+    # TODO: remove this after stable pkgs supports it.
+    pkgsUnstable.gnomeExtensions.vertical-overview
+    unite
+    clipboard-indicator
+    bing-wallpaper-changer
+    gtile
+    hide-top-bar
+  ]);
 
   # gnome-terminal
   ## dconf dump /org/gnome/terminal/legacy/profiles:/
@@ -98,13 +102,13 @@ in
       preset-resize-5=["<Super>apostrophe"];
       preset-resize-6=["<Super>semicolon"];
       preset-resize-7=["<Super>comma"];
-      resize1="2x2 0:0 0:0";
-      resize2="2x2 1:0 1:0";
-      resize3="2x2 0:1 0:1";
-      resize4="2x2 1:1 1:1";
-      resize5="4x8 1:1 2:6";
-      resize6="1x2 0:0 0:0";
-      resize7="1x2 0:1 0:1";
+      resize1="2x2 1:1 1:1";
+      resize2="2x2 2:1 2:1";
+      resize3="2x2 1:2 1:2";
+      resize4="2x2 2:2 2:2";
+      resize5="4x8 2:2 3:7";
+      resize6="1x2 1:1 1:1";
+      resize7="1x2 1:2 1:2";
       show-icon=false;
     };
 

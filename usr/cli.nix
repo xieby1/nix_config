@@ -1,20 +1,15 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  comma = import ( pkgs.fetchFromGitHub {
-    owner = "nix-community";
-    repo = "comma";
-    # master branch arm not work, wait for fixing, see:
-    # https://github.com/nix-community/comma/issues/17
-    rev = "54149dc417819af14ddc0d59216d4add5280ad14";
-    sha256 = "1xjyn42w18w2mn16i7xl0dvay60w82ghayan1ia7v1qqr0a0fac9";
-  }) {};
   nix-alien-pkgs = import ( pkgs.fetchFromGitHub {
     owner = "thiagokokada";
     repo = "nix-alien";
     # master needs to build python3, so pin to a stable version
-    rev = "2820f11c5a3e0ccae4fa705cc9898084ec1f523c";
-    sha256 = "141da8c4zqp52imwyffs0hnx1b71qfic8nah6djqdh154693fw7z";
-  }) {};
+    rev = "faeda0a028eca556dec136631f2e905fd7a46bb7";
+    sha256 = "0z2p9jj4h2a688vw5g0zqy0380qj3xb9zmxq9wyisrx86hnnsaq0";
+  }) {
+    inherit pkgs;
+    inherit (pkgs) poetry2nix;
+  };
 in
 {
   imports = [
