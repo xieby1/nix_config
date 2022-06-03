@@ -85,6 +85,8 @@ in
     libxml2
     ## bash
     bc
+    ## node
+    nodePackages.node2nix
 
     # runXonY
     debootstrap
