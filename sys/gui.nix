@@ -3,10 +3,13 @@
 {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
+  services.xserver.videoDrivers = if "${config.networking.hostName}" == "jumper"
+  then ["intel"]
+  else [];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = true;
+  services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11
