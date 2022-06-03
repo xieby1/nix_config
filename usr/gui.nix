@@ -21,7 +21,7 @@ in
     meld
     # draw
     drawio
-    aseprite-unfree
+    #aseprite-unfree
     inkscape
     # viewer
     xdot
