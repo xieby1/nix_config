@@ -4,9 +4,12 @@ let
     owner = "thiagokokada";
     repo = "nix-alien";
     # master needs to build python3, so pin to a stable version
-    rev = "2820f11c5a3e0ccae4fa705cc9898084ec1f523c";
-    sha256 = "141da8c4zqp52imwyffs0hnx1b71qfic8nah6djqdh154693fw7z";
-  }) {};
+    rev = "faeda0a028eca556dec136631f2e905fd7a46bb7";
+    sha256 = "0z2p9jj4h2a688vw5g0zqy0380qj3xb9zmxq9wyisrx86hnnsaq0";
+  }) {
+    inherit pkgs;
+    inherit (pkgs) poetry2nix;
+  };
 in
 {
   imports = [
