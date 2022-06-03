@@ -1,14 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
-let
-  pkgsUnstable = import (pkgs.fetchFromGitHub {
-    owner = "NixOS";
-    repo = "nixpkgs";
-    rev = "236cc2971ac72acd90f0ae3a797f9f83098b17ec";
-    sha256 = "06ydhcmzrzbvs675ycv7whhp3sjg3d76pdp27jlhx8vw9izp0ngi";
-  }) {};
-in
 {
   imports = [
     ./gsettings.nix
@@ -20,9 +12,6 @@ in
   ++ (with pkgs.gnomeExtensions; [
     dash-to-dock
     system-monitor
-    # current stable pkgs not support vertical-overview version 9
-    # TODO: remove this after stable pkgs supports it.
-    pkgsUnstable.gnomeExtensions.vertical-overview
     unite
     clipboard-indicator
     bing-wallpaper-changer
@@ -63,7 +52,6 @@ in
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
         "system-monitor@paradoxxx.zero.gmail.com"
-        "vertical-overview@RensAlthuis.github.com"
         "unite@hardpixel.eu"
       ];
 
@@ -87,9 +75,6 @@ in
       net-style="digit";
       swap-display=false;
       swap-style="digit";
-    };
-    "org/gnome/shell/extensions/vertical-overview" = {
-      override-dash=false;
     };
     "org/gnome/shell/extensions/gtile" = {
       animation=true;
@@ -190,10 +175,8 @@ in
       switch-windows-backward=["<Shift><Alt>Tab"];
       maximize=["<Super>Up"];
       unmaximize=["<Super>Down"];
-      move-to-workspace-up=["<Primary>Page_Up"];
-      move-to-workspace-down=["<Primary>Page_Down"];
-      switch-to-workspace-up=["<Primary><Alt>Up"];
-      switch-to-workspace-down=["<Primary><Alt>Down"];
+      move-to-workspace-left=["<Control>Home"];
+      move-to-workspace-right=["<Control>End"];
     };
     "org/gnome/shell/extensions/clipboard-indicator" =
     {
