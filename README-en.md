@@ -11,7 +11,7 @@ If you not only want to install Nix/NixOS, but also want to know more about Nix/
 welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](https://xieby1.github.io/Distro/Nix/README-en.html).
 
 * Use nix expression,not nix flakes
-* Use NixOS stable channel (current version 21.11),not unstable channel
+* Use NixOS stable channel (current version 22.05),not unstable channel
 * Ubuntu-based usage habits
 * Multiplatform
   * NixOS: QEMU✅, NixOS single-boot system✅, NixOS+Windows dual-boot system✅
@@ -184,10 +184,10 @@ Noted: `sudo` may be omitted in Nix.
 
 ```bash
 # (For users in mainland China) replace with Tsinghua tuna mirror
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos # for NixOS
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixpkgs # for Nix
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.05 nixos # for NixOS
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.05 nixpkgs # for Nix
 # Add home manager channel
-sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
 sudo nix-channel --update
 ```
 

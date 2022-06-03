@@ -11,7 +11,7 @@
 欢迎看看我的关于Nix/NixOS的博客[xieby1.github.io/Distro/Nix/](https://xieby1.github.io/Distro/Nix/)。
 
 * 使用nix expression，而非nix flakes
-* 使用NixOS稳定源（目前版本21.11），而非非稳定源（unstable）
+* 使用NixOS稳定源（目前版本22.05），而非非稳定源（unstable）
 * 基于ubuntu的使用习惯
 * 多平台
   * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
@@ -184,10 +184,10 @@ vim /etc/nixos/configuration.nix
 
 ```bash
 # 替换为清华的最新稳定源
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixos # 对于NixOS
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-21.11 nixpkgs # 对于Nix
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.05 nixos # 对于NixOS
+sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.05 nixpkgs # 对于Nix
 # 添加home manager源
-sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-21.11.tar.gz home-manager
+sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
 sudo nix-channel --update
 ```
 
