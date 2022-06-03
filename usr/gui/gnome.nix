@@ -10,7 +10,6 @@
     gnome.gnome-sound-recorder
   ])
   ++ (with pkgs.gnomeExtensions; [
-    dash-to-dock
     system-monitor
     unite
     clipboard-indicator
@@ -48,7 +47,6 @@
       enabled-extensions = [
         "BingWallpaper@ineffable-gmail.com"
         "clipboard-indicator@tudmotu.com"
-        "dash-to-dock@micxgx.gmail.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
         "system-monitor@paradoxxx.zero.gmail.com"
