@@ -87,6 +87,7 @@ in
       vim-markdown # format table
       tabular
       vim-hexokinase
+      vim-plugin-AnsiEsc
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
