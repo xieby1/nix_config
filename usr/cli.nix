@@ -20,6 +20,7 @@ in
     # tools
     parallel
     comma
+    nix-index
     ## repo
     gitui
     mr
