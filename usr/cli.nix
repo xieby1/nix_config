@@ -184,4 +184,12 @@ in
     source = ./cli/gdbinit;
     target = ".gdbinit.d/init";
   };
+
+  home.file.nix_index_database = {
+    source = pkgs.fetchurl {
+      url = "https://github.com/Mic92/nix-index-database/releases/download/2022-06-05/index-x86_64-linux";
+      sha256 = "0zz47as14lsj930jm9gplsngxr5d92fsg7fw1qxk0lgq7phawj5m";
+    };
+    target = ".cache/nix-index/files";
+  };
 }
