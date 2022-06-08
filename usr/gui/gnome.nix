@@ -152,7 +152,7 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding="<Alt>c";
-      command="gnome-terminal -- vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
+      command="~/Gist/script/bash/singleton.sh my_cheatsheet.mkd gnome-terminal -- vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
       name="edit cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
