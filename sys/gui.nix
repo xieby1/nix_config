@@ -54,6 +54,26 @@
         "FantasqueSansMono"
       ];
     })
+    # refs to pkgs/data/fonts/roboto-mono/default.nix
+    (stdenv.mkDerivation {
+      name = "my_fonts";
+      srcs = [(fetchurl {
+        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.235.2/LXGWWenKai-Bold.ttf";
+        sha256 = "1v7bczjnadzf2s8q88rm0pf66kaymq3drsll4iy3i5axpbimap18";
+      }) (fetchurl {
+        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.235.2/LXGWWenKai-Regular.ttf";
+        sha256 = "06kpqgar0vvsng4gzsnj1app1vkv7v07yqgi5mfwzxch0di5qk3v";
+      })];
+      sourceRoot = "./";
+      unpackCmd = ''
+        ttfName=$(basename $(stripHash $curSrc))
+        cp $curSrc ./$ttfName
+      '';
+      installPhase = ''
+        mkdir -p $out/share/fonts/truetype
+        cp -a *.ttf $out/share/fonts/truetype/
+      '';
+    })
   ];
 
 }
