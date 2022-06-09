@@ -80,3 +80,10 @@ matches:
       :::: {.col}
       ::::
       :::
+  - trigger: "'mr" # markdown reference
+    replace: |
+      :::{style="zoom: 50%; text-align:left;"}
+      Refs:
+
+      1.
+      :::
