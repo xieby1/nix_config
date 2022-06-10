@@ -79,4 +79,9 @@ in
       exec = "qutebrowser http://clash.razord.top";
     };
   };
+
+  home.file.kde_connect_indicator = {
+    source = "${pkgs.kdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
+    target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
+  };
 }
