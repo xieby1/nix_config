@@ -53,6 +53,7 @@ in
     xdotool
 
     # programming
+    universal-ctags
     cscope
     clang-tools
     cmake
