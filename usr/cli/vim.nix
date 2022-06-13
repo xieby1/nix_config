@@ -52,6 +52,23 @@ let
       }
     '';
   };
+  my-nvim-config-local = {
+    plugin = pkgs.vimUtils.buildVimPluginFrom2Nix {
+      name = "nvim-config-local";
+      src = pkgs.fetchFromGitHub {
+        owner = "klen";
+        repo = "nvim-config-local";
+        rev = "af59d6344e555917209f7304709bbff7cea9b5cc";
+        sha256 = "1wg6g4rqpj12sjj0g1qxqgcpkzr7x82lk90lf6qczim97r3lj9hy";
+      };
+    };
+    type = "lua";
+    config = ''
+      require('config-local').setup {
+        lookup_parents = true,
+      }
+    '';
+  };
 in
 
 {
@@ -88,6 +105,7 @@ in
       tabular
       vim-hexokinase
       vim-plugin-AnsiEsc
+      my-nvim-config-local
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
