@@ -46,6 +46,8 @@
   # https://github.com/liuchengxu/space-vim/wiki/tips#programming-fonts
   # available nerd fonts: nixpkgs/pkgs/data/fonts/nerdfonts/shas.nix
   fonts.fonts = with pkgs; [
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     (nerdfonts.override {
       fonts = [
         "SourceCodePro"
