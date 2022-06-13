@@ -28,16 +28,17 @@ let
       sha256 = "0yn985pj8dn0bzalwfc8ssx62m01307ic1ypymil311m4gzlfy60";
     };
   };
-  myTreesitters = with pkgs.vimPlugins; {
+  # pluginWithConfigType is not displayed in `man home-configuration.nix`
+  # see its avaiable config in `home-manager/modules/programs/neovim.nix`
+  myTreesitters = {
     # TODO: declarative way to add nvim-treesitter's plugins
     # https://nixos.wiki/wiki/Tree_sitters
     # (
     #   nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars)
     # )
-    plugin = nvim-treesitter;
+    plugin = pkgs.vimPlugins.nvim-treesitter;
+    type = "lua";
     config = ''
-      packadd! nvim-treesitter
-      lua << EOF
       require 'nvim-treesitter.configs'.setup {
         ensure_installed = {"c", "cpp"},
         sync_install = false,
@@ -49,7 +50,6 @@ let
           },
         },
       }
-      EOF
     '';
   };
 in
