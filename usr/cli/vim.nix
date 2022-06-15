@@ -40,7 +40,7 @@ let
     type = "lua";
     config = ''
       require 'nvim-treesitter.configs'.setup {
-        ensure_installed = {"c", "cpp"},
+        ensure_installed = {"c", "cpp", "python"},
         sync_install = false,
         highlight = {
           enable = true,
