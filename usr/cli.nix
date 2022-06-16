@@ -82,6 +82,7 @@ in
     libxml2
     ## bash
     bc
+    hstr
     ## node
     nodePackages.node2nix
 
