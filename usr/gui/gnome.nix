@@ -138,6 +138,7 @@
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
         "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
+        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
       ];
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
@@ -163,6 +164,10 @@
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
       binding="<Alt>j"; command="~/Gist/script/bash/quteapp.sh 日语词典 https://dict.hjenglish.com/jp/";
       name="日语词典";
+    };
+    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
+      binding="<Alt>k"; command="~/Gist/script/bash/singleton.sh kdeconnect.app kdeconnect-app";
+      name="KDE Connect";
     };
 
     # predefined keyboard shortcuts
