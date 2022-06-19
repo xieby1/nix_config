@@ -88,27 +88,8 @@ export HISTCONTROL=ignorespace   # leading space hides commands from history
 export HISTFILESIZE=10000        # increase history file size (default is 500)
 export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
 # ensure synchronization between bash memory and history file
-export PROMPT_COMMAND="history -a; history -n; ${PROMPT_COMMAND}"
+export PROMPT_COMMAND="history -a;"
 # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
 # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
 if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
-
-# PROMPT_COMMAND tmux guard
-# 1.
-## Home-manager `programs.bash.enableVteIntegration` controls __vte_prompt_command.
-## gnome-terminal.nix default enableVteIntegration.
-## Therefore, home-manager will append __vte_prompt_command related commands to ~/.bashrc
-# 2.
-## __vte_prompt_command is not defined in tmux, while is defined in real terminal.
-## hstr configuration make PROMPT_COMMAND will certainly contain __vte_prompt_command.
-# 3.
-## So I write these two dummy function to protect PROMPT_COMMAND.
-## In real terminal, dummy __vte_prompt_command will be override by real one.
-## In tmux, dummy dummy one prevents `__vte_prompt_command: command not found` error.
-__hm_vte_prompt_command() {
-    true
-}
-__vte_prompt_command() {
-    true
-}
