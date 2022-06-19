@@ -1,6 +1,13 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   feishu = pkgs.callPackage ./gui/feishu.nix {};
+  mykdeconnect = pkgs.kdeconnect.overrideAttrs (old: {
+    patches = [( pkgs.fetchpatch {
+      url = "https://raw.githubusercontent.com/xieby1/kdeconnect-kde-enhanced/4610431b932b2fab05d7e0fc55e7306dc7ff0910/diff.patch";
+      sha256 = "1d3ycpaaglr42bndajz1sxcavhm4p5k9n1rd5isjkim1w7ir8z56";
+    })];
+    # cmakeFlags = "-DCMAKE_BUILD_TYPE=Debug -DQT_FORCE_STDERR_LOGGING=1";
+  });
 in
 {
   imports = [
@@ -12,7 +19,7 @@ in
     # browser
     google-chrome
     # network
-    kdeconnect
+    mykdeconnect
     feishu
     # text
     #wpsoffice
@@ -81,7 +88,7 @@ in
   };
 
   home.file.kde_connect_indicator = {
-    source = "${pkgs.kdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
+    source = "${mykdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
     target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
   };
 }
