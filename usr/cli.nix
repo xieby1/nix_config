@@ -58,6 +58,8 @@ in
     clang-tools
     cmake
     capstone
+    scc
+    sloccount
     ## python
     ( python3.withPackages ( p: with p; [
       ipython
