@@ -110,6 +110,7 @@ in
       vim-hexokinase
       vim-plugin-AnsiEsc
       my-nvim-config-local
+      indentLine
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
