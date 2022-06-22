@@ -321,3 +321,9 @@ let g:vim_markdown_no_default_key_mappings = 1
 " hexokinase
 let g:Hexokinase_highlighters = ['backgroundfull']
 nnoremap <leader>c :set termguicolors!<CR>
+
+" highlight
+augroup HiglightTODO
+    autocmd!
+    autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
+augroup END
