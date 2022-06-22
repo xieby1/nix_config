@@ -99,9 +99,12 @@ let g:gitgutter_sign_modified = '~'
 let g:gitgutter_sign_removed = '-'
 nnoremap <Leader>g :GitGutterLineHighlightsToggle<CR>:GitGutterSignsToggle<CR>
 
+" filetype
 augroup filetype
     " detect LLVM IR file
     au! BufRead,BufNewFile *.ll     set filetype=llvm
+    " cpp " from gem5
+    au! BufRead,BufNewFile *.hh.inc,*.cc.inc set filetype=cpp
 augroup END
 
 " cscope
