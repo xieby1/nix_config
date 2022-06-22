@@ -41,9 +41,18 @@ function! MyFoldText()
     let str = indentation . startLineText . " …… " . endLineText . spaces
     return str
 endfunction
-" Custom display for text when folding
+"" toggle foldmethod between manual and indent
+set foldmethod=indent
+:function ToggleFoldmethod()
+: if (&foldmethod == "manual")
+:   set foldmethod=indent
+: else
+:   set foldmethod=manual
+: endif
+:endfunction
+nnoremap <Leader>z :call ToggleFoldmethod()<CR>
+"" Custom display for text when folding
 set foldtext=MyFoldText()
-set foldmethod=manual
 """ Set the foldlevel to a high setting,
 """ files are always loaded with opened folds.
 set foldlevel=20
