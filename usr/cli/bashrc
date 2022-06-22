@@ -11,6 +11,10 @@ qemu*)
     PS1+="(qemu)"
 ;;
 esac
+if [[ -n "$IN_NIX_SHELL" ]]
+then
+    PS1+="(nix-shell-${IN_NIX_SHELL})"
+fi
 if [[ $MACHINE == aarch64 ]]
 then
 PS1+="${u_green}\u${u_white}:"
