@@ -83,6 +83,7 @@ set backspace=indent,eol,start
 nnoremap <F9> :call ToggleWrap()<CR>
 set updatetime=400
 "" highlight current line
+set cursorlineopt=number
 augroup CursorLine
   au!
   au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
