@@ -82,6 +82,12 @@ set backspace=indent,eol,start
 :endfunction
 nnoremap <F9> :call ToggleWrap()<CR>
 set updatetime=400
+"" highlight current line
+augroup CursorLine
+  au!
+  au VimEnter,WinEnter,BufWinEnter * setlocal cursorline
+  au WinLeave * setlocal nocursorline
+augroup END
 
 " vim-mark
 "" clear highlight created by vim-mark
