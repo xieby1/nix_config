@@ -2,10 +2,6 @@
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
 {
-  imports = [
-    ./gsettings.nix
-  ];
-
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
   ])
@@ -17,26 +13,6 @@
     gtile
     hide-top-bar
   ]);
-
-  # gnome-terminal
-  ## dconf dump /org/gnome/terminal/legacy/profiles:/
-  programs.gnome-terminal.enable = true;
-  programs.gnome-terminal.profile = {
-    "b1dcc9dd-5262-4d8d-a863-c897e6d979b9" = {
-      visibleName = "xieby1";
-      default = true;
-      font = "Monospace 18";
-      showScrollbar = false;
-      # Tango
-      colors = {
-        foregroundColor = "rgb(211,215,207)";
-        backgroundColor = "rgb(46,52,54)";
-        palette = [
-          "rgb(46,52,54)" "rgb(204,0,0)" "rgb(78,154,6)" "rgb(196,160,0)" "rgb(52,101,164)" "rgb(117,80,123)" "rgb(6,152,154)" "rgb(211,215,207)" "rgb(85,87,83)" "rgb(239,41,41)" "rgb(138,226,52)" "rgb(252,233,79)" "rgb(114,159,207)" "rgb(173,127,168)" "rgb(52,226,226)" "rgb(238,238,236)"
-        ];
-      };
-    };
-  };
 
   # Setting: `gsettings set <key(dot)> <value>`
   # Getting: `dconf dump /<key(path)>`
@@ -143,7 +119,10 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding="<Primary><Alt>t";
-      command="gnome-terminal";
+      # use tango color black       white        black, new tab pos
+      command=''
+        tabbed -c -t "#2e3436" -o "#d3d7cf" -O "#2e3436" -p s+1 alacritty --embed
+      '';
       name="terminal";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
@@ -153,7 +132,7 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding="<Alt>c";
-      command="~/Gist/script/bash/singleton.sh my_cheatsheet.mkd gnome-terminal -- vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
+      command="~/Gist/script/bash/singleton.sh my_cheatsheet.mkd alacritty -e vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
       name="edit cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
@@ -194,13 +173,6 @@
     "org/gnome/desktop/interface" = {
       enable-hot-corners=false;
       show-battery-percentage=true;
-    };
-  };
-
-  gsettings = {
-    "org.gnome.Terminal.Legacy.Settings" = {
-      "headerbar" = "false";
-      "default-show-menubar" = "false";
     };
   };
 }
