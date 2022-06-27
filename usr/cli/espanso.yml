@@ -19,6 +19,12 @@ matches:
         params:
           format: "%Y.%m.%d"
 
+  - trigger: "'hd" # html detail
+    replace: |
+      <details>
+      <summary></summary>
+      </details>
+
   - trigger: "'st"
     replace: |
       "{{today}}$|$+" -> "{{today}}-" -> "{{today}}+";
