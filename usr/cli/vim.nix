@@ -111,6 +111,16 @@ in
       vim-plugin-AnsiEsc
       my-nvim-config-local
       lightspeed-nvim
+      {
+        plugin = indentLine;
+        config = ''
+          " prevent conceal vim-markdown ```
+          "" https://github.com/Yggdroot/indentLine
+          "" Disabling conceal for JSON and Markdown without disabling indentLine plugin
+          let g:vim_json_conceal = 0
+          let g:vim_markdown_conceal = 0
+        '';
+      }
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
