@@ -38,6 +38,7 @@ in
     zotero
     # entertainment
     mgba
+    dgen-sdl # sega md emulator
     ## icon miss?
     #(retroarch.override {
     #  cores = with libretro; [
