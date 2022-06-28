@@ -24,6 +24,15 @@
     createHome = true;
     hashedPassword = "$6$Y4KJxhdaJTT$RSolbCpaUKK2UW1cdnuH.8n1Ky9p0Lnx0MP36BxGX9Q2AeVMjCp.bZOsZ11w689je/785TFRQoVgicMiOfA9B.";
     extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
+    openssh.authorizedKeys.keyFiles = [] ++ (
+      if builtins.pathExists /home/xieby1/Gist/Vault/y50_70.pub
+      then [/home/xieby1/Gist/Vault/y50_70.pub]
+      else []
+    ) ++ (
+      if builtins.pathExists /home/xieby1/Gist/Vault/yoga14s.pub
+      then [/home/xieby1/Gist/Vault/yoga14s.pub]
+      else []
+    );
   };
 
 }
