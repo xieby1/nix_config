@@ -30,5 +30,10 @@ cursor:
 font:
   size: 16
 
+key_bindings:
+  # What is the difference of CreateNewWindow SpawnNewInstance?
+  - {key: N, mods: Control, action: CreateNewWindow}
+  - {key: T, mods: Control|Shift, action: SpawnNewInstance}
+
 # shell:
 #   program: tmux
