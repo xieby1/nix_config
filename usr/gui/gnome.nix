@@ -120,9 +120,10 @@
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
       binding="<Primary><Alt>t";
       # use tango color black       white        black, new tab pos
-      command=''
-        tabbed -c -t "#2e3436" -o "#d3d7cf" -O "#2e3436" -p s+1 alacritty --embed
-      '';
+      # command=''
+      #   tabbed -c -t "#2e3436" -o "#d3d7cf" -O "#2e3436" -p s+1 alacritty --embed
+      # '';
+      command = "kitty";
       name="terminal";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
@@ -132,7 +133,7 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding="<Alt>c";
-      command="~/Gist/script/bash/singleton.sh my_cheatsheet.mkd alacritty -e vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
+      command="~/Gist/script/bash/singleton.sh my_cheatsheet.mkd kitty vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
       name="edit cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {

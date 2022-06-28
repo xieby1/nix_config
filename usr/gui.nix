@@ -13,6 +13,7 @@ in
   imports = [
     ./gui/gnome.nix
     ./gui/mime.nix
+    ./gui/terminal.nix
   ];
 
   home.packages = with pkgs; [
@@ -48,7 +49,6 @@ in
     # runXonY
     wineWowPackages.stable
     winetricks
-    tabbed
   ];
 
   xdg.desktopEntries = {
@@ -92,12 +92,6 @@ in
   home.file.kde_connect_indicator = {
     source = "${mykdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
     target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
-  };
-
-  programs.alacritty.enable = true;
-  home.file.alacritty = {
-    source = ./gui/alacritty.yml;
-    target = ".config/alacritty/alacritty.yml";
   };
 
   # espanso
