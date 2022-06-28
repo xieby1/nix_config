@@ -26,6 +26,7 @@ in
     libreoffice
     obsidian
     meld
+    espanso
     # draw
     drawio
     #aseprite-unfree
@@ -97,5 +98,24 @@ in
   home.file.alacritty = {
     source = ./gui/alacritty.yml;
     target = ".config/alacritty/alacritty.yml";
+  };
+
+  # espanso
+  home.file.espanso = {
+    source = ./gui/espanso.yml;
+    target = ".config/espanso/default.yml";
+  };
+
+  systemd.user.services.espanso = {
+    Unit = {
+      Description = "Espanso daemon";
+    };
+    Install = {
+      # services.espanso.enable uses "default.target" which not work
+      WantedBy = [ "graphical-session.target" ];
+    };
+    Service = {
+      ExecStart = "${pkgs.espanso}/bin/espanso daemon";
+    };
   };
 }

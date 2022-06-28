@@ -32,7 +32,6 @@ in
     ## text
     pandoc
     mdbook
-    espanso
     ## compile
     gnumake
     makefile2graph
@@ -131,25 +130,6 @@ in
     mr = "mr -d ~"; # mr status not work in non-home dir
   };
   programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc;
-
-  # espanso
-  home.file.espanso = {
-    source = ./cli/espanso.yml;
-    target = ".config/espanso/user/espanso.yml";
-  };
-
-  systemd.user.services.espanso = {
-    Unit = {
-      Description = "Espanso daemon";
-    };
-    Install = {
-      # services.espanso.enable uses "default.target" which not work
-      WantedBy = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.espanso}/bin/espanso daemon";
-    };
-  };
 
   # tmux
   home.file.tmux = {

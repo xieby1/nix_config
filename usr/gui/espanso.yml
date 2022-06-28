@@ -1,5 +1,5 @@
-name: xieby1
-parent: default
+# to work with alacritty
+backend: Clipboard
 
 matches:
   # not work?
