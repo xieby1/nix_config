@@ -51,6 +51,10 @@
     };
     settings = {
       cursor_blink_interval = "0.8";
+      remember_window_size = "no";
+      initial_window_width = "80c";
+      initial_window_height = "20c";
+
       # tab
       tab_bar_edge = "top";
       tab_bar_style = "separator";
@@ -58,6 +62,7 @@
       active_tab_background   = "#2e3436";
       inactive_tab_foreground = "#2e3436";
       inactive_tab_background = "#d3d7cf";
+
       # tango dark
       background              = "#2e3436";
       foreground              = "#d3d7cf";
@@ -78,10 +83,17 @@
       color14                 = "#34e2e2";
       color7                  = "#d3d7cf";
       color15                 = "#eeeeec";
-      selection_foreground    = "#2e3436";
-      selection_background    = "#d3d7cf";
+      # selection_foreground    = "#2e3436";
+      # selection_background    = "#d3d7cf";
     };
     extraConfig = ''
+      map ctrl+equal change_font_size all +2.0
+      map ctrl+plus change_font_size all +2.0
+      map ctrl+kp_add change_font_size all +2.0
+      map ctrl+minus change_font_size all -2.0
+      map ctrl+kp_subtract change_font_size all -2.0
+      map ctrl+0 change_font_size all 0
+
       map alt+1 goto_tab 1
       map alt+2 goto_tab 2
       map alt+3 goto_tab 3
@@ -92,7 +104,9 @@
       map alt+8 goto_tab 8
       map alt+9 goto_tab 9
       map alt+0 goto_tab 99
+
       map ctrl+shift+t new_tab_with_cwd
+      map ctrl+n new_os_window_with_cwd
     '';
   };
 }
