@@ -107,6 +107,22 @@
 
       map ctrl+shift+t new_tab_with_cwd
       map ctrl+n new_os_window_with_cwd
+      map ctrl+shift+f launch --location=hsplit --allow-remote-control kitty +kitten search.py @active-kitty-window-id
     '';
+  };
+
+  home.file.kitty_search = {
+    source = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/8cc3237e6a995b6e7e101cba667fcda5439d96e2/search.py";
+      sha256 = "15z86vggplw0xlbmcsbfg2jlg19k21xn5ilxfv0afnd6q03lcbls";
+    };
+    target = ".config/kitty/search.py";
+  };
+  home.file.kitty_scrool_mark = {
+    source = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/8cc3237e6a995b6e7e101cba667fcda5439d96e2/scroll_mark.py";
+      sha256 = "1ylif0kknfv1z4684mbligwbxclwa256f36l1pr2a2hfnbl9zf01";
+    };
+    target = ".config/kitty/scroll_mark.py";
   };
 }
