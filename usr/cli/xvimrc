@@ -52,7 +52,7 @@ set foldmethod=indent
 :   set foldmethod=manual
 : endif
 :endfunction
-nnoremap <Leader>z :call ToggleFoldmethod()<CR>
+nnoremap <Leader>z :call ToggleFoldmethod()<CR>:echo &foldmethod<CR>
 "" Custom display for text when folding
 set foldtext=MyFoldText()
 """ Set the foldlevel to a high setting,
