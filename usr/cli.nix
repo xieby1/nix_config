@@ -44,6 +44,7 @@ in
     tree
     file
     fzf
+    ranger
     ## network
     frp
     wget
@@ -176,5 +177,10 @@ in
       sha256 = "0zz47as14lsj930jm9gplsngxr5d92fsg7fw1qxk0lgq7phawj5m";
     };
     target = ".cache/nix-index/files";
+  };
+
+  home.file.ranger_conf = {
+    source = ./cli/ranger.conf;
+    target = ".config/ranger/rc.conf";
   };
 }
