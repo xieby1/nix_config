@@ -57,7 +57,6 @@ if [[ ${KERNEL_RELEASE} == *"microsoft"* ]]
 then
     hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
     export HTTP_PROXY="http://${hostip}:8889"
-    source ~/.nix-profile/etc/profile.d/nix.sh
 fi
 export HTTPS_PROXY="${HTTP_PROXY}"
 export FTP_PROXY="${HTTP_PROXY}"
@@ -100,3 +99,8 @@ if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
 
 # user nix config setting
 export NIX_USER_CONF_FILES=~/.config/nixpkgs/nix/nix.conf
+
+if [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]]
+then
+    source ~/.nix-profile/etc/profile.d/nix.sh
+fi
