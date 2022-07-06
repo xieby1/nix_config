@@ -49,6 +49,8 @@ in
     frp
     wget
     clash
+    lsof
+    bind.dnsutils # nslookup
     ## x11
     xdotool
 
