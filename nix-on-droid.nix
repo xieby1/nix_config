@@ -39,6 +39,10 @@ in
     gawk
     openssh
     nettools
+    (lib.setPrio # make bintools less prior
+      (busybox.meta.priority + 10)
+      busybox
+    )
   ];
 
   # Backup etc files instead of failing to activate generation if a file already exists in /etc
