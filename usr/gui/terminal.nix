@@ -108,6 +108,9 @@
       map ctrl+shift+t new_tab_with_cwd
       map ctrl+shift+n new_os_window_with_cwd
       map ctrl+shift+f launch --location=hsplit --allow-remote-control kitty +kitten search.py @active-kitty-window-id
+
+      # disable opening of URLs with a plain click
+      mouse_map left click ungrabbed no_op
     '';
   };
 
