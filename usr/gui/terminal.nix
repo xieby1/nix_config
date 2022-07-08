@@ -106,7 +106,7 @@
       map alt+0 goto_tab 99
 
       map ctrl+shift+t new_tab_with_cwd
-      map ctrl+n new_os_window_with_cwd
+      map ctrl+shift+n new_os_window_with_cwd
       map ctrl+shift+f launch --location=hsplit --allow-remote-control kitty +kitten search.py @active-kitty-window-id
     '';
   };
