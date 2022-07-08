@@ -51,6 +51,7 @@ in
     clash
     lsof
     bind.dnsutils # nslookup
+    tailscale
     ## x11
     xdotool
 
@@ -184,5 +185,25 @@ in
   home.file.ranger_conf = {
     source = ./cli/ranger.conf;
     target = ".config/ranger/rc.conf";
+  };
+
+  systemd.user.services.tailscaled = {
+    Unit = {
+      Description = "Auto start tailscaled userspace network";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+    Service = {
+      # Environment = [
+      #   "HTTP_PROXY"
+      # ];
+      ExecStart = ''
+        ${pkgs.tailscale.outPath}/bin/tailscaled \
+          --tun userspace-networking \
+          --outbound-http-proxy-listen=localhost:1055 \
+          --socket=/tmp/tailscaled.sock
+      '';
+    };
   };
 }

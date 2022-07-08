@@ -18,8 +18,6 @@
 
   # ssh
   services.openssh.enable = true;
-  # tailscale client service
-  services.tailscale.enable = true;
 
   # syncthing
   services.syncthing = {

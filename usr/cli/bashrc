@@ -73,6 +73,7 @@ alias ls="ls --color"
 ## see nvim `:h :Man`
 ## nvim manpage huge mange is SLOW! E.g. man configuration.nix
 alias nman="env MANPAGER='nvim +Man!' man"
+alias tailscale="tailscale --socket /tmp/tailscaled.sock"
 
 # nixos obsidian
 export NIXPKGS_ALLOW_INSECURE=1
