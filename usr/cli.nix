@@ -87,7 +87,9 @@ in
     libxml2
     ## bash
     bc
-    hstr
+  ] ++ (if builtins.currentSystem == "x86_64-linux"
+      then [hstr] else []
+  ) ++ [
     ## node
     nodePackages.node2nix
 

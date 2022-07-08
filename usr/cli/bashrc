@@ -84,6 +84,8 @@ then
     source ~/Gist/Config/bashrc
 fi
 
+if [[ $MACHINE != aarch64 ]]
+then
 # HSTR configuration - add this to ~/.bashrc
 alias hh=hstr                    # hh to be alias for hstr
 export HSTR_CONFIG=hicolor       # get more colors
@@ -97,6 +99,7 @@ export PROMPT_COMMAND="history -a;"
 if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
 # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
 if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+fi
 
 # user nix config setting
 export NIX_USER_CONF_FILES=~/.config/nixpkgs/nix/nix.conf
