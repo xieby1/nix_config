@@ -156,9 +156,9 @@ in
     Unit = {
       Description = "Auto start clash";
     };
-    Install = {
-      WantedBy = [ "graphical-session.target" ];
-    };
+    # Install = {
+    #   WantedBy = [ "graphical-session.target" ];
+    # };
     Service = {
       ExecStart = "${pkgs.clash.outPath}/bin/clash";
     };
@@ -194,9 +194,9 @@ in
     Unit = {
       Description = "Auto start tailscaled userspace network";
     };
-    Install = {
-      WantedBy = [ "default.target" ];
-    };
+    # Install = {
+    #   WantedBy = [ "default.target" ];
+    # };
     Service = {
       Environment = [
         "HTTPS_PROXY=http://127.0.0.1:8889"
