@@ -190,16 +190,7 @@ in
     target = ".config/ranger/rc.conf";
   };
 
-  systemd.user.services.tailscaled = let
-    tailscaled_with_env = builtins.toFile "tailscaled_with_env.sh" ''
-      source ~/.bashrc
-      tailscaled \
-        --tun userspace-networking \
-        --outbound-http-proxy-listen=localhost:1055 \
-        --socket=/tmp/tailscaled.sock
-    '';
-  in
-  {
+  systemd.user.services.tailscaled = {
     Unit = {
       Description = "Auto start tailscaled userspace network";
     };
@@ -207,7 +198,16 @@ in
       WantedBy = [ "default.target" ];
     };
     Service = {
-      ExecStart = "${pkgs.bash.outPath}/bin/bash ${tailscaled_with_env}";
+      Environment = [
+        "HTTPS_PROXY=http://127.0.0.1:8889"
+        "HTTP_PROXY=http://127.0.0.1:8889"
+        "https_proxy=http://127.0.0.1:8889"
+        "http_proxy=http://127.0.0.1:8889"
+      ];
+      ExecStart = "${pkgs.tailscale}/bin/tailscaled" +
+        " --tun userspace-networking" +
+        " --outbound-http-proxy-listen=localhost:1055" +
+        " --socket=/tmp/tailscaled.sock";
     };
   };
 }
