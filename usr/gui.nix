@@ -32,6 +32,7 @@ in
     drawio
     #aseprite-unfree
     inkscape
+    gimp
     # viewer
     xdot
     # management
