@@ -21,6 +21,7 @@ in
     parallel
     comma
     nix-index
+    xclip
     ## repo
     gitui
     mr
