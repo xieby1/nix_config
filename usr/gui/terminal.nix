@@ -60,6 +60,7 @@
       tab_bar_style = "separator";
       active_tab_foreground   = "#d3d7cf";
       active_tab_background   = "#2e3436";
+      active_tab_title_template = "🐱{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title}";
       inactive_tab_foreground = "#2e3436";
       inactive_tab_background = "#d3d7cf";
 
