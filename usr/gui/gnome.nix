@@ -103,7 +103,7 @@
     };
     "org/gnome/shell/extensions/bingwallpaper" = {
       market="zh-CN";
-      delete-previous=true;
+      delete-previous=false;
     };
 
     # customized keyboard shortcuts
