@@ -39,6 +39,7 @@ in
     ## draw
     graphviz
     gnuclad
+    imagemagick
     ## manual
     tldr
     ## file system
