@@ -2,6 +2,7 @@
 let
   feishu = pkgs.callPackage ./gui/feishu.nix {};
   imhex = pkgs.callPackage ./gui/imhex.nix {};
+  xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
   mykdeconnect = pkgs.kdeconnect.overrideAttrs (old: {
     patches = [( pkgs.fetchpatch {
       url = "https://raw.githubusercontent.com/xieby1/kdeconnect-kde-enhanced/4610431b932b2fab05d7e0fc55e7306dc7ff0910/diff.patch";
@@ -37,6 +38,7 @@ in
     # viewer
     xdot
     imhex
+    xelfviewer
     # management
     zotero
     # entertainment
