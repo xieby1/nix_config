@@ -77,5 +77,7 @@
       '';
     })
   ];
+  # enable fontDir /run/current-system/sw/share/X11/fonts
+  fonts.fontDir.enable = true;
 
 }
