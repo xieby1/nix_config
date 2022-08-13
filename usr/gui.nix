@@ -1,6 +1,7 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   feishu = pkgs.callPackage ./gui/feishu.nix {};
+  imhex = pkgs.callPackage ./gui/imhex.nix {};
   mykdeconnect = pkgs.kdeconnect.overrideAttrs (old: {
     patches = [( pkgs.fetchpatch {
       url = "https://raw.githubusercontent.com/xieby1/kdeconnect-kde-enhanced/4610431b932b2fab05d7e0fc55e7306dc7ff0910/diff.patch";
@@ -35,6 +36,7 @@ in
     gimp
     # viewer
     xdot
+    imhex
     # management
     zotero
     # entertainment
