@@ -36,6 +36,7 @@ in
     ## compile
     gnumake
     makefile2graph
+    remake
     ## draw
     graphviz
     gnuclad
