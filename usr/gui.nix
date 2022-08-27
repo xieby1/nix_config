@@ -39,6 +39,7 @@ in
     xdot
     imhex
     xelfviewer
+    vlc
     # management
     zotero
     # entertainment
