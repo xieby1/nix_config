@@ -36,6 +36,8 @@ let
     # (
     #   nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars)
     # )
+    # Available languages see:
+    #   https://github.com/nvim-treesitter/nvim-treesitter
     plugin = pkgs.vimPlugins.nvim-treesitter;
     type = "lua";
     config = ''
@@ -105,6 +107,8 @@ in
       #     https://nixos.wiki/wiki/Vim
       #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
       coc-pyright
+      # javscript lsp support
+      coc-tsserver
       vim-markdown # format table
       tabular
       vim-hexokinase
