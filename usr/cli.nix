@@ -41,6 +41,7 @@ in
     graphviz
     gnuclad
     imagemagick
+    figlet
     ## manual
     tldr
     ## file system
