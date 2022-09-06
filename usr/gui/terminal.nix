@@ -27,6 +27,9 @@
   #     * Esay configurable
   #   * Cons
   #     * Icon display incorrectly (e.g. Vim-vista)
+  # * hyper
+  #   * Cons
+  #     * scroll speed is too fast!
 
   ################## Alacritty ##################
   home.packages = with pkgs; [
