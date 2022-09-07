@@ -48,6 +48,7 @@
   fonts.fonts = with pkgs; [
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
+    noto-fonts-emoji
     (nerdfonts.override {
       fonts = [
         "SourceCodePro"
@@ -79,6 +80,13 @@
   ];
   # enable fontDir /run/current-system/sw/share/X11/fonts
   fonts.fontDir.enable = true;
+  fonts.fontconfig.defaultFonts = {
+    monospace = [
+      "DejaVu Sans Mono"
+      "Noto Color Emoji"
+      "Noto Emoji"
+    ];
+  };
 
   services.gpm.enable = true;
 }
