@@ -97,7 +97,10 @@ in
   ] ++ (if builtins.currentSystem == "x86_64-linux"
       then [hstr] else []
   ) ++ [
-    ## node
+    ## javascript
+    nodePackages.typescript
+    ### node
+    nodejs
     nodePackages.node2nix
 
     # runXonY
