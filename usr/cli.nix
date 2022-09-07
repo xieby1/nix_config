@@ -102,6 +102,8 @@ in
     ### node
     nodejs
     nodePackages.node2nix
+    ## java
+    openjdk
 
     # runXonY
     debootstrap
