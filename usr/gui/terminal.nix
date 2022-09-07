@@ -33,7 +33,7 @@
 
   ################## Alacritty ##################
   home.packages = with pkgs; [
-    tabbed
+    (tabbed.overrideAttrs (old: {patches = [./tabbed_alt.patch];}))
   ];
 
   programs.alacritty.enable = true;
