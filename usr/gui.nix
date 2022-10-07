@@ -68,7 +68,8 @@ in
     # web apps
     ## microsoft's
     todo = {
-      name = "Microsoft ToDo";
+      name = "Microsoft To Do";
+      genericName = "ToDo";
       exec = "/home/xieby1/Gist/script/bash/quteapp.sh \"To Do\" https://to-do.live.com/";
       icon = (pkgs.fetchurl {
         url = "https://todo.microsoft.com/favicon.ico";
@@ -89,6 +90,16 @@ in
       icon = (pkgs.fetchurl {
         url = "https://cdn.cdnlogo.com/logos/o/82/outlook.svg";
         sha256 = "0544z9vmghp4lgapl00n99vksm0gq8dfwrp7rvfpp44njnh6b6dz";
+      }).outPath;
+    };
+    ## others
+    suishouji = {
+      name = "随手记";
+      genericName = "suishouji";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh 随手记 https://www.sui.com/";
+      icon = (pkgs.fetchurl {
+        url = "https://res.sui.com/favicon.ico";
+        sha256 = "01vm275n169r0ly8ywgq0shgk8lrzg79d1aarshwybwxwffj4q0q";
       }).outPath;
     };
   };
