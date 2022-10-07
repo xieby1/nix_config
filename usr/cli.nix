@@ -221,4 +221,25 @@ in
         " --socket=/tmp/tailscaled.sock";
     };
   };
+
+  systemd.user.services.onedrive = {
+    Unit = {
+      Description = "OneDrive Free Client";
+      Documentation = "https://github.com/abraunegg/onedrive";
+      After = "network-online.target";
+      Wants = "network-online.target";
+    };
+    Service = {
+      Environment = ["HTTP_PROXY=http://127.0.0.1:8889" "HTTPS_PROXY=http://127.0.0.1:8889"];
+      ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
+      Restart = "on-failure";
+    };
+    Install = {
+      WantedBy = [ "default.target" ];
+    };
+  };
+  home.file.onedrive = {
+    source = ./gui/onedrive.config;
+    target = ".config/onedrive/config";
+  };
 }

@@ -92,6 +92,14 @@ in
         sha256 = "0544z9vmghp4lgapl00n99vksm0gq8dfwrp7rvfpp44njnh6b6dz";
       }).outPath;
     };
+    onedrive = {
+      name = "OneDrive";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh OneDrive https://onedrive.live.com";
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/m/73/microsoft-onedrive.svg";
+        sha256 = "10sjz81xjcqfkd7v11vhpvdp0s2a8la9wipc3aapgybg822vhjck";
+      }).outPath;
+    };
     ## others
     suishouji = {
       name = "随手记";
