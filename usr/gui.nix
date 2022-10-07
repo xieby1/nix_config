@@ -64,6 +64,33 @@ in
       name = "xdot";
       exec = "xdot %U";
     };
+
+    # web apps
+    ## microsoft's
+    todo = {
+      name = "Microsoft ToDo";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh \"To Do\" https://to-do.live.com/";
+      icon = (pkgs.fetchurl {
+        url = "https://todo.microsoft.com/favicon.ico";
+        sha256 = "1742330y3fr79aw90bysgx9xcfx833n8jqx86vgbcp21iqqxn0z8";
+      }).outPath;
+    };
+    calendar = {
+      name = "Microsoft Calendar";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh Outlook https://outlook.live.com/calendar";
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/o/82/outlook.svg";
+        sha256 = "0544z9vmghp4lgapl00n99vksm0gq8dfwrp7rvfpp44njnh6b6dz";
+      }).outPath;
+    };
+    outlook = {
+      name = "Microsoft Outlook";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh Outlook https://outlook.live.com";
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/o/82/outlook.svg";
+        sha256 = "0544z9vmghp4lgapl00n99vksm0gq8dfwrp7rvfpp44njnh6b6dz";
+      }).outPath;
+    };
   };
 
   xdg.mime.types = {
