@@ -35,6 +35,7 @@
         "google-chrome.desktop"
         "org.qutebrowser.qutebrowser.desktop"
         "spotify.desktop"
+        "todo.desktop"
         ];
     };
     ## extensions settings
