@@ -92,6 +92,33 @@ in
         sha256 = "0544z9vmghp4lgapl00n99vksm0gq8dfwrp7rvfpp44njnh6b6dz";
       }).outPath;
     };
+    word = {
+      name = "Word";
+      genericName = "office";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh Word https://www.office.com/launch/word";
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/w/19/word.svg";
+        sha256 = "1ig0d8afacfl7m1n0brx82iw8c2iif3skb8dwjly4fzxikzvfmn4";
+      }).outPath;
+    };
+    excel = {
+      name = "Excel";
+      genericName = "office";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh Excel https://www.office.com/launch/excel";
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/m/96/microsoft-excel.png";
+        sha256 = "07ch9kb3s82m47mm414gvig6zg2h4yffmvjvg7bvr7sil8476cs8";
+      }).outPath;
+    };
+    powerpoint = {
+      name = "PowerPoint";
+      genericName = "office ppt";
+      exec = "/home/xieby1/Gist/script/bash/quteapp.sh PowerPoint https://www.office.com/launch/powerpoint";
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/p/67/powerpoint.svg";
+        sha256 = "1pnb2nna2b26kyn0i92xmgdpcrqhw1cpl3vv7vvvlsxrldndhclr";
+      }).outPath;
+    };
     onedrive = {
       name = "OneDrive";
       exec = "/home/xieby1/Gist/script/bash/quteapp.sh OneDrive https://onedrive.live.com";
