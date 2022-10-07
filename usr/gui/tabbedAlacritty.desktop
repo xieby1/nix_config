@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Comment=tango color black       white        black, new tab pos
+Exec=tabbed -c -t "#2e3436" -o "#d3d7cf" -O "#2e3436" -p s+1 alacritty --embed
+Icon=Alacritty
+Terminal=false
+
+Name=Tabbed Alacritty
+GenericName=alacritty
+StartupWMClass=tabbed

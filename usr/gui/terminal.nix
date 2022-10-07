@@ -41,6 +41,12 @@
     source = ./alacritty.yml;
     target = ".config/alacritty/alacritty.yml";
   };
+  # tabbed alacritty
+  home.file.tabbedAlacritty = {
+    source = ./tabbedAlacritty.desktop;
+    target = ".local/share/applications/tabbedAlacritty.desktop";
+  };
+
 
   #################### Kitty ####################
   programs.kitty = {

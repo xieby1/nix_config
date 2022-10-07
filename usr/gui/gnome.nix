@@ -148,10 +148,7 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
       binding="<Primary><Alt>a";
-      # use tango color black       white        black, new tab pos
-      command=''
-        tabbed -c -t "#2e3436" -o "#d3d7cf" -O "#2e3436" -p s+1 alacritty --embed
-      '';
+      command= "gtk-launch tabbedAlacritty.desktop";
       name="alacritty";
     };
 
