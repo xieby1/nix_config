@@ -137,6 +137,15 @@ in
         sha256 = "01vm275n169r0ly8ywgq0shgk8lrzg79d1aarshwybwxwffj4q0q";
       }).outPath;
     };
+    weixin = {
+      name = "微信";
+      genericName = "weixin";
+      exec = ''/home/xieby1/Gist/script/bash/quteapp.sh "微信|weixin" https://wx.qq.com/'';
+      icon = (pkgs.fetchurl {
+        url = "https://cdn.cdnlogo.com/logos/w/79/wechat.svg";
+        sha256 = "1xk1dsia6favc3p1rnmcncasjqb1ji4vkmlajgbks0i3xf60lskw";
+      }).outPath;
+    };
   };
 
   xdg.mime.types = {
