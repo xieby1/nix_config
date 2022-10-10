@@ -22,6 +22,7 @@ in
   home.packages = with pkgs; [
     # browser
     google-chrome
+    firefox
     # network
     mykdeconnect
     feishu

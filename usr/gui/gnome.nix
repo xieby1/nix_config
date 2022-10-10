@@ -33,7 +33,7 @@
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "google-chrome.desktop"
-        "org.qutebrowser.qutebrowser.desktop"
+        "firefox.desktop"
         "spotify.desktop"
         "todo.desktop"
         ];
