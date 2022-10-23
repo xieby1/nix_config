@@ -147,6 +147,33 @@ in
         sha256 = "1xk1dsia6favc3p1rnmcncasjqb1ji4vkmlajgbks0i3xf60lskw";
       }).outPath;
     };
+    my_cheatsheet_html = {
+      name = "Cheatsheet HTML";
+      genericName = "cheatsheet";
+      exec = "/home/xieby1/Gist/script/bash/webapp.sh cheatsheet /home/xieby1/Documents/Tech/my_cheatsheet.html";
+    };
+    bing_dict = {
+      name = "Bing Dict";
+      genericName = "dictionary";
+      exec = "/home/xieby1/Gist/script/bash/webapp.sh bing https://cn.bing.com/dict/";
+    };
+    hjxd_jp = {
+      name = "日语词典";
+      genericName = "riyucidian";
+      exec = "/home/xieby1/Gist/script/bash/webapp.sh 日语词典 https://dict.hjenglish.com/jp/";
+    };
+
+    # singleton apps
+    my_cheatsheet_md = {
+      name = "Cheatsheet MD";
+      genericName = "cheatsheet";
+      exec = "/home/xieby1/Gist/script/bash/singleton.sh my_cheatsheet.mkd alacritty -e vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
+    };
+    kdeconnect_app = {
+      name = "(S) KDE Connect App";
+      genericName = "kdeconnect";
+      exec = "/home/xieby1/Gist/script/bash/singleton.sh kdeconnect.app kdeconnect-app";
+    };
   };
 
   xdg.mime.types = {

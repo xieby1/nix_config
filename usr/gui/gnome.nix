@@ -126,25 +126,27 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding="<Alt>space";
-      command="~/Gist/script/bash/webapp.sh cheatsheet ~/Documents/Tech/my_cheatsheet.html";
+      command="gtk-launch my_cheatsheet_html.desktop";
       name="cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
       binding="<Alt>c";
-      command="~/Gist/script/bash/singleton.sh my_cheatsheet.mkd kitty vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
+      command="gtk-launch my_cheatsheet_md.desktop";
       name="edit cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       binding="<Alt>b";
-      command="~/Gist/script/bash/webapp.sh bing https://cn.bing.com/dict/";
+      command="gtk-launch bing_dict.desktop";
       name="bing dict";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-      binding="<Alt>j"; command="~/Gist/script/bash/webapp.sh 日语词典 https://dict.hjenglish.com/jp/";
+      binding="<Alt>j";
+      command="gtk-launch hjxd_jp.desktop";
       name="日语词典";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
-      binding="<Alt>k"; command="~/Gist/script/bash/singleton.sh kdeconnect.app kdeconnect-app";
+      binding="<Alt>k";
+      command="gtk-launch kdeconnect_app.desktop";
       name="KDE Connect";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
