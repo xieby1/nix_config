@@ -126,7 +126,7 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
       binding="<Alt>space";
-      command="~/Gist/script/bash/quteapp.sh cheatsheet ~/Documents/Tech/my_cheatsheet.html";
+      command="~/Gist/script/bash/webapp.sh cheatsheet ~/Documents/Tech/my_cheatsheet.html";
       name="cheatsheet";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
@@ -136,11 +136,11 @@
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
       binding="<Alt>b";
-      command="~/Gist/script/bash/quteapp.sh bing https://cn.bing.com/dict/";
+      command="~/Gist/script/bash/webapp.sh bing https://cn.bing.com/dict/";
       name="bing dict";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-      binding="<Alt>j"; command="~/Gist/script/bash/quteapp.sh 日语词典 https://dict.hjenglish.com/jp/";
+      binding="<Alt>j"; command="~/Gist/script/bash/webapp.sh 日语词典 https://dict.hjenglish.com/jp/";
       name="日语词典";
     };
     "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
