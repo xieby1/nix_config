@@ -57,6 +57,7 @@ in
     bind.dnsutils # nslookup
     tailscale
     netcat
+    nload
     ## x11
     xdotool
 
