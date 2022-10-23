@@ -8,8 +8,5 @@
     ./usr/gui.nix
   ] else []);
 
-  # allow unfree software
-  nixpkgs.config.allowUnfree = true;
-
   programs.home-manager.enable = true;
 }
