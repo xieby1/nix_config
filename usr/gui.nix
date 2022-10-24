@@ -85,6 +85,7 @@ in
     # network
     mykdeconnect
     feishu
+    (import ./gui/weixin.nix)
     # text
     #wpsoffice
     libreoffice
@@ -200,8 +201,8 @@ in
         sha256 = "01vm275n169r0ly8ywgq0shgk8lrzg79d1aarshwybwxwffj4q0q";
       }).outPath;
     };
-    weixin = {
-      name = "微信";
+    webweixin = {
+      name = "网页微信";
       genericName = "weixin";
       exec = ''${webapp_sh} "微信|weixin" https://wx.qq.com/'';
       icon = (pkgs.fetchurl {
