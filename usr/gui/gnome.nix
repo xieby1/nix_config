@@ -107,54 +107,6 @@
       delete-previous=false;
     };
 
-    # customized keyboard shortcuts
-    "org/gnome/settings-daemon/plugins/media-keys" = {
-      custom-keybindings=[
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5/"
-        "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6/"
-      ];
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-      binding="<Primary><Alt>t";
-      command = "kitty";
-      name="terminal";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom1" = {
-      binding="<Alt>space";
-      command="gtk-launch my_cheatsheet_html.desktop";
-      name="cheatsheet";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom3" = {
-      binding="<Alt>c";
-      command="gtk-launch my_cheatsheet_md.desktop";
-      name="edit cheatsheet";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom2" = {
-      binding="<Alt>b";
-      command="gtk-launch bing_dict.desktop";
-      name="bing dict";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom4" = {
-      binding="<Alt>j";
-      command="gtk-launch hjxd_jp.desktop";
-      name="日语词典";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom5" = {
-      binding="<Alt>k";
-      command="gtk-launch kdeconnect_app.desktop";
-      name="KDE Connect";
-    };
-    "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom6" = {
-      binding="<Primary><Alt>a";
-      command= "gtk-launch tabbedAlacritty.desktop";
-      name="alacritty";
-    };
-
     # predefined keyboard shortcuts
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications=[];

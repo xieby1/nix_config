@@ -85,11 +85,16 @@ in
     # network
     mykdeconnect
     feishu
+    # nur.repos.xddxdd.wechat-uos-bin
+    # (nur.repos.xddxdd.wine-wechat.override {
+    #   sha256 = "sha256-E0ZGFVp9h42G3iMzJ26P7WiASSgRdgnTHUTSRouFQYw=";
+    # })
     (import ./gui/weixin.nix)
     # text
     #wpsoffice
     libreoffice
     obsidian
+    logseq
     meld
     espanso
     # draw
@@ -122,6 +127,39 @@ in
     webapp
     singleton
   ];
+
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_html/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_md/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/bing_dict/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hjxd_jp/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kdeconnect_app/"
+  ];
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_html" = {
+    binding="<Alt>space";
+    command="gtk-launch my_cheatsheet_html.desktop";
+    name="cheatsheet";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_md" = {
+    binding="<Alt>c";
+    command="gtk-launch my_cheatsheet_md.desktop";
+    name="edit cheatsheet";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/bing_dict" = {
+    binding="<Alt>b";
+    command="gtk-launch bing_dict.desktop";
+    name="bing dict";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hjxd_jp" = {
+    binding="<Alt>j";
+    command="gtk-launch hjxd_jp.desktop";
+    name="日语词典";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kdeconnect_app" = {
+    binding="<Alt>k";
+    command="gtk-launch kdeconnect_app.desktop";
+    name="KDE Connect";
+  };
 
   xdg.desktopEntries = {
     xdot = {
