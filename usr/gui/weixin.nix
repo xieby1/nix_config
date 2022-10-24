@@ -19,7 +19,14 @@ let
     setupScript = ''
       LANG="zh_CN.UTF-8"
     '';
-    firstrunScript = "wine ${installer}";
+    firstrunScript = ''
+      wine ${installer}
+
+      # 占用磁盘空间持续增加
+      # https://github.com/vufa/deepin-wine-wechat-arch/issues/225
+      mkdir -p $WINEPREFIX/drive_c/users/xieby1/AppData/Roaming/Tencent/WeChat/xweb/crash/Crashpad/
+      touch $WINEPREFIX/drive_c/users/xieby1/AppData/Roaming/Tencent/WeChat/xweb/crash/Crashpad/reports
+    '';
     inherit regfile;
   };
   desktop = pkgs.makeDesktopItem {
