@@ -30,6 +30,7 @@ in
     ## manage
     htop
     tmux
+    nix-tree
     ## text
     pandoc
     mdbook
