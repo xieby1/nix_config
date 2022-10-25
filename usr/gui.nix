@@ -11,6 +11,15 @@ let
   #  })];
   #  # cmakeFlags = "-DCMAKE_BUILD_TYPE=Debug -DQT_FORCE_STDERR_LOGGING=1";
   #});
+  myxdot = pkgs.symlinkJoin {
+    name = "myxdot";
+    paths = [
+      pkgs.xdot
+      (pkgs.makeDesktopItem {
+        name = "myxdot";
+        desktopName = "xdot";
+        exec = "xdot %U";
+  })];};
 in
 {
   imports = [
@@ -45,7 +54,7 @@ in
     inkscape
     gimp
     # viewer
-    xdot
+    myxdot
     imhex
     xelfviewer
     vlc
@@ -66,13 +75,6 @@ in
     wineWowPackages.stable
     winetricks
   ];
-
-  xdg.desktopEntries = {
-    xdot = {
-      name = "xdot";
-      exec = "xdot %U";
-    };
-  };
 
   xdg.mime.types = {
     dot = {
