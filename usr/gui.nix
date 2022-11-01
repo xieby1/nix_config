@@ -16,7 +16,7 @@ let
     paths = [
       pkgs.xdot
       (pkgs.makeDesktopItem {
-        name = "myxdot";
+        name = "xdot";
         desktopName = "xdot";
         exec = "xdot %U";
   })];};
