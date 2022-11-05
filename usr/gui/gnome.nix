@@ -12,6 +12,7 @@
     bing-wallpaper-changer
     gtile
     hide-top-bar
+    lightdark-theme-switcher
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -27,6 +28,7 @@
         "hidetopbar@mathieu.bidon.ca"
         "system-monitor@paradoxxx.zero.gmail.com"
         "unite@hardpixel.eu"
+        "theme-switcher@fthx"
       ];
 
       ## dock icons
