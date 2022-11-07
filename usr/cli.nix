@@ -245,4 +245,7 @@ in
     source = ./gui/onedrive.config;
     target = ".config/onedrive/config";
   };
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
 }
