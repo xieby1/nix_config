@@ -47,7 +47,6 @@ in
     obsidian
     logseq
     meld
-    espanso
     # draw
     drawio
     #aseprite-unfree
@@ -103,24 +102,5 @@ in
   home.file.kde_connect_indicator = {
     source = "${mykdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
     target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
-  };
-
-  # espanso
-  home.file.espanso = {
-    source = ./gui/espanso.yml;
-    target = ".config/espanso/default.yml";
-  };
-
-  systemd.user.services.espanso = {
-    Unit = {
-      Description = "Espanso daemon";
-    };
-    Install = {
-      # services.espanso.enable uses "default.target" which not work
-      WantedBy = [ "graphical-session.target" ];
-    };
-    Service = {
-      ExecStart = "${pkgs.espanso}/bin/espanso daemon";
-    };
   };
 }
