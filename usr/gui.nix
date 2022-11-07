@@ -41,12 +41,15 @@ in
     #   sha256 = "sha256-E0ZGFVp9h42G3iMzJ26P7WiASSgRdgnTHUTSRouFQYw=";
     # })
     (import ./gui/weixin.nix)
+    transmission-gtk
     # text
     #wpsoffice
     libreoffice
     obsidian
-    logseq
+    # logseq
     meld
+    # TODO: use this after switching to wayland
+    #wl-clipboard
     # draw
     drawio
     #aseprite-unfree

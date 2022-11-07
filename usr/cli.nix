@@ -34,6 +34,7 @@ in
     ## text
     pandoc
     mdbook
+    pdftk
     ## compile
     gnumake
     makefile2graph
