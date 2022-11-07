@@ -107,6 +107,8 @@ in
     nodePackages.node2nix
     ## java
     openjdk
+    ## nix
+    rnix-lsp
 
     # runXonY
     debootstrap
