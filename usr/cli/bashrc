@@ -13,7 +13,7 @@ qemu*)
 esac
 if [[ -n "$IN_NIX_SHELL" ]]
 then
-    PS1+="(nix-shell-${IN_NIX_SHELL})"
+    PS1+="(${name}.${IN_NIX_SHELL})"
 fi
 if [[ $MACHINE == aarch64 ]]
 then
