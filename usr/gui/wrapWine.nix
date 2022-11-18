@@ -30,6 +30,7 @@ let
     if is64bits
     then "win64"
     else "win32";
+  WINE_NIX = "$HOME/.wine-nix";
   setupHook = ''
     ${wine}/bin/wineboot
   '';
@@ -46,7 +47,7 @@ let
   run = writeShellScriptBin name ''
     export APP_NAME="${NAME}"
     export WINEARCH=${WINEARCH}
-    export WINE_NIX="$HOME/.wine-nix" # define antes de definir $HOME senão ele vai gravar na nova $HOME a .wine-nix
+    export WINE_NIX=${WINE_NIX}
     export PATH=$PATH:${PATH}
     export WINEPREFIX="$WINE_NIX/${name}"
     export EXECUTABLE="${executable}"
@@ -78,8 +79,12 @@ let
   clean = writeShellScriptBin "${name}-clean" ''
     rm $HOME/.wine-nix/${name} -rf
   '';
+  winecfg = writeShellScriptBin "${name}-cfg" ''
+    export WINEARCH=${WINEARCH}
+    WINEPREFIX=${WINE_NIX}/${name} winecfg
+  '';
 in
 symlinkJoin {
   inherit name;
-  paths = [run clean];
+  paths = [run clean winecfg];
 }

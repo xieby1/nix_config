@@ -6,8 +6,8 @@ let
   regfile = builtins.toFile "${name}.reg" ''
     Windows Registry Editor Version 5.00
 
-    [HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts]
-    "LogPixels"=dword:000000F0
+    # [HKEY_LOCAL_MACHINE\System\CurrentControlSet\Hardware Profiles\Current\Software\Fonts]
+    # "LogPixels"=dword:000000F0
 
     [HKEY_CURRENT_USER\Software\Wine\X11 Driver]
     "Decorated"="N"
