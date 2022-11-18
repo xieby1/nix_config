@@ -41,6 +41,7 @@ in
     #   sha256 = "sha256-E0ZGFVp9h42G3iMzJ26P7WiASSgRdgnTHUTSRouFQYw=";
     # })
     (import ./gui/weixin.nix)
+    nur.repos.linyinfeng.wemeet
     transmission-gtk
     # text
     #wpsoffice
