@@ -63,6 +63,7 @@ in
     vlc
     # management
     zotero
+    barrier
     # entertainment
     mgba
     dgen-sdl # sega md emulator
@@ -106,5 +107,9 @@ in
   home.file.kde_connect_indicator = {
     source = "${mykdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
     target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
+  };
+  home.file.autostart_barrier = {
+    source = "${pkgs.barrier}/share/applications/barrier.desktop";
+    target = ".config/autostart/barrier.desktop";
   };
 }
