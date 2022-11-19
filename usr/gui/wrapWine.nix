@@ -31,6 +31,7 @@ let
     then "win64"
     else "win32";
   WINE_NIX = "$HOME/.wine-nix";
+  WINEPREFIX = "${WINE_NIX}/${name}";
   setupHook = ''
     ${wine}/bin/wineboot
   '';
@@ -49,7 +50,7 @@ let
     export WINEARCH=${WINEARCH}
     export WINE_NIX=${WINE_NIX}
     export PATH=$PATH:${PATH}
-    export WINEPREFIX="$WINE_NIX/${name}"
+    export WINEPREFIX="${WINEPREFIX}"
     export EXECUTABLE="${executable}"
     mkdir -p "$WINE_NIX"
     ${setupScript}
@@ -77,7 +78,10 @@ let
     wineserver -w
   '';
   clean = writeShellScriptBin "${name}-clean" ''
-    rm $HOME/.wine-nix/${name} -rf
+    read -p "Are you sure you want to clean ${WINEPREFIX}? <y/N> " prompt
+    if [[ $prompt =~ [yY](es)* ]]; then
+      rm ${WINEPREFIX} -rf
+    fi
   '';
   winecfg = writeShellScriptBin "${name}-cfg" ''
     export WINEARCH=${WINEARCH}
