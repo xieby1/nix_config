@@ -1,7 +1,9 @@
+{ pkgs ? import <nixpkgs> {}
+, wrapWine ? import ./wrapWine.nix {inherit pkgs;}
+}:
+
 let
   name = "weixin";
-  pkgs = import <nixpkgs> {};
-  wrapWine = import ./wrapWine.nix {inherit pkgs;};
   installer = builtins.fetchurl "https://dldir1.qq.com/weixin/Windows/WeChatSetup.exe";
   regfile = builtins.toFile "${name}.reg" ''
     Windows Registry Editor Version 5.00
