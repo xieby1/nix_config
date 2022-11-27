@@ -76,6 +76,13 @@ let
       augroup END
     '';
   };
+  my-leap-nvim = {
+    plugin = pkgs.nur.repos.m15a.vimExtraPlugins.leap-nvim;
+    type = "lua";
+    config = ''
+      require('leap').add_default_mappings()
+    '';
+  };
 in
 
 {
@@ -114,7 +121,7 @@ in
       vim-hexokinase
       vim-plugin-AnsiEsc
       my-nvim-config-local
-      lightspeed-nvim
+      my-leap-nvim
       # {
       #   plugin = indentLine;
       #   config = ''
