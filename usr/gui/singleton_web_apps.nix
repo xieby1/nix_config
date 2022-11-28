@@ -200,6 +200,10 @@ in
     clash = {
       name = "clash";
       exec = "${webapp_sh} clash http://clash.razord.top";
+      icon = (pkgs.fetchurl {
+        url = "https://github.com/Dreamacro/clash-dashboard/raw/4b174769f586fde51fbc90ce48791efdb58fbb49/src/assets/logo.png";
+        sha256 = "04agkgmdy268rqw56368dymja7wziss9n4m8kzkf0jx9cwpyflxl";
+      }).outPath;
     };
 
     # singleton apps
