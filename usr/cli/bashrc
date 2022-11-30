@@ -6,59 +6,41 @@ u_green="\[\033[01;32m\]"
 u_blue="\[\033[01;34m\]"
 u_white="\[\033[00m\]"
 PS1="${debian_chroot:+($debian_chroot)}"
-case "${HOSTNAME}" in
-qemu*)
+if [[ ${HOSTNAME} =~ qemu.* ]]; then
     PS1+="(qemu)"
-;;
-esac
-if [[ -n "$IN_NIX_SHELL" ]]
-then
+fi
+if [[ -n "$IN_NIX_SHELL" ]]; then
     PS1+="(${name}.${IN_NIX_SHELL})"
 fi
-if [[ $MACHINE == aarch64 ]]
-then
-PS1+="${u_green}\u${u_white}:"
+if [[ $MACHINE == aarch64 ]]; then
+    PS1+="${u_green}\u${u_white}:"
 else
-PS1+="${u_green}\u@\h${u_white}:"
+    PS1+="${u_green}\u@\h${u_white}:"
 fi
 PS1+="${u_blue}\w${u_white}"
 PS1+="\n${u_green}\$${u_white} "
 unset u_green u_blue u_white
-
-# change title
-# https://unix.stackexchange.com/questions/177572/
+## change title
+### https://unix.stackexchange.com/questions/177572/
 PS1+="\[\e]2;\w\a\]"
 
 # FZF top-down display
 export FZF_DEFAULT_OPTS="--reverse"
 
-# proxychains4
-#export PROXYCHAINS_SOCKS5=1080
-
 # proxy
-case ${MACHINE} in
-x86_64)
-    case ${HOSTNAME} in
-    container*)
-        # export HTTP_PROXY="http://172.17.0.1:8889/"
-        export HTTP_PROXY="http://127.0.0.1:8889/"
-        ;;
-    *)
-        export HTTP_PROXY="http://127.0.0.1:8889/"
-        ;;
-    esac
-    ;;
-aarch64)
-    # not need proxy env, use clash
-    ;;
-esac
-# microsoft wsl
-if [[ ${KERNEL_RELEASE} == *"microsoft"* ]]
-then
+## default
+HTTP_PROXY="http://127.0.0.1:8889/"
+## nix-on-droid
+if [[ "$USER" == "nix-on-droid" ]]; then
+    HTTP_PROXY=""
+fi
+## microsoft wsl
+if [[ ${KERNEL_RELEASE} == *"microsoft"* ]]; then
     hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
     export HTTP_PROXY="http://${hostip}:8889"
 fi
 export HTTPS_PROXY="${HTTP_PROXY}"
+export HTTP_PROXY="${HTTP_PROXY}"
 export FTP_PROXY="${HTTP_PROXY}"
 export http_proxy="${HTTP_PROXY}"
 export https_proxy="${HTTP_PROXY}"
@@ -69,11 +51,10 @@ alias o="xdg-open"
 alias a="broot \${HOME}/Documents/Config/autokey"
 alias ll="ls --color -l"
 alias ls="ls --color"
-# nvim as manpager
-## see nvim `:h :Man`
-## nvim manpage huge mange is SLOW! E.g. man configuration.nix
+## nvim as manpager
+### see nvim `:h :Man`
+### nvim manpage huge mange is SLOW! E.g. man configuration.nix
 alias nman="env MANPAGER='nvim +Man!' man"
-alias tailscale="tailscale --socket /tmp/tailscaled.sock"
 ## tailscale
 alias tailscale-headscale="tailscale --socket /tmp/tailscale-headscale.sock"
 alias tailscale-official="tailscale --socket /tmp/tailscale-official.sock"
@@ -115,26 +96,24 @@ fi
 export NIXPKGS_ALLOW_INSECURE=1
 
 # source my bashrc
-if [[ -f ~/Gist/Config/bashrc ]]
-then
+if [[ -f ~/Gist/Config/bashrc ]]; then
     source ~/Gist/Config/bashrc
 fi
 
-if [[ $MACHINE != aarch64 ]]
-then
-# HSTR configuration - add this to ~/.bashrc
-alias hh=hstr                    # hh to be alias for hstr
-export HSTR_CONFIG=hicolor       # get more colors
-shopt -s histappend              # append new history items to .bash_history
-export HISTCONTROL=ignorespace   # leading space hides commands from history
-export HISTFILESIZE=10000        # increase history file size (default is 500)
-export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
-# ensure synchronization between bash memory and history file
-export PROMPT_COMMAND="history -a;"
-# if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
-if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
-# if this is interactive shell, then bind 'kill last command' to Ctrl-x k
-if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+if [[ $MACHINE != aarch64 ]]; then
+    # HSTR configuration - add this to ~/.bashrc
+    alias hh=hstr                    # hh to be alias for hstr
+    export HSTR_CONFIG=hicolor       # get more colors
+    shopt -s histappend              # append new history items to .bash_history
+    export HISTCONTROL=ignorespace   # leading space hides commands from history
+    export HISTFILESIZE=10000        # increase history file size (default is 500)
+    export HISTSIZE=${HISTFILESIZE}  # increase history size (default is 500)
+    # ensure synchronization between bash memory and history file
+    export PROMPT_COMMAND="history -a;"
+    # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
+    if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+    # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+    if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
 fi
 
 # user nix config setting
