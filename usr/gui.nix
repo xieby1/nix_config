@@ -20,6 +20,15 @@ let
         desktopName = "xdot";
         exec = "xdot %U";
   })];};
+  mytypora = (pkgs.callPackage (pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/NixOS/nixpkgs/137f19d1d48b6d7c7901bb86729a2bce3588d4e9/pkgs/applications/editors/typora/default.nix";
+    sha256 = "057dk4hl4fljn50098g7l35sh7gwm7zqqqlrczv5lhmpgxi971c1";
+  }) {}).overrideAttrs (old: {
+    src = pkgs.fetchurl {
+      url = "https://web.archive.org/web/20211222112532/https://download.typora.io/linux/typora_0.9.98_amd64.deb";
+      sha256 = "1srj1fdcblfdsfvdnrqnwsxd3y8qd1h45p4sf1mxn6hr7z2s6ai6";
+    };
+  });
 in
 {
   imports = [
@@ -47,6 +56,7 @@ in
     #wpsoffice
     libreoffice
     obsidian
+    mytypora
     # logseq
     meld
     # TODO: use this after switching to wayland
