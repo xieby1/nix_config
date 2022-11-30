@@ -110,6 +110,7 @@ in
     openjdk
     ## nix
     rnix-lsp
+    nixos-option
 
     # runXonY
     debootstrap
