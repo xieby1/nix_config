@@ -74,6 +74,42 @@ alias ls="ls --color"
 ## nvim manpage huge mange is SLOW! E.g. man configuration.nix
 alias nman="env MANPAGER='nvim +Man!' man"
 alias tailscale="tailscale --socket /tmp/tailscaled.sock"
+## tailscale
+alias tailscale-headscale="tailscale --socket /tmp/tailscale-headscale.sock"
+alias tailscale-official="tailscale --socket /tmp/tailscale-official.sock"
+### nix-on-droid
+if [[ "$USER" == "nix-on-droid" ]]; then
+    # start tailscale
+    if [[ -z "$(ps|grep tailscaled|grep -v grep)" ]]; then
+        stateDir="~/.local/share/tailscale-headscale"
+        TS_LOGS_DIR=${stateDir} \
+        tailscaled \
+          --tun userspace-networking \
+          --outbound-http-proxy-listen=localhost:1055 \
+          --socket=/tmp/tailscale-headscale.sock \
+          --state=${stateDir}/tailscaled.state \
+          --statedir=${stateDir} &> /dev/null &
+
+        stateDir="~/.local/share/tailscale-official"
+        TS_LOGS_DIR=${stateDir} \
+        tailscaled \
+          --tun userspace-networking \
+          --outbound-http-proxy-listen=localhost:1056 \
+          --socket=/tmp/tailscale-official.sock \
+          --state=${stateDir}/tailscaled.state \
+          --statedir=${stateDir} &> /dev/null &
+    fi
+    # start sshd
+    if [[ -z "$(ps|grep sshd-start|grep -v grep)" ]]; then
+        sshd-start &> /dev/null &
+    fi
+
+    # alias all script
+    ## due to cannot exec script under symlink directory (Gist)
+    for SH in ~/Gist/script/bash/*; do
+        eval "alias ${SH##*/}='bash ${SH}'"
+    done
+fi
 
 # nixos obsidian
 export NIXPKGS_ALLOW_INSECURE=1

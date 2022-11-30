@@ -236,6 +236,35 @@ in
       ];
     };
   };
+  # for official tailscale
+  systemd.user.services.tailscaled-official = let
+    stateDir = "${config.home.homeDirectory}/.local/share/tailscale-official";
+  in {
+    Unit = {
+      Description = "Auto start tailscaled-official userspace network";
+      After = ["clash.service"];
+    };
+    Install = {
+      WantedBy = ["default.target"];
+    };
+    Service = {
+      Environment = [
+        "HTTPS_PROXY=http://127.0.0.1:8889"
+        "HTTP_PROXY=http://127.0.0.1:8889"
+        "https_proxy=http://127.0.0.1:8889"
+        "http_proxy=http://127.0.0.1:8889"
+        "TS_LOGS_DIR=${stateDir}"
+      ];
+      ExecStart = builtins.toString [
+        "${pkgs.tailscale}/bin/tailscaled"
+        "--tun userspace-networking"
+        "--outbound-http-proxy-listen=localhost:1056"
+        "--socket=/tmp/tailscale-official.sock"
+        "--state=${stateDir}/tailscaled.state"
+        "--statedir=${stateDir}"
+      ];
+    };
+  };
 
   # systemd.user.services.onedrive = {
   #   Unit = {
