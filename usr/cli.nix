@@ -171,12 +171,13 @@ in
   systemd.user.services.clash = {
     Unit = {
       Description = "Auto start clash";
+      After = ["network.target"];
     };
-    # Install = {
-    #   WantedBy = [ "graphical-session.target" ];
-    # };
+    Install = {
+      WantedBy = ["default.target"];
+    };
     Service = {
-      ExecStart = "${pkgs.clash.outPath}/bin/clash";
+      ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
     };
   };
 
@@ -206,24 +207,33 @@ in
     target = ".config/ranger/rc.conf";
   };
 
-  systemd.user.services.tailscaled = {
+  # for my headtail
+  systemd.user.services.tailscaled-headscale = let
+    stateDir = "${config.home.homeDirectory}/.local/share/tailscale-headscale";
+  in {
     Unit = {
-      Description = "Auto start tailscaled userspace network";
+      Description = "Auto start tailscaled-headscale userspace network";
+      After = ["clash.service"];
     };
-    # Install = {
-    #   WantedBy = [ "default.target" ];
-    # };
+    Install = {
+      WantedBy = ["default.target"];
+    };
     Service = {
       Environment = [
         "HTTPS_PROXY=http://127.0.0.1:8889"
         "HTTP_PROXY=http://127.0.0.1:8889"
         "https_proxy=http://127.0.0.1:8889"
         "http_proxy=http://127.0.0.1:8889"
+        "TS_LOGS_DIR=${stateDir}"
       ];
-      ExecStart = "${pkgs.tailscale}/bin/tailscaled" +
-        " --tun userspace-networking" +
-        " --outbound-http-proxy-listen=localhost:1055" +
-        " --socket=/tmp/tailscaled.sock";
+      ExecStart = builtins.toString [
+        "${pkgs.tailscale}/bin/tailscaled"
+        "--tun userspace-networking"
+        "--outbound-http-proxy-listen=localhost:1055"
+        "--socket=/tmp/tailscale-headscale.sock"
+        "--state=${stateDir}/tailscaled.state"
+        "--statedir=${stateDir}"
+      ];
     };
   };
 
@@ -250,4 +260,13 @@ in
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+
+  services.syncthing = let
+    isCli = (builtins.getEnv "DISPLAY")=="";
+  in {
+    enable = true;
+    extraOptions = if isCli
+      then ["--gui-address=0.0.0.0:8384"]
+      else [];
+  };
 }

@@ -35,4 +35,5 @@
     );
   };
 
+  services.getty.autologinUser = "xieby1";
 }
