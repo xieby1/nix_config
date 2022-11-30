@@ -60,6 +60,7 @@ in
     tailscale
     netcat
     nload
+    nmap
     ## x11
     xdotool
 
