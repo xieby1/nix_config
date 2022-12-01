@@ -154,7 +154,21 @@ in
     view = "nvim -R";
     mr = "mr -d ~"; # mr status not work in non-home dir
   };
-  programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc;
+  programs.bash.bashrcExtra = let
+    isSys = (builtins.tryEval <nixos-config>).success;
+    dummySys = import <nixpkgs/nixos> {configuration={};};
+  in
+  builtins.readFile ./cli/bashrc
+    # inspired by
+    ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
+    + pkgs.lib.optionalString (!isSys) ''
+      # system tools completion, e.g. nix
+      XDG_DATA_DIRS+=":${dummySys.config.system.path}/share"
+      # home tools completion
+      XDG_DATA_DIRS+=":${config.home.path}/share"
+      export XDG_DATA_DIRS
+      . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
+    '';
 
   # tmux
   home.file.tmux = {
