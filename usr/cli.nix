@@ -10,6 +10,32 @@ let
     inherit pkgs;
     inherit (pkgs) poetry2nix;
   };
+  mytailscale = let
+    mytailscale-wrapper = {
+      suffix, port
+    }: [
+      (pkgs.writeShellScriptBin "tailscale-${suffix}" ''
+        tailscale --socket /tmp/tailscale-${suffix}.sock $@
+      '')
+      (let
+        stateDir = "${config.home.homeDirectory}/.local/share/tailscale-${suffix}";
+      in pkgs.writeShellScriptBin "tailscaled-${suffix}" ''
+        TS_LOGS_DIR="${stateDir}" \
+          ${pkgs.tailscale}/bin/tailscaled \
+          --tun userspace-networking \
+          --outbound-http-proxy-listen=localhost:${port} \
+          --socket=/tmp/tailscale-${suffix}.sock \
+          --state=${stateDir}/tailscaled.state \
+          --statedir=${stateDir} \
+          $@
+      '')
+    ];
+  in pkgs.symlinkJoin {
+    name = "mytailscale";
+    paths = [pkgs.tailscale]
+      ++ (mytailscale-wrapper {suffix="headscale"; port="1055";})
+      ++ (mytailscale-wrapper {suffix="official"; port="1056";});
+  };
 in
 {
   imports = [
@@ -57,7 +83,7 @@ in
     clash
     lsof
     bind.dnsutils # nslookup
-    tailscale
+    mytailscale
     netcat
     nload
     nmap
@@ -224,9 +250,7 @@ in
   };
 
   # for my headtail
-  systemd.user.services.tailscaled-headscale = let
-    stateDir = "${config.home.homeDirectory}/.local/share/tailscale-headscale";
-  in {
+  systemd.user.services.tailscaled-headscale = {
     Unit = {
       Description = "Auto start tailscaled-headscale userspace network";
       After = ["clash.service"];
@@ -240,22 +264,12 @@ in
         "HTTP_PROXY=http://127.0.0.1:8889"
         "https_proxy=http://127.0.0.1:8889"
         "http_proxy=http://127.0.0.1:8889"
-        "TS_LOGS_DIR=${stateDir}"
       ];
-      ExecStart = builtins.toString [
-        "${pkgs.tailscale}/bin/tailscaled"
-        "--tun userspace-networking"
-        "--outbound-http-proxy-listen=localhost:1055"
-        "--socket=/tmp/tailscale-headscale.sock"
-        "--state=${stateDir}/tailscaled.state"
-        "--statedir=${stateDir}"
-      ];
+      ExecStart = "${mytailscale}/bin/tailscaled-headscale";
     };
   };
   # for official tailscale
-  systemd.user.services.tailscaled-official = let
-    stateDir = "${config.home.homeDirectory}/.local/share/tailscale-official";
-  in {
+  systemd.user.services.tailscaled-official = {
     Unit = {
       Description = "Auto start tailscaled-official userspace network";
       After = ["clash.service"];
@@ -269,16 +283,8 @@ in
         "HTTP_PROXY=http://127.0.0.1:8889"
         "https_proxy=http://127.0.0.1:8889"
         "http_proxy=http://127.0.0.1:8889"
-        "TS_LOGS_DIR=${stateDir}"
       ];
-      ExecStart = builtins.toString [
-        "${pkgs.tailscale}/bin/tailscaled"
-        "--tun userspace-networking"
-        "--outbound-http-proxy-listen=localhost:1056"
-        "--socket=/tmp/tailscale-official.sock"
-        "--state=${stateDir}/tailscaled.state"
-        "--statedir=${stateDir}"
-      ];
+      ExecStart = "${mytailscale}/bin/tailscaled-official";
     };
   };
 

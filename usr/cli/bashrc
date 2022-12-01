@@ -55,30 +55,13 @@ alias ls="ls --color"
 ### see nvim `:h :Man`
 ### nvim manpage huge mange is SLOW! E.g. man configuration.nix
 alias nman="env MANPAGER='nvim +Man!' man"
-## tailscale
-alias tailscale-headscale="tailscale --socket /tmp/tailscale-headscale.sock"
-alias tailscale-official="tailscale --socket /tmp/tailscale-official.sock"
-### nix-on-droid
+
+# services for nix-on-droid
 if [[ "$USER" == "nix-on-droid" ]]; then
     # start tailscale
     if [[ -z "$(ps|grep tailscaled|grep -v grep)" ]]; then
-        stateDir="~/.local/share/tailscale-headscale"
-        TS_LOGS_DIR=${stateDir} \
-        tailscaled \
-          --tun userspace-networking \
-          --outbound-http-proxy-listen=localhost:1055 \
-          --socket=/tmp/tailscale-headscale.sock \
-          --state=${stateDir}/tailscaled.state \
-          --statedir=${stateDir} &> /dev/null &
-
-        stateDir="~/.local/share/tailscale-official"
-        TS_LOGS_DIR=${stateDir} \
-        tailscaled \
-          --tun userspace-networking \
-          --outbound-http-proxy-listen=localhost:1056 \
-          --socket=/tmp/tailscale-official.sock \
-          --state=${stateDir}/tailscaled.state \
-          --statedir=${stateDir} &> /dev/null &
+        tailscaled-headscale &> /dev/null &
+        tailscaled-official &> /dev/null &
     fi
     # start sshd
     if [[ -z "$(ps|grep sshd-start|grep -v grep)" ]]; then
