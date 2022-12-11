@@ -62,6 +62,11 @@ let
     ${singleton_sh} "$1" ${chromeLikeBrowser} --app="$URL"
   '';
   webapp_sh = "${webapp}/bin/webapp.sh";
+  open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
+     cd ${config.home.homeDirectory}/Documents/Tech
+     typora my_cheatsheet.mkd
+     make
+  '';
 in
 {
   home.packages = [singleton webapp];
@@ -210,7 +215,7 @@ in
     my_cheatsheet_md = {
       name = "Cheatsheet MD";
       genericName = "cheatsheet";
-      exec = "${singleton_sh} my_cheatsheet.mkd alacritty -e vim ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.mkd";
+      exec = "${singleton_sh} my_cheatsheet.mkd ${open_my_cheatsheet_md_sh}";
     };
     kdeconnect_app = {
       name = "(S) KDE Connect App";
