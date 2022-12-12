@@ -36,6 +36,8 @@ let
       ++ (mytailscale-wrapper {suffix="headscale"; port="1055";})
       ++ (mytailscale-wrapper {suffix="official"; port="1056";});
   };
+  isSys = (builtins.tryEval <nixos-config>).success;
+  dummySys = import <nixpkgs/nixos> {configuration={};};
 in
 {
   imports = [
@@ -145,7 +147,9 @@ in
   then [
     nix-alien-pkgs.nix-alien
     nix-alien-pkgs.nix-index-update
-  ] else []);
+  ] else [])
+  ### allow non-nixos access `man configuration.nix`
+  ++ (pkgs.lib.optional (!isSys) dummySys.config.system.build.manual.manpages.outPath);
 
   # git
   programs.git = {
@@ -180,11 +184,7 @@ in
     view = "nvim -R";
     mr = "mr -d ~"; # mr status not work in non-home dir
   };
-  programs.bash.bashrcExtra = let
-    isSys = (builtins.tryEval <nixos-config>).success;
-    dummySys = import <nixpkgs/nixos> {configuration={};};
-  in
-  builtins.readFile ./cli/bashrc
+  programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc
     # inspired by
     ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
     + pkgs.lib.optionalString (!isSys) ''
