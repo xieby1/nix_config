@@ -181,6 +181,9 @@ in
         editor = "vim";
       };
     };
+    aliases = {
+      viz = "log --all --decorate --oneline --graph";
+    };
   };
 
   # mr
