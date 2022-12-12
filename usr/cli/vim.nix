@@ -83,6 +83,15 @@ let
       require('leap').add_default_mappings()
     '';
   };
+  my-telescople-nvim = {
+    plugin = pkgs.vimPlugins.telescope-nvim;
+    config = ''
+      nnoremap ff <cmd>Telescope find_files<cr>
+      nnoremap fg <cmd>Telescope live_grep<cr>
+      nnoremap fb <cmd>Telescope buffers<cr>
+      nnoremap fh <cmd>Telescope help_tags<cr>
+    '';
+  };
   git-wip = pkgs.vimUtils.buildVimPlugin {
     name = "git-wip";
     src = pkgs.fetchFromGitHub {
@@ -142,11 +151,15 @@ in
       #     let g:vim_markdown_conceal = 0
       #   '';
       # }
+      # telescope-nvim needs plenary-nvim and ripgrep
+      my-telescople-nvim
+      plenary-nvim
       git-wip
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
       ccls
+      ripgrep
     ];
 
     # coc
