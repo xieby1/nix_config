@@ -106,7 +106,8 @@
     };
     "org/gnome/shell/extensions/bingwallpaper" = {
       market="zh-CN";
-      delete-previous=false;
+      delete-previous=true;
+      download-folder="/tmp/pictures";
     };
 
     # predefined keyboard shortcuts
