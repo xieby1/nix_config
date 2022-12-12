@@ -36,6 +36,24 @@ let
       ++ (mytailscale-wrapper {suffix="headscale"; port="1055";})
       ++ (mytailscale-wrapper {suffix="official"; port="1056";});
   };
+  git-wip = builtins.derivation {
+    name = "git-wip";
+    system = builtins.currentSystem;
+    src = pkgs.fetchurl {
+      url = "https://raw.githubusercontent.com/bartman/git-wip/1c095e93539261370ae811ebf47b8d3fe9166869/git-wip";
+      sha256 = "00gq5bwwhjy68ig26a62307pww2i81y3zcx9yqr8fa36fsqaw37h";
+    };
+    builder = pkgs.writeShellScript "git-wip-builder" ''
+      source ${pkgs.stdenv}/setup
+      mkdir -p $out/bin
+      dst=$out/bin/git-wip
+      cp $src $dst
+      chmod +w $dst
+      sed -i 's/#!\/bin\/bash/#!\/usr\/bin\/env bash/g' $dst
+      chmod -w $dst
+      chmod a+x $dst
+    '';
+  };
   isSys = (builtins.tryEval <nixos-config>).success;
   dummySys = import <nixpkgs/nixos> {configuration={};};
 in
@@ -102,6 +120,7 @@ in
     sloccount
     linuxPackages.perf
     flamegraph
+    git-wip
     ## python
     ( python3.withPackages ( p: with p; [
       ipython

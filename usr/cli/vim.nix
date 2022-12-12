@@ -83,6 +83,16 @@ let
       require('leap').add_default_mappings()
     '';
   };
+  git-wip = pkgs.vimUtils.buildVimPlugin {
+    name = "git-wip";
+    src = pkgs.fetchFromGitHub {
+      owner = "bartman";
+      repo = "git-wip";
+      rev = "1c095e93539261370ae811ebf47b8d3fe9166869";
+      hash = "sha256-rjvg6sTOuUM3ltD3DuJqgBEDImLrsfdnK52qxCbu8vo=";
+    };
+    preInstall = "cd vim";
+  };
 in
 
 {
@@ -132,6 +142,7 @@ in
       #     let g:vim_markdown_conceal = 0
       #   '';
       # }
+      git-wip
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
