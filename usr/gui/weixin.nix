@@ -22,6 +22,10 @@ let
       LANG="zh_CN.UTF-8"
     '';
     firstrunScript = ''
+      # prevent weixin polluting my Documents folder
+      rm -f $WINEPREFIX/drive_c/users/$USER/Documents
+      mkdir -p $WINEPREFIX/drive_c/users/$USER/Documents
+
       wine ${installer}
 
       # 占用磁盘空间持续增加
