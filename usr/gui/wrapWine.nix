@@ -85,10 +85,14 @@ let
   '';
   winecfg = writeShellScriptBin "${name}-cfg" ''
     export WINEARCH=${WINEARCH}
-    WINEPREFIX=${WINE_NIX}/${name} winecfg
+    WINEPREFIX=${WINE_NIX}/${name} winecfg $@
+  '';
+  _wine = writeShellScriptBin "${name}-wine" ''
+    export WINEARCH=${WINEARCH}
+    WINEPREFIX=${WINE_NIX}/${name} ${wineBin} $@
   '';
 in
 symlinkJoin {
   inherit name;
-  paths = [run clean winecfg];
+  paths = [run clean winecfg _wine];
 }
