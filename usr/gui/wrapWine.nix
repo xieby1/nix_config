@@ -61,21 +61,20 @@ let
         else ""
       }
       ${setupHook}
-      wineserver -w
       ${tricksHook}
       ${firstrunScript}
-    fi
-    ${if chdir != null
-      then ''cd "${chdir}"''
-      else ""}
-    if [ ! "$REPL" == "" ]; # if $REPL is setup then start a shell in the context
-    then
-      bash
-      exit 0
-    fi
+    else # no automatically run after installation!
+      ${if chdir != null
+        then ''cd "${chdir}"''
+        else ""}
+      if [ ! "$REPL" == "" ]; # if $REPL is setup then start a shell in the context
+      then
+        bash
+        exit 0
+      fi
 
-    ${wineBin} ${wineFlags} "$EXECUTABLE" "$@"
-    wineserver -w
+      ${wineBin} ${wineFlags} "$EXECUTABLE" "$@"
+    fi
   '';
   clean = writeShellScriptBin "${name}-clean" ''
     read -p "Are you sure you want to clean ${WINEPREFIX}? <y/N> " prompt
