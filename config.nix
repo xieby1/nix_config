@@ -6,8 +6,8 @@
       # https://github.com//NUR/commit/
       owner = "nix-community";
       repo = "NUR";
-      rev = "1970f883e139b06ae109ad2ca2c45b7fa987afb9";
-      sha256 = "0ln72j456xzkny8xk5l72agrqif25bmxhlvay8v6kyazsa3xmaks";
+      rev = "d67c890fc1096b9c8706c1c46f8e3fec06add355";
+      sha256 = "1afx34940l6yf4n7dgljdyk0r8gbn7p26kkk9n9wqq4m8ng1bmh2";
     }) {
       inherit pkgs;
     };
