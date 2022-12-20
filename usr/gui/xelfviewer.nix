@@ -8,7 +8,7 @@
 let
   version = "0.05";
   rpath = lib.makeLibraryPath [
-    qt5.full
+    qt5.qtbase
   ] + ":${stdenv.cc.cc.lib}/lib64";
   src =
     if stdenv.hostPlatform.system == "x86_64-linux" then
