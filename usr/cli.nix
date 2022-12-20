@@ -1,15 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  nix-alien-pkgs = import ( pkgs.fetchFromGitHub {
-    owner = "thiagokokada";
-    repo = "nix-alien";
-    # master needs to build python3, so pin to a stable version
-    rev = "faeda0a028eca556dec136631f2e905fd7a46bb7";
-    sha256 = "0z2p9jj4h2a688vw5g0zqy0380qj3xb9zmxq9wyisrx86hnnsaq0";
-  }) {
-    inherit pkgs;
-    inherit (pkgs) poetry2nix;
-  };
   mytailscale = let
     mytailscale-wrapper = {
       suffix, port
@@ -162,11 +152,7 @@ in
     # runXonY
     debootstrap
     qemu
-  ] ++ (if builtins.currentSystem == "x86_64-linux"
-  then [
-    nix-alien-pkgs.nix-alien
-    nix-alien-pkgs.nix-index-update
-  ] else [])
+  ]
   ### allow non-nixos access `man configuration.nix`
   ++ (pkgs.lib.optional (!isSys) dummySys.config.system.build.manual.manpages.outPath);
 
