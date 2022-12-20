@@ -105,15 +105,6 @@ in
     };
   };
 
-  programs.qutebrowser = {
-    enable = true;
-    # https://qutebrowser.org/doc/help/settings.html
-    settings = {
-      qt.highdpi = true;
-      new_instance_open_target = "window";
-    };
-  };
-
   home.file.kde_connect_indicator = {
     source = "${mykdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
     target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
