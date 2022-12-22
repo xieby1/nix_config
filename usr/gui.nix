@@ -1,7 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  feishu = pkgs.callPackage ./gui/feishu.nix {};
-  imhex = pkgs.callPackage ./gui/imhex.nix {};
   xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
   mykdeconnect = pkgs.kdeconnect;
   #mykdeconnect = pkgs.kdeconnect.overrideAttrs (old: {
