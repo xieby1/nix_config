@@ -45,10 +45,16 @@
   # https://github.com/liuchengxu/vista.vim/issues/74
   # https://github.com/liuchengxu/space-vim/wiki/tips#programming-fonts
   # available nerd fonts: nixpkgs/pkgs/data/fonts/nerdfonts/shas.nix
-  fonts.fonts = with pkgs; [
+  ## use non-variable noto font for feishu and other old electron apps
+  ## for more details see: https://github.com/NixOS/nixpkgs/issues/171976
+  fonts.fonts = (
+    with (import (fetchTarball {
+      url = "https://github.com/NixOS/nixpkgs/archive/d881cf9fd64218a99a64a8bdae1272c3f94daea7.tar.gz";
+      sha256 = "1jaghsmsc05lvfzaq4qcy281rhq3jlx75q5x2600984kx1amwaal";
+    }) {}); [
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
-    noto-fonts-emoji
+    noto-fonts-emoji]) ++ (with pkgs; [
     (nerdfonts.override {
       fonts = [
         "SourceCodePro"
@@ -77,7 +83,7 @@
         cp -a *.ttf $out/share/fonts/truetype/
       '';
     })
-  ];
+  ]);
   # enable fontDir /run/current-system/sw/share/X11/fonts
   fonts.fontDir.enable = true;
   fonts.fontconfig.defaultFonts = {
