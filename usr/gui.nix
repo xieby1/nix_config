@@ -43,11 +43,9 @@ in
     # network
     mykdeconnect
     feishu
-    # nur.repos.xddxdd.wechat-uos-bin
-    # (nur.repos.xddxdd.wine-wechat.override {
-    #   sha256 = "sha256-E0ZGFVp9h42G3iMzJ26P7WiASSgRdgnTHUTSRouFQYw=";
-    # })
-    (import ./gui/weixin.nix {})
+    nur.repos.xddxdd.wechat-uos
+    # wine weixin waste too much memory, more than 4GB!!!
+    #(import ./gui/weixin.nix {})
     nur.repos.linyinfeng.wemeet
     transmission-gtk
     # text
