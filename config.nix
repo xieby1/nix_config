@@ -1,3 +1,4 @@
+# see pkgs/top-level/config.nix
 {
   allowUnsupportedSystem = true;
   allowUnfree = true;
