@@ -1,45 +1,31 @@
 # xieby1的Nix/NixOS配置
 
 该仓库存放着我的Nix/NixOS配置。
-其中包含了大量我对各种软件的配置，
-比如gnome桌面，比如vim等等。
+该仓库使用nix expression，而非nix flakes。
+该仓库使用NixOS稳定源（目前版本22.11），而非非稳定源（unstable）。
+该仓库的配置多平台都可以正常使用，
+
+* NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
+* Nix: Linux✅，安卓（nix-on-droid）✅，WSL2✅
 你可以使用该仓库的配置，配置出完整NixOS操作系统。
 也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
-若你想尝试使用NixOS，可参考下面的[安装NixOS](#安装nixos)和[配置Nix](#配置nix)。
-若你只想尝试Nix，则可跳过[安装NixOS](#安装nixos)，直接阅读[配置Nix](#配置nix)。
 若你不仅只是想安装Nix/NixOS，还想了解更多Nix/NixOS的知识，
 欢迎看看我的关于Nix/NixOS的博客[xieby1.github.io/Distro/Nix/](https://xieby1.github.io/Distro/Nix/)。
-
-* 使用nix expression，而非nix flakes
-* 使用NixOS稳定源（目前版本22.05），而非非稳定源（unstable）
-* 基于ubuntu的使用习惯
-* 多平台
-  * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
-  * Nix: Linux✅，安卓（nix-on-droid）✅，WSL2✅
 
 ## 目录
 
 <!-- vim-markdown-toc GFM -->
 
-* [文件夹结构](#文件夹结构)
-* [安装NixOS](#安装nixos)
-    * [准备镜像](#准备镜像)
-    * [分区](#分区)
-    * [文件系统](#文件系统)
-    * [基础配置](#基础配置)
-* [配置Nix](#配置nix)
-    * [导入配置](#导入配置)
-    * [设置软件源](#设置软件源)
-    * [部署配置](#部署配置)
-* [软件配置思路](#软件配置思路)
+  * [文件夹结构](#文件夹结构)
+  * [使用方法](#使用方法)
+  * [软件配置思路](#软件配置思路)
     * [gnome桌面](#gnome桌面)
-        * [Wayland or X11](#wayland-or-x11)
-        * [新增模块mime.nix](#新增模块mimenix)
-        * [新增模块gsettings.nix](#新增模块gsettingsnix)
+      * [Wayland or X11](#wayland-or-x11)
+      * [新增模块mime.nix](#新增模块mimenix)
     * [科学上网](#科学上网)
     * [文本编辑器](#文本编辑器)
-        * [NeoVim or Vim](#neovim-or-vim)
-        * [Typora替代品（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
+      * [NeoVim or Vim](#neovim-or-vim)
+      * [Typora替代品（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
     * [输入法](#输入法)
     * [chroot or docker](#chroot-or-docker)
 
@@ -50,151 +36,41 @@
 * system.nix: 系统总体配置（nixos-rebuild的配置）
   * sys/cli.nix: 系统命令行配置
   * sys/gui.nix: 系统图形配置
-* nix-on-droid.nix: 安卓总体配置（配合home-manager的配置）
 * home.nix: 用户总体配置（home-manager的配置）
   * usr/cli.nix: 用户命令行配置
   * usr/gui.nix: 用户图形配置
+* nix-on-droid.nix: 安卓总体配置（配合home-manager的配置）
 
-## 安装NixOS
+## 使用方法
 
-安装过程采用[官方安装文档](https://nixos.org/manual/nixos/stable/#sec-installation)。
-若已安装NixOS，则可跳过该步骤，直接看安装我的配置。
+安装Nix/NixOS不在此赘述，参考https://nixos.org/download.html。
 
-### 准备镜像
-
-QEMU:
-
-```bash
-# 下载minimal ISO镜像：https://nixos.org/download.html
-# 创建qemu硬盘（大小32GB）
-qemu-img create -f qcow2 <output/path/to/nix.qcow2> 32G
-# 将ISO安装到qemu硬盘
-qemu-system-x86_64 -display gtk,window-close=off -vga virtio -device e1000,netdev=net0 -netdev user,id=net0,hostfwd=tcp::5556-:22,smb=/home/xieby1/ -m 4G -smp 3 -enable-kvm -hda </path/to/nix.qcow2> -cdrom </path/to/nixos-minial.iso> -boot d &
-```
-
-物理机:
-
-```bash
-# 暂时未探究命令行连接wifi的方法
-# 所以目前使用gnome版ISO，而非minimal ISO。
-# 下载gnome ISO镜像：https://nixos.org/download.html
-# 启动U盘制作
-sudo dd if=<path/to/nixos.iso> of=</dev/your_usb>
-sync
-# 重启进入U盘系统
-# 注：需要在BIOS中取消secure boot，否则U盘无法启动。
-```
-
-### 分区
-
-进入ISO系统后，创建分区。
-一共需要3个分区：启动分区，操作系统分区，swap分区。
-QEMU和物理机单系统需要创建这3个分区。
-物理机双系统中启动分区已有，只需创建剩下2个分区。
-
-QEMU:
-
-```bash
-sudo bash
-parted /dev/sda -- mklabel msdos
-parted /dev/sda -- mkpart primary 1MiB -8GiB
-parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
-```
-
-物理机单系统:
-
-```bash
-parted /dev/sda -- mklabel gpt
-parted /dev/sda -- mkpart primary 512MiB -8GiB
-parted /dev/sda -- mkpart primary linux-swap -8GiB 100%
-parted /dev/sda -- mkpart ESP fat32 1MiB 512MiB
-parted /dev/sda -- set 3 esp on
-```
-
-物理机双系统:
-
-还未探索parted详细用法，目前使用disk软件可视化分区。
-
-* 创建Ext4分区，取名为nixos
-* 创建Other->swap分区
-
-### 文件系统
-
-```bash
-mkfs.ext4 -L nixos /dev/<系统分区>
-mkswap -L swap /dev/<swap分区>
-swapon /dev/<swap分区>
-mkfs.fat -F 32 -n boot /dev/<启动分区>      # 物理机单系统
-mount /dev/disk/by-label/nixos /mnt
-mkdir -p /mnt/boot                          # 物理机单系统&双系统
-mount /dev/disk/by-label/boot /mnt/boot     # 物理机单系统&双系统
-```
-
-### 基础配置
-
-* 生成配置文件
-```bash
-nixos-generate-config --root /mnt
-```
-* 修改/mnt/etc/nixos/configuration.nix，
-  * 修改名字`networking.hostName`
-  * 启用代理
-    * QEMU中宿主机器的ip为10.0.2.2
-    * 安装过程中需要借助别的计算机或宿主机的的代理服务
-    * 部署完我的nixos配置后，将会有clash服务，可以用虚拟机的代理服务
-    * `networking.proxy.default = "http://user:password@proxy:port/";`
-    * `networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";`
-  * （QEMU和物理机单系统）取消以下注释以开启grub支持
-    * `boot.loader.grub.device = "/dev/sda";`
-  * 取消防火墙，以便kdeconnect正常运行
-    * `networking.firewall.enable = false;`
-  * （物理机双系统）自动探测操作系统启动项
-    * `boot.loader.grub.useOSProber = true;`
-  * 添加用户
-    * `users.users.xieby1`
-  * 添加软件
-    * `environment.systemPackages = with pkgs; [vim git];`
-
-最后
-
-```bash
-nixos-install
-reboot
-```
-
-重启之后，进入NixOS。
-
-## 配置Nix
-
-安装Nix参考https://nixos.org/download.html
-
-### 导入配置
-
-在基础配置中，导入我的配置。
+首先下载我的配置
 
 ```bash
 git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
+# [仅NixOS] 在imports中添加system.nix的路径
 vim /etc/nixos/configuration.nix
-# 在imports中添加system.nix的路径
 ```
 
-### 设置软件源
-
-注：在Nix中`sudo`可以省掉。
+然后设置软件源，在NixOS中推荐使用`sudo`。
 
 ```bash
 # 替换为清华的最新稳定源
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.05 nixos # 对于NixOS
-sudo nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.05 nixpkgs # 对于Nix
+# [对于NixOS]
+nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.11 nixos
+# [对于Nix]
+nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.11 nixpkgs
 # 添加home manager源
-sudo nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.05.tar.gz home-manager
-sudo nix-channel --update
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz home-manager
+nix-channel --update
 ```
 
-### 部署配置
+最后部署配置
 
 ```bash
-sudo nixos-rebuild switch # 仅NixOS
+# [仅NixOS]
+sudo nixos-rebuild switch
 # 安装home-manager
 nix-shell '<home-manager>' -A install
 home-manager switch
@@ -219,13 +95,6 @@ home-manager switch
 该模块用于配置文件类型和默认打开程序。
 通过xdg-mime实现类型设置和默认程序设置。
 
-#### 新增模块gsettings.nix
-
-该模块用于gsettings配置。
-现有的dconf.settings并不能完成所有gsettings的功能。
-比如gnome-termimal的顶部栏需要通过gsettings隐藏。
-原因参考[该回答](https://askubuntu.com/questions/416556/shouldnt-dconf-editor-and-gsettings-access-the-same-database)
-gsettings(schema id)和dconf(schema path)存在区别。
 
 ### 科学上网
 
@@ -270,4 +139,3 @@ chroot需要挂载诸多目录，才能使ubuntu正常运行。
 但是NixOS并不提供FHS需要的众多目录。
 
 因此使用docker提供ubuntu命令行环境。
-
