@@ -46,11 +46,13 @@ let
     # )
     # Available languages see:
     #   https://github.com/nvim-treesitter/nvim-treesitter
-    plugin = pkgs.vimPlugins.nvim-treesitter;
+    plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
     type = "lua";
     config = ''
       require 'nvim-treesitter.configs'.setup {
-        ensure_installed = {"c", "cpp", "python", "markdown"},
+        -- TODO: https://github.com/NixOS/nixpkgs/issues/189838
+        -- ensure_installed = {"c", "cpp", "python", "markdown"},
+        ensure_installed = {},
         sync_install = false,
         highlight = {
           enable = true,
