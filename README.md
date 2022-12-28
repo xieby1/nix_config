@@ -7,6 +7,7 @@
 
 * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
 * Nix: Linux✅，安卓（nix-on-droid）✅，WSL2✅
+
 你可以使用该仓库的配置，配置出完整NixOS操作系统。
 也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
 若你不仅只是想安装Nix/NixOS，还想了解更多Nix/NixOS的知识，
@@ -16,18 +17,22 @@
 
 <!-- vim-markdown-toc GFM -->
 
-  * [文件夹结构](#文件夹结构)
-  * [使用方法](#使用方法)
-  * [软件配置思路](#软件配置思路)
-    * [gnome桌面](#gnome桌面)
-      * [Wayland or X11](#wayland-or-x11)
-      * [新增模块mime.nix](#新增模块mimenix)
-    * [科学上网](#科学上网)
-    * [文本编辑器](#文本编辑器)
-      * [NeoVim or Vim](#neovim-or-vim)
-      * [Typora替代品（Obsidian or Marktext）](#typora替代品obsidian-or-marktext)
-    * [输入法](#输入法)
-    * [chroot or docker](#chroot-or-docker)
+* [文件夹结构](#文件夹结构)
+* [使用方法](#使用方法)
+* [软件配置思路](#软件配置思路)
+  * [X11 Gnome桌面](#x11-gnome桌面)
+    * [新增模块mime.nix](#新增模块mimenix)
+  * [Windows程序（wrapWine）](#windows程序wrapwine)
+  * [网页应用](#网页应用)
+  * [Systemd用户服务](#systemd用户服务)
+  * [Clash科学上网](#clash科学上网)
+  * [Tailscale](#tailscale)
+  * [Non-NixOS bash-completion](#non-nixos-bash-completion)
+  * [Neovim](#neovim)
+  * [Typora](#typora)
+  * [输入法](#输入法)
+  * [chroot or docker](#chroot-or-docker)
+  * [TODO: terminal](#todo-terminal)
 
 <!-- vim-markdown-toc -->
 
@@ -78,53 +83,78 @@ home-manager switch
 
 ## 软件配置思路
 
-### gnome桌面
-
-#### Wayland or X11
+### X11 Gnome桌面
 
 我使用的部分软件依赖于x11，在wayland中无法运行，因此选用x11。
-例如autokey（尝试espanso代替autokey）。
-在找到合适的替代品前，仍然保持x11。
-
-界面、插件、快捷键等影响桌面系统使用体验的直观感受。
-使用gui/gnome.nix中的配置gnome桌面系统。
-其中的大量设置可以通过dconf查看/修改，以辅助修改。
+在wayland足够成熟前，仍然保持x11。
 
 #### 新增模块mime.nix
 
 该模块用于配置文件类型和默认打开程序。
 通过xdg-mime实现类型设置和默认程序设置。
+例如默认使用xdot打开.dot结尾的文件，
+详细见`usr/gui/mime.nix`。
 
+### Windows程序（wrapWine）
 
-### 科学上网
+详细见`usr/gui/wrapWine.nix`和`usr/gui/weixin.nix`。
+以Windows微信为例，使用方法：
 
-使用clash。
-手动将机场提供clash的config.yaml放在`~/.config/clash/config.yaml`即可。
+```nix
+let
+  weixin = import (builtins.fetchurl "https://raw.githubusercontent.com/xieby1/nix_config/main/usr/gui/weixin.nix") {
+    wrapWine = import (builtins.fetchurl "https://raw.githubusercontent.com/xieby1/nix_config/main/usr/gui/wrapWine.nix") {};
+  };
+in
+weixin
+```
 
-### 文本编辑器
+### 网页应用
 
-#### NeoVim or Vim
+TODO: singleton webapp
 
-NixOS社区对NeoVim和Vim的支持是不平等的，
-从插件管理就能看出。
+TODO: wrapWebApp
 
-配置vim插件需要vim_configurable.customize，
-十分繁杂，
-详细可见nixpkgs git commit: 3feff06b4dee3fd59312204eee0a2af948098376。
+使用Chrome系列浏览器的`--app="URL"`来实现网页应用。
+通过xdotool保证有且仅有一个网页应用被打开。
+详细见`usr/gui/singleton_web_apps.nix`。
 
-NeoVim使用programs.neovim.plugins即可，
-因此选用NeoVim。
+### Systemd用户服务
 
-#### Typora替代品（Obsidian or Marktext）
+TODO:
 
-[Typora加入"anti-user encryption"](https://github.com/NixOS/nixpkgs/issues/138329)后，
-nixpkgs社区停止对typora的支持。
+使用systemd的用户服务(user service)，
+这使得在非NixOS平台也能正常使用服务。
 
-Marktext更新慢，至今仍未支持插件。
-每次关闭文件，不管是否编辑，
-都会提示是否保存。
+### Clash科学上网
 
-Obsidian体验还不错！
+命令行clash+网页控制，
+这样的组合方便WSL和nix-on-droid这类无图形界面的使用场景。
+
+添加了systemd user服务，详见`./usr/cli.nix: systemd.user.services.clash`的定义。
+使用网页http://clash.razord.top来管理clash。
+网页应用的定义见`./usr/gui/singleton_web_apps.nix`。
+
+### Tailscale
+
+TODO:
+
+### Non-NixOS bash-completion
+
+TODO:
+
+### Neovim
+
+所有的vim配置都在`usr/cli/vim.nix`中。
+
+### Typora
+
+使用方法见`usr/gui.nix: mytypora`的定义。
+采用nixpkgs支持的最后的typora版本，即0.9.98。
+
+注：我尝试打包0.11.18，
+发现这个版本会检测文件完整性，
+因此基本上没办法用nix进行二次打包。
 
 ### 输入法
 
@@ -135,7 +165,11 @@ Obsidian体验还不错！
 
 ### chroot or docker
 
+TODO: podman, conenv.sh
+
 chroot需要挂载诸多目录，才能使ubuntu正常运行。
 但是NixOS并不提供FHS需要的众多目录。
 
 因此使用docker提供ubuntu命令行环境。
+
+### TODO: terminal
