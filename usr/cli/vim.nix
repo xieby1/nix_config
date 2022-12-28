@@ -38,7 +38,7 @@ let
   };
   # pluginWithConfigType is not displayed in `man home-configuration.nix`
   # see its avaiable config in `home-manager/modules/programs/neovim.nix`
-  myTreesitters = {
+  my-nvim-treesitter = {
     # TODO: declarative way to add nvim-treesitter's plugins
     # https://nixos.wiki/wiki/Tree_sitters
     # (
@@ -261,7 +261,7 @@ in
       augroup END
       "" clear tailing space
       nnoremap <leader>f :%s/\s*$//g<CR>
-      
+
       " filetype
       augroup filetype
           " detect LLVM IR file
@@ -269,7 +269,7 @@ in
           " cpp " from gem5
           au! BufRead,BufNewFile *.hh.inc,*.cc.inc set filetype=cpp
       augroup END
-      
+
       " cscope
       " inspired by https://linux-kernel-labs.github.io/refs/heads/master/labs/introduction.html
       if has("cscope")
@@ -284,11 +284,11 @@ in
               endif
               let s:dirs = s:dirs[:-2]
           endwhile
-      
+
           set csto=0  " Use cscope first, then ctags
           set cst     " Only search cscope
           set csverb  " Make cs verbose
-      
+
           " 0 symbol
           nmap <C-\>s :cs find s <C-R><C-W><CR>
           nmap <C-\>S :cs find s<Space>
@@ -315,22 +315,22 @@ in
           " 9 assign
           nmap <C-\>a :cs find a <C-R><C-W><CR>
           nmap <C-\>A :cs find a<Space>
-      
+
           " Open a quickfix window for the following queries.
           "set cscopequickfix=s-,c-,d-,i-,t-,e-,g-
           "nmap <F6> :cnext <CR>
           "nmap <F5> :cprev <CR>
       endif
-      
+
       " set terminal title
       "" https://stackoverflow.com/questions/15123477/tmux-tabs-with-name-of-file-open-in-vim
       autocmd BufEnter * let &titlestring = "" . expand("%:t")
       set title
-      
+
       nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-      
+
       " highlight
       augroup HiglightTODO
           autocmd!
@@ -350,7 +350,7 @@ in
       vim-markdown-toc
       my-vista-vim
       vim-commentary
-      myTreesitters
+      my-nvim-treesitter
       # python lsp support:
       #   coc related info:
       #     https://github.com/neoclide/coc.nvim/wiki/Language-servers#python
@@ -577,73 +577,4 @@ in
       nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
     '';
   };
-
-  # 1.
-  #home.packages = with pkgs; [
-  #  # refer to https://nixos.wiki/wiki/Vim#Add_a_new_custom_plugin_to_the_users_packages
-  #  # while I use VAM, so there are differences between above link and below
-  #  (vim_configurable.customize {
-  #    name = "vim"; # different to system-wide vim
-  #    # noted: no quote in relative path, if so,
-  #    # builtins.readFile "./vim/xvimrc" won't work
-  #    vimrcConfig.customRC = builtins.readFile ./../vim/xvimrc;
-  #    vimrcConfig.vam.knownPlugins = pkgs.vimPlugins // {
-  #      # add my cutomized vim plugins
-  #      inherit vim-mark vim-ingo-library DrawIt;
-  #    };
-  #    vimrcConfig.vam.pluginDictionaries = [
-  #      "vim-gitgutter"
-  #      "vim-smoothie"
-  #      "vim-mark"
-  #      "vim-ingo-library"
-  #      "ale"
-  #      "YouCompleteMe"
-  #      "vim-fugitive"
-  #      "git-messenger-vim"
-  #      "DrawIt"
-  #      "vim-nix"
-  #    ];
-  #  })
-  #];
-
-  # 2.
-  # home-manager:
-  # home-manager currently cannot manage customized vim plugin
-  #
-  #programs.vim = {
-  #  enable = true;
-  #  #plugins = with pkgs.vimPlugins; [
-  #  #  vim-gitgutter
-  #  #  vim-smoothie
-  #  #];
-  #programs.vim.packageConfigurable =
-  #  pkgs.vim_configurable.customize {
-  #  };
-  #};
-
-  # 3.
-  # Directly use my github repo:
-  # ~/.vim is not a git repo, so experience is not good
-  #
-  # ${home.homeDirectory} refer to `man home-configuration.nix`
-  #home.file."${config.home.homeDirectory}/.vim" = {
-  #  #recursive = true;
-  #  # 3.3
-  #  # fetchgit reserve .git, but belongs to root, cannot modify by user
-  #  source = pkgs.fetchgit {
-  #    url = "https://github.com/xieby1/vimrc";
-  #    sha256 = "0h7mkhc0mqv2a1syffv0mb4dblgbgv72rlvs4ldxi03wm227h8r6";
-  #    # ssh not work? may be executed by root?
-  #    #url = "git@github.com:xieby1/vimrc.git";
-  #    leaveDotGit = true;
-  #  };
-  #  # 3.2
-  #  #source = /home/xieby1/vimrc;
-  #  # 3.1
-  #  #source = builtins.fetchGit {
-  #  #  url = "git@github.com:xieby1/vimrc.git";
-  #  #  ref = "master";
-  #  #  submodules = true;
-  #  #};
-  #};
 }
