@@ -55,7 +55,7 @@ in
   #   nix-channel --add https://github.com/rycee/home-manager/archive/release-21.11.tar.gz home-manager
   #   nix-channel --update
   # you can configure home-manager in here like
-  home-manager.config = import ./usr/cli.nix;
+  home-manager.config = import ./home.nix;
   #home-manager.config =
   #  { pkgs, lib, ... }:
   #  {
