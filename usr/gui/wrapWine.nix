@@ -1,5 +1,5 @@
 # based on https://github.com/lucasew/nixcfg/blob/49d44c1a655f1c20d7354ecea942c78704067d50/pkgs/wrapWine.nix
-{ pkgs }:
+{ pkgs ? import <nixpkgs> {} }:
 let
   inherit (builtins) length concatStringsSep;
   inherit (pkgs) lib cabextract
