@@ -12,7 +12,11 @@ let
   myxdot = pkgs.symlinkJoin {
     name = "myxdot";
     paths = [
-      pkgs.xdot
+      # TODO: xdot gobject-introspection dependency broken
+      #   refers to https://github.com/NixOS/nixpkgs/pull/206186
+      (pkgs.xdot.overrideAttrs (old: {
+        nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.gobject-introspection];
+      }))
       (pkgs.makeDesktopItem {
         name = "xdot";
         desktopName = "xdot";
