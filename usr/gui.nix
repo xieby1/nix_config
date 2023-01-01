@@ -71,6 +71,7 @@ in
     imhex
     xelfviewer
     vlc
+    xournalpp # pdf annotation
     # management
     zotero
     barrier
