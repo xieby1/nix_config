@@ -338,6 +338,13 @@ in
           autocmd!
           autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
       augroup END
+
+      " wildmenu
+      " see: https://github.com/neovim/neovim/pull/11001
+      cnoremap <expr> <Up>    pumvisible() ? "\<Left>"  : "\<Up>"
+      cnoremap <expr> <Down>  pumvisible() ? "\<Right>" : "\<Down>"
+      cnoremap <expr> <Left>  pumvisible() ? "\<Up>"    : "\<Left>"
+      cnoremap <expr> <Right> pumvisible() ? "\<Down>"  : "\<Right>"
     '';
     plugins = with pkgs.vimPlugins; [
       my-vim-gitgutter
