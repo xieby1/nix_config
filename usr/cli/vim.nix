@@ -39,14 +39,16 @@ let
   # pluginWithConfigType is not displayed in `man home-configuration.nix`
   # see its avaiable config in `home-manager/modules/programs/neovim.nix`
   my-nvim-treesitter = {
-    # TODO: declarative way to add nvim-treesitter's plugins
-    # https://nixos.wiki/wiki/Tree_sitters
-    # (
-    #   nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars)
-    # )
     # Available languages see:
     #   https://github.com/nvim-treesitter/nvim-treesitter
-    plugin = pkgs.vimPlugins.nvim-treesitter.withAllGrammars;
+    # see `pkgs.tree-sitter.builtGrammars.`
+    # with `tree-sitter-` prefix and `-grammar` suffix removed
+    plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (p: with p; [
+      c
+      cpp
+      python
+      markdown
+    ]);
     type = "lua";
     config = ''
       require 'nvim-treesitter.configs'.setup {
