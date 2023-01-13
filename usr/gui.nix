@@ -38,6 +38,7 @@ in
     ./gui/mime.nix
     ./gui/terminal.nix
     ./gui/singleton_web_apps.nix
+    ./gui/rofi.nix
   ];
 
   home.packages = with pkgs; [

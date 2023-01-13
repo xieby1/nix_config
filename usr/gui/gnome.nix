@@ -13,7 +13,6 @@
     gtile
     hide-top-bar
     lightdark-theme-switcher
-    switcher
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -31,7 +30,6 @@
         "system-monitor@paradoxxx.zero.gmail.com"
         "unite@hardpixel.eu"
         "theme-switcher@fthx"
-        "switcher@landau.fi"
       ];
 
       ## dock icons
@@ -111,13 +109,6 @@
       market="zh-CN";
       delete-previous=true;
       download-folder="/tmp/pictures";
-    };
-    "org/gnome/shell/extensions/switcher" = {
-      fade-enable=true;
-      font-size=lib.hm.gvariant.mkUint32 18;
-      icon-size=lib.hm.gvariant.mkUint32 18;
-      show-executables=true;
-      workspace-indicator=true;
     };
 
     # predefined keyboard shortcuts
