@@ -11,6 +11,7 @@
   #   * Pros
   #     * Esay configurable
   #     * Icon display correctly (e.g. Vim-vista)
+  #     * input method fcitx works
   #   * Cons
   #     * Not native tab support
   #       https://github.com/alacritty/alacritty/issues/3129
@@ -27,44 +28,21 @@
   #     * Esay configurable
   #   * Cons
   #     * Icon display incorrectly (e.g. Vim-vista)
+  #     * input method support solved by fcitx5
   # * hyper
   #   * Cons
   #     * scroll speed is too fast!
 
   # shortcuts
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
-    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/alacritty/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty/"
   ];
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/alacritty" = {
-    binding="<Primary><Alt>a";
-    command= "gtk-launch tabbedAlacritty.desktop";
-    name="alacritty";
-  };
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty" = {
     binding="<Primary><Alt>t";
     command = "kitty";
     name="terminal";
   };
 
-  ################## Alacritty ##################
-  home.packages = with pkgs; [
-    (tabbed.overrideAttrs (old: {patches = [./tabbed_alt.patch];}))
-  ];
-
-  programs.alacritty.enable = true;
-  home.file.alacritty = {
-    source = ./alacritty.yml;
-    target = ".config/alacritty/alacritty.yml";
-  };
-  # tabbed alacritty
-  home.file.tabbedAlacritty = {
-    source = ./tabbedAlacritty.desktop;
-    target = ".local/share/applications/tabbedAlacritty.desktop";
-  };
-
-
-  #################### Kitty ####################
   programs.kitty = {
     enable = true;
     environment = {
