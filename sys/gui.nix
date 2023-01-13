@@ -26,17 +26,14 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.xserver.libinput.enable = true;
 
-  #i18n.inputMethod.enabled = "fcitx5";
-  #i18n.inputMethod.fcitx5.addons = with pkgs; [
-  #  fcitx5-configtool
-  #  fcitx5-chinese-addons
-  #  fcitx5-mozc
-  #];
-  i18n.inputMethod.enabled = "fcitx";
-  i18n.inputMethod.fcitx.engines = with pkgs.fcitx-engines; [
-    cloudpinyin
-    mozc
-    hangul
+  # https://github.com/kovidgoyal/kitty/issues/403
+  environment.variables.GLFW_IM_MODULE = "ibus";
+  i18n.inputMethod.enabled = "fcitx5";
+  i18n.inputMethod.fcitx5.addons = with pkgs; [
+    fcitx5-configtool
+    fcitx5-chinese-addons
+    fcitx5-mozc
+    fcitx5-hangul
   ];
 
   nixpkgs.config.allowUnfree = true;
