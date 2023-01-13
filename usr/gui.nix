@@ -42,6 +42,7 @@ in
   ];
 
   home.packages = with pkgs; [
+    libnotify
     # browser
     google-chrome
     firefox
