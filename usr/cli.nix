@@ -155,7 +155,7 @@ in
     qemu
   ]
   ### allow non-nixos access `man configuration.nix`
-  ++ (pkgs.lib.optional (!isSys) dummySys.config.system.build.manual.manpages.outPath);
+  ++ (pkgs.lib.optional (!isSys) dummySys.config.system.build.manual.manpages);
 
   # git
   programs.git = {
