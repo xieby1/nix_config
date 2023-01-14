@@ -47,6 +47,7 @@ in {
     tclx
   ];
 
+  # see https://github.com/flightaware/tclreadline/blob/master/sample.tclshrc
   home.file.tclshrc = {
     text = let
       u_red   = "\\[01;31m";
@@ -59,6 +60,9 @@ in {
       if {$tcl_interactive} {
         package require Tclx
         package require tclreadline
+
+        # tclreadline's fancy ls proc
+        namespace import tclreadline::ls
 
         # based on <nixpkgs.tclreadline>/lib/tclreadline2.3.8/tclreadlineSetup.tcl
         namespace eval ::tclreadline {
