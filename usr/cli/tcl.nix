@@ -96,12 +96,12 @@ in {
             }
             return "$prompt_string:${u_blue}$pwd\n${u_green}> ${u_white}"
         }
-
+    '' + (pkgs.lib.optionalString (config.home.username != "nix-on-droid") ''
         signal -restart trap SIGINT {
           puts -nonewline stdout "^C\n[::tclreadline::prompt1]"
           exec ${ioctl}/bin/ioctl /proc/self/fd/0 "\[H"
         }
-
+    '') + ''
         ::tclreadline::Loop
       }
     '';
