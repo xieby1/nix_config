@@ -50,6 +50,7 @@ in
 {
   imports = [
     ./cli/vim.nix
+    ./cli/tcl.nix
   ];
 
   home.packages = with pkgs; [
