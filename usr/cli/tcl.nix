@@ -1,5 +1,43 @@
 { config, pkgs, stdenv, lib, ... }:
-{
+let
+  # inspired by https://stackoverflow.com/questions/73542495/writing-to-file-descriptor-0-stdin-only-affects-terminal-program-doesnt-read
+  ioctl = pkgs.writeCBin "ioctl" ''
+    #include <sys/ioctl.h> /* ioctl */
+    #include <stdio.h> /* printf, perror */
+    #include <fcntl.h> /* open */
+    #include <errno.h> /* errno */
+    #include <unistd.h> /* close */
+
+    int main(int argc, char **argv) {
+        int fd;
+        char* input;
+        if (argc == 3) {
+            fd = open(argv[1], O_RDWR);
+            if (fd < 0) {
+                perror("Failed to open fd");
+                return errno;
+            }
+            input = argv[2];
+        } else {
+            printf("Usage: %s <path to stdin> <input>\n",
+                    argv[0]);
+            return 1;
+        }
+
+        for (int i=0; input[i]!='\0'; i++) {
+            int res = ioctl(fd, TIOCSTI, input+i);
+            if (res < 0) {
+                perror("ioctl");
+                close(fd);
+                return errno;
+            }
+        }
+        close(fd);
+
+        return 0;
+    }
+  '';
+in {
   home.packages = with pkgs; [
     tcl
     # enable readline
@@ -20,13 +58,6 @@
       ## https://comp.lang.tcl.narkive.com/WnpY54UP/disabling-ignoring-ctrl-c
       if {$tcl_interactive} {
         package require Tclx
-        # TODO: xdotool is too slow
-        signal -restart trap SIGINT {
-            exec xdotool key --clearmodifiers "Home"
-            exec xdotool key --clearmodifiers "ctrl+k"
-            exec xdotool key --clearmodifiers "Enter"
-        }
-
         package require tclreadline
 
         # based on <nixpkgs.tclreadline>/lib/tclreadline2.3.8/tclreadlineSetup.tcl
@@ -62,10 +93,12 @@
             return "$prompt_string:${u_blue}$pwd\n${u_green}> ${u_white}"
         }
 
-        ::tclreadline::Loop
+        signal -restart trap SIGINT {
+          puts -nonewline stdout "^C\n[::tclreadline::prompt1]"
+          exec ${ioctl}/bin/ioctl /proc/self/fd/0 "\[H"
+        }
 
-        package require Tclx
-        signal -restart trap SIGINT {puts stderr "signal %S received}
+        ::tclreadline::Loop
       }
     '';
     target = ".tclshrc";
