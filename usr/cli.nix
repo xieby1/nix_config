@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
+  isNixOnDroid = config.home.username == "nix-on-droid";
   mytailscale = let
     mytailscale-wrapper = {
       suffix, port
@@ -49,6 +50,8 @@ let
 in
 {
   imports = [
+    ./cli/vim.nix
+    ./cli/tcl.nix
     {
       home.packages = [pkgs.fzf];
       programs.bash.bashrcExtra = ''
@@ -69,7 +72,7 @@ in
           ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
         };
       };
-      programs.bash.bashrcExtra = lib.optionalString (config.home.username != "nix-on-droid") ''
+      programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
         # proxy
         ## default
         HTTP_PROXY="http://127.0.0.1:8889/"
@@ -85,9 +88,24 @@ in
         export https_proxy="$HTTP_PROXY"
         export ftp_proxy="$HTTP_PROXY"
       '';
+    } {
+      home.packages = lib.optional (!isNixOnDroid) pkgs.hstr;
+      programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
+        # HSTR configuration - add this to ~/.bashrc
+        alias hh=hstr                    # hh to be alias for hstr
+        export HSTR_CONFIG=hicolor       # get more colors
+        shopt -s histappend              # append new history items to .bash_history
+        export HISTCONTROL=ignorespace   # leading space hides commands from history
+        export HISTFILESIZE=10000        # increase history file size (default is 500)
+        export HISTSIZE=$HISTFILESIZE  # increase history size (default is 500)
+        # ensure synchronization between bash memory and history file
+        export PROMPT_COMMAND="history -a;"
+        # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
+        if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+        # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+        if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+      '';
     }
-    ./cli/vim.nix
-    ./cli/tcl.nix
   ];
 
   home.packages = with pkgs; [
@@ -171,9 +189,6 @@ in
     libxml2
     ## bash
     bc
-  ] ++ (if builtins.currentSystem == "x86_64-linux"
-      then [hstr] else []
-  ) ++ [
     ## javascript
     nodePackages.typescript
     ### node
