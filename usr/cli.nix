@@ -164,6 +164,34 @@ in
           sshd-start &> /dev/null &
       fi
     '';
+  }{
+    home.packages = with pkgs; [
+      gitui
+      mr
+      git-wip
+    ];
+    programs.git = {
+      enable = true;
+      package = pkgs.gitFull;
+      userEmail = "xieby1@outlook.com";
+      userName = "xieby1";
+      extraConfig = {
+        core = {
+          editor = "vim";
+        };
+      };
+      aliases = {
+        viz = "log --all --decorate --oneline --graph";
+      };
+    };
+    home.file.mr = {
+      text = if builtins.pathExists ~/Gist/Config/mrconfig
+        then builtins.readFile ~/Gist/Config/mrconfig
+        else "";
+      target = ".mrconfig";
+    };
+    # mr status not work in non-home dir
+    programs.bash.shellAliases.mr = "mr -d ~";
   }];
 
   home.packages = with pkgs; [
@@ -172,9 +200,6 @@ in
     comma
     nix-index
     xclip
-    ## repo
-    gitui
-    mr
     ## archive
     unar
     ## manage
@@ -221,7 +246,6 @@ in
     sloccount
     linuxPackages.perf
     flamegraph
-    git-wip
     ## python
     ( python3.withPackages ( p: with p; [
       ipython
@@ -264,42 +288,9 @@ in
   ### allow non-nixos access `man configuration.nix`
   ++ (pkgs.lib.optional (!isSys) dummySys.config.system.build.manual.manpages);
 
-  # git
-  programs.git = {
-    enable = true;
-    package = pkgs.gitFull;
-    userEmail = "xieby1@outlook.com";
-    userName = "xieby1";
-    extraConfig = {
-      core = {
-        editor = "vim";
-      };
-    };
-    aliases = {
-      viz = "log --all --decorate --oneline --graph";
-    };
-  };
-
-  # mr
-  home.file.mr =
-    if builtins.pathExists ~/Gist/Config/mrconfig
-    then
-    {
-      source = ~/Gist/Config/mrconfig;
-      target = ".mrconfig";
-    }
-    else
-    {
-      text = "";
-      target = ".mrconfig";
-    };
-
   # bash
   programs.bash.enable = true;
-  programs.bash.shellAliases = {
-    view = "nvim -R";
-    mr = "mr -d ~"; # mr status not work in non-home dir
-  };
+  programs.bash.shellAliases.view = "nvim -R";
   programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc
     # inspired by
     ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
