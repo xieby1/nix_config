@@ -19,8 +19,11 @@ let
       chmod a+x $dst
     '';
   };
-  isSys = (builtins.tryEval <nixos-config>).success;
-  dummySys = import <nixpkgs/nixos> {configuration={};};
+  sysconfig = (
+    if (builtins.tryEval <nixos-config>).success
+    then import <nixpkgs/nixos> {}
+    else import <nixpkgs/nixos> {configuration={};}
+  ).config;
 in
 {
   imports = [ # files
@@ -243,13 +246,12 @@ in
     ## nix
     rnix-lsp
     nixos-option
-
+    ### allow non-nixos access `man configuration.nix`
+    sysconfig.system.build.manual.manpages
     # runXonY
     debootstrap
     qemu
-  ]
-  ### allow non-nixos access `man configuration.nix`
-  ++ (pkgs.lib.optional (!isSys) dummySys.config.system.build.manual.manpages);
+  ];
 
   # bash
   programs.bash.enable = true;
@@ -289,24 +291,22 @@ in
     if [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]]; then
         source ~/.nix-profile/etc/profile.d/nix.sh
     fi
+
+    # bash-completion, inspired by
+    ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
+    # system tools completion, e.g. nix
+    XDG_DATA_DIRS+=":${sysconfig.system.path}/share"
+    # home tools completion
+    XDG_DATA_DIRS+=":${config.home.path}/share"
+    export XDG_DATA_DIRS
+    . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
   '' + lib.optionalString isNixOnDroid ''
     # alias all script
     ## due to cannot exec script under symlink directory (Gist)
     for SH in ~/Gist/script/bash/*; do
         eval "alias ''${SH##*/}='bash $SH'"
     done
-  ''
-    # inspired by
-    ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
-    + pkgs.lib.optionalString (!isSys) ''
-      # system tools completion, e.g. nix
-      XDG_DATA_DIRS+=":${dummySys.config.system.path}/share"
-      # home tools completion
-      XDG_DATA_DIRS+=":${config.home.path}/share"
-      export XDG_DATA_DIRS
-      . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
-    '';
-
+  '';
 
   home.file.gdbinit = {
     source = pkgs.fetchurl {

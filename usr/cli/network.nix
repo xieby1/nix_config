@@ -38,9 +38,28 @@ let
       };
     };
   };
+  tailscale-bash-completion = builtins.derivation {
+    name = "tailscale-bash-completion";
+    system = builtins.currentSystem;
+    src = builtins.fetchurl "https://gist.githubusercontent.com/cmtsij/f0d0be209224a7bdd67592695e1427de/raw/tailscale";
+    builder = pkgs.writeShellScript "tailscale-bash-completion-builder" ''
+      source ${pkgs.stdenv}/setup
+      dstdir=$out/share/bash-completion/completions
+      dst=$dstdir/tailscale
+      mkdir -p $dstdir
+      cp $src $dst
+      chmod +w $dst
+      echo "complete -F _tailscale tailscale-headscale" >> $dst
+      echo "complete -F _tailscale tailscale-official" >> $dst
+      chmod -w $dst
+      cd $dstdir
+      ln -s tailscale tailscale-headscale
+      ln -s tailscale tailscale-official
+    '';
+  };
 in {
   imports = [{
-    home.packages = [pkgs.tailscale];
+    home.packages = [pkgs.tailscale tailscale-bash-completion];
     programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
       # start tailscale
       if [[ -z "$(ps|grep tailscaled|grep -v grep)" ]]; then
