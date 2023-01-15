@@ -348,7 +348,9 @@ in
   };
 
   home.file.ranger_conf = {
-    source = ./cli/ranger.conf;
+    text = ''
+      set preview_images_method kitty
+    '';
     target = ".config/ranger/rc.conf";
   };
 
