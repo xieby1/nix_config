@@ -54,6 +54,7 @@ in
     #(import ./gui/weixin.nix {})
     nur.repos.linyinfeng.wemeet
     transmission-gtk
+    tdesktop
     # text
     #wpsoffice
     libreoffice
