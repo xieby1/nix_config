@@ -49,64 +49,63 @@ let
   dummySys = import <nixpkgs/nixos> {configuration={};};
 in
 {
-  imports = [
+  imports = [ # files
     ./cli/vim.nix
     ./cli/tcl.nix
-    {
-      home.packages = [pkgs.fzf];
-      programs.bash.bashrcExtra = ''
-        # FZF top-down display
-        export FZF_DEFAULT_OPTS="--reverse"
-      '';
-    } {
-      home.packages = [pkgs.clash];
-      systemd.user.services.clash = {
-        Unit = {
-          Description = "Auto start clash";
-          After = ["network.target"];
-        };
-        Install = {
-          WantedBy = ["default.target"];
-        };
-        Service = {
-          ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
-        };
+  ] ++ [{ # functions & attrs
+    home.packages = [pkgs.fzf];
+    programs.bash.bashrcExtra = ''
+      # FZF top-down display
+      export FZF_DEFAULT_OPTS="--reverse"
+    '';
+  }{
+    home.packages = [pkgs.clash];
+    systemd.user.services.clash = {
+      Unit = {
+        Description = "Auto start clash";
+        After = ["network.target"];
       };
-      programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
-        # proxy
-        ## default
-        HTTP_PROXY="http://127.0.0.1:8889/"
-        ## microsoft wsl
-        if [[ $(uname -r) == *"microsoft"* ]]; then
-            hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
-            export HTTP_PROXY="http://$hostip:8889"
-        fi
-        export HTTPS_PROXY="$HTTP_PROXY"
-        export HTTP_PROXY="$HTTP_PROXY"
-        export FTP_PROXY="$HTTP_PROXY"
-        export http_proxy="$HTTP_PROXY"
-        export https_proxy="$HTTP_PROXY"
-        export ftp_proxy="$HTTP_PROXY"
-      '';
-    } {
-      home.packages = lib.optional (!isNixOnDroid) pkgs.hstr;
-      programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
-        # HSTR configuration - add this to ~/.bashrc
-        alias hh=hstr                    # hh to be alias for hstr
-        export HSTR_CONFIG=hicolor       # get more colors
-        shopt -s histappend              # append new history items to .bash_history
-        export HISTCONTROL=ignorespace   # leading space hides commands from history
-        export HISTFILESIZE=10000        # increase history file size (default is 500)
-        export HISTSIZE=$HISTFILESIZE  # increase history size (default is 500)
-        # ensure synchronization between bash memory and history file
-        export PROMPT_COMMAND="history -a;"
-        # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
-        if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
-        # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
-        if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
-      '';
-    }
-  ];
+      Install = {
+        WantedBy = ["default.target"];
+      };
+      Service = {
+        ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
+      };
+    };
+    programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
+      # proxy
+      ## default
+      HTTP_PROXY="http://127.0.0.1:8889/"
+      ## microsoft wsl
+      if [[ $(uname -r) == *"microsoft"* ]]; then
+          hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
+          export HTTP_PROXY="http://$hostip:8889"
+      fi
+      export HTTPS_PROXY="$HTTP_PROXY"
+      export HTTP_PROXY="$HTTP_PROXY"
+      export FTP_PROXY="$HTTP_PROXY"
+      export http_proxy="$HTTP_PROXY"
+      export https_proxy="$HTTP_PROXY"
+      export ftp_proxy="$HTTP_PROXY"
+    '';
+  }{
+    home.packages = lib.optional (!isNixOnDroid) pkgs.hstr;
+    programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
+      # HSTR configuration - add this to ~/.bashrc
+      alias hh=hstr                    # hh to be alias for hstr
+      export HSTR_CONFIG=hicolor       # get more colors
+      shopt -s histappend              # append new history items to .bash_history
+      export HISTCONTROL=ignorespace   # leading space hides commands from history
+      export HISTFILESIZE=10000        # increase history file size (default is 500)
+      export HISTSIZE=$HISTFILESIZE  # increase history size (default is 500)
+      # ensure synchronization between bash memory and history file
+      export PROMPT_COMMAND="history -a;"
+      # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
+      if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
+      # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
+      if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
+    '';
+  }];
 
   home.packages = with pkgs; [
     # tools
