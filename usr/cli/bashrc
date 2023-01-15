@@ -24,9 +24,6 @@ unset u_green u_blue u_white
 ### https://unix.stackexchange.com/questions/177572/
 PS1+="\[\e]2;\w\a\]"
 
-# FZF top-down display
-export FZF_DEFAULT_OPTS="--reverse"
-
 # proxy
 ## default
 HTTP_PROXY="http://127.0.0.1:8889/"

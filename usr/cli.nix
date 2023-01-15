@@ -49,6 +49,13 @@ let
 in
 {
   imports = [
+    {
+      home.packages = [pkgs.fzf];
+      programs.bash.bashrcExtra = ''
+        # FZF top-down display
+        export FZF_DEFAULT_OPTS="--reverse"
+      '';
+    }
     ./cli/vim.nix
     ./cli/tcl.nix
   ];
@@ -86,7 +93,6 @@ in
     ## file system
     tree
     file
-    fzf
     ranger
     ## network
     frp
