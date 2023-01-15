@@ -141,8 +141,6 @@ in
       export HSTR_CONFIG=hicolor       # get more colors
       shopt -s histappend              # append new history items to .bash_history
       export HISTCONTROL=ignorespace   # leading space hides commands from history
-      export HISTFILESIZE=10000        # increase history file size (default is 500)
-      export HISTSIZE=$HISTFILESIZE  # increase history size (default is 500)
       # ensure synchronization between bash memory and history file
       export PROMPT_COMMAND="history -a;"
       # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
@@ -300,7 +298,49 @@ in
 
   # bash
   programs.bash.enable = true;
-  programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc
+  programs.bash.shellAliases.o = "xdg-open";
+  programs.bash.shellAliases.ll = "ls --color -l";
+  programs.bash.shellAliases.ls = "ls --color";
+  programs.bash.bashrcExtra = ''
+    # rewrite prompt format
+    u_green="\[\033[01;32m\]"
+    u_blue="\[\033[01;34m\]"
+    u_white="\[\033[00m\]"
+    PS1="''${debian_chroot:+($debian_chroot)}"
+    if [[ $HOSTNAME =~ qemu.* ]]; then
+        PS1+="(qemu)"
+    fi
+    if [[ -n "$IN_NIX_SHELL" ]]; then
+        PS1+="(''${name}.$IN_NIX_SHELL)"
+    fi
+    PS1+="''${u_green}\u${lib.optionalString (!isNixOnDroid) "@\\h"}''${u_white}:"
+    PS1+="''${u_blue}\w''${u_white}"
+    PS1+="\n''${u_green}\$''${u_white} "
+    unset u_green u_blue u_white
+    ## change title
+    ### https://unix.stackexchange.com/questions/177572/
+    PS1+="\[\e]2;\w\a\]"
+
+    # nixos obsidian
+    export NIXPKGS_ALLOW_INSECURE=1
+
+    # source my bashrc
+    if [[ -f ~/Gist/Config/bashrc ]]; then
+        source ~/Gist/Config/bashrc
+    fi
+
+    # user nix config setting
+    export NIX_USER_CONF_FILES=~/.config/nixpkgs/nix/nix.conf
+    if [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]]; then
+        source ~/.nix-profile/etc/profile.d/nix.sh
+    fi
+  '' + lib.optionalString isNixOnDroid ''
+    # alias all script
+    ## due to cannot exec script under symlink directory (Gist)
+    for SH in ~/Gist/script/bash/*; do
+        eval "alias ''${SH##*/}='bash $SH'"
+    done
+  ''
     # inspired by
     ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
     + pkgs.lib.optionalString (!isSys) ''
