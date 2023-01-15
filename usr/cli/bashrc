@@ -41,10 +41,6 @@ if [[ "$USER" == "nix-on-droid" ]]; then
         tailscaled-headscale &> /dev/null &
         tailscaled-official &> /dev/null &
     fi
-    # start sshd
-    if [[ -z "$(ps|grep sshd-start|grep -v grep)" ]]; then
-        sshd-start &> /dev/null &
-    fi
 
     # alias all script
     ## due to cannot exec script under symlink directory (Gist)

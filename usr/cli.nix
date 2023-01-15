@@ -105,6 +105,20 @@ in
       # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
       if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
     '';
+  }{
+    programs.ssh.enable = true;
+    programs.ssh.extraConfig =
+      if builtins.pathExists ~/Gist/Config/ssh.conf
+      then
+        builtins.readFile ~/Gist/Config/ssh.conf
+      else
+        "";
+    programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
+      # start sshd
+      if [[ -z "$(ps|grep sshd-start|grep -v grep)" ]]; then
+          sshd-start &> /dev/null &
+      fi
+    '';
   }];
 
   home.packages = with pkgs; [
@@ -259,14 +273,6 @@ in
     source = ./cli/tmux.conf;
     target = ".tmux.conf";
   };
-
-  programs.ssh.enable = true;
-  programs.ssh.extraConfig =
-    if builtins.pathExists ~/Gist/Config/ssh.conf
-    then
-      builtins.readFile ~/Gist/Config/ssh.conf
-    else
-      "";
 
   home.file.gdbinit = {
     source = pkgs.fetchurl {
