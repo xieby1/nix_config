@@ -29,10 +29,6 @@ alias o="xdg-open"
 alias a="broot \${HOME}/Documents/Config/autokey"
 alias ll="ls --color -l"
 alias ls="ls --color"
-## nvim as manpager
-### see nvim `:h :Man`
-### nvim manpage huge mange is SLOW! E.g. man configuration.nix
-alias nman="env MANPAGER='nvim +Man!' man"
 
 # services for nix-on-droid
 if [[ "$USER" == "nix-on-droid" ]]; then

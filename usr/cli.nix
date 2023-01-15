@@ -300,7 +300,6 @@ in
 
   # bash
   programs.bash.enable = true;
-  programs.bash.shellAliases.view = "nvim -R";
   programs.bash.bashrcExtra = builtins.readFile ./cli/bashrc
     # inspired by
     ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16

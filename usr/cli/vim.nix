@@ -165,6 +165,11 @@ let
 in
 {
   # neovim
+  programs.bash.shellAliases.view = "nvim -R";
+  # nvim as manpager
+  ## see nvim `:h :Man`
+  ## nvim manpage huge mange is SLOW! E.g. man configuration.nix
+  programs.bash.shellAliases.nman = "env MANPAGER='nvim +Man!' man";
   programs.neovim = {
     enable = true;
     viAlias = true;
