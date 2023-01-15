@@ -2,9 +2,7 @@
 let
   isNixOnDroid = config.home.username == "nix-on-droid";
   mytailscale = let
-    mytailscale-wrapper = {
-      suffix, port
-    }: [
+    mytailscale-wrapper = {suffix, port}: [
       (pkgs.writeShellScriptBin "tailscale-${suffix}" ''
         tailscale --socket /tmp/tailscale-${suffix}.sock $@
       '')
@@ -89,6 +87,53 @@ in
       export ftp_proxy="$HTTP_PROXY"
     '';
   }{
+    home.packages = [mytailscale];
+    # for my headtail
+    systemd.user.services.tailscaled-headscale = {
+      Unit = {
+        Description = "Auto start tailscaled-headscale userspace network";
+        After = ["clash.service"];
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+      Service = {
+        Environment = [
+          "HTTPS_PROXY=http://127.0.0.1:8889"
+          "HTTP_PROXY=http://127.0.0.1:8889"
+          "https_proxy=http://127.0.0.1:8889"
+          "http_proxy=http://127.0.0.1:8889"
+        ];
+        ExecStart = "${mytailscale}/bin/tailscaled-headscale";
+      };
+    };
+    # for official tailscale
+    systemd.user.services.tailscaled-official = {
+      Unit = {
+        Description = "Auto start tailscaled-official userspace network";
+        After = ["clash.service"];
+      };
+      Install = {
+        WantedBy = ["default.target"];
+      };
+      Service = {
+        Environment = [
+          "HTTPS_PROXY=http://127.0.0.1:8889"
+          "HTTP_PROXY=http://127.0.0.1:8889"
+          "https_proxy=http://127.0.0.1:8889"
+          "http_proxy=http://127.0.0.1:8889"
+        ];
+        ExecStart = "${mytailscale}/bin/tailscaled-official";
+      };
+    };
+    programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
+      # start tailscale
+      if [[ -z "$(ps|grep tailscaled|grep -v grep)" ]]; then
+          tailscaled-headscale &> /dev/null &
+          tailscaled-official &> /dev/null &
+      fi
+    '';
+  }{
     home.packages = lib.optional (!isNixOnDroid) pkgs.hstr;
     programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
       # HSTR configuration - add this to ~/.bashrc
@@ -160,7 +205,6 @@ in
     wget
     lsof
     bind.dnsutils # nslookup
-    mytailscale
     netcat
     nload
     nmap
@@ -298,45 +342,6 @@ in
   home.file.ranger_conf = {
     source = ./cli/ranger.conf;
     target = ".config/ranger/rc.conf";
-  };
-
-  # for my headtail
-  systemd.user.services.tailscaled-headscale = {
-    Unit = {
-      Description = "Auto start tailscaled-headscale userspace network";
-      After = ["clash.service"];
-    };
-    Install = {
-      WantedBy = ["default.target"];
-    };
-    Service = {
-      Environment = [
-        "HTTPS_PROXY=http://127.0.0.1:8889"
-        "HTTP_PROXY=http://127.0.0.1:8889"
-        "https_proxy=http://127.0.0.1:8889"
-        "http_proxy=http://127.0.0.1:8889"
-      ];
-      ExecStart = "${mytailscale}/bin/tailscaled-headscale";
-    };
-  };
-  # for official tailscale
-  systemd.user.services.tailscaled-official = {
-    Unit = {
-      Description = "Auto start tailscaled-official userspace network";
-      After = ["clash.service"];
-    };
-    Install = {
-      WantedBy = ["default.target"];
-    };
-    Service = {
-      Environment = [
-        "HTTPS_PROXY=http://127.0.0.1:8889"
-        "HTTP_PROXY=http://127.0.0.1:8889"
-        "https_proxy=http://127.0.0.1:8889"
-        "http_proxy=http://127.0.0.1:8889"
-      ];
-      ExecStart = "${mytailscale}/bin/tailscaled-official";
-    };
   };
 
   # systemd.user.services.onedrive = {

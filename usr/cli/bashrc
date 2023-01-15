@@ -36,12 +36,6 @@ alias nman="env MANPAGER='nvim +Man!' man"
 
 # services for nix-on-droid
 if [[ "$USER" == "nix-on-droid" ]]; then
-    # start tailscale
-    if [[ -z "$(ps|grep tailscaled|grep -v grep)" ]]; then
-        tailscaled-headscale &> /dev/null &
-        tailscaled-official &> /dev/null &
-    fi
-
     # alias all script
     ## due to cannot exec script under symlink directory (Gist)
     for SH in ~/Gist/script/bash/*; do
