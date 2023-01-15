@@ -1,5 +1,4 @@
 MACHINE=$(uname -m)
-KERNEL_RELEASE=$(uname -r)
 
 # rewrite prompt format
 u_green="\[\033[01;32m\]"
@@ -24,24 +23,6 @@ unset u_green u_blue u_white
 ### https://unix.stackexchange.com/questions/177572/
 PS1+="\[\e]2;\w\a\]"
 
-# proxy
-## default
-HTTP_PROXY="http://127.0.0.1:8889/"
-## nix-on-droid
-if [[ "$USER" == "nix-on-droid" ]]; then
-    HTTP_PROXY=""
-fi
-## microsoft wsl
-if [[ ${KERNEL_RELEASE} == *"microsoft"* ]]; then
-    hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
-    export HTTP_PROXY="http://${hostip}:8889"
-fi
-export HTTPS_PROXY="${HTTP_PROXY}"
-export HTTP_PROXY="${HTTP_PROXY}"
-export FTP_PROXY="${HTTP_PROXY}"
-export http_proxy="${HTTP_PROXY}"
-export https_proxy="${HTTP_PROXY}"
-export ftp_proxy="${HTTP_PROXY}"
 
 # alias
 alias o="xdg-open"
