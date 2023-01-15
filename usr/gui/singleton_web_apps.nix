@@ -33,7 +33,7 @@ let
   '';
   singleton_sh = "${singleton}/bin/singleton.sh";
 
-  webapp = pkgs.writeShellScriptBin "webapp.sh" ''
+  webapp_common = ''
     if [[ $# -lt 2 || "$1" == "-h" ]]
     then
       echo "Usage: ''${0##*/} <window> <url>"
@@ -58,10 +58,17 @@ let
     else
       URL="https://$URL"
     fi
-
+  '';
+  webapp = pkgs.writeShellScriptBin "webapp.sh" ''
+    ${webapp_common}
     ${singleton_sh} "$1" ${chromeLikeBrowser} --app="$URL"
   '';
+  webapp_no_cors = pkgs.writeShellScriptBin "webapp_no_cors.sh" ''
+    ${webapp_common}
+    ${singleton_sh} "$1" ${chromeLikeBrowser} --user-data-dir=~/.chrome_no_cors --disable-web-security --app="$URL"
+  '';
   webapp_sh = "${webapp}/bin/webapp.sh";
+  webapp_no_cors_sh = "${webapp_no_cors}/bin/webapp_no_cors.sh";
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
      cd ${config.home.homeDirectory}/Documents/Tech
      typora my_cheatsheet.mkd
@@ -69,7 +76,7 @@ let
   '';
 in
 {
-  home.packages = [singleton webapp];
+  home.packages = [singleton webapp webapp_no_cors];
 
   # gnome keyboard shortcuts
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
@@ -202,13 +209,12 @@ in
       genericName = "riyucidian";
       exec = "${webapp_sh} 日语词典 https://dict.hjenglish.com/jp/";
     };
-    clash = {
+    clash = let
+      yacd = builtins.fetchTarball "https://github.com/haishanh/yacd/archive/gh-pages.zip";
+    in {
       name = "clash";
-      exec = "${webapp_sh} clash http://clash.razord.top";
-      icon = (pkgs.fetchurl {
-        url = "https://github.com/Dreamacro/clash-dashboard/raw/4b174769f586fde51fbc90ce48791efdb58fbb49/src/assets/logo.png";
-        sha256 = "04agkgmdy268rqw56368dymja7wziss9n4m8kzkf0jx9cwpyflxl";
-      }).outPath;
+      exec = "${webapp_no_cors_sh} yacd file://${yacd}/index.html";
+      icon = "${yacd}/yacd-128.png";
     };
 
     # singleton apps
