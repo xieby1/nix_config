@@ -95,7 +95,7 @@ let
       require('leap').add_default_mappings()
     '';
   };
-  my-telescople-nvim = {
+  my-telescope-nvim = {
     plugin = pkgs.vimPlugins.telescope-nvim;
     config = ''
       nnoremap ff <cmd>Telescope find_files<cr>
@@ -392,7 +392,7 @@ in
       #   '';
       # }
       # telescope-nvim needs plenary-nvim and ripgrep
-      my-telescople-nvim
+      my-telescope-nvim
       plenary-nvim
       git-wip
     ];
