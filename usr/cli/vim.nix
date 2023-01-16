@@ -108,6 +108,14 @@ let
       nnoremap fh <cmd>lua require('telescope.builtin').help_tags()<cr>
     '';
   };
+  my-telescope-fzf-native-nvim = {
+    plugin = pkgs.vimPlugins.telescope-fzf-native-nvim;
+    type = "lua";
+    config = ''
+      require('telescope').setup {
+        extensions = {fzf = {}}
+      }
+      require('telescope').load_extension('fzf')
     '';
   };
   git-wip = pkgs.vimUtils.buildVimPlugin {
@@ -401,6 +409,7 @@ in
       # }
       # telescope-nvim needs plenary-nvim and ripgrep
       my-telescope-nvim
+      my-telescope-fzf-native-nvim
       plenary-nvim
       git-wip
     ];
