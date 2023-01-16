@@ -98,10 +98,16 @@ let
   my-telescope-nvim = {
     plugin = pkgs.vimPlugins.telescope-nvim;
     config = ''
-      nnoremap ff <cmd>Telescope find_files<cr>
-      nnoremap fg <cmd>Telescope live_grep<cr>
-      nnoremap fb <cmd>Telescope buffers<cr>
-      nnoremap fh <cmd>Telescope help_tags<cr>
+      " search relative to file
+      "" https://github.com/nvim-telescope/telescope.nvim/pull/902
+      nnoremap ff <cmd>lua require('telescope.builtin').find_files({cwd=require'telescope.utils'.buffer_dir()})<cr>
+      nnoremap fg <cmd>lua require('telescope.builtin').live_grep({cwd=require'telescope.utils'.buffer_dir()})<cr>
+      nnoremap fF <cmd>lua require('telescope.builtin').find_files()<cr>
+      nnoremap fG <cmd>lua require('telescope.builtin').live_grep()<cr>
+      nnoremap fb <cmd>lua require('telescope.builtin').buffers()<cr>
+      nnoremap fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+    '';
+  };
     '';
   };
   git-wip = pkgs.vimUtils.buildVimPlugin {
