@@ -2,6 +2,18 @@
 let
   isNixOnDroid = config.home.username == "nix-on-droid";
   proxyPort = "8889";
+  tailscale-bash-completion = builtins.derivation {
+    name = "tailscale-bash-completion";
+    system = builtins.currentSystem;
+    src = builtins.fetchurl "https://gist.githubusercontent.com/cmtsij/f0d0be209224a7bdd67592695e1427de/raw/tailscale";
+    builder = pkgs.writeShellScript "tailscale-bash-completion-builder" ''
+      source ${pkgs.stdenv}/setup
+      dstdir=$out/share/bash-completion/completions
+      dst=$dstdir/tailscale
+      mkdir -p $dstdir
+      cp $src $dst
+    '';
+  };
   tailscale-wrapper = {suffix, port}: let
     tailscale-wrapped = pkgs.writeShellScriptBin "tailscale-${suffix}" ''
       tailscale --socket /tmp/tailscale-${suffix}.sock $@
@@ -17,8 +29,26 @@ let
         --statedir=${stateDir} \
         $@
     '';
+    tailscale-wrapped-bash-completion = builtins.derivation {
+      name = "tailscale-${suffix}-bash-completion";
+      system = builtins.currentSystem;
+      builder = pkgs.writeShellScript "tailscale-${suffix}-bash-completion-builder" ''
+        source ${pkgs.stdenv}/setup
+        reldir=share/bash-completion/completions
+        dstdir=$out/$reldir
+        dst=$dstdir/tailscale-${suffix}
+        mkdir -p $dstdir
+        touch $dst
+        echo ". ${tailscale-bash-completion}/$reldir/tailscale" >> $dst
+        echo "complete -F _tailscale tailscale-${suffix}" >> $dst
+      '';
+    };
   in {
-    home.packages = [tailscale-wrapped tailscaled-wrapped];
+    home.packages = [
+      tailscale-wrapped
+      tailscaled-wrapped
+      tailscale-wrapped-bash-completion
+    ];
     systemd.user.services."tailscaled-${suffix}" = {
       Unit = {
         Description = "Auto start tailscaled-${suffix} userspace network";
@@ -37,36 +67,16 @@ let
         ExecStart = "${tailscaled-wrapped}/bin/tailscaled-${suffix}";
       };
     };
-  };
-  tailscale-bash-completion = builtins.derivation {
-    name = "tailscale-bash-completion";
-    system = builtins.currentSystem;
-    src = builtins.fetchurl "https://gist.githubusercontent.com/cmtsij/f0d0be209224a7bdd67592695e1427de/raw/tailscale";
-    builder = pkgs.writeShellScript "tailscale-bash-completion-builder" ''
-      source ${pkgs.stdenv}/setup
-      dstdir=$out/share/bash-completion/completions
-      dst=$dstdir/tailscale
-      mkdir -p $dstdir
-      cp $src $dst
-      chmod +w $dst
-      echo "complete -F _tailscale tailscale-headscale" >> $dst
-      echo "complete -F _tailscale tailscale-official" >> $dst
-      chmod -w $dst
-      cd $dstdir
-      ln -s tailscale tailscale-headscale
-      ln -s tailscale tailscale-official
+    programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
+      # start tailscale-${suffix}
+      if [[ -z "$(ps|grep tailscaled-${suffix}|grep -v grep)" ]]; then
+          tailscaled-${suffix} &> /dev/null &
+      fi
     '';
   };
 in {
   imports = [{
     home.packages = [pkgs.tailscale tailscale-bash-completion];
-    programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
-      # start tailscale
-      if [[ -z "$(ps|grep tailscaled|grep -v grep)" ]]; then
-          tailscaled-headscale &> /dev/null &
-          tailscaled-official &> /dev/null &
-      fi
-    '';
   }(tailscale-wrapper {suffix="headscale"; port="1055";}
   )(tailscale-wrapper {suffix="official";  port="1056";}
   ){
