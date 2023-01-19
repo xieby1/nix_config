@@ -36,11 +36,55 @@
   # shortcuts
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fuzzy_doc/"
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty" = {
     binding="<Primary><Alt>t";
     command = "kitty";
     name="terminal";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fuzzy_doc" = let
+    fuzzy_doc = pkgs.writeScript "fuzzy_doc" ''
+      allCmds() {
+        # bash alias
+        compgen -A alias
+
+        # external commands
+        # https://unix.stackexchange.com/questions/94775/list-all-commands-that-a-shell-knows
+        case "$PATH" in
+          (*[!:]:) PATH="$PATH:" ;;
+        esac
+        set -f
+        IFS_OLD="$IFS"
+        IFS=:
+        for dir in $PATH; do
+          set +f
+          [ -z "$dir" ] && dir="."
+          for file in "$dir"/*; do
+            if [ -x "$file" ] && ! [ -d "$file" ]; then
+              echo "''${file##*/}"
+            fi
+          done
+        done
+        IFS="$IFS_OLD"
+      }
+
+      cd ~/Documents
+      FILE=$(fzf)
+      [ -z "$FILE" ] && exit
+
+      CMD=$(allCmds | fzf)
+      [ -z "$CMD" ] && exit
+
+      # FILE name may contain space, quote FILE name
+      eval "$CMD" \"$FILE\"
+    '';
+  in {
+    binding="<Super>f";
+    # bash alias needs interative bash (-i)
+    # https://askubuntu.com/questions/1109564/alias-not-working-inside-bash-shell-script
+    command="kitty bash -i ${fuzzy_doc}";
+    name="fzf doc";
   };
 
   programs.kitty = {
