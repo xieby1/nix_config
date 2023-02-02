@@ -59,6 +59,15 @@ let
     then import <nixpkgs/nixos> {}
     else import <nixpkgs/nixos> {configuration={};}
   ).config;
+  my-capstone = pkgs.capstone.overrideAttrs (old: {
+    version = "next-5.0.0";
+    src = pkgs.fetchFromGitHub {
+      owner = "capstone-engine";
+      repo = "capstone";
+      rev = "6eb1db9c04113ac0a05f2dfd228704c84775530f";
+      hash = "sha256-ejshOt02jaAJkuyS8T+T6v3Td4Jqg19zKgVMZ5VuISs=";
+    };
+  });
 in
 {
   imports = [ # files
@@ -244,7 +253,7 @@ in
     cscope
     clang-tools
     cmake
-    capstone
+    my-capstone
     scc
     sloccount
     linuxPackages.perf
