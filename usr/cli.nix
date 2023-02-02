@@ -226,7 +226,6 @@ in
     ## manual
     tldr
     ## file system
-    tree
     file
     ranger
     ## network
@@ -291,11 +290,12 @@ in
     qemu
   ];
 
+  programs.exa.enable = true;
+  programs.exa.enableAliases = true;
+
   # bash
   programs.bash.enable = true;
   programs.bash.shellAliases.o = "xdg-open";
-  programs.bash.shellAliases.ll = "ls --color -l";
-  programs.bash.shellAliases.ls = "ls --color";
   programs.bash.bashrcExtra = ''
     # rewrite prompt format
     u_green="\[\033[01;32m\]"
