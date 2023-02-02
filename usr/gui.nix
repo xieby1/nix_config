@@ -58,9 +58,7 @@ in
     # text
     #wpsoffice
     libreoffice
-    obsidian
     mytypora
-    # logseq
     meld
     # TODO: use this after switching to wayland
     #wl-clipboard
