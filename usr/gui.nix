@@ -73,6 +73,7 @@ in
     xelfviewer
     vlc
     xournalpp # pdf annotation
+    weston # for waydroid
     # management
     zotero
     barrier

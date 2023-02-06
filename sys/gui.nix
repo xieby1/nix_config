@@ -92,4 +92,5 @@
   };
 
   services.gpm.enable = true;
+  virtualisation.waydroid.enable = true;
 }
