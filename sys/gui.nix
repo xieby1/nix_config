@@ -3,9 +3,11 @@
 {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
-  services.xserver.videoDrivers = if "${config.networking.hostName}" == "jumper"
-  then ["intel"]
-  else [];
+  services.xserver.videoDrivers = [
+    "intel" "amdgpu"
+    # default video drivers
+    "radeon" "nouveau" "modesetting" "fbdev"
+  ];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = true;
