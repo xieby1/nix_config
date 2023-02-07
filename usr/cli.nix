@@ -401,4 +401,8 @@ in
       then ["--gui-address=0.0.0.0:8384"]
       else [];
   };
+  systemd.user.services.syncthing.Service.Environment = [
+    # https://docs.syncthing.net/users/proxying.html
+    "all_proxy=socks5://127.0.0.1:${config.proxyPort}"
+  ];
 }

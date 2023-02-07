@@ -2,6 +2,7 @@
 
 {
   imports = [
+    ./opt.nix
     ./usr/cli.nix
   ] ++ (if (builtins.getEnv "DISPLAY")!=""
   then [
