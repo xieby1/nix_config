@@ -73,7 +73,8 @@ in
   imports = [ # files
     ./cli/vim.nix
     ./cli/tcl.nix
-    ./cli/network.nix
+    ./cli/clash.nix
+    ./cli/tailscale.nix
   ] ++ [{ # functions & attrs
     home.packages = [
       pkgs.fzf
@@ -403,6 +404,6 @@ in
   };
   systemd.user.services.syncthing.Service.Environment = [
     # https://docs.syncthing.net/users/proxying.html
-    "all_proxy=socks5://127.0.0.1:${config.proxyPort}"
+    "http_proxy=http://127.0.0.1:${config.proxyPort}"
   ];
 }
