@@ -5,4 +5,8 @@
     default = "8889";
     readOnly = true;
   };
+  isGui = lib.mkOption {
+    default = (builtins.getEnv "DISPLAY")!="";
+    readOnly = true;
+  };
 };}

@@ -475,9 +475,8 @@ in
       plenary-nvim
       git-wip
       my-gitsigns-nvim
-      markdown-preview-nvim
       my-color-scheme
-    ];
+    ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
     extraPackages = with pkgs; [
       ccls
