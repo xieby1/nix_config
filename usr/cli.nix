@@ -394,13 +394,9 @@ in
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
-  services.syncthing = let
-    isCli = (builtins.getEnv "DISPLAY")=="";
-  in {
+  services.syncthing = {
     enable = true;
-    extraOptions = if isCli
-      then ["--gui-address=0.0.0.0:8384"]
-      else [];
+    extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
   };
   systemd.user.services.syncthing.Service.Environment = [
     # https://docs.syncthing.net/users/proxying.html

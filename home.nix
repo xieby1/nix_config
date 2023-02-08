@@ -4,6 +4,7 @@
   imports = [
     ./opt.nix
     ./usr/cli.nix
+    # TODO: how to use isGui here?
   ] ++ (if (builtins.getEnv "DISPLAY")!=""
   then [
     ./usr/gui.nix
