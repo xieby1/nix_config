@@ -69,17 +69,17 @@
       # tab
       tab_bar_edge = "top";
       tab_bar_style = "separator";
-      active_tab_foreground   = "#d3d7cf";
-      active_tab_background   = "#2e3436";
+      active_tab_foreground   = "#e2e2e3";
+      active_tab_background   = "#2c2e34";
       active_tab_title_template = "🐱{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title}";
-      inactive_tab_foreground = "#2e3436";
-      inactive_tab_background = "#d3d7cf";
+      inactive_tab_foreground = "#2c2e34";
+      inactive_tab_background = "#e2e2e3";
 
       # tango dark
-      background              = "#2e3436";
-      foreground              = "#d3d7cf";
-      cursor                  = "#d3d7cf";
-      color0                  = "#2e3436";
+      background              = "#2c2e34";
+      foreground              = "#e2e2e3";
+      cursor                  = "#e2e2e3";
+      color0                  = "#2c2e34";
       color8                  = "#555753";
       color1                  = "#cc0000";
       color9                  = "#ef2929";
@@ -93,14 +93,10 @@
       color13                 = "#ad7fa8";
       color6                  = "#06989a";
       color14                 = "#34e2e2";
-      color7                  = "#d3d7cf";
+      color7                  = "#e2e2e3";
       color15                 = "#eeeeec";
-      # sonokai black
-      color237                = "#2e3436";
-      # sonokai fg
-      color250                = "#d3d7cf";
-      # selection_foreground    = "#2e3436";
-      # selection_background    = "#d3d7cf";
+      # selection_foreground    = "#2c2e34";
+      # selection_background    = "#e2e2e3";
     };
     extraConfig = ''
       map ctrl+equal change_font_size all +2.0

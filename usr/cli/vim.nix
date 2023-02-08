@@ -176,7 +176,6 @@ let
     plugin = pkgs.vimPlugins.vim-hexokinase;
     config = ''
       let g:Hexokinase_highlighters = ['backgroundfull']
-      nnoremap <leader>c :set termguicolors!<CR>
     '';
   };
   my-gitsigns-nvim = {
@@ -192,7 +191,7 @@ let
     plugin = pkgs.vimPlugins.sonokai;
     config = ''
       nnoremap <leader>c :set termguicolors!<CR>
-      " set termguicolors
+      set termguicolors
 
       " custom sonokai,
       " see section "How to use custom colors" of `:h sonokai.vim`
@@ -200,8 +199,6 @@ let
         let l:palette = sonokai#get_palette('default', {})
         call sonokai#highlight('StatusLine', l:palette.black, l:palette.fg, 'bold')
         call sonokai#highlight('StatusLineNC', l:palette.black, l:palette.grey, 'bold')
-        " background
-        call sonokai#highlight('Normal', l:palette.fg, l:palette.black)
       endfunction
       augroup SonokaiCustom
         autocmd!
