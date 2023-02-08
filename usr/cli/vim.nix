@@ -179,6 +179,15 @@ let
       nnoremap <leader>c :set termguicolors!<CR>
     '';
   };
+  my-gitsigns-nvim = {
+    plugin = pkgs.vimPlugins.gitsigns-nvim;
+    type = "lua";
+    config = ''
+      require('gitsigns').setup {
+        current_line_blame = true,
+      }
+    '';
+  };
 in
 {
   # neovim
@@ -413,6 +422,7 @@ in
       my-telescope-fzf-native-nvim
       plenary-nvim
       git-wip
+      my-gitsigns-nvim
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
