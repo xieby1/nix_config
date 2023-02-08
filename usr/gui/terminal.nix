@@ -95,6 +95,10 @@
       color14                 = "#34e2e2";
       color7                  = "#d3d7cf";
       color15                 = "#eeeeec";
+      # sonokai black
+      color237                = "#2e3436";
+      # sonokai fg
+      color250                = "#d3d7cf";
       # selection_foreground    = "#2e3436";
       # selection_background    = "#d3d7cf";
     };

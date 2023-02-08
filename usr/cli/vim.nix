@@ -188,6 +188,29 @@ let
       }
     '';
   };
+  my-color-scheme = {
+    plugin = pkgs.vimPlugins.sonokai;
+    config = ''
+      nnoremap <leader>c :set termguicolors!<CR>
+      " set termguicolors
+
+      " custom sonokai,
+      " see section "How to use custom colors" of `:h sonokai.vim`
+      function! s:sonokai_custom() abort
+        let l:palette = sonokai#get_palette('default', {})
+        call sonokai#highlight('StatusLine', l:palette.black, l:palette.fg, 'bold')
+        call sonokai#highlight('StatusLineNC', l:palette.black, l:palette.grey, 'bold')
+        " background
+        call sonokai#highlight('Normal', l:palette.fg, l:palette.black)
+      endfunction
+      augroup SonokaiCustom
+        autocmd!
+        autocmd ColorScheme sonokai call s:sonokai_custom()
+      augroup END
+
+      colorscheme sonokai
+    '';
+  };
 in
 {
   # neovim
@@ -423,6 +446,7 @@ in
       plenary-nvim
       git-wip
       my-gitsigns-nvim
+      my-color-scheme
     ];
     vimdiffAlias = true;
     extraPackages = with pkgs; [
