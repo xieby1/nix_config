@@ -453,6 +453,7 @@ in
       coc-pyright
       # javscript lsp support
       coc-tsserver
+      coc-tabnine
       my-vim-markdown # format table
       tabular
       my-vim-hexokinase
