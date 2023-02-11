@@ -14,6 +14,7 @@
     gtile
     hide-top-bar
     lightdark-theme-switcher
+    dash-to-dock
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -31,6 +32,7 @@
         "system-monitor@paradoxxx.zero.gmail.com"
         "unite@hardpixel.eu"
         "theme-switcher@fthx"
+        "dash-to-dock@micxgx.gmail.com"
       ];
 
       ## dock icons
