@@ -226,6 +226,8 @@ let
       nnoremap <leader>c :set termguicolors!<CR>
       set termguicolors
 
+      let g:sonokai_transparent_background = 1
+
       let g:sonokai_colors_override = {
       \ 'black':    ['#111215', '237'],
       \ 'bg0':      ['#22232a', '235'],
