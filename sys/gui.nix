@@ -95,4 +95,6 @@
 
   services.gpm.enable = true;
   virtualisation.waydroid.enable = true;
+
+  hardware.xone.enable = true;
 }
