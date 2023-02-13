@@ -24,6 +24,7 @@
       disable-extension-version-validation = true;
       ## enabled gnome extensions
       disable-user-extensions = false;
+      disabled-extensions = [];
       enabled-extensions = [
         "BingWallpaper@ineffable-gmail.com"
         "clipboard-indicator@tudmotu.com"
