@@ -113,6 +113,9 @@
       delete-previous=true;
       download-folder="/tmp/pictures";
     };
+    "org/gnome/shell/extensions/dash-to-dock" = {
+      click-action="focus-or-appspread";
+    };
 
     # predefined keyboard shortcuts
     "org/gnome/desktop/wm/keybindings" = {
