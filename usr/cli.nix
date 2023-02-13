@@ -51,8 +51,21 @@ let
     CMD=$(allCmds | fzf)
     [ -z "$CMD" ] && exit
 
-    # FILE name may contain space, quote FILE name
-    eval "$CMD" \"$FILE\"
+    case "$CMD" in
+    # run gui cmd background
+    o)
+      # use nohup to run bash command in background and exit
+      ## https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
+      # nohup not recognize bash alias like `o`, it's necessary to call bash
+      eval nohup bash -ic '"$CMD \"$FILE\" &"'
+    ;;
+
+    # run cli cmd foreground
+    *)
+      # FILE name may contain space, quote FILE name
+      eval "$CMD" \"$FILE\"
+    ;;
+    esac
   '';
   sysconfig = (
     if (builtins.tryEval <nixos-config>).success
