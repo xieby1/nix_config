@@ -10,11 +10,12 @@
     system-monitor
     unite
     clipboard-indicator
-    bing-wallpaper-changer
+    # bing-wallpaper-changer
     gtile
     hide-top-bar
     lightdark-theme-switcher
     dash-to-dock
+    random-wallpaper
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -26,7 +27,7 @@
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        "BingWallpaper@ineffable-gmail.com"
+        # "BingWallpaper@ineffable-gmail.com"
         "clipboard-indicator@tudmotu.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
@@ -34,6 +35,7 @@
         "unite@hardpixel.eu"
         "theme-switcher@fthx"
         "dash-to-dock@micxgx.gmail.com"
+        "randomwallpaper@iflow.space"
       ];
 
       ## dock icons
@@ -109,13 +111,25 @@
       window-buttons-theme="materia";
       restrict-to-primary-screen=false;
     };
-    "org/gnome/shell/extensions/bingwallpaper" = {
-      market="zh-CN";
-      delete-previous=true;
-      download-folder="/tmp/pictures";
-    };
+    # "org/gnome/shell/extensions/bingwallpaper" = {
+    #   market="zh-CN";
+    #   delete-previous=true;
+    #   download-folder="/tmp/pictures";
+    # };
     "org/gnome/shell/extensions/dash-to-dock" = {
       click-action="focus-or-appspread";
+    };
+    "org/gnome/shell/extensions/space-iflow-randomwallpaper" = {
+      auto-fetch = true;
+      change-lock-screen = true;
+      hours = 8;
+      minutes = 29;
+      source = "genericJSON";
+    };
+    "org/gnome/shell/extensions/space-iflow-randomwallpaper/genericJSON" = {
+      generic-json-request-url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN";
+      generic-json-response-path = "$.images[0].url";
+      generic-json-url-prefix = "http://www.bing.com";
     };
 
     # predefined keyboard shortcuts
