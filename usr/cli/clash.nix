@@ -19,11 +19,11 @@ in {
     programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
       # proxy
       ## default
-      HTTP_PROXY="http://127.0.0.1:${config.proxyPort}/"
+      HTTP_PROXY="http://127.0.0.1:${toString config.proxyPort}/"
       ## microsoft wsl
       if [[ $(uname -r) == *"microsoft"* ]]; then
           hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
-          export HTTP_PROXY="http://$hostip:${config.proxyPort}"
+          export HTTP_PROXY="http://$hostip:${toString config.proxyPort}"
       fi
       export HTTPS_PROXY="$HTTP_PROXY"
       export HTTP_PROXY="$HTTP_PROXY"

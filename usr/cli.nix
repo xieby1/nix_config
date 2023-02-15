@@ -413,6 +413,6 @@ in
   };
   systemd.user.services.syncthing.Service.Environment = [
     # https://docs.syncthing.net/users/proxying.html
-    "http_proxy=http://127.0.0.1:${config.proxyPort}"
+    "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
   ];
 }

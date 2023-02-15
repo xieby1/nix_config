@@ -2,7 +2,7 @@
 
 { options = {
   proxyPort = lib.mkOption {
-    default = "8889";
+    default = 8889;
     readOnly = true;
   };
   isCli = lib.mkOption {

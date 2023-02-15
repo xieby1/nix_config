@@ -58,10 +58,10 @@ let
       };
       Service = {
         Environment = [
-          "HTTPS_PROXY=http://127.0.0.1:${config.proxyPort}"
-          "HTTP_PROXY=http://127.0.0.1:${config.proxyPort}"
-          "https_proxy=http://127.0.0.1:${config.proxyPort}"
-          "http_proxy=http://127.0.0.1:${config.proxyPort}"
+          "HTTPS_PROXY=http://127.0.0.1:${toString config.proxyPort}"
+          "HTTP_PROXY=http://127.0.0.1:${toString config.proxyPort}"
+          "https_proxy=http://127.0.0.1:${toString config.proxyPort}"
+          "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
         ];
         ExecStart = "${tailscaled-wrapped}/bin/tailscaled-${suffix}";
       };
