@@ -157,5 +157,11 @@
       enable-hot-corners=false;
       show-battery-percentage=true;
     };
+
+    # proxy
+    "system/proxy" = {mode = "manual";};
+    "system/proxy/ftp" = {host="127.0.0.1"; port=config.proxyPort;};
+    "system/proxy/http" = {host="127.0.0.1"; port=config.proxyPort;};
+    "system/proxy/https" = {host="127.0.0.1"; port=config.proxyPort;};
   };
 }
