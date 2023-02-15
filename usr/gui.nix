@@ -31,6 +31,16 @@ let
       sha256 = "1srj1fdcblfdsfvdnrqnwsxd3y8qd1h45p4sf1mxn6hr7z2s6ai6";
     };
   });
+  my-xournalpp = pkgs.xournalpp.overrideAttrs (old: {
+    version = "nightly";
+    src = pkgs.fetchFromGitHub {
+      owner = "xournalpp";
+      repo = "xournalpp";
+      rev = "1dbb041f7b29d0175c943443747cbcf7953e3586";
+      hash = "sha256-yeovSxdWCEvzxRZ3u40gEWZpIOoBsK9G4x17FK0C+PA=";
+    };
+    buildInputs = old.buildInputs ++ [pkgs.alsa-lib];
+  });
 in
 {
   imports = [
@@ -72,7 +82,7 @@ in
     imhex
     xelfviewer
     vlc
-    xournalpp # pdf annotation
+    my-xournalpp # pdf annotation
     weston # for waydroid
     # management
     zotero
