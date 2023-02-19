@@ -141,6 +141,7 @@ in
         core = {
           editor = "vim";
         };
+        credential.helper = "store";
       };
       aliases = {
         viz = "log --all --decorate --oneline --graph";
