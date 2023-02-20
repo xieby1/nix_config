@@ -85,7 +85,6 @@ in
 {
   imports = [ # files
     ./cli/vim.nix
-    ./cli/tcl.nix
     ./cli/clash.nix
     ./cli/tailscale.nix
   ] ++ [{ # functions & attrs
