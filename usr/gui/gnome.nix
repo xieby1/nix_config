@@ -16,6 +16,7 @@
     lightdark-theme-switcher
     dash-to-dock
     random-wallpaper
+    always-show-titles-in-overview
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -36,6 +37,7 @@
         "theme-switcher@fthx"
         "dash-to-dock@micxgx.gmail.com"
         "randomwallpaper@iflow.space"
+        "Always-Show-Titles-In-Overview@gmail.com"
       ];
 
       ## dock icons
