@@ -85,6 +85,7 @@ in
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/bing_dict/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hjxd_jp/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kdeconnect_app/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/devdocs/"
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_html" = {
     binding="<Alt>space";
@@ -110,6 +111,11 @@ in
     binding="<Alt>k";
     command="gtk-launch kdeconnect_app.desktop";
     name="KDE Connect";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/devdocs" = {
+    binding="<Alt>d";
+    command="gtk-launch devdocs.desktop";
+    name="Devdocs";
   };
 
   xdg.desktopEntries = {
@@ -208,6 +214,15 @@ in
       name = "日语词典";
       genericName = "riyucidian";
       exec = "${webapp_sh} 日语词典 https://dict.hjenglish.com/jp/";
+    };
+    devdocs = {
+      name = "DevDocs";
+      genericName = "devdocs";
+      exec = "${webapp_sh} DevDocs https://devdocs.io/";
+      icon = (pkgs.fetchurl {
+        url = "https://devdocs.io/images/webapp-icon-512.png";
+        sha256 = "0bbimjp8r4fwzgd094wady2ady1fqz0crnyy2iwa835g7yivix24";
+      }).outPath;
     };
     clash = let
       yacd = builtins.fetchTarball "https://github.com/haishanh/yacd/archive/gh-pages.zip";
