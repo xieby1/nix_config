@@ -71,7 +71,7 @@ let
   webapp_no_cors_sh = "${webapp_no_cors}/bin/webapp_no_cors.sh";
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
      cd ${config.home.homeDirectory}/Documents/Tech
-     typora my_cheatsheet.mkd
+     kitty nvim my_cheatsheet.mkd -c Vista
      make
   '';
 in
