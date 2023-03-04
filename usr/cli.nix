@@ -270,7 +270,6 @@ in
     my-capstone
     scc
     sloccount
-    linuxPackages.perf
     flamegraph
     ## python
     ( python3.withPackages ( p: with p; [

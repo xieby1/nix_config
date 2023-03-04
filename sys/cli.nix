@@ -8,6 +8,7 @@
     file
     wget
     fzf
+    linuxPackages.perf
   ];
 
   # neovim
