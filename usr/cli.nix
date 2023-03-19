@@ -310,6 +310,7 @@ in
     # runXonY
     debootstrap
     qemu
+    pkgsu.quickemu
   ];
 
   programs.exa.enable = true;
