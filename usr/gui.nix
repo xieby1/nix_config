@@ -41,6 +41,7 @@ let
     };
     buildInputs = old.buildInputs ++ [pkgs.alsa-lib];
   });
+  my-imhex = pkgs.callPackage ./gui/imhex.nix {};
 in
 {
   imports = [
@@ -79,7 +80,7 @@ in
     gimp
     # viewer
     myxdot
-    imhex
+    my-imhex
     xelfviewer
     vlc
     my-xournalpp # pdf annotation
