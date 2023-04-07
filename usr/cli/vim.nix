@@ -114,7 +114,10 @@ let
     type = "lua";
     config = ''
       require('telescope').setup {
-        extensions = {fzf = {}}
+        extensions = {fzf = {}},
+        defaults = {
+          layout_strategy = 'vertical'
+        }
       }
       require('telescope').load_extension('fzf')
     '';
