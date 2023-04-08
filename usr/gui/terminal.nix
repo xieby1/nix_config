@@ -123,6 +123,26 @@
 
       # disable opening of URLs with a plain click
       mouse_map left click ungrabbed no_op
+
+      #: moves the window into a new tab
+      map f1 detach_window new-tab
+      #: asks which tab to move the window into
+      map f2 detach_window ask
+
+
+      action_alias launch_window launch --cwd=current
+      # Window layout
+      enabled_layouts splits
+
+      # Split and Create a new window
+      map f5 launch_window --location=hsplit
+      map f6 launch_window --location=vsplit
+
+      # Goto window
+      # map ctrl+left neighboring_window left
+      # map ctrl+right neighboring_window right
+      # map ctrl+up neighboring_window up
+      # map ctrl+down neighboring_window down
     '';
   };
 
