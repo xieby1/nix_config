@@ -5,6 +5,7 @@
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
     gnome.dconf-editor
+    gnome.devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
     system-monitor

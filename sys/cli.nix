@@ -72,4 +72,9 @@
       mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
     };
   };
+
+  # Make sure devdoc outputs are installed.
+  documentation.dev.enable = true;
+  # Make sure legacy path is installed as well.
+  environment.pathsToLink = [ "/share/gtk-doc" ];
 }
