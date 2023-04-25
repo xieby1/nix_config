@@ -310,8 +310,7 @@ in
     # runXonY
     debootstrap
     qemu
-    pkgsu.quickemu
-  ];
+  ] ++ lib.optional (!isNixOnDroid) pkgsu.quickemu;
 
   programs.exa.enable = true;
   programs.exa.enableAliases = true;
