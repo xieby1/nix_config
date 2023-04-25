@@ -360,12 +360,6 @@ in
     XDG_DATA_DIRS+=":${config.home.path}/share"
     export XDG_DATA_DIRS
     . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
-  '' + lib.optionalString isNixOnDroid ''
-    # alias all script
-    ## due to cannot exec script under symlink directory (Gist)
-    for SH in ~/Gist/script/bash/*; do
-        eval "alias ''${SH##*/}='bash $SH'"
-    done
   '';
 
   home.file.gdbinit = {
