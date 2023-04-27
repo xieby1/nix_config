@@ -251,6 +251,7 @@ in
     ## file system
     file
     ranger
+    tree
     ## network
     frp
     wget
