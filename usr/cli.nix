@@ -221,6 +221,16 @@ in
       '';
       target = ".tmux.conf";
     };
+  }{
+    home.packages = [(
+      pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {}
+    )];
+    home.shellAliases = let
+      alias = "pandora -t ~/Gist/Pandora-ChatGPT/access_token.dat";
+    in {
+      pandora = alias;
+      chatgpt = alias;
+    };
   }];
 
   home.packages = with pkgs; [
