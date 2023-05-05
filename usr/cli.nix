@@ -145,6 +145,7 @@ in
       aliases = {
         viz = "log --all --decorate --oneline --graph";
       };
+      lfs.enable = true;
     };
     home.file.mr = {
       text = if builtins.pathExists ~/Gist/Config/mrconfig
