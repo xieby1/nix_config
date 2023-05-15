@@ -17,10 +17,10 @@
 
 buildPythonPackage rec {
   pname = "Pandora-ChatGPT";
-  version = "1.0.7";
+  version = "1.1.0";
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-qOC88fTbRldkk696EISAgMHYV8FR8EsGd9oHHVgCeYo=";
+    hash = "sha256-aOC88fTbRldkk696EISAgMHYV8FR8EsGd9oHHVgCeYo=";
   };
   doCheck = false;
   preBuild = ''
