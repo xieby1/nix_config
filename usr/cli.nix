@@ -258,6 +258,7 @@ in
     gnuclad
     imagemagick
     figlet
+    nyancat
     ## manual
     tldr
     ## file system
