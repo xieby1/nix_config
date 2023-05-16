@@ -239,6 +239,7 @@ in
     parallel
     comma
     xclip
+    python3Packages.qrcode
     ## archive
     unar
     ## manage
