@@ -92,6 +92,7 @@ in
     # entertainment
     mgba
     dgen-sdl # sega md emulator
+    antimicrox
     ## icon miss?
     #(retroarch.override {
     #  cores = with libretro; [
