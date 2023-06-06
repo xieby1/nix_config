@@ -13,4 +13,8 @@
     default = (builtins.getEnv "DISPLAY")!="";
     readOnly = true;
   };
+  isNixOnDroid = lib.mkOption {
+    default = config.home.username == "nix-on-droid";
+    readOnly = true;
+  };
 };}

@@ -1,6 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  isNixOnDroid = config.home.username == "nix-on-droid";
   git-wip = builtins.derivation {
     name = "git-wip";
     system = builtins.currentSystem;
@@ -97,8 +96,8 @@ in
       export FZF_DEFAULT_OPTS="--reverse"
     '';
   }{
-    home.packages = lib.optional (!isNixOnDroid) pkgs.hstr;
-    programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
+    home.packages = lib.optional (!config.isNixOnDroid) pkgs.hstr;
+    programs.bash.bashrcExtra = lib.optionalString (!config.isNixOnDroid) ''
       # HSTR configuration - add this to ~/.bashrc
       alias hh=hstr                    # hh to be alias for hstr
       export HSTR_CONFIG=hicolor       # get more colors
@@ -119,7 +118,7 @@ in
         builtins.readFile ~/Gist/Config/ssh.conf
       else
         "";
-    programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
+    programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
       # start sshd
       if [[ -z "$(ps|grep sshd-start|grep -v grep)" ]]; then
           sshd-start &> /dev/null &
@@ -344,7 +343,7 @@ in
     if [[ -n "$IN_NIX_SHELL" ]]; then
         PS1+="(''${name}.$IN_NIX_SHELL)"
     fi
-    PS1+="''${u_green}\u${lib.optionalString (!isNixOnDroid) "@\\h"}''${u_white}:"
+    PS1+="''${u_green}\u${lib.optionalString (!config.isNixOnDroid) "@\\h"}''${u_white}:"
     PS1+="''${u_blue}\w''${u_white}"
     PS1+="\n''${u_green}\$''${u_white} "
     unset u_green u_blue u_white

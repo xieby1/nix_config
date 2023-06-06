@@ -1,6 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  isNixOnDroid = config.home.username == "nix-on-droid";
   tailscale-bash-completion = builtins.derivation {
     name = "tailscale-bash-completion";
     system = builtins.currentSystem;
@@ -66,7 +65,7 @@ let
         ExecStart = "${tailscaled-wrapped}/bin/tailscaled-${suffix}";
       };
     };
-    programs.bash.bashrcExtra = lib.optionalString isNixOnDroid ''
+    programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
       # start tailscale-${suffix}
       if [[ -z "$(ps|grep tailscaled-${suffix}|grep -v grep)" ]]; then
           tailscaled-${suffix} &> /dev/null &

@@ -1,7 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
-let
-  isNixOnDroid = config.home.username == "nix-on-droid";
-in {
+{
   imports = [{
     home.packages = [pkgs.clash];
     systemd.user.services.clash = {
@@ -16,7 +14,7 @@ in {
         ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
       };
     };
-    programs.bash.bashrcExtra = lib.optionalString (!isNixOnDroid) ''
+    programs.bash.bashrcExtra = lib.optionalString (!config.isNixOnDroid) ''
       # proxy
       ## default
       HTTP_PROXY="http://127.0.0.1:${toString config.proxyPort}/"
