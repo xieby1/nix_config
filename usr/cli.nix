@@ -239,6 +239,7 @@ in
     comma
     xclip
     python3Packages.qrcode
+    zellij
     ## archive
     unar
     ## manage
