@@ -257,6 +257,42 @@ let
       colorscheme sonokai
     '';
   };
+  my-nvim-lspconfig = {
+    plugin = pkgs.vimPlugins.nvim-lspconfig;
+    type = "lua";
+    config = ''
+      local lspconfig = require('lspconfig')
+      local paths = {
+        -- vim.fn.stdpath("config") .. "/spell/ltex.dictionary.en-US.txt",
+        vim.fn.expand("%:p:h") .. "/.ltexdict",
+      }
+      local words = {}
+      for _, path in ipairs(paths) do
+        local f = io.open(path)
+        if f then
+          for word in f:lines() do
+            table.insert(words, word)
+          end
+        f:close()
+        end
+      end
+
+      lspconfig.ltex.setup{
+        settings = {
+          ltex = {
+            -- Supported languages:
+            -- https://valentjn.github.io/ltex/settings.html#ltexlanguage
+            -- https://valentjn.github.io/ltex/supported-languages.html#code-languages
+            language = "en-GB", -- "zh-CN" | "en-GB",
+            filetypes = { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc" },
+            dictionary = {
+              ['en-GB'] = words,
+            },
+          },
+        },
+      }
+    '';
+  };
 in
 {
   # neovim
@@ -493,10 +529,12 @@ in
       git-wip
       my-gitsigns-nvim
       my-color-scheme
+      my-nvim-lspconfig
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
     extraPackages = with pkgs; [
       ccls
+      ltex-ls
       ripgrep
     ];
 
