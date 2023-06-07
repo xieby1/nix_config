@@ -218,6 +218,11 @@ in
         # vi key bindings
         set -g mode-keys vi
         set -g status-keys vi
+
+        # Home, End key not work in nix-on-droid
+        # https://stackoverflow.com/questions/18600188/home-end-keys-do-not-work-in-tmux
+        bind-key -n Home send Escape "OH"
+        bind-key -n End send Escape "OF"
       '';
       target = ".tmux.conf";
     };
@@ -374,6 +379,9 @@ in
     XDG_DATA_DIRS+=":${config.home.path}/share"
     export XDG_DATA_DIRS
     . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
+
+    # 解决tmux在nix-on-droid上不显示emoji和中文的问题
+    export LANG=C.UTF-8
   '';
 
   home.file.gdbinit = {
