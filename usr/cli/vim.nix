@@ -283,7 +283,7 @@ let
             -- Supported languages:
             -- https://valentjn.github.io/ltex/settings.html#ltexlanguage
             -- https://valentjn.github.io/ltex/supported-languages.html#code-languages
-            language = "en-GB", -- "zh-CN" | "en-GB",
+            language = "en-US", -- "zh-CN" | "en-US",
             filetypes = { "bib", "gitcommit", "markdown", "org", "plaintex", "rst", "rnoweb", "tex", "pandoc" },
             dictionary = {
               ['en-GB'] = words,
