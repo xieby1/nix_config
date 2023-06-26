@@ -227,15 +227,12 @@ in
       target = ".tmux.conf";
     };
   }{
-    home.packages = [(
-      pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {}
-    )];
-    home.shellAliases = let
-      alias = "pandora -t ~/Gist/Pandora-ChatGPT/access_token.dat";
-    in {
-      pandora = alias;
-      chatgpt = alias;
-    };
+    home.packages = let
+      pandora = pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {};
+      chatgpt = pkgs.writeShellScriptBin "chatgpt" ''
+        ${pandora}/bin/pandora -t ~/Gist/Pandora-ChatGPT/access_token.dat $@
+      '';
+    in [pandora chatgpt];
   }];
 
   home.packages = with pkgs; [
