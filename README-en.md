@@ -8,7 +8,7 @@ You can also use some of the packages and modules to expand your own Nix/NixOS.
 If you want to try NixOS, refer to [Install NixOS](#install-nixos) and [Configure Nix](#configure-nix).
 If you just want to try Nix, you can skip [Install NixOS](#install-nixos) and go directly to [Configure Nix](#configure-nix).
 If you not only want to install Nix/NixOS, but also want to know more about Nix/NixOS,
-welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](https://xieby1.github.io/Distro/Nix/README-en.html).
+welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](https://xieby1.github.io/nix_config).
 
 * Use nix expression,not nix flakes
 * Use NixOS stable channel (current version 22.05),not unstable channel
@@ -22,26 +22,29 @@ welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](http
 <!-- vim-markdown-toc GFM -->
 
 * [Folder structure](#folder-structure)
+* [Relationship between Nix and NixOS](#relationship-between-nix-and-nixos)
+* [Usage Scenarios](#usage-scenarios)
 * [Install NixOS](#install-nixos)
-    * [Prepare an image](#prepare-an-image)
-    * [Partition](#partition)
-    * [File system](#file-system)
-    * [Basic configuration](#basic-configuration)
+  * [Prepare an image](#prepare-an-image)
+  * [Partition](#partition)
+  * [File system](#file-system)
+  * [Basic configuration](#basic-configuration)
 * [Configure Nix](#configure-nix)
-    * [Import configuration](#import-configuration)
-    * [Config nix channels](#config-nix-channels)
-    * [Deploy configuration](#deploy-configuration)
+  * [Import configuration](#import-configuration)
+  * [Config nix channels](#config-nix-channels)
+  * [Deploy configuration](#deploy-configuration)
 * [Ideas behind my configuration](#ideas-behind-my-configuration)
-    * [Gnome desktop](#gnome-desktop)
-        * [Wayland or X11](#wayland-or-x11)
-        * [New module mime.nix](#new-module-mimenix)
-        * [New module gsettings.nix](#new-module-gsettingsnix)
-    * [Qv2ray proxy](#qv2ray-proxy)
-    * [Text editor](#text-editor)
-        * [NeoVim or Vim](#neovim-or-vim)
-        * [Typora alternatives (Obsidian or Marktext)](#typora-alternatives-obsidian-or-marktext)
-    * [Input method](#input-method)
-    * [chroot or docker](#chroot-or-docker)
+  * [Gnome desktop](#gnome-desktop)
+    * [Wayland or X11](#wayland-or-x11)
+    * [New module mime.nix](#new-module-mimenix)
+    * [New module gsettings.nix](#new-module-gsettingsnix)
+  * [Qv2ray proxy](#qv2ray-proxy)
+  * [Text editor](#text-editor)
+    * [NeoVim or Vim](#neovim-or-vim)
+    * [Typora alternatives (Obsidian or Marktext)](#typora-alternatives-obsidian-or-marktext)
+  * [Input method](#input-method)
+  * [chroot or docker](#chroot-or-docker)
+* [References](#references)
 
 <!-- vim-markdown-toc -->
 
@@ -54,6 +57,44 @@ welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](http
 * home.nix: user configuration (home-manager configuration)
   * usr/cli.nix: user CLI configuration
   * usr/gui.nix: user GUI configuration
+
+## Relationship between Nix and NixOS
+
+Nix is an advanced package management system for managing software packages.
+Its target is the same as that of common package managers such as apt and rpm.
+Comparing with these package managers, Nix adopts a pure function construction model, uses hashes to store packages and adopts other ideas.
+These ideas make it easy for Nix to do reproducible builds and resolve dependency hell.
+Nix is born from research conducted during Dolstra's PhD,
+which is detailed in his doctor dissertation[^doc_thesis],
+
+NixOS regards the entire Linux operating system (including the kernel) as a collection of software packages and uses Nix to manage it.
+In other words, NixOS is a Linux distribution that uses the Nix package manager.
+
+You can use the Nix package manager alone to manage your user programs.
+You can also use NixOS to have your entire operating system managed by Nix.
+The most intuitive advantage brought by Nix/NixOS is that as long as the Nix/NixOS configuration files are kept,
+an identical software environment/OS can be restored.
+(Of course this is only ideal.
+The impure feature of nix 2.8, home-manager etc. are breaking this.
+But don't worry.
+As long as the configuration files are kept, an almost identical software environment/OS can be generated on Nix/NixOS)
+
+At this point you may be wondering, Nix/NixOS can manage systems, software and their configuration, but what about data?
+Although Nix/NixOS does not directly manage data, Nix/NixOS can manage data synchronization software well.
+For example, using the open source software Syncthing, or the open source service NextCloud, or the commercial service Google Drive.
+Therefore, as long as you keep the configuration files of Nix/NixOS,
+you can easily build a software env/OS that contains the software, configuration, and data you are familiar with.
+
+My Nix/NixOS configuration are hosted here
+[github.com/xieby1/nix_config](https://github.com/xieby1/nix_config).
+
+## Usage Scenarios
+
+* OS re-installation: recover the env of old OS
+* Dual boot OS: keep WSL and Linux have same env
+* Virtual machine: keep local env and VM have same env
+* Container: keep local env and container have same env
+* Multiple devices: keep multiple computers/phones[^nix-on-droid] have same env
 
 ## Install NixOS
 
@@ -274,3 +315,9 @@ to make ubuntu work properly.
 But NixOS doesn't provide all FHS directories.
 
 So use docker to provide ubuntu command line environment.
+
+## References
+
+[^doc_thesis]: Dolstra, Eelco. “The purely functional software deployment model.” (2006).
+
+[^nix-on-droid]: [github.com/t184256/nix-on-droid](https://github.com/t184256/nix-on-droid) a termux fork, supporting nix

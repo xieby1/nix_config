@@ -503,7 +503,7 @@ in
       #     https://nixos.wiki/wiki/Vim
       #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
       coc-pyright
-      # javscript lsp support
+      # javascript lsp support
       coc-tsserver
       coc-tabnine
       my-vim-markdown # format table
