@@ -21,7 +21,8 @@
 title: xieby1's nix/nixos
 email: xieby1@outlook.com
 baseurl: "" # the subpath of your site, e.g. /blog
-url: "" # the base hostname & protocol for your site, e.g. http://example.com
+url: "https://xieby1.github.io/nix_config"
+repo_url: "https://github.com/xieby1/nix_config/blob/main"
 github_username: xieby1
 
 # Build settings

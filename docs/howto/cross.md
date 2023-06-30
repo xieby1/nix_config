@@ -219,12 +219,7 @@ abi字符串可取的值列举如下[^abis]，
 | "aarch64-linux"                 | 交叉编译aarch64 | 原生aarch64应用 |
 
 因此基于这3种组合，可以在同一个shell环境中配置出3种软件，
-[shell_cross_platform.nix](https://xieby1.github.io/scripts/index.html#shell_cross_platformnix)
-的代码如下。
-
-```nix
-{{#include ../../scripts/nix/shell_cross_platform.nix}}
-```
+代码见[cross_platform.nix]({{ site.repo_url }}/scripts/shell/cross_platform.nix)。
 
 `pkgs_arm_cross`软件包的`stdenv.cc`为x86平台的arm交叉编译器。
 nixpkgs channel只包含了原生x86应用和原生arm应用。
@@ -269,10 +264,7 @@ $ qemu-aarch64 `command -v figlet` miao!
 
 ### mips交叉工具链的例子
 
-```nix
-{{##include ../../scripts/nix/shell_cross_mips.nix}}
-```
-
+[cross_mips.nix]({{ site.repo_url }}/scripts/shell/cross_mips.nix)
 
 ## 引用
 

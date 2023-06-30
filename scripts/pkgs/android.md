@@ -1,7 +1,7 @@
 ---
 layout: default
-title: Android
-parent: usr/gui
+title: Android App
+parent: scripts/pkgs
 ---
 
 <div style="text-align:right; font-size:3em;">2022.04.19</div>
@@ -65,11 +65,7 @@ qemu-system-x86_64 -m 4G -smp 3 -hda ~/Img/andx64_vcm141r5.qcow2 -enable-kvm -di
 * [SO: Run Android app in qemu-arm?](https://stackoverflow.com/questions/24627978/run-android-app-in-qemu-arm)
   * [2014: Running Android L Developer Preview on 64-bit Arm QEMU](https://www.linaro.org/blog/running-64bit-android-l-qemu/index.html)
 
-使用的nix脚本见scripts/nix/android.nix
-
-```nix
-{{ #include ../../scripts/nix/android.nix }}
-```
+使用的nix脚本见android.nix
 
 ### 获取apk package和activity
 

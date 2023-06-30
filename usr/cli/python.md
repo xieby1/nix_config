@@ -56,11 +56,5 @@ I found two useful tools to install python packages in Nix/NixOS
 mach-nix github repo:
 [github.com/DavHau/mach-nix](https://github.com/DavHau/mach-nix)
 
-Here is `shell_python_mach.nix`,
+Here is [python_mach.nix]({{ site.repo_url }}/scripts/shell/python_mach.nix),
 an example which create a shell with a python package called expmcc.
-
-Run it by `nix-shell shell_python_mach.nix`.
-
-```nix
-{{#include ../../scripts/nix/shell_python_mach.nix}}
-```

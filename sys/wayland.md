@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Not Wayland, But X11
-parent: sys
+parent: sys/
 ---
 
 # Currently, Not Wayland, But X11

@@ -8,7 +8,7 @@ You can also use some of the packages and modules to expand your own Nix/NixOS.
 If you want to try NixOS, refer to [Install NixOS](#install-nixos) and [Configure Nix](#configure-nix).
 If you just want to try Nix, you can skip [Install NixOS](#install-nixos) and go directly to [Configure Nix](#configure-nix).
 If you not only want to install Nix/NixOS, but also want to know more about Nix/NixOS,
-welcome to check out my blog about Nix/NixOS [xieby1.github.io/Distro/Nix/](https://xieby1.github.io/nix_config).
+welcome to check out the documentation in this repo [xieby1.github.io/nix_config](https://xieby1.github.io/nix_config).
 
 * Use nix expression,not nix flakes
 * Use NixOS stable channel (current version 22.05),not unstable channel

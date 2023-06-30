@@ -18,7 +18,7 @@ permalink: /
 你可以使用该仓库的配置，配置出完整NixOS操作系统。
 也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
 若你不仅只是想安装Nix/NixOS，还想了解更多Nix/NixOS的知识，
-欢迎看看我的关于Nix/NixOS的博客[xieby1.github.io/Distro/Nix/](https://xieby1.github.io/nix_config)。
+欢迎看看这个仓库的文档[xieby1.github.io/nix_config](https://xieby1.github.io/nix_config)。
 
 ## 目录
 
