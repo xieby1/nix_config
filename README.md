@@ -9,7 +9,7 @@ permalink: /
 
 该仓库存放着我的Nix/NixOS配置。
 该仓库使用nix expression，而非nix flakes。
-该仓库使用NixOS稳定源（目前版本22.11），而非非稳定源（unstable）。
+该仓库使用NixOS稳定源（目前版本23.05），而非非稳定源（unstable）。
 该仓库的配置多平台都可以正常使用，
 
 * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
@@ -110,11 +110,11 @@ vim /etc/nixos/configuration.nix
 ```bash
 # 替换为清华的最新稳定源
 # [对于NixOS]
-nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.11 nixos
+nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-23.05 nixos
 # [对于Nix]
-nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-22.11 nixpkgs
+nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-23.05 nixpkgs
 # 添加home manager源
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-22.11.tar.gz home-manager
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.05.tar.gz home-manager
 nix-channel --update
 ```
 
