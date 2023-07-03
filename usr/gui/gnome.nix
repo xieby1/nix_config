@@ -170,6 +170,8 @@ in {
     "org/gnome/desktop/interface" = {
       enable-hot-corners=false;
       show-battery-percentage=true;
+      switch-input-source=["<Control>space"];
+      switch-input-source-backward=["<Shift><Control>space"];
     };
 
     # proxy
