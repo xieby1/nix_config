@@ -38,7 +38,6 @@ permalink: /
   * [Tailscale](#tailscale)
   * [Non-NixOS bash-completion](#non-nixos-bash-completion)
   * [Neovim](#neovim)
-  * [Typora](#typora)
   * [输入法](#输入法)
   * [chroot or docker](#chroot-or-docker)
   * [TODO: terminal](#todo-terminal)
@@ -194,15 +193,6 @@ TODO:
 ### Neovim
 
 所有的vim配置都在`usr/cli/vim.nix`中。
-
-### Typora
-
-使用方法见`usr/gui.nix: mytypora`的定义。
-采用nixpkgs支持的最后的typora版本，即0.9.98。
-
-注：我尝试打包0.11.18，
-发现这个版本会检测文件完整性，
-因此基本上没办法用nix进行二次打包。
 
 ### 输入法
 
