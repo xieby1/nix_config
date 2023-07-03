@@ -177,5 +177,16 @@ in {
     "system/proxy/ftp" = {host="127.0.0.1"; port=config.proxyPort;};
     "system/proxy/http" = {host="127.0.0.1"; port=config.proxyPort;};
     "system/proxy/https" = {host="127.0.0.1"; port=config.proxyPort;};
+
+    # input method
+    "org/gnome/desktop/input-sources" = {
+      sources = with lib.hm.gvariant; mkArray
+      "(${lib.concatStrings [type.string type.string]})" [
+        (mkTuple ["xkb"  "us"])
+        (mkTuple ["ibus" "rime"])
+        (mkTuple ["ibus" "mozc-jp"])
+        (mkTuple ["ibus" "hangul"])
+      ];
+    };
   };
 }

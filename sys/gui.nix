@@ -30,12 +30,11 @@
 
   # https://github.com/kovidgoyal/kitty/issues/403
   environment.variables.GLFW_IM_MODULE = "ibus";
-  i18n.inputMethod.enabled = "fcitx5";
-  i18n.inputMethod.fcitx5.addons = with pkgs; [
-    fcitx5-configtool
-    fcitx5-chinese-addons
-    fcitx5-mozc
-    fcitx5-hangul
+  i18n.inputMethod.enabled = "ibus";
+  i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
+    rime
+    mozc
+    hangul
   ];
 
   nixpkgs.config.allowUnfree = true;
