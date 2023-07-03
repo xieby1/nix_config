@@ -77,4 +77,7 @@
   documentation.dev.enable = true;
   # Make sure legacy path is installed as well.
   environment.pathsToLink = [ "/share/gtk-doc" ];
+
+  programs.adb.enable = true;
+  users.users.xieby1.extraGroups = ["adbusers"];
 }
