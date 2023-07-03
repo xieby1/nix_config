@@ -1,7 +1,18 @@
 { config, pkgs, stdenv, lib, ... }:
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
-{
+let
+  hide-top-bar-114 = pkgs.gnomeExtensions.buildShellExtension {
+    uuid = "hidetopbar@mathieu.bidon.ca";
+    name = "Hide Top Bar";
+    pname = "hide-top-bar";
+    description = "For gnome 44";
+    link = "https://extensions.gnome.org/extension/545/hide-top-bar/";
+    version = 114;
+    sha256 = "07mqqya5vpfs3bf7823ir3c23rjpn81l58m8r5nas3i2ggxsgfln";
+    metadata = "miao";
+  };
+in {
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
     gnome.dconf-editor
@@ -13,7 +24,7 @@
     clipboard-indicator
     # bing-wallpaper-changer
     gtile
-    hide-top-bar
+    hide-top-bar-114
     lightdark-theme-switcher
     dash-to-dock
     random-wallpaper
