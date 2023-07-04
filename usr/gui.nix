@@ -80,15 +80,7 @@ in
     zotero
     barrier
     # entertainment
-    mgba
-    dgen-sdl # sega md emulator
     antimicrox
-    ## icon miss?
-    #(retroarch.override {
-    #  cores = with libretro; [
-    #    libretro.beetle-gba
-    #  ];
-    #})
     # music
     spotify
     # runXonY

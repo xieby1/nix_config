@@ -241,7 +241,6 @@ in
     comma
     xclip
     python3Packages.qrcode
-    zellij
     ## archive
     unar
     ## manage
@@ -249,15 +248,12 @@ in
     nix-tree
     ## text
     pandoc
-    mdbook
-    pdftk
     ## compile
     gnumake
     makefile2graph
     remake
     ## draw
     graphviz
-    gnuclad
     imagemagick
     figlet
     nyancat
@@ -268,9 +264,7 @@ in
     ranger
     tree
     ## network
-    frp
     wget
-    lsof
     bind.dnsutils # nslookup
     netcat
     nload
@@ -315,7 +309,6 @@ in
     nodePackages.typescript
     ### node
     nodejs
-    nodePackages.node2nix
     ## java
     openjdk
     ## nix
@@ -324,7 +317,6 @@ in
     ### allow non-nixos access `man configuration.nix`
     sysconfig.system.build.manual.manpages
     # runXonY
-    debootstrap
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
 
