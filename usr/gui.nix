@@ -74,7 +74,6 @@ in
     xelfviewer
     vlc
     my-xournalpp # pdf annotation
-    weston # for waydroid
     ghidra
     # management
     zotero
