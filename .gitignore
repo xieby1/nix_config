@@ -3,3 +3,4 @@ result*
 Gemfile.lock
 _site
 vendor
+.direnv
