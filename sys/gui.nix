@@ -4,9 +4,10 @@
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [
-    "intel" "amdgpu"
+    "nvidia"
     # default video drivers
     "radeon" "nouveau" "modesetting" "fbdev"
+    "intel" "amdgpu"
   ];
 
   # Enable the GNOME Desktop Environment.
