@@ -29,6 +29,7 @@ in {
     dash-to-dock
     random-wallpaper
     always-show-titles-in-overview
+    customize-ibus
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -50,6 +51,7 @@ in {
         "dash-to-dock@micxgx.gmail.com"
         "randomwallpaper@iflow.space"
         "Always-Show-Titles-In-Overview@gmail.com"
+        "customize-ibus@hollowman.ml"
       ];
 
       ## dock icons
@@ -189,6 +191,15 @@ in {
         (mkTuple ["ibus" "mozc-jp"])
         (mkTuple ["ibus" "hangul"])
       ];
+    };
+    "org/gnome/shell/extensions/customize-ibus" = {
+      candidate-orientation = lib.hm.gvariant.mkUint32 1;
+      custom-font="Iosevka Nerd Font 16";
+      enable-orientation=true;
+      input-indicator-only-on-toggle=false;
+      input-indicator-only-use-ascii=false;
+      use-custom-font=true;
+      use-indicator-show-delay=true;
     };
   };
 }
