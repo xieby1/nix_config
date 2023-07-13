@@ -17,10 +17,10 @@
 
 buildPythonPackage rec {
   pname = "Pandora-ChatGPT";
-  version = "1.1.0";
+  version = "1.2.5";
   src = fetchPypi {
     inherit pname version;
-    hash = "sha256-Inq8mBtsp4CUn27b4A4/FzqJo9IdF5ffMvL2HbkX9Ck=";
+    hash = "sha256-tfGqBRf/0VyaBuXsZEH8LwAuJYfk7oimY5Y0M1d/Qxs=";
   };
   doCheck = false;
   preBuild = ''
@@ -44,5 +44,6 @@ buildPythonPackage rec {
     sentry-sdk
     waitress
     werkzeug
-  ];
+    flask
+  ] ++ flask.optional-dependencies.async;
 }
