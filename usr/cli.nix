@@ -321,7 +321,6 @@ in
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
 
   programs.exa.enable = true;
-  programs.exa.enableAliases = true;
 
   # bash
   programs.bash.enable = true;
@@ -371,6 +370,10 @@ in
 
     # 解决tmux在nix-on-droid上不显示emoji和中文的问题
     export LANG=C.UTF-8
+
+    if [[ -n $(command -v exa) ]]; then
+        alias ls=exa
+    fi
   '';
 
   home.file.gdbinit = {
