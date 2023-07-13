@@ -148,15 +148,15 @@
 
   home.file.kitty_search = {
     source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/8cc3237e6a995b6e7e101cba667fcda5439d96e2/search.py";
-      sha256 = "15z86vggplw0xlbmcsbfg2jlg19k21xn5ilxfv0afnd6q03lcbls";
+      url = "https://github.com/trygveaa/kitty-kitten-search/raw/0760138fad617c5e4159403cbfce8421ccdfe571/search.py";
+      sha256 = "1w50fimqsbmqk9zhdmq8k2v1b36iwsglpbqaavpglw0acam3xid7";
     };
     target = ".config/kitty/search.py";
   };
   home.file.kitty_scrool_mark = {
     source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/trygveaa/kitty-kitten-search/8cc3237e6a995b6e7e101cba667fcda5439d96e2/scroll_mark.py";
-      sha256 = "1ylif0kknfv1z4684mbligwbxclwa256f36l1pr2a2hfnbl9zf01";
+      url = "https://github.com/trygveaa/kitty-kitten-search/raw/0760138fad617c5e4159403cbfce8421ccdfe571/scroll_mark.py";
+      sha256 = "1a1l7sp2x247da8fr54wwq7ffm987wjal9nw2f38q956v3cfknzi";
     };
     target = ".config/kitty/scroll_mark.py";
   };
