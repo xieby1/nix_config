@@ -312,7 +312,6 @@ in
     ## java
     openjdk
     ## nix
-    rnix-lsp
     nixos-option
     ### allow non-nixos access `man configuration.nix`
     sysconfig.system.build.manual.manpages

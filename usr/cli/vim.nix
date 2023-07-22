@@ -536,6 +536,7 @@ in
       ccls
       ltex-ls
       ripgrep
+      pkgsu.nixd
     ];
 
     # coc
@@ -559,7 +560,7 @@ in
           };
         };
         "nix" = {
-          "command" = "rnix-lsp";
+          "command" = "nixd";
           "filetypes" = ["nix"];
         };
       };
