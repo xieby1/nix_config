@@ -374,6 +374,28 @@ in
         alias ls=exa
     fi
   '';
+  ## after direnv's bash.initExtra
+  programs.bash.initExtra = lib.mkOrder 2000 ''
+    # https://stackoverflow.com/questions/1862510/how-can-the-last-commands-wall-time-be-put-in-the-bash-prompt
+    function timer_start {
+      _timer=''${_timer:-$SECONDS}
+    }
+    function timer_stop {
+      last_timer=$(($SECONDS - $_timer))
+    }
+    function timer_unset {
+      unset _timer
+    }
+
+    trap timer_start DEBUG
+
+    PROMPT_COMMAND="timer_stop;$PROMPT_COMMAND"
+    if [[ -n "$(echo $PROMPT_COMMAND | grep -o -e ';$')" ]]; then
+      PROMPT_COMMAND+="timer_unset;"
+    else
+      PROMPT_COMMAND+=";timer_unset;"
+    fi
+  '';
 
   home.file.gdbinit = {
     source = pkgs.fetchurl {
