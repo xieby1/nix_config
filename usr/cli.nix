@@ -223,6 +223,8 @@ in
         # https://stackoverflow.com/questions/18600188/home-end-keys-do-not-work-in-tmux
         bind-key -n Home send Escape "OH"
         bind-key -n End send Escape "OF"
+
+        set -g allow-passthrough on
       '';
       target = ".tmux.conf";
     };
