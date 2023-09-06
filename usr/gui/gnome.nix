@@ -140,8 +140,8 @@ in {
       change-lock-screen = true;
       hours = 8;
       minutes = 29;
-      # source = "genericJSON";
-      source = "wallhaven";
+      source = "genericJSON";
+      # source = "wallhaven";
     };
     "org/gnome/shell/extensions/space-iflow-randomwallpaper/genericJSON" = {
       generic-json-request-url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN";
