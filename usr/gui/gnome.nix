@@ -193,7 +193,7 @@ in {
       "(${lib.concatStrings [type.string type.string]})" [
         (mkTuple ["xkb"  "us"])
         (mkTuple ["ibus" "rime"])
-        (mkTuple ["ibus" "mozc-jp"])
+        (mkTuple ["ibus" "anthy"])
         (mkTuple ["ibus" "hangul"])
       ];
     };
