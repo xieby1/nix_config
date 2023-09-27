@@ -103,7 +103,7 @@ in {
     "org/gnome/settings-daemon/plugins/power" = {
       ambient-enabled=false;
       idle-dim=false;
-      power-button-action="suspend";
+      power-button-action="nothing";
       sleep-inactive-ac-timeout=3600;
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
