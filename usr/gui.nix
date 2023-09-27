@@ -73,7 +73,8 @@ in
     my-imhex
     xelfviewer
     vlc
-    my-xournalpp # pdf annotation
+    # my-xournalpp # pdf annotation
+    xournalpp
     ghidra
     # management
     zotero
