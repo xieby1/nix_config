@@ -1,7 +1,10 @@
 { config, pkgs, stdenv, lib, ... }:
 {
   imports = [{
-    home.packages = [pkgs.clash];
+    home.packages = [
+      pkgs.clash
+      (pkgs.callPackage ./clashctl.nix {})
+    ];
     systemd.user.services.clash = {
       Unit = {
         Description = "Auto start clash";
