@@ -5,6 +5,17 @@ nav_order: 1
 permalink: /
 ---
 
+Nix是一个采用纯函数式编程的先进可重现包管理器，理论上可以在任何Linux发行版上安装使用(比如Ubuntu、Debian、Arch等)。
+NixOS是Nix对应的Linux发行版。
+
+通过2年的Nix/NixOS使用，它已经成为我的学习和工作的重要基础。
+在多个项目中，Nix/NixOS让我和我的团队无需担心依赖问题。
+(比如我在NixOS上编译通过的代码，在其他系统如Ubuntu 16上可能因版本不匹配导致各种问题。)
+
+20年来,Nix/NixOS从一个博士论文转变成一个活跃的开源项目。现在它已经是一个成熟稳定的大型项目。
+Nix/NixOS采用函数式编程理念,文件夹结构也与常见Linux包管理有较大差异。
+这导致Nix/NixOS有一个陡峭的学习曲线。不过,当你适应后,它可以极大提升工程效率!
+
 # xieby1的Nix/NixOS配置
 
 该仓库存放着我的Nix/NixOS配置。
@@ -15,6 +26,7 @@ permalink: /
 * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
 * Nix: Linux✅，安卓（nix-on-droid）✅，WSL2✅
 
+虚拟机/物理机单系统/物理机双系统 安装NixOS 可以参考我两年前的[NixOS安装](./docs/howto/install_nixos.html)过程。
 你可以使用该仓库的配置，配置出完整NixOS操作系统。
 也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
 若你不仅只是想安装Nix/NixOS，还想了解更多Nix/NixOS的知识，
