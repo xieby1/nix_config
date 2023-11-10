@@ -9,6 +9,10 @@ NixOS是Nix对应的Linux发行版。
 Nix/NixOS采用函数式编程理念,文件夹结构也与常见Linux包管理有较大差异。
 这导致Nix/NixOS有一个陡峭的学习曲线。不过,当你适应后,它可以极大提升工程效率!
 
+下面是我今年用来给实验室的同学们推销Nix/NixOS的幻灯片（左下角菜单可切换全屏）：
+
+<iframe src="./docs/slides/2023.nix-env.slides.html" style="width: 100%;aspect-ratio:12/7;" frameBorder="0"></iframe>
+
 # xieby1的Nix/NixOS配置
 
 该仓库存放着我的Nix/NixOS配置。
@@ -58,7 +62,7 @@ Nix/NixOS采用函数式编程理念,文件夹结构也与常见Linux包管理�
 * home.nix: 用户总体配置（home-manager的配置）
   * usr/cli.nix: 用户命令行配置
   * usr/gui.nix: 用户图形配置
-* nix-on-droid.nix: 安卓总体配置（配合home-manager的配置）
+* nix-on-droid.nix: 安卓总体配置（nix-on-droid的配置）
 
 ## Nix和NixOS的关系
 
