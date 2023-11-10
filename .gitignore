@@ -1,6 +1,4 @@
 result*
-.jekyll-cache
-Gemfile.lock
-_site
-vendor
 .direnv
+book/
+SUMMARY.md

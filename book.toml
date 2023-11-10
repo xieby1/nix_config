@@ -1,0 +1,6 @@
+[book]
+authors = ["xieby1"]
+language = "en"
+multilingual = false
+src = "."
+title = "Xieby1's Nix/NixOS Config"
