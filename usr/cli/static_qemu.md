@@ -1,9 +1,3 @@
----
-layout: default
-title: Static QEMU
-parent: usr/cli
----
-
 <div style="text-align:right; font-size:3em;">2022.05.29</div>
 
 # 静态链接，以qemu为例

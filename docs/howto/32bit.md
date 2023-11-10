@@ -1,9 +1,3 @@
----
-layout: default
-title: 打包/编译32位程序
-parent: How to
----
-
 # 打包/编译32位程序
 
 参考[Packaging/32bit Applications](https://nixos.wiki/wiki/Packaging/32bit_Applications)。

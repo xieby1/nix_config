@@ -1,10 +1,3 @@
----
-date: 2023-01-14
-layout: default
-title: Module
-parent: Explanation
----
-
 # Module
 
 nixpkgs/lib/modules.nix:

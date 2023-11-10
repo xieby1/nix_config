@@ -1,8 +1,4 @@
----
-layout: default
-title: Typora
-parent: usr/gui
----
+# Typora
 
 采用nixpkgs支持的最后的typora版本，即0.9.98。
 

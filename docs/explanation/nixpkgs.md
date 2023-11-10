@@ -1,10 +1,3 @@
----
-date: 2023-04-26
-layout: default
-title: Nixpkgs
-parent: Explanation
----
-
 # Nixpkgs
 
 ## nixpkgs crossSystem

@@ -1,10 +1,3 @@
----
-layout: default
-title: 安装NixOS
-parent: How to
-date: 2021.12.04
----
-
 # 安装NixOS
 
 安装过程采用[官方安装文档](https://nixos.org/manual/nixos/stable/#sec-installation)。

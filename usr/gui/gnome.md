@@ -1,9 +1,3 @@
----
-layout: default
-title: "TODO: Gnome"
-parent: usr/gui
----
-
 # Gnome in NixOS
 
 ## 插件

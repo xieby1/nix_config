@@ -1,9 +1,3 @@
----
-layout: default
-title: 备份binary cache
-parent: How to
----
-
 # 备份binary cache
 
 ## 场景

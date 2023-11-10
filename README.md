@@ -1,10 +1,3 @@
----
-layout: default
-title: Home
-nav_order: 1
-permalink: /
----
-
 Nix是一个采用纯函数式编程的先进可重现包管理器，理论上可以在任何Linux发行版上安装使用(比如Ubuntu、Debian、Arch等)。
 NixOS是Nix对应的Linux发行版。
 

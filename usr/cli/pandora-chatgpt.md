@@ -1,9 +1,3 @@
----
-layout: default
-title: "Python: pandora-chatgpt"
-parent: usr/cli
----
-
 <div style="text-align:right; font-size:3em;">2023.05.03</div>
 
 # 打包python（pip）包，以pandora-chatgpt为例

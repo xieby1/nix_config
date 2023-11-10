@@ -1,9 +1,4 @@
----
-layout: default
-title: Waydroid
-date: 2023-02-04
-parent: usr/gui
----
+# Wayland
 
 ```nix
 virtualisation.waydroid.enable = true;

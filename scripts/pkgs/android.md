@@ -1,9 +1,3 @@
----
-layout: default
-title: Android App
-parent: scripts/pkgs
----
-
 <div style="text-align:right; font-size:3em;">2022.04.19</div>
 
 # 在NixOS上使用Android程序

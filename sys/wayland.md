@@ -1,9 +1,3 @@
----
-layout: default
-title: Not Wayland, But X11
-parent: sys/
----
-
 # Currently, Not Wayland, But X11
 
 Here list wayland problems I have met.

@@ -1,10 +1,3 @@
----
-layout: default
-title: Nodejs
-parent: usr/cli
-date: 2022-09-07
----
-
 # Nodejs packages (npm) in NixOS
 
 # NixOS中的Nodejs包（npm）

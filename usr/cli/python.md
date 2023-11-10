@@ -1,9 +1,3 @@
----
-layout: default
-title: Python
-parent: usr/cli
----
-
 # Python in Nix/NixOS
 
 <div style="text-align:right; font-size:3em;">2023.05.03</div>

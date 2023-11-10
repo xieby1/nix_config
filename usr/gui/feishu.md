@@ -1,9 +1,3 @@
----
-layout: default
-title: 飞书
-parent: usr/gui
----
-
 <div style="text-align:right; font-size:3em;">2022.05.11</div>
 
 # 安装deb包，以飞书为例

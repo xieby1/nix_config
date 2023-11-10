@@ -1,9 +1,3 @@
----
-layout: default
-title: 交叉编译和安装跨平台程序
-parent: How to
----
-
 # 交叉编译和安装跨平台程序
 
 nixpkgs原生支持x86和arm指令集。

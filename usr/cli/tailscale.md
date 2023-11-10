@@ -1,9 +1,3 @@
----
-layout: default
-title: Tailscale
-parent: usr/cli
----
-
 # Tailscale/Headscale
 
 ## overview

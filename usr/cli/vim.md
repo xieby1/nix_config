@@ -1,10 +1,4 @@
----
-layout: default
-title: Vim/Neovim
-parent: usr/cli
----
-
-# Vim in Nix/NixOS
+# Vim/Neovim in Nix/NixOS
 
 ## highlight color code
 

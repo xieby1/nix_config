@@ -1,9 +1,3 @@
----
-layout: default
-title: Binutils and gcc collsion
-parent: usr/cli
----
-
 # binutils's ld and gcc's ld collsion
 
 Background: I want to install `gcc` and `objdump`, where `objdump` is contained in `binutils`.
