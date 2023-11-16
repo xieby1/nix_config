@@ -3,8 +3,7 @@
   imports = [{
     home.packages = [
       pkgs.clash
-      (pkgs.callPackage ./clashctl.nix {})
-    ];
+    ] ++ lib.optional (!config.isNixOnDroid) (pkgs.callPackage ./clashctl.nix {});
     systemd.user.services.clash = {
       Unit = {
         Description = "Auto start clash";
