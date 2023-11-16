@@ -17,4 +17,8 @@
     default = config.home.username == "nix-on-droid";
     readOnly = true;
   };
+  isWSL2 = lib.mkOption {
+    default = (builtins.getEnv "WSL_DISTRO_NAME")!="";
+    readOnly = true;
+  };
 };}

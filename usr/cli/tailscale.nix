@@ -65,9 +65,9 @@ let
         ExecStart = "${tailscaled-wrapped}/bin/tailscaled-${suffix}";
       };
     };
-    programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
+    programs.bash.bashrcExtra = lib.optionalString (config.isNixOnDroid || config.isWSL2) ''
       # start tailscale-${suffix}
-      if [[ -z "$(ps|grep tailscaled-${suffix}|grep -v grep)" ]]; then
+      if [[ -z "$(ps -e -o cmd|grep tailscaled-${suffix}|grep -v grep)" ]]; then
           tailscaled-${suffix} &> /dev/null &
       fi
     '';
