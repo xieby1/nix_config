@@ -399,11 +399,6 @@ let
           name = 'buffer',
         }}, {{
           name = 'path',
-        }}, {{
-          name = 'cmdline',
-          option = {
-            ignore_cmds = { 'Man', '!' }
-          }
         }})
       })
     '';
@@ -678,7 +673,6 @@ in
       cmp-nvim-lsp
       cmp-buffer
       cmp-path
-      cmp-cmdline
 
       my-hbac
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
