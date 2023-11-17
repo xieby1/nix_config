@@ -262,6 +262,42 @@ let
     type = "lua";
     config = ''
       local lspconfig = require('lspconfig')
+
+      -- Global mappings.
+      -- See `:help vim.diagnostic.*` for documentation on any of the below functions
+      vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+      vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+      vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+      vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+
+      -- Use LspAttach autocommand to only map the following keys
+      -- after the language server attaches to the current buffer
+      vim.api.nvim_create_autocmd('LspAttach', {
+        group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+        callback = function(ev)
+          -- Enable completion triggered by <c-x><c-o>
+          vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+          -- Buffer local mappings.
+          -- See `:help vim.lsp.*` for documentation on any of the below functions
+          local opts = { buffer = ev.buf }
+          vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+          vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+          vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+          vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+          vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+          vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+          vim.keymap.set('n', '<space>wa', vim.lsp.buf.add_workspace_folder, opts)
+          vim.keymap.set('n', '<space>wr', vim.lsp.buf.remove_workspace_folder, opts)
+          vim.keymap.set('n', '<space>wl', function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end, opts)
+          vim.keymap.set('n', '<space>D', vim.lsp.buf.type_definition, opts)
+          vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+          vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
+          vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
+        end,
+      })
+
+      -- ltex
       local paths = {
         -- vim.fn.stdpath("config") .. "/spell/ltex.dictionary.en-US.txt",
         vim.fn.expand("%:p:h") .. "/.ltexdict",
@@ -291,6 +327,17 @@ let
           },
         },
       }
+      -- end of ltex
+
+      -- ccls
+      lspconfig.ccls.setup{
+        filetypes = {"c", "cc", "cpp", "c++", "objc", "objcpp"},
+        rootPatterns = {".ccls", "compile_commands.json", ".git/", ".hg/"},
+        cache = {
+          directory = "/tmp/ccls",
+        },
+      }
+      -- end of ccls
     '';
   };
   my-hbac = {
@@ -337,6 +384,9 @@ in
       nnoremap <F3> :nohlsearch<CR>
       "" Show line number
       set number
+      "" Always show the signcolumn, otherwise it would shift the text each time
+      "" diagnostics appear/become resolved
+      set signcolumn=number
       "" indent
       "set smartindent " not good, indentation in empty line cannot be auto removed
       """ show existing tab with 4 spaces width
@@ -527,10 +577,10 @@ in
       #   nixos vim related info:
       #     https://nixos.wiki/wiki/Vim
       #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
-      coc-pyright
+      # coc-pyright
       # javascript lsp support
-      coc-tsserver
-      coc-tabnine
+      # coc-tsserver
+      # coc-tabnine
       my-vim-markdown # format table
       tabular
       my-vim-hexokinase
@@ -567,7 +617,7 @@ in
 
     # coc
     withNodeJs = true;
-    coc.enable = true;
+    coc.enable = false;
     coc.settings = {
       "suggest.noselect" = true;
       "suggest.enablePreview" = true;
@@ -602,10 +652,6 @@ in
       " Having longer updatetime (default is 4000 ms = 4s) leads to noticeable
       " delays and poor user experience
       set updatetime=300
-
-      " Always show the signcolumn, otherwise it would shift the text each time
-      " diagnostics appear/become resolved
-      set signcolumn=number
 
       " Use tab for trigger completion with characters ahead and navigate
       " NOTE: There's always complete item selected by default, you may want to enable
