@@ -107,6 +107,8 @@ let
       nnoremap fb <cmd>lua require('telescope.builtin').buffers()<cr>
       nnoremap fh <cmd>lua require('telescope.builtin').help_tags()<cr>
       nnoremap ft <cmd>lua require('telescope.builtin').treesitter()<cr>
+      nnoremap fc <cmd>lua require('telescope.builtin').command_history()<cr>
+      nnoremap fC <cmd>lua require('telescope.builtin').commands()<cr>
     '';
   };
   my-telescope-fzf-native-nvim = {
