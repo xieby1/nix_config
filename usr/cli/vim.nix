@@ -935,4 +935,15 @@ in
       nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
     '';
   };
+
+  # nvim-metals proxy for bloop
+  home.file.jvmopts = {
+    text = ''
+      -Dhttps.proxyHost=127.0.0.1
+      -Dhttps.proxyPort=${toString config.proxyPort}
+      -Dhttp.proxyHost=127.0.0.1
+      -Dhttp.proxyPort=${toString config.proxyPort}
+    '';
+    target = ".bloop/.jvmopts";
+  };
 }
