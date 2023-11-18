@@ -461,6 +461,34 @@ let
       })
     '';
   };
+  my-nvim-metals = {
+    plugin = pkgs.vimPlugins.nvim-metals;
+    type = "lua";
+    config = ''
+      -- lspconfig.metals.setup{}
+      local metals_config = require("metals").bare_config()
+      metals_config.settings = {
+        showImplicitArguments = true,
+        excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
+        serverProperties = {
+          "-Dhttps.proxyHost=127.0.0.1",
+          "-Dhttps.proxyPort=${toString config.proxyPort}",
+          "-Dhttp.proxyHost=127.0.0.1",
+          "-Dhttp.proxyPort=${toString config.proxyPort}",
+        },
+      }
+      metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
+      -- Autocmd that will actually be in charging of starting the whole thing
+      local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
+      vim.api.nvim_create_autocmd("FileType", {
+        group = nvim_metals_group,
+        pattern = { "scala", "sbt" },
+        callback = function()
+          require("metals").initialize_or_attach(metals_config)
+        end,
+      })
+    '';
+  };
 in
 {
   # neovim
@@ -708,6 +736,7 @@ in
       my-cmp-tabnine
 
       my-hbac
+      my-nvim-metals
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
     extraPackages = with pkgs; [
@@ -715,6 +744,8 @@ in
       ltex-ls
       ripgrep
       pkgsu.nixd
+      # nvim-metals
+      coursier
     ];
 
     # coc
