@@ -480,6 +480,7 @@ let
         },
         -- see `:h metalsBinaryPath`, "Another setting for you crazy Nix kids." Hahaha!
         metalsBinaryPath = "${pkgs.metals}/bin/metals",
+        javaHome = "${pkgs.openjdk8}",
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
