@@ -478,6 +478,8 @@ let
           "-Dhttp.proxyHost=127.0.0.1",
           "-Dhttp.proxyPort=${toString config.proxyPort}",
         },
+        -- see `:h metalsBinaryPath`, "Another setting for you crazy Nix kids." Hahaha!
+        metalsBinaryPath = "${pkgs.metals}/bin/metals",
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
