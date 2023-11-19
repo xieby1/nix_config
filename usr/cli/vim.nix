@@ -466,7 +466,13 @@ let
   my-nvim-metals = {
     plugin = pkgs.vimPlugins.nvim-metals;
     type = "lua";
-    config = ''
+    config = let
+      jre_with_proxy = pkgs.callPackage ./jre_with_proxy.nix {
+        jre = pkgs.openjdk8_headless;
+        proxyHost = "127.0.0.1";
+        proxyPort = "${toString config.proxyPort}";
+      };
+    in ''
       -- lspconfig.metals.setup{}
       local metals_config = require("metals").bare_config()
       metals_config.settings = {
@@ -480,7 +486,7 @@ let
         },
         -- see `:h metalsBinaryPath`, "Another setting for you crazy Nix kids." Hahaha!
         metalsBinaryPath = "${pkgs.metals}/bin/metals",
-        javaHome = "${pkgs.openjdk8}",
+        javaHome = "${jre_with_proxy}",
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
