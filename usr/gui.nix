@@ -37,12 +37,19 @@ in
 {
   imports = [
     ./gui/mime.nix
-  ] ++lib.optionals ((builtins.getEnv "WSL_DISTRO_NAME")=="") [
+  ] ++ (if (builtins.getEnv "WSL_DISTRO_NAME")=="" then [
     ./gui/gnome.nix
     ./gui/terminal.nix
     ./gui/singleton_web_apps.nix
     ./gui/rofi.nix
-  ];
+  ] else [{ # install fonts for WSL
+    fonts.fontconfig.enable = true;
+    home.packages = with pkgs; [
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-emoji
+    ];
+  }]);
 
   home.packages = with pkgs; [
     libnotify
