@@ -532,7 +532,8 @@ in
     };
   }) (let
     my-nvim-lspconfig = {
-      plugin = pkgs.vimPlugins.nvim-lspconfig;
+      # TODO: nixd is currently not supported by nixpkgs 23.05
+      plugin = pkgs.pkgsu.vimPlugins.nvim-lspconfig;
       type = "lua";
       config = ''
         local lspconfig = require('lspconfig')
@@ -612,6 +613,11 @@ in
           },
         }
         -- end of ccls
+
+        -- nixd
+        lspconfig.nixd.setup{}
+        -- end of nixd
+
         -- Add additional capabilities supported by nvim-cmp
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -633,6 +639,7 @@ in
       extraPackages = with pkgs; [
         ccls
         ltex-ls
+        pkgsu.nixd
       ];
     };
   })];
@@ -883,7 +890,6 @@ in
     vimdiffAlias = true;
     extraPackages = with pkgs; [
       ripgrep
-      pkgsu.nixd
     ];
 
     # coc
