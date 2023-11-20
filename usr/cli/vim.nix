@@ -484,7 +484,7 @@ let
           "-Dhttp.proxyPort=${toString config.proxyPort}",
         },
         -- see `:h metalsBinaryPath`, "Another setting for you crazy Nix kids." Hahaha!
-        metalsBinaryPath = "${pkgs.metals}/bin/metals",
+        metalsBinaryPath = "${pkgs.metals.override {jre = jre_with_proxy;}}/bin/metals",
         javaHome = "${jre_with_proxy}",
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
