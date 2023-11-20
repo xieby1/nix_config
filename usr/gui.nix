@@ -36,8 +36,9 @@ let
 in
 {
   imports = [
-    ./gui/gnome.nix
     ./gui/mime.nix
+  ] ++lib.optionals ((builtins.getEnv "WSL_DISTRO_NAME")=="") [
+    ./gui/gnome.nix
     ./gui/terminal.nix
     ./gui/singleton_web_apps.nix
     ./gui/rofi.nix
