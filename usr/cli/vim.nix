@@ -155,8 +155,7 @@ let
   my-vista-vim = {
     plugin = pkgs.vimPlugins.vista-vim;
     config = ''
-      let g:vista_update_on_text_changed = 1
-      let g:vista_default_executive = 'coc'
+      let g:vista_default_executive = 'nvim_lsp'
     '';
   };
   my-vim-markdown = {
