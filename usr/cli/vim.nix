@@ -463,16 +463,15 @@ let
       })
     '';
   };
+  jre_with_proxy = pkgs.callPackage ./jre_with_proxy.nix {
+    jre = pkgs.openjdk8_headless;
+    proxyHost = "127.0.0.1";
+    proxyPort = "${toString config.proxyPort}";
+  };
   my-nvim-metals = {
     plugin = pkgs.vimPlugins.nvim-metals;
     type = "lua";
-    config = let
-      jre_with_proxy = pkgs.callPackage ./jre_with_proxy.nix {
-        jre = pkgs.openjdk8_headless;
-        proxyHost = "127.0.0.1";
-        proxyPort = "${toString config.proxyPort}";
-      };
-    in ''
+    config = ''
       -- lspconfig.metals.setup{}
       local metals_config = require("metals").bare_config()
       metals_config.settings = {
@@ -756,7 +755,9 @@ in
       ripgrep
       pkgsu.nixd
       # nvim-metals
-      coursier
+      (coursier.override {
+        jre = jre_with_proxy;
+      })
     ];
 
     # coc
