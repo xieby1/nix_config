@@ -258,70 +258,6 @@ let
       colorscheme sonokai
     '';
   };
-  my-nvim-cmp = {
-    plugin = pkgs.vimPlugins.nvim-cmp;
-    type = "lua";
-    config = ''
-      local cmp = require'cmp'
-
-      cmp.setup({
-        mapping = cmp.mapping.preset.insert({
-          ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
-          ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
-          -- C-b (back) C-f (forward) for snippet placeholder navigation.
-          ['<C-Space>'] = cmp.mapping.complete(),
-
-          -- https://github.com/hrsh7th/nvim-cmp/issues/1753
-          -- The "Safely select entries with <CR>" example from wiki does not work correctly in command mode
-          ["<CR>"] = cmp.mapping({
-            i = function(fallback)
-              if cmp.visible() and cmp.get_active_entry() then
-                cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
-              else
-                fallback()
-              end
-            end,
-            s = cmp.mapping.confirm({ select = true }),
-            c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
-          }),
-
-          ['<Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_next_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-          ['<S-Tab>'] = cmp.mapping(function(fallback)
-            if cmp.visible() then
-              cmp.select_prev_item()
-            else
-              fallback()
-            end
-          end, { 'i', 's' }),
-        }),
-        sources = cmp.config.sources({{
-          name = 'nvim_lsp',
-        }}, {{
-          name = 'buffer',
-          option = {
-            -- completion using words from visible buffers
-            get_bufnrs = function()
-              local bufs = {}
-              for _, win in ipairs(vim.api.nvim_list_wins()) do
-                bufs[vim.api.nvim_win_get_buf(win)] = true
-              end
-              return vim.tbl_keys(bufs)
-            end
-          },
-        }}, {{
-          name = 'path',
-        }}, {{
-          name = 'cmp_tabnine',
-        }})
-      })
-    '';
-  };
   my-hbac = {
     plugin = pkgs.vimUtils.buildVimPlugin {
       name = "hbac.nvim";
@@ -344,27 +280,6 @@ let
         telescope = {
           -- See #telescope-configuration below
           },
-      })
-    '';
-  };
-  my-cmp-tabnine = {
-    plugin = pkgs.vimPlugins.cmp-tabnine;
-    type = "lua";
-    config = ''
-      local tabnine = require('cmp_tabnine.config')
-
-      tabnine:setup({
-        max_lines = 1000,
-        max_num_results = 20,
-        sort = true,
-        run_on_every_keystroke = true,
-        snippet_placeholder = '..',
-        ignored_file_types = {
-          -- default is not to ignore
-          -- uncomment to ignore in lua:
-          -- lua = true
-        },
-        show_prediction_strength = false
       })
     '';
   };
@@ -642,6 +557,104 @@ in
         pkgsu.nixd
       ];
     };
+  }) (let
+    my-nvim-cmp = {
+      plugin = pkgs.vimPlugins.nvim-cmp;
+      type = "lua";
+      config = ''
+        local cmp = require'cmp'
+
+        cmp.setup({
+          mapping = cmp.mapping.preset.insert({
+            ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
+            ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
+            -- C-b (back) C-f (forward) for snippet placeholder navigation.
+            ['<C-Space>'] = cmp.mapping.complete(),
+
+            -- https://github.com/hrsh7th/nvim-cmp/issues/1753
+            -- The "Safely select entries with <CR>" example from wiki does not work correctly in command mode
+            ["<CR>"] = cmp.mapping({
+              i = function(fallback)
+                if cmp.visible() and cmp.get_active_entry() then
+                  cmp.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = false })
+                else
+                  fallback()
+                end
+              end,
+              s = cmp.mapping.confirm({ select = true }),
+              c = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Replace, select = true }),
+            }),
+
+            ['<Tab>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_next_item()
+              else
+                fallback()
+              end
+            end, { 'i', 's' }),
+            ['<S-Tab>'] = cmp.mapping(function(fallback)
+              if cmp.visible() then
+                cmp.select_prev_item()
+              else
+                fallback()
+              end
+            end, { 'i', 's' }),
+          }),
+          sources = cmp.config.sources({{
+            name = 'nvim_lsp',
+          }}, {{
+            name = 'buffer',
+            option = {
+              -- completion using words from visible buffers
+              get_bufnrs = function()
+                local bufs = {}
+                for _, win in ipairs(vim.api.nvim_list_wins()) do
+                  bufs[vim.api.nvim_win_get_buf(win)] = true
+                end
+                return vim.tbl_keys(bufs)
+              end
+            },
+          }}, {{
+            name = 'path',
+          }}, {{
+            name = 'cmp_tabnine',
+          }})
+        })
+      '';
+    };
+    my-cmp-tabnine = {
+      plugin = pkgs.vimPlugins.cmp-tabnine;
+      type = "lua";
+      config = ''
+        local tabnine = require('cmp_tabnine.config')
+
+        tabnine:setup({
+          max_lines = 1000,
+          max_num_results = 20,
+          sort = true,
+          run_on_every_keystroke = true,
+          snippet_placeholder = '..',
+          ignored_file_types = {
+            -- default is not to ignore
+            -- uncomment to ignore in lua:
+            -- lua = true
+          },
+          show_prediction_strength = false
+        })
+      '';
+    };
+  in {
+    programs.neovim = {
+      plugins = with pkgs.vimPlugins; [
+        my-nvim-cmp
+        cmp-nvim-lsp
+        cmp-buffer
+        cmp-path
+        my-cmp-tabnine
+      ];
+      extraPackages = with pkgs; [
+      ];
+    };
   })];
 
   # neovim
@@ -878,13 +891,6 @@ in
       git-wip
       my-gitsigns-nvim
       my-color-scheme
-
-      my-nvim-cmp
-      cmp-nvim-lsp
-      cmp-buffer
-      cmp-path
-      my-cmp-tabnine
-
       my-hbac
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
