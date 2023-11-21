@@ -139,10 +139,10 @@
       map f6 launch_window --location=vsplit
 
       # Goto window
-      # map ctrl+left neighboring_window left
-      # map ctrl+right neighboring_window right
-      # map ctrl+up neighboring_window up
-      # map ctrl+down neighboring_window down
+      map alt+left neighboring_window left
+      map alt+right neighboring_window right
+      map alt+up neighboring_window up
+      map alt+down neighboring_window down
     '';
   };
 
