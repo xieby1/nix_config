@@ -400,6 +400,10 @@ in
     if [[ -n $(command -v exa) ]]; then
         alias ls=exa
     fi
+  '' + lib.optionalString config.isWSL2 ''
+    # use the working directory of the current tab as the starting directory for a new tab
+    # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#using-actions-to-duplicate-the-path
+    PROMPT_COMMAND=''${PROMPT_COMMAND:+"$PROMPT_COMMAND"}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
   '';
   ## after direnv's bash.initExtra
   programs.bash.initExtra = lib.mkOrder 2000 ''
