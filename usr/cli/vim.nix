@@ -565,6 +565,12 @@ in
         local cmp = require'cmp'
 
         cmp.setup({
+          snippet = {
+            -- REQUIRED - you must specify a snippet engine
+            expand = function(args)
+              require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+            end,
+          },
           mapping = cmp.mapping.preset.insert({
             ['<C-u>'] = cmp.mapping.scroll_docs(-4), -- Up
             ['<C-d>'] = cmp.mapping.scroll_docs(4), -- Down
@@ -602,6 +608,8 @@ in
           }),
           sources = cmp.config.sources({{
             name = 'nvim_lsp',
+          }}, {{
+            name = 'luasnip',
           }}, {{
             name = 'buffer',
             option = {
@@ -651,6 +659,8 @@ in
         cmp-buffer
         cmp-path
         my-cmp-tabnine
+        luasnip
+        cmp_luasnip
       ];
       extraPackages = with pkgs; [
       ];
