@@ -624,8 +624,10 @@ in
             },
           }}, {{
             name = 'path',
+      '' + pkgs.lib.optionalString (builtins.currentSystem=="x86_64-linux") ''
           }}, {{
             name = 'cmp_tabnine',
+      '' + ''
           }})
         })
       '';
@@ -658,10 +660,9 @@ in
         cmp-nvim-lsp
         cmp-buffer
         cmp-path
-        my-cmp-tabnine
         luasnip
         cmp_luasnip
-      ];
+      ] ++ pkgs.lib.optional (builtins.currentSystem == "x86_64-linux") my-cmp-tabnine;
       extraPackages = with pkgs; [
       ];
     };
