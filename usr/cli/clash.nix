@@ -31,11 +31,6 @@
       export http_proxy="$HTTP_PROXY"
       export https_proxy="$HTTP_PROXY"
       export ftp_proxy="$HTTP_PROXY"
-    '' + pkgs.lib.optionalString config.isWSL2 ''
-      # start clash
-      if [[ -z "$(ps -e -o cmd|grep clash|grep -v grep)" ]]; then
-        ${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash &> /dev/null &
-      fi
     '');
   }];
 }
