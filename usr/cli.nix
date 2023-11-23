@@ -121,7 +121,7 @@ in
     programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
       # start sshd
       if [[ -z "$(ps|grep sshd-start|grep -v grep)" ]]; then
-          sshd-start &> /dev/null &
+          tmux new -d -s sshd-start sshd-start
       fi
     '';
   }{

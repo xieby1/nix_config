@@ -68,7 +68,7 @@ let
     programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
       # start tailscale-${suffix}
       if [[ -z "$(ps -e -o cmd|grep tailscaled-${suffix}|grep -v grep)" ]]; then
-          tailscaled-${suffix} &> /dev/null &
+          tmux new -d -s tailscaled-${suffix} tailscaled-${suffix}
       fi
     '';
   };
