@@ -54,15 +54,19 @@ in
   home.packages = with pkgs; [
     libnotify
     # browser
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     google-chrome
+  ] ++ [
     firefox
     # network
     mykdeconnect
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     feishu
     nur.repos.xddxdd.wechat-uos
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./gui/weixin.nix {})
     nur.repos.linyinfeng.wemeet
+  ] ++ [
     transmission-gtk
     tdesktop
     # text
@@ -78,22 +82,24 @@ in
     gimp
     # viewer
     myxdot
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     my-imhex
     xelfviewer
+  ] ++ [
     vlc
     # my-xournalpp # pdf annotation
     xournalpp
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ghidra
+  ] ++ [
     # management
     zotero
     barrier
     # entertainment
     antimicrox
     # music
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     spotify
-    # runXonY
-    wineWowPackages.stable
-    winetricks
   ];
 
   xdg.mime.types = {
