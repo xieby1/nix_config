@@ -75,6 +75,8 @@ let
 in {
   imports = [{
     home.packages = [pkgs.tailscale tailscale-bash-completion];
-  }(tailscale-wrapper {suffix="headscale"; port="1055";}
-  )(tailscale-wrapper {suffix="official";  port="1056";})];
+  }
+    # (tailscale-wrapper {suffix="headscale"; port="1055";})
+    (tailscale-wrapper {suffix="official";  port="1056";})
+  ];
 }
