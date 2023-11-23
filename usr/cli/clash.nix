@@ -16,7 +16,7 @@
         ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
       };
     };
-    programs.bash.bashrcExtra = lib.optionalString (!config.isNixOnDroid) ''
+    programs.bash.bashrcExtra = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
       # proxy
       ## default
       HTTP_PROXY="http://127.0.0.1:${toString config.proxyPort}/"
@@ -36,6 +36,6 @@
       if [[ -z "$(ps -e -o cmd|grep clash|grep -v grep)" ]]; then
         ${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash &> /dev/null &
       fi
-    '';
+    '');
   }];
 }
