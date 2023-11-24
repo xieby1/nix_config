@@ -56,6 +56,8 @@ Nix/NixOS采用函数式编程理念,文件夹结构也与常见Linux包管理�
 
 ## 文件夹结构
 
+* docs/: 文档
+* scripts/: nix-shell和独立的软件包的脚本
 * system.nix: 系统总体配置（nixos-rebuild的配置）
   * sys/cli.nix: 系统命令行配置
   * sys/gui.nix: 系统图形配置
