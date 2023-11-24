@@ -5,8 +5,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "xieby1";
       repo = "markcode";
-      rev = "912e69e0131fe358ca27c65a7a5b0d33f2a3732c";
-      hash = "sha256-stDWnTyYq1URYb6lx+hbe4lJnLPvHt8mBzLFEMZ34x0=";
+      rev = "acd7ed3d56e4467881c1319ad0b1f239a9ad068c";
+      hash = "sha256-HlQIbV9HwLRa+shmpXfaPzFKZL2XyjLaZ3Hk4CJjlwY=";
     }
   ) {};
 in pkgs.mkShell {
