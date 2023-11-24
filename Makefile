@@ -6,6 +6,6 @@ NIX_MDs = $(addsuffix .md,${NIXs})
 %.md: %
 	markcode $< > $@
 
-.PHONY: SUMMARY.md
-SUMMARY.md: .genSUMMARY.sh ${NIX_MDs}
+ALL_MDs = $(shell find . -name "*.md" -not -name "SUMMARY.md")
+SUMMARY.md: .genSUMMARY.sh ${NIX_MDs} ${ALL_MDs}
 	./$< > $@
