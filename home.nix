@@ -1,10 +1,14 @@
 #MC # home.nix
 #MC
-#MC This file is the entry point of home-manager's config.
-#MC It imports my global options in `./opt.nix`,
-#MC my CLI configs in `./usr/cli.nix`
-#MC and my GUI configs in `./usr/gui.nix`.
-#MC The environment variable `DISPLAY` is used to determine whether to enable the GUI configs.
+#MC `home.nix`是home-manager的入口配置文件，它导入了3个nix文件：
+#MC
+#MC * `./opt.nix`：我定义的全局变量
+#MC * `./usr/cli.nix`：我的所有CLI程序的配置
+#MC * `./usr/gui.nix`：我的所有GUI程序的配置
+#MC
+#MC 因为部分系统不需要GUI程序，比如安卓手机nix-on-droid或是树莓派等。
+#MC 我利用环境变量`DISPLAY`用于判断是否导入GUI程序的配置。
+
 { config, pkgs, stdenv, lib, ... }:
 
 {
