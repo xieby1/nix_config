@@ -2,3 +2,4 @@ result*
 .direnv
 book/
 SUMMARY.md
+*.nix.md
