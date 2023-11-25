@@ -1,13 +1,26 @@
+#MC # nix-on-droid.nix
+#MC
+#MC `nix-on-droid.nix`是安卓nix-on-droid的入口配置文件。
+#MC 因为原生termux并不能直接运行nix，
+#MC 所以nix-on-droid的作者基于termux使用proot搞出来一个能运行nix的termux分支。
+#MC
+#MC nix-on-droid并未自带很多常用linux命令行工具，
+#MC 因此`nix-on-droid.nix`主要负责配置那些在linux常用的，但nix-on-droid没有默认提供的命令行工具。
+#MC 其他命令行工具的配置则复用home-manager的配置[`./home.nix`](./home.nix.md)。
+#MC 下面是我的带注解的`nix-on-droid.nix`代码。
+
 { pkgs, config, ... }:
 
 {
+  #MC 添加`sshd-start`命令，用于在安卓上启动sshd服务。
+  #MC 通常安卓上是没有root权限的，无法写/etc/目录的文件，
+  #MC 因此将ssh的tmp目录和配置目录设定到home下面。
+  #MC 这部分内容参考[nix-on-droid wiki: SSH access](https://github.com/t184256/nix-on-droid/wiki/SSH-access)
   imports = [(let
     sshdTmpDirectory = "${config.user.home}/sshd-tmp";
     sshdDirectory = "${config.user.home}/sshd";
     pathToPubKey = "${config.user.home}/.ssh/id_rsa.pub";
     port = 8022;
-    # sshd-start script
-    # refers to: https://github.com/t184256/nix-on-droid/wiki/SSH-access
     sshd-start = pkgs.writeScriptBin "sshd-start" ''
       #!${pkgs.runtimeShell}
 
@@ -36,6 +49,7 @@
       fi
     '';
   }) ({
+  #MC 自动配置termux。
     build.activation.termux = ''
       DIR=${config.user.home}/.termux
       mkdir -p $DIR
@@ -54,6 +68,7 @@
     '';
   })];
 
+  #MC 下面是非常直观的软件安装。
   # Simply install just the packages
   environment.packages = with pkgs; [
     # User-facing stuff that you really really want to have
@@ -89,6 +104,7 @@
   # Read the changelog before changing this value
   system.stateVersion = "21.11";
 
-  # you can configure home-manager in here like
+  #MC 导入home-manager的配置文件[./home.nix](./home.nix)的配置。
+  #MC 如此操作，所有home-manager的软件和配置都能nix-on-droid中复用。
   home-manager.config = import ./home.nix;
 }
