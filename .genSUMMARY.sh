@@ -2,7 +2,7 @@
 
 echo "# Summary"
 echo
-echo "* [Home](./README.md)"
+echo "* [主页](./README.md)"
 
 for PATHMD in $(find -name "*.md" -exec ./.parent_dirs.sh {} \; | sort -n | uniq); do
 
