@@ -3,3 +3,4 @@ result*
 book/
 SUMMARY.md
 *.nix.md
+nix/nix.conf.md
