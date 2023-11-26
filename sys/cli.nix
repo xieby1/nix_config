@@ -1,6 +1,16 @@
+#MC # cli.nix
+#MC
+#MC 本文件是NixOS的CLI配置。
+#MC 主要包含两部分内容：
+#MC
+#MC * 系统环境管理（root的环境）
+#MC * 系统配置
+
 { config, pkgs, ... }:
 
 {
+  #MC ## 系统环境管理（root的环境）
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -20,6 +30,9 @@
   # ssh
   services.openssh.enable = true;
 
+  #MC ## 系统配置
+
+  #MC 给jumper电脑自动挂在SD卡。
   # refers to https://www.golinuxcloud.com/automount-file-system-systemd-rhel-centos-7-8/
   systemd.mounts = if "${config.networking.hostName}" == "jumper"
   then [{
@@ -52,8 +65,13 @@
     wantedBy = ["multi-user.target"];
   }] else [];
 
+  #MC 启用NTFS文件系统的支持。
+  #MC 如此就可以在NixOS/Windows双系统的电脑上挂在Windows的分区啦。
   boot.supportedFilesystems = [ "ntfs" ];
 
+  #MC 启用podman。
+  #MC podman是一个十分好用的docker实现。
+  #MC 支持用户态容器（不需要sudo），可以方便地挂在容器镜像的文件系统。
   virtualisation.podman.enable = true;
 
   #MC 配置binfmt，让非本地指令集的用户程序可以正常运行。
@@ -83,11 +101,15 @@
     };
   };
 
+  #MC 启用docdev。
+  #MC 在home-manager中装devdoc似乎有问题，得在NixOS中装才行。
+  #MC 之后有空再来详细研究。
   # Make sure devdoc outputs are installed.
   documentation.dev.enable = true;
   # Make sure legacy path is installed as well.
   environment.pathsToLink = [ "/share/gtk-doc" ];
 
+  #MC 启用ADB，安卓搞事情必备。
   programs.adb.enable = true;
   users.users.xieby1.extraGroups = ["adbusers"];
 }
