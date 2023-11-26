@@ -466,6 +466,7 @@ in
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
 
+  #MC ## Syncthing
   services.syncthing = {
     enable = true;
     extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
