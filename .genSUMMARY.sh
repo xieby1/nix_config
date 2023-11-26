@@ -43,36 +43,38 @@ genDir() {
 
 echo "# Summary"
 echo
-echo "* [主页](./README.md)"
+echo "# 🏠主页"
 echo
-echo "# 全局配置"
+echo "* [📔README.md](./README.md)"
+echo
+echo "# 🌏全局配置"
 echo
 echo "* [config.nix](./config.nix.md)"
 echo "* [TODO: nix/nix.conf](./nix/nix.conf.md)"
 echo "* [opt.nix](./opt.nix.md)"
 echo
-echo "# 系统配置（需sudo，用于NixOS）"
+echo "# 🖥️系统配置(需sudo,用于NixOS)"
 echo
 echo "* [system.nix](./system.nix.md)"
 genDir ./sys/
 echo
-echo "# 用户配置（无需sudo，用于Nix/NixOS）"
+echo "# 😺用户配置(无需sudo,用于Nix/NixOS)"
 echo
 echo "* [home.nix](./home.nix.md)"
 genDir ./usr/
 echo
-echo "# 安卓配置（无需sudo，复用\"用户配置\"）"
+echo "# 🤖安卓配置(无需sudo,复用\"用户配置\")"
 echo
 echo "* [nix-on-droid.nix](./nix-on-droid.nix.md)"
 echo
-echo "# 文档和心得体会"
+echo "# 📝文档和心得体会"
 echo
 genDir ./docs/
 echo
-echo "# Nix脚本（nix-shell和打包）"
+echo "# 📃Nix脚本（nix-shell和打包）"
 echo
 genDir ./scripts/
 echo
-echo "# 其他"
+echo "# 📌其他"
 echo
 echo "* [shell.nix](./shell.nix.md)"
