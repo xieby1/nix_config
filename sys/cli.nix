@@ -56,10 +56,6 @@
 
   virtualisation.podman.enable = true;
 
-  networking.extraHosts = if builtins.pathExists /home/xieby1/Gist/Config/hosts
-  then builtins.readFile /home/xieby1/Gist/Config/hosts
-  else "";
-
   boot.binfmt.registrations = {
     aarch64-linux = {
       interpreter = "${pkgs.qemu}/bin/qemu-aarch64";
