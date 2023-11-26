@@ -56,7 +56,21 @@
 
   virtualisation.podman.enable = true;
 
-  boot.binfmt.registrations = {
+  #MC 配置binfmt，让非本地指令集的用户程序可以正常运行。
+  #MC 比如在x86_64-linux上运行aarch64-linux的用户程序。
+  #MC 注意：不能在配和本地一样的binfmt，比如不能在x86_64-linux的机器上配置x86_64-linux的binfmt。
+  #MC 不然会出现奇怪的嵌套？你执行任何一条命令（x86_64-linux）都需要去调用qemu-x86_64，
+  #MC 但qemu-x86_64本事也是x86_64-linux的，所以会死循环？
+  #MC 我做了个实验：在x86_64-linux的NixOS中启用x86_64-linux的binfmt。
+  #MC 任何程序都执行不了了，连关机都不行，只能强制重启。
+  #MC 不过好在NixOS可以回滚，轻松复原实验前的环境。
+  #MC 下面的`filterAttrs`就是用来保证不配置本地的binfmt。
+  boot.binfmt.registrations = pkgs.lib.filterAttrs (n: v: n!=builtins.currentSystem) {
+    x86_64-linux = {
+      interpreter = "${pkgs.qemu}/bin/qemu-x86_64";
+      magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00'';
+      mask = ''\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
+    };
     aarch64-linux = {
       interpreter = "${pkgs.qemu}/bin/qemu-aarch64";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00'';
