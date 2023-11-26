@@ -21,8 +21,8 @@ let
     pkgs.fetchFromGitHub {
       owner = "xieby1";
       repo = "markcode";
-      rev = "acd7ed3d56e4467881c1319ad0b1f239a9ad068c";
-      hash = "sha256-HlQIbV9HwLRa+shmpXfaPzFKZL2XyjLaZ3Hk4CJjlwY=";
+      rev = "1c414aca28db7f2727f6da118f4e914743780ad0";
+      hash = "sha256-B5kmpAIyUihlBqk7oNAdqBmdfCajCmleKBTgLyy0NqU=";
     }
   ) {};
 in pkgs.mkShell {
