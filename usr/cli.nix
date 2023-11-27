@@ -260,6 +260,24 @@ in
         eval "''${CMD[@]}"
       '')
     ];
+  }{
+    #MC ## Syncthing
+    services.syncthing = {
+      enable = true;
+      #MC 让syncthing的端口外部可访问。
+      extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
+    };
+    #MC 启用代理，因为有些syncthing的服务器似乎是被墙了的。
+    systemd.user.services.syncthing.Service.Environment = [
+      # https://docs.syncthing.net/users/proxying.html
+      "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
+    ];
+    #MC 使用命令行浏览器browsh来实现syncthing-tui。
+    home.packages = [(
+      pkgs.writeShellScriptBin "syncthing-tui" ''
+        ${pkgs.browsh}/bin/browsh --firefox.path ${pkgs.firefox}/bin/firefox http://127.0.0.1:8384
+      ''
+    )];
   }];
 
   home.packages = with pkgs; [
@@ -465,14 +483,4 @@ in
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-
-  #MC ## Syncthing
-  services.syncthing = {
-    enable = true;
-    extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
-  };
-  systemd.user.services.syncthing.Service.Environment = [
-    # https://docs.syncthing.net/users/proxying.html
-    "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
-  ];
 }
