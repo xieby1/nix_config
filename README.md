@@ -1,3 +1,5 @@
+*🏗️我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**9/65**</span>🏗️*
+
 为了更好的文档阅读体验，请看[GitHub Pages](https://xieby1.github.io/nix_config/)的版本。
 
 Nix是一个采用纯函数式编程的先进可重现包管理器，理论上可以在任何Linux发行版上安装使用(比如Ubuntu、Debian、Arch等)。
