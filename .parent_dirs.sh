@@ -1,8 +1,10 @@
 #!/usr/bin/env bash
 
-dir="$1"
+path="$1"
+echo $path
+dir=$(dirname "$path")
 while true; do
-    echo $dir
+    echo $dir/
 
     dirdir=$(dirname "$dir")
     if [[ "$dir" != "$dirdir" ]]; then

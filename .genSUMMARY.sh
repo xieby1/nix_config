@@ -4,6 +4,9 @@ genDir() {
     Dir=$1
     for PATHMD in $(find $Dir -name "*.md" -exec ./.parent_dirs.sh {} \; | sort -n | uniq); do
 
+        # remove tailing slash for dir
+        PATHMD=${PATHMD%/}
+
         # README.md & index.md belongs to current folder
         NAMEMD=${PATHMD##*/}
         if [[ ${NAMEMD} =~ README.*md || ${NAMEMD} == "index.md" || ${NAMEMD} == "SUMMARY.md" ]]; then
