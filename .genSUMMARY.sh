@@ -35,9 +35,11 @@ genDir() {
                 echo "* [${NAMEMD}](${PATHMD})"
             fi
         elif [[ -f ${PATHMD}/index.md ]]; then
-            echo "* [${NAMEMD}](${PATHMD}/index.md)"
+            echo "* [${NAMEMD}/](${PATHMD}/index.md)"
         elif [[ -f ${PATHMD}/README.md ]]; then
-            echo "* [${NAMEMD}](${PATHMD}/README.md)"
+            echo "* [${NAMEMD}/](${PATHMD}/README.md)"
+        elif [[ -d ${PATHMD} ]]; then
+            echo "* [${NAMEMD}/]()"
         else
             echo "* [${NAMEMD}]()"
         fi
