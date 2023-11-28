@@ -1,4 +1,4 @@
-*🏗️我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**9/65**</span>🏗️*
+🏗️ *我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**9/65**</span>* 🏗️
 
 为了更好的文档阅读体验，请看[GitHub Pages](https://xieby1.github.io/nix_config/)的版本。
 
