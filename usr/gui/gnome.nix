@@ -207,4 +207,9 @@ in {
       use-indicator-show-delay=true;
     };
   };
+
+  # inspired by https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
+  home.activation.nautilus_bookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    $DRY_RUN_CMD ln -sf $VERBOSE_ARG ~/Gist/Config/nautilus_bookmarks ~/.config/gtk-3.0/bookmarks
+  '';
 }
