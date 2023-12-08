@@ -364,7 +364,7 @@ in
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
 
-  programs.exa.enable = true;
+  programs.eza.enable = true;
 
   # bash
   programs.bash.enable = true;
@@ -415,8 +415,8 @@ in
     # 解决tmux在nix-on-droid上不显示emoji和中文的问题
     export LANG=C.UTF-8
 
-    if [[ -n $(command -v exa) ]]; then
-        alias ls=exa
+    if [[ -n $(command -v eza) ]]; then
+        alias ls=eza
     fi
   '' + lib.optionalString config.isWSL2 ''
     # use the working directory of the current tab as the starting directory for a new tab
