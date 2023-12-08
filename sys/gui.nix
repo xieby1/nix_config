@@ -68,11 +68,11 @@
     (stdenv.mkDerivation {
       name = "my_fonts";
       srcs = [(fetchurl {
-        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.235.2/LXGWWenKai-Bold.ttf";
-        sha256 = "1v7bczjnadzf2s8q88rm0pf66kaymq3drsll4iy3i5axpbimap18";
+        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Bold.ttf";
+        sha256 = "16111vvjii2hmnigjb44rjj39k8hjawbvwrb3f2f1ph4hv5wnvkn";
       }) (fetchurl {
-        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.235.2/LXGWWenKai-Regular.ttf";
-        sha256 = "06kpqgar0vvsng4gzsnj1app1vkv7v07yqgi5mfwzxch0di5qk3v";
+        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Regular.ttf";
+        sha256 = "103mvbpg51jvda265f29sjq17jj76dgwz6f1qdmv6d99bb8b6x7w";
       })];
       sourceRoot = "./";
       unpackCmd = ''
