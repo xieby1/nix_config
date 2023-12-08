@@ -67,6 +67,7 @@ let
     esac
   '';
   sysconfig = (
+    # <...> are expression search in NIX_PATH
     if (builtins.tryEval <nixos-config>).success
     then import <nixpkgs/nixos> {}
     else import <nixpkgs/nixos> {configuration={};}
@@ -359,7 +360,9 @@ in
     ## nix
     nixos-option
     ### allow non-nixos access `man configuration.nix`
-    sysconfig.system.build.manual.manpages
+    # see: nixos/modules/misc/documentation.nix
+    #        nixos/doc/manual/default.nix
+    sysconfig.system.build.manual.nixos-configuration-reference-manpage
     # runXonY
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
