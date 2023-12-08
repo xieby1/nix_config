@@ -72,15 +72,17 @@ let
     then import <nixpkgs/nixos> {}
     else import <nixpkgs/nixos> {configuration={};}
   ).config;
-  my-capstone = pkgs.capstone.overrideAttrs (old: {
-    version = "next-5.0.0";
-    src = pkgs.fetchFromGitHub {
-      owner = "capstone-engine";
-      repo = "capstone";
-      rev = "6eb1db9c04113ac0a05f2dfd228704c84775530f";
-      hash = "sha256-ejshOt02jaAJkuyS8T+T6v3Td4Jqg19zKgVMZ5VuISs=";
-    };
-  });
+  # https://github.com/NixOS/nixpkgs/pull/252945
+  capstone5 = pkgs.callPackage (
+    pkgs.fetchurl (let
+      owner_repo = "r-ryantm/nixpkgs";
+      rev = "4fda89a5beb213a9520bee9c505bf02d344cd7c5";
+      path = "pkgs/development/libraries/capstone/default.nix";
+    in {
+      url = "https://raw.githubusercontent.com/${owner_repo}/${rev}/${path}";
+      sha256 = "11kdidshrnpn43bg8w8hc5j0dgwfz1lqybs04vw4qa0gw0n4jdlm";
+    })
+  ) {};
 in
 {
   imports = [ # files
@@ -323,7 +325,7 @@ in
     cscope
     clang-tools
     cmake
-    my-capstone
+    capstone5
     scc
     sloccount
     flamegraph
