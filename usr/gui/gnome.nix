@@ -40,7 +40,6 @@ in {
     unite
     clipboard-indicator
     # bing-wallpaper-changer
-    lightdark-theme-switcher
     gtile54
     hide-top-bar-issue339
     dash-to-dock
@@ -64,7 +63,6 @@ in {
         "hidetopbar@mathieu.bidon.ca"
         "system-monitor@paradoxxx.zero.gmail.com"
         "unite@hardpixel.eu"
-        "theme-switcher@fthx"
         "dash-to-dock@micxgx.gmail.com"
         "randomwallpaper@iflow.space"
         "Always-Show-Titles-In-Overview@gmail.com"
