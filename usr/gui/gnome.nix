@@ -12,6 +12,16 @@ let
     sha256 = "07mqqya5vpfs3bf7823ir3c23rjpn81l58m8r5nas3i2ggxsgfln";
     metadata = "miao";
   };
+  hide-top-bar-issue339 = pkgs.gnomeExtensions.hide-top-bar.overrideAttrs (old: {
+    src = pkgs.fetchzip (let
+      owner = "ademar111190";
+      repo = "hidetopbar";
+      rev = "07653b2953b2695c2dfce5bad7894e7ac215b6ef";
+    in {
+      url = "https://gitlab.gnome.org/${owner}/${repo}/-/archive/${rev}/hidetopbar-${rev}.zip";
+      hash = "sha256-TKBEZBXu4yMW4bcEPrj6cqvDqBPFTkBhBi/F60RZ2RA=";
+    });
+  });
 in {
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
@@ -24,8 +34,8 @@ in {
     clipboard-indicator
     # bing-wallpaper-changer
     gtile
-    hide-top-bar-114
     lightdark-theme-switcher
+    hide-top-bar-issue339
     dash-to-dock
     random-wallpaper
     always-show-titles-in-overview
