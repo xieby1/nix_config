@@ -22,6 +22,13 @@ let
       hash = "sha256-TKBEZBXu4yMW4bcEPrj6cqvDqBPFTkBhBi/F60RZ2RA=";
     });
   });
+  gtile54 = pkgs.gnomeExtensions.gtile.overrideAttrs (old: {
+    src = pkgs.fetchzip {
+      url = "https://github.com/gTile/gTile/releases/download/V54/gtile.dist.zip";
+      sha256 = "0w69996dhj1lp2d9qpa854bp1hn493ymwa0h0gaj45h4db6hmji9";
+      stripRoot = false;
+    };
+  });
 in {
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
@@ -33,8 +40,8 @@ in {
     unite
     clipboard-indicator
     # bing-wallpaper-changer
-    gtile
     lightdark-theme-switcher
+    gtile54
     hide-top-bar-issue339
     dash-to-dock
     random-wallpaper
