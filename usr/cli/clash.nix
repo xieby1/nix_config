@@ -2,7 +2,7 @@
 {
   imports = [{
     home.packages = [
-      pkgs.clash
+      pkgs.clash-meta
     ] ++ lib.optional (!config.isNixOnDroid) (pkgs.callPackage ./clashctl.nix {});
     systemd.user.services.clash = {
       Unit = {
@@ -13,7 +13,7 @@
         WantedBy = ["default.target"];
       };
       Service = {
-        ExecStart = "${pkgs.clash.outPath}/bin/clash -d ${config.home.homeDirectory}/Gist/clash";
+        ExecStart = "${pkgs.clash-meta.outPath}/bin/clash-meta -d ${config.home.homeDirectory}/Gist/clash";
       };
     };
     programs.bash.bashrcExtra = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
