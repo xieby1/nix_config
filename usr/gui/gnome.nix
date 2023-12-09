@@ -38,11 +38,11 @@ in {
   ++ (with pkgs.gnomeExtensions; [
     pkgs.pkgsu.gnomeExtensions.unite
     clipboard-indicator
-    # bing-wallpaper-changer
+    bing-wallpaper-changer
+    # random-wallpaper-wip-v3
     gtile54
     hide-top-bar-issue339
     dash-to-dock
-    random-wallpaper
     always-show-titles-in-overview
     customize-ibus
     # replace system-monitor(-next) with vitals
@@ -59,14 +59,14 @@ in {
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        # "BingWallpaper@ineffable-gmail.com"
+        "BingWallpaper@ineffable-gmail.com"
         "clipboard-indicator@tudmotu.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
         "Vitals@CoreCoding.com"
         "unite@hardpixel.eu"
         "dash-to-dock@micxgx.gmail.com"
-        "randomwallpaper@iflow.space"
+        # "randomwallpaper@iflow.space"
         "Always-Show-Titles-In-Overview@gmail.com"
         "customize-ibus@hollowman.ml"
       ];
@@ -142,11 +142,11 @@ in {
       window-buttons-theme="materia";
       restrict-to-primary-screen=false;
     };
-    # "org/gnome/shell/extensions/bingwallpaper" = {
-    #   market="zh-CN";
-    #   delete-previous=true;
-    #   download-folder="/tmp/pictures";
-    # };
+    "org/gnome/shell/extensions/bingwallpaper" = {
+      market="zh-CN";
+      delete-previous=true;
+      download-folder="/tmp/pictures";
+    };
     "org/gnome/shell/extensions/dash-to-dock" = {
       click-action="focus-or-appspread";
     };
