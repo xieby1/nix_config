@@ -208,7 +208,7 @@ in
     bing_dict = {
       name = "Bing Dict";
       genericName = "dictionary";
-      exec = "${webapp_sh} bing https://cn.bing.com/dict/";
+      exec = ''${webapp_sh} "搜索 词典" https://cn.bing.com/dict/'';
     };
     hjxd_jp = {
       name = "日语词典";
