@@ -36,7 +36,7 @@ in {
     gnome.devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    unite
+    pkgs.pkgsu.gnomeExtensions.unite
     clipboard-indicator
     # bing-wallpaper-changer
     gtile54
@@ -137,6 +137,7 @@ in {
       notifications-position="center";
       reduce-panel-spacing=true;
       show-window-buttons="always";
+      use-activities-text = false;
       window-buttons-placement="last";
       window-buttons-theme="materia";
       restrict-to-primary-screen=false;
