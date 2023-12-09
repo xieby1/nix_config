@@ -85,10 +85,16 @@ in {
       fixed-widths = true;
       hide-icons = true;
       hot-sensors = [
+        "_processor_usage_"
         "_memory_usage_"
         "__network-rx_max__"
         "__network-tx_max__"
       ];
+      show-fan = false;
+      show-system = false;
+      show-temperature = false;
+      show-voltage = false;
+      update-time = 2;
     };
     "org/gnome/shell/extensions/gtile" = {
       animation=true;
