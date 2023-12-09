@@ -36,7 +36,6 @@ in {
     gnome.devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    system-monitor
     unite
     clipboard-indicator
     # bing-wallpaper-changer
@@ -46,6 +45,9 @@ in {
     random-wallpaper
     always-show-titles-in-overview
     customize-ibus
+    # replace system-monitor(-next) with vitals
+    # refers to https://github.com/mgalgs/gnome-shell-system-monitor-applet/issues/57
+    vitals
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -61,7 +63,7 @@ in {
         "clipboard-indicator@tudmotu.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
-        "system-monitor@paradoxxx.zero.gmail.com"
+        "Vitals@CoreCoding.com"
         "unite@hardpixel.eu"
         "dash-to-dock@micxgx.gmail.com"
         "randomwallpaper@iflow.space"
@@ -79,17 +81,14 @@ in {
         ];
     };
     ## extensions settings
-    "org/gnome/shell/extensions/system-monitor" = {
-      compact-display=true;
-      cpu-show-text=false;
-      cpu-style="digit";
-      icon-display=false;
-      memory-show-text=false;
-      memory-style="digit";
-      net-show-text=false;
-      net-style="digit";
-      swap-display=false;
-      swap-style="digit";
+    "org/gnome/shell/extensions/vitals" = {
+      fixed-widths = true;
+      hide-icons = true;
+      hot-sensors = [
+        "_memory_usage_"
+        "__network-rx_max__"
+        "__network-tx_max__"
+      ];
     };
     "org/gnome/shell/extensions/gtile" = {
       animation=true;
