@@ -67,7 +67,7 @@ let
     '';
   };
   my-nvim-config-local = {
-    plugin = pkgs.vimUtils.buildVimPluginFrom2Nix {
+    plugin = pkgs.vimUtils.buildVimPlugin {
       name = "nvim-config-local";
       src = pkgs.fetchFromGitHub {
         owner = "klen";
