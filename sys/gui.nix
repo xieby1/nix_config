@@ -15,6 +15,26 @@
   services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
+  # https://discourse.nixos.org/t/how-to-create-folder-in-var-lib-with-nix/15647
+  system.activationScripts.user_account_conf = pkgs.lib.stringAfter [ "var" ] (let
+    face = pkgs.fetchurl {
+      url = "https://github.com/xieby1.png";
+      sha256 = "1s20qy3205ljp29lk0wqs6aw5z67db3c0lvnp0p7v1q2bz97s9bm";
+    };
+  in ''
+    mkdir -p /var/lib/AccountsService/users
+    if [[ ! -f /var/lib/AccountsService/users/xieby1 ]]; then
+    cat > /var/lib/AccountsService/users/xieby1 <<XIEBY1_ACCOUNT
+    [User]
+    Session=
+    Icon=/var/lib/AccountsService/icons/xieby1
+    SystemAccount=false
+    XIEBY1_ACCOUNT
+    fi
+    mkdir -p /var/lib/AccountsService/icons
+    ln -sf ${face} /var/lib/AccountsService/icons/xieby1
+  '');
+
   # Configure keymap in X11
   # services.xserver.layout = "us";
   # services.xserver.xkbOptions = "eurosign:e";
