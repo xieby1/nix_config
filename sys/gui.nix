@@ -54,9 +54,10 @@
   i18n.inputMethod.enabled = "ibus";
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
     rime
+    # keyboard layout is wrong in anthy, e.g. punctuations
+    # anthy
     # hinagara toggle setting is absent in mozc
-    # mozc
-    anthy
+    mozc
     hangul
   ];
 

@@ -214,7 +214,7 @@ in {
       "(${lib.concatStrings [type.string type.string]})" [
         (mkTuple ["xkb"  "us"])
         (mkTuple ["ibus" "rime"])
-        (mkTuple ["ibus" "anthy"])
+        (mkTuple ["ibus" "mozc-jp"])
         (mkTuple ["ibus" "hangul"])
       ];
     };
