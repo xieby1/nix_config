@@ -297,6 +297,10 @@ in
       config = ''
         -- lspconfig.metals.setup{}
         local metals_config = require("metals").bare_config()
+        metals_config.find_root_dir_max_project_nesting = 2
+        metals_config.root_patterns = {
+          "build.sbt",
+        }
         metals_config.settings = {
           showImplicitArguments = true,
           excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
