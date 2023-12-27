@@ -231,6 +231,8 @@ in {
 
   # inspired by https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
   home.activation.nautilus_bookmarks = lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+    # WSL2 may not have folder ~/.config/gtk-3.0
+    $DRY_RUN_CMD mkdir -p $VERBOSE_ARG ~/.config/gtk-3.0
     $DRY_RUN_CMD ln -sf $VERBOSE_ARG ~/Gist/Config/nautilus_bookmarks ~/.config/gtk-3.0/bookmarks
   '';
 }
