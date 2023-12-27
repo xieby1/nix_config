@@ -119,4 +119,10 @@
   services.gpm.enable = true;
 
   hardware.xone.enable = true;
+
+  programs.evolution = {
+    enable = true;
+    plugins = [pkgs.evolution-ews];
+  };
+
 }
