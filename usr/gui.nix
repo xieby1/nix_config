@@ -66,9 +66,10 @@ in
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./gui/weixin.nix {})
     nur.repos.linyinfeng.wemeet
+    # telegram desktop not provide aarch64 prebuilt
+    tdesktop
   ] ++ [
     transmission-gtk
-    tdesktop
     # text
     #wpsoffice
     libreoffice
