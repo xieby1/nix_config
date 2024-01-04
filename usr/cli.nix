@@ -365,6 +365,7 @@ in
     # see: nixos/modules/misc/documentation.nix
     #        nixos/doc/manual/default.nix
     sysconfig.system.build.manual.nixos-configuration-reference-manpage
+    nurl
     # runXonY
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
