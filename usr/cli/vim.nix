@@ -604,11 +604,15 @@ in
         lspconfig.nixd.setup{}
         -- end of nixd
 
+        -- html
+        lspconfig.html.setup{}
+        -- end of html
+
         -- Add additional capabilities supported by nvim-cmp
         local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
         -- Enable some language servers with the additional completion capabilities offered by nvim-cmp
-        local servers = { 'ltex', 'ccls', 'nixd'}
+        local servers = { 'ltex', 'ccls', 'nixd', 'html'}
         for _, lsp in ipairs(servers) do
           lspconfig[lsp].setup {
             -- on_attach = my_custom_on_attach,
@@ -626,6 +630,7 @@ in
         ccls
         ltex-ls
         pkgsu.nixd
+        vscode-langservers-extracted
       ];
     };
   }) (let
