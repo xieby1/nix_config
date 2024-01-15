@@ -956,14 +956,6 @@ in
       my-vista-vim
       vim-commentary
       my-nvim-treesitter
-      # python lsp support:
-      #   coc related info:
-      #     https://github.com/neoclide/coc.nvim/wiki/Language-servers#python
-      #       https://github.com/fannheyward/coc-pyright
-      #   nixos vim related info:
-      #     https://nixos.wiki/wiki/Vim
-      #       https://github.com/NixOS/nixpkgs/issues/98166#issuecomment-725319238
-      # coc-pyright
       # javascript lsp support
       # coc-tsserver
       my-vim-markdown # format table
