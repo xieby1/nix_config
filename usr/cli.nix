@@ -296,6 +296,8 @@ in
     nix-tree
     ## text
     pandoc
+    ### pdfcrop
+    (texlive.combine {inherit (pkgs.texlive) scheme-minimal pdfcrop;})
     ## compile
     gnumake
     makefile2graph
