@@ -281,6 +281,14 @@ in
         ${pkgs.browsh}/bin/browsh --firefox.path ${pkgs.firefox}/bin/firefox http://127.0.0.1:8384
       ''
     )];
+  }{
+    home.packages = with pkgs; [
+      cachix
+    ];
+    home.file.cachix_dhall = {
+      source = ~/Gist/Config/cachix.dhall;
+      target = ".config/cachix/cachix.dhall";
+    };
   }];
 
   home.packages = with pkgs; [
