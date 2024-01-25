@@ -12,7 +12,7 @@ let
       cp $src $dst
     '';
   };
-  tailscale-wrapper = {suffix, port}: let
+  tailscale-wrapper = {suffix, httpPort, socks5Port}: let
     tailscale-wrapped = pkgs.writeShellScriptBin "tailscale-${suffix}" ''
       tailscale --socket /tmp/tailscale-${suffix}.sock $@
     '';
@@ -21,7 +21,8 @@ let
       TS_LOGS_DIR="${stateDir}" \
         ${pkgs.tailscale}/bin/tailscaled \
         --tun userspace-networking \
-        --outbound-http-proxy-listen=localhost:${port} \
+        --outbound-http-proxy-listen=localhost:${httpPort} \
+        --socks5-server=localhost:${socks5Port} \
         --socket=/tmp/tailscale-${suffix}.sock \
         --state=${stateDir}/tailscaled.state \
         --statedir=${stateDir} \
@@ -76,7 +77,7 @@ in {
   imports = [{
     home.packages = [pkgs.tailscale tailscale-bash-completion];
   }
-    # (tailscale-wrapper {suffix="headscale"; port="1055";})
-    (tailscale-wrapper {suffix="official";  port="1056";})
+    # (tailscale-wrapper {suffix="headscale"; httpPort="1055"; socks5Port="1065";})
+    (tailscale-wrapper {suffix="official";  httpPort="1056"; socks5Port="1066";})
   ];
 }
