@@ -86,25 +86,25 @@
       ];
     })
     # refs to pkgs/data/fonts/roboto-mono/default.nix
-    (stdenv.mkDerivation {
-      name = "my_fonts";
-      srcs = [(fetchurl {
-        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Bold.ttf";
-        sha256 = "16111vvjii2hmnigjb44rjj39k8hjawbvwrb3f2f1ph4hv5wnvkn";
-      }) (fetchurl {
-        url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Regular.ttf";
-        sha256 = "103mvbpg51jvda265f29sjq17jj76dgwz6f1qdmv6d99bb8b6x7w";
-      })];
-      sourceRoot = "./";
-      unpackCmd = ''
-        ttfName=$(basename $(stripHash $curSrc))
-        cp $curSrc ./$ttfName
-      '';
-      installPhase = ''
-        mkdir -p $out/share/fonts/truetype
-        cp -a *.ttf $out/share/fonts/truetype/
-      '';
-    })
+    # (stdenv.mkDerivation {
+    #   name = "my_fonts";
+    #   srcs = [(fetchurl {
+    #     url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Bold.ttf";
+    #     sha256 = "16111vvjii2hmnigjb44rjj39k8hjawbvwrb3f2f1ph4hv5wnvkn";
+    #   }) (fetchurl {
+    #     url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Regular.ttf";
+    #     sha256 = "103mvbpg51jvda265f29sjq17jj76dgwz6f1qdmv6d99bb8b6x7w";
+    #   })];
+    #   sourceRoot = "./";
+    #   unpackCmd = ''
+    #     ttfName=$(basename $(stripHash $curSrc))
+    #     cp $curSrc ./$ttfName
+    #   '';
+    #   installPhase = ''
+    #     mkdir -p $out/share/fonts/truetype
+    #     cp -a *.ttf $out/share/fonts/truetype/
+    #   '';
+    # })
   ]);
   # enable fontDir /run/current-system/sw/share/X11/fonts
   fonts.fontDir.enable = true;
