@@ -76,6 +76,7 @@ in
     meld
     # TODO: use this after switching to wayland
     #wl-clipboard
+    textsnatcher
     # draw
     drawio
     #aseprite-unfree
