@@ -1,0 +1,419 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>📔README.md - Xieby1&#x27;s Nix/NixOS Config</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+    </head>
+    <body class="sidebar-visible no-js">
+    <div id="body-container">
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('light')
+            html.classList.add(theme);
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var body = document.querySelector('body');
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><li class="part-title">🏠主页</li><li class="chapter-item expanded "><a href="index.html" class="active"><strong aria-hidden="true">1.</strong> 📔README.md</a></li><li class="chapter-item expanded affix "><li class="part-title">🌏全局配置</li><li class="chapter-item expanded "><a href="config.nix.html"><strong aria-hidden="true">2.</strong> config.nix</a></li><li class="chapter-item expanded "><a href="nix/nix.conf.html"><strong aria-hidden="true">3.</strong> TODO: nix/nix.conf</a></li><li class="chapter-item expanded "><a href="opt.nix.html"><strong aria-hidden="true">4.</strong> opt.nix</a></li><li class="chapter-item expanded affix "><li class="part-title">🖥️系统配置(需sudo,用于NixOS)</li><li class="chapter-item expanded "><a href="system.nix.html"><strong aria-hidden="true">5.</strong> system.nix</a></li><li class="chapter-item expanded "><a href="sys/index.html"><strong aria-hidden="true">6.</strong> sys/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="sys/cli.nix.html"><strong aria-hidden="true">6.1.</strong> cli.nix</a></li><li class="chapter-item expanded "><a href="sys/gui.nix.html"><strong aria-hidden="true">6.2.</strong> gui.nix.md</a></li><li class="chapter-item expanded "><a href="sys/wayland.html"><strong aria-hidden="true">6.3.</strong> Currently, Not Wayland, But X11</a></li></ol></li><li class="chapter-item expanded "><li class="part-title">😺用户配置(无需sudo,用于Nix/NixOS)</li><li class="chapter-item expanded "><a href="home.nix.html"><strong aria-hidden="true">7.</strong> home.nix</a></li><li class="chapter-item expanded "><div><strong aria-hidden="true">8.</strong> usr/</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="usr/cli.nix.html"><strong aria-hidden="true">8.1.</strong> cli.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/index.html"><strong aria-hidden="true">8.2.</strong> cli/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="usr/cli/clash.nix.html"><strong aria-hidden="true">8.2.1.</strong> clash.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/clashctl.nix.html"><strong aria-hidden="true">8.2.2.</strong> clashctl.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/jre_with_proxy.nix.html"><strong aria-hidden="true">8.2.3.</strong> jre_with_proxy.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/kaleido.nix.html"><strong aria-hidden="true">8.2.4.</strong> kaleido.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/ld.html"><strong aria-hidden="true">8.2.5.</strong> binutils's ld and gcc's ld collsion</a></li><li class="chapter-item expanded "><a href="usr/cli/node.html"><strong aria-hidden="true">8.2.6.</strong> Nodejs packages (npm) in NixOS</a></li><li class="chapter-item expanded "><a href="usr/cli/pandora-chatgpt.html"><strong aria-hidden="true">8.2.7.</strong> 打包python（pip）包，以pandora-chatgpt为例</a></li><li class="chapter-item expanded "><a href="usr/cli/pandora-chatgpt.nix.html"><strong aria-hidden="true">8.2.8.</strong> pandora-chatgpt.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/python.html"><strong aria-hidden="true">8.2.9.</strong> Python in Nix/NixOS</a></li><li class="chapter-item expanded "><a href="usr/cli/static_qemu.html"><strong aria-hidden="true">8.2.10.</strong> 静态链接，以qemu为例</a></li><li class="chapter-item expanded "><a href="usr/cli/tailscale.html"><strong aria-hidden="true">8.2.11.</strong> Tailscale/Headscale</a></li><li class="chapter-item expanded "><a href="usr/cli/tailscale.nix.html"><strong aria-hidden="true">8.2.12.</strong> tailscale.nix.md</a></li><li class="chapter-item expanded "><a href="usr/cli/vim.html"><strong aria-hidden="true">8.2.13.</strong> Vim/Neovim in Nix/NixOS</a></li><li class="chapter-item expanded "><a href="usr/cli/vim.nix.html"><strong aria-hidden="true">8.2.14.</strong> vim.nix.md</a></li></ol></li><li class="chapter-item expanded "><a href="usr/gui.nix.html"><strong aria-hidden="true">8.3.</strong> gui.nix.md</a></li><li class="chapter-item expanded "><a href="usr/gui/index.html"><strong aria-hidden="true">8.4.</strong> gui/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="usr/gui/feishu.html"><strong aria-hidden="true">8.4.1.</strong> 安装deb包，以飞书为例</a></li><li class="chapter-item expanded "><a href="usr/gui/gnome.html"><strong aria-hidden="true">8.4.2.</strong> Gnome in NixOS</a></li><li class="chapter-item expanded "><a href="usr/gui/gnome.nix.html"><strong aria-hidden="true">8.4.3.</strong> gnome.nix.md</a></li><li class="chapter-item expanded "><a href="usr/gui/mime.nix.html"><strong aria-hidden="true">8.4.4.</strong> https://nixos.org/manual/nixos/stable/#sec-writing-modules</a></li><li class="chapter-item expanded "><a href="usr/gui/rofi.nix.html"><strong aria-hidden="true">8.4.5.</strong> rofi.nix.md</a></li><li class="chapter-item expanded "><a href="usr/gui/singleton_web_apps.nix.html"><strong aria-hidden="true">8.4.6.</strong> singleton_web_apps.nix.md</a></li><li class="chapter-item expanded "><a href="usr/gui/terminal.nix.html"><strong aria-hidden="true">8.4.7.</strong> terminal.nix.md</a></li><li class="chapter-item expanded "><a href="usr/gui/typora.html"><strong aria-hidden="true">8.4.8.</strong> Typora</a></li><li class="chapter-item expanded "><a href="usr/gui/waydroid.html"><strong aria-hidden="true">8.4.9.</strong> Wayland</a></li><li class="chapter-item expanded "><a href="usr/gui/weixin.nix.html"><strong aria-hidden="true">8.4.10.</strong> weixin.nix.md</a></li><li class="chapter-item expanded "><a href="usr/gui/wrapWine.nix.html"><strong aria-hidden="true">8.4.11.</strong> based on https://github.com/lucasew/nixcfg/blob/49d44c1a655f1c20d7354ecea942c78704067d50/pkgs/wrapWine.nix</a></li><li class="chapter-item expanded "><a href="usr/gui/xelfviewer.nix.html"><strong aria-hidden="true">8.4.12.</strong> xelfviewer.nix.md</a></li></ol></li></ol></li><li class="chapter-item expanded "><li class="part-title">🤖安卓配置(无需sudo,复用"用户配置")</li><li class="chapter-item expanded "><a href="nix-on-droid.nix.html"><strong aria-hidden="true">9.</strong> nix-on-droid.nix</a></li><li class="chapter-item expanded affix "><li class="part-title">📝文档和心得体会</li><li class="chapter-item expanded "><div><strong aria-hidden="true">10.</strong> docs/</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="docs/explanation/index.html"><strong aria-hidden="true">10.1.</strong> explanation/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="docs/explanation/modules.html"><strong aria-hidden="true">10.1.1.</strong> Module</a></li><li class="chapter-item expanded "><a href="docs/explanation/nixpkgs.html"><strong aria-hidden="true">10.1.2.</strong> Nixpkgs</a></li></ol></li><li class="chapter-item expanded "><a href="docs/howto/index.html"><strong aria-hidden="true">10.2.</strong> howto/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="docs/howto/32bit.html"><strong aria-hidden="true">10.2.1.</strong> 打包/编译32位程序</a></li><li class="chapter-item expanded "><a href="docs/howto/backup_binary_cache.html"><strong aria-hidden="true">10.2.2.</strong> 备份binary cache</a></li><li class="chapter-item expanded "><a href="docs/howto/cross.html"><strong aria-hidden="true">10.2.3.</strong> 交叉编译和安装跨平台程序</a></li><li class="chapter-item expanded "><a href="docs/howto/install_nixos.html"><strong aria-hidden="true">10.2.4.</strong> 安装NixOS</a></li></ol></li><li class="chapter-item expanded "><a href="docs/slides/index.html"><strong aria-hidden="true">10.3.</strong> slides/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="docs/slides/2023.nix-env.html"><strong aria-hidden="true">10.3.1.</strong> Nix让你的团队成员不再受环境问题困扰</a></li></ol></li></ol></li><li class="chapter-item expanded "><li class="part-title">📃Nix脚本（nix-shell和打包）</li><li class="chapter-item expanded "><div><strong aria-hidden="true">11.</strong> scripts/</div></li><li><ol class="section"><li class="chapter-item expanded "><a href="scripts/fhs-shell/index.html"><strong aria-hidden="true">11.1.</strong> fhs-shell/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="scripts/fhs-shell/dynamorio.nix.html"><strong aria-hidden="true">11.1.1.</strong> dynamorio.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/fhs-shell/hello.nix.html"><strong aria-hidden="true">11.1.2.</strong> hello.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/fhs-shell/pin.nix.html"><strong aria-hidden="true">11.1.3.</strong> pin.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/fhs-shell/spec.nix.html"><strong aria-hidden="true">11.1.4.</strong> spec.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/fhs-shell/x11.nix.html"><strong aria-hidden="true">11.1.5.</strong> x11.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/fhs-shell/xilinx.nix.html"><strong aria-hidden="true">11.1.6.</strong> xilinx.nix.md</a></li></ol></li><li class="chapter-item expanded "><a href="scripts/pkgs/index.html"><strong aria-hidden="true">11.2.</strong> pkgs/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="scripts/pkgs/7z.nix.html"><strong aria-hidden="true">11.2.1.</strong> TODO: 7z need dynamical link 7z.so</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/android.html"><strong aria-hidden="true">11.2.2.</strong> 在NixOS上使用Android程序</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/android.nix.html"><strong aria-hidden="true">11.2.3.</strong> android.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/appimage_runtime.nix.html"><strong aria-hidden="true">11.2.4.</strong> appimage_runtime.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/coremarks.nix.html"><strong aria-hidden="true">11.2.5.</strong> coremarks.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/cross_mips.nix.html"><strong aria-hidden="true">11.2.6.</strong> cross_mips.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/cross_static_hello.nix.html"><strong aria-hidden="true">11.2.7.</strong> cross_static_hello.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/fhs_helloworld.nix.html"><strong aria-hidden="true">11.2.8.</strong> fhs_helloworld.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/fhs_spec2000_perl.nix.html"><strong aria-hidden="true">11.2.9.</strong> fhs_spec2000_perl.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/qemu-sys-static.nix.html"><strong aria-hidden="true">11.2.10.</strong> qemu-sys-static.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/qemu-sys_riscv64_static.nix.html"><strong aria-hidden="true">11.2.11.</strong> qemu-sys_riscv64_static.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/qemu_riscv64_static.nix.html"><strong aria-hidden="true">11.2.12.</strong> qemu_riscv64_static.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/qemu_static.nix.html"><strong aria-hidden="true">11.2.13.</strong> qemu_static.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/qemu_tests_tcg.nix.html"><strong aria-hidden="true">11.2.14.</strong> qemu_tests_tcg.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/qemus.nix.html"><strong aria-hidden="true">11.2.15.</strong> build by version</a></li><li class="chapter-item expanded "><a href="scripts/pkgs/shellinabox.nix.html"><strong aria-hidden="true">11.2.16.</strong> https://github.com/NixOS/nixpkgs/issues/185773</a></li></ol></li><li class="chapter-item expanded "><a href="scripts/shell/index.html"><strong aria-hidden="true">11.3.</strong> shell/</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="scripts/shell/chipyard.nix.html"><strong aria-hidden="true">11.3.1.</strong> chipyard.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/cross_mips.nix.html"><strong aria-hidden="true">11.3.2.</strong> cross_mips.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/cross_platform.nix.html"><strong aria-hidden="true">11.3.3.</strong> cross_platform.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/devshell_hello.nix.html"><strong aria-hidden="true">11.3.4.</strong> devshell_hello.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/gcc.nix.html"><strong aria-hidden="true">11.3.5.</strong> gcc.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/hello.nix.html"><strong aria-hidden="true">11.3.6.</strong> hello.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/pygame.nix.html"><strong aria-hidden="true">11.3.7.</strong> pygame.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/python_fhs_venv.nix.html"><strong aria-hidden="true">11.3.8.</strong> https://nixos.wiki/wiki/Python</a></li><li class="chapter-item expanded "><a href="scripts/shell/python_mach.nix.html"><strong aria-hidden="true">11.3.9.</strong> python_mach.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/python_venv.nix.html"><strong aria-hidden="true">11.3.10.</strong> python_venv.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/qemu_plugins.nix.html"><strong aria-hidden="true">11.3.11.</strong> qemu_plugins.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/qemu_tests_tcg.nix.html"><strong aria-hidden="true">11.3.12.</strong> qemu_tests_tcg.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/riscv-tests.nix.html"><strong aria-hidden="true">11.3.13.</strong> riscv-tests.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/spike.nix.html"><strong aria-hidden="true">11.3.14.</strong> spike.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/texlive.nix.html"><strong aria-hidden="true">11.3.15.</strong> texlive.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/ucasproposal.nix.html"><strong aria-hidden="true">11.3.16.</strong> ucasproposal.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/v8.nix.html"><strong aria-hidden="true">11.3.17.</strong> v8.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/venv.nix.html"><strong aria-hidden="true">11.3.18.</strong> venv.nix.md</a></li><li class="chapter-item expanded "><a href="scripts/shell/wine6.nix.html"><strong aria-hidden="true">11.3.19.</strong> wine6.nix.md</a></li></ol></li></ol></li><li class="chapter-item expanded "><li class="part-title">📌其他</li><li class="chapter-item expanded "><a href="shell.nix.html"><strong aria-hidden="true">12.</strong> shell.nix</a></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <!-- Track and set sidebar scroll position -->
+        <script>
+            var sidebarScrollbox = document.querySelector('#sidebar .sidebar-scrollbox');
+            sidebarScrollbox.addEventListener('click', function(e) {
+                if (e.target.tagName === 'A') {
+                    sessionStorage.setItem('sidebar-scroll', sidebarScrollbox.scrollTop);
+                }
+            }, { passive: true });
+            var sidebarScrollTop = sessionStorage.getItem('sidebar-scroll');
+            sessionStorage.removeItem('sidebar-scroll');
+            if (sidebarScrollTop) {
+                // preserve sidebar scroll position when navigating via links within sidebar
+                sidebarScrollbox.scrollTop = sidebarScrollTop;
+            } else {
+                // scroll sidebar to current active section when navigating via "next/previous chapter" buttons
+                var activeSection = document.querySelector('#sidebar .active');
+                if (activeSection) {
+                    activeSection.scrollIntoView({ block: 'center' });
+                }
+            }
+        </script>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">Xieby1&#x27;s Nix/NixOS Config</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/xieby1/nix_config" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <p>🏗️ <em>我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;"><strong>8/65</strong></span></em> 🏗️</p>
+<p>为了更好的文档阅读体验，请看<a href="https://xieby1.github.io/nix_config/">GitHub Pages</a>的版本。</p>
+<p>Nix是一个采用纯函数式编程的先进可重现包管理器，理论上可以在任何Linux发行版上安装使用(比如Ubuntu、Debian、Arch等)。
+NixOS是Nix对应的Linux发行版。</p>
+<p>通过2年的Nix/NixOS使用，它已经成为我的学习和工作的重要基础。
+在多个项目中，Nix/NixOS让我和我的团队无需担心依赖问题。
+(比如我在NixOS上编译通过的代码，在其他系统如Ubuntu 16上可能因版本不匹配导致各种问题。)</p>
+<p>20年来,Nix/NixOS从一个博士论文转变成一个活跃的开源项目。现在它已经是一个成熟稳定的大型项目。
+Nix/NixOS采用函数式编程理念,文件夹结构也与常见Linux包管理有较大差异。
+这导致Nix/NixOS有一个陡峭的学习曲线。不过,当你适应后,它可以极大提升工程效率!</p>
+<p>下面是我今年用来给实验室的同学们推销Nix/NixOS的幻灯片（左下角菜单可切换全屏）：</p>
+<iframe src="./docs/slides/2023.nix-env.slides.html" style="width: 100%;aspect-ratio:12/7;" frameBorder="0"></iframe>
+<h1 id="xieby1的nixnixos配置"><a class="header" href="#xieby1的nixnixos配置">xieby1的Nix/NixOS配置</a></h1>
+<p>该仓库存放着我的Nix/NixOS配置。
+该仓库使用nix expression，而非nix flakes。
+该仓库使用NixOS稳定源（目前版本23.11），而非非稳定源（unstable）。
+该仓库的配置多平台都可以正常使用，</p>
+<ul>
+<li>NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅</li>
+<li>Nix: Linux✅，安卓（nix-on-droid）✅，WSL2✅</li>
+</ul>
+<p>虚拟机/物理机单系统/物理机双系统 安装NixOS 可以参考我两年前的<a href="./docs/howto/install_nixos.html">NixOS安装</a>过程。
+你可以使用该仓库的配置，配置出完整NixOS操作系统。
+也可以使用其中的部分包、模块，扩充自己的Nix/NixOS。
+若你不仅只是想安装Nix/NixOS，还想了解更多Nix/NixOS的知识，
+欢迎看看这个仓库的文档<a href="https://xieby1.github.io/nix_config">xieby1.github.io/nix_config</a>。</p>
+<h2 id="目录"><a class="header" href="#目录">目录</a></h2>
+<!-- vim-markdown-toc GFM -->
+<ul>
+<li><a href="#%E6%96%87%E4%BB%B6%E5%A4%B9%E7%BB%93%E6%9E%84">文件夹结构</a></li>
+<li><a href="#nix%E5%92%8Cnixos%E7%9A%84%E5%85%B3%E7%B3%BB">Nix和NixOS的关系</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">使用场景</a></li>
+<li><a href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95">使用方法</a></li>
+<li><a href="#%E8%BD%AF%E4%BB%B6%E9%85%8D%E7%BD%AE%E6%80%9D%E8%B7%AF">软件配置思路</a>
+<ul>
+<li><a href="#x11-gnome%E6%A1%8C%E9%9D%A2">X11 Gnome桌面</a>
+<ul>
+<li><a href="#%E6%96%B0%E5%A2%9E%E6%A8%A1%E5%9D%97mimenix">新增模块mime.nix</a></li>
+</ul>
+</li>
+<li><a href="#windows%E7%A8%8B%E5%BA%8Fwrapwine">Windows程序（wrapWine）</a></li>
+<li><a href="#%E7%BD%91%E9%A1%B5%E5%BA%94%E7%94%A8">网页应用</a></li>
+<li><a href="#systemd%E7%94%A8%E6%88%B7%E6%9C%8D%E5%8A%A1">Systemd用户服务</a></li>
+<li><a href="#clash%E7%A7%91%E5%AD%A6%E4%B8%8A%E7%BD%91">Clash科学上网</a></li>
+<li><a href="#tailscale">Tailscale</a></li>
+<li><a href="#non-nixos-bash-completion">Non-NixOS bash-completion</a></li>
+<li><a href="#neovim">Neovim</a></li>
+<li><a href="#%E8%BE%93%E5%85%A5%E6%B3%95">输入法</a></li>
+<li><a href="#chroot-or-docker">chroot or docker</a></li>
+<li><a href="#todo-terminal">TODO: terminal</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BC%95%E7%94%A8">引用</a></li>
+</ul>
+<!-- vim-markdown-toc -->
+<h2 id="文件夹结构"><a class="header" href="#文件夹结构">文件夹结构</a></h2>
+<ul>
+<li>docs/: 文档</li>
+<li>scripts/: nix-shell和独立的软件包的脚本</li>
+<li>system.nix: 系统总体配置（nixos-rebuild的配置）
+<ul>
+<li>sys/cli.nix: 系统命令行配置</li>
+<li>sys/gui.nix: 系统图形配置</li>
+</ul>
+</li>
+<li>home.nix: 用户总体配置（home-manager的配置）
+<ul>
+<li>usr/cli.nix: 用户命令行配置</li>
+<li>usr/gui.nix: 用户图形配置</li>
+</ul>
+</li>
+<li>nix-on-droid.nix: 安卓总体配置（nix-on-droid的配置）</li>
+</ul>
+<h2 id="nix和nixos的关系"><a class="header" href="#nix和nixos的关系">Nix和NixOS的关系</a></h2>
+<p>Nix是一个先进的包管理系统，用来管理软件包。
+其目标和常见的apt、rpm等包管理器一致。
+相对于这些包管理器，Nix采用了纯函数构建模型、使用哈希存储软件包等思想。
+这使得Nix能够轻松做到做到可重现构建、解决依赖地狱（dependency hell）。
+Nix源自于Dolstra博士期间的研究内容。
+其详细理论由他的博士论文<sup class="footnote-reference"><a href="#doc_thesis">1</a></sup>支撑。</p>
+<p>NixOS则是把整个Linux操作系统看作一系列软件包（包括内核），采用Nix来进行管理。
+换句话说，NixOS是一个的使用Nix包管理器的Linux发行版。</p>
+<p>你可以单独使用Nix包管理器，用它来管理你的用户程序。
+你也可以使用NixOS，让你的整个操作系统都由Nix管理。
+Nix/NixOS带来的最直观的优势就是，只要保留着Nix/NixOS的配置文件，
+就能恢复出一个一模一样的软件环境/操作系统。
+（当然这是理想情况下。
+nix 2.8的impure特性，home-manager等在打破这一特性。
+不过不用担心。
+只要保留配置文件，Nix/NixOS上能够生成一个几乎一模一样的软件环境/操作系统）</p>
+<p>至此你可能会产生疑问，Nix/NixOS能够管理系统、软件及其配置，那数据呢？
+虽然Nix/NixOS不直接管理数据，但是Nix/NixOS可以很好的管理数据同步软件。
+比如使用开源软件Syncthing，或是开源服务NextCloud，或是商业服务Google Drive。
+因此只要有Nix/NixOS的配置文件，
+那就能轻松的构建出包含你熟悉的软件、配置、数据的软件环境/操作系统啦。</p>
+<p>我的Nix/NixOS配置存放在这里
+<a href="https://github.com/xieby1/nix_config">github.com/xieby1/nix_config</a>。</p>
+<h2 id="使用场景"><a class="header" href="#使用场景">使用场景</a></h2>
+<ul>
+<li>重装系统：复原老系统的环境</li>
+<li>双系统：让WSL和Linux保持相同的环境</li>
+<li>虚拟机：让本地环境和虚拟机保持相同的环境</li>
+<li>容器：让本地环境和容器保持相同的环境</li>
+<li>多设备：让多台电脑/手机<sup class="footnote-reference"><a href="#nix-on-droid">2</a></sup>保持相同的环境</li>
+</ul>
+<h2 id="使用方法"><a class="header" href="#使用方法">使用方法</a></h2>
+<p>安装Nix/NixOS不在此赘述，参考https://nixos.org/download.html。</p>
+<p>首先下载我的配置</p>
+<pre><code class="language-bash">git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
+# [仅NixOS] 在imports中添加system.nix的路径
+vim /etc/nixos/configuration.nix
+</code></pre>
+<p>然后设置软件源，在NixOS中推荐使用<code>sudo</code>。</p>
+<pre><code class="language-bash"># 替换为清华的最新稳定源
+# [对于NixOS]
+nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-23.11 nixos
+# [对于Nix]
+nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-23.11 nixpkgs
+# 添加home manager源
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --update
+</code></pre>
+<p>最后部署配置</p>
+<pre><code class="language-bash"># [仅NixOS]
+sudo nixos-rebuild switch
+# 安装home-manager
+nix-shell '&lt;home-manager&gt;' -A install
+home-manager switch
+</code></pre>
+<h2 id="软件配置思路"><a class="header" href="#软件配置思路">软件配置思路</a></h2>
+<h3 id="x11-gnome桌面"><a class="header" href="#x11-gnome桌面">X11 Gnome桌面</a></h3>
+<p>我使用的部分软件依赖于x11，在wayland中无法运行，因此选用x11。
+在wayland足够成熟前，仍然保持x11。</p>
+<h4 id="新增模块mimenix"><a class="header" href="#新增模块mimenix">新增模块mime.nix</a></h4>
+<p>该模块用于配置文件类型和默认打开程序。
+通过xdg-mime实现类型设置和默认程序设置。
+例如默认使用xdot打开.dot结尾的文件，
+详细见<code>usr/gui/mime.nix</code>。</p>
+<h3 id="windows程序wrapwine"><a class="header" href="#windows程序wrapwine">Windows程序（wrapWine）</a></h3>
+<p>详细见<code>usr/gui/wrapWine.nix</code>和<code>usr/gui/weixin.nix</code>。
+以Windows微信为例，使用方法：</p>
+<pre><code class="language-nix">let
+  weixin = import (builtins.fetchurl "https://raw.githubusercontent.com/xieby1/nix_config/main/usr/gui/weixin.nix") {
+    wrapWine = import (builtins.fetchurl "https://raw.githubusercontent.com/xieby1/nix_config/main/usr/gui/wrapWine.nix") {};
+  };
+in
+weixin
+</code></pre>
+<h3 id="网页应用"><a class="header" href="#网页应用">网页应用</a></h3>
+<p>TODO: singleton webapp</p>
+<p>TODO: wrapWebApp</p>
+<p>使用Chrome系列浏览器的<code>--app="URL"</code>来实现网页应用。
+通过xdotool保证有且仅有一个网页应用被打开。
+详细见<code>usr/gui/singleton_web_apps.nix</code>。</p>
+<h3 id="systemd用户服务"><a class="header" href="#systemd用户服务">Systemd用户服务</a></h3>
+<p>TODO:</p>
+<p>使用systemd的用户服务(user service)，
+这使得在非NixOS平台也能正常使用服务。</p>
+<h3 id="clash科学上网"><a class="header" href="#clash科学上网">Clash科学上网</a></h3>
+<p>命令行clash+网页控制，
+这样的组合方便WSL和nix-on-droid这类无图形界面的使用场景。</p>
+<p>添加了systemd user服务，详见<code>./usr/cli.nix: systemd.user.services.clash</code>的定义。
+使用网页http://clash.razord.top来管理clash。
+网页应用的定义见<code>./usr/gui/singleton_web_apps.nix</code>。</p>
+<h3 id="tailscale"><a class="header" href="#tailscale">Tailscale</a></h3>
+<p>TODO:</p>
+<h3 id="non-nixos-bash-completion"><a class="header" href="#non-nixos-bash-completion">Non-NixOS bash-completion</a></h3>
+<p>TODO:</p>
+<h3 id="neovim"><a class="header" href="#neovim">Neovim</a></h3>
+<p>所有的vim配置都在<code>usr/cli/vim.nix</code>中。</p>
+<h3 id="输入法"><a class="header" href="#输入法">输入法</a></h3>
+<p>沿用ubuntu的使用习惯，采用fcitx。</p>
+<ul>
+<li>中文：cloudpinyin（支持模糊音、自动联网词库）</li>
+<li>日文：mozc</li>
+<li>韩文：hangul</li>
+</ul>
+<h3 id="chroot-or-docker"><a class="header" href="#chroot-or-docker">chroot or docker</a></h3>
+<p>TODO: podman, conenv.sh</p>
+<p>chroot需要挂载诸多目录，才能使ubuntu正常运行。
+但是NixOS并不提供FHS需要的众多目录。</p>
+<p>因此使用docker提供ubuntu命令行环境。</p>
+<h3 id="todo-terminal"><a class="header" href="#todo-terminal">TODO: terminal</a></h3>
+<h2 id="引用"><a class="header" href="#引用">引用</a></h2>
+<div class="footnote-definition" id="doc_thesis"><sup class="footnote-definition-label">1</sup>
+<p>Dolstra, Eelco. “The purely functional software deployment model.” (2006).</p>
+</div>
+<div class="footnote-definition" id="nix-on-droid"><sup class="footnote-definition-label">2</sup>
+<p><a href="https://github.com/t184256/nix-on-droid">github.com/t184256/nix-on-droid</a> termux的分支，支持nix</p>
+</div>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+                            <a rel="next prefetch" href="config.nix.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+            <script src="https://utteranc.es/client.js"
+                    repo="xieby1/nix_config"
+                    issue-term="pathname"
+                    theme="github-light"
+                    crossorigin="anonymous"
+                    async>
+            </script>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+                    <a rel="next prefetch" href="config.nix.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
