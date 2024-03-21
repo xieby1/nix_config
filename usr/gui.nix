@@ -32,7 +32,6 @@ let
     };
     buildInputs = old.buildInputs ++ [pkgs.alsa-lib];
   });
-  my-imhex = pkgs.callPackage ./gui/imhex.nix {};
 in
 {
   imports = [
@@ -85,7 +84,7 @@ in
     # viewer
     myxdot
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    my-imhex
+    imhex
     xelfviewer
   ] ++ [
     vlc
