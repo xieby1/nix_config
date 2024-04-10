@@ -33,6 +33,8 @@ let
         engine: bing
         shortcut: bi
         disabled: false
+    ui:
+      results_on_new_tab: true
   '';
 in {
   systemd.user.services.searxng = {
