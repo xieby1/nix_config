@@ -9,6 +9,9 @@ let
     # Default settings see <pkgs.searxng>/lib/python3.11/site-packages/searx/settings.yml
     use_default_settings: true
 
+    search:
+      autocomplete: "google"
+
     server:
       # Is overwritten by $SEARXNG_SECRET
       secret_key: ${if builtins.pathExists ~/Gist/Config/passwordFile
