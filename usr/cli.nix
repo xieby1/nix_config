@@ -320,6 +320,7 @@ in
     tldr
     ## file system
     file
+    pkgsu.magika # detect file content types with deep learning
     ranger
     tree
     ## network
