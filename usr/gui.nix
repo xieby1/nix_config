@@ -61,7 +61,12 @@ in
     mykdeconnect
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     feishu
-    nur.repos.xddxdd.wechat-uos
+    (nur.repos.xddxdd.wechat-uos.overrideAttrs (old: {
+      postInstall = builtins.replaceStrings
+        ["--run"]
+        [''--set WECHAT_DATA_DIR ${config.home.homeDirectory}/.local/share/wechat-uos/data --run'']
+        old.postInstall;
+    }))
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./gui/weixin.nix {})
     nur.repos.linyinfeng.wemeet
