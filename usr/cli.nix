@@ -328,6 +328,7 @@ in
     netcat
     nload
     nmap
+    nethogs
     ## x11
     xdotool
 
