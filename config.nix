@@ -13,10 +13,10 @@
   #MC 禁用安装非本地的包，比如禁止x86_64-linux的包被安装到aarch64-linux上。
   allowUnsupportedSystem = false;
   allowUnfree = true;
-  packageOverrides = pkgs: {
+  packageOverrides = pkgs: rec {
     #MC 添加nix user repository (NUR)到nixpkgs里。
     nur = import (builtins.fetchTarball "https://github.com/nix-community/NUR/archive/master.tar.gz") {
-      inherit pkgs;
+      pkgs = pkgsu;
     };
     #MC 添加非稳定版的nixpkgs到nixpkgs里，
     #MC 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
