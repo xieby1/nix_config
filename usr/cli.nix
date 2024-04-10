@@ -89,6 +89,7 @@ in
     ./cli/vim.nix
     ./cli/clash.nix
     ./cli/tailscale.nix
+    ./cli/searxng.nix
   ] ++ [{ # functions & attrs
     home.packages = [
       pkgs.fzf
