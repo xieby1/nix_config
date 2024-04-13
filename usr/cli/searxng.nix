@@ -11,6 +11,7 @@ let
 
     search:
       autocomplete: "google"
+      default_lang: "en"
 
     server:
       # Is overwritten by $SEARXNG_SECRET
