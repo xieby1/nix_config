@@ -350,6 +350,18 @@ let
       vim.keymap.set('n', '<C-W>m', '<Cmd>WinShift<CR>')
     '';
   };
+  my-smartyank-nvim = {
+    plugin = pkgs.vimPlugins.smartyank-nvim;
+    type = "lua";
+    config = ''
+      require('smartyank').setup {
+        highlight = {
+          enabled = false, -- not enable highlight yanked text
+        },
+        validate_yank = function() return vim.v.operator == '"+y' end,
+      }
+    '';
+  };
 in
 {
   imports = [(let
@@ -983,6 +995,7 @@ in
       my-color-scheme
       my-hbac
       my-winshift-nvim
+      my-smartyank-nvim
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
     extraPackages = with pkgs; [
