@@ -4,17 +4,17 @@
 }:
 rustPlatform.buildRustPackage rec {
   pname = "clashctl";
-  version = "0.3.3";
+  version = "b09e1faf80f1a25fa855499d8b34d36491e5a081";
 
   src = fetchFromGitHub {
     # owner = "https://github.com/George-Miao/clashctl";
     owner = "George-Miao";
     repo = pname;
     rev = version;
-    hash = "sha256-7XVMtl6yFxT9fy205sZL8eJ711NXdmYIMFVBbF0RoPc=";
+    hash = "sha256-c7y64SsZEKdC8+umCY8+XBwxAHxn4YpqR48ASbHpkdM=";
   };
 
-  cargoHash = "sha256-G0mAcB80D7/s9kwkNhJkGLkVYpXMwqpLq/T9gLuYj4E=";
+  cargoHash = "sha256-VEQ1amZxCTV4jefN20d8VV85/IaJivl0s8RVclV+jqg=";
 
   doCheck = false;
 
