@@ -34,6 +34,9 @@ let
         engine: bing
         shortcut: bi
         disabled: false
+
+      - name: qwant
+        disabled: true
     ui:
       results_on_new_tab: true
   '';
