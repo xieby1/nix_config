@@ -116,12 +116,7 @@ in
     '';
   }{
     programs.ssh.enable = true;
-    programs.ssh.extraConfig =
-      if builtins.pathExists ~/Gist/Config/ssh.conf
-      then
-        builtins.readFile ~/Gist/Config/ssh.conf
-      else
-        "";
+    programs.ssh.includes = lib.optional (builtins.pathExists ~/Gist/Config/ssh.conf) "~/Gist/Config/ssh.conf";
     programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
       # start sshd
       if [[ -z "$(pidof sshd-start)" ]]; then
