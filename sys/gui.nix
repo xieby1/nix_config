@@ -15,6 +15,40 @@
   services.xserver.displayManager.gdm.wayland = false;
   services.xserver.desktopManager.gnome.enable = true;
 
+  nixpkgs.overlays = [ (final: prev: {
+
+    # refer to https://nixos.wiki/wiki/Overlays#Overriding_a_package_inside_a_scope
+    # support fractional scaling for x11
+    gnome = prev.gnome.overrideScope' (gfinal: gprev: {
+      mutter = let
+        mutter-x11-scaling = pkgs.fetchFromGitHub {
+          owner = "puxplaying";
+          repo = "mutter-x11-scaling";
+          rev = "dca2dca4b6fd769abb158c1728e7a9277dd2d478";
+          hash = "sha256-xK8kDmGwB/a85qS2EsEOviaNGcAsV6vNlE1UQElzcnE=";
+        };
+      in gprev.mutter.overrideAttrs (old: {
+        patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
+          "${mutter-x11-scaling}/mutter-45.0-x11-Add-support-for-fractional-scaling-using-Randr.patch"
+        ];
+      });
+      gnome-control-center = let
+        gnome-control-center-x11-scaling = pkgs.fetchFromGitHub {
+          owner = "puxplaying";
+          repo = "gnome-control-center-x11-scaling";
+          rev = "758a28e2c0e6f3cbe5c59154a850504d7c56e81b";
+          hash = "sha256-vRiZXqpWyU4c0hvJXVCoqfbYPtePGOI6hZO/bJ4/6D8=";
+        };
+      in gprev.gnome-control-center.overrideAttrs (old: {
+        patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
+          "${gnome-control-center-x11-scaling}/gnome-control-center-45.0-display-Support-UI-scaled-logical-monitor-mode.patch"
+          "${gnome-control-center-x11-scaling}/gnome-control-center-45.0-display-Allow-fractional-scaling-to-be-enabled.patch"
+        ];
+      });
+    });
+
+  }) ];
+
   # https://discourse.nixos.org/t/how-to-create-folder-in-var-lib-with-nix/15647
   system.activationScripts.user_account_conf = pkgs.lib.stringAfter [ "var" ] (let
     face = pkgs.fetchurl {
