@@ -114,4 +114,6 @@
   users.users.xieby1.extraGroups = ["adbusers"];
 
   nix.settings.trusted-users = ["root" "xieby1"];
+
+  zramSwap.enable = true;
 }
