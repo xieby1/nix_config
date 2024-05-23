@@ -330,7 +330,6 @@ in
 
     # programming
     universal-ctags
-    cscope
     clang-tools
     cmake
     capstone5
