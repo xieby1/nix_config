@@ -14,7 +14,7 @@
 {
   imports = [
     ./opt.nix
-    ./modules/cachix.nix
+    ./usr/modules/cachix.nix
     ./usr/cli.nix
     # Q: how to use isGui here?
     # A: Not possible.
