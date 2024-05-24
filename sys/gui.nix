@@ -37,13 +37,7 @@
     }) ];
 
     # push the overrided mutter and gnome to my cachix
-    system.activationScripts = {
-      cachix_push = let
-        cachix_dhall = "/home/xieby1/Gist/Config/cachix.dhall";
-      in pkgs.lib.optionalString (builtins.pathExists cachix_dhall) ''
-        ${pkgs.cachix}/bin/cachix -c ${cachix_dhall} push xieby1 ${pkgs.gnome.mutter} ${pkgs.gnome.gnome-control-center}
-      '';
-    };
+    cachixPackages = with pkgs.gnome; [mutter gnome-control-center];
   }] ;
 
   # Enable the X11 windowing system.

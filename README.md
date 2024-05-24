@@ -77,6 +77,7 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
   * usr/cli.nix: 用户命令行配置
   * usr/gui.nix: 用户图形配置
 * nix-on-droid.nix: 安卓总体配置（nix-on-droid的配置）
+* modules/: nixos/home-manager通用的模块
 
 ## 使用方法
 

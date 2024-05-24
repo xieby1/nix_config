@@ -27,6 +27,7 @@
   #MC 导入我的NixOS的CLI和GUI配置，
   #MC 详细内容见文档[./sys/cli.nix](./sys/cli.nix.md)和[./sys/gui.nix](./sys/gui.nix.md)。
   imports = [
+    ./modules/cachix.nix
     ./sys/cli.nix
     ./sys/gui.nix
   ];
