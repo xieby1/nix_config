@@ -37,7 +37,7 @@
     }) ];
 
     # push the overrided mutter and gnome to my cachix
-    cachixPackages = with pkgs.gnome; [mutter gnome-control-center];
+    cachix_packages = with pkgs.gnome; [mutter gnome-control-center];
   }] ;
 
   # Enable the X11 windowing system.
