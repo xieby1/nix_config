@@ -86,6 +86,10 @@ echo "# 🤖安卓配置(无需sudo,复用\"用户配置\")"
 echo
 echo "* [nix-on-droid.nix](./nix-on-droid.nix.md)"
 echo
+echo "# 🔩通用模块"
+echo
+genDir ./modules/
+echo
 echo "# 📝文档和心得体会"
 echo
 genDir ./docs/
