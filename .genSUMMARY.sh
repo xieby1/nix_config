@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+getTitle() {
+    PATHMD=$1
+    head -n 3 "${PATHMD}" | awk '/^# / {$1=""; print substr($0,2); exit;}'
+}
 genDir() {
     Dir=$1
     for PATHMD in $(find $Dir -name "*.md" -exec ./.parent_dirs.sh {} \; | sort -n | uniq); do
@@ -28,16 +32,26 @@ genDir() {
         done
 
         if [[ -f ${PATHMD} ]]; then
-            TITLE=$(head -n 3 "${PATHMD}" | awk '/^# / {$1=""; print substr($0,2); exit;}')
+            TITLE=$(getTitle "${PATHMD}")
             if [[ -n ${TITLE} ]]; then
                 echo "* [${TITLE}](${PATHMD})"
             else
                 echo "* [${NAMEMD}](${PATHMD})"
             fi
         elif [[ -f ${PATHMD}/index.md ]]; then
-            echo "* [${NAMEMD}/](${PATHMD}/index.md)"
+            TITLE=$(getTitle "${PATHMD}/index.md")
+            if [[ -n ${TITLE} ]]; then
+                echo "* [${TITLE}](${PATHMD}/index.md)"
+            else
+                echo "* [${NAMEMD}/](${PATHMD}/index.md)"
+            fi
         elif [[ -f ${PATHMD}/README.md ]]; then
-            echo "* [${NAMEMD}/](${PATHMD}/README.md)"
+            TITLE=$(getTitle "${PATHMD}/README.md")
+            if [[ -n ${TITLE} ]]; then
+                echo "* [${TITLE}](${PATHMD}/README.md)"
+            else
+                echo "* [${NAMEMD}/](${PATHMD}/README.md)"
+            fi
         elif [[ -d ${PATHMD} ]]; then
             echo "* [${NAMEMD}/]()"
         else
