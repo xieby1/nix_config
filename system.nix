@@ -24,6 +24,9 @@
 { config, pkgs, ... }:
 
 {
+  #MC 让NixOS的nixpkgs使用和home-manager的nixpkgs采用相同的nixpkgs config
+  nixpkgs.config = import ./config.nix;
+
   #MC 导入我的NixOS的CLI和GUI配置，
   #MC 详细内容见文档[./sys/cli.nix](./sys/cli.nix.md)和[./sys/gui.nix](./sys/gui.nix.md)。
   imports = [
