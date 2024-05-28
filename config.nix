@@ -21,5 +21,10 @@
     #MC 添加非稳定版的nixpkgs到nixpkgs里，
     #MC 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
     pkgsu = import (builtins.fetchTarball "https://github.com/NixOS/nixpkgs/archive/master.tar.gz") {};
+    #MC 添加flake-compat，用于在nix expression中使用flake的包
+    flake-compat = import (builtins.fetchTarball {
+      url = "https://github.com/edolstra/flake-compat/archive/0f9255e01c2351cc7d116c072cb317785dd33b33.tar.gz";
+      sha256 = "0m9grvfsbwmvgwaxvdzv6cmyvjnlww004gfxjvcl806ndqaxzy4j";
+    });
   };
 }
