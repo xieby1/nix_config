@@ -85,19 +85,22 @@
   #MC 下面的`filterAttrs`就是用来保证不配置本地的binfmt。
   boot.binfmt.registrations = pkgs.lib.filterAttrs (n: v: n!=builtins.currentSystem) {
     x86_64-linux = {
-      interpreter = "${pkgs.qemu}/bin/qemu-x86_64";
+      interpreter = "${pkgs.nur.repos.xddxdd.qemu-user-static}/bin/qemu-x86_64-static";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00'';
       mask = ''\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
+      wrapInterpreterInShell = false;
     };
     aarch64-linux = {
-      interpreter = "${pkgs.qemu}/bin/qemu-aarch64";
+      interpreter = "${pkgs.nur.repos.xddxdd.qemu-user-static}/bin/qemu-aarch64-static";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00'';
       mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff'';
+      wrapInterpreterInShell = false;
     };
     riscv64-linux = {
-      interpreter = "${pkgs.qemu}/bin/qemu-riscv64";
+      interpreter = "${pkgs.nur.repos.xddxdd.qemu-user-static}/bin/qemu-riscv64-static";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'';
       mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
+      wrapInterpreterInShell = false;
     };
   };
 
