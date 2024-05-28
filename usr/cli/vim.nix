@@ -362,6 +362,22 @@ let
       }
     '';
   };
+  # mini-nvim is wonderful nvim plugin!
+  # I found it due to below link:
+  # indent-blankline.nvim is too complex.
+  # However, it does not support basic functionality like highlight current indentation
+  # See: https://github.com/lukas-reineke/indent-blankline.nvim/issues/649
+  my-mini-nvim = {
+    plugin = pkgs.vimPlugins.mini-nvim;
+    type = "lua";
+    config = ''
+      require('mini.indentscope').setup{
+        options = {
+          try_as_border = true,
+        },
+      }
+    '';
+  };
 in
 {
   imports = [(let
@@ -944,6 +960,7 @@ in
       my-hbac
       my-winshift-nvim
       my-smartyank-nvim
+      my-mini-nvim
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
     extraPackages = with pkgs; [
