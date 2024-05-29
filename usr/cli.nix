@@ -385,6 +385,7 @@ in
     nurl
     # runXonY
     qemu
+    (import ./cli/nix-docker-isa)
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
 
   programs.eza.enable = true;
