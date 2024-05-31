@@ -86,7 +86,7 @@ let
 in
 {
   imports = [ # files
-    ./cli/vim.nix
+    ./cli/vim
     ./cli/clash.nix
     ./cli/tailscale.nix
     ./cli/searxng.nix
