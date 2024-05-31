@@ -1,3 +1,10 @@
+#MC # JRE with Proxy
+#MC
+#MC Let JRE aware of proxy by default.
+#MC This package can be used standalone, while my main usage is for nvim-metals lsp.
+#MC Without proxy, the scala package update make me headached.
+#MC
+#MC For usage example, see [my nvim-metals config](./default.nix)
 { stdenv
 , writeShellScript
 , jre
