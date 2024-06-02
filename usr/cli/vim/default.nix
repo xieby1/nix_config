@@ -1,13 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-leap-nvim = {
-    plugin = pkgs.nur.repos.m15a.vimExtraPlugins.leap-nvim;
-    type = "lua";
-    config = ''
-      require('leap').add_default_mappings()
-    '';
-  };
   my-telescope-nvim = {
     plugin = pkgs.vimPlugins.telescope-nvim;
     config = ''
@@ -309,6 +302,7 @@ in
     ./DrawIt.nix
     ./nvim-treesitter.nix
     ./nvim-config-local.nix
+    ./leap-nvim.nix
   ];
 
   # neovim
@@ -462,7 +456,6 @@ in
       tabular
       my-vim-hexokinase
       vim-plugin-AnsiEsc
-      my-leap-nvim
       # {
       #   plugin = indentLine;
       #   config = ''
