@@ -1,28 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-nvim-config-local = {
-    plugin = pkgs.vimUtils.buildVimPlugin {
-      name = "nvim-config-local";
-      src = pkgs.fetchFromGitHub {
-        owner = "klen";
-        repo = "nvim-config-local";
-        rev = "af59d6344e555917209f7304709bbff7cea9b5cc";
-        sha256 = "1wg6g4rqpj12sjj0g1qxqgcpkzr7x82lk90lf6qczim97r3lj9hy";
-      };
-    };
-    config = ''
-      lua << EOF
-      require('config-local').setup {
-        lookup_parents = true,
-        silent = true,
-      }
-      EOF
-      augroup config-local
-        autocmd BufEnter * nested lua require'config-local'.source()
-      augroup END
-    '';
-  };
   my-leap-nvim = {
     plugin = pkgs.nur.repos.m15a.vimExtraPlugins.leap-nvim;
     type = "lua";
@@ -330,6 +308,7 @@ in
     ./vim-mark.nix
     ./DrawIt.nix
     ./nvim-treesitter.nix
+    ./nvim-config-local.nix
   ];
 
   # neovim
@@ -483,7 +462,6 @@ in
       tabular
       my-vim-hexokinase
       vim-plugin-AnsiEsc
-      my-nvim-config-local
       my-leap-nvim
       # {
       #   plugin = indentLine;
