@@ -1,15 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  DrawIt = pkgs.vimUtils.buildVimPlugin {
-    name = "DrawIt";
-    src = pkgs.fetchFromGitHub {
-      owner = "vim-scripts";
-      repo = "DrawIt";
-      rev = "master"; # I believe it wont update ^_*, so its safe
-      sha256 = "0yn985pj8dn0bzalwfc8ssx62m01307ic1ypymil311m4gzlfy60";
-    };
-  };
   # pluginWithConfigType is not displayed in `man home-configuration.nix`
   # see its avaiable config in `home-manager/modules/programs/neovim.nix`
   my-nvim-treesitter = {
@@ -367,6 +358,7 @@ in
     ./nvim-lspconfig.nix
     ./nvim-cmp.nix
     ./vim-mark.nix
+    ./DrawIt.nix
   ];
 
   # neovim
@@ -509,7 +501,6 @@ in
       vim-smoothie
       vim-fugitive
       my-git-messenger-vim
-      DrawIt
       vim-nix
       my-vim-floaterm
       vim-markdown-toc
