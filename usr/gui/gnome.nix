@@ -1,47 +1,19 @@
 { config, pkgs, stdenv, lib, ... }:
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
-let
-  hide-top-bar-114 = pkgs.gnomeExtensions.buildShellExtension {
-    uuid = "hidetopbar@mathieu.bidon.ca";
-    name = "Hide Top Bar";
-    pname = "hide-top-bar";
-    description = "For gnome 44";
-    link = "https://extensions.gnome.org/extension/545/hide-top-bar/";
-    version = 114;
-    sha256 = "07mqqya5vpfs3bf7823ir3c23rjpn81l58m8r5nas3i2ggxsgfln";
-    metadata = "miao";
-  };
-  hide-top-bar-issue339 = pkgs.gnomeExtensions.hide-top-bar.overrideAttrs (old: {
-    src = pkgs.fetchzip (let
-      owner = "ademar111190";
-      repo = "hidetopbar";
-      rev = "07653b2953b2695c2dfce5bad7894e7ac215b6ef";
-    in {
-      url = "https://gitlab.gnome.org/${owner}/${repo}/-/archive/${rev}/hidetopbar-${rev}.zip";
-      hash = "sha256-TKBEZBXu4yMW4bcEPrj6cqvDqBPFTkBhBi/F60RZ2RA=";
-    });
-  });
-  gtile54 = pkgs.gnomeExtensions.gtile.overrideAttrs (old: {
-    src = pkgs.fetchzip {
-      url = "https://github.com/gTile/gTile/releases/download/V54/gtile.dist.zip";
-      sha256 = "0w69996dhj1lp2d9qpa854bp1hn493ymwa0h0gaj45h4db6hmji9";
-      stripRoot = false;
-    };
-  });
-in {
+{
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
     gnome.dconf-editor
     gnome.devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    pkgs.pkgsu.gnomeExtensions.unite
+    unite
     clipboard-indicator
     bing-wallpaper-changer
     # random-wallpaper-wip-v3
-    gtile54
-    hide-top-bar-issue339
+    gtile
+    pkgs.pkgsu.gnomeExtensions.hide-top-bar
     dash-to-dock
     always-show-titles-in-overview
     customize-ibus
