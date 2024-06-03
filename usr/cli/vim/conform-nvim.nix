@@ -99,7 +99,7 @@ in {
       my-conform-nvim
     ];
     extraPackages = with pkgs; [
-      nixfmt
+      nixfmt-rfc-style
       clang-tools
     ];
   };

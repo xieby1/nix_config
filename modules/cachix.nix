@@ -15,21 +15,21 @@
       '';
     };
     cachix_dhall = lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       default = "/home/xieby1/Gist/Config/cachix.dhall";
       description = ''
         The path of cachix.dhall.
       '';
     };
     cachix_name = lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       default = "xieby1";
       description = ''
         The cachix name.
       '';
     };
     _cachix_push = lib.mkOption {
-      type = lib.types.string;
+      type = lib.types.str;
       default = ''
         echo Pushing packages to cachix:
         ${lib.concatMapStrings (x: "echo 📦"+x+"\n") config.cachix_packages}
