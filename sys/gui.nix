@@ -12,25 +12,27 @@
           mutter-x11-scaling = pkgs.fetchFromGitHub {
             owner = "puxplaying";
             repo = "mutter-x11-scaling";
-            rev = "dca2dca4b6fd769abb158c1728e7a9277dd2d478";
-            hash = "sha256-xK8kDmGwB/a85qS2EsEOviaNGcAsV6vNlE1UQElzcnE=";
+            rev = "8c5d5224955a5ec6a36697e9b64e606e6a596ef7";
+            hash = "sha256-TDQkDgAcuNnzSqiYE364E/Z2mBKegevVQ3AeOYBjHc4=";
           };
         in gprev.mutter.overrideAttrs (old: {
           patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
-            "${mutter-x11-scaling}/mutter-45.0-x11-Add-support-for-fractional-scaling-using-Randr.patch"
+            "${mutter-x11-scaling}/mutter-fix-x11-restart.patch"
+            "${mutter-x11-scaling}/x11-Add-support-for-fractional-scaling-using-Randr.patch"
+            "${mutter-x11-scaling}/Support-Dynamic-triple-double-buffering.patch"
           ];
         });
         gnome-control-center = let
           gnome-control-center-x11-scaling = pkgs.fetchFromGitHub {
             owner = "puxplaying";
             repo = "gnome-control-center-x11-scaling";
-            rev = "758a28e2c0e6f3cbe5c59154a850504d7c56e81b";
-            hash = "sha256-vRiZXqpWyU4c0hvJXVCoqfbYPtePGOI6hZO/bJ4/6D8=";
+            rev = "9d4b878a523151776cea0fad47a0421c660ea8af";
+            hash = "sha256-xAf0jXs9holjN5xa20d4VLesbwitNq0w+9p5qyw7Ut8=";
           };
         in gprev.gnome-control-center.overrideAttrs (old: {
           patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
-            "${gnome-control-center-x11-scaling}/gnome-control-center-45.0-display-Support-UI-scaled-logical-monitor-mode.patch"
-            "${gnome-control-center-x11-scaling}/gnome-control-center-45.0-display-Allow-fractional-scaling-to-be-enabled.patch"
+            "${gnome-control-center-x11-scaling}/display-Support-UI-scaled-logical-monitor-mode.patch"
+            "${gnome-control-center-x11-scaling}/display-Allow-fractional-scaling-to-be-enabled.patch"
           ];
         });
       });
