@@ -1,12 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-vim-hexokinase = {
-    plugin = pkgs.vimPlugins.vim-hexokinase;
-    config = ''
-      let g:Hexokinase_highlighters = ['backgroundfull']
-    '';
-  };
   my-gitsigns-nvim = {
     plugin = pkgs.vimPlugins.gitsigns-nvim;
     type = "lua";
@@ -238,6 +232,7 @@ in
     ./vim-floaterm.nix
     ./vista-vim.nix
     ./vim-markdown.nix
+    ./vim-hexokinase.nix
   ];
 
   # neovim
@@ -385,7 +380,6 @@ in
       # javascript lsp support
       # coc-tsserver
       tabular
-      my-vim-hexokinase
       vim-plugin-AnsiEsc
       my-gitsigns-nvim
       my-color-scheme
