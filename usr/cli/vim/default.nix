@@ -1,13 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-git-messenger-vim = {
-    plugin = pkgs.vimPlugins.git-messenger-vim;
-    config = ''
-      " popup window no close automatically
-      let g:git_messenger_close_on_cursor_moved=v:false
-    '';
-  };
   my-vim-floaterm = {
     plugin = pkgs.vimPlugins.vim-floaterm;
     config = ''
@@ -407,7 +400,6 @@ in
     plugins = with pkgs.vimPlugins; [
       vim-smoothie
       vim-fugitive
-      my-git-messenger-vim
       vim-nix
       my-vim-floaterm
       vim-markdown-toc
