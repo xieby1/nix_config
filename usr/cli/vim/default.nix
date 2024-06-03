@@ -1,18 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-smartyank-nvim = {
-    plugin = pkgs.vimPlugins.smartyank-nvim;
-    type = "lua";
-    config = ''
-      require('smartyank').setup {
-        highlight = {
-          enabled = false, -- not enable highlight yanked text
-        },
-        validate_yank = function() return vim.v.operator == '"+y' end,
-      }
-    '';
-  };
   # mini-nvim is wonderful nvim plugin!
   # I found it due to below link:
   # indent-blankline.nvim is too complex.
@@ -58,6 +46,7 @@ in
     ./color-scheme.nix
     ./hbac-nvim.nix
     ./winshift-nvim.nix
+    ./smartyank-nvim.nix
   ];
 
   # neovim
@@ -206,7 +195,6 @@ in
       # coc-tsserver
       tabular
       vim-plugin-AnsiEsc
-      my-smartyank-nvim
       my-mini-nvim
     ] ++ (lib.optional config.isGui markdown-preview-nvim);
     vimdiffAlias = true;
