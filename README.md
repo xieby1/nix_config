@@ -1,4 +1,4 @@
-🏗️ *我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**9/65**</span>* 🏗️
+🏗️ *我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**37/102**</span>* 🏗️
 
 为了更好的文档阅读体验，请看[GitHub Pages](https://xieby1.github.io/nix_config/)的版本。
 
@@ -55,7 +55,7 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
 
 这个仓库[Github: xieby1/nix_config](https://github.com/xieby1/nix_config)里存放着我的Nix/NixOS配置和文档。
 该仓库使用nix expression，而非nix flakes；
-使用NixOS稳定源（目前版本23.11），而非非稳定源（unstable）。
+使用NixOS稳定源（目前版本24.05），而非非稳定源（unstable）。
 该仓库的配置在多个平台都可以正常使用：
 
 * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
@@ -96,14 +96,18 @@ vim /etc/nixos/configuration.nix
 
 然后设置软件源，在NixOS中推荐使用`sudo`。
 
+注：更多其他nix channels参考
+[NixOS Wiki: Nix channels](https://nixos.wiki/wiki/Nix_channels)
+和[Nix channel status](https://status.nixos.org/)。
+
+
 ```bash
-# 替换为清华的最新稳定源
 # [对于NixOS]
-nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-23.11 nixos
+nix-channel --add https://github.com/NixOS/nixpkgs/archive/release-24.05.tar.gz nixos
 # [对于Nix]
-nix-channel --add https://mirror.tuna.tsinghua.edu.cn/nix-channels/nixos-23.11 nixpkgs
+nix-channel --add https://github.com/NixOS/nixpkgs/archive/release-24.05.tar.gz nixpkgs
 # 添加home manager源
-nix-channel --add https://github.com/nix-community/home-manager/archive/release-23.11.tar.gz home-manager
+nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
 nix-channel --update
 ```
 
