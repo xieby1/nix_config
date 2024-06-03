@@ -7,7 +7,7 @@
     # support fractional scaling for x11 gnome:
     # refer to https://nixos.wiki/wiki/Overlays#Overriding_a_package_inside_a_scope
     nixpkgs.overlays = [ (final: prev: {
-      gnome = prev.gnome.overrideScope' (gfinal: gprev: {
+      gnome = prev.gnome.overrideScope (gfinal: gprev: {
         mutter = let
           mutter-x11-scaling = pkgs.fetchFromGitHub {
             owner = "puxplaying";
@@ -85,10 +85,10 @@
   services.printing.enable = true;
   services.printing.drivers = [pkgs.hplip];
   services.avahi.enable = true;
-  services.avahi.nssmdns = true;
+  services.avahi.nssmdns4 = true;
 
   # Enable touchpad support (enabled default in most desktopManager).
-  services.xserver.libinput.enable = true;
+  services.libinput.enable = true;
 
   # https://github.com/kovidgoyal/kitty/issues/403
   environment.variables.GLFW_IM_MODULE = "ibus";
@@ -110,7 +110,7 @@
   # available nerd fonts: nixpkgs/pkgs/data/fonts/nerdfonts/shas.nix
   ## use non-variable noto font for feishu and other old electron apps
   ## for more details see: https://github.com/NixOS/nixpkgs/issues/171976
-  fonts.fonts = (
+  fonts.packages = (
     with (import (fetchTarball {
       url = "https://github.com/NixOS/nixpkgs/archive/d881cf9fd64218a99a64a8bdae1272c3f94daea7.tar.gz";
       sha256 = "1jaghsmsc05lvfzaq4qcy281rhq3jlx75q5x2600984kx1amwaal";
