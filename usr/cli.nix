@@ -72,17 +72,6 @@ let
     then import <nixpkgs/nixos> {}
     else import <nixpkgs/nixos> {configuration={};}
   ).config;
-  # https://github.com/NixOS/nixpkgs/pull/252945
-  capstone5 = pkgs.callPackage (
-    pkgs.fetchurl (let
-      owner_repo = "r-ryantm/nixpkgs";
-      rev = "4fda89a5beb213a9520bee9c505bf02d344cd7c5";
-      path = "pkgs/development/libraries/capstone/default.nix";
-    in {
-      url = "https://raw.githubusercontent.com/${owner_repo}/${rev}/${path}";
-      sha256 = "11kdidshrnpn43bg8w8hc5j0dgwfz1lqybs04vw4qa0gw0n4jdlm";
-    })
-  ) {};
 in
 {
   imports = [ # files
@@ -344,7 +333,7 @@ in
     # programming
     clang-tools
     cmake
-    capstone5
+    capstone
     scc
     sloccount
     flamegraph
