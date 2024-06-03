@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 {
+  #MC Plugins with customizations:
   imports = [
     ./nvim-metals
     ./conform-nvim.nix
@@ -24,16 +25,30 @@
     ./mini-nvim.nix
   ];
 
-  # neovim
   programs.bash.shellAliases.view = "nvim -R";
-  # nvim as manpager
-  ## see nvim `:h :Man`
-  ## nvim manpage huge mange is SLOW! E.g. man configuration.nix
+  #MC Set nvim as manpager.
+  #MC see nvim `:h :Man`.
+  #MC nvim manpage huge mange is SLOW! E.g. man configuration.nix.
   programs.bash.shellAliases.nman = "env MANPAGER='nvim +Man!' man";
+
   programs.neovim = {
     enable = true;
     viAlias = true;
     vimAlias = true;
+    vimdiffAlias = true;
+
+    #MC Plugins without customizations:
+    plugins = with pkgs.vimPlugins; [
+      vim-smoothie
+      vim-fugitive
+      vim-nix
+      vim-markdown-toc
+      vim-commentary
+      tabular
+      vim-plugin-AnsiEsc
+    ] ++ (lib.optional config.isGui markdown-preview-nvim);
+
+    #MC Vim config
     extraConfig = ''
       " vim
       "" Highlight searches
@@ -160,17 +175,5 @@
       cnoremap <expr> <Left>  pumvisible() ? "\<Up>"    : "\<Left>"
       cnoremap <expr> <Right> pumvisible() ? "\<Down>"  : "\<Right>"
     '';
-    plugins = with pkgs.vimPlugins; [
-      vim-smoothie
-      vim-fugitive
-      vim-nix
-      vim-markdown-toc
-      vim-commentary
-      # javascript lsp support
-      # coc-tsserver
-      tabular
-      vim-plugin-AnsiEsc
-    ] ++ (lib.optional config.isGui markdown-preview-nvim);
-    vimdiffAlias = true;
   };
 }
