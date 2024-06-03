@@ -1,13 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-vim-markdown = {
-    plugin = pkgs.vimPlugins.vim-markdown;
-    config = ''
-      let g:vim_markdown_new_list_item_indent = 2
-      let g:vim_markdown_no_default_key_mappings = 1
-    '';
-  };
   my-vim-hexokinase = {
     plugin = pkgs.vimPlugins.vim-hexokinase;
     config = ''
@@ -244,6 +237,7 @@ in
     ./git-wip.nix
     ./vim-floaterm.nix
     ./vista-vim.nix
+    ./vim-markdown.nix
   ];
 
   # neovim
@@ -390,7 +384,6 @@ in
       vim-commentary
       # javascript lsp support
       # coc-tsserver
-      my-vim-markdown # format table
       tabular
       my-vim-hexokinase
       vim-plugin-AnsiEsc
