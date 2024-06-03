@@ -1,17 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-vim-floaterm = {
-    plugin = pkgs.vimPlugins.vim-floaterm;
-    config = ''
-      nmap <Leader>t :FloatermNew --cwd=<buffer><CR>
-      " let g:floaterm_keymap_new = '<Leader>t'
-      let g:floaterm_width = 0.8
-      let g:floaterm_height = 0.8
-      " Set floaterm window's background
-      hi Floaterm guibg=black
-    '';
-  };
   my-vista-vim = {
     plugin = pkgs.vimPlugins.vista-vim;
     config = ''
@@ -259,6 +248,7 @@ in
     ./leap-nvim.nix
     ./telescope-nvim.nix
     ./git-wip.nix
+    ./vim-floaterm.nix
   ];
 
   # neovim
@@ -401,7 +391,6 @@ in
       vim-smoothie
       vim-fugitive
       vim-nix
-      my-vim-floaterm
       vim-markdown-toc
       my-vista-vim
       vim-commentary
