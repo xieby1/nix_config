@@ -1,12 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 
 let
-  my-vista-vim = {
-    plugin = pkgs.vimPlugins.vista-vim;
-    config = ''
-      let g:vista_default_executive = 'nvim_lsp'
-    '';
-  };
   my-vim-markdown = {
     plugin = pkgs.vimPlugins.vim-markdown;
     config = ''
@@ -249,6 +243,7 @@ in
     ./telescope-nvim.nix
     ./git-wip.nix
     ./vim-floaterm.nix
+    ./vista-vim.nix
   ];
 
   # neovim
@@ -392,7 +387,6 @@ in
       vim-fugitive
       vim-nix
       vim-markdown-toc
-      my-vista-vim
       vim-commentary
       # javascript lsp support
       # coc-tsserver
