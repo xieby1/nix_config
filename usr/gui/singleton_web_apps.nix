@@ -225,11 +225,11 @@ in
       }).outPath;
     };
     clash = let
-      yacd = builtins.fetchTarball "https://github.com/haishanh/yacd/archive/gh-pages.zip";
+      metacubexd = builtins.fetchTarball "https://github.com/MetaCubeX/metacubexd/archive/gh-pages.zip";
     in {
       name = "clash";
-      exec = "${webapp_no_cors_sh} yacd file://${yacd}/index.html";
-      icon = "${yacd}/yacd-128.png";
+      exec = "${webapp_no_cors_sh} metacubexd file://${metacubexd}/index.html";
+      icon = "${metacubexd}/pwa-192x192.png";
     };
 
     # singleton apps
