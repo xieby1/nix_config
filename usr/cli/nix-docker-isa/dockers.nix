@@ -13,4 +13,6 @@ let
   ];
 in {
   home.packages = dockers;
+  #MC push dockers to cachix
+  cachix_packages = dockers;
 }
