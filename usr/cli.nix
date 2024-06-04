@@ -81,6 +81,7 @@ in
     # When init searxng, it throws `ERROR:searx.engines.wikidata: Fail to initialize`
     # I have no idea, so disable it.
     # ./cli/searxng.nix
+    ./cli/nix-docker-isa/dockers.nix
   ] ++ [{ # functions & attrs
     home.packages = [
       pkgs.fzf
@@ -376,7 +377,6 @@ in
     nurl
     # runXonY
     qemu
-    (import ./cli/nix-docker-isa)
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
 
   programs.eza.enable = true;

@@ -2,14 +2,13 @@
 #MC
 #MC This script is inspired by https://github.com/nix-community/docker-nixpkgs/images/nix
 #MC
-#MC TODO: support multiple ISAs (currently only riscv64)
-#MC currently: this riscv64 nix docker can `nix-env -iA nixpkgs.hello`,
-#MC which is completely built from source including toolchains (stdenv) in riscv64.
+#MC currently: this riscv64 nix docker can `nix-env -iA nixpkgs.hello/tmux` and so on,
+#MC which is completely built from source including toolchains (stdenv) in x86/aarch64/riscv64/...
+{ pkgs ? import <nixpkgs> {}
+, pkgsCross ? pkgs
+}:
 let
-  pkgs = import <nixpkgs> {};
-  # pkgsCross = import <nixpkgs> {};
-  pkgsCross = pkgs.pkgsCross.riscv64;
-  name = "nix-${pkgsCross.stdenv.system}";
+  name = "nix-docker-${pkgsCross.stdenv.system}";
   image = pkgs.dockerTools.buildImageWithNixDb {
     inherit name;
     copyToRoot = pkgs.buildEnv {
@@ -48,7 +47,7 @@ let
       ];
     };
   };
-in pkgs.writeShellScriptBin "nix-docker-riscv64" ''
+in pkgs.writeShellScriptBin name ''
   command -v podman &> /dev/null || echo "podman not found TODO: install" || exit 1
 
   outName="$(basename ${image})"
@@ -62,8 +61,6 @@ in pkgs.writeShellScriptBin "nix-docker-riscv64" ''
     podman load -i ${image}
   fi
 
-
-  # TODO
   BINFMTS=""
   for binfmt in /run/binfmt/*; do
       BINFMTS+=" -v $(realpath $binfmt):$binfmt"
@@ -71,11 +68,14 @@ in pkgs.writeShellScriptBin "nix-docker-riscv64" ''
 
   containerName=${name}-$outHash
   # run container
-  podman run -it \
-    --name=$containerName \
-    -v $(realpath /run/binfmt/riscv64-linux):/run/binfmt/riscv64-linux \
-    --network=host \
-    $imageName
+  OPTS=(
+    "--name=$containerName"
+    "$BINFMTS"
+    "--network=host"
+    "-it"
+    "$imageName"
+  )
+  eval "podman run ''${OPTS[@]}"
   podman commit $containerName $imageName
   podman rm $containerName
 ''
