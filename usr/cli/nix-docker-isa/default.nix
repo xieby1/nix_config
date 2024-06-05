@@ -6,6 +6,7 @@
 #MC which is completely built from source including toolchains (stdenv) in x86/aarch64/riscv64/...
 { pkgs ? import <nixpkgs> {}
 , pkgsCross ? pkgs
+, useTmux ? true
 }:
 let
   name = "nix-docker-${pkgsCross.stdenv.system}";
@@ -24,7 +25,9 @@ let
         openssh
         vim
         wget
-      ]) ++ [
+      ]
+      ++ lib.optional useTmux (tmux.override {withSystemd=false;})
+      ) ++ [
         ./imageFiles
       ];
     };
@@ -37,7 +40,9 @@ let
       mkdir -m 1777 tmp
     '';
     config = {
-      Cmd = [ "/bin/bash" ];
+      Cmd = if useTmux
+        then [ "/bin/tmux" ]
+        else [ "/bin/bash" ];
       Env = [
         "NIX_BUILD_SHELL=/bin/bash"
         "PAGER=cat"
