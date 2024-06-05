@@ -38,6 +38,9 @@ let
 
       # make sure /tmp exists
       mkdir -m 1777 tmp
+
+      # need a HOME
+      mkdir -vp root
     '';
     config = {
       Cmd = if useTmux
