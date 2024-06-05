@@ -96,16 +96,18 @@ vim /etc/nixos/configuration.nix
 
 然后设置软件源，在NixOS中推荐使用`sudo`。
 
-注：更多其他nix channels参考
-[NixOS Wiki: Nix channels](https://nixos.wiki/wiki/Nix_channels)
-和[Nix channel status](https://status.nixos.org/)。
-
+* 注一：更多其他nix channels参考
+  [NixOS Wiki: Nix channels](https://nixos.wiki/wiki/Nix_channels)
+  和[Nix channel status](https://status.nixos.org/)。
+* 注二：为什么用https://nixos.org/channels/nixos-24.05，
+  而非https://github.com/NixOS/nixpkgs/archive/release-24.05.tar.gz？
+  前者包含额外内容，比如programs.command-not-found.dbPath，详细见`man configuration.nix`。
 
 ```bash
 # [对于NixOS]
-nix-channel --add https://github.com/NixOS/nixpkgs/archive/release-24.05.tar.gz nixos
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixos
 # [对于Nix]
-nix-channel --add https://github.com/NixOS/nixpkgs/archive/release-24.05.tar.gz nixpkgs
+nix-channel --add https://nixos.org/channels/nixos-24.05 nixpkgs
 # 添加home manager源
 nix-channel --add https://github.com/nix-community/home-manager/archive/release-24.05.tar.gz home-manager
 nix-channel --update
