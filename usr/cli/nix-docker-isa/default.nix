@@ -46,7 +46,7 @@ let
       Env = [
         "NIX_BUILD_SHELL=/bin/bash"
         "PAGER=cat"
-        "PATH=/usr/bin:/bin"
+        "PATH=/bin"
         "SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt"
         "USER=root"
       ];
