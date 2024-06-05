@@ -1,8 +1,9 @@
-#MC # nixpkgs overlays for RISC-V
+#MC # nixpkgs overlays
 #MC
+[
+#MC ## nixpkgs overlays for RISC-V
 #MC This file could be treated as a todo list of porting nixpkgs to RISC-V Linux.
-[(self: super:
-{
+(self: super: super.lib.optionalAttrs (builtins.currentSystem == "riscv64-linux") {
   bison = super.bison.overrideAttrs (old: {
     doInstallCheck = false;
   });
@@ -83,4 +84,5 @@
     doCheck = false;
     doInstallCheck = false;
   });
-})]
+})
+]
