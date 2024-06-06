@@ -5,10 +5,9 @@ let
     # TODO: nixd is currently not supported by nixpkgs 23.05
     plugin = pkgs.pkgsu.vimPlugins.nvim-lspconfig;
     type = "lua";
-    config = ''
-      local lspconfig = require('lspconfig')
-
-      -- Global mappings.
+    config =
+    #MC ## Global mappings.
+    ''
       -- See `:help vim.diagnostic.*` for documentation on any of the below functions
       vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
       vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -41,8 +40,9 @@ let
           vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
         end,
       })
-
-      -- ltex
+    ''
+    #MC ## Text
+    + ''
       local paths = {
         -- vim.fn.stdpath("config") .. "/spell/ltex.dictionary.en-US.txt",
         vim.fn.expand("%:p:h") .. "/.ltexdict",
@@ -58,7 +58,7 @@ let
         end
       end
 
-      lspconfig.ltex.setup{
+      require('lspconfig').ltex.setup{
         settings = {
           ltex = {
             -- Supported languages:
@@ -72,11 +72,10 @@ let
           },
         },
       }
-      -- end of ltex
     ''
-    #MC ## C/C++ LSP
+    #MC ## C/C++
     #MC
-    #MC ### Why not use ccls?
+    #MC ### Why use clangd instead of ccls?
     #MC
     #MC I encountered the problem below,
     #MC when view https://github.com/xieby1/openc910 smart_run/logical/tb/sim_main1.cpp
@@ -107,26 +106,26 @@ let
     #MC No one try to fix the two-replies problem in ccls.
     #MC However, nimaipatel recommanded [clangd_extensions](https://github.com/p00f/clangd_extensions.nvim).
     + ''
-      -- clangd
-      lspconfig.clangd.setup{
+      require('lspconfig').clangd.setup{
         filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp", "cuda", "proto" }
       }
       require("clangd_extensions.inlay_hints").setup_autocmd()
       require("clangd_extensions.inlay_hints").set_inlay_hints()
-      -- end of clangd
-
-      -- nixd
-      lspconfig.nixd.setup{}
-      -- end of nixd
-
-      -- html
-      lspconfig.html.setup{}
-      -- end of html
-
-      -- python
-      lspconfig.pyright.setup{}
-      -- end of python
-
+    ''
+    #MC ## Nix
+    + ''
+      require('lspconfig').nixd.setup{}
+    ''
+    #MC ## Html
+    + ''
+      require('lspconfig').html.setup{}
+    ''
+    #MC ## Python
+    + ''
+      require('lspconfig').pyright.setup{}
+    ''
+    #MC ## Auto completion
+    + ''
       -- Add additional capabilities supported by nvim-cmp
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
@@ -139,13 +138,14 @@ let
         'pyright',
       }
       for _, lsp in ipairs(servers) do
-        lspconfig[lsp].setup {
+        require('lspconfig')[lsp].setup {
           -- on_attach = my_custom_on_attach,
           capabilities = capabilities,
         }
       end
     '';
   };
+#MC ## Setting up my nvim-lspconfig
 in {
   programs.neovim = {
     plugins = [
