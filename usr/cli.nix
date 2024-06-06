@@ -318,7 +318,7 @@ in
     tldr
     ## file system
     file
-    # pkgsu.magika # detect file content types with deep learning
+    # magika # detect file content types with deep learning
     ranger
     tree
     ## network
@@ -377,7 +377,7 @@ in
     nurl
     # runXonY
     qemu
-  ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") pkgsu.quickemu;
+  ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
 
   programs.eza.enable = true;
 

@@ -2,8 +2,7 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   my-nvim-lspconfig = {
-    # TODO: nixd is currently not supported by nixpkgs 23.05
-    plugin = pkgs.pkgsu.vimPlugins.nvim-lspconfig;
+    plugin = pkgs.vimPlugins.nvim-lspconfig;
     type = "lua";
     config =
     #MC ## Global mappings.
@@ -155,7 +154,7 @@ in {
     extraPackages = with pkgs; [
       clang-tools
       ltex-ls
-      pkgsu.nixd
+      nixd
       vscode-langservers-extracted # html
       pyright
     ];
