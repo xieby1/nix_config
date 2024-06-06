@@ -1,10 +1,10 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   my-leap-nvim = {
-    plugin = pkgs.nur.repos.m15a.vimExtraPlugins.leap-nvim;
+    plugin = pkgs.vimPlugins.leap-nvim;
     type = "lua";
     config = ''
-      require('leap').add_default_mappings()
+      require('leap').create_default_mappings()
     '';
   };
 in {
