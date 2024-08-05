@@ -48,11 +48,12 @@
       ## dock icons
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
-        "google-chrome.desktop"
+        "microsoft-edge.desktop"
         "firefox.desktop"
         "calendar.desktop"
         "todo.desktop"
         "spotify.desktop"
+        "google-chrome.desktop"
         ];
     };
     ## extensions settings

@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   # You Can Change To Chrome-Like Browser Here!
-  chromeLikeBrowser = "${pkgs.google-chrome}/bin/google-chrome-stable";
+  chromeLikeBrowser = "${pkgs.microsoft-edge}/bin/microsoft-edge";
 
   singleton = pkgs.writeShellScriptBin "singleton.sh" ''
     if [[ $# -lt 2 || $1 == "-h" ]]
