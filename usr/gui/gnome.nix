@@ -50,8 +50,9 @@
         "org.gnome.Nautilus.desktop"
         "google-chrome.desktop"
         "firefox.desktop"
-        "spotify.desktop"
+        "calendar.desktop"
         "todo.desktop"
+        "spotify.desktop"
         ];
     };
     ## extensions settings
