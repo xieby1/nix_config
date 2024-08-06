@@ -286,7 +286,6 @@ in
     ## file system
     file
     # magika # detect file content types with deep learning
-    ranger
     tree
     ## network
     wget
@@ -445,13 +444,6 @@ in
       dashboard -style prompt_running "\\[\\e[1;32m\\]$\\[\\e[0m\\]"
     '';
     target = ".gdbinit.d/init";
-  };
-
-  home.file.ranger_conf = {
-    text = ''
-      set preview_images_method kitty
-    '';
-    target = ".config/ranger/rc.conf";
   };
 
   programs.direnv.enable = true;
