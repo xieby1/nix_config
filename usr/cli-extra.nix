@@ -35,6 +35,19 @@
   }];
 
   home.packages = with pkgs; [
+    # tools
+    imagemagick
+
+    # programming
+    ## c
+    cling # c/cpp repl
+    ## javascript
+    nodePackages.typescript
+    ### node
+    nodejs
+    ## java
+    openjdk
+
     ### pdfcrop
     (texlive.combine {inherit (pkgs.texlive) scheme-minimal pdfcrop;})
     # runXonY

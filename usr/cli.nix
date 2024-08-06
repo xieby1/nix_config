@@ -279,7 +279,6 @@ in
     remake
     ## draw
     graphviz
-    imagemagick
     figlet
     nyancat
     ## manual
@@ -320,7 +319,6 @@ in
       else gcc
     )
     gdb
-    cling # c/cpp repl
     ### docs
     stdmanpages
     man-pages
@@ -330,12 +328,6 @@ in
     libxml2
     ## bash
     bc
-    ## javascript
-    nodePackages.typescript
-    ### node
-    nodejs
-    ## java
-    openjdk
     ## nix
     nixos-option
     ### allow non-nixos access `man configuration.nix`
