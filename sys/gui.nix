@@ -119,10 +119,15 @@
     noto-fonts-cjk-serif
     noto-fonts-emoji]) ++ (with pkgs; [
     (nerdfonts.override {
+      # The best developer fonts, see https://www.nerdfonts.com/
       fonts = [
+        "Hack"
+        "Meslo"
         "SourceCodePro"
-        "Iosevka"
         "FiraCode"
+        "Terminus"
+        "Iosevka"
+        "Monoid"
         "FantasqueSansMono"
       ];
     })
