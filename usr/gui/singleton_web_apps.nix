@@ -125,10 +125,10 @@ in
       name = "Microsoft To Do";
       genericName = "ToDo";
       exec = "${webapp_sh} \"To Do\" https://to-do.live.com/";
-      icon = (pkgs.fetchurl {
-        url = "https://todo.microsoft.com/favicon.ico";
-        sha256 = "1742330y3fr79aw90bysgx9xcfx833n8jqx86vgbcp21iqqxn0z8";
-      }).outPath;
+      icon = builtins.fetchurl {
+        url = "http://www.google.com/s2/favicons?domain=https://to-do.live.com&sz=128";
+        name = "ToDo.png";
+      };
     };
     calendar = {
       name = "Microsoft Calendar";
