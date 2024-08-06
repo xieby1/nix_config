@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
+  opt4imports = import ../opt4imports.nix;
   git-wip = builtins.derivation {
     name = "git-wip";
     system = builtins.currentSystem;
@@ -74,7 +75,9 @@ let
   ).config;
 in
 {
-  imports = [ # files
+  imports = lib.optionals (!opt4imports.isMinimalConfig) [
+    ./cli-extra.nix
+  ] ++ [ # files
     ./cli/vim
     ./cli/clash.nix
     ./cli/tailscale.nix
@@ -219,38 +222,6 @@ in
       target = ".tmux.conf";
     };
   }{
-    home.packages = let
-      pandora = pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {};
-      chatgpt = pkgs.writeShellScriptBin "chatgpt" ''
-        ${pandora}/bin/pandora -t ~/Gist/Pandora-ChatGPT/access_token.dat $@
-      '';
-    in [pandora chatgpt];
-  }{
-    home.packages = [
-      pkgs.act
-      (pkgs.writeShellScriptBin "act-podman" ''
-        CMD=(
-          "${pkgs.act}/bin/act"
-          "--bind"
-
-          # use podman
-          "--container-daemon-socket" "unix://$XDG_RUNTIME_DIR/podman/podman.sock"
-
-          # use host proxy
-          "--container-options" "--network=host"
-          "--env" "HTTPS_PROXY='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "HTTP_PROXY='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "FTP_PROXY='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "https_proxy='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "http_proxy='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "ftp_proxy='http://127.0.0.1:${toString config.proxyPort}'"
-
-          "$@"
-        )
-        eval "''${CMD[@]}"
-      '')
-    ];
-  }{
     #MC ## Syncthing
     services.syncthing = {
       enable = true;
@@ -263,11 +234,11 @@ in
       "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
     ];
     #MC 使用命令行浏览器browsh来实现syncthing-tui。
-    home.packages = [(
+    home.packages = lib.optional (!opt4imports.isMinimalConfig) (
       pkgs.writeShellScriptBin "syncthing-tui" ''
         ${pkgs.browsh}/bin/browsh --firefox.path ${pkgs.firefox}/bin/firefox http://127.0.0.1:8384
       ''
-    )];
+    );
   }{
     home.packages = with pkgs; [
       cachix
@@ -302,8 +273,6 @@ in
     nix-tree
     ## text
     pandoc
-    ### pdfcrop
-    (texlive.combine {inherit (pkgs.texlive) scheme-minimal pdfcrop;})
     ## compile
     gnumake
     makefile2graph
@@ -374,9 +343,7 @@ in
     #        nixos/doc/manual/default.nix
     sysconfig.system.build.manual.nixos-configuration-reference-manpage
     nurl
-    # runXonY
-    qemu
-  ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
+  ];
 
   programs.eza.enable = true;
 
