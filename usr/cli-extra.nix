@@ -1,5 +1,6 @@
+#MC # cli-extra.nix: Extra CLI configs (added to minial cli.nix)
 { config, pkgs, stdenv, lib, ... }:
-(lib.optionalAttrs (!config.isMinimalConfig) {
+{
   imports = [{
     home.packages = let
       pandora = pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {};
@@ -53,4 +54,4 @@
     # runXonY
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
-})
+}
