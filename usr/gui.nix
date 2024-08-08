@@ -22,16 +22,6 @@ let
         desktopName = "xdot";
         exec = "xdot %U";
   })];};
-  my-xournalpp = pkgs.xournalpp.overrideAttrs (old: {
-    version = "nightly";
-    src = pkgs.fetchFromGitHub {
-      owner = "xournalpp";
-      repo = "xournalpp";
-      rev = "1dbb041f7b29d0175c943443747cbcf7953e3586";
-      hash = "sha256-yeovSxdWCEvzxRZ3u40gEWZpIOoBsK9G4x17FK0C+PA=";
-    };
-    buildInputs = old.buildInputs ++ [pkgs.alsa-lib];
-  });
 in
 {
   imports = [
@@ -95,8 +85,6 @@ in
     xelfviewer
   ] ++ [
     vlc
-    # my-xournalpp # pdf annotation
-    xournalpp
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ghidra
   ] ++ [
