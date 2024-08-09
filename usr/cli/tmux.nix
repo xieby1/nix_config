@@ -1,6 +1,20 @@
 { config, pkgs, stdenv, lib, ... }:
-{
+let
+  opt = import ../../opt.nix;
+in {
   home.packages = [pkgs.tmux];
+  # Auto start tmux in non-GUI device
+  # mkAfter ensure the tmux config is appended to the tail of .bashrc
+  programs.bash.bashrcExtra = lib.mkAfter (lib.optionalString (!opt.isGui) ''
+    # Auto start tmux
+    # see: https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
+    # ~~1. tmux exists on the system~~, nix ensure that tmux does exist
+    # 2. we're in an interactive shell, and
+    # 3. tmux doesn't try to run within itself
+    if [ -n "$PS1" ] && [[ ! "$TERM" =~ screen ]] && [[ ! "$TERM" =~ tmux ]] && [ -z "$TMUX" ]; then
+      exec tmux
+    fi
+  '');
   home.file.tmux = {
     text = ''
       # display status at top
