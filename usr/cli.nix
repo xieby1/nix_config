@@ -81,7 +81,6 @@ in
     ./cli/vim
     ./cli/clash.nix
     ./cli/tailscale.nix
-    ./cli/zsh.nix
     # When init searxng, it throws `ERROR:searx.engines.wikidata: Fail to initialize`
     # I have no idea, so disable it.
     # ./cli/searxng.nix
