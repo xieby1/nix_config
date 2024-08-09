@@ -1,6 +1,8 @@
 #MC # cli-extra.nix: Extra CLI configs (added to minial cli.nix)
 { config, pkgs, stdenv, lib, ... }:
-{
+let
+  opt = import ../opt.nix;
+in {
   imports = [{
     home.packages = let
       pandora = pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {};
@@ -21,12 +23,12 @@
 
           # use host proxy
           "--container-options" "--network=host"
-          "--env" "HTTPS_PROXY='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "HTTP_PROXY='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "FTP_PROXY='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "https_proxy='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "http_proxy='http://127.0.0.1:${toString config.proxyPort}'"
-          "--env" "ftp_proxy='http://127.0.0.1:${toString config.proxyPort}'"
+          "--env" "HTTPS_PROXY='http://127.0.0.1:${toString opt.proxyPort}'"
+          "--env" "HTTP_PROXY='http://127.0.0.1:${toString opt.proxyPort}'"
+          "--env" "FTP_PROXY='http://127.0.0.1:${toString opt.proxyPort}'"
+          "--env" "https_proxy='http://127.0.0.1:${toString opt.proxyPort}'"
+          "--env" "http_proxy='http://127.0.0.1:${toString opt.proxyPort}'"
+          "--env" "ftp_proxy='http://127.0.0.1:${toString opt.proxyPort}'"
 
           "$@"
         )

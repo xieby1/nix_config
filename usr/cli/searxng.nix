@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
+  opt = import ../../opt.nix;
   searxng_yml = builtins.toFile "searxng.yml" ''
     # https://docs.searxng.org/admin/settings/settings.html#settings-yml-location
     # The initial settings.yml we be load from these locations:
@@ -22,7 +23,7 @@ let
     outgoing:
       proxies:
         all://:
-          - http://127.0.0.1:${toString config.proxyPort}
+          - http://127.0.0.1:${toString opt.proxyPort}
 
     engines:
       - name: bilibili

@@ -1,7 +1,9 @@
 { config, pkgs, stdenv, lib, ... }:
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
-{
+let
+  opt = import ../../opt.nix;
+in{
   home.packages = (with pkgs; [
     gnome.gnome-sound-recorder
     gnome.dconf-editor
@@ -187,9 +189,9 @@
 
     # proxy
     "system/proxy" = {mode = "manual";};
-    "system/proxy/ftp" = {host="127.0.0.1"; port=config.proxyPort;};
-    "system/proxy/http" = {host="127.0.0.1"; port=config.proxyPort;};
-    "system/proxy/https" = {host="127.0.0.1"; port=config.proxyPort;};
+    "system/proxy/ftp" = {host="127.0.0.1"; port=opt.proxyPort;};
+    "system/proxy/http" = {host="127.0.0.1"; port=opt.proxyPort;};
+    "system/proxy/https" = {host="127.0.0.1"; port=opt.proxyPort;};
 
     # input method
     "org/gnome/desktop/input-sources" = {

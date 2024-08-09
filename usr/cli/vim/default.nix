@@ -1,5 +1,7 @@
 { config, pkgs, stdenv, lib, ... }:
-{
+let
+  opt = import ../../../opt.nix;
+in {
   #MC Plugins with customizations:
   imports = [
     ./nvim-metals
@@ -46,7 +48,7 @@
       vim-commentary
       tabular
       vim-plugin-AnsiEsc
-    ] ++ (lib.optional config.isGui markdown-preview-nvim);
+    ] ++ (lib.optional opt.isGui markdown-preview-nvim);
 
     #MC Vim config
     extraConfig = ''

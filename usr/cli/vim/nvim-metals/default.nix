@@ -3,10 +3,11 @@
 #MC The JRE proxy need subtle configuration.
 { config, pkgs, ... }:
 let
+  opt = import ../../../../opt.nix;
   jre_with_proxy = pkgs.callPackage ./jre_with_proxy.nix {
     jre = pkgs.openjdk_headless;
     proxyHost = "127.0.0.1";
-    proxyPort = "${toString config.proxyPort}";
+    proxyPort = toString opt.proxyPort;
   };
   my-nvim-metals = {
     plugin = pkgs.vimPlugins.nvim-metals;
@@ -23,9 +24,9 @@ let
         excludedPackages = { "akka.actor.typed.javadsl", "com.github.swagger.akka.javadsl" },
         serverProperties = {
           "-Dhttps.proxyHost=127.0.0.1",
-          "-Dhttps.proxyPort=${toString config.proxyPort}",
+          "-Dhttps.proxyPort=${toString opt.proxyPort}",
           "-Dhttp.proxyHost=127.0.0.1",
-          "-Dhttp.proxyPort=${toString config.proxyPort}",
+          "-Dhttp.proxyPort=${toString opt.proxyPort}",
         },
         -- see `:h metalsBinaryPath`, "Another setting for you crazy Nix kids." Hahaha!
         metalsBinaryPath = "${pkgs.metals.override {jre = jre_with_proxy;}}/bin/metals",
@@ -59,9 +60,9 @@ in {
   home.file.jvmopts = {
     text = ''
       -Dhttps.proxyHost=127.0.0.1
-      -Dhttps.proxyPort=${toString config.proxyPort}
+      -Dhttps.proxyPort=${toString opt.proxyPort}
       -Dhttp.proxyHost=127.0.0.1
-      -Dhttp.proxyPort=${toString config.proxyPort}
+      -Dhttp.proxyPort=${toString opt.proxyPort}
     '';
     target = ".bloop/.jvmopts";
   };

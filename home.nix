@@ -10,17 +10,13 @@
 #MC 我利用环境变量`DISPLAY`用于判断是否导入GUI程序的配置。
 
 { config, pkgs, stdenv, lib, ... }:
-
-{
+let
+  opt = import ./opt.nix;
+in {
   imports = [
-    ./opt.nix
     ./usr/modules/cachix.nix
     ./usr/cli.nix
-    # Q: how to use isGui here?
-    # A: Not possible.
-    #    As isGui is evaluated after `imports` being evaluated,
-    #    use config.isGui here cause infinite loop.
-  ] ++ lib.optionals ((builtins.getEnv "DISPLAY")!="") [
+  ] ++ lib.optionals opt.isGui [
     ./usr/gui.nix
   ];
 

@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
+  opt = import ../../opt.nix;
   tailscale-bash-completion = builtins.derivation {
     name = "tailscale-bash-completion";
     system = builtins.currentSystem;
@@ -58,15 +59,15 @@ let
       };
       Service = {
         Environment = [
-          "HTTPS_PROXY=http://127.0.0.1:${toString config.proxyPort}"
-          "HTTP_PROXY=http://127.0.0.1:${toString config.proxyPort}"
-          "https_proxy=http://127.0.0.1:${toString config.proxyPort}"
-          "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
+          "HTTPS_PROXY=http://127.0.0.1:${toString opt.proxyPort}"
+          "HTTP_PROXY=http://127.0.0.1:${toString opt.proxyPort}"
+          "https_proxy=http://127.0.0.1:${toString opt.proxyPort}"
+          "http_proxy=http://127.0.0.1:${toString opt.proxyPort}"
         ];
         ExecStart = "${tailscaled-wrapped}/bin/tailscaled-${suffix}";
       };
     };
-    programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
+    programs.bash.bashrcExtra = lib.optionalString opt.isNixOnDroid ''
       # start tailscale-${suffix}
       if [[ -z "$(pidof tailscaled-${suffix})" ]]; then
           tmux new -d -s tailscaled-${suffix} tailscaled-${suffix}

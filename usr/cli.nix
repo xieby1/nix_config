@@ -1,6 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  opt4imports = import ../opt4imports.nix;
+  opt = import ../opt.nix;
   git-wip = builtins.derivation {
     name = "git-wip";
     system = builtins.currentSystem;
@@ -75,12 +75,13 @@ let
   ).config;
 in
 {
-  imports = lib.optionals (!opt4imports.isMinimalConfig) [
+  imports = lib.optionals (!opt.isMinimalConfig) [
     ./cli-extra.nix
   ] ++ [ # files
     ./cli/vim
     ./cli/clash.nix
     ./cli/tailscale.nix
+    ./cli/zsh.nix
     # When init searxng, it throws `ERROR:searx.engines.wikidata: Fail to initialize`
     # I have no idea, so disable it.
     # ./cli/searxng.nix
@@ -94,8 +95,8 @@ in
       export FZF_DEFAULT_OPTS="--reverse"
     '';
   }{
-    home.packages = lib.optional (!config.isNixOnDroid) pkgs.hstr;
-    programs.bash.bashrcExtra = lib.optionalString (!config.isNixOnDroid) ''
+    home.packages = lib.optional (!opt.isNixOnDroid) pkgs.hstr;
+    programs.bash.bashrcExtra = lib.optionalString (!opt.isNixOnDroid) ''
       # HSTR configuration - add this to ~/.bashrc
       alias hh=hstr                    # hh to be alias for hstr
       export HSTR_CONFIG=hicolor       # get more colors
@@ -111,7 +112,7 @@ in
   }{
     programs.ssh.enable = true;
     programs.ssh.includes = lib.optional (builtins.pathExists ~/Gist/Config/ssh.conf) "~/Gist/Config/ssh.conf";
-    programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
+    programs.bash.bashrcExtra = lib.optionalString opt.isNixOnDroid ''
       # start sshd
       if [[ -z "$(pidof sshd-start)" ]]; then
           tmux new -d -s sshd-start sshd-start
@@ -226,15 +227,15 @@ in
     services.syncthing = {
       enable = true;
       #MC 让syncthing的端口外部可访问。
-      extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
+      extraOptions = lib.optional opt.isCli "--gui-address=0.0.0.0:8384";
     };
     #MC 启用代理，因为有些syncthing的服务器似乎是被墙了的。
     systemd.user.services.syncthing.Service.Environment = [
       # https://docs.syncthing.net/users/proxying.html
-      "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
+      "http_proxy=http://127.0.0.1:${toString opt.proxyPort}"
     ];
     #MC 使用命令行浏览器browsh来实现syncthing-tui。
-    home.packages = lib.optional (!opt4imports.isMinimalConfig) (
+    home.packages = lib.optional (!opt.isMinimalConfig) (
       pkgs.writeShellScriptBin "syncthing-tui" ''
         ${pkgs.browsh}/bin/browsh --firefox.path ${pkgs.firefox}/bin/firefox http://127.0.0.1:8384
       ''
@@ -353,7 +354,7 @@ in
     if [[ -n "$IN_NIX_SHELL" ]]; then
         PS1+="(''${name}.$IN_NIX_SHELL)"
     fi
-    PS1+="''${u_green}\u${lib.optionalString (!config.isNixOnDroid) "@\\h"}''${u_white}:"
+    PS1+="''${u_green}\u${lib.optionalString (!opt.isNixOnDroid) "@\\h"}''${u_white}:"
     PS1+="''${u_blue}\w''${u_white}"
     PS1+="\n''${u_green}\$''${u_white} "
     unset u_green u_blue u_white
@@ -390,7 +391,7 @@ in
     if [[ -n $(command -v eza) ]]; then
         alias ls=eza
     fi
-  '' + lib.optionalString config.isWSL2 ''
+  '' + lib.optionalString opt.isWSL2 ''
     # use the working directory of the current tab as the starting directory for a new tab
     # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#using-actions-to-duplicate-the-path
     PROMPT_COMMAND=''${PROMPT_COMMAND:+"$PROMPT_COMMAND"}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
