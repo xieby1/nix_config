@@ -44,7 +44,7 @@
 #MC 目前的想法是不将opt-local.nix加入git仓库，以实现“设备特定”。
 #MC 相比opt.nix，opt-local.nix的配置具备更高的优先级。
 // (
-  if (builtins.pathExists ./opt4-local.nix)
-  then import ./opt4-local.nix
+  if (builtins.pathExists ./opt-local.nix)
+  then import ./opt-local.nix
   else {}
 )

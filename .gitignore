@@ -4,4 +4,4 @@ book/
 SUMMARY.md
 *.nix.md
 nix/nix.conf.md
-opt4imports-local.nix
+opt-local.nix
