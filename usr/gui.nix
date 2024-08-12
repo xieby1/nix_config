@@ -89,7 +89,9 @@ in
     ghidra
   ] ++ [
     # management
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     zotero
+  ] ++ [
     barrier
     # entertainment
     antimicrox
