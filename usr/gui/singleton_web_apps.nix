@@ -1,7 +1,9 @@
 { config, pkgs, lib, ... }:
 let
   # You Can Change To Chrome-Like Browser Here!
-  chromeLikeBrowser = "${pkgs.microsoft-edge}/bin/microsoft-edge";
+  chromeLikeBrowser = if (lib.meta.availableOn builtins.currentSystem pkgs.microsoft-edge)
+    then "${pkgs.microsoft-edge}/bin/microsoft-edge"
+    else "${pkgs.chromium}/bin/chromium";
 
   singleton = pkgs.writeShellScriptBin "singleton.sh" ''
     if [[ $# -lt 2 || $1 == "-h" ]]
