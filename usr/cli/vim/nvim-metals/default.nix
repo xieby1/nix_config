@@ -31,6 +31,9 @@ let
         -- see `:h metalsBinaryPath`, "Another setting for you crazy Nix kids." Hahaha!
         metalsBinaryPath = "${pkgs.metals.override {jre = jre_with_proxy;}}/bin/metals",
         javaHome = "${jre_with_proxy}",
+        showImplicitArguments = true,
+        showImplicitConversionsAndClasses = true,
+        showInferredType = ture,
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
