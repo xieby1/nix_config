@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }:
 let
   # You Can Change To Chrome-Like Browser Here!
-  chromeLikeBrowser = if (lib.meta.availableOn builtins.currentSystem pkgs.microsoft-edge)
+  chromeLikeBrowser = if (lib.meta.availableOn builtins.currentSystem pkgs.microsoft-edge.meta.platforms)
     then "${pkgs.microsoft-edge}/bin/microsoft-edge"
     else "${pkgs.chromium}/bin/chromium";
 
