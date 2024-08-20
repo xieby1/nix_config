@@ -1,4 +1,4 @@
-🏗️ *我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**37/102**</span>* 🏗️
+🏗️ *我的Nix/NixOS配置详细文档正在施工中，完成进度：<span style="font-size:2em;">**39/105**</span>* 🏗️
 
 为了更好的文档阅读体验，请看[GitHub Pages](https://xieby1.github.io/nix_config/)的版本。
 
@@ -10,7 +10,9 @@
 * [xieby1和Nix/NixOS](#xieby1和nixnixos)
 * [xieby1的Nix/NixOS配置](#xieby1的nixnixos配置)
   * [文件夹结构](#文件夹结构)
-  * [使用方法](#使用方法)
+  * [nix脚本的使用方法](#nix脚本的使用方法)
+    * [nix-shell的例子](#nix-shell的例子)
+  * [nix配置的使用方法](#nix配置的使用方法)
   * [引用](#引用)
 
 <!-- vim-markdown-toc -->
@@ -69,7 +71,10 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
 ## 文件夹结构
 
 * docs/: 文档
-* scripts/: nix-shell和独立的软件包的脚本
+* scripts/: nix脚本
+  * fhs-shell/: 采用FHS的nix-shell脚本
+  * shell/: nix-shell脚本
+  * pkgs/: 独立的软件包脚本
 * system.nix: 系统总体配置（nixos-rebuild的配置）
   * sys/cli.nix: 系统命令行配置
   * sys/gui.nix: 系统图形配置
@@ -81,7 +86,28 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
 * nix-on-droid.nix: 安卓总体配置（nix-on-droid的配置）
 * modules/: nixos/home-manager通用的模块
 
-## 使用方法
+## nix脚本的使用方法
+
+安装Nix不在此赘述，参考[nixos.org/download.html](https://nixos.org/download.html)。
+
+安装完Nix后，下载所需的nix脚本，然后：
+
+* `fhs-shell/`和`shell/`脚本用`nix-shell`命令进入shell环境；
+* `pkgs/`脚本用`nix-build`命令生成软件包。
+
+### nix-shell的例子
+
+```bash
+# 以xiangshan.nix配置香山开发环境为例
+# 进入香山的根目录
+cd Xiangshan
+# 下载xiangshan.nix脚本，并重命名为shell.nix
+wget https://raw.githubusercontent.com/xieby1/nix_config/main/scripts/shell/xiangshan.nix -O shell.nix
+# 进入nix shell
+nix-shell
+```
+
+## nix配置的使用方法
 
 虚拟机/物理机单系统/物理机双系统 安装NixOS 可以参考我两年前的[NixOS安装](./docs/howto/install_nixos.html)过程。
 安装Nix/NixOS不在此赘述，参考[nixos.org/download.html](https://nixos.org/download.html)。
