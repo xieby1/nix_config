@@ -177,7 +177,9 @@ in
       cachix
     ];
     home.file.cachix_dhall = {
-      source = ~/Gist/Config/cachix.dhall;
+      source = if (builtins.pathExists ~/Gist/Config/cachix.dhall)
+        then ~/Gist/Config/cachix.dhall
+        else builtins.toFile "empty-cachix.dhall" "";
       target = ".config/cachix/cachix.dhall";
     };
   }{
