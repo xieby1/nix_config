@@ -50,8 +50,8 @@ in{
       ## dock icons
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
-        "microsoft-edge.desktop"
         "firefox.desktop"
+        "microsoft-edge.desktop"
         "calendar.desktop"
         "todo.desktop"
         "spotify.desktop"
