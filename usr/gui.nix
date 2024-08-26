@@ -58,6 +58,7 @@ in
     # network
     mykdeconnect
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    rustdesk
     feishu
     (wechat-uos.override {
       buildFHSEnv = args: buildFHSEnv (args // {
@@ -113,6 +114,8 @@ in
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     spotify
   ];
+
+  cachix_packages = lib.optional (builtins.currentSystem=="x86_64-linux") pkgs.rustdesk;
 
   xdg.mime.types = {
     dot = {
