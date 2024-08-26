@@ -41,6 +41,7 @@
   #MC 这里使用了清华Tuna提供的Nix binary cache镜像来加速。
   nix.settings.substituters = [
     "https://cache.nixos.org/"
+    "https://xieby1.cachix.org"
   ];
 
   #MC 设置时区。
