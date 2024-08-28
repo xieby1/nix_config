@@ -141,4 +141,6 @@
   nix.settings.trusted-users = ["root" "xieby1"];
 
   zramSwap.enable = true;
+
+  documentation.man.generateCaches = true;
 }
