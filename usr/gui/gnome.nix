@@ -117,6 +117,8 @@ in{
       mouse-sensitive = true;
       enable-active-window=false;
       enable-intellihide=true;
+      shortcut-delay = 0.0;
+      shortcut-keybind = ["<Super>h"];
     };
     "org/gnome/shell/extensions/unite" = {
       app-menu-ellipsize-mode="end";
@@ -167,6 +169,7 @@ in{
       switch-windows-backward=["<Shift><Alt>Tab"];
       maximize=["<Super>Up"];
       unmaximize=["<Super>Down"];
+      minimize=[];
       move-to-workspace-left=["<Control>Home"];
       move-to-workspace-right=["<Control>End"];
     };
