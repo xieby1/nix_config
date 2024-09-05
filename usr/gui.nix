@@ -38,7 +38,7 @@ in
     my-firefox
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    rustdesk
+    rustdesk-flutter
     feishu
     (wechat-uos.override {
       buildFHSEnv = args: buildFHSEnv (args // {
@@ -94,8 +94,6 @@ in
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     spotify
   ];
-
-  cachix_packages = lib.optional (builtins.currentSystem=="x86_64-linux") pkgs.rustdesk;
 
   xdg.mime.types = {
     drawio = {
