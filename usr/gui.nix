@@ -1,14 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
-  mykdeconnect = pkgs.kdeconnect;
-  #mykdeconnect = pkgs.kdeconnect.overrideAttrs (old: {
-  #  patches = [( pkgs.fetchpatch {
-  #    url = "https://raw.githubusercontent.com/xieby1/kdeconnect-kde-enhanced/4610431b932b2fab05d7e0fc55e7306dc7ff0910/diff.patch";
-  #    hash = "sha256-NL/TVOMEhdJ/W7UTxjF7Qjnq7JciNvl08BC1wrBfvHo=";
-  #  })];
-  #  # cmakeFlags = "-DCMAKE_BUILD_TYPE=Debug -DQT_FORCE_STDERR_LOGGING=1";
-  #});
   myxdot = pkgs.symlinkJoin {
     name = "myxdot";
     paths = [
@@ -33,6 +25,7 @@ in
 {
   imports = [
     ./gui/mime.nix
+    ./gui/kdeconnect.nix
   ] ++ (if (builtins.getEnv "WSL_DISTRO_NAME")=="" then [
     ./gui/gnome.nix
     ./gui/terminal.nix
@@ -56,7 +49,6 @@ in
   ] ++ [
     my-firefox
     # network
-    mykdeconnect
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     rustdesk
     feishu
@@ -132,10 +124,6 @@ in
     };
   };
 
-  home.file.kde_connect_indicator = {
-    source = "${mykdeconnect}/share/applications/org.kde.kdeconnect.nonplasma.desktop";
-    target = ".config/autostart/org.kde.kdeconnect.nonplasma.desktop";
-  };
   home.file.autostart_barrier = {
     source = "${pkgs.barrier}/share/applications/barrier.desktop";
     target = ".config/autostart/barrier.desktop";
