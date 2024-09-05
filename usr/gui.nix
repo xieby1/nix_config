@@ -87,6 +87,7 @@ in
     zotero
   ] ++ [
     barrier
+    keepassxc
     # entertainment
     antimicrox
     # music
