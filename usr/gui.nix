@@ -1,5 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
+  opt = import ../opt.nix;
   xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
   my-firefox = pkgs.runCommand "firefox-pinch" {} ''
     mkdir -p $out
@@ -16,7 +17,7 @@ in
     ./gui/xdot.nix
   ] ++ (lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ./gui/rustdesk.nix
-  ]) ++ (if (builtins.getEnv "WSL_DISTRO_NAME")=="" then [
+  ]) ++ (if !opt.isWSL2 then [
     ./gui/gnome.nix
     ./gui/terminal.nix
     ./gui/singleton_web_apps.nix
