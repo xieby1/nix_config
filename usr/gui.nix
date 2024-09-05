@@ -1,19 +1,6 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
-  myxdot = pkgs.symlinkJoin {
-    name = "myxdot";
-    paths = [
-      # TODO: xdot gobject-introspection dependency broken
-      #   refers to https://github.com/NixOS/nixpkgs/pull/206186
-      (pkgs.xdot.overrideAttrs (old: {
-        nativeBuildInputs = old.nativeBuildInputs ++ [pkgs.gobject-introspection];
-      }))
-      (pkgs.makeDesktopItem {
-        name = "xdot";
-        desktopName = "xdot";
-        exec = "xdot %U";
-  })];};
   my-firefox = pkgs.runCommand "firefox-pinch" {} ''
     mkdir -p $out
     ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.firefox} $out
@@ -26,6 +13,7 @@ in
   imports = [
     ./gui/mime.nix
     ./gui/kdeconnect.nix
+    ./gui/xdot.nix
   ] ++ (if (builtins.getEnv "WSL_DISTRO_NAME")=="" then [
     ./gui/gnome.nix
     ./gui/terminal.nix
@@ -86,7 +74,6 @@ in
     inkscape
     gimp
     # viewer
-    myxdot
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex
     xelfviewer
@@ -110,12 +97,6 @@ in
   cachix_packages = lib.optional (builtins.currentSystem=="x86_64-linux") pkgs.rustdesk;
 
   xdg.mime.types = {
-    dot = {
-      name = "graphviz-dot";
-      type = "text/graphviz-dot";
-      pattern = "*.dot";
-      defaultApp = "xdot.desktop";
-    };
     drawio = {
       name = "draw-io";
       type = "text/draw-io";
