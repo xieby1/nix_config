@@ -14,7 +14,9 @@ in
     ./gui/mime.nix
     ./gui/kdeconnect.nix
     ./gui/xdot.nix
-  ] ++ (if (builtins.getEnv "WSL_DISTRO_NAME")=="" then [
+  ] ++ (lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    ./gui/rustdesk.nix
+  ]) ++ (if (builtins.getEnv "WSL_DISTRO_NAME")=="" then [
     ./gui/gnome.nix
     ./gui/terminal.nix
     ./gui/singleton_web_apps.nix
@@ -38,7 +40,6 @@ in
     my-firefox
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    rustdesk-flutter
     feishu
     (wechat-uos.override {
       buildFHSEnv = args: buildFHSEnv (args // {
