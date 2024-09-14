@@ -2,7 +2,6 @@
 <!-- Export by pandoc -D revealjs, pandoc version 2.14.03 -->
 <!-- pandoc-types 1.22.1, texmath 0.12.3.2, skylighting 0.10.5.2, -->
 <!-- citeproc 0.4.0.1, ipynb 0.1.0.2 -->
-<!-- delete /dist after revealjs-url -->
 <html>
 <head>
   <meta charset="utf-8">
@@ -12,17 +11,26 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, minimal-ui">
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/reset.css">
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/reveal.css">
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/dist/reset.css">
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
-    span.underline{text-decoration: underline;}
-    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.columns{display: flex; gap: min(4vw, 1.5em);}
+    div.column{flex: auto; overflow-x: auto;}
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
-    ul.task-list{list-style: none;}
+    /* The extra [class] is a hack that increases specificity enough to
+       override a similar rule in reveal.js */
+    ul.task-list[class]{list-style: none;}
+    ul.task-list li input[type="checkbox"] {
+      font-size: inherit;
+      width: 0.8em;
+      margin: 0 0.8em 0.2em -1.6em;
+      vertical-align: middle;
+    }
+    /* CSS for syntax highlighting */
     pre > code.sourceCode { white-space: pre; position: relative; }
-    pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+    pre > code.sourceCode > span { line-height: 1.25; }
     pre > code.sourceCode > span:empty { height: 1.2em; }
     .sourceCode { overflow: visible; }
     code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -33,7 +41,7 @@
     }
     @media print {
     pre > code.sourceCode { white-space: pre-wrap; }
-    pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+    pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
     }
     pre.numberSource code
       { counter-reset: source-line 0; }
@@ -84,12 +92,21 @@
     code span.va { color: #19177c; } /* Variable */
     code span.vs { color: #4070a0; } /* VerbatimString */
     code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
-    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
   </style>
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/theme/white.css" id="theme">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/chalkboard/style.css">
-  <link rel="stylesheet" href="https://cdn.bootcdn.net/ajax/libs/font-awesome/5.15.4/css/all.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/customcontrols/style.css">
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/dist/theme/white.css" id="theme">
+<!-- Split font file using cn-font-split -->
+<link href='https://xieby1.github.io/markdown_revealjs/fonts/Noto_Color_Emoji/dist/main.css' rel='stylesheet'>
+<style>
+/* See themes/white.css */
+:root {
+    --r-main-font: Source Sans Pro, Helvetica, Noto Color Emoji, sans-serif;
+    --r-main-font: Source Sans Pro, Helvetica, Noto Color Emoji, sans-serif;
+}
+</style>
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-plugins/chalkboard/style.css">
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-plugins/customcontrols/style.css">
+  <link rel="stylesheet" href="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-simplemenu/simpleMenu.css">
 <!-- revealjs.sh customized styles -->
 <style>
 .reveal section img {
@@ -122,11 +139,11 @@ a.sourceLine {
 
 [role="doc-toc"] > ul {
     /* multiple column in first level TOC */
-    column-width: 290px;
+    column-width:  unset ;
     width: 100%;
     column-rule-style: solid;
     /* no margin in first level TOC */
-    margin: 0 0 0 0;
+    margin:  0 400px ;
 }
 
 [role="doc-toc"] ul {
@@ -143,9 +160,23 @@ nav > ul > li > a {
     background: lightgrey;
 }
 
+/* Long table overflow */
+/* https://stackoverflow.com/questions/23989463/how-to-set-tbody-height-with-overflow-scroll */
+thead tr th {
+    position: sticky;
+    top: 0;
+}
 table {
-    /* 42px / sprt 2 */
-    font-size: 30px;
+    border-collapse: collapse;
+}
+
+/* Center the table, make the scroll bar right beside the table */
+/* https://www.joshwcomeau.com/css/center-a-div/ */
+.longtable {
+    overflow-y: auto;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* enable multiple columns */
@@ -200,34 +231,41 @@ table {
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide">
+<section id="title-slide"
+         data-sminvisible=true>
   <h1 class="title">Nix让你的团队成员不再受环境问题困扰</h1>
   <p class="author">🤓谢本壹</p>
-  <p class="date">2023.05</p>
+  <p class="date"><del>2023.05</del> 2024.09</br><span
+style="font-size:0.8em;"><a
+href="https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html">https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html</a></span></p>
 </section>
-<section id="TOC">
+<section id="TOC"
+         data-sminvisible=true>
 <nav role="doc-toc"> 
 <ul>
-<li><a href="#/nixnixos简介"><span class="toc-section-number">1</span>
-Nix/NixOS简介</a></li>
-<li><a href="#/nix展示"><span class="toc-section-number">2</span>
-Nix展示</a></li>
-<li><a href="#/nix原理"><span class="toc-section-number">3</span>
-Nix原理</a></li>
-<li><a href="#/谢谢"><span class="toc-section-number">4</span>
-谢谢</a></li>
+<li><a href="#/nixnixos简介" id="/toc-nixnixos简介"><span
+class="toc-section-number">1</span> Nix/NixOS简介</a></li>
+<li><a href="#/nix展示" id="/toc-nix展示"><span
+class="toc-section-number">2</span> Nix展示</a></li>
+<li><a href="#/nix原理" id="/toc-nix原理"><span
+class="toc-section-number">3</span> Nix原理</a></li>
+<li><a href="#/应用nix与程序切片" id="/toc-应用nix与程序切片"><span
+class="toc-section-number">4</span> 🆕应用：Nix与程序切片</a></li>
+<li><a href="#/总结" id="/toc-总结"><span
+class="toc-section-number">5</span> 总结</a></li>
 </ul>
 </nav>
 </section>
 
 <section>
 <section id="nixnixos简介" class="title-slide slide level1"
-data-number="1">
-<h1 data-number="1"><span class="header-section-number">1</span>
-Nix/NixOS简介</h1>
+data-number="1" data-stack-name="1.简介">
+<h1 data-number="1" data-stack-name="1.简介"><span
+class="header-section-number">1</span> Nix/NixOS简介</h1>
 
 </section>
-<section id="nixnixos是什么" class="slide level2" data-number="1.1">
+<section id="nixnixos是什么" class="title-slide slide level2"
+data-number="1.1">
 <h2 data-number="1.1"><span class="header-section-number">1.1</span>
 Nix/NixOS是什么</h2>
 <div class="container">
@@ -247,7 +285,9 @@ NixOS
 </div>
 </div>
 </section>
-<section id="nixnixos发展简史" class="slide level2" data-number="1.2">
+
+<section id="nixnixos发展简史" class="title-slide slide level2"
+data-number="1.2">
 <h2 data-number="1.2"><span class="header-section-number">1.2</span>
 Nix/NixOS发展简史</h2>
 <div class="container">
@@ -273,8 +313,9 @@ https://discourse.nixos.org/t/nixos-unstable-s-iso-minimal-x86-64-linux-is-100-r
 </ul>
 </div>
 </section>
-<section id="nixnixos特点" class="slide level2" data-number="1.3"
-data-auto-animate="1">
+
+<section id="nixnixos特点" class="title-slide slide level2"
+data-number="1.3" data-auto-animate="1">
 <h2 data-number="1.3" data-auto-animate="1"><span
 class="header-section-number">1.3</span> Nix/NixOS特点</h2>
 <div style="font-size:20pt;">
@@ -285,8 +326,9 @@ class="header-section-number">1.3</span> Nix/NixOS特点</h2>
 </ul>
 </div>
 </section>
-<section id="nixnixos特点-续" class="slide level2" data-number="1.4"
-data-auto-animate="1">
+
+<section id="nixnixos特点-续" class="title-slide slide level2"
+data-number="1.4" data-auto-animate="1">
 <h2 data-number="1.4" data-auto-animate="1"><span
 class="header-section-number">1.4</span> Nix/NixOS特点-续</h2>
 <div style="font-size:20pt;">
@@ -305,7 +347,8 @@ class="header-section-number">1.4</span> Nix/NixOS特点-续</h2>
 </ul>
 </div>
 </section>
-<section id="nixnixos-vs-aptubuntu" class="slide level2"
+
+<section id="nixnixos-vs-aptubuntu" class="title-slide slide level2"
 data-number="1.5">
 <h2 data-number="1.5"><span class="header-section-number">1.5</span>
 <img src="images/nix-snowflake.svg" style="height:1em;">Nix/NixOS vs
@@ -383,14 +426,18 @@ data-number="1.5">
 </ul>
 </div>
 </section>
-<section id="nixnixos-vs-docker" class="slide level2" data-number="1.6">
+
+<section id="nixnixos-vs-docker" class="title-slide slide level2"
+data-number="1.6">
 <h2 data-number="1.6"><span class="header-section-number">1.6</span>
 <img src="images/nix-snowflake.svg" style="height:1em;">Nix/NixOS vs
 <img src="images/Moby-logo.png" style="height:1em;">Docker</h2>
 <p>Docker融入现有环境</p>
 <p>没办法简单的在docker环境中用自己的vim/vscode配置</p>
 </section>
-<section id="学习nixnixos" class="slide level2" data-number="1.7">
+
+<section id="学习nixnixos" class="title-slide slide level2"
+data-number="1.7">
 <h2 data-number="1.7"><span class="header-section-number">1.7</span>
 学习Nix/NixOS</h2>
 <p><span class="fragment">学习曲线陡峭📈，但也别担心😸</span></p>
@@ -429,14 +476,17 @@ NixOS</a></li>
 </ul>
 </div>
 </div>
-</section></section>
+</section>
+</section>
 <section>
-<section id="nix展示" class="title-slide slide level1" data-number="2">
-<h1 data-number="2"><span class="header-section-number">2</span>
-Nix展示</h1>
+<section id="nix展示" class="title-slide slide level1" data-number="2"
+data-stack-name="2.展示">
+<h1 data-number="2" data-stack-name="2.展示"><span
+class="header-section-number">2</span> Nix展示</h1>
 
 </section>
-<section id="nix使用模式" class="slide level2" data-number="2.1">
+<section id="nix使用模式" class="title-slide slide level2"
+data-number="2.1">
 <h2 data-number="2.1"><span class="header-section-number">2.1</span>
 Nix使用模式</h2>
 <div class="container">
@@ -462,7 +512,8 @@ nix-shell
 <p></br></p>
 <p><span class="fragment">nix-shell适合创建开发环境</span></p>
 </section>
-<section id="nix-shell使用场景实例" class="slide level2"
+
+<section id="nix-shell使用场景实例" class="title-slide slide level2"
 data-number="2.2">
 <h2 data-number="2.2"><span class="header-section-number">2.2</span>
 nix-shell使用场景实例</h2>
@@ -489,7 +540,8 @@ nix-shell使用场景实例</h2>
 <p></br></p>
 <p><span class="fragment">项目一开始就体验极差😖😤😱</span></p>
 </section>
-<section id="nix-shell使用场景实例-续" class="slide level2"
+
+<section id="nix-shell使用场景实例-续" class="title-slide slide level2"
 data-number="2.3" data-auto-animate="1">
 <h2 data-number="2.3" data-auto-animate="1"><span
 class="header-section-number">2.3</span> nix-shell使用场景实例-续</h2>
@@ -522,8 +574,10 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb1-1"><a href="#c
 </div>
 </div>
 </section>
-<section id="nix-shell使用场景实例-续-1" class="slide level2"
-data-number="2.4" data-auto-animate="1">
+
+<section id="nix-shell使用场景实例-续-1"
+class="title-slide slide level2" data-number="2.4"
+data-auto-animate="1">
 <h2 data-number="2.4" data-auto-animate="1"><span
 class="header-section-number">2.4</span> nix-shell使用场景实例-续</h2>
 <div class="container">
@@ -560,8 +614,10 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb3-1"><a href="#c
 </div>
 </div>
 </section>
-<section id="nix-shell使用场景实例-续-2" class="slide level2"
-data-number="2.5" data-auto-animate="1">
+
+<section id="nix-shell使用场景实例-续-2"
+class="title-slide slide level2" data-number="2.5"
+data-auto-animate="1">
 <h2 data-number="2.5" data-auto-animate="1"><span
 class="header-section-number">2.5</span> nix-shell使用场景实例-续</h2>
 <div class="container">
@@ -598,8 +654,10 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb5-1"><a href="#c
 </div>
 </div>
 </section>
-<section id="nix-shell使用场景实例-续-3" class="slide level2"
-data-number="2.6" data-auto-animate="1">
+
+<section id="nix-shell使用场景实例-续-3"
+class="title-slide slide level2" data-number="2.6"
+data-auto-animate="1">
 <h2 data-number="2.6" data-auto-animate="1"><span
 class="header-section-number">2.6</span> nix-shell使用场景实例-续</h2>
 <div class="container">
@@ -636,8 +694,9 @@ class="sourceCode nix"><code class="sourceCode nix"><span id="cb7-1"><a href="#c
 </div>
 </div>
 </section>
-<section id="nix-shell使用场景实例-结果" class="slide level2"
-data-number="2.7">
+
+<section id="nix-shell使用场景实例-结果"
+class="title-slide slide level2" data-number="2.7">
 <h2 data-number="2.7"><span class="header-section-number">2.7</span>
 nix-shell使用场景实例-结果</h2>
 <div class="container">
@@ -675,12 +734,14 @@ data-fragment-index="3">成功编译🎉🎉🎉</span></p>
 <div class="fragment" data-fragment-index="4">
 <p>并且</p>
 </div>
+<p>一模一样！</p>
 </section>
-<section id="编译结果二进制级别一致" class="slide level2"
-data-number="2.8" data-background-video="./images/ohhh.mp4">
-<h2 data-number="2.8" data-background-video="./images/ohhh.mp4"><span
+
+<section id="编译结果二进制级别一致" class="title-slide slide level2"
+data-number="2.8" data-auto-animate="1">
+<h2 data-number="2.8" data-auto-animate="1"><span
 class="header-section-number">2.8</span> 编译结果二进制级别一致！</h2>
-<div class="container fragment" data-fragment-index="1">
+<div class="container">
 <div class="col">
 <p>同学壹🤓</p>
 </div>
@@ -691,19 +752,45 @@ class="header-section-number">2.8</span> 编译结果二进制级别一致！</h
 <p>同学叁🥰</p>
 </div>
 </div>
-<div class="fragment" data-fragment-index="1" style="font-size: 48pt;">
+<div style="font-size: 48pt;">
 <div class="sourceCode" id="cb11"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">md5sum</span> ~/Codes/gem5/build/X86/gem5.debug</span></code></pre></div>
 <p>一模一样！</p>
 </div>
-</section></section>
+</section>
+
+<section id="编译结果二进制级别一致-1" class="title-slide slide level2"
+data-number="2.9" data-background-video="./images/ohhh.mp4"
+data-auto-animate="1">
+<h2 data-number="2.9" data-background-video="./images/ohhh.mp4"
+data-auto-animate="1"><span class="header-section-number">2.9</span>
+编译结果二进制级别一致！</h2>
+<div class="container">
+<div class="col">
+<p>同学壹🤓</p>
+</div>
+<div class="col">
+<p>同学贰😍</p>
+</div>
+<div class="col">
+<p>同学叁🥰</p>
+</div>
+</div>
+<div style="font-size: 48pt;">
+<div class="sourceCode" id="cb12"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">md5sum</span> ~/Codes/gem5/build/X86/gem5.debug</span></code></pre></div>
+<p>一模一样！</p>
+</div>
+</section>
+</section>
 <section>
-<section id="nix原理" class="title-slide slide level1" data-number="3">
-<h1 data-number="3"><span class="header-section-number">3</span>
-Nix原理</h1>
+<section id="nix原理" class="title-slide slide level1" data-number="3"
+data-stack-name="3.原理">
+<h1 data-number="3" data-stack-name="3.原理"><span
+class="header-section-number">3</span> Nix原理</h1>
 
 </section>
-<section id="多版本" class="slide level2" data-number="3.1">
+<section id="多版本" class="title-slide slide level2" data-number="3.1">
 <h2 data-number="3.1"><span class="header-section-number">3.1</span>
 多版本</h2>
 <ul>
@@ -713,15 +800,16 @@ Nix原理</h1>
 <li>命名方式<code>/nix/store/&lt;hash&gt;-&lt;pname&gt;-&lt;version&gt;</code></li>
 </ul>
 <div class="fragment">
-<div class="sourceCode" id="cb12"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bap4d0lpcrhpwmpb8ayjcgkmvfj62lnq-bash-interactive-5.1-p16</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bjp36ahgqs5m2j29kp3ni8x8zb3s7crc-bash-interactive-5.1-p16</span></span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="ex">f01r6lmbi7mg0xg80mvzdwqhlmrzvy4v-bash-interactive-5.2-p15</span></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gmz9kyy7m7dvbp34wjpmqjyir58z0xch-bash-interactive-5.1-p16</span></span></code></pre></div>
+<div class="sourceCode" id="cb13"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">bap4d0lpcrhpwmpb8ayjcgkmvfj62lnq-bash-interactive-5.1-p16</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">bjp36ahgqs5m2j29kp3ni8x8zb3s7crc-bash-interactive-5.1-p16</span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="ex">f01r6lmbi7mg0xg80mvzdwqhlmrzvy4v-bash-interactive-5.2-p15</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="ex">gmz9kyy7m7dvbp34wjpmqjyir58z0xch-bash-interactive-5.1-p16</span></span></code></pre></div>
 </div>
 <p><span class="fragment">混乱的用户环境？</span></p>
 </section>
-<section id="多版本-统一的用户环境" class="slide level2"
+
+<section id="多版本-统一的用户环境" class="title-slide slide level2"
 data-number="3.2">
 <h2 data-number="3.2"><span class="header-section-number">3.2</span>
 多版本-统一的用户环境</h2>
@@ -733,24 +821,27 @@ data-number="3.2">
 <p><code>PATH=~/.nix-profile/bin:...</code></p>
 <p>所有用户需要程序会被符号链接到改文件夹</p>
 <div class="fragment" style="font-size: 36pt;">
-<div class="sourceCode" id="cb13"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> which vim</span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/.nix-profile/bin/vim</span></span></code></pre></div>
+<div class="sourceCode" id="cb14"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> which vim</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">~/.nix-profile/bin/vim</span></span></code></pre></div>
 </div>
 <div class="fragment" style="font-size: 36pt;">
-<div class="sourceCode" id="cb14"><pre
-class="sourceCode bash"><code class="sourceCode bash"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> realpath ~/.nix-profile/bin/vim</span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/nix/store/9gzxr4ij4i0h1zyvkai8k7jq2dpprr2k-neovim-0.8.1/bin/nvim</span></span></code></pre></div>
+<div class="sourceCode" id="cb15"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="ex">$</span> realpath ~/.nix-profile/bin/vim</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">/nix/store/9gzxr4ij4i0h1zyvkai8k7jq2dpprr2k-neovim-0.8.1/bin/nvim</span></span></code></pre></div>
 </div>
 </div>
 </section>
-<section id="多版本-总" class="slide level2" data-number="3.3">
+
+<section id="多版本-总" class="title-slide slide level2"
+data-number="3.3">
 <h2 data-number="3.3"><span class="header-section-number">3.3</span>
 多版本-总</h2>
 <p><img src="images/multi-versions.svg" style="width: 80%;"></p>
 </section>
-<section id="正确的依赖关系" class="slide level2" data-number="3.4"
-data-auto-animate="1">
+
+<section id="正确的依赖关系" class="title-slide slide level2"
+data-number="3.4" data-auto-animate="1">
 <h2 data-number="3.4" data-auto-animate="1"><span
 class="header-section-number">3.4</span> 正确的依赖关系</h2>
 <ul>
@@ -769,8 +860,9 @@ class="header-section-number">3.4</span> 正确的依赖关系</h2>
 </ul>
 </div>
 </section>
-<section id="正确的依赖关系-解决" class="slide level2" data-number="3.5"
-data-auto-animate="1">
+
+<section id="正确的依赖关系-解决" class="title-slide slide level2"
+data-number="3.5" data-auto-animate="1">
 <h2 data-number="3.5" data-auto-animate="1"><span
 class="header-section-number">3.5</span> 正确的依赖关系-解决</h2>
 <ul>
@@ -784,7 +876,8 @@ class="header-section-number">3.5</span> 正确的依赖关系-解决</h2>
 <p>可使用<code>readelf -d</code>查看</p>
 <p>动态链接器<code>ld.so</code>会根据寻找<code>RUNPATH</code>去找动态链接库</p>
 </section>
-<section id="其他的原理等待你来探索" class="slide level2"
+
+<section id="其他的原理等待你来探索" class="title-slide slide level2"
 data-number="3.6">
 <h2 data-number="3.6"><span class="header-section-number">3.6</span>
 其他的原理等待你来探索</h2>
@@ -794,20 +887,134 @@ data-number="3.6">
 <li>垃圾回收</li>
 <li>…</li>
 </ul>
-</section></section>
-<section id="谢谢" class="title-slide slide level1" data-number="4">
-<h1 data-number="4"><span class="header-section-number">4</span>
-谢谢</h1>
+</section>
+</section>
+<section>
+<section id="应用nix与程序切片" class="title-slide slide level1"
+data-number="4" data-stack-name="4.切片">
+<h1 data-number="4" data-stack-name="4.切片"><span
+class="header-section-number">4</span> 🆕应用：Nix与程序切片</h1>
+
+</section>
+<section id="切片checkpoint" class="title-slide slide level2"
+data-number="4.1">
+<h2 data-number="4.1"><span class="header-section-number">4.1</span>
+切片（Checkpoint）</h2>
+<div class="container"
+style="align-items: flex-start; font-size: 0.8em;">
+<div class="col">
+<h3>
+为什么要切片
+</h3>
+<ul>
+<li>为了测试处理器的性能</li>
+<li>测试程序时间运行长
+<ul>
+<li>SPEC CPU 2017 ref verilator几年</li>
+</ul></li>
+<li>仅采样测试程序的一些片段</li>
+</ul>
+</div>
+<div class="col">
+<h3>
+什么是切片
+</h3>
+<ul>
+<li>动词：获取片段</li>
+<li>名字：获取到的片段</li>
+</ul>
+</div>
+<div class="col">
+<h3>
+有哪些采样方法
+</h3>
+<ul>
+<li>平均切片</li>
+<li>SimPoint聚类</li>
+<li>…</li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="基于simpoint聚类的切片" class="title-slide slide level2"
+data-number="4.2">
+<h2 data-number="4.2"><span class="header-section-number">4.2</span>
+基于SimPoint聚类的切片</h2>
+<ol type="1">
+<li>收集程序所有的片段包含哪些指令块（插桩(QEMU)运行一片测试程序）</li>
+<li>根据指令块执行频率对片段聚类，选出有代表性的片段（运行SimPoint）</li>
+<li>根据代表性的片段，生成可片段运行的上下文（再次插桩(QEMU)运行测试程序）</li>
+</ol>
+<div class="fragment">
+<p>以上步骤，每次运行结果都不一样</p>
+</div>
+</section>
+
+<section id="切片恼人的场景" class="title-slide slide level2"
+data-number="4.3">
+<h2 data-number="4.3"><span class="header-section-number">4.3</span>
+切片恼人的场景</h2>
+<ul>
+<li>🤔切片出问题，想找原来完整的程序，想复现一下
+<ul>
+<li>❗但找不到了完整的程序了</li>
+<li>❗重新编译生成的也不一样</li>
+<li>❗重新切片也不一样</li>
+</ul></li>
+<li>🤔服务器切片跑出问题了
+<ul>
+<li>❗在我的环境下无法复现</li>
+<li>❗在你的环境下也无法复现</li>
+</ul></li>
+</ul>
+</section>
+
+<section id="确定性切片deterministic_checkpoints"
+class="title-slide slide level2" data-number="4.4">
+<h2 data-number="4.4"><span class="header-section-number">4.4</span>
+确定性切片(deterministic_checkpoints)</h2>
+<ul>
+<li>Nix: 测试程序、QEMU、SimPoint这些程序二进制级别一样</li>
+<li>改QEMU、内核，控制SimPoint等：运行结果一样</li>
+</ul>
+</section>
+<section id="确定性切片deterministic_checkpoints用法"
+class="title-slide slide level3" data-number="4.4.1">
+<h3 data-number="4.4.1"><span class="header-section-number">4.4.1</span>
+确定性切片(deterministic_checkpoints)用法</h3>
+<div class="sourceCode" id="cb16"><pre
+class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 准备源码spec2006.tar.gz # </span><span class="al">TODO</span><span class="co">: 更智能化</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> clone https://github.com/xieby1/deterministic_checkpoints</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> deterministic_checkpoints</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nix-build</span> <span class="at">-A</span> checkpoints</span></code></pre></div>
+</section>
+
+<section id="确定性切片deterministic_checkpoints展示"
+class="title-slide slide level3" data-number="4.4.2">
+<h3 data-number="4.4.2"><span class="header-section-number">4.4.2</span>
+确定性切片(deterministic_checkpoints)展示</h3>
+<p>…</p>
+</section>
+
+</section>
+<section id="总结" class="title-slide slide level1" data-number="5"
+data-sminvisible="true">
+<h1 data-number="5" data-sminvisible="true"><span
+class="header-section-number">5</span> 总结</h1>
 <div class="container">
 <div class="col" style="width:30%;">
 <p><img src="./images/slides_location.svg" style="width:100%;"></p>
 </div>
 <div class="col">
+<p>参考：</p>
 <ul>
 <li><a
 href="https://github.com/xieby1/nix_config">我的Nix/NixOS配置</a></li>
 <li><a
 href="https://xieby1.github.io/scripts/index.html#nix-scripts">我的Nix脚本</a></li>
+<li><a
+href="https://github.com/xieby1/deterministic_checkpoints">deterministic_checkpoints项目</a></li>
 <li><a
 href="https://github.com/Martins3/My-Linux-Config/tree/master/nixpkgs">Martins3的Nix/NixOS配置</a></li>
 <li><a
@@ -819,20 +1026,22 @@ href="https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix">Innor6的Ni
     </div>
   </div>
   <div id=headerl style="position:absolute; top:0;    left:0;  padding:0.5em; font-size:16pt;"></div>
-  <div id=headerr style="position:absolute; top:0;    right:0; padding:0.5em; font-size:16pt;"><img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake.svg" style="height:24pt;"></div>
+  <div id=headerr style="position:absolute; top:0;    right:0; padding:0.5em; font-size:16pt;"><img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-colours.svg" style="height:24pt;"></div>
   <div id=footerl style="position:absolute; bottom:0; left:0;  padding:0.5em; font-size:16pt;"></div>
   <div id=footerr style="position:absolute; bottom:0; right:0; padding:0.5em; font-size:16pt;"></div>
 
-  <script src="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/reveal.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/dist/reveal.js"></script>
 
   <!-- reveal.js plugins -->
-  <script src="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/plugin/notes/notes.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/plugin/search/search.js"></script>
-  <script src="https://cdn.bootcdn.net/ajax/libs/reveal.js/4.3.1/plugin/zoom/zoom.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/chalkboard/plugin.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js-plugins@4.1.5/customcontrols/plugin.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js-menu@2.1.0/menu.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/reveal.js-verticator@1.2.3/plugin/verticator/verticator.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/plugin/notes/notes.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/plugin/search/search.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/plugin/zoom/zoom.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js/plugin/math/math.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-plugins/chalkboard/plugin.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-plugins/customcontrols/plugin.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-simplemenu/simpleMenu.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-menu/menu.js"></script>
+  <script src="https://xieby1.github.io/markdown_revealjs/lib/reveal.js-verticator/plugin/verticator/verticator.js"></script>
   <script>
   var title_slide = document.getElementById("title-slide")
   title_slide.setAttribute("data-background-image", "./images/nix-wallpaper-nineish.src.svg")
@@ -846,6 +1055,7 @@ href="https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix">Innor6的Ni
   // inspired by https://github.com/hakimel/reveal.js/issues/1227
   for (var slide of document.getElementsByClassName('slide level1')){
     if (!(slide.getAttribute('data-background') ||
+          slide.getAttribute('data-background-color') ||
           slide.getAttribute('data-background-image') ||
           slide.getAttribute('data-background-video') ||
           slide.getAttribute('data-background-iframe'))){
@@ -856,6 +1066,18 @@ href="https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix">Innor6的Ni
   <script>
   for (var slide of document.getElementsByClassName('slide level2')){
     if (!(slide.getAttribute('data-background') ||
+          slide.getAttribute('data-background-color') ||
+          slide.getAttribute('data-background-image') ||
+          slide.getAttribute('data-background-video') ||
+          slide.getAttribute('data-background-iframe'))){
+      slide.setAttribute('data-background-image', './images/efi-background.png')
+    }
+  }
+  </script>
+  <script>
+  for (var slide of document.getElementsByClassName('slide level3')){
+    if (!(slide.getAttribute('data-background') ||
+          slide.getAttribute('data-background-color') ||
           slide.getAttribute('data-background-image') ||
           slide.getAttribute('data-background-video') ||
           slide.getAttribute('data-background-iframe'))){
@@ -890,7 +1112,20 @@ href="https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix">Innor6的Ni
         // * h/v Horizontal / Vertical slide number
         // * c Flattened slide number, including both horizontal and vertical slides
         // * c/t Flattened slide number / total slides
-        slideNumber: 'c/t',
+        slideNumber: slide => {
+            let slideEndCount = document.getElementsByClassName("slide-count-end")[0]
+            let endCount = slideEndCount ?
+                Reveal.getSlidePastCount( slideEndCount ) + 1 :
+                Reveal.getTotalSlides();
+            // see reveal.js/js/controllers/slidenumber.js
+            // Offset the current slide number by 1 to make it 1-indexed
+            let horizontalOffset = slide && slide.dataset.visibility === 'uncounted' ? 0 : 1;
+            return [
+                Reveal.getSlidePastCount( slide ) + horizontalOffset,
+                '/',
+                endCount,
+            ];
+        },
 
         // 'all', 'print', or 'speaker'
         showSlideNumber: 'all',
@@ -1019,8 +1254,34 @@ href="https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix">Innor6的Ni
 
         height: 700,
 
+        math: {
+          mathjax: 'https://xieby1.github.io/markdown_revealjs/lib/MathJax/es5/tex-chtml-full.js',
+          config: 'TeX-AMS_HTML-full',
+          tex2jax: {
+            inlineMath: [['\\(','\\)']],
+            displayMath: [['\\[','\\]']],
+            balanceBraces: true,
+            processEscapes: false,
+            processRefs: true,
+            processEnvironments: true,
+            preview: 'TeX',
+            skipTags: ['script','noscript','style','textarea','pre','code'],
+            ignoreClass: 'tex2jax_ignore',
+            processClass: 'tex2jax_process'
+          },
+        },
+
         chalkboard: {
           theme: "whiteboard",
+        },
+        simplemenu: {
+          barhtml: {
+            header: "<div class='simplemenubar'><ul class='simplemenu'></ul></div>",
+            footer: "",
+          },
+          menubarclass: "simplemenubar",
+          menuclass: "simplemenu",
+          csspath: false,
         },
         menu: {
           sticky: true,
@@ -1054,15 +1315,19 @@ href="https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix">Innor6的Ni
         },
         // reveal.js plugins
         plugins: [
+          RevealMath,
           RevealChalkboard,
           RevealCustomControls,
           RevealNotes,
           RevealSearch,
           RevealZoom,
+          Simplemenu,
           RevealMenu,
           Verticator,
         ],
       });
+      Reveal.addKeyBinding( { keyCode: 9,  key: "Tab",   description: "Left"  }, () => {Reveal.left()} )
+      Reveal.addKeyBinding( { keyCode: 13, key: "Enter", description: "Right" }, () => {Reveal.right()} )
       // make customcontrols collapsed by default
       Reveal.on("ready", event => {
         var div = document.querySelector("div#customcontrols");

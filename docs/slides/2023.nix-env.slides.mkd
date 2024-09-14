@@ -1,17 +1,22 @@
 ---
 title: Nix让你的团队成员不再受环境问题困扰
 author: 🤓谢本壹
-date: 2023.05
+date: ~~2023.05~~ 2024.09</br><span style="font-size:0.8em;">[https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html](https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html)</span>
 
-headerr: <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake.svg" style="height:24pt;">
+headerr: <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-colours.svg" style="height:24pt;">
 
 title-slide-background-image: ./images/nix-wallpaper-nineish.src.svg
 toc-slide-background-image: ./images/nix-wallpaper-nineish.src.svg
 level1-slide-background-image: ./images/nix-wallpaper-nineish.src.svg
 level2-slide-background-image: ./images/efi-background.png
+level3-slide-background-image: ./images/efi-background.png
+
+toc-depth: 1
+toc-column-width: unset
+toc-margin: 0 400px
 ---
 
-# Nix/NixOS简介
+# Nix/NixOS简介 {data-stack-name="1.简介"}
 
 ## Nix/NixOS是什么
 
@@ -127,7 +132,7 @@ Docker融入现有环境
 ::::
 :::
 
-# Nix展示
+# Nix展示 {data-stack-name="2.展示"}
 
 ## Nix使用模式
 
@@ -384,9 +389,11 @@ nix-shell
 并且
 :::
 
-## 编译结果二进制级别一致！ {data-background-video="./images/ohhh.mp4"}
+一模一样！
 
-::: {.container .fragment data-fragment-index=1}
+## 编译结果二进制级别一致！ {data-auto-animate=1}
+
+::: {.container}
 :::: {.col}
 同学壹🤓
 ::::
@@ -398,7 +405,7 @@ nix-shell
 ::::
 :::
 
-::: {.fragment data-fragment-index=1 style="font-size: 48pt;"}
+::: {style="font-size: 48pt;"}
 ```bash
 md5sum ~/Codes/gem5/build/X86/gem5.debug
 ```
@@ -406,7 +413,29 @@ md5sum ~/Codes/gem5/build/X86/gem5.debug
 一模一样！
 :::
 
-# Nix原理
+## 编译结果二进制级别一致！ {data-background-video="./images/ohhh.mp4" data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+同学壹🤓
+::::
+:::: {.col}
+同学贰😍
+::::
+:::: {.col}
+同学叁🥰
+::::
+:::
+
+::: {style="font-size: 48pt;"}
+```bash
+md5sum ~/Codes/gem5/build/X86/gem5.debug
+```
+
+一模一样！
+:::
+
+# Nix原理 {data-stack-name="3.原理"}
 
 ## 多版本
 
@@ -488,15 +517,86 @@ ELF文件Dynamic section的`RUNPATH`
 * 垃圾回收
 * ...
 
-# 谢谢
+# 🆕应用：Nix与程序切片 {data-stack-name="4.切片"}
+
+## 切片（Checkpoint）
+
+::: {.container style="align-items: flex-start; font-size: 0.8em;"}
+:::: {.col}
+<h3>为什么要切片</h3>
+
+* 为了测试处理器的性能
+* 测试程序时间运行长
+  * SPEC CPU 2017 ref verilator几年
+* 仅采样测试程序的一些片段
+
+::::
+:::: {.col}
+<h3>什么是切片</h3>
+
+* 动词：获取片段
+* 名字：获取到的片段
+
+::::
+:::: {.col}
+<h3>有哪些采样方法</h3>
+
+* 平均切片
+* SimPoint聚类
+* ...
+::::
+:::
+
+## 基于SimPoint聚类的切片
+
+1. 收集程序所有的片段包含哪些指令块（插桩(QEMU)运行一片测试程序）
+2. 根据指令块执行频率对片段聚类，选出有代表性的片段（运行SimPoint）
+3. 根据代表性的片段，生成可片段运行的上下文（再次插桩(QEMU)运行测试程序）
+
+::: {.fragment}
+以上步骤，每次运行结果都不一样
+:::
+
+## 切片恼人的场景
+
+* 🤔切片出问题，想找原来完整的程序，想复现一下
+  * ❗但找不到了完整的程序了
+  * ❗重新编译生成的也不一样
+  * ❗重新切片也不一样
+* 🤔服务器切片跑出问题了
+  * ❗在我的环境下无法复现
+  * ❗在你的环境下也无法复现
+
+## 确定性切片(deterministic_checkpoints)
+
+* Nix: 测试程序、QEMU、SimPoint这些程序二进制级别一样
+* 改QEMU、内核，控制SimPoint等：运行结果一样
+
+### 确定性切片(deterministic_checkpoints)用法
+
+```bash
+# 准备源码spec2006.tar.gz # TODO: 更智能化
+git clone https://github.com/xieby1/deterministic_checkpoints
+cd deterministic_checkpoints
+nix-build -A checkpoints
+```
+
+### 确定性切片(deterministic_checkpoints)展示
+
+...
+
+# 总结 {data-sminvisible=true}
 
 ::: {.container}
 :::: {.col style="width:30%;"}
 <img src="./images/slides_location.svg" style="width:100%;">
 ::::
 :::: {.col}
+参考：
+
 * [我的Nix/NixOS配置](https://github.com/xieby1/nix_config)
 * [我的Nix脚本](https://xieby1.github.io/scripts/index.html#nix-scripts)
+* [deterministic_checkpoints项目](https://github.com/xieby1/deterministic_checkpoints)
 * [Martins3的Nix/NixOS配置](https://github.com/Martins3/My-Linux-Config/tree/master/nixpkgs)
 * [Innor6的Nix/NixOS配置](https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix)
 ::::
