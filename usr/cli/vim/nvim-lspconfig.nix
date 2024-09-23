@@ -123,6 +123,10 @@ let
     + ''
       require('lspconfig').pyright.setup{}
     ''
+    #MC ## Lua
+    + ''
+      require('lspconfig').lua_ls.setup{}
+    ''
     #MC ## Auto completion
     + ''
       -- Add additional capabilities supported by nvim-cmp
@@ -135,6 +139,7 @@ let
         'nixd',
         'html',
         'pyright',
+        'lua_ls',
       }
       for _, lsp in ipairs(servers) do
         require('lspconfig')[lsp].setup {
@@ -157,6 +162,7 @@ in {
       nixd
       vscode-langservers-extracted # html
       pyright
+      lua-language-server
     ];
   };
 }

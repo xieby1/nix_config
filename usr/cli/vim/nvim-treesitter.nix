@@ -11,6 +11,7 @@ let
       cpp
       python
       markdown
+      lua
     ]);
     type = "lua";
     config = ''
