@@ -18,6 +18,8 @@ let
       metals_config.find_root_dir_max_project_nesting = 2
       metals_config.root_patterns = {
         "build.sbt",
+        "build.sc",
+        ".git",
       }
       metals_config.settings = {
         showImplicitArguments = true,
