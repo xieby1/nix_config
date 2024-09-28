@@ -1,0 +1,603 @@
+---
+title: Nix让你的团队成员不再受环境问题困扰
+author: 🤓谢本壹
+date: ~~2023.05~~ 2024.09</br><span style="font-size:0.8em;">[https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html](https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html)</span>
+
+headerr: <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-colours.svg" style="height:24pt;">
+
+title-slide-background-image: ./images/nix-wallpaper-nineish.src.svg
+toc-slide-background-image: ./images/nix-wallpaper-nineish.src.svg
+level1-slide-background-image: ./images/nix-wallpaper-nineish.src.svg
+level2-slide-background-image: ./images/efi-background.png
+level3-slide-background-image: ./images/efi-background.png
+
+toc-depth: 1
+toc-column-width: unset
+toc-margin: 0 400px
+---
+
+# Nix/NixOS简介 {data-stack-name="1.简介"}
+
+## Nix/NixOS是什么
+
+:::{.container}
+::::{.col style="width:50%;"}
+<h3>Nix</h3>
+
+* 包管理器 (Package Manager)
+::::
+::::{.col style="width:50%;"}
+<h3>NixOS</h3>
+
+基于Nix的Linux发行版 (Distro)
+::::
+:::
+
+## Nix/NixOS发展简史
+
+::: {.container}
+:::: {.col style="width:30%;"}
+* 2006: 博士论文[1]
+* 2012: Github[2,3]
+* 2021: 100%可重现[4]
+::::
+:::: {.col style="width:60%;"}
+<img src="https://api.star-history.com/svg?repos=NixOS/nixpkgs,NixOS/nix&type=Date" style="height: 400px;">
+::::
+:::
+
+::: {style="font-size:12pt;"}
+* \[1\]: Dolstra, Eelco. “The purely functional software deployment model.” (2006).
+* \[2\]: https://github.com/NixOS/nixpkgs
+* \[3\]: https://github.com/NixOS/nix
+* \[4\]: Nixos-unstable’s iso_minimal.x86_64-linux is 100% reproducible! https://discourse.nixos.org/t/nixos-unstable-s-iso-minimal-x86-64-linux-is-100-reproducible/13723
+:::
+
+## Nix/NixOS特点 {data-auto-animate=1}
+
+::: {style="font-size:20pt;"}
+* Imperative（命令式）/Declarative（声明式）
+* **纯**函数式编程语言 (Purely Functional)
+* 可重现 (Reproducible)
+:::
+
+## Nix/NixOS特点-续 {data-auto-animate=1}
+
+::: {style="font-size:20pt;"}
+* Imperative（命令式）/Declarative（声明式）
+* 🟢Imperative
+  * `apt install vim`
+  * `nix-env -iA nixpkgs.vim`
+* 🟢Declarative即需要编程
+* **纯**函数式编程语言 (Purely Functional)
+* 🟢在nix配置代码中：`home.packages = [nixpkgs.vim];`
+* 可重现 (Reproducible)
+* 🔴apt install，不同时间安装的内容不一样
+:::
+
+## <img src="images/nix-snowflake.svg" style="height:1em;">Nix/NixOS vs <img src="images/ubuntu-icon.svg" style="height:1em;">APT/Ubuntu
+
+::: {style="zoom: 70%;"}
+|          | Nix/NixOS                           | APT/Ubuntu            |
+|----------|-------------------------------------|-----------------------|
+| 使用用户 | root(system wide), 普通用户         | 仅root(system wide)   |
+| 版本升级 | 随时升级channel                     | 跨版本升级难          |
+| 安装位置 | 全局/各用户：/nix/store配合符号链接 | 全局：/bin, /usr, ... |
+| 包的版本 | 能够同时安装多个版本的包            | 单一版本              |
+| 包的数量 | >80,000[1]                          | 72,514[2]             |
+| 更新速度 | 每天几百个commits[3]                | -                     |
+| 开放程度 | 开放、可去中心化                    | Canonical Ltd维护     |
+| 历史回滚 | 支持                                | -                     |
+| 交互方式 | Declarative/Imperative              | 仅Imperative          |
+:::
+
+::: {style="font-size: 12pt;"}
+</br>
+
+* \[1\]: https://search.nixos.org/packages
+* \[2\]: `apt list | wc -l`
+* \[3\]: `git log --date=short --pretty=format:%ad | sort | uniq -c`
+:::
+
+## <img src="images/nix-snowflake.svg" style="height:1em;">Nix/NixOS vs <img src="images/Moby-logo.png" style="height:1em;">Docker
+
+Docker融入现有环境
+
+没办法简单的在docker环境中用自己的vim/vscode配置
+
+## 学习Nix/NixOS
+
+[学习曲线陡峭📈，但也别担心😸]{.fragment}
+
+::: {.container}
+:::: {.col}
+<h3>入门文档</h3>
+
+* [官方学习文档](https://nixos.org/learn.html)
+  * [Nix Pills](https://nixos.org/guides/nix-pills/)
+  * [Nix Ref Man](https://nixos.org/manual/nix/stable/introduction.html)
+* 非官方文档
+  * [NixOS Wiki](https://nixos.wiki/)
+  * [nix.dev](https://nix.dev/)
+::::
+:::: {.col}
+<h3>遇到问题</h3>
+
+* [NixOS论坛](http://discourse.nixos.org/)
+* [Github nixpkgs issues](https://github.com/NixOS/nixpkgs/issues)
+* [Reddit NixOS](https://github.com/NixOS/nixpkgs/issues)
+* StackOverflow
+* 问同学
+* ...
+::::
+:::
+
+# Nix展示 {data-stack-name="2.展示"}
+
+## Nix使用模式
+
+::: {.container}
+:::: {.col}
+<h3>nix-env</h3>
+
+* 永久的(Permanent)
+* 和其他包管理器差不多
+::::
+:::: {.col}
+<h3>nix-shell</h3>
+
+* 稍纵即逝的（Ephemeral）
+* 类似python的venv
+::::
+:::
+
+</br>
+
+[nix-shell适合创建开发环境]{.fragment}
+
+## nix-shell使用场景实例
+
+::: {.container}
+:::: {.col .fragment}
+同学壹🤓
+
+---
+
+搞了一个
+
+gem5项目
+::::
+:::: {.col .fragment}
+同学贰🫠
+
+---
+
+在ubuntu22上
+
+死活编译不成功
+::::
+:::: {.col .fragment}
+同学叁😨
+
+---
+
+在服务器（ubuntu16）上
+
+好多库都没有
+::::
+:::
+
+</br>
+
+[项目一开始就体验极差😖😤😱]{.fragment}
+
+## nix-shell使用场景实例-续 {data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+`shell.nix`
+
+```nix
+let
+  pkgs = import (fetchTarball {
+    url = ...; # url of nixpkgs
+    sha256 = ...;
+  }) {};
+in pkgs.mkShell {
+  packages = with pkgs; [
+    # for compilation
+    python3 scons zlib ...
+  ];
+  shellHook = ''
+    PYTHONPATH+=":..."
+    export PYTHONPATH
+  '';
+}
+```
+::::
+:::: {.col}
+* 包集合（nixpkgs）的版本
+* 装哪些包
+* 环境变量
+::::
+:::
+
+## nix-shell使用场景实例-续 {data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+`shell.nix`
+
+```nix
+let
+  pkgs = import (fetchTarball {
+    url = ...; # url of nixpkgs
+    sha256 = ...;
+  }) {};
+in pkgs.mkShell {
+  packages = with pkgs; [
+    # for compilation
+    python3 scons zlib ...
+  ];
+  shellHook = ''
+    PYTHONPATH+=":..."
+    export PYTHONPATH
+  '';
+}
+```
+::::
+:::: {.col}
+* 包集合（nixpkgs）的版本
+*
+  ```nix
+  pkgs = import (fetchTarball {
+    url = ...; # url of nixpkgs
+    sha256 = ...;
+  }) {};
+  ```
+* 装哪些包
+* 环境变量
+::::
+:::
+
+## nix-shell使用场景实例-续 {data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+`shell.nix`
+
+```nix
+let
+  pkgs = import (fetchTarball {
+    url = ...; # url of nixpkgs
+    sha256 = ...;
+  }) {};
+in pkgs.mkShell {
+  packages = with pkgs; [
+    # for compilation
+    python3 scons zlib ...
+  ];
+  shellHook = ''
+    PYTHONPATH+=":..."
+    export PYTHONPATH
+  '';
+}
+```
+::::
+:::: {.col}
+* 包集合（nixpkgs）的版本
+* 装哪些包
+*
+  ```nix
+  packages = with pkgs; [
+    # for compilation
+    python3 scons zlib ...
+  ];
+  ```
+* 环境变量
+::::
+:::
+
+## nix-shell使用场景实例-续 {data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+`shell.nix`
+
+```nix
+let
+  pkgs = import (fetchTarball {
+    url = ...; # url of nixpkgs
+    sha256 = ...;
+  }) {};
+in pkgs.mkShell {
+  packages = with pkgs; [
+    # for compilation
+    python3 scons zlib ...
+  ];
+  shellHook = ''
+    PYTHONPATH+=":..."
+    export PYTHONPATH
+  '';
+}
+```
+::::
+:::: {.col}
+* 包集合（nixpkgs）的版本
+* 装哪些包
+* 环境变量
+*
+  ```nix
+  shellHook = ''
+    PYTHONPATH+=":..."
+    export PYTHONPATH
+  '';
+  ```
+::::
+:::
+
+## nix-shell使用场景实例-结果
+
+::: {.container}
+:::: {.col}
+同学壹🤓
+
+---
+
+搞了一个gem5项目
+
+```bash
+cd ~/Codes/gem5/
+写好了nix-shell.nix
+# 提交到gitlab仓库
+```
+::::
+:::: {.col .fragment data-fragment-index="1"}
+同学贰[😍]{.fragment data-fragment-index="3"}
+
+---
+
+在ubuntu22上
+
+```bash
+cd ~/Codes/gem5/
+nix-shell
+# 开始编译
+```
+::::
+:::: {.col .fragment data-fragment-index="2"}
+同学叁[🥰]{.fragment data-fragment-index="3"}
+
+---
+
+在服务器（ubuntu16）上
+
+```bash
+cd ~/Codes/gem5/
+nix-shell
+# 开始编译
+```
+::::
+:::
+
+</br>
+
+
+[成功编译🎉🎉🎉]{.fragment data-fragment-index="3"}
+
+::: {.fragment data-fragment-index="4"}
+并且
+:::
+
+一模一样！
+
+## 编译结果二进制级别一致！ {data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+同学壹🤓
+::::
+:::: {.col}
+同学贰😍
+::::
+:::: {.col}
+同学叁🥰
+::::
+:::
+
+::: {style="font-size: 48pt;"}
+```bash
+md5sum ~/Codes/gem5/build/X86/gem5.debug
+```
+
+一模一样！
+:::
+
+## 编译结果二进制级别一致！ {data-background-video="./images/ohhh.mp4" data-auto-animate=1}
+
+::: {.container}
+:::: {.col}
+同学壹🤓
+::::
+:::: {.col}
+同学贰😍
+::::
+:::: {.col}
+同学叁🥰
+::::
+:::
+
+::: {style="font-size: 48pt;"}
+```bash
+md5sum ~/Codes/gem5/build/X86/gem5.debug
+```
+
+一模一样！
+:::
+
+# Nix原理 {data-stack-name="3.原理"}
+
+## 多版本
+
+* 抛弃FHS (Filesystem Hierarchy Standard): `/bin`, `/lib`, ...
+* 所有的包将被hash，全部放在`/nix/store/`里
+* 命名方式`/nix/store/<hash>-<pname>-<version>`
+
+::: {.fragment}
+```bash
+bap4d0lpcrhpwmpb8ayjcgkmvfj62lnq-bash-interactive-5.1-p16
+bjp36ahgqs5m2j29kp3ni8x8zb3s7crc-bash-interactive-5.1-p16
+f01r6lmbi7mg0xg80mvzdwqhlmrzvy4v-bash-interactive-5.2-p15
+gmz9kyy7m7dvbp34wjpmqjyir58z0xch-bash-interactive-5.1-p16
+```
+:::
+
+[混乱的用户环境？]{.fragment}
+
+## 多版本-统一的用户环境
+
+符号链接
+
+::: {.fragment}
+<h3>以可执行程序为例</h3>
+
+`PATH=~/.nix-profile/bin:...`
+
+所有用户需要程序会被符号链接到改文件夹
+
+:::: {.fragment style="font-size: 36pt;"}
+```bash
+$ which vim
+~/.nix-profile/bin/vim
+```
+::::
+:::: {.fragment style="font-size: 36pt;"}
+```bash
+$ realpath ~/.nix-profile/bin/vim
+/nix/store/9gzxr4ij4i0h1zyvkai8k7jq2dpprr2k-neovim-0.8.1/bin/nvim
+```
+::::
+:::
+
+## 多版本-总
+
+<img src="images/multi-versions.svg" style="width: 80%;">
+
+## 正确的依赖关系 {data-auto-animate=1}
+
+* 用户视角只能看到单一的
+  * `~/.nix-profile/bin/`
+  * `~/.nix-profile/lib/`
+  * ...
+
+::: {.fragment}
+* 某个包依赖某个特定版本的可执行程序？
+* 某个包依赖某个特定版本的动态链接库？
+* ...
+:::
+
+## 正确的依赖关系-解决 {data-auto-animate=1}
+
+* 某个包依赖某个特定版本的可执行程序？
+
+写绝对路径
+
+* 某个包依赖某个特定版本的动态链接库？
+
+ELF文件Dynamic section的`RUNPATH`
+
+可使用`readelf -d`查看
+
+动态链接器`ld.so`会根据寻找`RUNPATH`去找动态链接库
+
+## 其他的原理等待你来探索
+
+* 多用户
+* 回滚
+* 垃圾回收
+* ...
+
+# 🆕应用：Nix与程序切片 {data-stack-name="4.切片"}
+
+## 切片（Checkpoint）
+
+::: {.container style="align-items: flex-start; font-size: 0.8em;"}
+:::: {.col}
+<h3>为什么要切片</h3>
+
+* 为了测试处理器的性能
+* 测试程序时间运行长
+  * SPEC CPU 2017 ref verilator几年
+* 仅采样测试程序的一些片段
+
+::::
+:::: {.col}
+<h3>什么是切片</h3>
+
+* 动词：获取片段
+* 名字：获取到的片段
+
+::::
+:::: {.col}
+<h3>有哪些采样方法</h3>
+
+* 平均切片
+* SimPoint聚类
+* ...
+::::
+:::
+
+## 基于SimPoint聚类的切片
+
+1. 收集程序所有的片段包含哪些指令块（插桩(QEMU)运行一片测试程序）
+2. 根据指令块执行频率对片段聚类，选出有代表性的片段（运行SimPoint）
+3. 根据代表性的片段，生成可片段运行的上下文（再次插桩(QEMU)运行测试程序）
+
+::: {.fragment}
+以上步骤，每次运行结果都不一样
+:::
+
+## 切片恼人的场景
+
+* 🤔切片出问题，想找原来完整的程序，想复现一下
+  * ❗但找不到了完整的程序了
+  * ❗重新编译生成的也不一样
+  * ❗重新切片也不一样
+* 🤔服务器切片跑出问题了
+  * ❗在我的环境下无法复现
+  * ❗在你的环境下也无法复现
+
+## 确定性切片(deterministic_checkpoints)
+
+* Nix: 测试程序、QEMU、SimPoint这些程序二进制级别一样
+* 改QEMU、内核，控制SimPoint等：运行结果一样
+
+### 确定性切片(deterministic_checkpoints)用法
+
+```bash
+# 准备源码spec2006.tar.gz # TODO: 更智能化
+git clone https://github.com/xieby1/deterministic_checkpoints
+cd deterministic_checkpoints
+nix-build -A checkpoints
+```
+
+### 确定性切片(deterministic_checkpoints)展示
+
+...
+
+# 总结 {data-sminvisible=true}
+
+::: {.container}
+:::: {.col style="width:30%;"}
+<img src="./images/slides_location.svg" style="width:100%;">
+::::
+:::: {.col}
+参考：
+
+* [我的Nix/NixOS配置](https://github.com/xieby1/nix_config)
+* [我的Nix脚本](https://xieby1.github.io/scripts/index.html#nix-scripts)
+* [deterministic_checkpoints项目](https://github.com/xieby1/deterministic_checkpoints)
+* [Martins3的Nix/NixOS配置](https://github.com/Martins3/My-Linux-Config/tree/master/nixpkgs)
+* [Innor6的Nix/NixOS配置](https://github.com/innor6/My-Linux-Config/tree/fire-nixos/nix)
+::::
+:::
