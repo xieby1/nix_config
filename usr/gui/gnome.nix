@@ -215,6 +215,9 @@ in{
       use-custom-font=true;
       use-indicator-show-delay=true;
     };
+    "org/gnome/mutter" = {
+      dynamic-workspaces = true;
+    };
   };
 
   # inspired by https://discourse.nixos.org/t/how-to-set-the-bookmarks-in-nautilus/36143
