@@ -1,7 +1,7 @@
 ---
 title: Nix让你的团队成员不再受环境问题困扰
 author: 🤓谢本壹
-date: ~~2023.05~~ 2024.09</br><span style="font-size:0.8em;">[https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html](https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html)</span>
+date: 2024.10</br><span style="font-size:0.8em;">[https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html](https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html)</span>
 
 headerr: <img src="https://raw.githubusercontent.com/NixOS/nixos-artwork/master/logo/nix-snowflake-colours.svg" style="height:24pt;">
 
@@ -549,16 +549,35 @@ ELF文件Dynamic section的`RUNPATH`
 
 ## 基于SimPoint聚类的切片
 
+::: {style="font-size: 0.7em;"}
 1. 收集程序所有的片段包含哪些指令块（插桩(QEMU)运行一片测试程序）
 2. 根据指令块执行频率对片段聚类，选出有代表性的片段（运行SimPoint）
 3. 根据代表性的片段，生成可片段运行的上下文（再次插桩(QEMU)运行测试程序）
+:::
 
 ::: {.fragment}
 以上步骤，每次运行结果都不一样
 :::
 
+## 香山的切片流程
+
+::: {.container}
+:::: {.col style="width: 600px;"}
+<img src="./xschkpnts.dot.svg" style="height: 300px;">
+::::
+:::: {.col style="width: 500px; font-size:0.8em;"}
+* 十几个流程
+  * 每个流程都有较高门槛
+* 文档驱动
+  * 每个人的环境都不一样，没办法完全自动化，只能文档
+  * 但文档不足
+::::
+:::
+
+
 ## 切片恼人的场景
 
+::: {style="font-size:0.8em;"}
 * 🤔切片出问题，想找原来完整的程序，想复现一下
   * ❗但找不到了完整的程序了
   * ❗重新编译生成的也不一样
@@ -566,11 +585,26 @@ ELF文件Dynamic section的`RUNPATH`
 * 🤔服务器切片跑出问题了
   * ❗在我的环境下无法复现
   * ❗在你的环境下也无法复现
+:::
 
 ## 确定性切片(deterministic_checkpoints)
 
+
+就做了两件事：
+
+1. [流程复杂、文档驱动]{style="font-size:0.7em;"} => [自动化]{style="font-size: 1.5em;"}
+2. [难以复现]{style="font-size:0.7em;"} => [确定性]{style="font-size: 1.5em;"}
+
+::: {.fragment}
+大致涉及内容：
+
 * Nix: 测试程序、QEMU、SimPoint这些程序二进制级别一样
 * 改QEMU、内核，控制SimPoint等：运行结果一样
+:::
+
+::: {style="font-size: 0.6em;"}
+项目链接：[https://github.com/xieby1/deterministic_checkpoints](https://github.com/xieby1/deterministic_checkpoints)
+:::
 
 ### 确定性切片(deterministic_checkpoints)用法
 
@@ -581,9 +615,12 @@ cd deterministic_checkpoints
 nix-build -A checkpoints
 ```
 
-### 确定性切片(deterministic_checkpoints)展示
+## Nix的更多应用场景等你来探索
 
-...
+* 确定性切片
+* 确定性验证
+* 确定性CI
+* 确定性...
 
 # 总结 {data-sminvisible=true}
 

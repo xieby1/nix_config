@@ -235,8 +235,7 @@ table {
          data-sminvisible=true>
   <h1 class="title">Nix让你的团队成员不再受环境问题困扰</h1>
   <p class="author">🤓谢本壹</p>
-  <p class="date"><del>2023.05</del> 2024.09</br><span
-style="font-size:0.8em;"><a
+  <p class="date">2024.10</br><span style="font-size:0.8em;"><a
 href="https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html">https://xieby1.github.io/nix_config/docs/slides/2023.nix-env.slides.html</a></span></p>
 </section>
 <section id="TOC"
@@ -941,20 +940,47 @@ style="align-items: flex-start; font-size: 0.8em;">
 data-number="4.2">
 <h2 data-number="4.2"><span class="header-section-number">4.2</span>
 基于SimPoint聚类的切片</h2>
+<div style="font-size: 0.7em;">
 <ol type="1">
 <li>收集程序所有的片段包含哪些指令块（插桩(QEMU)运行一片测试程序）</li>
 <li>根据指令块执行频率对片段聚类，选出有代表性的片段（运行SimPoint）</li>
 <li>根据代表性的片段，生成可片段运行的上下文（再次插桩(QEMU)运行测试程序）</li>
 </ol>
+</div>
 <div class="fragment">
 <p>以上步骤，每次运行结果都不一样</p>
 </div>
 </section>
 
-<section id="切片恼人的场景" class="title-slide slide level2"
+<section id="香山的切片流程" class="title-slide slide level2"
 data-number="4.3">
 <h2 data-number="4.3"><span class="header-section-number">4.3</span>
+香山的切片流程</h2>
+<div class="container">
+<div class="col" style="width: 600px;">
+<p><img src="./xschkpnts.dot.svg" style="height: 300px;"></p>
+</div>
+<div class="col" style="width: 500px; font-size:0.8em;">
+<ul>
+<li>十几个流程
+<ul>
+<li>每个流程都有较高门槛</li>
+</ul></li>
+<li>文档驱动
+<ul>
+<li>每个人的环境都不一样，没办法完全自动化，只能文档</li>
+<li>但文档不足</li>
+</ul></li>
+</ul>
+</div>
+</div>
+</section>
+
+<section id="切片恼人的场景" class="title-slide slide level2"
+data-number="4.4">
+<h2 data-number="4.4"><span class="header-section-number">4.4</span>
 切片恼人的场景</h2>
+<div style="font-size:0.8em;">
 <ul>
 <li>🤔切片出问题，想找原来完整的程序，想复现一下
 <ul>
@@ -968,20 +994,35 @@ data-number="4.3">
 <li>❗在你的环境下也无法复现</li>
 </ul></li>
 </ul>
+</div>
 </section>
 
 <section id="确定性切片deterministic_checkpoints"
-class="title-slide slide level2" data-number="4.4">
-<h2 data-number="4.4"><span class="header-section-number">4.4</span>
+class="title-slide slide level2" data-number="4.5">
+<h2 data-number="4.5"><span class="header-section-number">4.5</span>
 确定性切片(deterministic_checkpoints)</h2>
+<p>就做了两件事：</p>
+<ol type="1">
+<li><span style="font-size:0.7em;">流程复杂、文档驱动</span> =&gt; <span
+style="font-size: 1.5em;">自动化</span></li>
+<li><span style="font-size:0.7em;">难以复现</span> =&gt; <span
+style="font-size: 1.5em;">确定性</span></li>
+</ol>
+<div class="fragment">
+<p>大致涉及内容：</p>
 <ul>
 <li>Nix: 测试程序、QEMU、SimPoint这些程序二进制级别一样</li>
 <li>改QEMU、内核，控制SimPoint等：运行结果一样</li>
 </ul>
+</div>
+<div style="font-size: 0.6em;">
+<p>项目链接：<a
+href="https://github.com/xieby1/deterministic_checkpoints">https://github.com/xieby1/deterministic_checkpoints</a></p>
+</div>
 </section>
 <section id="确定性切片deterministic_checkpoints用法"
-class="title-slide slide level3" data-number="4.4.1">
-<h3 data-number="4.4.1"><span class="header-section-number">4.4.1</span>
+class="title-slide slide level3" data-number="4.5.1">
+<h3 data-number="4.5.1"><span class="header-section-number">4.5.1</span>
 确定性切片(deterministic_checkpoints)用法</h3>
 <div class="sourceCode" id="cb16"><pre
 class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="co"># 准备源码spec2006.tar.gz # </span><span class="al">TODO</span><span class="co">: 更智能化</span></span>
@@ -990,13 +1031,18 @@ class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href=
 <span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="ex">nix-build</span> <span class="at">-A</span> checkpoints</span></code></pre></div>
 </section>
 
-<section id="确定性切片deterministic_checkpoints展示"
-class="title-slide slide level3" data-number="4.4.2">
-<h3 data-number="4.4.2"><span class="header-section-number">4.4.2</span>
-确定性切片(deterministic_checkpoints)展示</h3>
-<p>…</p>
-</section>
 
+<section id="nix的更多应用场景等你来探索"
+class="title-slide slide level2" data-number="4.6">
+<h2 data-number="4.6"><span class="header-section-number">4.6</span>
+Nix的更多应用场景等你来探索</h2>
+<ul>
+<li>确定性切片</li>
+<li>确定性验证</li>
+<li>确定性CI</li>
+<li>确定性…</li>
+</ul>
+</section>
 </section>
 <section id="总结" class="title-slide slide level1" data-number="5"
 data-sminvisible="true">
