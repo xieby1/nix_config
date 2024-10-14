@@ -617,10 +617,11 @@ nix-build -A checkpoints
 
 ## Nix的更多应用场景等你来探索
 
-* 确定性切片
-* 确定性验证
+* 确定性构建香山
+* 确定性构建Gem5
+* 确定性的性能评估
 * 确定性CI
-* 确定性...
+* 确定性的...
 
 # 总结 {data-sminvisible=true}
 
