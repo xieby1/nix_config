@@ -58,7 +58,7 @@ toc-margin: 0 400px
 ::: {style="font-size:20pt;"}
 * Imperative（命令式）/Declarative（声明式）
 * **纯**函数式编程语言 (Purely Functional)
-* 可重现 (Reproducible)
+* 可重现 (Reproducible) & 确定性 (Deterministic)
 :::
 
 ## Nix/NixOS特点-续 {data-auto-animate=1}
@@ -71,7 +71,7 @@ toc-margin: 0 400px
 * 🟢Declarative即需要编程
 * **纯**函数式编程语言 (Purely Functional)
 * 🟢在nix配置代码中：`home.packages = [nixpkgs.vim];`
-* 可重现 (Reproducible)
+* 可重现 (Reproducible) & 确定性 (Deterministic)
 * 🔴apt install，不同时间安装的内容不一样
 :::
 
@@ -101,13 +101,16 @@ toc-margin: 0 400px
 
 ## <img src="images/nix-snowflake.svg" style="height:1em;">Nix/NixOS vs <img src="images/Moby-logo.png" style="height:1em;">Docker
 
-Docker融入现有环境
-
-没办法简单的在docker环境中用自己的vim/vscode配置
+::: {style="font-size: 0.7em;"}
+|              | Nix/NixOS               | Docker                             |
+|--------------|-------------------------|------------------------------------|
+| 确定性       | 是 (确定性derivation)   | 否 (非确定性layer)                 |
+| 融入现有环境 | 轻松：nix-env/nix-shell | 难：本质各种隔离，bind/network/... |
+:::
 
 ## 学习Nix/NixOS
 
-[学习曲线陡峭📈，但也别担心😸]{.fragment}
+学习曲线陡峭📈，但也别担心😸
 
 ::: {.container}
 :::: {.col}
@@ -383,37 +386,18 @@ nix-shell
 </br>
 
 
-[成功编译🎉🎉🎉]{.fragment data-fragment-index="3"}
+::: {.fragment data-fragment-index="3"}
+成功编译🎉🎉🎉
+
+并且结果一模一样！
+:::
 
 ::: {.fragment data-fragment-index="4"}
-并且
+一模一样具体是指？
 :::
 
-一模一样！
 
-## 编译结果二进制级别一致！ {data-auto-animate=1}
-
-::: {.container}
-:::: {.col}
-同学壹🤓
-::::
-:::: {.col}
-同学贰😍
-::::
-:::: {.col}
-同学叁🥰
-::::
-:::
-
-::: {style="font-size: 48pt;"}
-```bash
-md5sum ~/Codes/gem5/build/X86/gem5.debug
-```
-
-一模一样！
-:::
-
-## 编译结果二进制级别一致！ {data-background-video="./images/ohhh.mp4" data-auto-animate=1}
+## 一模一样具体指：二进制级别一样！ {data-background-video="./images/ohhh.mp4" data-auto-animate=1}
 
 ::: {.container}
 :::: {.col}
