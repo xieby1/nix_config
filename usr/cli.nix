@@ -237,6 +237,8 @@ in
     cmake
     capstone
     scc
+    ## https://stackoverflow.com/questions/40165650/how-to-list-all-files-tracked-by-git-excluding-submodules
+    (writeShellScriptBin "scc-git" "${scc}/bin/scc $(git grep --cached -l '')")
     sloccount
     flamegraph
     ## python
