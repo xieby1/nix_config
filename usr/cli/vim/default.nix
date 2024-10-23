@@ -25,6 +25,7 @@ in {
     ./winshift-nvim.nix
     ./smartyank-nvim.nix
     ./mini-nvim.nix
+    ./vim-easy-align.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
