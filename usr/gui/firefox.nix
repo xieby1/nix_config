@@ -1,14 +1,24 @@
 { config, pkgs, stdenv, lib, ... }:
-let
-  my-firefox = pkgs.runCommand "firefox-pinch" {} ''
-    mkdir -p $out
-    ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.firefox} $out
-    path=share/applications/firefox.desktop
-    rm $out/$path
-    sed 's/Exec=/Exec=env MOZ_USE_XINPUT2=1 /' ${pkgs.firefox}/$path > $out/$path
-  '';
-in {
-  home.packages = [
-    my-firefox
-  ];
+{
+  programs.firefox = {
+    enable = true;
+    # If state version ≥ 19.09 then this should be a wrapped Firefox
+    package = pkgs.firefox.overrideAttrs (old: {
+      desktopItem = old.desktopItem.override {
+        exec = "env MOZ_USE_XINPUT2=1 firefox --name firefox %U";
+      };
+    });
+    profiles.xieby1 = {
+      # id is default 0, thus this profile is default
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+        # 😾😾😾 Chinese users cannot use ad block extensions
+        # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
+        ublock-origin
+      ];
+      settings = {
+        # Automatically enable extensions
+        "extensions.autoDisableScopes" = 0;
+      };
+    };
+  };
 }
