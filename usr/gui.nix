@@ -2,19 +2,13 @@
 let
   opt = import ../opt.nix;
   xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
-  my-firefox = pkgs.runCommand "firefox-pinch" {} ''
-    mkdir -p $out
-    ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.firefox} $out
-    path=share/applications/firefox.desktop
-    rm $out/$path
-    sed 's/Exec=/Exec=env MOZ_USE_XINPUT2=1 /' ${pkgs.firefox}/$path > $out/$path
-  '';
 in
 {
   imports = [
     ./gui/mime.nix
     ./gui/kdeconnect.nix
     ./gui/xdot.nix
+    ./gui/firefox.nix
   ] ++ (lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ./gui/rustdesk.nix
   ]) ++ (if !opt.isWSL2 then [
@@ -38,7 +32,6 @@ in
     google-chrome
     microsoft-edge
   ] ++ [
-    my-firefox
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     feishu
