@@ -547,7 +547,7 @@ ELF文件Dynamic section的`RUNPATH`
 
 ::: {.container}
 :::: {.col style="width: 600px;"}
-<img src="./xschkpnts.dot.svg" style="height: 300px;">
+<img src="https://xieby1.github.io/deterministic_checkpoints/images/deps_dot.svg" style="height: 300px;">
 ::::
 :::: {.col style="width: 500px; font-size:0.8em;"}
 * 十几个流程
