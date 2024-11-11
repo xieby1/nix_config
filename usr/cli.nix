@@ -340,6 +340,17 @@ in
     }
     function timer_stop {
       last_timer=$(($SECONDS - $_timer))
+
+      _notification_threthold=10
+      if [[ $last_timer -ge $_notification_threthold ]]; then
+        _notification="[''${last_timer}s⏰] Job finished!"
+        if [[ "$TERM" =~ tmux ]]; then
+          # https://github.com/tmux/tmux/issues/846
+          printf '\033Ptmux;\033\x1b]99;;%s\033\x1b\\\033\\' "$_notification"
+        else
+          printf '\x1b]99;;%s\x1b\\' "$_notification"
+        fi
+      fi
     }
     function timer_unset {
       unset _timer
