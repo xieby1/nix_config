@@ -201,6 +201,7 @@ in
     comma
     xclip
     python3Packages.qrcode
+    ripgrep
     ## archive
     unar
     ## manage
