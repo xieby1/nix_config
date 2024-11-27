@@ -31,7 +31,7 @@ in pkgs.writeShellScriptBin "github-runner-nix" ''
   OPTS=(
     --rm
     --network=host
-    --env-merge PATH='${pkgs.github-runner}/bin:${pkgs.nix}/bin:''${PATH}'
+    --env-merge PATH='${pkgs.github-runner}/bin:${pkgs.nix}/bin:\''${PATH}'
     -v /nix:/nix:ro
     -it
     ${builtins.concatStringsSep " " podmanExtraOpts}
