@@ -1,4 +1,6 @@
 { pkgs ? import <nixpkgs> {}
+, configExtraOpts ? []
+, podmanExtraOpts ? []
 }: let
   container = import ./mini-container.nix {inherit pkgs;};
   cmds = builtins.toFile "cmds" ''
@@ -10,7 +12,7 @@
 
     cd /root
     # start
-    config="config.sh --disableupdate --unattended --name $HOSTNAME-$(date +%y%m%d%H%S) $@"
+    config="config.sh --disableupdate --unattended --name $HOSTNAME-$(date +%y%m%d%H%S) ${builtins.concatStringsSep " " configExtraOpts} $@"
     echo $config
     eval $config
 
@@ -32,6 +34,7 @@ in pkgs.writeShellScriptBin "github-runner-nix" ''
     --env-merge PATH='${pkgs.github-runner}/bin:${pkgs.nix}/bin:''${PATH}'
     -v /nix:/nix:ro
     -it
+    ${builtins.concatStringsSep " " podmanExtraOpts}
     "$fullName"
     /bin/sh ${cmds} $@
   )
