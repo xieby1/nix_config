@@ -1,3 +1,13 @@
+#MC # Github Runner
+#MC
+#MC This is a specially designed github runner:
+#MC
+#MC 1. To improve the security, more specifially, to avoid leaking information of the host environment,
+#MC   * the runner is confined to a container,
+#MC   * the rootless container is used, without sudo privilege.
+#MC 2. To reduce the build time, the /nix/store is shared across containers and host environment, so that
+#MC   * the results can be cached in host /nix/store,
+#MC   * there is no repeated build among different containers.
 { pkgs ? import <nixpkgs> {}
 , configExtraOpts ? []
 , podmanExtraOpts ? []

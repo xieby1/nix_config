@@ -1,3 +1,8 @@
+#MC # Mini Container Image
+#MC
+#MC This script generates a mini container, whose size is less than 5MB.
+#MC The generated image can be loaded by podman or docker.
+#MC The utilities are all provided by a statically linked busybox.
 { pkgs ? import <nixpkgs> {}
 }: pkgs.dockerTools.buildImage {
   name = "mini-container";
