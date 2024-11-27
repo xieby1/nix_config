@@ -267,6 +267,7 @@ in
     bc
     ## nix
     nixos-option
+    nix-output-monitor
     ### allow non-nixos access `man configuration.nix`
     # see: nixos/modules/misc/documentation.nix
     #        nixos/doc/manual/default.nix
