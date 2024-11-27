@@ -17,14 +17,12 @@
     run.sh
   '';
 in pkgs.writeShellScriptBin "github-runner-nix" ''
-  command -v podman &> /dev/null || echo "podman not found" || exit 1
-
   fullName=localhost/${container.imageName}:${container.imageTag}
   # check whether image has been loaded
-  podman images $fullName | grep ${container.imageName} | grep ${container.imageTag} &> /dev/null
+  ${pkgs.podman}/bin/podman images $fullName | grep ${container.imageName} | grep ${container.imageTag} &> /dev/null
   # image has not been loaded, then load it
   if [[ $? != 0 ]]; then
-    podman load -i ${container}
+    ${pkgs.podman}/bin/podman load -i ${container}
   fi
 
   # run container
@@ -37,6 +35,6 @@ in pkgs.writeShellScriptBin "github-runner-nix" ''
     "$fullName"
     /bin/sh ${cmds} $@
   )
-  echo "podman run ''${OPTS[@]}"
-  eval "podman run ''${OPTS[@]}"
+  echo "${pkgs.podman}/bin/podman run ''${OPTS[@]}"
+  eval "${pkgs.podman}/bin/podman run ''${OPTS[@]}"
 ''
