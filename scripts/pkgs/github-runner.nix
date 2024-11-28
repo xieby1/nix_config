@@ -33,7 +33,7 @@
     pkgs.github-runner
     pkgs.nix
   ] ++ extraPkgsInPATH;
-in pkgs.writeShellScriptBin "github-runner-nix" ''
+in pkgs.writeShellScript "github-runner-nix" ''
   fullName=localhost/${container.imageName}:${container.imageTag}
   # check whether image has been loaded
   ${pkgs.podman}/bin/podman images $fullName | grep ${container.imageName} | grep ${container.imageTag} &> /dev/null
