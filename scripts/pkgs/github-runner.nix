@@ -22,7 +22,7 @@
 
     cd /root
     # start
-    config="config.sh --disableupdate --unattended --name $HOSTNAME-$(date +%y%m%d%H%S) ${builtins.concatStringsSep " " configExtraOpts} $@"
+    config="config.sh --disableupdate --unattended --name $HOSTNAME-$(date +%y%m%d%H%M%S) ${builtins.concatStringsSep " " configExtraOpts} $@"
     echo $config
     eval $config
 
