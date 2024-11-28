@@ -9,8 +9,9 @@
 #MC   * the results can be cached in host /nix/store,
 #MC   * there is no repeated build among different containers.
 { pkgs ? import <nixpkgs> {}
-, configExtraOpts ? []
-, podmanExtraOpts ? []
+, extraConfigOpts ? []
+, extraPodmanOpts ? []
+, extraPkgsInPATH ? []
 }: let
   container = import ./mini-container.nix {inherit pkgs;};
   cmds = builtins.toFile "cmds" ''
@@ -22,12 +23,16 @@
 
     cd /root
     # start
-    config="config.sh --disableupdate --unattended --name $HOSTNAME-$(date +%y%m%d%H%M%S) ${builtins.concatStringsSep " " configExtraOpts} $@"
+    config="config.sh --disableupdate --unattended --name $HOSTNAME-$(date +%y%m%d%H%M%S) ${builtins.concatStringsSep " " extraConfigOpts} $@"
     echo $config
     eval $config
 
     run.sh
   '';
+  pkgsInPATH = [
+    pkgs.github-runner
+    pkgs.nix
+  ] ++ extraPkgsInPATH;
 in pkgs.writeShellScriptBin "github-runner-nix" ''
   fullName=localhost/${container.imageName}:${container.imageTag}
   # check whether image has been loaded
@@ -41,10 +46,10 @@ in pkgs.writeShellScriptBin "github-runner-nix" ''
   OPTS=(
     --rm
     --network=host
-    --env-merge PATH='${pkgs.github-runner}/bin:${pkgs.nix}/bin:\''${PATH}'
+    --env-merge PATH='${pkgs.lib.concatMapStrings (pkg: pkg+"/bin:") pkgsInPATH}\''${PATH}'
     -v /nix:/nix:ro
     -it
-    ${builtins.concatStringsSep " " podmanExtraOpts}
+    ${builtins.concatStringsSep " " extraPodmanOpts}
     "$fullName"
     /bin/sh ${cmds} $@
   )
