@@ -123,6 +123,7 @@ in
       gitui
       mr
       git-wip
+      git-quick-stats
     ];
     programs.git = {
       enable = true;
