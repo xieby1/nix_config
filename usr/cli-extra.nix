@@ -14,6 +14,7 @@ in {
     home.packages = [
       pkgs.act
       (pkgs.writeShellScriptBin "act-podman" ''
+        export DOCKER_HOST=unix://$XDG_RUNTIME_DIR/podman/podman.sock
         CMD=(
           "${pkgs.act}/bin/act"
           "--bind"
