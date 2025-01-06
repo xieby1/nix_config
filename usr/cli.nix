@@ -226,6 +226,7 @@ in
     tree
     ## network
     wget
+    axel
     bind.dnsutils # nslookup
     netcat
     nload
@@ -235,6 +236,7 @@ in
     xdotool
 
     # programming
+    inotify-tools
     clang-tools
     cmake
     capstone
