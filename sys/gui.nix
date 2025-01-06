@@ -110,14 +110,13 @@
   # available nerd fonts: nixpkgs/pkgs/data/fonts/nerdfonts/shas.nix
   ## use non-variable noto font for feishu and other old electron apps
   ## for more details see: https://github.com/NixOS/nixpkgs/issues/171976
-  fonts.packages = (
-    with (import (fetchTarball {
-      url = "https://github.com/NixOS/nixpkgs/archive/d881cf9fd64218a99a64a8bdae1272c3f94daea7.tar.gz";
-      sha256 = "1jaghsmsc05lvfzaq4qcy281rhq3jlx75q5x2600984kx1amwaal";
-    }) {}); [
+  fonts.packages = with pkgs; [
+    noto-fonts-cjk
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
-    noto-fonts-emoji]) ++ (with pkgs; [
+    noto-fonts-emoji
+    noto-fonts-color-emoji
+    noto-fonts-extra
     (nerdfonts.override {
       # The best developer fonts, see https://www.nerdfonts.com/
       fonts = [
@@ -151,7 +150,7 @@
     #     cp -a *.ttf $out/share/fonts/truetype/
     #   '';
     # })
-  ]);
+  ];
   # enable fontDir /run/current-system/sw/share/X11/fonts
   fonts.fontDir.enable = true;
   fonts.fontconfig.defaultFonts = {
