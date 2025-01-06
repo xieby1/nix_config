@@ -43,10 +43,6 @@ in
           "--chdir /home"
         ];
       });
-      uosLicense = fetchurl {
-        url = "https://github.com/xddxdd/nur-packages/raw/master/pkgs/uncategorized/wechat-uos/license.tar.gz";
-        sha256 = "0sdx5mdybx4y489dhhc8505mjfajscggxvymlcpqzdd5q5wh0xjk";
-      };
     })
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./gui/weixin.nix {})
@@ -55,7 +51,7 @@ in
     # telegram desktop not provide aarch64 prebuilt
     tdesktop
   ] ++ [
-    transmission-gtk
+    transmission_4-gtk
     # text
     #wpsoffice
     libreoffice

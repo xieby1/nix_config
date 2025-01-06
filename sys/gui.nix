@@ -7,48 +7,44 @@
     # support fractional scaling for x11 gnome:
     # refer to https://nixos.wiki/wiki/Overlays#Overriding_a_package_inside_a_scope
     nixpkgs.overlays = [ (final: prev: {
-      gnome = prev.gnome.overrideScope (gfinal: gprev: {
-        mutter = let
-          mutter-x11-scaling = pkgs.fetchFromGitHub {
-            owner = "puxplaying";
-            repo = "mutter-x11-scaling";
-            rev = "8c5d5224955a5ec6a36697e9b64e606e6a596ef7";
-            hash = "sha256-TDQkDgAcuNnzSqiYE364E/Z2mBKegevVQ3AeOYBjHc4=";
-          };
-        in gprev.mutter.overrideAttrs (old: {
-          patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
-            "${mutter-x11-scaling}/mutter-fix-x11-restart.patch"
-            "${mutter-x11-scaling}/x11-Add-support-for-fractional-scaling-using-Randr.patch"
-            "${mutter-x11-scaling}/Support-Dynamic-triple-double-buffering.patch"
-          ];
-        });
-        gnome-control-center = let
-          gnome-control-center-x11-scaling = pkgs.fetchFromGitHub {
-            owner = "puxplaying";
-            repo = "gnome-control-center-x11-scaling";
-            rev = "9d4b878a523151776cea0fad47a0421c660ea8af";
-            hash = "sha256-xAf0jXs9holjN5xa20d4VLesbwitNq0w+9p5qyw7Ut8=";
-          };
-        in gprev.gnome-control-center.overrideAttrs (old: {
-          patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
-            "${gnome-control-center-x11-scaling}/display-Support-UI-scaled-logical-monitor-mode.patch"
-            "${gnome-control-center-x11-scaling}/display-Allow-fractional-scaling-to-be-enabled.patch"
-          ];
-        });
+      mutter = let
+        mutter-x11-scaling = pkgs.fetchFromGitHub {
+          owner = "puxplaying";
+          repo = "mutter-x11-scaling";
+          rev = "3a3a20ba7ae0af2c312373ebea9a33d912356217";
+          hash = "sha256-aB4pc3qu9/1aYt2Mlj2lWcmW9Qva8BzLx4k4O7lgURk=";
+        };
+      in prev.mutter.overrideAttrs (old: {
+        patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
+          "${mutter-x11-scaling}/x11-Add-support-for-fractional-scaling-using-Randr.patch"
+        ];
+      });
+      gnome-control-center = let
+        gnome-control-center-x11-scaling = pkgs.fetchFromGitHub {
+          owner = "puxplaying";
+          repo = "gnome-control-center-x11-scaling";
+          rev = "12ce1fb886e46b96ae9dc278df19536d2093ca6d";
+          hash = "sha256-6DkUzarvI/vZOSda0qmO65gwSvW2NC1gdx45gA21kB8=";
+        };
+      in prev.gnome-control-center.overrideAttrs (old: {
+        patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
+          "${gnome-control-center-x11-scaling}/display-Support-UI-scaled-logical-monitor-mode.patch"
+          "${gnome-control-center-x11-scaling}/display-Allow-fractional-scaling-to-be-enabled.patch"
+        ];
       });
     }) ];
 
     # push the overrided mutter and gnome to my cachix
-    cachix_packages = with pkgs.gnome; [mutter gnome-control-center];
+    cachix_packages = with pkgs; [mutter gnome-control-center];
   }] ;
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [
-    "nvidia"
+    # "nvidia"
     # default video drivers
     "radeon" "nouveau" "modesetting" "fbdev"
-    "intel" "amdgpu"
+    "modesetting" "amdgpu"
   ];
 
   # Enable the GNOME Desktop Environment.
@@ -92,7 +88,8 @@
 
   # https://github.com/kovidgoyal/kitty/issues/403
   environment.variables.GLFW_IM_MODULE = "ibus";
-  i18n.inputMethod.enabled = "ibus";
+  i18n.inputMethod.enable = true;
+  i18n.inputMethod.type = "ibus";
   i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
     rime
     # keyboard layout is wrong in anthy, e.g. punctuations
@@ -111,7 +108,6 @@
   ## use non-variable noto font for feishu and other old electron apps
   ## for more details see: https://github.com/NixOS/nixpkgs/issues/171976
   fonts.packages = with pkgs; [
-    noto-fonts-cjk
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-emoji

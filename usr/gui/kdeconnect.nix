@@ -1,7 +1,7 @@
 #MC # KDE Connect
 { config, pkgs, stdenv, lib, ... }:
 let
-  mykdeconnect = pkgs.kdeconnect;
+  mykdeconnect = pkgs.plasma5Packages.kdeconnect-kde;
   #MC This customized version of KDE Connect allow share PC's keyboard smoothly to android.
   #mykdeconnect = pkgs.kdeconnect.overrideAttrs (old: {
   #  patches = [( pkgs.fetchpatch {

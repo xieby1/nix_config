@@ -5,9 +5,9 @@ let
   opt = import ../../opt.nix;
 in{
   home.packages = (with pkgs; [
-    gnome.gnome-sound-recorder
-    gnome.dconf-editor
-    gnome.devhelp
+    gnome-sound-recorder
+    dconf-editor
+    devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
     unite
