@@ -81,9 +81,6 @@ in
     keepassxc
     # entertainment
     antimicrox
-    # music
-  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    spotify
   ];
 
   xdg.mime.types = {

@@ -54,7 +54,6 @@ in{
         "microsoft-edge.desktop"
         "calendar.desktop"
         "todo.desktop"
-        "spotify.desktop"
         "google-chrome.desktop"
         ];
     };
