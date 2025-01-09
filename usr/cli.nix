@@ -248,6 +248,7 @@ in
     ## python
     ( python3.withPackages ( p: with p; [
       ipython
+      pydot
     ]))
     ## c
     (lib.setPrio # make bintools less prior
