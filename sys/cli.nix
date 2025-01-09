@@ -83,43 +83,21 @@
   #MC 任何程序都执行不了了，连关机都不行，只能强制重启。
   #MC 不过好在NixOS可以回滚，轻松复原实验前的环境。
   #MC 下面的`filterAttrs`就是用来保证不配置本地的binfmt。
-  boot.binfmt.registrations = let
-    version = "9.0.2+ds-6";
-    qemu-user-static = pkgs.nur.repos.xddxdd.qemu-user-static.override {
-      sources = {
-        qemu-user-static-amd64 = {
-          pname = "qemu-user-static-amd64";
-          inherit version;
-          src = builtins.fetchurl {
-            url = "http://ftp.debian.org/debian/pool/main/q/qemu/qemu-user-static_${version}_amd64.deb";
-            sha256 = "15gfs9011smppbank3vzla09yrq84xrhbcn3zwqjnl9xvkzsp2bw";
-          };
-        };
-        qemu-user-static-arm64 = {
-          pname = "qemu-user-static-arm64";
-          inherit version;
-          src = builtins.fetchurl {
-            url = "http://ftp.debian.org/debian/pool/main/q/qemu/qemu-user-static_${version}_arm64.deb";
-            sha256 = "1as8s74dmmqp2sv2msblb2vngn1y3611ix9yjq012dlgck2h77id";
-          };
-        };
-      };
-    };
-  in pkgs.lib.filterAttrs (n: v: n!=builtins.currentSystem) {
+  boot.binfmt.registrations = pkgs.lib.filterAttrs (n: v: n!=builtins.currentSystem) {
     x86_64-linux = {
-      interpreter = "${qemu-user-static}/bin/qemu-x86_64-static";
+      interpreter = "${pkgs.pkgsStatic.qemu-user}/bin/qemu-x86_64";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00'';
       mask = ''\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
       wrapInterpreterInShell = false;
     };
     aarch64-linux = {
-      interpreter = "${qemu-user-static}/bin/qemu-aarch64-static";
+      interpreter = "${pkgs.pkgsStatic.qemu-user}/bin/qemu-aarch64";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00'';
       mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff'';
       wrapInterpreterInShell = false;
     };
     riscv64-linux = {
-      interpreter = "${qemu-user-static}/bin/qemu-riscv64-static";
+      interpreter = "${pkgs.pkgsStatic.qemu-user}/bin/qemu-riscv64";
       magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'';
       mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
       wrapInterpreterInShell = false;
