@@ -6,6 +6,7 @@ let
     type = "lua";
     config = ''
       require('gitsigns').setup {
+        signs_staged_enable = false,
         signcolumn = false,
         numhl      = true,
         linehl     = true,
