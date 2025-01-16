@@ -28,8 +28,8 @@ in {
       # status bar
       ## display title on terminal
       set -g set-titles on
-      set -g window-status-format "#I #W #{=/-20/…:pane_title}"
-      set -g window-status-current-format "🐶#I #W #{=/-20/…:pane_title}"
+      set -g window-status-format "#F#I #W #{=/-20/…:pane_title}"
+      set -g window-status-current-format "🐶#F#I #W #{=/-20/…:pane_title}"
       ## hide status bar when only one window
       ### refer to
       ### https://www.reddit.com/r/tmux/comments/6lwb07/is_it_possible_to_hide_the_status_bar_in_only_a/
