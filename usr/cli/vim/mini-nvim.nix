@@ -23,6 +23,8 @@ let
       -- * background color blinks when create window
       -- * background color broken after q::q
       -- require('mini.animate').setup()
+
+      require('mini.icons').setup()
     '';
   };
 in {
