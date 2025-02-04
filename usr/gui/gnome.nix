@@ -15,7 +15,7 @@ in{
     bing-wallpaper-changer
     # random-wallpaper-wip-v3
     gtile
-    pkgs.pkgsu.gnomeExtensions.hide-top-bar
+    hide-top-bar
     dash-to-dock
     always-show-titles-in-overview
     customize-ibus
