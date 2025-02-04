@@ -23,6 +23,7 @@ in{
     # refers to https://github.com/mgalgs/gnome-shell-system-monitor-applet/issues/57
     # vitals
     system-monitor-next
+    x11-gestures
   ]);
 
   # Setting: `gsettings set <key(dot)> <value>`
@@ -45,6 +46,7 @@ in{
         # "randomwallpaper@iflow.space"
         "Always-Show-Titles-In-Overview@gmail.com"
         "customize-ibus@hollowman.ml"
+        "x11gestures@joseexposito.github.io"
       ];
 
       ## dock icons

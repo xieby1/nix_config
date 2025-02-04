@@ -160,4 +160,7 @@
   services.gpm.enable = true;
 
   hardware.xone.enable = true;
+
+  # for x11 gesture
+  services.touchegg.enable = true;
 }
