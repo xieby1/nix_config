@@ -149,6 +149,8 @@ in{
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
       click-action="focus-or-appspread";
+      transparency-mode = "FIXED";
+      background-opacity = 0.4;
     };
     "org/gnome/shell/extensions/space-iflow-randomwallpaper" = {
       auto-fetch = true;
