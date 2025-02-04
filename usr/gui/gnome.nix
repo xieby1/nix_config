@@ -16,6 +16,7 @@ in{
     # random-wallpaper-wip-v3
     gtile
     hide-top-bar
+    transparent-top-bar-adjustable-transparency
     dash-to-dock
     always-show-titles-in-overview
     customize-ibus
@@ -39,6 +40,7 @@ in{
         "clipboard-indicator@tudmotu.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
+        "transparent-top-bar@ftpix.com"
         # "Vitals@CoreCoding.com"
         "system-monitor-next@paradoxxx.zero.gmail.com"
         "unite@hardpixel.eu"
@@ -120,6 +122,10 @@ in{
       enable-intellihide=true;
       shortcut-delay = 0.0;
       shortcut-keybind = ["<Super>h"];
+    };
+    "com/ftpix/transparentbar" = {
+      dark-full-screen = false;
+      transparency = 40;
     };
     "org/gnome/shell/extensions/unite" = {
       app-menu-ellipsize-mode="end";
