@@ -18,6 +18,9 @@
       settings = {
         # Automatically enable extensions
         "extensions.autoDisableScopes" = 0;
+        # Disable `alt` key of toggling menu bar
+        "ui.key.menuAccessKeyFocuses" = false;
+        "ui.key.menuAccessKey" = -1; # original number 18
       };
     };
   };
