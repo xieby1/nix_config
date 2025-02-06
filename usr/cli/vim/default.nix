@@ -48,7 +48,6 @@ in {
       vim-nix
       vim-markdown-toc
       vim-commentary
-      tabular
       vim-plugin-AnsiEsc
     ] ++ (lib.optional opt.isGui markdown-preview-nvim);
 
