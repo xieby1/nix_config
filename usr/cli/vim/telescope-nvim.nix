@@ -17,6 +17,8 @@ let
       nnoremap fC <cmd>lua require('telescope.builtin').commands()<cr>
     '';
   };
+  # Problem: unable to fuzzy search parenthesis '('
+  # https://github.com/nvim-telescope/telescope-fzf-native.nvim/issues/141
   my-telescope-fzf-native-nvim = {
     plugin = pkgs.vimPlugins.telescope-fzf-native-nvim;
     type = "lua";
