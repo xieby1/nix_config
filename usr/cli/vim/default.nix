@@ -27,6 +27,7 @@ in {
     ./mini-nvim.nix
     ./vim-easy-align.nix
     ./codecompanion-nvim.nix
+    ./remote-sshfs-nvim.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
