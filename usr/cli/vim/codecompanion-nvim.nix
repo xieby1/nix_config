@@ -1,5 +1,12 @@
-{ pkgs, ... }: {
-  programs.neovim.plugins = [{
+#MC # Code Companion: AI
+{ lib, pkgs, ... }: {
+  #MC Q: Why `mkAfter` here?
+  #MC
+  #MC A: As codecompanion will change the nvim-cmp config,
+  #MC therefore we need to make codecompanion is setup after nvim-cmp.
+  #MC Use `mkAfter`, make config of codecompanion is placed after all
+  #MC other normal configs in `~/.config/nvim/init.lua`.
+  programs.neovim.plugins = lib.mkAfter [{
     plugin = pkgs.vimUtils.buildVimPlugin {
       pname = "codecompanion.nvim";
       # currently lastest
