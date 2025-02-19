@@ -17,6 +17,10 @@
         rev = "f8b9dce0468708c3b280abb045927c6864a17869";
         hash = "sha256-1EMzh3TaQxj+eMLjizHwntl/6ZqTHRlxFF6IOSROnuA=";
       };
+      postPatch = ''
+        substituteInPlace lua/codecompanion/strategies/chat/ui.lua \
+          --replace-fail "vsplit" "vertical topleft new"
+      '';
       meta.homepage = "https://github.com/olimorris/codecompanion.nvim/";
     };
     type = "lua";
