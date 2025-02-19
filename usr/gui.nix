@@ -79,6 +79,7 @@ in
   ] ++ [
     barrier
     keepassxc
+    (pkgs.callPackage ./gui/planner.nix {})
     # entertainment
     antimicrox
   ];
