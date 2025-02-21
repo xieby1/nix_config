@@ -17,9 +17,14 @@
         rev = "f8b9dce0468708c3b280abb045927c6864a17869";
         hash = "sha256-1EMzh3TaQxj+eMLjizHwntl/6ZqTHRlxFF6IOSROnuA=";
       };
+      # vertical split current window (including multiple buffers), instead of vsplit current buffer
       postPatch = ''
         substituteInPlace lua/codecompanion/strategies/chat/ui.lua \
           --replace-fail "vsplit" "vertical topleft new"
+      ''
+      # fix the chat window
+      + ''
+        sed -i '/ui.set_win_options/i vim.cmd("set winfixwidth")' lua/codecompanion/strategies/chat/ui.lua
       '';
       meta.homepage = "https://github.com/olimorris/codecompanion.nvim/";
     };
