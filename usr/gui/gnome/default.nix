@@ -9,6 +9,7 @@ in{
     ./extensions/clipboard-indicator.nix
     ./extensions/gtile.nix
     ./extensions/hide-top-bar.nix
+    ./extensions/transparent-top-bar.nix
     ./extensions/unite.nix
   ];
   home.packages = (with pkgs; [
@@ -17,7 +18,6 @@ in{
     devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    transparent-top-bar-adjustable-transparency
     dash-to-dock
     always-show-titles-in-overview
     customize-ibus
@@ -37,7 +37,6 @@ in{
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        "transparent-top-bar@ftpix.com"
         # "Vitals@CoreCoding.com"
         "system-monitor-next@paradoxxx.zero.gmail.com"
         "dash-to-dock@micxgx.gmail.com"
@@ -90,10 +89,6 @@ in{
       sleep-inactive-ac-timeout=3600;
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
-    };
-    "com/ftpix/transparentbar" = {
-      dark-full-screen = false;
-      transparency = 40;
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
       click-action="focus-or-appspread";
