@@ -5,15 +5,7 @@ let
   opt = import ../../../opt.nix;
 in{
   imports = [
-    ./extensions/bing-wallpaper-changer.nix
-    ./extensions/clipboard-indicator.nix
-    ./extensions/customize-ibus.nix
-    ./extensions/dash-to-dock.nix
-    ./extensions/gtile.nix
-    ./extensions/hide-top-bar.nix
-    ./extensions/system-monitor.nix
-    ./extensions/transparent-top-bar.nix
-    ./extensions/unite.nix
+    ./extensions
   ];
   home.packages = (with pkgs; [
     gnome-sound-recorder
