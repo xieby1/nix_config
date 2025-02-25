@@ -7,6 +7,7 @@ in{
   imports = [
     ./extensions/bing-wallpaper-changer.nix
     ./extensions/clipboard-indicator.nix
+    ./extensions/dash-to-dock.nix
     ./extensions/gtile.nix
     ./extensions/hide-top-bar.nix
     ./extensions/transparent-top-bar.nix
@@ -18,7 +19,6 @@ in{
     devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    dash-to-dock
     always-show-titles-in-overview
     customize-ibus
     # replace system-monitor(-next) with vitals
@@ -39,7 +39,6 @@ in{
       enabled-extensions = [
         # "Vitals@CoreCoding.com"
         "system-monitor-next@paradoxxx.zero.gmail.com"
-        "dash-to-dock@micxgx.gmail.com"
         "Always-Show-Titles-In-Overview@gmail.com"
         "customize-ibus@hollowman.ml"
         "x11gestures@joseexposito.github.io"
@@ -89,11 +88,6 @@ in{
       sleep-inactive-ac-timeout=3600;
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
-    };
-    "org/gnome/shell/extensions/dash-to-dock" = {
-      click-action="focus-or-appspread";
-      transparency-mode = "FIXED";
-      background-opacity = 0.4;
     };
 
 
