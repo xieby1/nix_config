@@ -8,6 +8,7 @@ in{
     ./extensions/bing-wallpaper-changer.nix
     ./extensions/clipboard-indicator.nix
     ./extensions/gtile.nix
+    ./extensions/hide-top-bar.nix
     ./extensions/unite.nix
   ];
   home.packages = (with pkgs; [
@@ -16,7 +17,6 @@ in{
     devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    hide-top-bar
     transparent-top-bar-adjustable-transparency
     dash-to-dock
     always-show-titles-in-overview
@@ -37,7 +37,6 @@ in{
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        "hidetopbar@mathieu.bidon.ca"
         "transparent-top-bar@ftpix.com"
         # "Vitals@CoreCoding.com"
         "system-monitor-next@paradoxxx.zero.gmail.com"
@@ -91,13 +90,6 @@ in{
       sleep-inactive-ac-timeout=3600;
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
-    };
-    "org/gnome/shell/extensions/hidetopbar" = {
-      mouse-sensitive = true;
-      enable-active-window=false;
-      enable-intellihide=true;
-      shortcut-delay = 0.0;
-      shortcut-keybind = ["<Super>h"];
     };
     "com/ftpix/transparentbar" = {
       dark-full-screen = false;
