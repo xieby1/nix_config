@@ -1,3 +1,7 @@
+#MC # Gnome Extensions
+#MC
+#MC Each time home-manager switched, no need log out.
+#MC Just reload extension by <alt>+F2 r
 { pkgs, ... }: {
   imports = [
     ./bing-wallpaper-changer.nix

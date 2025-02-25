@@ -1,9 +1,8 @@
-{ config, pkgs, stdenv, lib, ... }:
-# gnome extensions and settings
-# no need log out to reload extension: <alt>+F2 r
+#MC Gnome settings
+{ pkgs, lib, ... }:
 let
   opt = import ../../../opt.nix;
-in{
+in {
   imports = [
     ./extensions
   ];
@@ -25,7 +24,7 @@ in{
         "calendar.desktop"
         "todo.desktop"
         "google-chrome.desktop"
-        ];
+      ];
     };
 
     "org/gnome/desktop/session" = {
@@ -39,7 +38,6 @@ in{
       sleep-inactive-ac-type="nothing";
       sleep-inactive-battery-type="suspend";
     };
-
 
     # predefined keyboard shortcuts
     "org/gnome/desktop/wm/keybindings" = {
