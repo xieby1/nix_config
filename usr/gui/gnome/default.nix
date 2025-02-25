@@ -4,13 +4,15 @@
 let
   opt = import ../../../opt.nix;
 in{
+  imports = [
+    ./extensions/unite.nix
+  ];
   home.packages = (with pkgs; [
     gnome-sound-recorder
     dconf-editor
     devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    unite
     clipboard-indicator
     bing-wallpaper-changer
     # random-wallpaper-wip-v3
@@ -43,7 +45,6 @@ in{
         "transparent-top-bar@ftpix.com"
         # "Vitals@CoreCoding.com"
         "system-monitor-next@paradoxxx.zero.gmail.com"
-        "unite@hardpixel.eu"
         "dash-to-dock@micxgx.gmail.com"
         # "randomwallpaper@iflow.space"
         "Always-Show-Titles-In-Overview@gmail.com"
@@ -126,21 +127,6 @@ in{
     "com/ftpix/transparentbar" = {
       dark-full-screen = false;
       transparency = 40;
-    };
-    "org/gnome/shell/extensions/unite" = {
-      app-menu-ellipsize-mode="end";
-      extend-left-box=false;
-      greyscale-tray-icons=false;
-      hide-app-menu-icon=false;
-      hide-dropdown-arrows=true;
-      hide-window-titlebars="always";
-      notifications-position="center";
-      reduce-panel-spacing=true;
-      show-window-buttons="always";
-      use-activities-text = false;
-      window-buttons-placement="last";
-      window-buttons-theme="materia";
-      restrict-to-primary-screen=false;
     };
     "org/gnome/shell/extensions/bingwallpaper" = {
       market="zh-CN";
