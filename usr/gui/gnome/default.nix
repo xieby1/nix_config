@@ -7,6 +7,7 @@ in{
   imports = [
     ./extensions/bing-wallpaper-changer.nix
     ./extensions/clipboard-indicator.nix
+    ./extensions/customize-ibus.nix
     ./extensions/dash-to-dock.nix
     ./extensions/gtile.nix
     ./extensions/hide-top-bar.nix
@@ -21,7 +22,6 @@ in{
   ])
   ++ (with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
-    customize-ibus
     x11-gestures
   ]);
 
@@ -35,7 +35,6 @@ in{
       disabled-extensions = [];
       enabled-extensions = [
         "Always-Show-Titles-In-Overview@gmail.com"
-        "customize-ibus@hollowman.ml"
         "x11gestures@joseexposito.github.io"
       ];
 
@@ -94,25 +93,6 @@ in{
     "system/proxy/http" = {host="127.0.0.1"; port=opt.proxyPort;};
     "system/proxy/https" = {host="127.0.0.1"; port=opt.proxyPort;};
 
-    # input method
-    "org/gnome/desktop/input-sources" = {
-      sources = with lib.hm.gvariant; mkArray
-      "(${lib.concatStrings [type.string type.string]})" [
-        (mkTuple ["xkb"  "us"])
-        (mkTuple ["ibus" "rime"])
-        (mkTuple ["ibus" "mozc-jp"])
-        (mkTuple ["ibus" "hangul"])
-      ];
-    };
-    "org/gnome/shell/extensions/customize-ibus" = {
-      candidate-orientation = lib.hm.gvariant.mkUint32 1;
-      custom-font="Iosevka Nerd Font 16";
-      enable-orientation=true;
-      input-indicator-only-on-toggle=false;
-      input-indicator-only-use-ascii=false;
-      use-custom-font=true;
-      use-indicator-show-delay=true;
-    };
     "org/gnome/mutter" = {
       dynamic-workspaces = true;
     };
