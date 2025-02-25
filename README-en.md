@@ -252,7 +252,7 @@ For example autokey (I am trying to replace autokey with espanso).
 Still keep x11 until a suitable replacement is found.
 
 UI, plugins, shortcut keys, etc. affect the intuitive feeling of the desktop system experience.
-Configure the gnome desktop system using gui/gnome.nix.
+Configure the gnome desktop system using gui/gnome/.
 A large number of settings can be viewed/modified through dconf to assist with modification.
 
 #### New module mime.nix

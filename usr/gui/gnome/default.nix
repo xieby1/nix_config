@@ -2,7 +2,7 @@
 # gnome extensions and settings
 # no need log out to reload extension: <alt>+F2 r
 let
-  opt = import ../../opt.nix;
+  opt = import ../../../opt.nix;
 in{
   home.packages = (with pkgs; [
     gnome-sound-recorder

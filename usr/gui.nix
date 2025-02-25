@@ -12,7 +12,7 @@ in
   ] ++ (lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ./gui/rustdesk.nix
   ]) ++ (if !opt.isWSL2 then [
-    ./gui/gnome.nix
+    ./gui/gnome
     ./gui/terminal.nix
     ./gui/singleton_web_apps.nix
     ./gui/rofi.nix
