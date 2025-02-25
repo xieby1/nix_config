@@ -10,6 +10,7 @@ in{
     ./extensions/dash-to-dock.nix
     ./extensions/gtile.nix
     ./extensions/hide-top-bar.nix
+    ./extensions/system-monitor.nix
     ./extensions/transparent-top-bar.nix
     ./extensions/unite.nix
   ];
@@ -21,10 +22,6 @@ in{
   ++ (with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
     customize-ibus
-    # replace system-monitor(-next) with vitals
-    # refers to https://github.com/mgalgs/gnome-shell-system-monitor-applet/issues/57
-    # vitals
-    system-monitor-next
     x11-gestures
   ]);
 
@@ -37,8 +34,6 @@ in{
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        # "Vitals@CoreCoding.com"
-        "system-monitor-next@paradoxxx.zero.gmail.com"
         "Always-Show-Titles-In-Overview@gmail.com"
         "customize-ibus@hollowman.ml"
         "x11gestures@joseexposito.github.io"
@@ -53,29 +48,6 @@ in{
         "todo.desktop"
         "google-chrome.desktop"
         ];
-    };
-    ## extensions settings
-    # "org/gnome/shell/extensions/vitals" = {
-    #   fixed-widths = true;
-    #   hide-icons = true;
-    #   hot-sensors = [
-    #     "_processor_usage_"
-    #     "_memory_usage_"
-    #     "__network-rx_max__"
-    #     "__network-tx_max__"
-    #   ];
-    #   show-fan = false;
-    #   show-system = false;
-    #   show-temperature = false;
-    #   show-voltage = false;
-    #   update-time = 2;
-    # };
-    "org/gnome/shell/extensions/system-monitor" = {
-      compact-display = true;
-      icon-display = false;
-      cpu-style = "digit";
-      memory-style = "digit";
-      net-style = "digit";
     };
 
     "org/gnome/desktop/session" = {
