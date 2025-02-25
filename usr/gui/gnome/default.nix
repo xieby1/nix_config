@@ -5,6 +5,7 @@ let
   opt = import ../../../opt.nix;
 in{
   imports = [
+    ./extensions/bing-wallpaper-changer.nix
     ./extensions/clipboard-indicator.nix
     ./extensions/unite.nix
   ];
@@ -14,8 +15,6 @@ in{
     devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    bing-wallpaper-changer
-    # random-wallpaper-wip-v3
     gtile
     hide-top-bar
     transparent-top-bar-adjustable-transparency
@@ -38,14 +37,12 @@ in{
       disable-user-extensions = false;
       disabled-extensions = [];
       enabled-extensions = [
-        "BingWallpaper@ineffable-gmail.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
         "transparent-top-bar@ftpix.com"
         # "Vitals@CoreCoding.com"
         "system-monitor-next@paradoxxx.zero.gmail.com"
         "dash-to-dock@micxgx.gmail.com"
-        # "randomwallpaper@iflow.space"
         "Always-Show-Titles-In-Overview@gmail.com"
         "customize-ibus@hollowman.ml"
         "x11gestures@joseexposito.github.io"
@@ -127,31 +124,10 @@ in{
       dark-full-screen = false;
       transparency = 40;
     };
-    "org/gnome/shell/extensions/bingwallpaper" = {
-      market="zh-CN";
-      delete-previous=true;
-      download-folder="/tmp/pictures";
-    };
     "org/gnome/shell/extensions/dash-to-dock" = {
       click-action="focus-or-appspread";
       transparency-mode = "FIXED";
       background-opacity = 0.4;
-    };
-    "org/gnome/shell/extensions/space-iflow-randomwallpaper" = {
-      auto-fetch = true;
-      change-lock-screen = true;
-      hours = 8;
-      minutes = 29;
-      source = "genericJSON";
-      # source = "wallhaven";
-    };
-    "org/gnome/shell/extensions/space-iflow-randomwallpaper/genericJSON" = {
-      generic-json-request-url = "http://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1&mkt=zh-CN";
-      generic-json-response-path = "$.images[0].url";
-      generic-json-url-prefix = "http://www.bing.com";
-    };
-    "org/gnome/shell/extensions/space-iflow-randomwallpaper/wallhaven" ={
-      wallhaven-keyword="cardcaptor sakura";
     };
 
 
