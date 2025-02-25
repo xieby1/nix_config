@@ -5,6 +5,7 @@ let
   opt = import ../../../opt.nix;
 in{
   imports = [
+    ./extensions/clipboard-indicator.nix
     ./extensions/unite.nix
   ];
   home.packages = (with pkgs; [
@@ -13,7 +14,6 @@ in{
     devhelp
   ])
   ++ (with pkgs.gnomeExtensions; [
-    clipboard-indicator
     bing-wallpaper-changer
     # random-wallpaper-wip-v3
     gtile
@@ -39,7 +39,6 @@ in{
       disabled-extensions = [];
       enabled-extensions = [
         "BingWallpaper@ineffable-gmail.com"
-        "clipboard-indicator@tudmotu.com"
         "gTile@vibou"
         "hidetopbar@mathieu.bidon.ca"
         "transparent-top-bar@ftpix.com"
@@ -167,10 +166,6 @@ in{
       minimize=[];
       move-to-workspace-left=["<Control>Home"];
       move-to-workspace-right=["<Control>End"];
-    };
-    "org/gnome/shell/extensions/clipboard-indicator" =
-    {
-      move-item-first=true;
     };
 
     # nautilus
