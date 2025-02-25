@@ -7,29 +7,16 @@ in{
   imports = [
     ./extensions
   ];
-  home.packages = (with pkgs; [
+  home.packages = with pkgs; [
     gnome-sound-recorder
     dconf-editor
     devhelp
-  ])
-  ++ (with pkgs.gnomeExtensions; [
-    always-show-titles-in-overview
-    x11-gestures
-  ]);
+  ];
 
   # Setting: `gsettings set <key(dot)> <value>`
   # Getting: `dconf dump /<key(path)>`
   dconf.settings = {
     "org/gnome/shell" = {
-      disable-extension-version-validation = true;
-      ## enabled gnome extensions
-      disable-user-extensions = false;
-      disabled-extensions = [];
-      enabled-extensions = [
-        "Always-Show-Titles-In-Overview@gmail.com"
-        "x11gestures@joseexposito.github.io"
-      ];
-
       ## dock icons
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
