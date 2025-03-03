@@ -338,39 +338,6 @@ in
     # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#using-actions-to-duplicate-the-path
     PROMPT_COMMAND=''${PROMPT_COMMAND:+"$PROMPT_COMMAND"}'printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")"'
   '';
-  ## after direnv's bash.initExtra
-  programs.bash.initExtra = lib.mkOrder 2000 ''
-    # https://stackoverflow.com/questions/1862510/how-can-the-last-commands-wall-time-be-put-in-the-bash-prompt
-    function timer_start {
-      _timer=''${_timer:-$SECONDS}
-    }
-    function timer_stop {
-      last_timer=$(($SECONDS - $_timer))
-
-      _notification_threthold=10
-      if [[ $last_timer -ge $_notification_threthold ]]; then
-        _notification="[''${last_timer}s⏰] Job finished!"
-        if [[ "$TERM" =~ tmux ]]; then
-          # https://github.com/tmux/tmux/issues/846
-          printf '\033Ptmux;\033\x1b]99;;%s\033\x1b\\\033\\' "$_notification"
-        else
-          printf '\x1b]99;;%s\x1b\\' "$_notification"
-        fi
-      fi
-    }
-    function timer_unset {
-      unset _timer
-    }
-
-    trap timer_start DEBUG
-
-    PROMPT_COMMAND="timer_stop;$PROMPT_COMMAND"
-    if [[ -n "$(echo $PROMPT_COMMAND | grep -o -e ';$')" ]]; then
-      PROMPT_COMMAND+="timer_unset;"
-    else
-      PROMPT_COMMAND+=";timer_unset;"
-    fi
-  '';
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
