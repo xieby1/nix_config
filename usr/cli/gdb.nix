@@ -4,11 +4,12 @@
     pkgs.gdb
   ];
   home.file.gdbinit = {
-    source = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/cyrus-and/gdb-dashboard/2b107b27949d13f6ef041de6eec1ad2e5f7b4cbf/.gdbinit";
-      sha256 = "02rxyk8hmk7xk1pyhnc5z6a2kqyd63703rymy9rfmypn6057i4sr";
-      name = "gdbinit";
-    };
+    source = pkgs.fetchFromGitHub {
+      owner = "cyrus-and";
+      repo = "gdb-dashboard";
+      rev = "616ed5100d3588bb70e3b86737ac0609ce0635cc";
+      hash = "sha256-xoBkAFwkbaAsvgPwGwe1JxE1C8gPR6GP1iXeNKK5Z70=";
+    } + /.gdbinit;
     target = ".gdbinit";
   };
   home.file.gdb_dashboard_init = {
