@@ -17,6 +17,7 @@
   home.packages = with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
     x11-gestures
+    permanent-notifications
   ];
   dconf.settings = {
     "org/gnome/shell" = {
@@ -27,6 +28,7 @@
       enabled-extensions = [
         "Always-Show-Titles-In-Overview@gmail.com"
         "x11gestures@joseexposito.github.io"
+        "permanent-notifications@bonzini.gnu.org"
       ];
     };
   };
