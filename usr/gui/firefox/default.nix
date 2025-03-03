@@ -4,7 +4,11 @@
   programs.firefox = {
     enable = true;
     # If state version ≥ 19.09 then this should be a wrapped Firefox
-    package = pkgs.firefox.overrideAttrs (old: {
+    package = (pkgs.firefox.override {
+      nativeMessagingHosts = [
+        pkgs.firefoxpwa
+      ];
+    }).overrideAttrs (old: {
       desktopItem = old.desktopItem.override {
         exec = "env MOZ_USE_XINPUT2=1 firefox --name firefox %U";
       };
@@ -15,6 +19,7 @@
         # 😾😾😾 Chinese users cannot use ad block extensions
         # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
         ublock-origin
+        pwas-for-firefox
       ];
       settings = {
         # Automatically enable extensions
