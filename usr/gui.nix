@@ -8,7 +8,7 @@ in
     ./gui/mime.nix
     ./gui/kdeconnect.nix
     ./gui/xdot.nix
-    ./gui/firefox.nix
+    ./gui/firefox
   ] ++ (lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ./gui/rustdesk.nix
   ]) ++ (if !opt.isWSL2 then [

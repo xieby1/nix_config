@@ -1,3 +1,4 @@
+#MC # firefox configurations
 { config, pkgs, stdenv, lib, ... }:
 {
   programs.firefox = {
