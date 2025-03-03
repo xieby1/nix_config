@@ -1,3 +1,4 @@
+#MC # kitty
 { config, pkgs, stdenv, lib, ... }:
 {
   # Terminal Comparsion

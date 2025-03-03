@@ -13,7 +13,7 @@ in
     ./gui/rustdesk.nix
   ]) ++ (if !opt.isWSL2 then [
     ./gui/gnome
-    ./gui/terminal.nix
+    ./gui/kitty
     ./gui/singleton_web_apps.nix
     ./gui/rofi.nix
   ] else [{ # install fonts for WSL
