@@ -178,6 +178,9 @@ in {
       cnoremap <expr> <Down>  pumvisible() ? "\<Right>" : "\<Down>"
       cnoremap <expr> <Left>  pumvisible() ? "\<Up>"    : "\<Left>"
       cnoremap <expr> <Right> pumvisible() ? "\<Down>"  : "\<Right>"
+
+      " prevent resizing other windows when splitting/closing a window
+      set noequalalways
     '';
   };
 }
