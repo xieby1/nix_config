@@ -70,6 +70,7 @@ in
     xelfviewer
   ] ++ [
     vlc
+    obsidian
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ghidra
   ] ++ [
