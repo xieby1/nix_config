@@ -65,7 +65,10 @@
           },
         },
       })
+
+      -- key bindings of AI
       vim.keymap.set('n', '<leader>a', ':CodeCompanionChat Toggle<CR>')
+      vim.keymap.set('v', '<leader>a', ':CodeCompanionChat Add<CR>')
     '';
   }];
 }
