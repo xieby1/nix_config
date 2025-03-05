@@ -1,4 +1,6 @@
 { config, pkgs, lib, ... }:
+# TODO: change it into a module
+# TODO: split
 let
   # You Can Change To Chrome-Like Browser Here!
   chromeLikeBrowser = if (lib.meta.availableOn builtins.currentSystem pkgs.microsoft-edge.meta.platforms)
@@ -88,6 +90,7 @@ in
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/hjxd_jp/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kdeconnect_app/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/devdocs/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ai/"
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_html" = {
     binding="<Alt>space";
@@ -118,6 +121,11 @@ in
     binding="<Alt>d";
     command="gtk-launch devdocs.desktop";
     name="Devdocs";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/ai" = {
+    binding="<Alt>a";
+    command="gtk-launch ai.desktop";
+    name="AI";
   };
 
   xdg.desktopEntries = {
@@ -232,6 +240,15 @@ in
       name = "clash";
       exec = "${webapp_no_cors_sh} metacubexd file://${metacubexd}/index.html";
       icon = "${metacubexd}/pwa-192x192.png";
+    };
+    ai = {
+      name = "AI Chatbox";
+      genericName = "ai chatbox";
+      exec = "${webapp_sh} Chatbox https://web.chatboxai.app/";
+      icon = builtins.fetchurl {
+        url = "http://www.google.com/s2/favicons?domain=https://web.chatboxai.app&sz=128";
+        name = "Chatbox.png";
+      };
     };
 
     # singleton apps
