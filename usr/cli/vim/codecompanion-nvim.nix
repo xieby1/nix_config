@@ -48,6 +48,9 @@
         },
         display = {
           chat = {
+            window = {
+              width = 40,
+            },
             diff = {
               enabled = true,
             },
