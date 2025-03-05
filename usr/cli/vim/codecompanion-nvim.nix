@@ -62,6 +62,7 @@
           },
         },
       })
+      vim.keymap.set('n', '<leader>a', ':CodeCompanionChat Toggle<CR>')
     '';
   }];
 }
