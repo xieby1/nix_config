@@ -223,6 +223,7 @@ in
     tldr
     ## file system
     file
+    sshfs
     # magika # detect file content types with deep learning
     tree
     ## network

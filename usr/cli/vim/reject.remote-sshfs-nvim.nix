@@ -1,4 +1,6 @@
-#MC # remote-sshfs.nvim: integrate sshfs into nvim
+#MC # Deprecated: remote-sshfs.nvim: integrate sshfs into nvim
+#MC
+#MC Reason of Deprecation: It is better to use sshfs CLI!
 #MC
 #MC In my opinion, sshfs provides a better experience than distant.nvim
 { pkgs, ... }: {

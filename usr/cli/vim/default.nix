@@ -28,7 +28,6 @@ in {
     ./mini-nvim.nix
     ./vim-easy-align.nix
     ./codecompanion-nvim.nix
-    ./remote-sshfs-nvim.nix
     ./close-windows.nix
   ];
 
