@@ -33,6 +33,7 @@ nixpkgs原生支持x86和arm指令集。
 * [`localSystem`和`crossSystem`的应用](#localsystem和crosssystem的应用)
   * [aarch64交叉工具链和程序的详细例子](#aarch64交叉工具链和程序的详细例子)
   * [mips交叉工具链的例子](#mips交叉工具链的例子)
+* [crossSystem的传递](#crosssystem的传递)
 * [引用](#引用)
 
 <!-- vim-markdown-toc -->
@@ -259,6 +260,106 @@ $ qemu-aarch64 `command -v figlet` miao!
 ### mips交叉工具链的例子
 
 [cross_mips.nix]({{ site.repo_url }}/scripts/shell/cross_mips.nix)
+
+## crossSystem的传递
+
+* pkgs/top-level/stage.nix:
+  * ```nix
+    pkgsCross = lib.mapAttrs (n: crossSystem:
+      nixpkgsFun { inherit crossSystem; })
+      lib.systems.examples;
+    ```
+* 其中pkgs/top-level/default.nix: `nixpkgsFun = newArgs: import ./. (args // newArgs);`
+* 也就是说lib.systems.examples的每个元素作为crossSystem传递给了pkgs/top-level/default.nix
+* pkgs/top-level/default.nix:
+  * 首先crossSystem = lib.systems.elaborate crossSystem0
+  * 接下来是推导
+  * pkgs = boot stages;
+  * pkgs = boot (stdenvStages {inherit crossSystem ...});
+  * pkgs = boot (import ../stdenv {inherit crossSystem ...})
+* pkgs/stdenv/default.nix:
+  * pkgs = boot (import ./cross {inherit crossSystem ...})
+* pkgs/stdenv/cross/default.nix:
+  * pkgs = boot (lib.init bootStages ++ [(...) (..crossSystem..) (..crossSystem..)])
+  * 包含了若干个stages，包括本地的bootStages的前几个stages、和crossSystem相关的3个stages（其实只有最后两个stages使用了crossSystem）
+  * 这里需要搞清楚boot是怎么调用stages的
+  * pkgs/top-level/default.nix:
+    * boot = import ../stdenv/bo（__raw=false或未定义）oter.nix { inherit lib allPackages; };
+    * boot = import ../stdenv/booter.nix { ...; allPackages = newArgs: import ./stage.nix ({inherit lib nixpkgsFun;} // newArgs);};
+  * pkgs/stdenv/booter.nix:
+    * 注释写了boot的功能，如下：
+      参数为一个函数数组，每个函数的输入为pkgset，输出要么是pkgset的参数（__raw=false或未定义），要么是pkgsset（__raw=true）。
+      （这里说的“pkgset的参数”会传给allPackages（是个函数，见上））
+
+      ```nix
+      # Type:
+      #   [ pkgset -> (args to stage/default.nix) or ({ __raw = true; } // pkgs) ]
+      #   -> pkgset
+      #
+      # In english: This takes a list of function from the previous stage pkgset and
+      # returns the final pkgset. Each of those functions returns, if `__raw` is
+      # undefined or false, args for this stage's pkgset (the most complex and
+      # important arg is the stdenv), or, if `__raw = true`, simply this stage's
+      # pkgset itself.
+      ```
+  * 所以最终还是得看下面两个使用了crossSystem的stages
+* pkgs/stdenv/cross/default.nix:
+  * pkgs = boot (lib.init bootStages ++ [(...) ❶(..crossSystem..) ❷(..crossSystem..)])
+  * ❶
+
+    ```nix
+      # Build tool Packages
+      (vanillaPackages: {
+        ...
+        stdenv = assert ...;
+          vanillaPackages.stdenv.override { targetPlatform = crossSystem; };
+        ...
+      })
+    ```
+
+    输入是vanillaPackages，输出是buildPackages的参数（为生成下一级的输入pkgset即buildPackages）。
+    因此，这一级（即buildPackages，pkgsCross.<xxx>.buildPackages）的3个平台为：
+
+    | build       | host        | target      |
+    |-------------|-------------|-------------|
+    | localSystem | localSystem | crossSystem |
+
+    因此这一级的包是用来构建各种交叉工具链的包。
+
+    注：nixpkgs里也有叫buildPackages的包，定义位于pkgs/top-level/stage.nix：
+    buildPackages是pkgsBuildHost的别名，其中pkgs<theirHost><theirTarget>。
+
+  * ❷
+
+    ```nix
+    # Run Packages
+    (buildPackages: let
+      ...
+      stdenNoCC = adaptStdenv (buildPackages.stdenv.override (old: rec {
+        buildPlatform = localSystem;
+        hostPlatform = crossSystem;
+        targetPlatform = crossSystem;
+        ...
+      }));
+    in {
+      ...
+      stdenv = let
+        baseStdenv = stdenNoCC.override {
+          cc = ... buildPackages.gcc;
+        }
+      in ... baseStdenv;
+      ...
+    })
+    ```
+
+    这一级输入是buildPackages，输出就是我们平时pkgsCross.<xxx>的包集合了。
+    这一级（即pkgsCross.<xxx>）的3个平台为
+
+    | build       | host        | target      |
+    |-------------|-------------|-------------|
+    | localSystem | crossSystem | crossSystem |
+
+    其中要注意的是，pkgsCross.<xxx>.stdenv.cc就是pkgsCross.<xxx>.buildPackages.gcc。
 
 ## 引用
 
