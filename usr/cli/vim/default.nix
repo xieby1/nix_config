@@ -7,7 +7,7 @@ in {
     ./fold.nix
     ./nvim-metals
     ./conform-nvim.nix
-    ./nvim-lspconfig.nix
+    ./nvim-lspconfig
     ./nvim-cmp.nix
     ./vim-mark.nix
     ./DrawIt.nix
