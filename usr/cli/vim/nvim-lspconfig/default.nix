@@ -2,8 +2,6 @@
 { pkgs, ... }: {
   imports = [
     ./c.nix
-    # TODO: split cmp
-    ./cmp.nix
     ./html.nix
     ./lua.nix
     ./nix.nix
