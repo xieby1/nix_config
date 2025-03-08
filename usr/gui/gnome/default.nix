@@ -4,7 +4,7 @@ let
   opt = import ../../../opt.nix;
 in {
   imports = [
-    ./calendar.nix
+    ./calendar
     ./extensions
   ];
   home.packages = with pkgs; [
