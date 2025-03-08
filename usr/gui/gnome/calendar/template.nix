@@ -1,11 +1,11 @@
 {
   "Data Source" = {
-    DisplayName = builtins.trace ''gnome-calendar: it is recommended to set "Data Source".DisplayName'' "miao";
+    DisplayName = "toBeFilled";
     Enabled=true;
     Parent="webcal-stub";
   };
   Authentication = {
-    Host=builtins.trace ''Authentication.Host needs to be set, e.g. "outlook.live.com"'' "";
+    Host= "toBeFilled";
     Method="plain/password";
     Port=443;
     ProxyUid="system-proxy";
@@ -23,7 +23,7 @@
     Color="";
     DisplayName="";
     EmailAddress="";
-    ResourcePath=builtins.trace ''"WebDAV Backend".ResourcePath needs to be set, e.g. "/owa/calendar/xxxx/xxxx/xxxx/calendar.ics"'' "";
+    ResourcePath= "toBeFilled";
     ResourceQuery="";
     SslTrust="";
     Order=4294967295;
