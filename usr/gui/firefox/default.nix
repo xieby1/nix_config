@@ -1,6 +1,10 @@
 #MC # firefox configurations
 { config, pkgs, stdenv, lib, ... }:
 {
+  home.packages = [
+    # only with this package in home.packages, the installed PWAs will show up in gnome applications
+    pkgs.firefoxpwa
+  ];
   programs.firefox = {
     enable = true;
     # If state version ≥ 19.09 then this should be a wrapped Firefox
