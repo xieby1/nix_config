@@ -6,8 +6,8 @@ let
     src = pkgs.fetchFromGitHub {
       owner = "inkarkat";
       repo = "vim-ingo-library";
-      rev = "8ea0e934d725a0339f16375f248fbf1235ced5f6";
-      sha256 = "1rabyhayxswwh85lp4rzi2w1x1zbp5j0v025vsknzbqi0lqy32nk";
+      rev = "c93c33f803356b16bf4b4d122404d8251dc7b24d";
+      hash = "sha256-85h3S+5IjVIbTkYJasPXU+z/ALc9oT+MzdyjvTOhIwg=";
     };
   };
   my-vim-mark = {
@@ -16,8 +16,8 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "inkarkat";
         repo = "vim-mark";
-        rev = "7f90d80d0d7a0b3696f4dfa0f8639bba4906d037";
-        sha256 = "0n8r0ks58ixqv7y1afliabiqwi55nxsslwls7hni4583w1v1bbly";
+        rev = "76a25085d7c46f90fd5dfd7c43c3ba05b86ee192";
+        hash = "sha256-h2uaZ8dCUopNJ7fpf3BEoZNRk+25zqFukcHa3LomPSk=";
       };
     };
     config = ''
