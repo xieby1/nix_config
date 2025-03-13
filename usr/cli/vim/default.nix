@@ -51,6 +51,7 @@ in {
       vim-markdown-toc
       vim-commentary
       vim-plugin-AnsiEsc
+      vim-surround
     ] ++ (lib.optional opt.isGui markdown-preview-nvim);
 
     #MC Vim config
