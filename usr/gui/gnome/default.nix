@@ -22,6 +22,7 @@ in {
         "org.gnome.Nautilus.desktop"
         "firefox.desktop"
         "microsoft-edge.desktop"
+        "spotify.desktop"
       ];
     };
 

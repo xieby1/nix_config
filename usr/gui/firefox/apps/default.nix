@@ -99,5 +99,11 @@
     desktopEntryExtras = {
       name = "AI Chatbox";
     };
+  }{
+    name = "spotify";
+    url = "https://open.spotify.com/search";
+    desktopEntryExtras = {
+      name = "Spotify (Search)";
+    };
   }];
 }
