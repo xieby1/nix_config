@@ -1,6 +1,9 @@
 #MC # firefox configurations
 { config, pkgs, stdenv, lib, ... }:
 {
+  imports = [
+    ./apps
+  ];
   home.packages = [
     # only with this package in home.packages, the installed PWAs will show up in gnome applications
     pkgs.firefoxpwa
