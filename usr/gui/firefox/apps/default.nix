@@ -25,23 +25,20 @@
   ];
 
   firefox-apps = [{
-    name = "todo";
+    name = "ms-todo";
     url = "https://to-do.live.com/";
     desktopEntryExtras = {
       name = "Microsoft To Do";
     };
+    keybinding = "<Alt>t";
   }{
-    name = "calendar";
+    name = "ms-calendar"; # avoid singleton xdotool conflicts with system calendar
     url = "https://outlook.live.com/calendar";
     desktopEntryExtras = {
       name = "Microsoft Calendar";
+      genericName = "outlook calendar mail";
     };
-  }{
-    name = "outlook";
-    url = "https://outlook.live.com";
-    desktopEntryExtras = {
-      name = "Microsoft Outlook";
-    };
+    keybinding = "<Alt>m";
   }{
     name = "webweixin";
     url = "https://wx.qq.com";

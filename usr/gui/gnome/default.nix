@@ -22,8 +22,6 @@ in {
         "org.gnome.Nautilus.desktop"
         "firefox.desktop"
         "microsoft-edge.desktop"
-        "calendar.desktop"
-        "todo.desktop"
         "google-chrome.desktop"
       ];
     };
