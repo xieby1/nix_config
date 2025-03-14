@@ -22,7 +22,6 @@ in {
         "org.gnome.Nautilus.desktop"
         "firefox.desktop"
         "microsoft-edge.desktop"
-        "google-chrome.desktop"
       ];
     };
 

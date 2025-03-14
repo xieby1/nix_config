@@ -29,7 +29,6 @@ in
     libnotify
     # browser
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    google-chrome
     microsoft-edge
   ] ++ [
     # network
