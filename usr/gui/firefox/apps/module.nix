@@ -56,6 +56,8 @@ in {
             # auto open all windows in fullscreen mode
             i-auto-fullscreen
             darkreader
+            vimium
+            ublock-origin
           ];
           settings = {
             # https://superuser.com/questions/1483037/making-firefox-fullscreen-like-without-actually-maximizing-the-window
