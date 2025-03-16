@@ -95,9 +95,22 @@
   }){
     name = "ai";
     url = "https://web.chatboxai.app";
-    keybinding = "<Alt>a";
     desktopEntryExtras = {
       name = "AI Chatbox";
+    };
+  }{
+    name = "deepseek";
+    url = "https://chat.deepseek.com";
+    keybinding = "<Alt>a";
+    desktopEntryExtras = {
+      name = "DeepSeek";
+    };
+  }{
+    name = "doubao";
+    url = "https://www.doubao.com/chat";
+    keybinding = "<Alt>d";
+    desktopEntryExtras = {
+      name = "豆包";
     };
   }{
     name = "spotify";
