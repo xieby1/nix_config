@@ -35,6 +35,19 @@
   };
 
   config = {
+    # Available options: <evolution-data-server>/data/org.gnome.evolution-data-server.calendar.gschema.xml.in
+    dconf.settings."org/gnome/evolution-data-server/calendar" = {
+      # Currently, cannot use audio, otherwise no notification pops out.
+      # * https://gitlab.gnome.org/GNOME/gnome-calendar/-/issues/1226
+      #   * https://gitlab.gnome.org/GNOME/gnome-calendar/-/issues/1280
+      notify-enable-audio = false;
+      notify-enable-display = true;
+
+      # Default reminder for all events in chosen calendars
+      defall-reminder-enabled = true;
+      # defall-reminder-interval = 15
+      # defall-reminder-units = minutes
+    };
     home.activation = lib.mapAttrs (name: entry:
       let
         parseUrl = urlString:
