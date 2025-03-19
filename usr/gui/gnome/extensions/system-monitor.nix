@@ -28,12 +28,15 @@
     #   show-voltage = false;
     #   update-time = 2;
     # };
-    "org/gnome/shell/extensions/system-monitor" = {
+    "org/gnome/shell/extensions/system-monitor-next-applet" = {
       compact-display = true;
       icon-display = false;
       cpu-style = "digit";
       memory-style = "digit";
       net-style = "digit";
+      cpu-show-text = false;
+      memory-show-text = false;
+      net-show-text = false;
     };
   };
 }
