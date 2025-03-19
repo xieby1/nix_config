@@ -5,6 +5,7 @@
 { pkgs, ... }: {
   imports = [
     ./bing-wallpaper-changer.nix
+    ./bluetooth-battery-meter.nix
     ./clipboard-indicator.nix
     ./customize-ibus.nix
     ./dash-to-dock.nix
