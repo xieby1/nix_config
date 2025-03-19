@@ -8,6 +8,7 @@
 { stdenv
 , writeShellScript
 , jre
+, lndir
 , proxyHost
 , proxyPort
 }: let
@@ -21,16 +22,7 @@ in builtins.derivation rec {
     source ${stdenv}/setup
 
     mkdir -p $out
-    for dir in ${jre}/*; do
-      ln -s $dir $out/
-    done
-
-    rm $out/bin
-    mkdir -p $out/bin
-    for file in ${jre}/lib/openjdk/bin/*; do
-      ln -s $file $out/bin/
-    done
-
+    ${lndir}/bin/lndir -silent ${jre} $out
     rm $out/bin/java
     ln -s ${java_with_proxy_sh} $out/bin/java
   '';
