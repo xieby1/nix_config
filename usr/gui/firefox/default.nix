@@ -34,7 +34,14 @@
         # Disable `alt` key of toggling menu bar
         "ui.key.menuAccessKeyFocuses" = false;
         "ui.key.menuAccessKey" = -1; # original number 18
+        # enable userChrome.css
+        "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
+      userChrome = ''
+        /* [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666) */
+        /* [prevent firefox from showing the address bar in fullscreen mode](https://support.mozilla.org/en-US/questions/1323320) */
+        *|div#fullscr-toggler {display:none!important;}
+      '';
     };
   };
 }

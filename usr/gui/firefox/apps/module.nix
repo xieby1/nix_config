@@ -67,7 +67,14 @@ in {
             "extensions.autoDisableScopes" = 0;
             # https://stackoverflow.com/questions/51081754/cross-origin-request-blocked-when-loading-local-file
             "security.fileuri.strict_origin_policy" = false;
+            # enable userChrome.css
+            "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
           };
+          userChrome = ''
+            /* [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666) */
+            /* [prevent firefox from showing the address bar in fullscreen mode](https://support.mozilla.org/en-US/questions/1323320) */
+            *|div#fullscr-toggler {display:none!important;}
+          '';
         };
       }) config.firefox-apps
     );
