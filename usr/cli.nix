@@ -219,6 +219,7 @@ in
     graphviz
     figlet
     nyancat
+    d2
     ## manual
     tldr
     ## file system
