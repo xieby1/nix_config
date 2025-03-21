@@ -29,6 +29,9 @@
         pwas-for-firefox
       ];
       settings = {
+        # https://superuser.com/questions/1483037/making-firefox-fullscreen-like-without-actually-maximizing-the-window
+        # the full screen hotkey/button will trigger fullscreen like normal, except it won't resize the window.
+        "full-screen-api.ignore-widgets" = true;
         # Automatically enable extensions
         "extensions.autoDisableScopes" = 0;
         # Disable `alt` key of toggling menu bar
