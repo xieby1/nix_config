@@ -29,7 +29,6 @@ in {
     ./vim-easy-align.nix
     ./codecompanion-nvim.nix
     ./close-windows.nix
-    ./d2-vim.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
@@ -122,6 +121,9 @@ in {
           au! BufRead,BufNewFile *.ll     set filetype=llvm
           " cpp " from gem5
           au! BufRead,BufNewFile *.hh.inc,*.cc.inc set filetype=cpp
+          " d2
+          au! BufRead,BufNewFile *.d2 set filetype=d2
+          au! FileType d2 setlocal commentstring=#\ %s
       augroup END
 
       " set terminal title
