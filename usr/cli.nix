@@ -83,6 +83,7 @@ in
     ./cli/clash.nix
     ./cli/tailscale.nix
     ./cli/gdb.nix
+    ./cli/ctags.nix
     # When init searxng, it throws `ERROR:searx.engines.wikidata: Fail to initialize`
     # I have no idea, so disable it.
     # ./cli/searxng.nix
@@ -183,17 +184,6 @@ in
         then ~/Gist/Config/cachix.dhall
         else builtins.toFile "empty-cachix.dhall" "";
       target = ".config/cachix/cachix.dhall";
-    };
-  }{
-    home.packages = with pkgs; [
-      universal-ctags
-    ];
-    home.file.exclude_ctags = {
-      text = ''
-        # exclude ccls generated directories
-        --exclude=.ccls*
-      '';
-      target = ".config/ctags/exclude.ctags";
     };
   }];
 
