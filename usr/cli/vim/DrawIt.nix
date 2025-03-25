@@ -9,6 +9,10 @@ let
       rev = "master"; # I believe it wont update ^_*, so its safe
       sha256 = "0yn985pj8dn0bzalwfc8ssx62m01307ic1ypymil311m4gzlfy60";
     };
+    # disable <Leader>f binding
+    postPatch = ''
+      sed -i '/<Leader>f/d' autoload/DrawIt.vim
+    '';
   };
 in {
   programs.neovim = {
