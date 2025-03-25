@@ -4,13 +4,6 @@ let
   opt = import ../opt.nix;
 in {
   imports = [{
-    home.packages = let
-      pandora = pkgs.python3Packages.callPackage ./cli/pandora-chatgpt.nix {};
-      chatgpt = pkgs.writeShellScriptBin "chatgpt" ''
-        ${pandora}/bin/pandora -t ~/Gist/Pandora-ChatGPT/access_token.dat $@
-      '';
-    in [pandora chatgpt];
-  }{
     home.packages = [
       pkgs.act
       (pkgs.writeShellScriptBin "act-podman" ''
