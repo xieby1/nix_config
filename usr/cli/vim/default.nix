@@ -67,13 +67,11 @@ in {
       set signcolumn=number
       "" indent
       "set smartindent " not good, indentation in empty line cannot be auto removed
-      """ show existing tab with 4 spaces width
-      set tabstop=4
-      """ when indenting with '>', use 4 spaces width
-      set shiftwidth=4
-      """ specicial indent
-      au FileType markdown setlocal shiftwidth=2 tabstop=2
-      """ On pressing tab, insert 4 spaces
+      """ show existing tab with 2 spaces width
+      set tabstop=2
+      """ when indenting with '>', use 2 spaces width
+      set shiftwidth=2
+      """ On pressing tab, insert spaces
       set expandtab
       """ line wrap with ident
       set breakindent
