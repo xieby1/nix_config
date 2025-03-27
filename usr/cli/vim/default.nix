@@ -77,8 +77,6 @@ in {
       set expandtab
       """ line wrap with ident
       set breakindent
-      "" tags support, ';' means upward search, refering to http://vimdoc.sourceforge.net/htmldoc/editing.html#file-searching
-      set tags=./tags;
 
       """ mouse support " select by pressing shift key!
       set mouse=a
