@@ -77,9 +77,6 @@ in {
       set expandtab
       """ line wrap with ident
       set breakindent
-      """" horizontally scroll 4 characters
-      nnoremap z<left> 4zh
-      nnoremap z<right> 4zl
       "" tags support, ';' means upward search, refering to http://vimdoc.sourceforge.net/htmldoc/editing.html#file-searching
       set tags=./tags;
 
