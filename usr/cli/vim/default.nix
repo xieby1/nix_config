@@ -18,7 +18,6 @@ in {
     ./git-wip.nix
     ./vim-floaterm.nix
     ./vista-vim.nix
-    ./vim-markdown.nix
     ./vim-hexokinase.nix
     ./gitsigns-nvim.nix
     ./color-scheme.nix
