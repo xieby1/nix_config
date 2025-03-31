@@ -13,6 +13,8 @@
       mouse-sensitive = true;
       enable-active-window=false;
       enable-intellihide=true;
+      # enable shortcut <Super>+v show nofication list, <Super>+s show quick settings, and so on
+      keep-round-corners=true;
       shortcut-delay = 0.0;
       shortcut-keybind = ["<Super>h"];
     };
