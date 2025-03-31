@@ -73,6 +73,8 @@ in {
       set shiftwidth=2
       """ On pressing tab, insert spaces
       set expandtab
+      """ no markdown recommended indent style (recommended shiftwidth=4)
+      let g:markdown_recommended_style = 0
       """ line wrap with ident
       set breakindent
 
