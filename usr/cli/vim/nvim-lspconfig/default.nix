@@ -7,6 +7,7 @@
     ./nix.nix
     ./python.nix
     ./text.nix
+    ./typos.nix
   ];
   programs.neovim = {
     plugins = [{
