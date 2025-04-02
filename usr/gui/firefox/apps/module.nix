@@ -69,6 +69,8 @@ in {
             "security.fileuri.strict_origin_policy" = false;
             # enable userChrome.css
             "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+            # disable extensions auto update
+            "extensions.update.enabled" = false;
           };
           userChrome = ''
             /* [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666) */
