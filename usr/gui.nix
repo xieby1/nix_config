@@ -16,6 +16,7 @@ in
     ./gui/kitty
     ./gui/singleton_web_apps.nix
     ./gui/rofi.nix
+    ./gui/xcolor.nix
   ] else [{ # install fonts for WSL
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
