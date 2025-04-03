@@ -5,7 +5,7 @@
 #MC Without proxy, the scala package update make me headached.
 #MC
 #MC For usage example, see [my nvim-metals config](./default.nix)
-{ stdenv
+{ runCommand
 , writeShellScript
 , jre
 , lndir
@@ -15,15 +15,9 @@
   java_with_proxy_sh = writeShellScript "java" ''
     ${jre}/bin/java -Dhttp.proxyHost=${proxyHost} -Dhttp.proxyPort=${proxyPort} -Dhttps.proxyHost=${proxyHost} -Dhttps.proxyPort=${proxyPort} "$@"
   '';
-in builtins.derivation rec {
-  name = "jre_with_proxy";
-  system = builtins.currentSystem;
-  builder = writeShellScript "${name}-builder" ''
-    source ${stdenv}/setup
-
-    mkdir -p $out
-    ${lndir}/bin/lndir -silent ${jre} $out
-    rm $out/bin/java
-    ln -s ${java_with_proxy_sh} $out/bin/java
-  '';
-}
+in runCommand "jre_with_proxy" {} ''
+  mkdir -p $out
+  ${lndir}/bin/lndir -silent ${jre} $out
+  rm $out/bin/java
+  ln -s ${java_with_proxy_sh} $out/bin/java
+''
