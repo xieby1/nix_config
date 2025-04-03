@@ -35,7 +35,7 @@ let
         javaHome = "${jre_with_proxy}",
         showImplicitArguments = true,
         showImplicitConversionsAndClasses = true,
-        showInferredType = ture,
+        showInferredType = true,
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
