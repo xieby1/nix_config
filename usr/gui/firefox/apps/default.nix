@@ -73,7 +73,7 @@
     };
   }{
     name = "riyucidian";
-    url = "https://dict.hjenglish.com/jp";
+    url = "https://www.mojidict.com";
     keybinding = "<Alt>j";
     desktopEntryExtras = {
       name = "日语词典";
