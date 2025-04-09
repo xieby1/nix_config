@@ -2,6 +2,8 @@
 
 Here list wayland problems I have met.
 
+## warpd not work
+
 ## fcitx input method not work
 
 ## waydroid
