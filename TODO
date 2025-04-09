@@ -1,0 +1,2 @@
+* mv {gui,cli}.nix to {gui,cli}/default.nix
+* using rofi to select apps to save power of rendering gnome's zoom effect
