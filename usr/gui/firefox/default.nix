@@ -40,9 +40,10 @@
         # enable userChrome.css
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
-      userChrome = ''
-        /* [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666) */
-        /* [prevent firefox from showing the address bar in fullscreen mode](https://support.mozilla.org/en-US/questions/1323320) */
+      userChrome =
+      # [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666)
+      # [prevent firefox from showing the address bar in fullscreen mode](https://support.mozilla.org/en-US/questions/1323320)
+      ''
         *|div#fullscr-toggler {display:none!important;}
       ''
       # remove the thick toolbar header on the top of tree style tab
