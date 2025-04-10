@@ -5,7 +5,7 @@
     text = ''
       [Desktop Entry]
       Type=Application
-      Name=Barrier
+      Name=warpd
       Exec=${pkgs.warpd}/bin/warpd
     '';
   };

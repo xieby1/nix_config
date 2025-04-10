@@ -79,7 +79,7 @@ in
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     zotero
   ] ++ [
-    barrier
+    pkgs.pkgsu.deskflow
     keepassxc
     (pkgs.callPackage ./gui/planner.nix {})
     # entertainment
@@ -95,8 +95,8 @@ in
     };
   };
 
-  home.file.autostart_barrier = {
-    source = "${pkgs.barrier}/share/applications/barrier.desktop";
-    target = ".config/autostart/barrier.desktop";
+  home.file.autostart_deskflow = {
+    source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
+    target = ".config/autostart/org.deskflow.deskflow.desktop";
   };
 }
