@@ -12,7 +12,7 @@
     "org/gnome/shell/extensions/gtile" = {
       animation=true;
       global-presets=true;
-      grid-sizes="6x4,8x6";
+      grid-sizes="16x10";
       preset-resize-1=["<Super>bracketleft"];
       preset-resize-2=["<Super>bracketright"];
       preset-resize-3=["<Super>period"];
