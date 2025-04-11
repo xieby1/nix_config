@@ -79,7 +79,8 @@ in
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     zotero
   ] ++ [
-    pkgs.pkgsu.deskflow
+    # pkgs.pkgsu.deskflow
+    barrier
     keepassxc
     (pkgs.callPackage ./gui/planner.nix {})
     # entertainment
@@ -95,8 +96,14 @@ in
     };
   };
 
-  home.file.autostart_deskflow = {
-    source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
-    target = ".config/autostart/org.deskflow.deskflow.desktop";
+  # home.file.autostart_deskflow = {
+  #   source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
+  #   target = ".config/autostart/org.deskflow.deskflow.desktop";
+  # };
+  # use barrier due to its support of hotkey toggle screen!
+  #   see: https://github.com/deskflow/deskflow/issues/8006
+  home.file.autostart_barrier = {
+    source = "${pkgs.barrier}/share/applications/barrier.desktop";
+    target = ".config/autostart/barrier.desktop";
   };
 }
