@@ -47,8 +47,8 @@ in {
       maximize=["<Super>Up"];
       unmaximize=["<Super>Down"];
       minimize=[];
-      move-to-workspace-left=["<Control>Home"];
-      move-to-workspace-right=["<Control>End"];
+      move-to-workspace-left=["<Control><Super>Left"];
+      move-to-workspace-right=["<Control><Super>Right"];
     };
 
     # nautilus
