@@ -28,7 +28,7 @@ in {
     ./vim-easy-align.nix
     ./codecompanion-nvim.nix
     ./close-windows.nix
-    ./nvim-window.nix
+    ./nvim-window-picker.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
