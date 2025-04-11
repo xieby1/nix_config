@@ -123,5 +123,4 @@
 
   zramSwap.enable = true;
 
-  documentation.man.generateCaches = true;
 }
