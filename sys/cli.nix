@@ -123,4 +123,5 @@
 
   zramSwap.enable = true;
 
+  boot.kernelPackages = pkgs.linuxPackages_xanmod;
 }
