@@ -4,18 +4,10 @@
   imports = [
     ./apps
   ];
-  home.packages = [
-    # only with this package in home.packages, the installed PWAs will show up in gnome applications
-    pkgs.firefoxpwa
-  ];
   programs.firefox = {
     enable = true;
     # If state version ≥ 19.09 then this should be a wrapped Firefox
-    package = (pkgs.firefox.override {
-      nativeMessagingHosts = [
-        pkgs.firefoxpwa
-      ];
-    }).overrideAttrs (old: {
+    package = pkgs.firefox.overrideAttrs (old: {
       desktopItem = old.desktopItem.override {
         # MOZ_USE_XINPUT2=1 allow more smooth (pixel-level) scroll and zoom
         exec = "env MOZ_USE_XINPUT2=1 firefox --name firefox %U";
@@ -27,7 +19,6 @@
         # 😾😾😾 Chinese users cannot use ad block extensions
         # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
         ublock-origin
-        pwas-for-firefox
       ];
       settings = {
         # https://superuser.com/questions/1483037/making-firefox-fullscreen-like-without-actually-maximizing-the-window
