@@ -4,6 +4,7 @@
 #MC Just reload extension by <alt>+F2 r
 { pkgs, ... }: {
   imports = [
+    ./advanced-alttab-window-switcher.nix
     ./bing-wallpaper-changer.nix
     ./bluetooth-battery-meter.nix
     ./customize-ibus.nix
