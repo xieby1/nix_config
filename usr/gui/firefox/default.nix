@@ -8,10 +8,11 @@
     enable = true;
     # If state version ≥ 19.09 then this should be a wrapped Firefox
     package = pkgs.firefox.overrideAttrs (old: {
-      desktopItem = old.desktopItem.override {
-        # MOZ_USE_XINPUT2=1 allow more smooth (pixel-level) scroll and zoom
-        exec = "env MOZ_USE_XINPUT2=1 firefox --name firefox %U";
-      };
+      # MOZ_USE_XINPUT2=1 allow more smooth (pixel-level) scroll and zoom
+      buildCommand = old.buildCommand + ''
+        mv $out/bin/firefox $out/bin/firefox-no-xinput2
+        makeWrapper $out/bin/firefox-no-xinput2 $out/bin/firefox --set-default MOZ_USE_XINPUT2 1
+      '';
     });
     profiles.xieby1 = {
       # id is default 0, thus this profile is default

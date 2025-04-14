@@ -88,8 +88,6 @@ in {
           name = firefox-app.name;
           genericName = firefox-app.name;
           exec = assert firefox-app.url!=null;
-            # MOZ_USE_XINPUT2=1 allow more smooth (pixel-level) scroll and zoom
-            "env MOZ_USE_XINPUT2=1 " +
             "firefox -P ${firefox-app.name} --class ${firefox-app.name} ${firefox-app.url}";
           icon = builtins.fetchurl {
             url = "http://www.google.com/s2/favicons?domain=${firefox-app.url}&sz=128";
