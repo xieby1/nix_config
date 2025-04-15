@@ -1,6 +1,7 @@
 #MC # nvim-lspconfig
 { pkgs, ... }: {
   imports = [
+    ./bash.nix
     ./c.nix
     ./html.nix
     ./lua.nix
