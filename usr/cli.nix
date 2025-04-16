@@ -225,6 +225,7 @@ in
     nload
     nmap
     nethogs
+    nodePackages.browser-sync
     ## x11
     xdotool
 
