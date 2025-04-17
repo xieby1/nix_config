@@ -29,6 +29,7 @@ in {
     ./codecompanion-nvim.nix
     ./close-windows.nix
     ./nvim-window-picker.nix
+    ./vim-matchup.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
@@ -80,8 +81,6 @@ in {
 
       """ mouse support " select by pressing shift key!
       set mouse=a
-      """ matchit.vim " :h matchit-install
-      packadd! matchit
       "" Preview
       nnoremap <leader>[ :pc<CR>
       "" highlight unwanted whitespace
