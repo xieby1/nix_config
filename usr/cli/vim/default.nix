@@ -17,7 +17,7 @@ in {
     ./telescope-nvim.nix
     ./git-wip.nix
     ./vim-floaterm.nix
-    ./vista-vim.nix
+    ./outline-nvim.nix
     ./vim-hexokinase.nix
     ./gitsigns-nvim.nix
     ./color-scheme.nix
