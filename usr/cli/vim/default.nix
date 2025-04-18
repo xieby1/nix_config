@@ -30,6 +30,7 @@ in {
     ./close-windows.nix
     ./nvim-window-picker.nix
     ./vim-matchup.nix
+    ./nvim-nav.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";

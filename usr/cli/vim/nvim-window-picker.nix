@@ -10,8 +10,7 @@
           picker_config = {
             statusline_winbar_picker = {
               selection_display = function(char, windowid)
-                -- https://unix.stackexchange.com/questions/224771/what-is-the-format-of-the-default-statusline
-                return '[' .. char .. '] %<%f %h%w%m%r%=%-14.(%l,%c%V%) %P'
+                return '[' .. char .. ']' .. vim.o.statusline
               end,
             },
           },
