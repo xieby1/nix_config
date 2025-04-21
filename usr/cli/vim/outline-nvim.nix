@@ -11,6 +11,9 @@
           symbol_folding = {
             autofold_depth = 99,
           },
+          keymaps = {
+            close = {}, -- disable close key
+          },
         })
       '';
     }];
