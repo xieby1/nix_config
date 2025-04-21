@@ -8,6 +8,9 @@
           outline_window = {
             relative_width = false,
           },
+          guides = {
+            enabled = false, -- I already have mini indentscope
+          },
           symbol_folding = {
             autofold_depth = 99,
           },
