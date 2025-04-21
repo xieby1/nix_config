@@ -38,7 +38,8 @@
     # * ctrl: C-
     # Available X11 key names by removing "XK_" prefix in ${pkgs.xorg.xorgproto}/include/X11/keysymdef.h
     text = lib.generators.toKeyValue {mkKeyValue=lib.generators.mkKeyValueDefault {} ": ";} {
-      buttons = "q w r";
+      activation_key = "A-M-z"; # 一只手按A-M-z比A-M-c更方便！
+      buttons = "q w e";
       left  = "Left";
       up    = "Up";
       right = "Right";
