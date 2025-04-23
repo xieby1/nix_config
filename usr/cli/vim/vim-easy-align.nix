@@ -41,6 +41,8 @@ let
       \     'stick_to_left': 0
       \   },
       \ }
+
+      let g:easy_align_ignore_groups = [] " default: ['Comment', 'String']
     '';
   };
 in {
