@@ -15,11 +15,11 @@
       grid-sizes="16x10";
       preset-resize-1=["<Super>bracketleft"];
       preset-resize-2=["<Super>bracketright"];
-      preset-resize-3=["<Super>period"];
-      preset-resize-4=["<Super>slash"];
-      preset-resize-5=["<Super>apostrophe"];
-      preset-resize-6=["<Super>semicolon"];
-      preset-resize-7=["<Super>comma"];
+      preset-resize-3=["<Super>comma"];
+      preset-resize-4=["<Super>period"];
+      preset-resize-5=["<Super>semicolon"];
+      preset-resize-6=["<Super>apostrophe"];
+      preset-resize-7=["<Super>slash"];
       resize1="2x2 1:1 1:1";
       resize2="2x2 2:1 2:1";
       resize3="2x2 1:2 1:2";
