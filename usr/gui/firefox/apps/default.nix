@@ -30,7 +30,7 @@
     desktopEntryExtras = {
       name = "Microsoft To Do";
     };
-    keybinding = "<Alt>t";
+    keybinding = "<Super>t";
   }{
     name = "ms-calendar"; # avoid singleton xdotool conflicts with system calendar
     url = "https://outlook.live.com/calendar";
@@ -38,7 +38,7 @@
       name = "Microsoft Calendar";
       genericName = "outlook calendar mail";
     };
-    keybinding = "<Alt>m";
+    keybinding = "<Super>c";
   }{
     name = "webweixin";
     url = "https://wx.qq.com";
@@ -49,7 +49,7 @@
   }{
     name = "my_cheatsheet_html";
     url = "${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.html";
-    keybinding = "<Alt>space";
+    keybinding = "<Super>space";
     desktopEntryExtras = {
       name = "Cheatsheet HTML";
       genericName = "cheatsheet";
@@ -66,7 +66,7 @@
   }{
     name = "bing_dict";
     url = "https://cn.bing.com/dict";
-    keybinding = "<Alt>b";
+    keybinding = "<Super>b";
     desktopEntryExtras = {
       name = "Bing Dict";
       genericName = "dictionary";
@@ -74,7 +74,7 @@
   }{
     name = "riyucidian";
     url = "https://www.mojidict.com";
-    keybinding = "<Alt>j";
+    keybinding = "<Super>j";
     desktopEntryExtras = {
       name = "日语词典";
     };
@@ -101,14 +101,14 @@
   }{
     name = "deepseek";
     url = "https://chat.deepseek.com";
-    keybinding = "<Alt>a";
+    keybinding = "<Super>a";
     desktopEntryExtras = {
       name = "DeepSeek";
     };
   }{
     name = "doubao";
     url = "https://www.doubao.com/chat";
-    keybinding = "<Alt>d";
+    keybinding = "<Super>d";
     desktopEntryExtras = {
       name = "豆包";
     };
