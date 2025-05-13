@@ -1,4 +1,5 @@
 #MC # DrawIt: ascii art drawing
+# Currently, DrawIt runs very slowly, and it has not been maintained for a long time, so deprecate it.
 { config, pkgs, stdenv, lib, ... }:
 let
   DrawIt = pkgs.vimUtils.buildVimPlugin {

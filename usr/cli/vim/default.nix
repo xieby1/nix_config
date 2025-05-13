@@ -10,7 +10,6 @@ in {
     ./nvim-lspconfig
     ./nvim-cmp.nix
     ./vim-mark.nix
-    ./DrawIt.nix
     ./nvim-treesitter.nix
     ./nvim-config-local.nix
     ./leap-nvim.nix
@@ -54,6 +53,7 @@ in {
       vim-commentary
       vim-plugin-AnsiEsc
       vim-surround
+      venn-nvim
     ] ++ (lib.optional opt.isGui markdown-preview-nvim);
 
     #MC Vim config
