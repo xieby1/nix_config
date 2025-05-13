@@ -34,27 +34,27 @@ let
 
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
      cd ${config.home.homeDirectory}/Documents/Tech
-     kitty nvim my_cheatsheet.mkd -c Vista
+     kitty nvim my_cheatsheet.mkd -c Outline
      make
   '';
 in
 {
-  # gnome keyboard shortcuts
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
-    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_md/"
-  ];
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/my_cheatsheet_md" = {
-    binding="<Alt>c";
-    command="gtk-launch my_cheatsheet_md.desktop";
-    name="edit cheatsheet";
-  };
-
   xdg.desktopEntries = {
     # singleton apps
     my_cheatsheet_md = {
-      name = "Cheatsheet MD";
+      name = "Cheatsheet Edit MD";
       genericName = "cheatsheet";
       exec = "${singleton_sh} my_cheatsheet.mkd ${open_my_cheatsheet_md_sh}";
+      icon = builtins.toFile "cheatsheet.svg" ''
+        <svg width="64" height="64" xmlns="http://www.w3.org/2000/svg">
+          <rect width="100%" height="100%" rx="20%" ry="20%" fill="#666666"/>
+          <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="18" font-weight="bold" fill="#F5F5F5">
+            <tspan x="50%" dy="-1.0em">CS</tspan>
+            <tspan x="50%" dy="1.0em">Edit</tspan>
+            <tspan x="50%" dy="1.0em">MD</tspan>
+          </text>
+        </svg>
+      '';
     };
   };
 }
