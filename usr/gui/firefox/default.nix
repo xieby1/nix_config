@@ -3,6 +3,7 @@
 {
   imports = [
     ./apps
+    ./extensions
   ];
   programs.firefox = {
     enable = true;
@@ -38,11 +39,6 @@
       # [prevent firefox from showing the address bar in fullscreen mode](https://support.mozilla.org/en-US/questions/1323320)
       ''
         *|div#fullscr-toggler {display:none!important;}
-      ''
-      # remove the thick toolbar header on the top of tree style tab
-      # https://github.com/piroor/treestyletab/issues/1525
-      + ''
-        #sidebar-header { display: none; }
       '';
     };
   };
