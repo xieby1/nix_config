@@ -21,7 +21,7 @@ in {
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "firefox.desktop"
-        "microsoft-edge.desktop"
+        "chromium-browser.desktop"
         "spotify.desktop"
       ];
     };

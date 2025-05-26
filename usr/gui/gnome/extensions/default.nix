@@ -19,7 +19,8 @@
   home.packages = with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
     x11-gestures
-    permanent-notifications
+  ] ++ [
+    pkgs.gnome45Extensions."permanent-notifications@bonzini.gnu.org"
   ];
   dconf.settings = {
     "org/gnome/shell" = {

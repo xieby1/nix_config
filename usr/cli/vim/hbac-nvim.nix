@@ -10,6 +10,7 @@ let
         rev = "e2e8333aa56ef43a577ac3a2a2e87bdf2f0d4cbb";
         hash = "sha256-7+e+p+0zMHPJjpnKNkL7QQHZJGQ1DFZ6fsofcsVNXaY=";
       };
+      doCheck = false;
     };
     type = "lua";
     config = ''

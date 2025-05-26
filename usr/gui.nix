@@ -30,8 +30,7 @@ in
   home.packages = with pkgs; [
     libnotify
     # browser
-  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    microsoft-edge
+    chromium
   ] ++ [
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [

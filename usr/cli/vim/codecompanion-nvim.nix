@@ -52,6 +52,7 @@
         sed -i 's/provider = .*telescope.*/provider = "telescope",/' lua/codecompanion/config.lua
       '';
       meta.homepage = "https://github.com/olimorris/codecompanion.nvim/";
+      doCheck = false;
     };
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html

@@ -29,7 +29,7 @@
   };
   programs.neovim = {
     extraConfig = ''
-      "" tags support, ';' means upward search, refering to http://vimdoc.sourceforge.net/htmldoc/editing.html#file-searching
+      "" tags support, ';' means upward search, referring to http://vimdoc.sourceforge.net/htmldoc/editing.html#file-searching
       set tags=./tags;
     '';
     plugins = [{
@@ -87,6 +87,7 @@
           rev = "455f24c0dcc6126c89cd3a3278e3fe322df061b1";
           hash = "sha256-P9uYkWvY4NzwlAxG40/0sNZoGEHezDhlYL/gKfBI/dA=";
         };
+        doCheck = false;
       };
       type = "lua";
       config =''

@@ -11,8 +11,8 @@
         mutter-x11-scaling = pkgs.fetchFromGitHub {
           owner = "puxplaying";
           repo = "mutter-x11-scaling";
-          rev = "3a3a20ba7ae0af2c312373ebea9a33d912356217";
-          hash = "sha256-aB4pc3qu9/1aYt2Mlj2lWcmW9Qva8BzLx4k4O7lgURk=";
+          rev = "d19eeb27f6efb1f489ef49e0c987a9e02a072b31";
+          hash = "sha256-NOMd7wyQNj+tp2WZ9l2tKITYUvL7toZ8OvVQssR14Ng=";
         };
       in prev.mutter.overrideAttrs (old: {
         patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
@@ -23,8 +23,8 @@
         gnome-control-center-x11-scaling = pkgs.fetchFromGitHub {
           owner = "puxplaying";
           repo = "gnome-control-center-x11-scaling";
-          rev = "12ce1fb886e46b96ae9dc278df19536d2093ca6d";
-          hash = "sha256-6DkUzarvI/vZOSda0qmO65gwSvW2NC1gdx45gA21kB8=";
+          rev = "ec599022bbd39455043eeb5dd03ea6f1d33bbe23";
+          hash = "sha256-Y5D1p+koFBfgkbgreIV8FE+TqJrA8TJIrRQ8cQkzdB8=";
         };
       in prev.gnome-control-center.overrideAttrs (old: {
         patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
@@ -113,39 +113,15 @@
     noto-fonts-emoji
     noto-fonts-color-emoji
     noto-fonts-extra
-    (nerdfonts.override {
-      # The best developer fonts, see https://www.nerdfonts.com/
-      fonts = [
-        "Hack"
-        "Meslo"
-        "SourceCodePro"
-        "FiraCode"
-        "Terminus"
-        "Iosevka"
-        "Monoid"
-        "FantasqueSansMono"
-      ];
-    })
-    # refs to pkgs/data/fonts/roboto-mono/default.nix
-    # (stdenv.mkDerivation {
-    #   name = "my_fonts";
-    #   srcs = [(fetchurl {
-    #     url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Bold.ttf";
-    #     sha256 = "16111vvjii2hmnigjb44rjj39k8hjawbvwrb3f2f1ph4hv5wnvkn";
-    #   }) (fetchurl {
-    #     url = "https://github.com/lxgw/LxgwWenKai/releases/download/v1.311/LXGWWenKai-Regular.ttf";
-    #     sha256 = "103mvbpg51jvda265f29sjq17jj76dgwz6f1qdmv6d99bb8b6x7w";
-    #   })];
-    #   sourceRoot = "./";
-    #   unpackCmd = ''
-    #     ttfName=$(basename $(stripHash $curSrc))
-    #     cp $curSrc ./$ttfName
-    #   '';
-    #   installPhase = ''
-    #     mkdir -p $out/share/fonts/truetype
-    #     cp -a *.ttf $out/share/fonts/truetype/
-    #   '';
-    # })
+    # The best developer fonts, see https://www.nerdfonts.com/
+    nerd-fonts.hack
+    nerd-fonts.meslo-lg
+    nerd-fonts.sauce-code-pro
+    nerd-fonts.fira-code
+    nerd-fonts.terminess-ttf
+    nerd-fonts.iosevka
+    nerd-fonts.monoid
+    nerd-fonts.fantasque-sans-mono
   ];
   # enable fontDir /run/current-system/sw/share/X11/fonts
   fonts.fontDir.enable = true;
