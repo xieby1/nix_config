@@ -1,6 +1,9 @@
 #MC # nvim-metals: Scala LSP
 #MC
 #MC The JRE proxy need subtle configuration.
+# If jump to definition not work, try
+# * clean .metals/, ~/.bloop/, ~/.cache/mill
+# * MetalsResetChoice: Build server selection: mill-bsp
 { config, pkgs, ... }:
 let
   opt = import ../../../../opt.nix;
@@ -36,6 +39,8 @@ let
         showImplicitArguments = true,
         showImplicitConversionsAndClasses = true,
         showInferredType = true,
+        -- use mill in system, preventing the situation where I can compile but I cannot use metals
+        millScript = "mill",
       }
       metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
