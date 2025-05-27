@@ -30,7 +30,8 @@ in
   home.packages = with pkgs; [
     libnotify
     # browser
-    chromium
+    # dont ask me for keyring chromium-like browsers!
+    (chromium.override {commandLineArgs="--password-store=basic";})
   ] ++ [
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
