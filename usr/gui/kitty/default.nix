@@ -36,6 +36,7 @@
 
   imports = [
     ./timer.nix
+    ./search.nix
   ];
 
   # shortcuts
@@ -124,7 +125,6 @@
 
       map ctrl+shift+t new_tab_with_cwd
       map ctrl+shift+n new_os_window_with_cwd
-      map ctrl+shift+f launch --location=hsplit --allow-remote-control kitty +kitten search.py @active-kitty-window-id
 
       # disable opening of URLs with a plain click
       mouse_map left click ungrabbed no_op
@@ -147,20 +147,5 @@
       map alt+up neighboring_window up
       map alt+down neighboring_window down
     '';
-  };
-
-  home.file.kitty_search = {
-    source = pkgs.fetchurl {
-      url = "https://github.com/trygveaa/kitty-kitten-search/raw/0760138fad617c5e4159403cbfce8421ccdfe571/search.py";
-      sha256 = "1w50fimqsbmqk9zhdmq8k2v1b36iwsglpbqaavpglw0acam3xid7";
-    };
-    target = ".config/kitty/search.py";
-  };
-  home.file.kitty_scrool_mark = {
-    source = pkgs.fetchurl {
-      url = "https://github.com/trygveaa/kitty-kitten-search/raw/0760138fad617c5e4159403cbfce8421ccdfe571/scroll_mark.py";
-      sha256 = "1a1l7sp2x247da8fr54wwq7ffm987wjal9nw2f38q956v3cfknzi";
-    };
-    target = ".config/kitty/scroll_mark.py";
   };
 }
