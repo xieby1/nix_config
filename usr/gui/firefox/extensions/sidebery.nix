@@ -54,7 +54,7 @@
         #sidebar-header { display: none; }
         #sidebar-splitter { display: none; }
         #sidebar-box {
-          width: 15vw !important;
+          width: 13vw !important;
           min-width: 8em !important;
           padding: 0 !important;
         }
