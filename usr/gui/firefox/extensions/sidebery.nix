@@ -4,6 +4,9 @@
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         sidebery
       ];
+      settings = {
+        "sidebar.position_start" = false; # sidebar on the right
+      };
       userChrome = ''
         /* Completely Remove Firefox Tab Bar */
         /* https://bricep.net/completely-remove-firefox-tab-bar/ */
@@ -12,9 +15,6 @@
         #sidebar-header { display: none; }
         #sidebar-splitter { display: none; }
         #sidebar-box {
-          /* move sidebar-box to the right */
-          order: 99 !important;
-
           width: 15vw !important;
           min-width: 8em !important;
           padding: 0 !important;
