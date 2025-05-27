@@ -10,7 +10,8 @@
           nix = { "nixfmt" },
           c = { "clang_format" },
           cpp = { "clang_format" },
-          json = { "prettier" },
+          json = { "js_beautify" },
+          javascript = { "js_beautify" },
         },
       })
 
@@ -45,7 +46,7 @@
     extraPackages = with pkgs; [
       nixfmt-rfc-style
       clang-tools
-      nodePackages.prettier
+      nodePackages.js-beautify
     ];
   };
 }
