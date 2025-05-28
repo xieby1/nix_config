@@ -49,6 +49,8 @@ in {
       minimize=[];
       move-to-workspace-left=["<Control><Super>Left"];
       move-to-workspace-right=["<Control><Super>Right"];
+      switch-input-source=["<Control>space"];
+      switch-input-source-backward=["<Shift><Control>space"];
     };
 
     # nautilus
@@ -59,8 +61,6 @@ in {
     "org/gnome/desktop/interface" = {
       enable-hot-corners=false;
       show-battery-percentage=true;
-      switch-input-source=["<Control>space"];
-      switch-input-source-backward=["<Shift><Control>space"];
     };
 
     # proxy
