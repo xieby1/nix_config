@@ -15,6 +15,7 @@
     ./system-monitor.nix
     ./transparent-top-bar.nix
     ./unite.nix
+    ./lunar-calendar.nix
   ];
   home.packages = with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
