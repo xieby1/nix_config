@@ -4,7 +4,7 @@ let
     plugin = pkgs.vimPlugins.leap-nvim;
     type = "lua";
     config = ''
-      require('leap').create_default_mappings()
+      require('leap').set_default_mappings()
     '';
   };
 in {
