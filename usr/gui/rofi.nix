@@ -14,23 +14,17 @@ in
   # gnome keyboard shortcuts
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window/"
-    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_x/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_drun/"
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window" = {
     binding="<Super>w";
     command="rofi -show window";
     name="rofi window";
   };
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_x" = let
-    x = pkgs.writeScript "x" ''
-      cd ${config.home.homeDirectory}/Gist/script/bash/
-      xdotool type --clearmodifiers --delay 30 \
-        "$(ls --color=never x-* | rofi -dmenu | xargs bash -c)"
-    '';
-  in {
-    binding="<Super>x";
-    command="${x}";
-    name="rofi x";
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_drun" = {
+    binding="<Super>d";
+    command="rofi -show drun";
+    name="rofi drun";
   };
 
   home.file.rofi_config = {

@@ -108,7 +108,6 @@
   }{
     name = "doubao";
     url = "https://www.doubao.com/chat";
-    keybinding = "<Super>d";
     desktopEntryExtras = {
       name = "豆包";
     };
