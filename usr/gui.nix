@@ -82,7 +82,6 @@ in
     # pkgs.pkgsu.deskflow
     barrier
     keepassxc
-    (pkgs.callPackage ./gui/planner.nix {})
     # entertainment
     antimicrox
   ];
