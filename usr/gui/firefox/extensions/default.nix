@@ -4,5 +4,6 @@
 
     ./sidebery.nix
     ./darkreader.nix
+    ./smartproxy.nix
   ];
 }
