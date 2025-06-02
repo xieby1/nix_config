@@ -6,7 +6,7 @@
       ];
     };
   };
-  firefox-extensions.xieby1."${pkgs.nur.repos.rycee.firefox-addons.darkreader.addonId}" = {
+  firefox-extensions.xieby1.browser-extension-data."${pkgs.nur.repos.rycee.firefox-addons.darkreader.addonId}" = {
     storage = {
       schemeVersion = 2;
       syncSettings = false;

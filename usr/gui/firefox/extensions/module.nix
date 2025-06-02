@@ -1,20 +1,21 @@
 { config, pkgs, lib, ... }: {
-  options = let
-    extension-settings = {
-      options = {
-        storage = lib.mkOption {
-          type = lib.types.attrs;
-          default = {};
-          description = ''
-            Attrs that will be converted to json and merged to storage.js
-          '';
-        };
-      };
-    };
-  in {
+  options = {
     firefox-extensions = lib.mkOption {
-      #      per-profile        per-extension
-      type = lib.types.attrsOf (lib.types.attrsOf (lib.types.submodule extension-settings));
+      #      per-profile
+      type = lib.types.attrsOf (lib.types.submodule { options = {
+        browser-extension-data = lib.mkOption {
+          #      per-extension
+          type = lib.types.attrsOf (lib.types.submodule { options = {
+            storage = lib.mkOption {
+              type = lib.types.attrs;
+              default = {};
+              description = ''
+                Attrs that will be converted to json and merged to storage.js
+              '';
+            };
+          };});
+        };
+      };});
       default = {};
       description = ''
         Attrs of firefox-extensions settings
@@ -26,13 +27,15 @@
 
         firefox-extensions = {
           profile0 = {
-            darkreader = {
-              storage = {
-                schemeVersion = 2;
-                syncSettings = false;
-                disabledFor = [
-                  "http://127.0.0.1:7768"
-                ];
+            browser-extension-data = {
+              darkreader = {
+                storage = {
+                  schemeVersion = 2;
+                  syncSettings = false;
+                  disabledFor = [
+                    "http://127.0.0.1:7768"
+                  ];
+                };
               };
             };
           };
@@ -42,45 +45,32 @@
     };
   };
 
-  config = let
-    /*
-      mapAttrsAttrsToList (name1: name2: value2: <func-body>) <attrs>
-      <func-body> must return a name-value pair.
-      Example:
-         attrs = { a={x=0;y=1;}; b={x=2;y=3;}; };
-         mapAttrsAttrs (n1: n2: v2: {name=n1+n2; value=v2;}) attrs
-      => {ax=0; ay=1; bx=2; by=3;}
-    */
-    mapAttrsAttrs = f: attrs: builtins.listToAttrs (lib.flatten (
-      lib.mapAttrsToList (
-        n1: v1: (lib.mapAttrsToList (n2: v2: f n1 n2 v2)) v1
-      ) attrs
+  config = {
+    home.file = builtins.listToAttrs (lib.flatten (
+      lib.mapAttrsToList (profile: per-profile-settings: (
+        lib.mapAttrsToList (extensionId: per-extension-settings: {
+          name = "firefox-${profile}-${extensionId}";
+          value = let
+            relDir = "${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}";
+            absDir = "${config.home.homeDirectory}/${relDir}";
+          in {
+            target = "${relDir}/_storage_.js";
+            text = builtins.toJSON per-extension-settings.storage;
+            onChange = ''
+              if [[ -e ${absDir}/storage.js ]]; then
+                ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/storage.js ${absDir}/_storage_.js
+              else
+                cat ${absDir}/_storage_.js > ${absDir}/storage.js
+              fi
+            '';
+          };
+        }) per-profile-settings.browser-extension-data
+      )) config.firefox-extensions
     ));
-  in {
-    home.file = mapAttrsAttrs (profile: extensionId: settings: {
-      name = "firefox-${profile}-${extensionId}";
-      value = let
-        relDir = "${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}";
-        absDir = "${config.home.homeDirectory}/${relDir}";
-      in {
-        target = "${relDir}/_storage_.js";
-        text = builtins.toJSON settings.storage;
-        onChange = ''
-          if [[ -e ${absDir}/storage.js ]]; then
-            ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/storage.js ${absDir}/_storage_.js
-          else
-            cat ${absDir}/_storage_.js > ${absDir}/storage.js
-          fi
-        '';
-      };
-    }) config.firefox-extensions;
 
-    programs.firefox.profiles = mapAttrsAttrs (profile: extension: settings: {
-      name = "${profile}";
-      value = {
-        settings = {
-          "extensions.webextensions.ExtensionStorageIDB.enabled" = false;
-        };
+    programs.firefox.profiles = lib.mapAttrs (profile: _: {
+      settings = {
+        "extensions.webextensions.ExtensionStorageIDB.enabled" = false;
       };
     }) config.firefox-extensions;
   };
