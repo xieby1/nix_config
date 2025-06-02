@@ -79,6 +79,30 @@ in {
           value = { shortcut = "F2"; };
           enabled = true;
         }];};
+        up_shift = { precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value = { shortcut = ""; };
+          enabled = true;
+        }];};
+        down_shift = { precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value = { shortcut = ""; };
+          enabled = true;
+        }];};
+        switch_to_next_tab = { precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value = { shortcut = "Alt+Shift+Down"; };
+          enabled = true;
+        }];};
+        switch_to_prev_tab = { precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value = { shortcut = "Alt+Shift+Up"; };
+          enabled = true;
+        }];};
       };
     };
   };
