@@ -16,7 +16,15 @@
           };});
         };
         extension-settings = lib.mkOption {
-          type = lib.types.attrs;
+          type = lib.types.mkOptionType {
+            name = "attrsRecursiveUpdate";
+            description = "attribute set";
+            check = lib.isAttrs;
+            merge = loc: lib.foldl' (res: def: lib.recursiveUpdate res def.value) { };
+            emptyValue = {
+              value = { };
+            };
+          };
           default = {};
           description = ''
             The extension-settings.json
