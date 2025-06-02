@@ -59,13 +59,18 @@
   in {
     home.file = mapAttrsAttrs (profile: extensionId: settings: {
       name = "firefox-${profile}-${extensionId}";
-      value = {
-        target = ".mozilla/firefox/${profile}/browser-extension-data/addon@darkreader.org/_storage_.js";
+      value = let
+        relDir = "${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}";
+        absDir = "${config.home.homeDirectory}/${relDir}";
+      in {
+        target = "${relDir}/_storage_.js";
         text = builtins.toJSON settings.storage;
         onChange = ''
-          ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' \
-            ${config.home.homeDirectory}/${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}/storage.js \
-            ${config.home.homeDirectory}/${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}/_storage_.js
+          if [[ -e ${absDir}/storage.js ]]; then
+            ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/storage.js ${absDir}/_storage_.js
+          else
+            cat ${absDir}/_storage_.js > ${absDir}/storage.js
+          fi
         '';
       };
     }) config.firefox-extensions;
