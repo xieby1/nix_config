@@ -84,7 +84,9 @@
           absDir = "${config.home.homeDirectory}/${relDir}";
         in {
           target = "${relDir}/_extension-settings_.json";
-          text = builtins.toJSON per-profile-settings.extension-settings;
+          text = builtins.toJSON ({
+            version = 3;
+          } // per-profile-settings.extension-settings);
           onChange = ''
             if [[ -e ${absDir}/extension-settings.json ]]; then
               ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/extension-settings.json ${absDir}/_extension-settings_.json

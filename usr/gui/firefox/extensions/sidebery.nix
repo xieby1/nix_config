@@ -64,7 +64,6 @@ in {
 
   firefox-extensions.xieby1 = {
     extension-settings = {
-      version = 3;
       commands = {
         # toggle sidebery
         _execute_sidebar_action = { precedenceList = [{
