@@ -15,6 +15,13 @@
             };
           };});
         };
+        extension-settings = lib.mkOption {
+          type = lib.types.attrs;
+          default = {};
+          description = ''
+            The extension-settings.json
+          '';
+        };
       };});
       default = {};
       description = ''
@@ -38,6 +45,9 @@
                 };
               };
             };
+            extension-settings = {
+              ...
+            };
           };
           profile1 = {...};
         };
@@ -46,7 +56,7 @@
   };
 
   config = {
-    home.file = builtins.listToAttrs (lib.flatten (
+    home.file = (builtins.listToAttrs (lib.flatten (
       lib.mapAttrsToList (profile: per-profile-settings: (
         lib.mapAttrsToList (extensionId: per-extension-settings: {
           name = "firefox-${profile}-${extensionId}";
@@ -66,7 +76,25 @@
           };
         }) per-profile-settings.browser-extension-data
       )) config.firefox-extensions
-    ));
+    ))) // (
+      lib.mapAttrs' (profile: per-profile-settings: {
+        name = "firefox-${profile}-extension-settings";
+        value = let
+          relDir = "${config.programs.firefox.configPath}/${profile}";
+          absDir = "${config.home.homeDirectory}/${relDir}";
+        in {
+          target = "${relDir}/_extension-settings_.json";
+          text = builtins.toJSON per-profile-settings.extension-settings;
+          onChange = ''
+            if [[ -e ${absDir}/extension-settings.json ]]; then
+              ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/extension-settings.json ${absDir}/_extension-settings_.json
+            else
+              cat ${absDir}/_extension-settings_.json > ${absDir}/extension-settings.json
+            fi
+          '';
+        };
+      }) config.firefox-extensions
+    );
 
     programs.firefox.profiles = lib.mapAttrs (profile: _: {
       settings = {

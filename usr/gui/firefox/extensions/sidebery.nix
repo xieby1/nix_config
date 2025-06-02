@@ -1,9 +1,9 @@
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+  sidebery = pkgs.nur.repos.rycee.firefox-addons.sidebery;
+in {
   programs.firefox = {
     profiles.xieby1 = {
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        sidebery
-      ];
+      extensions = [ sidebery ];
       # transparent floating sidebar
       # Why not use it?
       # Because: I tried two ways to adjust the height of sidebar dynamically, but all failed:
@@ -59,6 +59,27 @@
           padding: 0 !important;
         }
       '';
+    };
+  };
+
+  firefox-extensions.xieby1 = {
+    extension-settings = {
+      version = 3;
+      commands = {
+        # toggle sidebery
+        _execute_sidebar_action = { precedenceList = [{
+           id = sidebery.addonId;
+           installDate = 0;
+           value = { shortcut = "F1"; };
+           enabled = true;
+        }];};
+        search = { precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value = { shortcut = "F2"; };
+          enabled = true;
+        }];};
+      };
     };
   };
 }
