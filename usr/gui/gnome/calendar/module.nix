@@ -35,7 +35,7 @@
   };
 
   config = {
-    # Available options: <evolution-data-server>/data/org.gnome.evolution-data-server.calendar.gschema.xml.in
+    # Available options: <evolution-data-server>/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
     dconf.settings."org/gnome/evolution-data-server/calendar" = {
       # Currently, cannot use audio, otherwise no notification pops out.
       # * https://gitlab.gnome.org/GNOME/gnome-calendar/-/issues/1226
@@ -89,6 +89,7 @@
         ];
         src = (pkgs.formats.ini {}).generate "${name}.source" cal_cfg;
         dst = "${config.home.homeDirectory}/.config/evolution/sources/${name}.source";
+      # Why not using yq, due to Color=#xxxxxx, '#' will be identified as comment, and be striped
       in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
         $DRY_RUN_CMD mkdir -p $VERBOSE_ARG $(dirname ${dst})
         $DRY_RUN_CMD sed 's/LastNotified=.*/LastNotified='$(date -u +"%Y-%m-%dT%H:%M:%SZ")'/g' ${src} > ${dst}
