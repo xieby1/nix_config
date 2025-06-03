@@ -7,7 +7,6 @@
     ./lua.nix
     ./nix.nix
     ./python.nix
-    ./text.nix
     ./typos.nix
     ./xml.nix
   ];
