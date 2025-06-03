@@ -25,6 +25,10 @@ in {
         "spotify.desktop"
       ];
     };
+    "org/gnome/shell/keybindings" = {
+      # disable original super+A
+      toggle-application-view = [];
+    };
 
     "org/gnome/desktop/session" = {
       idle-delay=lib.hm.gvariant.mkUint32 0; # never turn off screen
