@@ -17,7 +17,7 @@
     });
     profiles.xieby1 = {
       # id is default 0, thus this profile is default
-      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
         # 😾😾😾 Chinese users cannot use ad block extensions
         # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
         ublock-origin

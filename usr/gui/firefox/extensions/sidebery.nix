@@ -3,7 +3,7 @@
 in {
   programs.firefox = {
     profiles.xieby1 = {
-      extensions = [ sidebery ];
+      extensions.packages = [ sidebery ];
       # transparent floating sidebar
       # Why not use it?
       # Because: I tried two ways to adjust the height of sidebar dynamically, but all failed:

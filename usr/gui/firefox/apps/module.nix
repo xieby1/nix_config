@@ -52,7 +52,7 @@ in {
         name = assert firefox-app.name!=null; firefox-app.name;
         value = {
           id = i;
-          extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+          extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
             # auto open all windows in fullscreen mode
             i-auto-fullscreen
             darkreader

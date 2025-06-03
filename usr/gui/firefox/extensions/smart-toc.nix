@@ -20,7 +20,7 @@
 in {
   programs.firefox = {
     profiles.xieby1 = {
-      extensions = [ smart-toc ];
+      extensions.packages = [ smart-toc ];
     };
   };
   firefox-extensions.xieby1 = {

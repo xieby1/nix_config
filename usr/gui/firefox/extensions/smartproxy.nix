@@ -4,7 +4,7 @@
 in {
   programs.firefox = {
     profiles.xieby1 = {
-      extensions = [ smartproxy ];
+      extensions.packages = [ smartproxy ];
     };
   };
   firefox-extensions.xieby1 = {
