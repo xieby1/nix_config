@@ -24,8 +24,14 @@ let
       require('telescope').setup {
         extensions = {fzf = {}},
         defaults = {
-          layout_strategy = 'vertical'
-        }
+          layout_strategy = 'vertical',
+          layout_config = {
+            height = 0.95,
+            width = 0.95,
+            -- do not disable preview
+            preview_cutoff = 1,
+          },
+        },
       }
       require('telescope').load_extension('fzf')
     '';
