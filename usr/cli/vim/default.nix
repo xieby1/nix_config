@@ -30,6 +30,7 @@ in {
     ./nvim-window-picker.nix
     ./vim-matchup.nix
     ./nvim-nav.nix
+    ./markdown-preview-nvim.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
@@ -54,7 +55,7 @@ in {
       vim-plugin-AnsiEsc
       vim-surround
       venn-nvim
-    ] ++ (lib.optional opt.isGui markdown-preview-nvim);
+    ];
 
     #MC Vim config
     extraConfig = ''
