@@ -56,6 +56,7 @@ in {
         #sidebar-box {
           width: 13vw !important;
           min-width: 8em !important;
+          max-width: 15em !important;
           padding: 0 !important;
         }
       '';
