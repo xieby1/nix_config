@@ -31,12 +31,15 @@
     "org/gnome/shell/extensions/system-monitor-next-applet" = {
       compact-display = true;
       icon-display = false;
+      swap-display = true;
       cpu-style = "digit";
       memory-style = "digit";
       net-style = "digit";
+      swap-style = "digit";
       cpu-show-text = false;
       memory-show-text = false;
       net-show-text = false;
+      swap-show-text = false;
     };
   };
 }
