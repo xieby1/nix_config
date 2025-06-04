@@ -16,6 +16,7 @@
     ./transparent-top-bar.nix
     ./unite.nix
     ./lunar-calendar.nix
+    ./auto-accent-colour.nix
   ];
   home.packages = with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
