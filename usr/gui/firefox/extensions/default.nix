@@ -1,4 +1,4 @@
-{ ... }: {
+{ pkgs, ... }: {
   imports = [
     ./module.nix
 
@@ -7,4 +7,18 @@
     ./smartproxy.nix
     ./smart-toc.nix
   ];
+
+  programs.firefox = {
+    profiles.xieby1 = {
+      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
+        # 😾😾😾 Chinese users cannot use ad block extensions
+        # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
+        ublock-origin
+      ];
+      settings = {
+        # Automatically enable extensions
+        "extensions.autoDisableScopes" = 0;
+      };
+    };
+  };
 }

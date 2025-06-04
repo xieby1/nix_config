@@ -1,5 +1,5 @@
 #MC # firefox configurations
-{ config, pkgs, stdenv, lib, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./apps
@@ -15,19 +15,12 @@
         makeWrapper $out/bin/firefox-no-xinput2 $out/bin/firefox --set-default MOZ_USE_XINPUT2 1
       '';
     });
+    # id is default 0, thus this profile is default
     profiles.xieby1 = {
-      # id is default 0, thus this profile is default
-      extensions.packages = with pkgs.nur.repos.rycee.firefox-addons; [
-        # 😾😾😾 Chinese users cannot use ad block extensions
-        # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
-        ublock-origin
-      ];
       settings = {
         # https://superuser.com/questions/1483037/making-firefox-fullscreen-like-without-actually-maximizing-the-window
         # the full screen hotkey/button will trigger fullscreen like normal, except it won't resize the window.
         "full-screen-api.ignore-widgets" = true;
-        # Automatically enable extensions
-        "extensions.autoDisableScopes" = 0;
         # Disable `alt` key of toggling menu bar
         "ui.key.menuAccessKeyFocuses" = false;
         "ui.key.menuAccessKey" = -1; # original number 18
