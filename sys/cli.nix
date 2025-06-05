@@ -124,4 +124,6 @@
   zramSwap.enable = true;
 
   boot.kernelPackages = pkgs.linuxPackages_xanmod;
+
+  networking.firewall.enable = false;
 }

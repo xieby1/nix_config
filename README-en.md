@@ -187,8 +187,6 @@ nixos-generate-config --root /mnt
     * `networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";`
   * (For QEMU and single boot) Uncomment the following to enable grub support
     * `boot.loader.grub.device = "/dev/sda";`
-  * (Optional) Remove the firewall so that kdeconnect works
-    * `networking.firewall.enable = false;`
   * (dual boot) Automatic detection of operating system startup entries
     * `boot.loader.grub.useOSProber = true;`
   * Add a user
