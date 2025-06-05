@@ -33,6 +33,10 @@ in {
             type = lib.types.str;
             default = null;
           };
+          icon = lib.mkOption {
+            type = lib.types.nullOr lib.types.path;
+            default = null;
+          };
           desktopEntryExtras = lib.mkOption {
             type = lib.types.attrs;
             default = {};
@@ -89,7 +93,8 @@ in {
           genericName = firefox-app.name;
           exec = assert firefox-app.url!=null;
             "firefox -P ${firefox-app.name} --class ${firefox-app.name} ${firefox-app.url}";
-          icon = builtins.fetchurl {
+          icon = if firefox-app.icon != null then firefox-app.icon
+          else builtins.fetchurl {
             url = "http://www.google.com/s2/favicons?domain=${firefox-app.url}&sz=128";
             name = "${firefox-app.name}.png";
           };

@@ -19,7 +19,7 @@
 #MC 能正常设置kitty的WM_CLASS，但是为什么chrome不行？
 #MC
 #MC 所以选择firefox！
-{ config, ... }: {
+{ config, pkgs, ... }: {
   imports = [
     ./module.nix
   ];
@@ -117,5 +117,9 @@
     desktopEntryExtras = {
       name = "Spotify (Search)";
     };
+  }{
+    name = "syncthing";
+    url = "http://127.0.0.1:8384";
+    icon = "${pkgs.syncthingtray-minimal}/share/icons/hicolor/scalable/apps/syncthingtray.svg";
   }];
 }
