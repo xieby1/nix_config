@@ -6,6 +6,7 @@
     ./darkreader.nix
     ./smartproxy.nix
     ./smart-toc.nix
+    ./brotab.nix
   ];
 
   programs.firefox = {
