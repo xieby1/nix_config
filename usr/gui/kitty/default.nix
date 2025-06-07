@@ -67,6 +67,8 @@
       size = 16;
     };
     settings = {
+      allow_remote_control = "yes";
+
       cursor_blink_interval = "0.8";
       remember_window_size = "no";
       initial_window_width = "80c";
