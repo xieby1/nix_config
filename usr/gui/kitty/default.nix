@@ -68,6 +68,7 @@
     };
     settings = {
       allow_remote_control = "yes";
+      listen_on = "unix:/tmp/mykitty";
 
       cursor_blink_interval = "0.8";
       remember_window_size = "no";
