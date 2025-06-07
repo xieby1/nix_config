@@ -15,6 +15,7 @@ in
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_drun/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_wm/"
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window" = {
     binding="<Super>w";
@@ -25,6 +26,18 @@ in
     binding="<Super>d";
     command="rofi -show drun";
     name="rofi drun";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_wm" = let
+    wm = pkgs.python3Packages.callPackage (pkgs.fetchFromGitHub {
+      owner = "xieby1";
+      repo = "rofi-wm";
+      rev = "0572410bce9a4b5919c0f04f81bb4d115f51150f";
+      hash = "sha256-51sqEwVIbvfSl2V1a/T9sdxsKD/Z3reAGb/PE2Eq+TM=";
+    }) {};
+  in {
+    binding="<Super>q";
+    command="rofi -show wm -modes wm:${wm}/bin/wm.py";
+    name="rofi wm";
   };
 
   home.file.rofi_config = {

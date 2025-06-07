@@ -13,6 +13,7 @@
       click-action="focus-or-appspread";
       transparency-mode = "FIXED";
       background-opacity = 0.4;
+      shortcut= [];
     };
   };
 }
