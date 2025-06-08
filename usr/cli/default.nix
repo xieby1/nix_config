@@ -1,23 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  git-wip = builtins.derivation {
-    name = "git-wip";
-    system = builtins.currentSystem;
-    src = pkgs.fetchurl {
-      url = "https://raw.githubusercontent.com/bartman/git-wip/1c095e93539261370ae811ebf47b8d3fe9166869/git-wip";
-      sha256 = "00gq5bwwhjy68ig26a62307pww2i81y3zcx9yqr8fa36fsqaw37h";
-    };
-    builder = pkgs.writeShellScript "git-wip-builder" ''
-      source ${pkgs.stdenv}/setup
-      mkdir -p $out/bin
-      dst=$out/bin/git-wip
-      cp $src $dst
-      chmod +w $dst
-      sed -i 's/#!\/bin\/bash/#!\/usr\/bin\/env bash/g' $dst
-      chmod -w $dst
-      chmod a+x $dst
-    '';
-  };
   fzf-doc = pkgs.writeScriptBin "fzf-doc" ''
     allCmds() {
       # bash alias
@@ -83,6 +65,7 @@ in
     ./gdb.nix
     ./ctags.nix
     ./ssh.nix
+    ./git.nix
   ] ++ [{ # functions & attrs
     home.packages = [
       pkgs.fzf
@@ -107,37 +90,6 @@ in
       # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
       if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
     '';
-  }{
-    home.packages = with pkgs; [
-      gitui
-      mr
-      git-wip
-      git-quick-stats
-    ];
-    programs.git = {
-      enable = true;
-      package = pkgs.gitFull;
-      userEmail = "xieby1@outlook.com";
-      userName = "xieby1";
-      extraConfig = {
-        core = {
-          editor = "vim";
-        };
-        credential.helper = "store";
-      };
-      aliases = {
-        viz = "log --all --decorate --oneline --graph";
-      };
-      lfs.enable = true;
-    };
-    home.file.mr = {
-      text = if builtins.pathExists ~/Gist/Config/mrconfig
-        then builtins.readFile ~/Gist/Config/mrconfig
-        else "";
-      target = ".mrconfig";
-    };
-    # mr status not work in non-home dir
-    programs.bash.shellAliases.mr = "mr -d ~";
   }{
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
