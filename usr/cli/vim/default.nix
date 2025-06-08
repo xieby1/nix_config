@@ -1,7 +1,4 @@
-{ config, pkgs, stdenv, lib, ... }:
-let
-  opt = import ../../../opt.nix;
-in {
+{ config, pkgs, stdenv, lib, ... }: {
   #MC Plugins with customizations:
   imports = [
     ./fold.nix

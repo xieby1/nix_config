@@ -1,6 +1,5 @@
-{ pkgs, ... }: let
+{ config, pkgs, ... }: let
   inherit (pkgs.nur.repos.rycee.firefox-addons) smartproxy;
-  opt = import ../../../../opt.nix;
 in {
   programs.firefox = {
     profiles.xieby1 = {
@@ -17,7 +16,7 @@ in {
           id = "defaultProxyServerId";
           order = 0;
           host = "127.0.0.1";
-          port = opt.proxyPort;
+          port = config.proxyPort;
           protocol = "HTTP";
           username = "";
           password = "";

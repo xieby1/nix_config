@@ -1,8 +1,5 @@
 #MC Gnome settings
-{ pkgs, lib, ... }:
-let
-  opt = import ../../../opt.nix;
-in {
+{ config, pkgs, lib, ... }: {
   imports = [
     ./calendar
     ./extensions
@@ -69,9 +66,9 @@ in {
 
     # proxy
     "system/proxy" = {mode = "manual";};
-    "system/proxy/ftp" = {host="127.0.0.1"; port=opt.proxyPort;};
-    "system/proxy/http" = {host="127.0.0.1"; port=opt.proxyPort;};
-    "system/proxy/https" = {host="127.0.0.1"; port=opt.proxyPort;};
+    "system/proxy/ftp" = {host="127.0.0.1"; port=config.proxyPort;};
+    "system/proxy/http" = {host="127.0.0.1"; port=config.proxyPort;};
+    "system/proxy/https" = {host="127.0.0.1"; port=config.proxyPort;};
 
     "org/gnome/mutter" = {
       dynamic-workspaces = true;

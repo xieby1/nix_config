@@ -1,14 +1,11 @@
 #MC # tmux
-{ config, pkgs, stdenv, lib, ... }:
-let
-  opt = import ../../opt.nix;
-in {
+{ config, pkgs, stdenv, lib, ... }: {
   home.packages = [pkgs.tmux];
   #MC ## bash config for tmux
   #MC
   #MC Auto start tmux in non-GUI device.
   #MC mkAfter ensure the tmux config is appended to the tail of .bashrc.
-  programs.bash.bashrcExtra = lib.mkAfter (lib.optionalString (!opt.isGui) ''
+  programs.bash.bashrcExtra = lib.mkAfter (lib.optionalString (!config.isGui) ''
     # Auto start tmux
     # see: https://unix.stackexchange.com/questions/43601/how-can-i-set-my-default-shell-to-start-up-tmux
     # ~~1. tmux exists on the system~~, nix ensure that tmux does exist

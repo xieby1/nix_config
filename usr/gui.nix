@@ -1,6 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  opt = import ../opt.nix;
   xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
 in
 {
@@ -10,23 +9,16 @@ in
     ./gui/xdot.nix
     ./gui/firefox
     ./gui/warpd.nix
-  ] ++ (lib.optionals (builtins.currentSystem=="x86_64-linux") [
     ./gui/rustdesk.nix
-  ]) ++ (if !opt.isWSL2 then [
     ./gui/gnome
     ./gui/kitty
     ./gui/singleton_web_apps.nix
     ./gui/rofi.nix
     ./gui/xcolor.nix
-  ] else [{ # install fonts for WSL
-    fonts.fontconfig.enable = true;
-    home.packages = with pkgs; [
-      noto-fonts-cjk-sans
-      noto-fonts-cjk-serif
-      noto-fonts-emoji
-    ];
-  }]);
+    ./gui/wsl.nix
+  ];
 
+config = lib.mkIf config.isGui {
   home.packages = with pkgs; [
     libnotify
     # browser
@@ -105,4 +97,4 @@ in
     source = "${pkgs.barrier}/share/applications/barrier.desktop";
     target = ".config/autostart/barrier.desktop";
   };
-}
+};}
