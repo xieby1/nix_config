@@ -31,8 +31,8 @@ in
     wm = pkgs.python3Packages.callPackage (pkgs.fetchFromGitHub {
       owner = "xieby1";
       repo = "rofi-wm";
-      rev = "0572410bce9a4b5919c0f04f81bb4d115f51150f";
-      hash = "sha256-51sqEwVIbvfSl2V1a/T9sdxsKD/Z3reAGb/PE2Eq+TM=";
+      rev = "5d3a13d3293b2e3a06a528f03bdfa99db5d4fd7b";
+      hash = "sha256-rWn4k2AD5vRv0Dz+K1aIOmG74Nilw5NZPs3xQCIS3Ew=";
     }) {};
   in {
     binding="<Super>q";
