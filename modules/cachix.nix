@@ -31,9 +31,17 @@
     _cachix_push = lib.mkOption {
       type = lib.types.str;
       default = ''
-        echo Pushing packages to cachix:
-        ${lib.concatMapStrings (x: "echo 📦"+x+"\n") config.cachix_packages}
-        ${pkgs.cachix}/bin/cachix -c ${config.cachix_dhall} push ${config.cachix_name} ${builtins.toString config.cachix_packages}
+        mkdir -p ~/.config/cachix_push
+        ${lib.concatMapStrings (pkg: ''
+          symlink=~/.config/cachix_push/${pkg.name}
+          if [[ ! (-h "$symlink" && $(realpath "$symlink")==${pkg}) ]]; then
+            # the symlink are not the same to pkg, need to cachix push
+            echo 📦 ${pkg}
+            ${pkgs.cachix}/bin/cachix -c ${config.cachix_dhall} push ${config.cachix_name} ${pkg}
+            rm -f "$symlink"
+            ln -s ${pkg} "$symlink"
+          fi
+        '') config.cachix_packages}
       '';
       description = ''
         (Internal usage) The script of pushing packages to cachix.
