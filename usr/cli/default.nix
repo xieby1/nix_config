@@ -80,7 +80,7 @@ in
     programs.bash.bashrcExtra = lib.optionalString (!config.isNixOnDroid) ''
       # HSTR configuration - add this to ~/.bashrc
       alias hh=hstr                    # hh to be alias for hstr
-      export HSTR_CONFIG=hicolor       # get more colors
+      export HSTR_CONFIG=hicolor,raw-history-view
       shopt -s histappend              # append new history items to .bash_history
       export HISTCONTROL=ignorespace   # leading space hides commands from history
       # ensure synchronization between bash memory and history file
