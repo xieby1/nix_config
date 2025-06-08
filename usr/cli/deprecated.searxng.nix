@@ -1,3 +1,5 @@
+# When init searxng, it throws `ERROR:searx.engines.wikidata: Fail to initialize`
+# I have no idea, so deprecated it.
 { config, pkgs, stdenv, lib, ... }:
 let
   searxng_yml = builtins.toFile "searxng.yml" ''
