@@ -6,7 +6,7 @@
 #MC
 #MC nix-on-droid并未自带很多常用linux命令行工具，
 #MC 因此`nix-on-droid.nix`主要负责配置那些在linux常用的，但nix-on-droid没有默认提供的命令行工具。
-#MC 其他命令行工具的配置则复用home-manager的配置[`./home.nix`](./home.nix.md)。
+#MC 其他命令行工具的配置则复用home-manager的配置[`./usr`](./usr/default.nix.md)。
 #MC 下面是我的带注解的`nix-on-droid.nix`代码。
 
 { pkgs, config, ... }:
@@ -104,7 +104,7 @@
   # Read the changelog before changing this value
   system.stateVersion = "21.11";
 
-  #MC 导入home-manager的配置文件[./home.nix](./home.nix)的配置。
+  #MC 导入home-manager的配置文件[./usr](./usr/default.nix)的配置。
   #MC 如此操作，所有home-manager的软件和配置都能nix-on-droid中复用。
-  home-manager.config = import ./home.nix;
+  home-manager.config = import ./usr;
 }

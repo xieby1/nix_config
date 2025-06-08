@@ -79,9 +79,9 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
   * cli/: 系统命令行配置
   * gui/: 系统图形配置
   * modules/: 系统模块
-* home.nix: 用户总体配置（home-manager的配置）
-  * usr/cli/: 用户命令行配置
-  * usr/gui/: 用户图形配置
+* usr/: 用户总体配置（home-manager的配置）
+  * cli/: 用户命令行配置
+  * gui/: 用户图形配置
   * modules/: 用户模块
 * nix-on-droid.nix: 安卓总体配置（nix-on-droid的配置）
 * modules/: nixos/home-manager通用的模块
@@ -146,6 +146,11 @@ nix-channel --update
 sudo nixos-rebuild switch
 # 安装home-manager
 nix-shell '<home-manager>' -A install
+# 在home-manager配置中添加usr/的路径
+vim ~/.config/home-manager/home.nix
+## 例如  imports = [ /home/xieby1/.config/nixpkgs/usr ];
+# 用nix expression而不使用nix flakes
+rm ~/.config/home-manager/flake.nix
 home-manager switch
 ```
 

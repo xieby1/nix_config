@@ -54,9 +54,9 @@ welcome to check out the documentation in this repo [xieby1.github.io/nix_config
   * cli/: system CLI configuration
   * gui/: system GUI configuration
 * nix-on-droid.nix: android configuration (with home-manager configuration)
-* home.nix: user configuration (home-manager configuration)
-  * usr/cli/: user CLI configuration
-  * usr/gui/: user GUI configuration
+* usr/: user configuration (home-manager configuration)
+  * cli/: user CLI configuration
+  * gui/: user GUI configuration
 
 ## Relationship between Nix and NixOS
 
