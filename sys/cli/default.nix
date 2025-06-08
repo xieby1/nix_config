@@ -1,4 +1,4 @@
-#MC # cli.nix
+#MC # sys/cli
 #MC
 #MC 本文件是NixOS的CLI配置。
 #MC 主要包含两部分内容：
@@ -34,39 +34,6 @@
   };
 
   #MC ## 系统配置
-
-  #MC 给jumper电脑自动挂在SD卡。
-  # refers to https://www.golinuxcloud.com/automount-file-system-systemd-rhel-centos-7-8/
-  systemd.mounts = if "${config.networking.hostName}" == "jumper"
-  then [{
-    enable = true;
-    # [Unit]
-    description = "My SD Card";
-    unitConfig = {
-      DefaultDependencies = "no";
-      Conflicts = "umount.target";
-    };
-    before = ["local-fs.target" "umount.target"];
-    after = ["swap.target"];
-    # [Mount]
-    what = "/dev/disk/by-label/home";
-    where = "/home";
-    type = "ext4";
-    options = "defaults";
-    # [Install]
-    wantedBy = ["multi-user.target"];
-  }] else [];
-
-  systemd.automounts = if "${config.networking.hostName}" == "jumper"
-  then [{
-    enable = true;
-    # [Unit]
-    description = "automount sdcard";
-    # [Automount]
-    where = "/home";
-    # [Install]
-    wantedBy = ["multi-user.target"];
-  }] else [];
 
   #MC 启用NTFS文件系统的支持。
   #MC 如此就可以在NixOS/Windows双系统的电脑上挂在Windows的分区啦。

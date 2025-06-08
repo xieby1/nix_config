@@ -1,7 +1,7 @@
-#MC # system.nix
+#MC # sys/default.nix
 #MC
-#MC 本文件`system.nix`存放喆我的NixOS的配置。
-#MC NixOS的配置通过命令`sudo nixos-rebuid switch`生效。
+#MC 本文件存放喆我的NixOS的配置。
+#MC NixOS的配置通过命令`sudo nixos-rebuild switch`生效。
 #MC 因为NixOS的配置入口是`/etc/nixos/configuration.nix`，
 #MC 所以需要在`/etc/nixos/configuration.nix`中import本文件，例如
 #MC
@@ -10,8 +10,8 @@
 #MC { config, pkgs, ... }: {
 #MC   imports = [
 #MC     ./hardware-configuration.nix
-#MC     # import my system.nix here!
-#MC     /home/xieby1/.config/nixpkgs/system.nix
+#MC     # import my sys/ here!
+#MC     /home/xieby1/.config/nixpkgs/sys
 #MC   ];
 #MC   # other configs ...
 #MC }
@@ -25,14 +25,14 @@
 
 {
   #MC 让NixOS的nixpkgs使用和home-manager的nixpkgs采用相同的nixpkgs config
-  nixpkgs.config = import ./config.nix;
+  nixpkgs.config = import ../config.nix;
 
   #MC 导入我的NixOS的CLI和GUI配置，
-  #MC 详细内容见文档[./sys/cli.nix](./sys/cli.nix.md)和[./sys/gui.nix](./sys/gui.nix.md)。
+  #MC 详细内容见文档[./cli](./cli/default.nix.md)和[./gui](./gui/default.nix.md)。
   imports = [
-    ./sys/modules/cachix.nix
-    ./sys/cli.nix
-    ./sys/gui.nix
+    ./modules/cachix.nix
+    ./cli
+    ./gui
   ];
 
   #MC Nix binary cache的地址。
@@ -87,7 +87,7 @@
   #MC
   #MC * home-manager配置的manpage的services词条，
   #MC   比如`man home-configuration.nix`搜索`services.syncthing`
-  #MC * 我的syncthing配置[./usr/cli.nix: syncthing](./usr/cli.nix.md#syncthing)
+  #MC * 我的syncthing配置[./usr/cli: syncthing](./usr/cli/default.nix.md#syncthing)
   #MC * 我的clash配置[./usr/cli/clash.nix](./usr/cli/clash.nix.md)
   #MC * 我的tailscale配置[./usr/cli/tailscale.nix](./usr/cli/tailscale.nix.md)
 }

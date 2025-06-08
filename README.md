@@ -75,13 +75,13 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
   * fhs-shell/: 采用FHS的nix-shell脚本
   * shell/: nix-shell脚本
   * pkgs/: 独立的软件包脚本
-* system.nix: 系统总体配置（nixos-rebuild的配置）
-  * sys/cli.nix: 系统命令行配置
-  * sys/gui.nix: 系统图形配置
+* sys/: 系统总体配置（nixos-rebuild的配置）
+  * cli/: 系统命令行配置
+  * gui/: 系统图形配置
   * modules/: 系统模块
 * home.nix: 用户总体配置（home-manager的配置）
-  * usr/cli.nix: 用户命令行配置
-  * usr/gui.nix: 用户图形配置
+  * usr/cli/: 用户命令行配置
+  * usr/gui/: 用户图形配置
   * modules/: 用户模块
 * nix-on-droid.nix: 安卓总体配置（nix-on-droid的配置）
 * modules/: nixos/home-manager通用的模块
@@ -116,7 +116,7 @@ nix-shell
 
 ```bash
 git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
-# [仅NixOS] 在imports中添加system.nix的路径
+# [仅NixOS] 在imports中添加sys/的路径
 vim /etc/nixos/configuration.nix
 ```
 

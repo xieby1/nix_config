@@ -50,13 +50,13 @@ welcome to check out the documentation in this repo [xieby1.github.io/nix_config
 
 ## Folder structure
 
-* system.nix: system configuration (nixos-rebuild configuration)
-  * sys/cli.nix: system CLI configuration
-  * sys/gui.nix: system GUI configuration
+* sys/: system configuration (nixos-rebuild configuration)
+  * cli/: system CLI configuration
+  * gui/: system GUI configuration
 * nix-on-droid.nix: android configuration (with home-manager configuration)
 * home.nix: user configuration (home-manager configuration)
-  * usr/cli.nix: user CLI configuration
-  * usr/gui.nix: user GUI configuration
+  * usr/cli/: user CLI configuration
+  * usr/gui/: user GUI configuration
 
 ## Relationship between Nix and NixOS
 
@@ -182,7 +182,7 @@ nixos-generate-config --root /mnt
   * enable proxy (if you are not bothered by GFW, skip this step)
     * The host machine ip in QEMU is 10.0.2.2
     * During the installation process, you need to use the proxy service of another computer or host
-    * After deploying my nixos configuration, the qv2ray service will be avialable
+    * After deploying my nixos configuration, the qv2ray service will be available
     * `networking.proxy.default = "http://user:password@proxy:port/";`
     * `networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";`
   * (For QEMU and single boot) Uncomment the following to enable grub support
@@ -191,7 +191,7 @@ nixos-generate-config --root /mnt
     * `boot.loader.grub.useOSProber = true;`
   * Add a user
     * `users.users.xieby1`
-  * Add softwares
+  * Add software
     * `environment.systemPackages = with pkgs; [vim git];`
 
 Finally,
@@ -214,7 +214,7 @@ Import my configuration into the basic configuration.
 ```bash
 git clone https://github.com/xieby1/nix_config.git ~/.config/nixpkgs
 vim /etc/nixos/configuration.nix
-# Add the path of system.nix to imports
+# Add the path of sys/ to imports
 ```
 
 ### Config nix channels
@@ -262,7 +262,7 @@ Type settings and default program settings are implemented through xdg-mime.
 
 This module is used for gsettings configuration.
 The existing dconf.settings does not cover all gsettings functions.
-For example, the top bar of gnome-termimal needs to be hidden through gsettings.
+For example, the top bar of gnome-terminal needs to be hidden through gsettings.
 For details, refers to [this answer](https://askubuntu.com/questions/416556/shouldnt-dconf-editor-and-gsettings-access-the-same-database) which explains the difference between gsettings (schema id) and dconf (schema path).
 
 ### Qv2ray proxy
@@ -271,7 +271,7 @@ qv2ray has stopped updating and does not adapt well to high-resolution screens.
 Possible GUI replacement v2rayA.
 
 qv2ray requires v2ray core.
-Through usr/gui.nix: home.file.v2ray_core,
+Through usr/gui: home.file.v2ray_core,
 put v2ray core in the default folder of qv2ray.config/qv2ray/,
 so that qv2ray can be used out of the box.
 

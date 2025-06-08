@@ -1,4 +1,4 @@
-#MC # cli-extra.nix: Extra CLI configs (added to minial cli.nix)
+#MC # cli-extra.nix: Extra CLI configs (added to minimal cli config)
 { config, pkgs, stdenv, lib, ... }: {
   imports = [{
     home.packages = [

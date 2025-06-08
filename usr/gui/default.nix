@@ -1,21 +1,21 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  xelfviewer = pkgs.callPackage ./gui/xelfviewer.nix {};
+  xelfviewer = pkgs.callPackage ./xelfviewer.nix {};
 in
 {
   imports = [
-    ./gui/mime.nix
-    ./gui/kdeconnect.nix
-    ./gui/xdot.nix
-    ./gui/firefox
-    ./gui/warpd.nix
-    ./gui/rustdesk.nix
-    ./gui/gnome
-    ./gui/kitty
-    ./gui/singleton_web_apps.nix
-    ./gui/rofi.nix
-    ./gui/xcolor.nix
-    ./gui/wsl.nix
+    ./mime.nix
+    ./kdeconnect.nix
+    ./xdot.nix
+    ./firefox
+    ./warpd.nix
+    ./rustdesk.nix
+    ./gnome
+    ./kitty
+    ./singleton_web_apps.nix
+    ./rofi.nix
+    ./xcolor.nix
+    ./wsl.nix
   ];
 
 config = lib.mkIf config.isGui {
@@ -38,7 +38,7 @@ config = lib.mkIf config.isGui {
       });
     })
     # wine weixin waste too much memory, more than 4GB!!!
-    #(import ./gui/weixin.nix {})
+    #(import ./weixin.nix {})
     nur.repos.linyinfeng.wemeet
     nur.repos.xddxdd.dingtalk
     # telegram desktop not provide aarch64 prebuilt

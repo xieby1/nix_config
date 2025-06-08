@@ -75,13 +75,13 @@ let
 in
 {
   imports = [
-    ./cli-extra.nix
-    ./cli/vim
-    ./cli/tmux.nix
-    ./cli/clash.nix
-    ./cli/tailscale.nix
-    ./cli/gdb.nix
-    ./cli/ctags.nix
+    ./extra.nix
+    ./vim
+    ./tmux.nix
+    ./clash.nix
+    ./tailscale.nix
+    ./gdb.nix
+    ./ctags.nix
     # When init searxng, it throws `ERROR:searx.engines.wikidata: Fail to initialize`
     # I have no idea, so disable it.
     # ./cli/searxng.nix
