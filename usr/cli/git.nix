@@ -40,12 +40,9 @@ in {
     };
     lfs.enable = true;
   };
-  home.file.mr = {
-    text = if builtins.pathExists ~/Gist/Config/mrconfig
-      then builtins.readFile ~/Gist/Config/mrconfig
-      else "";
-    target = ".mrconfig";
-  };
+  systemd.user.tmpfiles.rules = [
+    "L? %h/.mrconfig - - - - %h/Gist/Config/mrconfig"
+  ];
   # mr status not work in non-home dir
   programs.bash.shellAliases.mr = "mr -d ~";
 }
