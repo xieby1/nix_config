@@ -48,7 +48,7 @@
       # defall-reminder-interval = 15
       # defall-reminder-units = minutes
     };
-    home.activation = lib.mapAttrs (name: entry:
+    home.file = lib.mapAttrs (name: entry:
       let
         parseUrl = urlString:
         let
@@ -90,10 +90,14 @@
         src = (pkgs.formats.ini {}).generate "${name}.source" cal_cfg;
         dst = "${config.home.homeDirectory}/.config/evolution/sources/${name}.source";
       # Why not using yq, due to Color=#xxxxxx, '#' will be identified as comment, and be striped
-      in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-        $DRY_RUN_CMD mkdir -p $VERBOSE_ARG $(dirname ${dst})
-        $DRY_RUN_CMD sed 's/LastNotified=.*/LastNotified='$(date -u +"%Y-%m-%dT%H:%M:%SZ")'/g' ${src} > ${dst}
-      ''
+      in rec {
+        target = ".config/evolution/sources/${name}.source.onChange";
+        source = (pkgs.formats.ini {}).generate "${name}.source" cal_cfg;
+        onChange = ''
+          sed 's/LastNotified=.*/LastNotified='$(date -u +"%Y-%m-%dT%H:%M:%SZ")'/g' \
+            ${target} > ${lib.removeSuffix ".onChange" target}
+        '';
+      }
     ) config.gnome-calendar;
   };
 }
