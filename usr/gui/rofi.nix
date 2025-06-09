@@ -19,7 +19,7 @@ in
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window" = {
     binding="<Super>w";
-    command="rofi -show window";
+    command="rofi -show window -window-format '{c} {t}'";
     name="rofi window";
   };
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_drun" = {
