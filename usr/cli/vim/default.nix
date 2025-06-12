@@ -28,6 +28,7 @@
     ./vim-matchup.nix
     ./nvim-nav.nix
     ./markdown-preview-nvim.nix
+    ./venn-nvim.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
@@ -51,7 +52,6 @@
       vim-commentary
       vim-plugin-AnsiEsc
       vim-surround
-      venn-nvim
     ];
 
     #MC Vim config
