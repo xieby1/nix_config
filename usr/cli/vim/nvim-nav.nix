@@ -15,7 +15,7 @@
           -- set maximum width of nvim-navic str: winwidth-40
           -- exec %{%...%} results in '%.xx(yyyy%)', where xx is the max width, yyyy is the navic str
           "%{%'%.' .. (winwidth(0)-40) .. '(' .. v:lua.require'nvim-navic'.get_location() .. '%)'%}" ..
-          " %=%-5.(%l,%c%V%) %P"
+          " %=%-8.(%l,%c%) %P"
       '';
     }{
       plugin = pkgs.vimPlugins.nvim-navbuddy;
