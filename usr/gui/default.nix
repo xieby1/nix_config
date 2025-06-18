@@ -16,6 +16,7 @@ in
     ./rofi.nix
     ./xcolor.nix
     ./wsl.nix
+    ./drawio.nix
   ];
 
 config = lib.mkIf config.isGui {
@@ -53,7 +54,6 @@ config = lib.mkIf config.isGui {
     #wl-clipboard
     textsnatcher
     # draw
-    drawio
     #aseprite-unfree
     inkscape
     gimp
@@ -77,15 +77,6 @@ config = lib.mkIf config.isGui {
     # entertainment
     antimicrox
   ];
-
-  xdg.mime.types = {
-    drawio = {
-      name = "draw-io";
-      type = "text/draw-io";
-      pattern = "*.drawio";
-      defaultApp = "drawio.desktop";
-    };
-  };
 
   # home.file.autostart_deskflow = {
   #   source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
