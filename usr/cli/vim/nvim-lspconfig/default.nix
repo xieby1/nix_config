@@ -10,6 +10,7 @@
     ./typos.nix
     ./xml.nix
     ./markdown.nix
+    ./harper.nix
   ];
   programs.neovim = {
     plugins = [{
