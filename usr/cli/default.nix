@@ -181,6 +181,7 @@ in
     ( python3.withPackages ( p: with p; [
       ipython
       pydot
+      networkx
     ]))
     ## c
     (lib.setPrio # make bintools less prior
