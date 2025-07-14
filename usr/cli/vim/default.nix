@@ -77,6 +77,11 @@
       let g:markdown_recommended_style = 0
       """ line wrap with ident
       set breakindent
+      """ disable python indent (nvim default python indent is annoying: share/nvim/runtime/indent/python.vim)
+      augroup DisablePythonIndent
+        autocmd!
+        autocmd FileType python setlocal indentexpr=
+      augroup END
 
       """ mouse support " select by pressing shift key!
       set mouse=a
