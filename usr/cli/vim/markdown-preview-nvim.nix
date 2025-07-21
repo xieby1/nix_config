@@ -25,7 +25,16 @@
         # set line-height of <pre></pre>
         ''
           sed -i 's/line-height: 1.45;/line-height: 1em;/' app/_static/markdown.css
-        ''];
+        ''
+        # upgrade mermaid
+        (let
+          mermaid_js = pkgs.fetchurl {
+            url = "https://cdn.jsdelivr.net/npm/mermaid@11.9.0/dist/mermaid.min.js";
+            sha256 = "1658hsyxrg9sh3nmafsisiylsw7z436dznpgv8akhdhp84vx8ghb";
+          };
+        in ''
+          cp ${mermaid_js} app/_static/mermaid.min.js
+        '')];
       });
       config = ''
         " allow LAN
