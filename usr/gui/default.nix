@@ -40,7 +40,7 @@ config = lib.mkIf config.isGui {
     })
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./weixin.nix {})
-    nur.repos.linyinfeng.wemeet
+    wemeet
     nur.repos.xddxdd.dingtalk
     # telegram desktop not provide aarch64 prebuilt
     tdesktop
