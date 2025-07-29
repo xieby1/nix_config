@@ -34,7 +34,8 @@ let
 
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
      cd ${config.home.homeDirectory}/Documents/Tech
-     kitty nvim my_cheatsheet.mkd -c Outline
+     # Open Outline and focus on code
+     kitty nvim my_cheatsheet.mkd -c Outline!
      make
   '';
 in
