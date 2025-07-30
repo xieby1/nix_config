@@ -16,6 +16,7 @@
         # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
         ublock-origin
         vimium
+        auto-tab-discard
       ];
       settings = {
         # Automatically enable extensions
