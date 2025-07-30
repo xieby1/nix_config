@@ -82,13 +82,19 @@ in {
         up_shift = { precedenceList = [{
           id = sidebery.addonId;
           installDate = 0;
-          value = { shortcut = ""; };
+          value = { shortcut = "Alt+Shift+Left"; };
           enabled = true;
         }];};
         down_shift = { precedenceList = [{
           id = sidebery.addonId;
           installDate = 0;
-          value = { shortcut = ""; };
+          value = { shortcut = "Alt+Shift+Right"; };
+          enabled = true;
+        }];};
+        rm_tab_on_panel = { precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value = { shortcut = "Alt+Shift+Delete"; };
           enabled = true;
         }];};
         switch_to_next_tab = { precedenceList = [{
