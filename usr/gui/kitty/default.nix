@@ -70,6 +70,7 @@
       allow_remote_control = "yes";
       listen_on = "unix:/tmp/mykitty";
 
+      hide_window_decorations = "yes";
       cursor_blink_interval = "0.8";
       remember_window_size = "no";
       initial_window_width = "80c";
