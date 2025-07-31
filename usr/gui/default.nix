@@ -17,6 +17,7 @@ in
     ./xcolor.nix
     ./wsl.nix
     ./drawio.nix
+    ./flameshot.nix
   ];
 
 config = lib.mkIf config.isGui {
