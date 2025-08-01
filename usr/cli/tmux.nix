@@ -39,7 +39,7 @@
       set -g status-style "bg=white fg=black"
       set -g window-status-last-style "bg=white fg=green bold"
       set -g window-status-current-style "bg=black fg=green bold"
-      # set -g window-status-separator "|"
+      set -g window-status-separator " ┇"
 
       # enable mouse scroll
       set -g mouse on

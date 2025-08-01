@@ -79,6 +79,7 @@
       # tab
       tab_bar_edge = "top";
       tab_bar_style = "separator";
+      # tab_separator = " ┇"; This is default, a space before the vertical line
       active_tab_foreground   = "#e2e2e3";
       active_tab_background   = "#2c2e34";
       active_tab_title_template = "🐱{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title}";
