@@ -37,6 +37,10 @@ in {
             type = lib.types.nullOr lib.types.path;
             default = null;
           };
+          enableDesktopEntry = lib.mkOption {
+            type = lib.types.bool;
+            default = true;
+          };
           desktopEntryExtras = lib.mkOption {
             type = lib.types.attrs;
             default = {};
@@ -85,7 +89,9 @@ in {
       }) config.firefox-apps
     );
 
-    xdg.desktopEntries = builtins.listToAttrs (
+    xdg.desktopEntries = let
+      firefox-apps-with-desktopEntry = (builtins.filter (firefox-app: firefox-app.enableDesktopEntry) config.firefox-apps);
+    in builtins.listToAttrs (
       map (firefox-app: {
         name = assert firefox-app.name!=null; firefox-app.name;
         value = {
@@ -102,7 +108,7 @@ in {
             StartupWMClass = firefox-app.name;
           };
         } // firefox-app.desktopEntryExtras;
-      }) config.firefox-apps
+      }) firefox-apps-with-desktopEntry
     );
 
     dconf.settings = let
