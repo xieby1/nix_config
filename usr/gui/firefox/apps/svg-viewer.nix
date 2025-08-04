@@ -16,9 +16,9 @@ in {
     '';
   }];
 
-  home.packages = [(
-    pkgs.writeScriptBin name ''
+  home.packages = map (n: (
+    pkgs.writeScriptBin n ''
       firefox -P ${name} --class ${name} "$@"
     ''
-  )];
+  )) [name "svg-viewer"];
 }
