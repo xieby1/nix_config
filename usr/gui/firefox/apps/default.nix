@@ -22,7 +22,7 @@
 { config, pkgs, ... }: {
   imports = [
     ./module.nix
-    ./svg-viewer.nix
+    ./single-tab.nix
   ];
 
   firefox-apps = [{

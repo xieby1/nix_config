@@ -1,5 +1,5 @@
 { pkgs, ... }: let
-  name = "firefox-svg-viewer";
+  name = "firefox-single-tab";
 in {
   firefox-apps = [{
     inherit name;
@@ -9,8 +9,8 @@ in {
         <rect width="100%" height="100%" rx="20%" ry="20%" fill="white"/>
         <text x="50%" y="50%" text-anchor="middle" dominant-baseline="middle" font-size="14" font-weight="bold" fill="#6155d2">
           <tspan x="50%" dy="-1em">Firefox</tspan>
-          <tspan x="50%" dy="1em">SVG</tspan>
-          <tspan x="50%" dy="1em">Viewer</tspan>
+          <tspan x="50%" dy="1em">Single</tspan>
+          <tspan x="50%" dy="1em">Tab</tspan>
         </text>
       </svg>
     '';
@@ -18,7 +18,7 @@ in {
 
   home.packages = map (n: (
     pkgs.writeScriptBin n ''
-      firefox -P ${name} --class ${name} "$@"
+      firefox -P ${name} --class ${name} --new-window "$@"
     ''
-  )) [name "svg-viewer"];
+  )) [name "single-tab"];
 }
