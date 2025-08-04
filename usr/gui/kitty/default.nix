@@ -43,6 +43,7 @@
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty/"
     "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc/"
+    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc-background/"
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty" = {
     binding="<Primary><Alt>t";
@@ -54,6 +55,11 @@
     # bash alias needs interative bash (-i)
     # https://askubuntu.com/questions/1109564/alias-not-working-inside-bash-shell-script
     command="kitty bash -i fzf-doc";
+    name="fzf-doc";
+  };
+  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc-background" = {
+    binding="<Super>g";
+    command="kitty bash -i fzf-doc -g";
     name="fzf-doc";
   };
 

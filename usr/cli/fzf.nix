@@ -34,18 +34,30 @@
     case "$CMD" in
     # run gui cmd background
     o)
-      # use nohup to run bash command in background and exit
-      ## https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
-      # nohup not recognize bash alias like `o`, it's necessary to call bash
-      eval nohup bash -ic '"$CMD \"$FILE\" &"'
+      BACKGROUND=1
     ;;
 
     # run cli cmd foreground
     *)
-      # FILE name may contain space, quote FILE name
-      eval "$CMD" \"$FILE\"
+      BACKGROUND=0
     ;;
     esac
+
+    if [[ $* =~ .*-f.* ]]; then
+      BACKGROUND=0
+    elif [[ $* =~ .*-g.* ]]; then
+      BACKGROUND=1
+    fi
+
+    if [[ $BACKGROUND -eq 1 ]]; then
+      # use nohup to run bash command in background and exit
+      ## https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
+      # nohup not recognize bash alias like `o`, it's necessary to call bash
+      eval nohup bash -ic '"$CMD \"$FILE\" &"'
+    else
+      # FILE name may contain space, quote FILE name
+      eval "$CMD" \"$FILE\"
+    fi
   '';
 in {
   home.packages = [
