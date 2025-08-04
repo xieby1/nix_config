@@ -68,6 +68,13 @@ in
         else builtins.toFile "empty-cachix.dhall" "";
       target = ".config/cachix/cachix.dhall";
     };
+  }{
+    home.packages = [
+      pkgs.pkgsu.claude-code
+    ];
+    systemd.user.tmpfiles.rules = [
+      "L? %h/.claude/settings.json - - - - %h/Gist/Config/claude.settings.json"
+    ];
   }];
 
   home.packages = with pkgs; [
