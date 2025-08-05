@@ -10,11 +10,17 @@
       ];
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
+      intellihide-mode="ALL_WINDOWS";
       running-indicator-style="DOTS";
       click-action="focus-or-appspread";
       transparency-mode = "FIXED";
       background-opacity = 0.4;
-      shortcut= [];
+      shortcut=["<Shift><Super>h"];
+      shortcut-text="<Super><Shift>h";
+      scroll-action="cycle-windows";
+      shift-click-action="launch";
+      middle-click-action="previews";
+      # shift-middle-click-action="launch";
     };
   };
 }
