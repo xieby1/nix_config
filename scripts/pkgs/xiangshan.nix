@@ -49,11 +49,16 @@ let
     name = "xs-mill-cache";
     src = xs-src;
     nativeBuildInputs = [ pkgs.mill ];
+    impureEnvVars = pkgs.lib.fetchers.proxyImpureEnvVars;
     # [COURSIER_CACHE with relative path cause artifacts download into process sandbox folder](https://github.com/com-lihaoyi/mill/issues/3946)
     # Thus, COURSIER_CACHE uses absolute path like below
     buildPhase = ''
       export COURSIER_CACHE=$PWD/.cache/coursier
-      mill __.prepareOffline
+      mill -D http.proxyHost=$(echo $http_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\2,') \
+           -D http.proxyPort=$(echo $http_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\3,') \
+           -D https.proxyHost=$(echo $https_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\2,') \
+           -D https.proxyPort=$(echo $https_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\3,') \
+        __.prepareOffline
     '';
     installPhase = ''
       cp -r $COURSIER_CACHE $out
