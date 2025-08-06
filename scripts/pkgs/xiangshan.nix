@@ -9,40 +9,24 @@
 , genRTL ? false
 }:
 let
-  xs-src = let
+  xs-src = (pkgs.fetchFromGitHub {
+    owner = "OpenXiangShan";
+    repo = "XiangShan";
     rev = "ff4344e4e52d4e58ba1570da9ace0dafaca74de0";
-    outputHash = "sha256-N4gh0VH54vGPbq7elUfwmzr3rQdC6mfRDdRxEVgpRcE=";
-  in pkgs.stdenv.mkDerivation {
-    name = "OpenXiangShan";
-    nativeBuildInputs = [
-      pkgs.git
-      pkgs.cacert
-    ];
-    impureEnvVars = pkgs.lib.fetchers.proxyImpureEnvVars ++ [
-      "GIT_PROXY_COMMAND"
-      "NIX_GIT_SSL_CAINFO"
-      "SOCKS_SERVER"
-    ];
-    deterministic_git = let
-      nix-prefetch-git = "${pkgs.path}/pkgs/build-support/fetchgit/nix-prefetch-git";
-    in pkgs.runCommand "deterministic-git" {} ''
-      sed -n '/clean_git(){/,/^}/p'               ${nix-prefetch-git}  > $out
-      sed -n '/make_deterministic_repo(){/,/^}/p' ${nix-prefetch-git} >> $out
-    '';
-    builder = builtins.toFile "builder.sh" ''
-      . $stdenv/setup
-      mkdir -p $out
-      git clone https://github.com/OpenXiangShan/XiangShan $out
-      git -C $out checkout ${rev}
-      make -C $out init
-      source $deterministic_git
-      find $out -name .git | while read -r gitdir; do
-        make_deterministic_repo "$(readlink -f "$(dirname "$gitdir")")" || true
-      done
-    '';
-    outputHashMode = "recursive";
-    inherit rev outputHash;
-  };
+    hash = "sha256-2vaeqiEOGRlEkcSZLzneqwVe1IldhPMK552ydUnKS+s=";
+    forceFetchGit = true;
+  }).overrideAttrs (old: {
+    # NOTE: Why not use leaveDotGit/deepClone here?
+    # see pkgs/build-support/fetchgit/nix-prefetch-git:
+    # # > # shallow with leaveDotGit will change hashes
+    # In other words: If deepClone/leaveDotGit co-exists with fetchSubmodules
+    # (here we only fetch selected submodules by NIX_PREFETCH_GIT_CHECKOUT_HOOK)
+    # then hash changes every time.
+    #
+    # old nixpkgs.fetchgit not support preFetch
+    # preFetch = ''export NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init"'';
+    NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init";
+  });
 
   # mill deps refer to https://github.com/com-lihaoyi/mill/discussions/1170
   millDeps = pkgs.stdenv.mkDerivation {
