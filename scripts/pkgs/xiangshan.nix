@@ -11,7 +11,7 @@
 let
   xs-src = let
     rev = "ff4344e4e52d4e58ba1570da9ace0dafaca74de0";
-    outputHash = "sha256-QaM+PN7mLGaqYqP3wxU82XHW5oA4ol64zeB+GOclSnU=";
+    outputHash = "sha256-N4gh0VH54vGPbq7elUfwmzr3rQdC6mfRDdRxEVgpRcE=";
   in pkgs.stdenv.mkDerivation {
     name = "OpenXiangShan";
     nativeBuildInputs = [
@@ -24,16 +24,16 @@ let
       "SOCKS_SERVER"
     ];
     deterministic_git = let
-      nix-prefetch-git = <nixpkgs> + /pkgs/build-support/fetchgit/nix-prefetch-git;
+      nix-prefetch-git = "${pkgs.path}/pkgs/build-support/fetchgit/nix-prefetch-git";
     in pkgs.runCommand "deterministic-git" {} ''
       sed -n '/clean_git(){/,/^}/p'               ${nix-prefetch-git}  > $out
       sed -n '/make_deterministic_repo(){/,/^}/p' ${nix-prefetch-git} >> $out
     '';
     builder = builtins.toFile "builder.sh" ''
+      . $stdenv/setup
       mkdir -p $out
-      git clone --depth=1 \
-        --revision=${rev} \
-        https://github.com/OpenXiangShan/XiangShan $out
+      git clone https://github.com/OpenXiangShan/XiangShan $out
+      git -C $out checkout ${rev}
       make -C $out init
       source $deterministic_git
       find $out -name .git | while read -r gitdir; do
