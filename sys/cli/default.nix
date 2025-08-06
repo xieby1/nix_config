@@ -11,6 +11,10 @@
 {
   #MC ## 系统环境管理（root的环境）
 
+  imports = [
+    ./build-machines.nix
+  ];
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
