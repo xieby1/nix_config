@@ -34,7 +34,7 @@
         mkdir -p ~/.config/cachix_push
         ${lib.concatMapStrings (pkg: ''
           symlink=~/.config/cachix_push/${pkg.name}
-          if [[ ! (-h "$symlink" && $(realpath "$symlink")==${pkg}) ]]; then
+          if [[ ! (-h "$symlink" && $(realpath "$symlink") == ${pkg}) ]]; then
             # the symlink are not the same to pkg, need to cachix push
             echo 📦 ${pkg}
             ${pkgs.cachix}/bin/cachix -c ${config.cachix_dhall} push ${config.cachix_name} ${pkg}
