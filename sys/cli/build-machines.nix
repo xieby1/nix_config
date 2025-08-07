@@ -9,9 +9,15 @@
     '';
   in ''
     ln -sfn ${ssh_config} /root/.ssh/config
-    if [[ ! -e /root/.ssh/id_rsa ]]; then
-      cp /home/xieby1/Gist/Vault/id_rsa* /root/.ssh/
-      chmod 600 /root/.ssh/id_rsa
-    fi
+    for user_id_pub in /home/xieby1/Gist/Vault/id_*.pub; do
+        user_id=''${user_id_pub%.pub}
+        root_id_pub=/root/.ssh/''${user_id_pub##*/}
+        root_id=''${root_id_pub%.pub}
+      if [[ ! -e $root_id_pub ]]; then
+        cp $user_id_pub $root_id_pub
+        cp $user_id     $root_id
+        chmod 600 $root_id
+      fi
+    done
   '';
 }
