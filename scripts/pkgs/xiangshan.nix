@@ -89,17 +89,18 @@ in pkgs.stdenv.mkDerivation {
     sed -i '/@git log/,/rm .__head__/d' Makefile
   '';
 
-  buildPhase = let
-    # current version of Chisel (6.6.0) was published against firtool version 1.62.1
-    circt_1_62_0 = (import (pkgs.fetchFromGitHub {
-      owner = "NixOS";
-      repo = "nixpkgs";
-      rev = "771b079bb84ac2395f3a24a5663ac8d1495c98d3";
-      sha256 = "0l1l9ms78xd41xg768pkb6xym200zpf4zjbv4kbqbj3z7rzvhpb7";
-    }){}).circt;
-  in ''
-    export CHISEL_FIRTOOL_PATH=${circt_1_62_0}/bin/
+  # current version of Chisel (6.6.0) was published against firtool version 1.62.1
+  CHISEL_FIRTOOL_PATH = "${(import (pkgs.fetchFromGitHub {
+    owner = "NixOS";
+    repo = "nixpkgs";
+    rev = "771b079bb84ac2395f3a24a5663ac8d1495c98d3";
+    sha256 = "0l1l9ms78xd41xg768pkb6xym200zpf4zjbv4kbqbj3z7rzvhpb7";
+  }){}).circt}/bin/";
+  shellHook = ''
     export NOOP_HOME=$(realpath .)
+  '';
+  buildPhase = ''
+    eval "$shellHook"
     make emu CONFIG=${CONFIG} EMU_THREADS=${EMU_THREADS} NUM_CORES=${NUM_CORES} EMU_TRACE=${EMU_TRACE} -j $NIX_BUILD_CORES
   '';
 
