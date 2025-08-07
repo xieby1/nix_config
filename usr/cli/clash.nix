@@ -23,7 +23,7 @@ in {
     programs.bash.bashrcExtra = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
       # proxy
       ## default
-      HTTP_PROXY="http://127.0.0.1:${toString config.proxyPort}/"
+      HTTP_PROXY="http://127.0.0.1:${toString config.proxyPort}"
       ## microsoft wsl
       # if [[ $(uname -r) == *"microsoft"* ]]; then
       #     hostip=$(cat /etc/resolv.conf | grep nameserver | awk '{ print $2 }')
