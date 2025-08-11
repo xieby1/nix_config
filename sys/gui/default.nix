@@ -86,19 +86,6 @@
   # Enable touchpad support (enabled default in most desktopManager).
   services.libinput.enable = true;
 
-  # https://github.com/kovidgoyal/kitty/issues/403
-  environment.variables.GLFW_IM_MODULE = "ibus";
-  i18n.inputMethod.enable = true;
-  i18n.inputMethod.type = "ibus";
-  i18n.inputMethod.ibus.engines = with pkgs.ibus-engines; [
-    rime
-    # keyboard layout is wrong in anthy, e.g. punctuations
-    # anthy
-    # hinagara toggle setting is absent in mozc
-    mozc
-    hangul
-  ];
-
   nixpkgs.config.allowUnfree = true;
 
   # vim vista need nerd fonts

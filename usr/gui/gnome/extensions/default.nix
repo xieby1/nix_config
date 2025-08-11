@@ -7,7 +7,6 @@
     ./advanced-alttab-window-switcher.nix
     ./bing-wallpaper-changer.nix
     ./bluetooth-battery-meter.nix
-    ./customize-ibus.nix
     ./dash-to-dock.nix
     ./gtile.nix
     ./hide-top-bar.nix
