@@ -16,12 +16,10 @@
       ];
     };
   };
-  home.file.fcitx5_profile = let
-    relDir = ".config/fcitx5";
-    absDir = "${config.home.homeDirectory}/${relDir}";
-  in {
-    target = "${relDir}/_profile_";
-    source = (pkgs.formats.ini {}).generate "profile" {
+
+  imports = [ ./module.nix ];
+  config_fcitx5 = {
+    profile = (pkgs.formats.ini {}).generate "profile" {
       "Groups/0" = {
         Name="Default";
         "Default Layout"="us";
@@ -39,20 +37,7 @@
         Name="hangul";
       };
     };
-    onChange = ''
-      if [[ -e ${absDir}/profile ]]; then
-        ${pkgs.crudini}/bin/crudini --merge ${absDir}/profile < ${absDir}/_profile_
-      else
-        cat ${absDir}/_profile_ > ${absDir}/profile
-      fi
-    '';
-  };
-  home.file.fcitx5_config = let
-    relDir = ".config/fcitx5";
-    absDir = "${config.home.homeDirectory}/${relDir}";
-  in {
-    target = "${relDir}/_config_";
-    source = (pkgs.formats.ini {}).generate "config" {
+    config = (pkgs.formats.ini {}).generate "config" {
       "Hotkey" = {
         # Disable default super+space, shift+super+space
         EnumerateGroupForwardKeys="";
@@ -68,20 +53,7 @@
         "0"="Control+Shift+space";
       };
     };
-    onChange = ''
-      if [[ -e ${absDir}/config ]]; then
-        ${pkgs.crudini}/bin/crudini --merge ${absDir}/config < ${absDir}/_config_
-      else
-        cat ${absDir}/_config_ > ${absDir}/config
-      fi
-    '';
-  };
-  home.file.fcitx5_conf_classicui_conf = let
-    relDir = ".config/fcitx5";
-    absDir = "${config.home.homeDirectory}/${relDir}";
-  in {
-    target = "${relDir}/conf/_classicui.conf_";
-    source = (pkgs.formats.keyValue {}).generate "classicui.conf" {
+    "conf/classicui.conf" = (pkgs.formats.keyValue {}).generate "classicui.conf" {
       Font=''"Sans Serif 18"'';
       MenuFont=''"Sans Serif 16"'';
       TrayFont=''"Sans Serif 16"'';
@@ -92,13 +64,6 @@
       # Follow system accent color if it is supported by theme and desktop
       UseAccentColor="True";
     };
-    onChange = ''
-      if [[ -e ${absDir}/conf/classicui.conf ]]; then
-        ${pkgs.crudini}/bin/crudini --merge ${absDir}/conf/classicui.conf < ${absDir}/conf/_classicui.conf_
-      else
-        cat ${absDir}/conf/_classicui.conf_ > ${absDir}/conf/classicui.conf
-      fi
-    '';
   };
 
   dconf.settings = {
