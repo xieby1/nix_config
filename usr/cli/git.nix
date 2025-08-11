@@ -20,6 +20,7 @@
 in {
   home.packages = with pkgs; [
     gitui
+    lazygit
     mr
     git-wip
     git-quick-stats
