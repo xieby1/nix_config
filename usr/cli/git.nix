@@ -19,8 +19,6 @@
   };
 in {
   home.packages = with pkgs; [
-    gitui
-    lazygit
     mr
     git-wip
     git-quick-stats
@@ -46,4 +44,22 @@ in {
   ];
   # mr status not work in non-home dir
   programs.bash.shellAliases.mr = "mr -d ~";
+  programs.lazygit = {
+    enable = true;
+    settings = {
+      gui = {
+        screenMode = "half";
+        mainPanelSplitMode = "horizontal";
+      };
+      keybinding = {
+        universal = {
+          rangeSelectDown = "";
+          rangeSelectUp = "";
+          scrollUpMain-alt1 = "<s-up>";
+          scrollDownMain-alt1 = "<s-down>";
+        };
+      };
+      promptToReturnFromSubprocess = false;
+    };
+  };
 }
