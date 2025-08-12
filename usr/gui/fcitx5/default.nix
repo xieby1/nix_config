@@ -54,7 +54,7 @@
       };
     };
     "conf/classicui.conf" = (pkgs.formats.keyValue {}).generate "classicui.conf" {
-      Font=''"Sans Serif 18"'';
+      Font=''"Sans Serif 16"'';
       MenuFont=''"Sans Serif 16"'';
       TrayFont=''"Sans Serif 16"'';
       Theme="default";
