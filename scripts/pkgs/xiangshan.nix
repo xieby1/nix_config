@@ -27,9 +27,22 @@ let
     # preFetch = ''export NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init"'';
     NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init";
   });
-
+in pkgs.stdenv.mkDerivation {
+  name = "xs";
+  src = xs-src;
+  nativeBuildInputs = [
+    pkgs.makeWrapper
+    pkgs.mill
+    pkgs.time
+    pkgs.espresso
+    pkgs.verilator
+    pkgs.sqlite
+    pkgs.zlib
+    pkgs.zstd
+    pkgs.python3
+  ];
   # mill deps refer to https://github.com/com-lihaoyi/mill/discussions/1170
-  millDeps = pkgs.stdenv.mkDerivation {
+  COURSIER_CACHE = pkgs.stdenv.mkDerivation {
     name = "xs-mill-cache";
     src = xs-src;
     nativeBuildInputs = [ pkgs.mill ];
@@ -50,21 +63,6 @@ let
     outputHashMode = "recursive";
     outputHash = "sha256-9qL+2W2KSHIV4KxhfY9F+2j1xP8NCW7mC/CO2EWbYh8=";
   };
-in pkgs.stdenv.mkDerivation {
-  name = "xs";
-  src = xs-src;
-  nativeBuildInputs = [
-    pkgs.makeWrapper
-    pkgs.mill
-    pkgs.time
-    pkgs.espresso
-    pkgs.verilator
-    pkgs.sqlite
-    pkgs.zlib
-    pkgs.zstd
-    pkgs.python3
-  ];
-  COURSIER_CACHE = millDeps;
 
   postPatch = ''
     patchShebangs scripts/
