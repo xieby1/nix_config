@@ -10,7 +10,8 @@
     type = "fcitx5";
     fcitx5 = {
       addons = [
-        pkgs.fcitx5-rime
+        pkgs.fcitx5-chinese-addons
+        pkgs.fcitx5-pinyin-zhwiki
         pkgs.fcitx5-mozc-ut
         pkgs.fcitx5-hangul
       ];
@@ -28,7 +29,7 @@
         Name="keyboard-us";
       };
       "Groups/0/Items/1" = {
-        Name="rime";
+        Name="pinyin";
       };
       "Groups/0/Items/2" = {
         Name="mozc";
