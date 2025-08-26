@@ -6,12 +6,8 @@
       #   https://github.com/nvim-treesitter/nvim-treesitter
       # see `pkgs.tree-sitter.builtGrammars.`
       # with `tree-sitter-` prefix and `-grammar` suffix removed
-      plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (tree-sitter: [
-        tree-sitter.c
-        tree-sitter.cpp
-        tree-sitter.python
-        tree-sitter.markdown
-        tree-sitter.lua
+      plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (_:
+      pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
         #MC When edit a large d2 file using d2-vim, the cursor movement becomes lag.
         #MC However, tree-sitter-d2 works fluently.
         #MC So I replace the d2-vim with tree-sitter-d2.
@@ -28,7 +24,7 @@
         })
       ]);
       type = "lua";
-      config = ''
+      config = /*lua*/''
         require 'nvim-treesitter.configs'.setup {
           -- TODO: https://github.com/NixOS/nixpkgs/issues/189838
           -- ensure_installed = {"c", "cpp", "python", "markdown"},
