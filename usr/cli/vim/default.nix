@@ -29,6 +29,7 @@
     ./nvim-nav.nix
     ./markdown-preview-nvim.nix
     ./venn-nvim.nix
+    ./snacks-nvim.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
