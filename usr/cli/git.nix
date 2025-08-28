@@ -33,6 +33,7 @@ in {
         editor = "vim";
       };
       credential.helper = "store";
+      init.defaultBranch = "main";
     };
     aliases = {
       viz = "log --all --decorate --oneline --graph";
