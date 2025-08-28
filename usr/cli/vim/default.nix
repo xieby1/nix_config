@@ -46,7 +46,6 @@
 
     #MC Plugins without customizations:
     plugins = with pkgs.vimPlugins; [
-      vim-smoothie
       vim-fugitive
       vim-nix
       vim-markdown-toc

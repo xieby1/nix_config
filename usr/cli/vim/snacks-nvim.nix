@@ -8,6 +8,9 @@
           image = {
             enabled = true,
           },
+          scroll = {
+            enabled = true,
+          },
         })
       '';
     }];
