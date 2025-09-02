@@ -1,5 +1,5 @@
 #MC # firefox configurations
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   imports = [
     ./apps
@@ -26,6 +26,11 @@
         "ui.key.menuAccessKey" = -1; # original number 18
         # enable userChrome.css
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+
+        # enable bookmarks sync to file
+        "browser.bookmarks.autoExportHTML" = true;
+        "browser.bookmarks.file" = "${config.home.homeDirectory}/Gist/Config/firefox-bookmarks.html";
+        "browser.places.importBookmarksHTML" = true;
       };
       userChrome =
       # [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666)
