@@ -112,4 +112,19 @@ in {
       };
     };
   };
+  firefox-extensions.xieby1.browser-extension-data."${sidebery.addonId}" = {
+    storage = {
+      sidebarCSS = /*css*/ ''
+        /* make vertical line more clear */
+        /* original: --tabs-lvl-opacity: 0.16 */
+        #root.root {--tabs-lvl-opacity: 0.8;}
+
+        /* compact fav margin */
+        .Tab[data-pin="false"] .fav {
+          /* original: 0 var(--tabs-inner-gap)0 calc(var(--tabs-inner-gap) + 2px); */
+          margin: 0;
+        }
+      '';
+    };
+  };
 }
