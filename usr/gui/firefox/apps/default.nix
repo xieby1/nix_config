@@ -122,5 +122,11 @@
     name = "syncthing";
     url = "http://127.0.0.1:8384";
     icon = "${pkgs.syncthingtray-minimal}/share/icons/hicolor/scalable/apps/syncthingtray.svg";
+  }{
+    name = "emojidb";
+    url = "https://emojidb.org";
+    desktopEntryExtras = {
+      name = "EmojiDB";
+    };
   }];
 }
