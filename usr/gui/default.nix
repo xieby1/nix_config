@@ -23,6 +23,7 @@ in
 
 config = lib.mkIf config.isGui {
   home.packages = with pkgs; [
+    (pkgs.writeShellScriptBin "o" ''nohup xdg-open "$@" &> /dev/null &'')
     libnotify
     # browser
     # dont ask me for keyring chromium-like browsers!

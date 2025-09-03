@@ -166,7 +166,6 @@ in
 
   # bash
   programs.bash.enable = true;
-  programs.bash.shellAliases.o = "xdg-open";
   programs.bash.bashrcExtra = ''
     # rewrite prompt format
     u_green="\[\033[01;32m\]"
