@@ -1,5 +1,5 @@
 { pkgs, ... }: let
-  fzf-doc = pkgs.writeScriptBin "fzf-doc" ''
+  fzf-doc = pkgs.writeScriptBin "fzf-doc" /*bash*/ ''
     allCmds() {
       # bash alias
       compgen -A alias
@@ -28,36 +28,9 @@
     FILE=$(fzf)
     [ -z "$FILE" ] && exit
 
-    CMD=$(allCmds | fzf)
-    [ -z "$CMD" ] && exit
-
-    case "$CMD" in
-    # run gui cmd background
-    o)
-      BACKGROUND=1
-    ;;
-
-    # run cli cmd foreground
-    *)
-      BACKGROUND=0
-    ;;
-    esac
-
-    if [[ $* =~ .*-f.* ]]; then
-      BACKGROUND=0
-    elif [[ $* =~ .*-g.* ]]; then
-      BACKGROUND=1
-    fi
-
-    if [[ $BACKGROUND -eq 1 ]]; then
-      # use nohup to run bash command in background and exit
-      ## https://superuser.com/questions/448445/run-bash-script-in-background-and-exit-terminal
-      # nohup not recognize bash alias like `o`, it's necessary to call bash
-      nohup bash -ic "$CMD \"$FILE\"" &
-    else
-      # FILE name may contain space, quote FILE name
-      eval "$CMD" \"$FILE\"
-    fi
+    allCmds | fzf \
+      --bind     "enter:execute(      bash -ic '{} \"$FILE\"'               )+accept" \
+      --bind "alt-enter:execute(nohup bash -ic '{} \"$FILE\"' &> /dev/null &)+accept"
   '';
 in {
   home.packages = [

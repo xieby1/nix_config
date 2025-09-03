@@ -57,11 +57,6 @@
     command="kitty bash -i fzf-doc";
     name="fzf-doc";
   };
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc-background" = {
-    binding="<Super>g";
-    command="kitty bash -i fzf-doc -g";
-    name="fzf-doc";
-  };
 
   programs.kitty = {
     enable = true;
