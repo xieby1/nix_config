@@ -21,6 +21,8 @@
       settings = {
         # Automatically enable extensions
         "extensions.autoDisableScopes" = 0;
+        # Disable extension auto update
+        "extensions.update.enabled" = false;
       };
     };
   };
