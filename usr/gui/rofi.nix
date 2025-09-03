@@ -19,7 +19,8 @@ in
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window" = {
     binding="<Super>w";
-    command="rofi -show window -window-format '{c} {t}'";
+    # alt-enter/shift-enter: move window to current desktop
+    command=/*bash*/''rofi -show window -window-format '{c} {t}' -window-cmd "wmctrl -i -R {window} -t $(wmctrl -d | awk '{if ($2 == "'*'") print $1}')"'';
     name="rofi window";
   };
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_drun" = {
