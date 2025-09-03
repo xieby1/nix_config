@@ -7,6 +7,7 @@
     ./smartproxy.nix
     ./smart-toc.nix
     ./brotab.nix
+    ./vimium.nix
   ];
 
   programs.firefox = {
@@ -15,7 +16,6 @@
         # 😾😾😾 Chinese users cannot use ad block extensions
         # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
         ublock-origin
-        vimium
         auto-tab-discard
       ];
       settings = {
