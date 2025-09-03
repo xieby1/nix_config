@@ -128,5 +128,11 @@
     desktopEntryExtras = {
       name = "EmojiDB";
     };
+  }{
+    name = "wangyiyunyinyue-wyyyy";
+    url = "https://music.163.com";
+    desktopEntryExtras = {
+      name = "网易云音乐";
+    };
   }];
 }
