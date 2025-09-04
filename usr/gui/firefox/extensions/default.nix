@@ -17,6 +17,7 @@
         # https://discourse.mozilla.org/t/chinese-users-cant-use-ad-blocker-extensions/94823
         ublock-origin
         auto-tab-discard
+        refined-github
       ];
       settings = {
         # Automatically enable extensions
