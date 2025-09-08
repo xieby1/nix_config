@@ -32,11 +32,14 @@ let
   '';
   singleton_sh = "${singleton}/bin/singleton.sh";
 
+  # TODO: use kitty --class
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
-     cd ${config.home.homeDirectory}/Documents/Tech
-     # Open Outline and focus on code
-     kitty nvim my_cheatsheet.mkd -c Outline!
-     make
+    cd ${config.home.homeDirectory}/Documents/Tech
+    # Open Outline and focus on code
+    kitty nvim my_cheatsheet.mkd -c Outline!
+    if [[ ! -f my_cheatsheet.html || my_cheatsheet.html -ot my_cheatsheet.mkd ]]; then
+      ~/Codes/MyRepos/markdown_cheatsheet/cheatsheet.sh my_cheatsheet.mkd
+    fi
   '';
 in
 {
