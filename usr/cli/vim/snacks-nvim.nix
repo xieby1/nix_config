@@ -32,7 +32,21 @@
             enabled = true,
           },
         })
+        -- change math color to black, then it will be negate to white in dark background
+        vim.api.nvim_set_hl(0, "SnacksImageMath", { fg = "black" })
       '';
     }];
+    extraPackages = [
+      # for drawing math.tex as images
+      (pkgs.texlive.combine {
+        inherit (pkgs.texlive)
+        scheme-basic
+        standalone
+        varwidth
+        preview
+        mathtools
+        xcolor
+      ;})
+    ];
   };
 }
