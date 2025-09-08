@@ -18,6 +18,7 @@
         ublock-origin
         auto-tab-discard
         refined-github
+        furiganaize
       ];
       settings = {
         # Automatically enable extensions
