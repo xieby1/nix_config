@@ -13,7 +13,7 @@
                 original = {
                   default = { "{src}[0]", "-scale", "1920x1080>" }, -- default for raster images
                   vector = { "-density", 192, "{src}[0]" }, -- used by vector images like svg
-                  math = { "-density", 192, "{src}[0]", "-trim" },
+                  -- math = { "-density", 192, "{src}[0]", "-trim" },
                   pdf = { "-density", 192, "{src}[0]", "-background", "white", "-alpha", "remove", "-trim" },
                 }
                 -- if vim background is dark then negate the image color
@@ -32,8 +32,6 @@
             enabled = true,
           },
         })
-        -- change math color to black, then it will be negate to white in dark background
-        vim.api.nvim_set_hl(0, "SnacksImageMath", { fg = "black" })
       '';
     }];
     extraPackages = [
