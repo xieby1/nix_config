@@ -72,7 +72,13 @@ let
         }}, {{
           name = 'cmp_tabnine',
     '' + ''
-        }})
+        }}, {{
+          name = 'minuet'
+        }}),
+        performance = {
+          -- for minuet-ai-nvim
+          fetching_timeout = 2000,
+        },
       })
     '';
   };
