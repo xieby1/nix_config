@@ -34,6 +34,10 @@
       args_allow_files_auto_save = true,
       -- auto purge session after 30 days
       purge_after_minutes = 60*24*30,
+      session_lens = {
+        -- for telescope
+        picker_opts = { layout_config = { width = 0.95 } },
+      },
     })
     vim.api.nvim_create_autocmd("VimLeavePre", { callback = function()
       local buffers = {}
