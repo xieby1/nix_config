@@ -52,6 +52,7 @@
       vim-commentary
       vim-plugin-AnsiEsc
       vim-surround
+      otter-nvim
     ];
 
     #MC Vim config
