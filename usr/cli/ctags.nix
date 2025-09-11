@@ -50,9 +50,10 @@
       #MC After tweaking a lot, I found out that clangd's lspconfig config directly or indirectly causes this.
       #MC
       #MC ```lua
-      #MC require('lspconfig').clangd.setup{
+      #MC vim.lsp.config("clangd", {
       #MC   filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp", "cuda", "proto" }
-      #MC }
+      #MC })
+      #MC vim.lsp.enable("clangd")
       #MC ```
       #MC
       #MC As long as the filetype of the current buffer is not clangd-related, ctags works correctly.

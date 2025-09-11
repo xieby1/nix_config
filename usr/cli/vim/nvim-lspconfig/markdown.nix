@@ -18,7 +18,7 @@
   #   * ...
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').marksman.setup {}
+      vim.lsp.enable("marksman")
     '';
     extraPackages = [(
       pkgs.marksman

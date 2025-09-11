@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require'lspconfig'.lemminx.setup{}
+      vim.lsp.enable("lemminx")
     '';
     extraPackages = [
       pkgs.lemminx

@@ -17,7 +17,7 @@
         end
       end
 
-      require('lspconfig').ltex.setup{
+      vim.lsp.config("ltex", {
         settings = {
           ltex = {
             -- Supported languages:
@@ -30,8 +30,8 @@
             },
           },
         },
-      }
-      require('lspconfig')['ltex'].setup {}
+      })
+      vim.lsp.enable("ltex")
     '';
     extraPackages = with pkgs; [
       ltex-ls

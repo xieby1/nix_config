@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').harper_ls.setup {}
+      vim.lsp.enable("harper_ls")
     '';
     extraPackages = [
       pkgs.harper

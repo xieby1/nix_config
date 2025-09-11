@@ -2,7 +2,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').lua_ls.setup{}
+      vim.lsp.enable("lua_ls")
     '';
     extraPackages = with pkgs; [
       lua-language-server

@@ -2,7 +2,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').bashls.setup{}
+      vim.lsp.enable("bashls")
     '';
     extraPackages = with pkgs; [
       nodePackages.bash-language-server

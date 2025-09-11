@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require'lspconfig'.typos_lsp.setup{}
+      vim.lsp.enable("typos_lsp")
     '';
     extraPackages = [
       pkgs.typos-lsp

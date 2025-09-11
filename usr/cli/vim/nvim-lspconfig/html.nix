@@ -2,7 +2,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').html.setup{}
+      vim.lsp.enable("html")
     '';
     extraPackages = with pkgs; [
       vscode-langservers-extracted # html

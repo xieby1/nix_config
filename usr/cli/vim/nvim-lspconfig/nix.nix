@@ -2,7 +2,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').nixd.setup{}
+      vim.lsp.enable("nixd")
     '';
     extraPackages = with pkgs; [
       nixd

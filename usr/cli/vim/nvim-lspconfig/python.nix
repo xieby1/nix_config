@@ -2,7 +2,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     extraLuaConfig = ''
-      require('lspconfig').pyright.setup{}
+      vim.lsp.enable("pyright")
     '';
     extraPackages = with pkgs; [
       pyright
