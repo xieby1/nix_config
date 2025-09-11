@@ -52,7 +52,6 @@
       vim-nix
       vim-markdown-toc
       vim-commentary
-      vim-plugin-AnsiEsc
       vim-surround
       otter-nvim
     ];
