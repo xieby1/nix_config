@@ -12,6 +12,7 @@
     src = pkgs.fetchFromGitHub {
       owner = "rmagatti";
       repo = "auto-session";
+      # TODO: replace this (2025.09.10) with nixpkgs's in future
       rev = "3b5d8947cf16ac582ef00443ede4cdd3dfa23af9";
       hash = "sha256-JOJNnz+1tzTJh5xTpkoTYPRAt4lR1HN7FP1fSXhzU2s=";
     };
@@ -70,12 +71,16 @@
       end
 
       table.sort(buffers_strs)
+      local buffers_string = table.concat(buffers_strs, ", ")
 
-      require("auto-session").SaveSession(string.format("%s %s: %s",
-        os.date("%d日"),
-        vim.fn.fnamemodify(vim.fn.getcwd(), ":~"),
-        table.concat(buffers_strs, ", ")
-      ))
+      -- save session iff buffers_string is not empty
+      if buffers_string ~= "" then
+        require("auto-session").SaveSession(string.format("%s %s: %s",
+          os.date("%d日"),
+          vim.fn.fnamemodify(vim.fn.getcwd(), ":~"),
+          buffers_string
+        ))
+      end
     end})
   '';
 }];}
