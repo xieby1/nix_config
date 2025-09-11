@@ -4,7 +4,13 @@
     type = "lua";
     config = /*lua*/ ''
       require("blink.cmp").setup({
-        keymap = { preset = 'super-tab' },
+        keymap = { preset = 'none',
+          ['<Tab>']   = { 'select_next', 'fallback' },
+          ['<S-Tab>'] = { 'select_prev', 'fallback' },
+          ['<Up>']   = { function(cmp) return cmp.select_prev({ auto_insert = false }) end, 'fallback' },
+          ['<Down>'] = { function(cmp) return cmp.select_next({ auto_insert = false }) end, 'fallback' },
+          ['<CR>'] = { 'accept', 'fallback' },
+        },
         completion = {
           documentation = { auto_show = true },
           menu = {
@@ -12,6 +18,7 @@
               columns = { {'kind_icon'}, {'label', 'label_description', gap = 1}, {'source_name'}, },
             },
           },
+          list = { selection = { preselect = false }, },
         },
         sources = {
           default = { 'lsp', 'path', 'buffer', 'snippets', 'minuet' },
