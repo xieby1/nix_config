@@ -5,7 +5,7 @@
     ./nvim-metals
     ./conform-nvim.nix
     ./nvim-lspconfig
-    ./nvim-cmp.nix
+    ./blink-cmp.nix
     ./vim-mark.nix
     ./nvim-treesitter.nix
     ./nvim-config-local.nix

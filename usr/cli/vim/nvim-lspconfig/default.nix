@@ -50,9 +50,6 @@
             vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
           end,
         })
-        vim.lsp.config('*', {
-          capabilities = require("cmp_nvim_lsp").default_capabilities(),
-        })
       '';
     }];
   };
