@@ -11,7 +11,14 @@
     };
     "org/gnome/shell/extensions/dash-to-dock" = {
       intellihide-mode="ALL_WINDOWS";
-      running-indicator-style="DOTS";
+      # DOTS support at most 4 windows counting,
+      # BINARY supports at most 2^4-1 windows counting
+      running-indicator-style="BINARY";
+      custom-theme-customize-running-dots=true;
+      custom-theme-running-dots-border-color="rgb(0,0,0)";
+      custom-theme-running-dots-border-width="4";
+      custom-theme-running-dots-color="rgb(255,255,255)";
+
       click-action="focus-or-appspread";
       transparency-mode = "FIXED";
       background-opacity = 0.4;
