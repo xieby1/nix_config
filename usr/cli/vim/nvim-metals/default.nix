@@ -41,7 +41,6 @@ let
         -- use mill in system, preventing the situation where I can compile but I cannot use metals
         millScript = "mill",
       }
-      metals_config.capabilities = require("cmp_nvim_lsp").default_capabilities()
       -- Autocmd that will actually be in charging of starting the whole thing
       local nvim_metals_group = vim.api.nvim_create_augroup("nvim-metals", { clear = true })
       vim.api.nvim_create_autocmd("FileType", {

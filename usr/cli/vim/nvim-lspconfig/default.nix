@@ -17,7 +17,7 @@
       plugin = pkgs.vimPlugins.nvim-lspconfig;
       type = "lua";
       #MC ## Global mappings.
-      config = ''
+      config = /*lua*/ ''
         -- See `:help vim.diagnostic.*` for documentation on any of the below functions
         vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
@@ -49,6 +49,9 @@
             vim.keymap.set({ 'n', 'v' }, '<space>ca', vim.lsp.buf.code_action, opts)
             vim.keymap.set('n', '<space>f', function() vim.lsp.buf.format { async = true } end, opts)
           end,
+        })
+        vim.lsp.config('*', {
+          capabilities = require("cmp_nvim_lsp").default_capabilities(),
         })
       '';
     }];

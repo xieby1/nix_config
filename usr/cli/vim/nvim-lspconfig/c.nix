@@ -39,9 +39,6 @@
       }
       require("clangd_extensions.inlay_hints").setup_autocmd()
       require("clangd_extensions.inlay_hints").set_inlay_hints()
-      require('lspconfig')['clangd'].setup {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      }
     '';
     plugins = [
       pkgs.vimPlugins.clangd_extensions-nvim

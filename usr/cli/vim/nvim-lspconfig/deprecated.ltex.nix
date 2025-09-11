@@ -31,9 +31,7 @@
           },
         },
       }
-      require('lspconfig')['ltex'].setup {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-      }
+      require('lspconfig')['ltex'].setup {}
     '';
     extraPackages = with pkgs; [
       ltex-ls
