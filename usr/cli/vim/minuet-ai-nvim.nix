@@ -6,6 +6,7 @@ in { config = lib.mkIf (builtins.pathExists api_key_file) {
     type = "lua";
     config = /*lua*/ ''
       require('minuet').setup {
+        blink = { enable_auto_complete = false },
         provider = 'openai_fim_compatible',
         provider_options = {
           openai_fim_compatible = {
@@ -20,6 +21,11 @@ in { config = lib.mkIf (builtins.pathExists api_key_file) {
           },
         },
       }
+      vim.keymap.set({'n','i'}, '<A-a>', function()
+        local minuet = require("minuet")
+        minuet.config.blink.enable_auto_complete = not minuet.config.blink.enable_auto_complete
+        vim.notify('Minuet ' .. (minuet.config.blink.enable_auto_complete and 'enabled' or 'disabled'), vim.log.levels.INFO)
+      end)
     '';
   }];
 };}
