@@ -30,6 +30,7 @@
     ./markdown-preview-nvim.nix
     ./venn-nvim.nix
     ./snacks-nvim.nix
+    ./minuet-ai-nvim.nix
     ./auto-session.nix
   ];
 
