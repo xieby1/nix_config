@@ -1,3 +1,8 @@
+#MC # completion
+#MC # blink-cmp vs nvim-cmp
+#MC # * as the config looks too hacking and too many issues remaining unsolved in github
+#MC # * and nvim-cmp last maintain is 5 months ago, blink-cmp is 5 days ago.
+#MC # * and minuet-ai-nvim delay in nvim-cmp and not solved, blink-cmp is async
 { pkgs, ... }: { programs.neovim = {
   plugins = [{
     plugin = pkgs.vimPlugins.blink-cmp;
