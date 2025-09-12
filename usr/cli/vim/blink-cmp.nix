@@ -5,7 +5,34 @@
 #MC # * and minuet-ai-nvim delay in nvim-cmp and not solved, blink-cmp is async
 { pkgs, ... }: { programs.neovim = {
   plugins = [{
-    plugin = pkgs.vimPlugins.blink-cmp;
+    # match unicode characters => match alphabet characters instead.
+    # E.g. I don't want to completion a long CJK sentence.
+    # E.g. I want alphabet next to CJK can be completed: "例子example"
+    #      In original blink-fuzzy-lib, "example" cannot be completed.
+    # (Due to the libblink_cmp_fuzzy being not easy to be patched,
+    # the nix patch code becomes a large chunk as below.)
+    plugin = pkgs.vimPlugins.blink-cmp.overrideAttrs (old: let
+      postPatch = ''
+        ## This is where texts being collected
+        sed -i 's/\\p{L}/a-zA-Z/g' lua/blink/cmp/fuzzy/rust/lib.rs
+        ## This is where trigger range is decided
+        ## This change will break blink-fuzzy-lib check, so doCheck=false
+        sed -i 's/\\p{L}/a-zA-Z/g' lua/blink/cmp/fuzzy/rust/keyword.rs
+      '';
+    in {
+      # Here, postPatch does not effect blink-fuzzy-lib,
+      # however, for consistency between source code and libblink_cmp_fuzzy.so,
+      # I patch the source code as well.
+      inherit postPatch;
+
+      preInstall = let
+        ext = pkgs.stdenv.hostPlatform.extensions.sharedLibrary;
+        blink-fuzzy-lib = old.passthru.blink-fuzzy-lib.overrideAttrs { inherit postPatch; doCheck=false; };
+      in ''
+        mkdir -p target/release
+        ln -s ${blink-fuzzy-lib}/lib/libblink_cmp_fuzzy${ext} target/release/libblink_cmp_fuzzy${ext}
+      '';
+    });
     type = "lua";
     config = /*lua*/ ''
       require("blink.cmp").setup({
