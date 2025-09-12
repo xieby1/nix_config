@@ -6,13 +6,13 @@
 #MC   while other two not support
 #MC * persisted-nvim support telescope, while persistence-nvim not
 { pkgs, ... }: { programs.neovim.plugins = [{
-  # use latest auto-session for `custom_session_tag`
+  # TODO: replace this (2025.09.10) with nixpkgs's in future
+  # use latest auto-session for auto use telescope
   plugin = pkgs.vimUtils.buildVimPlugin {
     name = "custom_session_tag";
     src = pkgs.fetchFromGitHub {
       owner = "rmagatti";
       repo = "auto-session";
-      # TODO: replace this (2025.09.10) with nixpkgs's in future
       rev = "3b5d8947cf16ac582ef00443ede4cdd3dfa23af9";
       hash = "sha256-JOJNnz+1tzTJh5xTpkoTYPRAt4lR1HN7FP1fSXhzU2s=";
     };
