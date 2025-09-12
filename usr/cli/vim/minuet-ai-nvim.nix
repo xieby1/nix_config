@@ -1,12 +1,12 @@
 { config, pkgs, lib, ... }: let
   api_key_file = "${config.home.homeDirectory}/Gist/Vault/siliconflow_api_key_chatbox.txt";
 in { config = lib.mkIf (builtins.pathExists api_key_file) {
-  programs.neovim.plugins = [pkgs.vimPlugins.plenary-nvim {
+  # mkAfter makes sure statusline setting is after nvim-nav.nix
+  programs.neovim.plugins = lib.mkAfter [pkgs.vimPlugins.plenary-nvim {
     plugin = pkgs.vimPlugins.minuet-ai-nvim;
     type = "lua";
     config = /*lua*/ ''
       require('minuet').setup {
-        blink = { enable_auto_complete = false },
         provider = 'openai_fim_compatible',
         provider_options = {
           openai_fim_compatible = {
@@ -21,11 +21,18 @@ in { config = lib.mkIf (builtins.pathExists api_key_file) {
           },
         },
       }
-      vim.keymap.set({'n','i'}, '<A-a>', function()
+
+      function update_minuet_statusline()
+        local minuet = require("minuet")
+        vim.o.statusline = string.gsub(vim.o.statusline, "[ᯤ]*$",
+          minuet.config.blink.enable_auto_complete and "ᯤ" or "")
+      end
+      vim.keymap.set({'n','i'}, '<A-a>', function() 
         local minuet = require("minuet")
         minuet.config.blink.enable_auto_complete = not minuet.config.blink.enable_auto_complete
-        vim.notify('Minuet ' .. (minuet.config.blink.enable_auto_complete and 'enabled' or 'disabled'), vim.log.levels.INFO)
+        update_minuet_statusline()
       end)
+      update_minuet_statusline()
     '';
   }];
 };}
