@@ -141,6 +141,7 @@
           autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
       augroup END
 
+      " TODO: replace wildmenu with blink-cmp cmdline
       " wildmenu
       " see: https://github.com/neovim/neovim/pull/11001
       cnoremap <expr> <Up>    pumvisible() ? "\<Left>"  : "\<Up>"

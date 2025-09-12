@@ -39,6 +39,17 @@
             },
           },
         },
+        cmdline = {
+          -- TODO: blink-cmp cmdline cannot complete `'`,
+          -- for example: `:h statusline` cannot complete to `:h 'statusline'`
+          -- thus disable it currently
+          enabled = false,
+          keymap = { preset = 'inherit',
+            ['<Tab>'] = { 'show_and_insert', 'select_next' },
+            ['<CR>'] = { 'accept_and_enter', 'fallback' },
+          },
+          completion = { list = { selection = { preselect = false }, }, },
+        },
       })
       vim.lsp.config('*', {
         capabilities = require('blink.cmp').get_lsp_capabilities(),
