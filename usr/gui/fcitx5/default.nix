@@ -65,6 +65,10 @@
       # Follow system accent color if it is supported by theme and desktop
       UseAccentColor="True";
     };
+    "conf/punctuation.conf" = (pkgs.formats.keyValue {}).generate "punctuation.conf" {
+      # Half width punctuation after latin letter or number
+      HalfWidthPuncAfterLetterOrNumber = false;
+    };
   };
 
   dconf.settings = {
