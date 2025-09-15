@@ -28,7 +28,8 @@
     FILE=$(fzf)
     [ -z "$FILE" ] && exit
 
-    allCmds | fzf \
+    # move o to the first line
+    { echo o ; allCmds | grep -vw o; } | fzf \
       --bind     "enter:execute(      bash -ic '{} \"$FILE\"'               )+accept" \
       --bind "alt-enter:execute(nohup bash -ic '{} \"$FILE\"' &> /dev/null &)+accept"
   '';
