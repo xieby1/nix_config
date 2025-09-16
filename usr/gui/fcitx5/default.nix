@@ -70,6 +70,12 @@
       HalfWidthPuncAfterLetterOrNumber = false;
     };
   };
+  home.file.punc_mb_zh_CN = {
+    source = pkgs.runCommand "punc.mb.zh_CN" {} /*bash*/ ''
+      sed 's/_ ——/- ——/' ${pkgs.fcitx5-chinese-addons}/share/fcitx5/punctuation/punc.mb.zh_CN > $out
+    '';
+    target = ".local/share/fcitx5/punctuation/punc.mb.zh_CN";
+  };
 
   dconf.settings = {
     # Disable ibus input method shortcuts
