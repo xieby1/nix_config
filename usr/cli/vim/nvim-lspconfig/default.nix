@@ -11,6 +11,7 @@
     ./xml.nix
     ./markdown.nix
     ./harper.nix
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('rust_analyzer')\n";extraPackages=[pkgs.rust-analyzer];};}
   ];
   programs.neovim = {
     plugins = [{
