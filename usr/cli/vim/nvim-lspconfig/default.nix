@@ -1,16 +1,25 @@
 #MC # nvim-lspconfig
 { pkgs, ... }: {
   imports = [
-    ./bash.nix
     ./c.nix
-    ./html.nix
-    ./lua.nix
-    ./nix.nix
-    ./python.nix
-    ./typos.nix
-    ./xml.nix
-    ./markdown.nix
-    ./harper.nix
+    # bash
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
+    # html
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('html')\n";extraPackages=[pkgs.vscode-langservers-extracted];};}
+    # lua
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('lua_ls')\n";extraPackages=[pkgs.lua-language-server];};}
+    # nix
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('nixd')\n";extraPackages=[pkgs.nixd];};}
+    # python
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('pyright')\n";extraPackages=[pkgs.pyright];};}
+    # typos
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('typos_lsp')\n";extraPackages=[pkgs.typos-lsp];};}
+    # xml
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('lemminx')\n";extraPackages=[pkgs.lemminx];};}
+    # markdown
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};}
+    # language checker
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
     {programs.neovim={extraLuaConfig="vim.lsp.enable('rust_analyzer')\n";extraPackages=[pkgs.rust-analyzer];};}
   ];
   programs.neovim = {
