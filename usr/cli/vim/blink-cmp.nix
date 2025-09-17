@@ -52,6 +52,7 @@
           ['<A-8>'] = { function(cmp) cmp.accept({ index = 8 }) end },
           ['<A-9>'] = { function(cmp) cmp.accept({ index = 9 }) end },
           ['<A-0>'] = { function(cmp) cmp.accept({ index = 10 }) end },
+          ['<A-y>'] = require('minuet').make_blink_map(),
         },
         completion = {
           documentation = { auto_show = true },
