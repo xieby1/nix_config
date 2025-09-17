@@ -19,7 +19,25 @@ in { config = lib.mkIf (builtins.pathExists api_key_file) {
               top_p = 0.9,
             },
           },
+          --[[
+            Enable ollama:
+            * ollama serve
+            * ollama pull qwen2.5-coder:0.5b
+            * or other model support completion and insert capabilities
+              (I dont why need insert, and the ollama docs and minuet-ai-nvim docs don't explain about this)
+          ]]
+          -- openai_fim_compatible = {
+          --   model = "qwen2.5-coder:0.5b",
+          --   end_point = "localhost:11434/v1/completions",
+          --   name = "Qwen2.5",
+          --   stream = true,
+          --   api_key = 'TERM',
+          --   optional = {
+          --     max_tokens = 5,
+          --   },
+          -- },
         },
+        --context_window = 512,
       }
 
       function update_minuet_statusline()
