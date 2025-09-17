@@ -57,7 +57,7 @@
     ];
 
     #MC Vim config
-    extraConfig = ''
+    extraConfig = /*vim*/ ''
       " vim
       "" Highlight searches
       set hlsearch
@@ -151,6 +151,10 @@
 
       " prevent resizing other windows when splitting/closing a window
       set noequalalways
+      nnoremap <C-W><C-Left>  <C-W><Left>
+      nnoremap <C-W><C-Right> <C-W><Right>
+      nnoremap <C-W><C-Up>    <C-W><Up>
+      nnoremap <C-W><C-Down>  <C-W><Down>
     '';
   };
 }
