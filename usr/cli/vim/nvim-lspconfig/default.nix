@@ -20,7 +20,7 @@
     {programs.neovim={extraLuaConfig="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};}
     # language checker
     {programs.neovim={extraLuaConfig="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('rust_analyzer')\n";extraPackages=[pkgs.rust-analyzer];};}
+    ./rust.nix
   ];
   programs.neovim = {
     plugins = [{
