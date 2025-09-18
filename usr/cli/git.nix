@@ -75,6 +75,9 @@ in {
         };
       };
       promptToReturnFromSubprocess = false;
+      git = {
+        autoFetch = false;
+      };
     };
   };
 }
