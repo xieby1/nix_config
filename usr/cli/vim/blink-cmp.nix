@@ -93,6 +93,9 @@
             "dictionary"
           },
           providers = {
+            -- > By default, the buffer source will only show when the LSP source returns no items
+            -- Always show buffer completion, defaults to `{ 'buffer' }`
+            lsp = { fallbacks = {}, },
             minuet = {
               name = 'minuet',
               module = 'minuet.blink',
