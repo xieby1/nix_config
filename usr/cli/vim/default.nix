@@ -2,7 +2,6 @@
   #MC Plugins with customizations:
   imports = [
     ./fold.nix
-    ./nvim-metals
     ./conform-nvim.nix
     ./nvim-lspconfig
     ./blink-cmp.nix

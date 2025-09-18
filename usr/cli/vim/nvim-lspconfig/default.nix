@@ -21,6 +21,7 @@
     # language checker
     {programs.neovim={extraLuaConfig="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
     ./rust.nix
+    ./scala.nix
   ];
   programs.neovim = {
     plugins = [{
