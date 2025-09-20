@@ -1,3 +1,5 @@
+# DrawIt vs venn-nvim
+# * DrawIt is slow when moving cursor adding spaces
 { pkgs, ... }: {
   programs.neovim = {
     plugins = [(
