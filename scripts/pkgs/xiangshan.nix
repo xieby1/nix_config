@@ -27,20 +27,6 @@ let
     # preFetch = ''export NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init"'';
     NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init";
   });
-in pkgs.stdenv.mkDerivation {
-  name = "xs";
-  src = xs-src;
-  nativeBuildInputs = [
-    pkgs.makeWrapper
-    pkgs.mill
-    pkgs.time
-    pkgs.espresso
-    pkgs.verilator
-    pkgs.sqlite
-    pkgs.zlib
-    pkgs.zstd
-    pkgs.python3
-  ];
   # mill deps refer to https://github.com/com-lihaoyi/mill/discussions/1170
   COURSIER_CACHE = pkgs.stdenv.mkDerivation {
     name = "xs-mill-cache";
@@ -63,6 +49,20 @@ in pkgs.stdenv.mkDerivation {
     outputHashMode = "recursive";
     outputHash = "sha256-9qL+2W2KSHIV4KxhfY9F+2j1xP8NCW7mC/CO2EWbYh8=";
   };
+in pkgs.stdenv.mkDerivation {
+  name = "xs";
+  src = xs-src;
+  nativeBuildInputs = [
+    pkgs.makeWrapper
+    pkgs.mill
+    pkgs.time
+    pkgs.espresso
+    pkgs.verilator
+    pkgs.sqlite
+    pkgs.zlib
+    pkgs.zstd
+    pkgs.python3
+  ];
 
   postPatch = ''
     patchShebangs scripts/
@@ -99,6 +99,8 @@ in pkgs.stdenv.mkDerivation {
   '';
   buildPhase = ''
     eval "$shellHook"
+    # prevent COURSIER_CACHE (a read-only path in /nix/store) from affecting LSP metals' behaviour
+    export COURSIER_CACHE=${COURSIER_CACHE}
     make emu CONFIG=${CONFIG} EMU_THREADS=${EMU_THREADS} NUM_CORES=${NUM_CORES} EMU_TRACE=${EMU_TRACE} -j $NIX_BUILD_CORES
   '';
 
