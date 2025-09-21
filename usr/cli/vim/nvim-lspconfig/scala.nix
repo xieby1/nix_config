@@ -42,6 +42,7 @@ in {
           "-Dmetals.javaHome=${jre-with-proxy}"
         ];
       }))
+      (pkgs.coursier.override { jre = jre-with-proxy; })
     ];
   };
 }
