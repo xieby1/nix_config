@@ -28,7 +28,12 @@ let
     NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init";
   });
   mill-with-proxy = pkgs.writeShellScriptBin "mill" ''
-    ${pkgs.mill}/bin/mill \
+    # -i/--interactive/--no-server/--bsp must be passed in as the first argument
+    if [[ $1 == -i || $1 == --interactive ||  $1 == --no-server || $1 == --bsp  ]]; then
+      FIRST_ARG=$1
+      shift
+    fi
+    ${pkgs.mill}/bin/mill $FIRST_ARG \
       -D http.proxyHost=$(echo $http_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\2,') \
       -D http.proxyPort=$(echo $http_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\3,') \
       -D https.proxyHost=$(echo $https_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\2,') \
