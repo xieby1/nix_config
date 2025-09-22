@@ -108,7 +108,8 @@ in pkgs.stdenv.mkDerivation {
   '';
   buildPhase = ''
     eval "$shellHook"
-    # prevent COURSIER_CACHE (a read-only path in /nix/store) from affecting LSP metals' behaviour
+    # Q: Why not use COURSIER_CACHE as a variable in mkDerivation
+    # A: To prevent COURSIER_CACHE (a read-only path in /nix/store) from affecting LSP metals' behaviour in nix-shell
     export COURSIER_CACHE=${COURSIER_CACHE}
     make emu CONFIG=${CONFIG} EMU_THREADS=${EMU_THREADS} NUM_CORES=${NUM_CORES} EMU_TRACE=${EMU_TRACE} -j $NIX_BUILD_CORES
   '';
