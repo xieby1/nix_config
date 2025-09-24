@@ -1,15 +1,7 @@
-{ config, pkgs, stdenv, lib, ... }:
-let
-  my-rofi = pkgs.rofi.override {
-    plugins = with pkgs; [
-      # rofi-file-browser
-    ];
-  };
-in
-{
-  home.packages = with pkgs; [
-    my-rofi
-    wmctrl
+{ pkgs, ... }: {
+  home.packages = [
+    (pkgs.rofi.override { plugins = [ /*pkgs.rofi-file-browser*/ ]; })
+    pkgs.wmctrl
   ];
 
   # gnome keyboard shortcuts
