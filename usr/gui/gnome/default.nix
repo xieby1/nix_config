@@ -50,6 +50,8 @@
       minimize=[];
       move-to-workspace-left=["<Control><Super>Left"];
       move-to-workspace-right=["<Control><Super>Right"];
+      # Disable alt+space binding
+      activate-window-menu=[];
     };
 
     # nautilus
