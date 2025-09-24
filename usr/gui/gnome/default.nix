@@ -18,6 +18,7 @@
       favorite-apps = [
         "org.gnome.Nautilus.desktop"
         "firefox.desktop"
+        "firefox-single-tab.desktop"
         "chromium-browser.desktop"
         "spotify.desktop"
       ];
