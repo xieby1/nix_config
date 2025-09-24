@@ -9,6 +9,7 @@ in
 {
   home.packages = with pkgs; [
     my-rofi
+    wmctrl
   ];
 
   # gnome keyboard shortcuts
@@ -19,8 +20,9 @@ in
   ];
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_window" = {
     binding="<Super>w";
-    # alt-enter/shift-enter: move window to current desktop
-    command=/*bash*/''rofi -show window -window-format '{c} {t}' -window-cmd "wmctrl -i -R {window} -t $(wmctrl -d | awk '{if ($2 == "'*'") print $1}')"'';
+    # The default -window-command is `wmctrl -i -R {window}` which is move window to current desktop
+    # The only thing we need to do is to install wmctrl
+    command=/*bash*/"rofi -show window -window-format '{c} {t}'";
     name="rofi window";
   };
   dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/rofi_drun" = {
