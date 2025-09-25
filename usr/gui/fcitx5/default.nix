@@ -67,7 +67,7 @@
     };
     "conf/punctuation.conf" = (pkgs.formats.keyValue {}).generate "punctuation.conf" {
       # Half width punctuation after latin letter or number
-      HalfWidthPuncAfterLetterOrNumber = false;
+      HalfWidthPuncAfterLetterOrNumber = "False";
     };
   };
   home.file.punc_mb_zh_CN = {
