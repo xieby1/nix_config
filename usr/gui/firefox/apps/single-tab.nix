@@ -18,7 +18,7 @@ in {
 
   home.packages = map (n: (
     pkgs.writeScriptBin n ''
-      firefox -P ${name} --class ${name} --new-window "$@"
+      nohup firefox -P ${name} --class ${name} --new-window "$@" &> /dev/null &
     ''
   )) [name "single-tab"];
 }
