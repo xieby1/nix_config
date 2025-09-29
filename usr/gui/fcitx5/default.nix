@@ -76,7 +76,7 @@
   };
   home.file.punc_mb_zh_CN = {
     source = pkgs.runCommand "punc.mb.zh_CN" {} /*bash*/ ''
-      sed 's/_ ——/- ——/' ${pkgs.fcitx5-chinese-addons}/share/fcitx5/punctuation/punc.mb.zh_CN > $out
+      sed '/_ ——/d' ${pkgs.fcitx5-chinese-addons}/share/fcitx5/punctuation/punc.mb.zh_CN > $out
       {
       cat <<APPEND
       < <
