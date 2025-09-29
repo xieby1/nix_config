@@ -69,6 +69,10 @@
       # Half width punctuation after latin letter or number
       HalfWidthPuncAfterLetterOrNumber = "False";
     };
+    # simplified/traditional chinese conversion
+    "conf/chttrans.conf" = (pkgs.formats.ini {}).generate "chttrans.conf" {
+      Hotkey."0" = "Alt+F";
+    };
   };
   home.file.punc_mb_zh_CN = {
     source = pkgs.runCommand "punc.mb.zh_CN" {} /*bash*/ ''
