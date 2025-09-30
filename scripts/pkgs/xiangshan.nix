@@ -27,13 +27,22 @@ let
     # preFetch = ''export NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init"'';
     NIX_PREFETCH_GIT_CHECKOUT_HOOK="make -C $out init";
   });
+  # If you want to use other mill version, uncomment belowing
+  # mill = pkgs.mill.overrideAttrs (finalAttrs: previousAttrs: {
+  #   version = "0.11.8";
+  #   src = pkgs.fetchurl {
+  #     url = "https://github.com/com-lihaoyi/mill/releases/download/${finalAttrs.version}/${finalAttrs.version}-assembly";
+  #     hash = "sha256-HORTexIzrxbWjcGrS59JqZboxGCzk8wKf3eKMoYGqrI=";
+  #   };
+  # });
+  mill = pkgs.mill;
   mill-with-proxy = pkgs.writeShellScriptBin "mill" ''
     # -i/--interactive/--no-server/--bsp must be passed in as the first argument
     if [[ $1 == -i || $1 == --interactive ||  $1 == --no-server || $1 == --bsp  ]]; then
       FIRST_ARG=$1
       shift
     fi
-    ${pkgs.mill}/bin/mill $FIRST_ARG \
+    ${mill}/bin/mill $FIRST_ARG \
       -D http.proxyHost=$(echo $http_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\2,') \
       -D http.proxyPort=$(echo $http_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\3,') \
       -D https.proxyHost=$(echo $https_proxy | sed -E 's,(.*://)?([^:/]+):([0-9]*).*,\2,') \
