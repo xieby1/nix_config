@@ -28,7 +28,7 @@
     ];
   }];
 
-config = lib.mkIf config.isMinimalConfig {
+config = lib.mkIf (!config.isMinimalConfig) {
   home.packages = with pkgs; [
     # tools
     imagemagick
