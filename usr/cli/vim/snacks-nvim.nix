@@ -51,6 +51,7 @@
         mathtools
         xcolor
       ;})
+      pkgs.ghostscript
     ];
   };
 }
