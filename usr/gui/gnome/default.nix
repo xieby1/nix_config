@@ -63,6 +63,7 @@
     "org/gnome/desktop/interface" = {
       enable-hot-corners=false;
       show-battery-percentage=true;
+      clock-show-weekday=true;
     };
 
     # proxy
