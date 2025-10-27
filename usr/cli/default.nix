@@ -20,21 +20,6 @@ in
     ./git.nix
     ./fzf.nix
   ] ++ [{ # functions & attrs
-    home.packages = lib.optional (!config.isNixOnDroid) pkgs.hstr;
-    programs.bash.bashrcExtra = lib.optionalString (!config.isNixOnDroid) ''
-      # HSTR configuration - add this to ~/.bashrc
-      alias hh=hstr                    # hh to be alias for hstr
-      export HSTR_CONFIG=hicolor,raw-history-view
-      shopt -s histappend              # append new history items to .bash_history
-      export HISTCONTROL=ignorespace   # leading space hides commands from history
-      # ensure synchronization between bash memory and history file
-      export PROMPT_COMMAND="history -a;"
-      # if this is interactive shell, then bind hstr to Ctrl-r (for Vi mode check doc)
-      if [[ $- =~ .*i.* ]]; then bind '"\C-r": "\C-a hstr -- \C-j"'; fi
-      # if this is interactive shell, then bind 'kill last command' to Ctrl-x k
-      if [[ $- =~ .*i.* ]]; then bind '"\C-xk": "\C-a hstr -k \C-j"'; fi
-    '';
-  }{
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
       source = builtins.fetchurl "https://github.com/Mic92/nix-index-database/releases/latest/download/index-${builtins.currentSystem}";
@@ -223,4 +208,14 @@ in
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+
+  programs.atuin = {
+    enable = true;
+    enableBashIntegration = true;
+    settings = {
+      inline_height = 0;
+      scroll_exits = false;
+      enter_accept = true;
+    };
+  };
 }
