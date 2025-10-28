@@ -19,7 +19,7 @@ in
     ./ssh.nix
     ./git.nix
     ./fzf.nix
-    ./atuin.nix
+    ./mcfly.nix
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
