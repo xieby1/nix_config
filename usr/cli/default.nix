@@ -217,5 +217,6 @@ in
       scroll_exits = false;
       enter_accept = true;
     };
+    flags = [ "--disable-up-arrow" ];
   };
 }
