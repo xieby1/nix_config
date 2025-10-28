@@ -19,6 +19,7 @@ in
     ./ssh.nix
     ./git.nix
     ./fzf.nix
+    ./atuin.nix
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
@@ -208,15 +209,4 @@ in
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
-
-  programs.atuin = {
-    enable = true;
-    enableBashIntegration = true;
-    settings = {
-      inline_height = 0;
-      scroll_exits = false;
-      enter_accept = true;
-    };
-    flags = [ "--disable-up-arrow" ];
-  };
 }
