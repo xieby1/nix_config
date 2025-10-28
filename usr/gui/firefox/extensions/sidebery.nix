@@ -1,3 +1,18 @@
+# TIPS (https://github.com/piroor/treestyletab/wiki/How-to-inspect-tree-of-tabs):
+# How to start debugger?
+# 1. Type about:debugging into the address bar and hit the Enter key.
+# 2. Choose "This Firefox" at the left pane.
+# 3. Find "Tree Style Tab" from the list and click the Inspect button.
+# 4. Then a debugger tab is opened.
+#
+# How to inspect the sidebar?
+# 1. Start the debugger for TST.
+# 2. On the top-right corner of the debugger window, there are some buttons, so click the Select an iframe as the currently targeted document button.
+# 3. Choose /sidebar/sidebar.html from the list.
+#   3.1. If you are opening multiple browser windows with their sidebar, you'll see multiple entries in the list.
+#   3.2. /sidebar/sidebar.html items are sorted by the order they are initialized. If you hope to inspect the sidebar in the first browser window, you should choose first /sidebar/sidebar.html item in the list.
+# 4. Choose the Inspector tab.
+
 { pkgs, ... }: let
   sidebery = pkgs.nur.repos.rycee.firefox-addons.sidebery;
 in {
