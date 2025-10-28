@@ -115,9 +115,13 @@ in {
   firefox-extensions.xieby1.browser-extension-data."${sidebery.addonId}" = {
     storage = {
       sidebarCSS = /*css*/ ''
-        /* make vertical line more clear */
-        /* original: --tabs-lvl-opacity: 0.16 */
-        #root.root {--tabs-lvl-opacity: 0.8;}
+        #root.root {
+          /* make vertical line more clear */
+          /* original: --tabs-lvl-opacity: 0.16 */
+          --tabs-lvl-opacity: 0.8;
+          /* white border for activated tab */
+          --tabs-activated-shadow: 0 0 0 1px white;
+        }
 
         /* compact fav margin */
         .Tab[data-pin="false"] .fav {
