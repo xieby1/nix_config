@@ -130,19 +130,24 @@ in {
   firefox-extensions.xieby1.browser-extension-data."${sidebery.addonId}" = {
     storage = {
       sidebarCSS = /*css*/ ''
-        #root.root {
-          /* make vertical line more clear */
-          /* original: --tabs-lvl-opacity: 0.16 */
-          --tabs-lvl-opacity: 0.8;
-          /* white border for activated tab */
-          --tabs-activated-shadow: 0 0 0 1px white;
-        }
+        /* make vertical line more clear */
+        /* original: --tabs-lvl-opacity: 0.16 */
+        #root.root { --tabs-lvl-opacity: 0.8; }
 
         /* compact fav margin */
         .Tab[data-pin="false"] .fav {
           /* original: 0 var(--tabs-inner-gap)0 calc(var(--tabs-inner-gap) + 2px); */
           margin: 0;
         }
+
+        /* white border for activated tab */
+        #root.root { --tabs-activated-shadow: 0 0 0 1px white; }
+        /* make sure the top tab shadow is not clipped */
+        /* Why not using border?
+           Because border will add size to the div, thus changing the layout.
+           As a result, the vertical line is not aligned.
+        */
+        .AnimatedTabList { padding-top: 1px; }
       '';
     };
   };
