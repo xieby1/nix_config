@@ -69,7 +69,6 @@ in
     comma
     xclip
     python3Packages.qrcode
-    ripgrep
     ## archive
     unar
     ## manage
@@ -209,4 +208,11 @@ in
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+
+  programs.ripgrep = {
+    enable = true;
+    arguments = [
+      "--no-ignore-vcs"
+    ];
+  };
 }

@@ -56,8 +56,5 @@ in {
       pkgs.vimPlugins.plenary-nvim
       my-telescope-live-grep-args-nvim
     ];
-    extraPackages = with pkgs; [
-      ripgrep
-    ];
   };
 }
