@@ -49,6 +49,11 @@
             vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
             vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
             vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+
+            -- make sure lsp/vim native indent(share/nvim/runtime/indent/python.vim)
+            -- don't override my setting
+            vim.opt.tabstop = 2
+            vim.opt.shiftwidth = 2
           end,
         })
       '';

@@ -67,22 +67,12 @@
       "" diagnostics appear/become resolved
       set signcolumn=number
       "" indent
-      "set smartindent " not good, indentation in empty line cannot be auto removed
-      """ show existing tab with 2 spaces width
-      set tabstop=2
-      """ when indenting with '>', use 2 spaces width
-      set shiftwidth=2
       """ On pressing tab, insert spaces
       set expandtab
       """ no markdown recommended indent style (recommended shiftwidth=4)
       let g:markdown_recommended_style = 0
       """ line wrap with ident
       set breakindent
-      """ disable python indent (nvim default python indent is annoying: share/nvim/runtime/indent/python.vim)
-      augroup DisablePythonIndent
-        autocmd!
-        autocmd FileType python setlocal indentexpr=
-      augroup END
 
       """ mouse support " select by pressing shift key!
       set mouse=a
