@@ -16,6 +16,7 @@
     ./unite.nix
     ./lunar-calendar.nix
     ./auto-accent-colour.nix
+    ./new-workspace-shortcut.nix
   ];
   home.packages = with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
