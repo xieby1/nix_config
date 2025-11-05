@@ -27,10 +27,13 @@
         # enable userChrome.css
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
 
-        # enable bookmarks sync to file
-        "browser.bookmarks.autoExportHTML" = true;
-        "browser.bookmarks.file" = "${config.home.homeDirectory}/Gist/Config/firefox-bookmarks.html";
-        "browser.places.importBookmarksHTML" = true;
+        # Bookmark import only triggered when first open firefox.
+        # Bookmark exposure only triggered when all firefox instances are closed.
+        # As a result, there are so many sync conflicts!
+        # # enable bookmarks sync to file
+        # "browser.bookmarks.autoExportHTML" = true;
+        # "browser.bookmarks.file" = "${config.home.homeDirectory}/Gist/Config/firefox-bookmarks.html";
+        # "browser.places.importBookmarksHTML" = true;
       };
       userChrome =
       # [Disabling the mouseover to reveal the address/toolbar while in fullscreen - old method doesn't work](https://support.mozilla.org/en-US/questions/1324666)
