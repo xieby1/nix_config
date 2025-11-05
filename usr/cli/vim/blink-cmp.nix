@@ -112,7 +112,13 @@
               module = 'blink-cmp-dictionary',
               min_keyword_length = 3,
               score_offset = -4, -- lower priority than buffer's -3
-              opts = { dictionary_directories = { vim.fn.expand('~/Gist/dicts/') }, },
+              opts = {
+                dictionary_files = { "${pkgs.fetchurl {
+                  url = "https://github.com/first20hours/google-10000-english/raw/bdf4c221bc120b0b7f6c3f1eff1cc1abb975f8d8/google-10000-english-no-swears.txt";
+                  sha256 = "11pd0p6ckixr1b5qvi6qxj389wmzq1k42is1bm9fc2y3397y1cyn";
+                }}" },
+                dictionary_directories = { vim.fn.expand('~/Gist/dicts/') },
+              },
             },
           },
         },
@@ -133,14 +139,5 @@
       })
     '';
   }];
-};
-home.file.dicts_words = {
-  source = let
-    words = pkgs.fetchurl {
-      url = "https://github.com/first20hours/google-10000-english/raw/bdf4c221bc120b0b7f6c3f1eff1cc1abb975f8d8/google-10000-english-no-swears.txt";
-      sha256 = "11pd0p6ckixr1b5qvi6qxj389wmzq1k42is1bm9fc2y3397y1cyn";
-    };
-  in pkgs.runCommand "words_more_than_5_letters" {} "awk 'length($0) > 5' ${words} > $out";
-  target = "Gist/dicts/words.txt";
 };
 }
