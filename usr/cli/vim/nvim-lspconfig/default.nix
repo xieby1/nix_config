@@ -34,6 +34,11 @@
         vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
         vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
         vim.keymap.set('n', '<space>q', vim.diagnostic.setloclist)
+        vim.diagnostic.config({
+          float = {
+            source = true,  -- Show the source (LSP server name)
+          }
+        })
 
         -- Use LspAttach autocommand to only map the following keys
         -- after the language server attaches to the current buffer
