@@ -53,6 +53,7 @@
       vim-commentary
       vim-surround
       otter-nvim
+      context-vim
     ];
 
     #MC Vim config
