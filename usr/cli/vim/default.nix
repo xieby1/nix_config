@@ -31,6 +31,7 @@
     ./snacks-nvim.nix
     ./minuet-ai-nvim.nix
     ./auto-session.nix
+    ./nvim-treesitter-context.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
@@ -53,7 +54,6 @@
       vim-commentary
       vim-surround
       otter-nvim
-      context-vim
     ];
 
     #MC Vim config
