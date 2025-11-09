@@ -15,5 +15,9 @@
     '';
     extraPackages = [ pkgs.rust-analyzer ];
   };
-  home.packages = [ pkgs.cargo ];
+  home.packages = [
+    pkgs.cargo
+    # prevent rust_analyzer throw error: `rust-analyzer: no sysroot [macro-error]`
+    pkgs.rustc
+  ];
 }
