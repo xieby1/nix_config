@@ -27,6 +27,8 @@
     cd ~/Documents
     FILE=$(fzf)
     [ -z "$FILE" ] && exit
+    cd $(dirname "$FILE")
+    FILE=$(basename "$FILE")
 
     # move o to the first line
     { echo o ; allCmds | grep -vw o; } | fzf \
