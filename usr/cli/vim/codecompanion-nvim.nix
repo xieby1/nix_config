@@ -17,6 +17,10 @@
             window = {
               position = "left",
               width = 40,
+              -- call api.nvim_set_option_value(k, v, { scope = "local", win = winnr }) for each k,v in opts
+              opts = {
+                winfixwidth = true,
+              },
             },
             diff = { enabled = true },
           },
