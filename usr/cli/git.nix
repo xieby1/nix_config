@@ -49,7 +49,7 @@ in {
     enable = true;
     settings = {
       gui = {
-        screenMode = "half";
+        # screenMode = "half";
         mainPanelSplitMode = "horizontal";
         commitAuthorLongLength = builtins.stringLength "xieby1";
 
