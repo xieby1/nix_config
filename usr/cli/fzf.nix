@@ -1,4 +1,9 @@
 { pkgs, ... }: let
+  go-there = pkgs.writeScriptBin "go-there" /*bash*/ ''
+    dir=$(dirname "$1")
+    cd "$dir" || exit
+    bash -i
+  '';
   fzf-doc = pkgs.writeScriptBin "fzf-doc" /*bash*/ ''
     allCmds() {
       # bash alias
@@ -30,14 +35,15 @@
     cd $(dirname "$FILE")
     FILE=$(basename "$FILE")
 
-    # move o to the first line
-    { echo o ; allCmds | grep -vw o; } | fzf \
+    # move o and go-there to top
+    { echo o; echo go-there; allCmds | grep -vw o | grep -vw go-there; } | fzf \
       --bind     "enter:execute(      bash -ic '{} \"$FILE\"'               )+accept" \
       --bind "alt-enter:execute(nohup bash -ic '{} \"$FILE\"' &> /dev/null &)+accept"
   '';
 in {
   home.packages = [
     pkgs.fzf
+    go-there
     fzf-doc
   ];
   programs.bash.bashrcExtra = ''
