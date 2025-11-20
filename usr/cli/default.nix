@@ -20,6 +20,7 @@ in
     ./git.nix
     ./fzf.nix
     ./mcfly.nix
+    ./tldr.nix
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
@@ -85,8 +86,6 @@ in
     figlet
     nyancat
     d2
-    ## manual
-    tldr
     ## file system
     file
     # magika # detect file content types with deep learning
