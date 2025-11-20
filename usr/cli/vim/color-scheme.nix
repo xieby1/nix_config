@@ -4,7 +4,6 @@ let
   my-color-scheme = {
     plugin = pkgs.vimPlugins.sonokai;
     config = ''
-      nnoremap <leader>c :set termguicolors!<CR>
       set termguicolors
 
       let g:sonokai_transparent_background = 1
