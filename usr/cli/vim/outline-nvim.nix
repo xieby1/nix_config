@@ -28,6 +28,7 @@
             close = {}, -- disable close key
           },
         })
+        vim.keymap.set('n', '<leader>o', require('outline').toggle)
       '';
     }(
       pkgs.vimUtils.buildVimPlugin {
