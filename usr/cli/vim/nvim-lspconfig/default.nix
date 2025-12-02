@@ -30,13 +30,13 @@
       #MC ## Global mappings.
       config = /*lua*/ ''
         -- See `:help vim.diagnostic.*` for documentation on any of the below functions
-        vim.keymap.set('n', '<space>e', vim.diagnostic.open_float)
+        vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
         vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count=-1, float=true, severity = { min = vim.diagnostic.severity.WARN } }) end)
         vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count= 1, float=true, severity = { min = vim.diagnostic.severity.WARN } }) end)
         vim.keymap.set('n', '[D', function() vim.diagnostic.jump({ count=-1, float=true, }) end)
         vim.keymap.set('n', ']D', function() vim.diagnostic.jump({ count= 1, float=true, }) end)
-        vim.keymap.set('n', '<space>q', function() require('telescope.builtin').diagnostics({bufnr=0}) end)
-        vim.keymap.set('n', '<space>Q', require('telescope.builtin').diagnostics)
+        vim.keymap.set('n', '<space>d', function() require('telescope.builtin').diagnostics({bufnr=0}) end)
+        vim.keymap.set('n', '<space>D', require('telescope.builtin').diagnostics)
         vim.diagnostic.config({
           float = {
             source = true,  -- Show the source (LSP server name)

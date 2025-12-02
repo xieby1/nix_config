@@ -3,16 +3,17 @@
 let
   my-telescope-nvim = {
     plugin = pkgs.vimPlugins.telescope-nvim;
-    config = ''
-      " search relative to file
-      "" https://github.com/nvim-telescope/telescope.nvim/pull/902
-      nnoremap ff <cmd>lua require('telescope.builtin').find_files({cwd=require'telescope.utils'.buffer_dir()})<cr>
-      nnoremap fF <cmd>lua require('telescope.builtin').find_files()<cr>
-      nnoremap fb <cmd>lua require('telescope.builtin').buffers()<cr>
-      nnoremap fh <cmd>lua require('telescope.builtin').help_tags()<cr>
-      nnoremap ft <cmd>lua require('telescope.builtin').treesitter()<cr>
-      nnoremap fc <cmd>lua require('telescope.builtin').command_history()<cr>
-      nnoremap fC <cmd>lua require('telescope.builtin').commands()<cr>
+    type = "lua";
+    config = /*lua*/ ''
+      -- search relative to file
+      -- https://github.com/nvim-telescope/telescope.nvim/pull/902
+      vim.keymap.set('n', '<space>f', function() require('telescope.builtin').find_files({cwd=require'telescope.utils'.buffer_dir()}) end)
+      vim.keymap.set('n', '<space>F', require('telescope.builtin').find_files)
+      vim.keymap.set('n', '<space>b', require('telescope.builtin').buffers)
+      vim.keymap.set('n', '<space>h', require('telescope.builtin').help_tags)
+      vim.keymap.set('n', '<space>t', require('telescope.builtin').treesitter)
+      vim.keymap.set('n', '<space>c', require('telescope.builtin').command_history)
+      vim.keymap.set('n', '<space>C', require('telescope.builtin').commands)
     '';
   };
   # Problem: unable to fuzzy search parenthesis '('
