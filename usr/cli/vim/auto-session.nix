@@ -40,6 +40,7 @@
         picker_opts = { layout_config = { width = 0.95 } },
       },
     })
+    vim.keymap.set('n', '<space>s', '<cmd>AutoSession search<CR>')
     vim.api.nvim_create_autocmd("VimLeavePre", { callback = function()
       local buffers = {}
       for _, win in ipairs(vim.api.nvim_list_wins()) do
