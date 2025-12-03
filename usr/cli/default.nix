@@ -19,7 +19,6 @@ in
     ./ssh.nix
     ./git.nix
     ./fzf.nix
-    ./mcfly.nix
     ./tldr.nix
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
