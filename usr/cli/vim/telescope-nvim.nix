@@ -21,7 +21,7 @@ let
   my-telescope-fzf-native-nvim = {
     plugin = pkgs.vimPlugins.telescope-fzf-native-nvim;
     type = "lua";
-    config = ''
+    config = /*lua*/ ''
       require('telescope').setup {
         extensions = {fzf = {}},
         defaults = {
@@ -40,13 +40,10 @@ let
   my-telescope-live-grep-args-nvim = {
     plugin = pkgs.vimPlugins.telescope-live-grep-args-nvim;
     type = "lua";
-    config = ''
+    config = /*lua*/ ''
       require('telescope').load_extension("live_grep_args")
-
-      -- nnoremap fg <cmd>lua require('telescope.builtin').live_grep({cwd=require'telescope.utils'.buffer_dir()})<cr>
-      vim.keymap.set('n', 'fg', '<cmd>lua require("telescope").extensions.live_grep_args.live_grep_args({search_dirs={require"telescope.utils".buffer_dir()}})<cr>')
-      -- nnoremap fG <cmd>lua require('telescope.builtin').live_grep()<cr>
-      vim.keymap.set('n', 'fG', '<cmd>lua require("telescope").extensions.live_grep_args.live_grep_args()<cr>')
+      vim.keymap.set('n', '<space>g', function() require("telescope").extensions.live_grep_args.live_grep_args({search_dirs={require"telescope.utils".buffer_dir()}}) end)
+      vim.keymap.set('n', '<space>G', require("telescope").extensions.live_grep_args.live_grep_args)
     '';
   };
 in {
