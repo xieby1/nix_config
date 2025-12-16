@@ -20,6 +20,7 @@
         "firefox.desktop"
         "firefox-single-tab.desktop"
         "chromium-browser.desktop"
+        "wangyiyunyinyue-wyyyy.desktop"
         "spotify.desktop"
       ];
     };
