@@ -7,16 +7,16 @@ let
       src = pkgs.fetchFromGitHub {
         owner = "axkirillov";
         repo = "hbac.nvim";
-        rev = "e2e8333aa56ef43a577ac3a2a2e87bdf2f0d4cbb";
-        hash = "sha256-7+e+p+0zMHPJjpnKNkL7QQHZJGQ1DFZ6fsofcsVNXaY=";
+        rev = "2c85485ea28e5e3754650829e0bca612960e1b73";
+        hash = "sha256-A+C9N7xorS7DV0w8N5TjyD7OvWdxUQ4PJaKW3kwkQS0=";
       };
       doCheck = false;
     };
     type = "lua";
-    config = ''
+    config = /*lua*/ ''
       require("hbac").setup({
         autoclose     = true, -- set autoclose to false if you want to close manually
-        threshold     = 10, -- hbac will start closing unedited buffers once that number is reached
+        threshold     = 20, -- hbac will start closing unedited buffers once that number is reached
         close_command = function(bufnr)
           vim.api.nvim_buf_delete(bufnr, {})
         end,
