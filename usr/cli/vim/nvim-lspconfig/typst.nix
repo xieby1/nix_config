@@ -4,7 +4,9 @@
       plugin = pkgs.vimPlugins.typst-preview-nvim;
       type = "lua";
       config = /*lua*/ ''
-        require ('typst-preview').setup()
+        require ('typst-preview').setup({
+          open_cmd = "single-tab %s",
+        })
       '';
     }];
     extraLuaConfig = /*lua*/ ''
