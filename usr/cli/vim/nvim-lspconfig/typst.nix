@@ -14,4 +14,7 @@
     '';
     extraPackages = [ pkgs.tinymist ];
   };
+  home.packages = [
+    pkgs.typst
+  ];
 }
