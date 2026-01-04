@@ -20,7 +20,6 @@
   ];
   home.packages = with pkgs.gnomeExtensions; [
     always-show-titles-in-overview
-    x11-gestures
   ] ++ [
     pkgs.gnome45Extensions."permanent-notifications@bonzini.gnu.org"
   ];
@@ -32,7 +31,6 @@
       disabled-extensions = [];
       enabled-extensions = [
         "Always-Show-Titles-In-Overview@gmail.com"
-        "x11gestures@joseexposito.github.io"
         "permanent-notifications@bonzini.gnu.org"
       ];
     };
