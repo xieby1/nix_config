@@ -26,17 +26,19 @@ in {
   programs.git = {
     enable = true;
     package = pkgs.gitFull;
-    userEmail = "xieby1@outlook.com";
-    userName = "xieby1";
-    extraConfig = {
+    settings = {
       core = {
         editor = "vim";
       };
       credential.helper = "store";
       init.defaultBranch = "main";
-    };
-    aliases = {
-      viz = "log --all --decorate --oneline --graph";
+      alias = {
+        viz = "log --all --decorate --oneline --graph";
+      };
+      user = {
+        email = "xieby1@outlook.com";
+        name = "xieby1";
+      };
     };
     lfs.enable = true;
   };
