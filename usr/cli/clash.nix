@@ -1,13 +1,8 @@
-{ config, pkgs, stdenv, lib, ... }:
-let
-  clashctl = pkgs.callPackage ./clashctl.nix {};
-in {
+{ config, pkgs, stdenv, lib, ... }: {
   imports = [{
     home.packages = [
       pkgs.clash-meta
-    ] ++ lib.optional (!config.isNixOnDroid) clashctl;
-    cachix_packages = lib.optional (!config.isNixOnDroid) clashctl;
-
+    ];
     systemd.user.services.clash = {
       Unit = {
         Description = "Auto start clash";
