@@ -17,8 +17,9 @@ in {
   }];
 
   home.packages = map (n: (
+    # https://superuser.com/questions/1770285/custom-firefox-profiles-with-different-wm-class-and-icons
     pkgs.writeScriptBin n ''
-      nohup firefox -P ${name} --class ${name} --new-window "$@" &> /dev/null &
+      nohup firefox -P ${name} --name ${name} --new-window "$@" &> /dev/null &
     ''
   )) [name "single-tab"];
 }

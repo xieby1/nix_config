@@ -98,7 +98,8 @@ in {
           name = firefox-app.name;
           genericName = firefox-app.name;
           exec = assert firefox-app.url!=null;
-            "firefox -P ${firefox-app.name} --class ${firefox-app.name} ${firefox-app.url}";
+            # https://superuser.com/questions/1770285/custom-firefox-profiles-with-different-wm-class-and-icons
+            "firefox -P ${firefox-app.name} --name ${firefox-app.name} ${firefox-app.url}";
           icon = if firefox-app.icon != null then firefox-app.icon
           else builtins.fetchurl {
             url = "http://www.google.com/s2/favicons?domain=${firefox-app.url}&sz=128";
