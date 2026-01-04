@@ -45,8 +45,6 @@ config = lib.mkIf config.isGui {
     #(import ./weixin.nix {})
     wemeet
     nur.repos.xddxdd.dingtalk
-    # telegram desktop not provide aarch64 prebuilt
-    tdesktop
   ] ++ [
     transmission_4-gtk
     # text
