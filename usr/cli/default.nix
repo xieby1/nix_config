@@ -212,4 +212,6 @@ in
       "--no-ignore-vcs"
     ];
   };
+
+  programs.command-not-found.enable = true;
 }
