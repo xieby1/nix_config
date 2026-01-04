@@ -1,43 +1,4 @@
-{ config, pkgs, ... }:
-
-{
-  imports = [ # files
-
-  ] ++ [{ # functions & attrs
-    # support fractional scaling for x11 gnome:
-    # refer to https://nixos.wiki/wiki/Overlays#Overriding_a_package_inside_a_scope
-    nixpkgs.overlays = [ (final: prev: {
-      mutter = let
-        mutter-x11-scaling = pkgs.fetchFromGitHub {
-          owner = "puxplaying";
-          repo = "mutter-x11-scaling";
-          rev = "d19eeb27f6efb1f489ef49e0c987a9e02a072b31";
-          hash = "sha256-NOMd7wyQNj+tp2WZ9l2tKITYUvL7toZ8OvVQssR14Ng=";
-        };
-      in prev.mutter.overrideAttrs (old: {
-        patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
-          "${mutter-x11-scaling}/x11-Add-support-for-fractional-scaling-using-Randr.patch"
-        ];
-      });
-      gnome-control-center = let
-        gnome-control-center-x11-scaling = pkgs.fetchFromGitHub {
-          owner = "puxplaying";
-          repo = "gnome-control-center-x11-scaling";
-          rev = "ec599022bbd39455043eeb5dd03ea6f1d33bbe23";
-          hash = "sha256-Y5D1p+koFBfgkbgreIV8FE+TqJrA8TJIrRQ8cQkzdB8=";
-        };
-      in prev.gnome-control-center.overrideAttrs (old: {
-        patches = (pkgs.lib.optionals (old ? patches) old.patches) ++ [
-          "${gnome-control-center-x11-scaling}/display-Support-UI-scaled-logical-monitor-mode.patch"
-          "${gnome-control-center-x11-scaling}/display-Allow-fractional-scaling-to-be-enabled.patch"
-        ];
-      });
-    }) ];
-
-    # push the overrided mutter and gnome to my cachix
-    cachix_packages = with pkgs; [mutter gnome-control-center];
-  }] ;
-
+{ pkgs, ... }: {
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [
@@ -48,9 +9,8 @@
   ];
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = true;
-  services.xserver.displayManager.gdm.wayland = false;
-  services.xserver.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
+  services.desktopManager.gnome.enable = true;
 
   # https://discourse.nixos.org/t/how-to-create-folder-in-var-lib-with-nix/15647
   system.activationScripts.user_account_conf = pkgs.lib.stringAfter [ "var" ] (let
