@@ -32,7 +32,7 @@ config = lib.mkIf config.isGui {
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     feishu
-    (wechat-uos.override {
+    (pkgsu.wechat-uos.override {
       buildFHSEnv = args: buildFHSEnv (args // {
         # bubble wrap wechat-uos's home directory
         extraBwrapArgs = [
@@ -72,21 +72,14 @@ config = lib.mkIf config.isGui {
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     zotero
   ] ++ [
-    # pkgs.pkgsu.deskflow
-    barrier
+    deskflow
     keepassxc
     # entertainment
     antimicrox
   ];
 
-  # home.file.autostart_deskflow = {
-  #   source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
-  #   target = ".config/autostart/org.deskflow.deskflow.desktop";
-  # };
-  # use barrier due to its support of hotkey toggle screen!
-  #   see: https://github.com/deskflow/deskflow/issues/8006
-  home.file.autostart_barrier = {
-    source = "${pkgs.barrier}/share/applications/barrier.desktop";
-    target = ".config/autostart/barrier.desktop";
+  home.file.autostart_deskflow = {
+    source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
+    target = ".config/autostart/org.deskflow.deskflow.desktop";
   };
 };}

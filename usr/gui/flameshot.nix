@@ -20,7 +20,7 @@
     };
   };
   home.file.autostart_flameshot = {
-    source = "${pkgs.barrier}/share/applications/org.flameshot.Flameshot.desktop";
+    source = "${pkgs.flameshot}/share/applications/org.flameshot.Flameshot.desktop";
     target = ".config/autostart/org.flameshot.Flameshot.desktop";
   };
   systemd.user.tmpfiles.rules = [
