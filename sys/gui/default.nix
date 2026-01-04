@@ -97,9 +97,8 @@
   fonts.packages = with pkgs; [
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
-    noto-fonts-emoji
     noto-fonts-color-emoji
-    noto-fonts-extra
+    noto-fonts
     # The best developer fonts, see https://www.nerdfonts.com/
     nerd-fonts.hack
     nerd-fonts.meslo-lg
