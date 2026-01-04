@@ -77,6 +77,9 @@
       initial_window_width = "80c";
       initial_window_height = "20c";
 
+      # Note that this is only used for high precision scrolling devices on platforms such as macOS and Wayland.
+      touch_scroll_multiplier = "5.0";
+
       # tab
       tab_bar_edge = "top";
       tab_bar_style = "separator";
