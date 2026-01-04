@@ -4,7 +4,17 @@
 #MC * ibus mozc not support shift toggle activation
 #MC * ibus configuration use db, not file
 #MC * ibus cannot be configured by user (home-manager)
-{ config, pkgs, ... }: {
+{ pkgs, ... }: let
+  # 自建拼音字典
+  #   参考：https://wiki.archlinux.org/title/Fcitx5
+  #         https://github.com/fcitx/libime/blob/master/tools/libime_pinyindict.cpp
+  #         TLDR: libime_pinyindict：语法: 词 pin'yin 频率
+  my-dict = pkgs.runCommand "my-fcitx-dict" {} ''
+    DIR=$out/share/fcitx5/pinyin/dictionaries
+    mkdir -p $DIR
+    ${pkgs.libime}/bin/libime_pinyindict ${~/Gist/dicts/fcitx/main.txt} $DIR/main.dict
+  '';
+in {
   i18n.inputMethod = {
     enable = true;
     type = "fcitx5";
@@ -14,6 +24,7 @@
         pkgs.fcitx5-pinyin-zhwiki
         pkgs.fcitx5-mozc-ut
         pkgs.fcitx5-hangul
+        my-dict
       ];
     };
   };
