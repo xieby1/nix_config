@@ -38,8 +38,6 @@
         filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp", "cuda", "proto" }
       })
       vim.lsp.enable("clangd")
-      require("clangd_extensions.inlay_hints").setup_autocmd()
-      require("clangd_extensions.inlay_hints").set_inlay_hints()
     '';
     plugins = [
       pkgs.vimPlugins.clangd_extensions-nvim
