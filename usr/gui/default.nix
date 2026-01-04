@@ -72,14 +72,16 @@ config = lib.mkIf config.isGui {
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     zotero
   ] ++ [
-    deskflow
+    input-leap
     keepassxc
     # entertainment
     antimicrox
   ];
 
-  home.file.autostart_deskflow = {
-    source = "${pkgs.pkgsu.deskflow}/share/applications/org.deskflow.deskflow.desktop";
-    target = ".config/autostart/org.deskflow.deskflow.desktop";
+  # deskflow vs input-leap
+  # deskflow not support metakeys: window, alt-tab, alt-f4, ...
+  home.file.autostart_input_leap = {
+    source = "${pkgs.input-leap}/share/applications/io.github.input_leap.input-leap.desktop";
+    target = ".config/autostart/input-leap.desktop";
   };
 };}
