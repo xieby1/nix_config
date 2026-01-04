@@ -10,7 +10,7 @@
     type = "fcitx5";
     fcitx5 = {
       addons = [
-        pkgs.fcitx5-chinese-addons
+        pkgs.qt6Packages.fcitx5-chinese-addons
         pkgs.fcitx5-pinyin-zhwiki
         pkgs.fcitx5-mozc-ut
         pkgs.fcitx5-hangul
@@ -76,7 +76,7 @@
   };
   home.file.punc_mb_zh_CN = {
     source = pkgs.runCommand "punc.mb.zh_CN" {} /*bash*/ ''
-      sed '/_ ——/d' ${pkgs.fcitx5-chinese-addons}/share/fcitx5/punctuation/punc.mb.zh_CN > $out
+      sed '/_ ——/d' ${pkgs.qt6Packages.fcitx5-chinese-addons}/share/fcitx5/punctuation/punc.mb.zh_CN > $out
       {
       cat <<APPEND
       < <
