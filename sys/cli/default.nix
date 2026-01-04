@@ -22,7 +22,7 @@
     file
     wget
     fzf
-    linuxPackages.perf
+    perf
   ];
 
   # neovim
