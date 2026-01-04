@@ -7,10 +7,12 @@
     config = /*lua*/ ''
       require("codecompanion").setup({
         adapters = {
-          deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
-            env = { api_key = "cmd:cat ~/Gist/Vault/deepseek_api_key_nvim.txt" },
-            schema = { model = { default = "deepseek-chat" } },
-          }) end,
+          http = {
+            deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
+              env = { api_key = "cmd:cat ~/Gist/Vault/deepseek_api_key_nvim.txt" },
+              schema = { model = { default = "deepseek-chat" } },
+            }) end,
+          },
         },
         display = {
           chat = {
