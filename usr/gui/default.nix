@@ -19,6 +19,7 @@ in
     ./drawio.nix
     ./flameshot.nix
     ./fcitx5
+    ./niri
   ];
 
 config = lib.mkIf config.isGui {
