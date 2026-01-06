@@ -32,6 +32,7 @@
     ./minuet-ai-nvim.nix
     ./auto-session.nix
     ./nvim-treesitter-context.nix
+    ./rustowl.nix
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
