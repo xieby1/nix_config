@@ -1,3 +1,4 @@
+# 不足：niri还不支持viewport的查询和控制！
 { config, pkgs, ... }: let
   niri = pkgs.niri.overrideAttrs (final: prev: {
     # Implement release keybinds and modifier-only binds
@@ -29,6 +30,10 @@ in {
   ];
   home.file.niri_config = {
     text = config.lib.generators.toKDL {} {
+      output = {
+        _args = ["eDP-1"];
+        scale = 2.0;
+      };
       input = {
         touchpad = {
           tap = {};
@@ -117,7 +122,7 @@ in {
         "Mod+Left".move-column-left = {};
         "Mod+Right".move-column-right = {};
         "Mod+Up".maximize-column = {};
-        "Mod+Down".toggle-window-floating = {};
+        "Mod+Down".set-column-width = "50%";
 
         "Ctrl+Alt+Left".focus-column-left = {};
         "Ctrl+Alt+Right".focus-column-right = {};
