@@ -27,6 +27,9 @@
 in {
   home.packages = [
     niri
+    # Use latest xwayland-satellite for wechat popup
+    # https://github.com/Supreeeme/xwayland-satellite/pull/281
+    pkgs.pkgsu.xwayland-satellite
   ];
   home.file.niri_config = {
     text = config.lib.generators.toKDL {} {
