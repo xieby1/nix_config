@@ -83,19 +83,19 @@
           _props.repeat = false;
           toggle-overview = {};
         };
-        "Mod+Q" = {
+
+        "Alt+F4" = {
           _props.repeat = false;
           close-window = {};
         };
-        "Mod+Left".focus-column-left = {};
-        "Mod+Down".focus-window-down = {};
-        "Mod+Up".focus-window-up = {};
-        "Mod+Right".focus-column-right = {};
 
-        "Mod+Ctrl+Left".move-column-left = {};
-        "Mod+Ctrl+Down".move-window-down = {};
-        "Mod+Ctrl+Up".move-window-up = {};
-        "Mod+Ctrl+Right".move-column-right = {};
+        "Mod+Left".move-column-left = {};
+        "Mod+Right".move-column-right = {};
+        "Mod+Up".maximize-column = {};
+        "Mod+Down".toggle-window-floating = {};
+
+        "Ctrl+Alt+Left".focus-column-left = {};
+        "Ctrl+Alt+Right".focus-column-right = {};
 
         "Mod+Home".focus-column-first = {};
         "Mod+End".focus-column-last = {};
