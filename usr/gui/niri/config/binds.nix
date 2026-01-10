@@ -1,4 +1,4 @@
-{
+{ pkgs }: {
   "Mod+Shift+Slash".show-hotkey-overlay = {};
   "Mod+T" = {
     _props.hotkey-overlay-title = "Open a Terminal";
@@ -47,11 +47,11 @@
   };
   XF86MonBrightnessUp = {
     _props.allow-when-locked = true;
-    spawn = ["brightnessctl" "--class=backlight" "set" "+10%"];
+    spawn-sh = "${pkgs.brightnessctl}/bin/brightnessctl --class=backlight set +10%";
   };
   XF86MonBrightnessDown = {
     _props.allow-when-locked = true;
-    spawn = ["brightnessctl" "--class=backlight" "set" "10%-"];
+    spawn-sh = "${pkgs.brightnessctl}/bin/brightnessctl --class=backlight set 10%-";
   };
 
   # Open/close the Overview: a zoomed-out view of workspaces and windows.

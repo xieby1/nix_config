@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   home.file.niri_config = {
     text = config.lib.generators.toKDL {} {
       output = {
@@ -21,7 +21,7 @@
       };
       spawn-at-startup = "waybar";
       screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
-      binds = import ./binds.nix;
+      binds = import ./binds.nix {inherit pkgs;};
       gestures.hot-corners.off = {};
       overview.zoom = 0.25;
     };
