@@ -4,10 +4,9 @@
     _props.hotkey-overlay-title = "Open a Terminal";
     spawn = "kitty";
   };
-  "Mod+D" = {
-    _props.hotkey-overlay-title = "Run an Application";
-    spawn = "fuzzel";
-  };
+  # TODO: move to rofi
+  "Mod+D".spawn-sh = "rofi -show drun";
+  "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
   "Super+Alt+L" = {
     _props.hotkey-overlay-title = "Lock the Screen: swaylock";
     spawn = "swaylock";
@@ -15,35 +14,35 @@
 
   XF86AudioRaiseVolume = {
     _props.allow-when-locked = true;
-    spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0";
+    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0";
   };
   XF86AudioLowerVolume = {
     _props.allow-when-locked = true;
-    spawn-sh = "wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
   };
   XF86AudioMute = {
     _props.allow-when-locked = true;
-    spawn-sh = "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
+    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle";
   };
   XF86AudioMicMute = {
     _props.allow-when-locked = true;
-    spawn-sh  = "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
+    spawn-sh  = "${pkgs.wireplumber}/bin/wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle";
   };
   XF86AudioPlay = {
     _props.allow-when-locked = true;
-    spawn-sh = "playerctl play-pause";
+    spawn-sh = "${pkgs.playerctl}/bin/playerctl play-pause";
   };
   XF86AudioStop = {
     _props.allow-when-locked = true;
-    spawn-sh = "playerctl stop";
+    spawn-sh = "${pkgs.playerctl}/bin/playerctl stop";
   };
   XF86AudioPrev = {
     _props.allow-when-locked = true;
-    spawn-sh = "playerctl previous";
+    spawn-sh = "${pkgs.playerctl}/bin/playerctl previous";
   };
   XF86AudioNext = {
     _props.allow-when-locked = true;
-    spawn-sh = "playerctl next";
+    spawn-sh = "${pkgs.playerctl}/bin/playerctl next";
   };
   XF86MonBrightnessUp = {
     _props.allow-when-locked = true;
@@ -149,7 +148,6 @@
 
   "Mod+V".toggle-window-floating = {};
   "Mod+Shift+V".switch-focus-between-floating-and-tiling = {};
-  "Mod+W".toggle-column-tabbed-display = {};
   "Print".screenshot = {};
   "Ctrl+Print".screenshot-screen = {};
   "Alt+Print".screenshot-window = {};
