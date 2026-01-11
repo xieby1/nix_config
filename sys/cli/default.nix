@@ -100,4 +100,8 @@
   boot.kernelPackages = pkgs.linuxPackages_xanmod;
 
   networking.firewall.enable = false;
+
+  # The following are mkDefault when desktopManager.gnome.enable is true
+  networking.networkmanager.enable = true;
+  hardware.bluetooth.enable = true;
 }

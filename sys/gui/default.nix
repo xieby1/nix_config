@@ -8,9 +8,10 @@
     "modesetting" "amdgpu"
   ];
 
-  # Enable the GNOME Desktop Environment.
-  services.displayManager.gdm.enable = true;
-  services.desktopManager.gnome.enable = true;
+  # Enable the KDE Desktop Environment.
+  services.desktopManager.plasma6.enable = true;
+  services.displayManager.sddm.enable = true;
+  services.displayManager.sddm.wayland.enable = true;
 
   # https://discourse.nixos.org/t/how-to-create-folder-in-var-lib-with-nix/15647
   system.activationScripts.user_account_conf = pkgs.lib.stringAfter [ "var" ] (let
