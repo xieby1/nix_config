@@ -20,6 +20,7 @@ in
     ./flameshot.nix
     ./fcitx5
     ./niri
+    ./plasma
   ];
 
 config = lib.mkIf config.isGui {
