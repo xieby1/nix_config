@@ -1,4 +1,6 @@
-# 不足：niri还不支持viewport的查询和控制！
+# Cons:
+# * does not support viewport query and control (only support hard-coded touch gesture move view)!
+# * does not support window movement (This is a common problem for wayland, in X11 there is wmctrl)
 { pkgs, ... }: let
   niri = pkgs.niri.overrideAttrs (final: prev: {
     # Implement release keybinds and modifier-only binds
