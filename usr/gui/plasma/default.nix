@@ -12,7 +12,19 @@ in {
   programs = {
     plasma = {
       enable = true;
-      # etc.
+      shortcuts = {
+        kwin = {
+          "Window Maximize" = "Meta+Up";
+          "Window Quick Tile Top Left" = "Meta+[";
+          "Window Quick Tile Top Right" = "Meta+]";
+          "Window Quick Tile Bottom Left" = "Meta+,";
+          "Window Quick Tile Bottom Right" = "Meta+.";
+          "Switch One Desktop to the Left" = "Ctrl+Alt+Left";
+          "Switch One Desktop to the Right" = "Ctrl+Alt+Right";
+          "Window One Desktop to the Left" = "Ctrl+Meta+Left";
+          "Window One Desktop to the Right" = "Ctrl+Meta+Right";
+        };
+      };
     };
   };
 }
