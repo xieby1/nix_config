@@ -9,6 +9,10 @@ in {
   imports = [
     (plasma-manager + "/modules")
   ];
+  home.packages = [
+    # Plasma6 extension also uses javascript! It is insane!
+    pkgs.kdePackages.dynamic-workspaces
+  ];
   programs = {
     plasma = {
       enable = true;
