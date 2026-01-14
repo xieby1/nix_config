@@ -1,3 +1,6 @@
+# Cons:
+# * Does not support set 3-finger swipe directions
+# * Extensions use JS
 { pkgs, ... }: let
   plasma-manager = (import <nixpkgs> {}).fetchFromGitHub {
     owner = "nix-community";
