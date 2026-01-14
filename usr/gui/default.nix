@@ -21,6 +21,7 @@ in
     ./fcitx5
     ./niri
     ./plasma
+    ./hyprland
   ];
 
 config = lib.mkIf config.isGui {
