@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  home.packages = [ pkgs.ironbar ];
+  home.packages = [ pkgs.pkgsu.ironbar ];
   home.file.ironbar_config = {
     text = builtins.toJSON {
       position = "top";
@@ -33,6 +33,7 @@
         type = "volume";
       }{
         type = "tray";
+        icon_size = 24;
       }{
         type = "battery";
         icon_size = 16;
@@ -42,5 +43,40 @@
       }];
     };
     target = ".config/ironbar/config.json";
+  };
+  home.file.ironbar_style = {
+    text = /*css*/ ''
+      :root {
+        --color-dark-primary: #1c1c1c;
+        --color-dark-secondary: #2d2d2d;
+        --color-active: #6699cc;
+      }
+      * {
+        background-image: none;
+        font-family: noto mono;
+      }
+      #bar, popover, popover contents, calendar {
+        background-color: var(--color-dark-primary);
+      }
+      button {
+        padding: 0;
+      }
+      button:hover, button:active {
+        background-color: var(--color-dark-secondary);
+      }
+      #end > * + * {
+        margin: 0.5em;
+      }
+      .clock {
+        font-weight: bold;
+      }
+      .popup-clock .calendar-clock {
+        font-size: 2.0em;
+      }
+      .popup-clock .calendar .today {
+        background-color: var(--color-active);
+      }
+    '';
+    target = ".config/ironbar/style.css";
   };
 }
