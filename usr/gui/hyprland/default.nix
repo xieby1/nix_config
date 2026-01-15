@@ -37,8 +37,11 @@
         "Super, left, resizewindowpixel, exact 50% 100% ,activewindow"
         "Super, right, movewindowpixel, exact 50% 0 ,activewindow"
         "Super, right, resizewindowpixel, exact 50% 100% ,activewindow"
-        "Super, up, fullscreen, 0, set"
-        "Super, down, fullscreen, 0, unset"
+        # If use fullscreen then cannot see the ironbar
+        # "Super, up, fullscreen, 1, set"
+        # "Super, down, fullscreen, 1, unset"
+        "Super, up, movewindowpixel, exact 0 0 ,activewindow"
+        "Super, up, resizewindowpixel, exact 100% 100% ,activewindow"
 
         "Super, bracketleft, movewindowpixel, exact 0 0 ,activewindow"
         "Super, bracketleft, resizewindowpixel, exact 50% 50% ,activewindow"
