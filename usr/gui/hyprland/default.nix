@@ -5,6 +5,7 @@
   wayland.windowManager.hyprland = {
     enable = true;
     settings = {
+      windowrule = "float, class:.*";
       animation = "global, 1, 3, default";
       exec-once = "ironbar";
       general = {
