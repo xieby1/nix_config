@@ -11,11 +11,7 @@
       general = {
         gaps_in = 0;
         gaps_out = 0;
-        border_size = 2;
-      };
-      decoration = {
-        rounding = 10;
-        rounding_power = 2;
+        border_size = 0;
       };
       input = {
         follow_mouse = 2;
