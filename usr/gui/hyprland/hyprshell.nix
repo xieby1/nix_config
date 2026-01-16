@@ -20,5 +20,23 @@
       # but to make it explicitly that cargoHash is not used after overrideAttrs.
       cargoHash = null;
     });
+    settings = {
+      version = 3;
+      windows = {
+        overview = {
+          launcher = {
+            default_terminal = "kitty";
+            launch_modifier = "alt";
+          };
+          key = "super_l";
+          modifier = "super";
+        };
+        switch = {
+          modifier = "alt";
+          filter_by = ["current_workspace"];
+          switch_workspaces = false;
+        };
+      };
+    };
   };
 }
