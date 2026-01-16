@@ -104,4 +104,7 @@
   # The following are mkDefault when desktopManager.gnome.enable is true
   networking.networkmanager.enable = true;
   hardware.bluetooth.enable = true;
+  services.upower.enable = true;
+  # TODO: remove, currently home-manager switch needs
+  programs.dconf.enable = true;
 }
