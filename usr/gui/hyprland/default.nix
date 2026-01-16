@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./ironbar.nix
+    ./hyprshell.nix
   ];
   wayland.windowManager.hyprland = {
     enable = true;
