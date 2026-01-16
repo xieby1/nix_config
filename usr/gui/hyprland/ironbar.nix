@@ -19,6 +19,9 @@
         format = "%Y.%m.%d | %H:%M";
       }];
       end = [{
+        type = "tray";
+        icon_size = 24;
+      }{
         type = "sys_info";
         format = [
           "⏲{cpu_percent:2}"
@@ -32,8 +35,10 @@
       }{
         type = "volume";
       }{
-        type = "tray";
-        icon_size = 24;
+        type = "network_manager";
+        icon_size = 16;
+      }{
+        type = "bluetooth";
       }{
         type = "battery";
         icon_size = 16;
