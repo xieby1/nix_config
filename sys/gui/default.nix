@@ -8,9 +8,16 @@
     "modesetting" "amdgpu"
   ];
 
-  # Enable the KDE Desktop Environment.
-  services.displayManager.sddm.enable = true;
-  services.displayManager.sddm.wayland.enable = true;
+  # Cosmic
+  # * Cons
+  #   * bluetooth cannot disable auto connect,
+  #     and no one discussed in comsic-applets/comsic-epoch github issues
+  #   * dont have enough key binding settings
+  #     * E.g. left/right half screen?
+  # services.desktopManager.cosmic.enable = true;
+  # services.displayManager.cosmic-greeter.enable = true;
+  services.desktopManager.gnome.enable = true;
+  services.displayManager.gdm.enable = true;
 
   # https://discourse.nixos.org/t/how-to-create-folder-in-var-lib-with-nix/15647
   system.activationScripts.user_account_conf = pkgs.lib.stringAfter [ "var" ] (let
