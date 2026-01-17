@@ -19,9 +19,10 @@ in
     ./drawio.nix
     ./flameshot.nix
     ./fcitx5
-    ./niri
-    ./plasma
-    ./hyprland
+    # TODO: remove
+    # ./niri
+    # ./plasma
+    # ./hyprland
   ];
 
 config = lib.mkIf config.isGui {
