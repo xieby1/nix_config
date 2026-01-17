@@ -1,3 +1,8 @@
+# Cons:
+# * Static workspace (id: 1,2,3,...)
+#   * As a result, it is not easy to insert a new workspace into a place.
+#   * Though we can write a script to swap workspace from tail to the place,
+#     it is very inelegant.
 { pkgs, ... }: {
   imports = [
     ./ironbar.nix
@@ -27,8 +32,34 @@
         "Alt, F4, killactive,"
         "Super, M, exit,"
         "Super, D, exec, rofi -show drun"
+
+# # Toggle overview, show windows from current workspace only (default)
+# "SUPER, H, hyprview:toggle"
+
+# # Toggle overview, show windows from all workspaces
+# "SUPER, H, hyprview:toggle, all"
+
+# # Toggle overview, show windows from all workspaces including special workspaces
+# "SUPER, S, hyprview:toggle, all special"
+
+# # Close the overview
+# "SUPER, ESC, hyprview:toggle, off"
+
+# # Toggle overview with different placement algorithms
+# "SUPER, G, hyprview:toggle, placement:spiral"
+# "SUPER, T, hyprview:toggle, placement:flow"
+# "SUPER, A, hyprview:toggle, placement:adaptive"
+# "SUPER, W, hyprview:toggle, placement:wide"
+# "SUPER, F, hyprview:toggle, placement:scale"
+
         "Ctrl+Alt, left, workspace, -1"
         "Ctrl+Alt, right, workspace, +1"
+        "Ctrl+Super, left, movetoworkspace, -1"
+        "Ctrl+Super, right, movetoworkspace, +1"
+        "Ctrl+Shift+Alt, left, workspace, e-1"
+        "Ctrl+Shift+Alt, right, workspace, e+1"
+        "Ctrl+Shift+Super, left, movetoworkspace, e-1"
+        "Ctrl+Shift+Super, right, movetoworkspace, e+1"
 
         "Super, left, movewindowpixel, exact 0 0 ,activewindow"
         "Super, left, resizewindowpixel, exact 50% 100% ,activewindow"
@@ -67,5 +98,8 @@
         ",XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl previous"
       ];
     };
+    plugins = [
+      # (import ./hyprview.nix)
+    ];
   };
 }
