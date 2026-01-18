@@ -13,7 +13,6 @@ in
     ./gnome
     ./kitty
     ./singleton_apps.nix
-    ./rofi.nix
     ./xcolor.nix
     ./wsl.nix
     ./drawio.nix
