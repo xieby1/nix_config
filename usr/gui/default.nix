@@ -12,7 +12,7 @@ in
     ./rustdesk.nix
     ./gnome
     ./kitty
-    ./singleton_apps.nix
+    ./cheatsheet_edit.nix
     ./xcolor.nix
     ./wsl.nix
     ./drawio.nix
