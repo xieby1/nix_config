@@ -16,15 +16,15 @@
       win-switcher-popup-filter=1;
       win-switch-include-modals=true;
 
-      enable-super=true;
-      # super => window switcher
-      super-key-mode=3;
-      # show overview
-      super-double-press-action=3;
-      # Activate app after mouse out. But why needs this?
-      # If not enable this, the app switcher will not exit automatically,
-      # which may be a bug.
-      switcher-popup-activate-on-hide=true;
+      # enable-super=true;
+      # # super => window switcher
+      # super-key-mode=3;
+      # # show overview
+      # super-double-press-action=3;
+      # # Activate app after mouse out. But why needs this?
+      # # If not enable this, the app switcher will not exit automatically,
+      # # which may be a bug.
+      # switcher-popup-activate-on-hide=true;
     };
   };
 }
