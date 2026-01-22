@@ -137,3 +137,9 @@ findInputs(pkg, hostOffset, targetOffset) {
 所以依赖图的遍历过程在stdenv/setup中findInputs函数完成。
 遍历后得到所有依赖（直接依赖、间接依赖）放入了6个pkgs{Build/Host/Target}{Build/Host/Target}变量中。
 还需要注意的是，依赖传递通过$pkg/nix-support/对应的文件propogate文件实现。
+
+注：6个pkgs{Build/Host/Target}{Build/Host/Target}为**数组变量**，
+* 若用$pkgs{Build/Host/Target}{Build/Host/Target}则仅显示第一个元素，这是bash的特性
+  * 例：$pkgsHostTarget仅为第一个元素
+* 需要用${pkgs{Build/Host/Target}{Build/Host/Target}[@]}才会显示所有元素。
+  * 例：${pkgsHostTarget[@]}为所有元素
