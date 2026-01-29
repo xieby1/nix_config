@@ -19,9 +19,11 @@ in
     ./flameshot.nix
     ./fcitx5
     # TODO: remove
-    # ./niri
+    ./niri
+    ./rofi.nix
     # ./plasma
     # ./hyprland
+    ./dms
   ];
 
 config = lib.mkIf config.isGui {
