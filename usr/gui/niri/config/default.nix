@@ -19,7 +19,7 @@
           offset._props = {x=2; y=2;};
         };
       };
-      spawn-at-startup = "waybar";
+      spawn-at-startup = ["dms" "run"];
       screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
       binds = import ./binds.nix {inherit pkgs;};
       gestures.hot-corners.off = {};
