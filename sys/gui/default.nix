@@ -1,4 +1,8 @@
 { pkgs, ... }: {
+  imports = [
+    # Bug: authentication error, thus, current use greetd
+    # ./dms
+  ];
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [
@@ -16,8 +20,16 @@
   #     * E.g. left/right half screen?
   # services.desktopManager.cosmic.enable = true;
   # services.displayManager.cosmic-greeter.enable = true;
-  services.desktopManager.gnome.enable = true;
-  services.displayManager.gdm.enable = true;
+  # services.desktopManager.gnome.enable = true;
+  # services.displayManager.gdm.enable = true;
+  services.greetd = {
+    enable = true;
+    settings = {
+      default_session = {
+        command = "${pkgs.greetd}/bin/agreety --cmd niri";
+      };
+    };
+  };
 
   # https://discourse.nixos.org/t/how-to-create-folder-in-var-lib-with-nix/15647
   system.activationScripts.user_account_conf = pkgs.lib.stringAfter [ "var" ] (let
