@@ -82,7 +82,10 @@
   #MC 让TTY自动登录我的账户，这样就可以自动启动用户级（user）的systemd服务了。
   #MC 这样就可以在<span style="color:teal">**非NixOS**</span>中（比如Ubuntu服务器、WSL2、Debian树莓派等）
   #MC 自动拉起systemd<span style="color:teal">**用户**</span>服务（比如syncthing、clash、tailscale等）。
-  services.getty.autologinUser = "xieby1";
+  services.getty = {
+    autologinUser = "xieby1";
+    autologinOnce = true;
+  };
   #MC 有关systemd用户服务的配置，详细可见参考：
   #MC
   #MC * home-manager配置的manpage的services词条，
