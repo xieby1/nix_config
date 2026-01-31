@@ -64,45 +64,19 @@
   };
 
   config = {
-    home.file = (builtins.listToAttrs (lib.flatten (
+    yq-merge = (builtins.listToAttrs (lib.flatten (
       lib.mapAttrsToList (profile: per-profile-settings: (
         lib.mapAttrsToList (extensionId: per-extension-settings: {
-          name = "firefox-${profile}-${extensionId}";
-          value = let
-            relDir = "${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}";
-            absDir = "${config.home.homeDirectory}/${relDir}";
-          in {
-            target = "${relDir}/_storage_.js";
-            text = builtins.toJSON per-extension-settings.storage;
-            onChange = ''
-              if [[ -e ${absDir}/storage.js ]]; then
-                ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/storage.js ${absDir}/_storage_.js
-              else
-                cat ${absDir}/_storage_.js > ${absDir}/storage.js
-              fi
-            '';
-          };
+          name = "${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}/storage.js";
+          value.text = builtins.toJSON per-extension-settings.storage;
         }) per-profile-settings.browser-extension-data
       )) config.firefox-extensions
     ))) // (
       lib.mapAttrs' (profile: per-profile-settings: {
-        name = "firefox-${profile}-extension-settings";
-        value = let
-          relDir = "${config.programs.firefox.configPath}/${profile}";
-          absDir = "${config.home.homeDirectory}/${relDir}";
-        in {
-          target = "${relDir}/_extension-settings_.json";
-          text = builtins.toJSON ({
-            version = 3;
-          } // per-profile-settings.extension-settings);
-          onChange = ''
-            if [[ -e ${absDir}/extension-settings.json ]]; then
-              ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${absDir}/extension-settings.json ${absDir}/_extension-settings_.json
-            else
-              cat ${absDir}/_extension-settings_.json > ${absDir}/extension-settings.json
-            fi
-          '';
-        };
+        name = "${config.programs.firefox.configPath}/${profile}/extension-settings.json";
+        value.text = builtins.toJSON ({
+          version = 3;
+        } // per-profile-settings.extension-settings);
       }) config.firefox-extensions
     );
 
