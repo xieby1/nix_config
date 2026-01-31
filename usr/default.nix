@@ -10,8 +10,7 @@
 
 { ... }: {
   imports = [
-    ../modules
-    ./modules/cachix.nix
+    ./modules
     ./cli
     ./gui
   ];

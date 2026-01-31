@@ -1,4 +1,8 @@
 { lib, ... }: {
+  imports = [
+    ./cachix.nix
+  ];
+
   options = {
     isMinimalConfig = lib.mkOption {
       type = lib.types.bool;
