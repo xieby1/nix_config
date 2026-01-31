@@ -35,7 +35,7 @@ However, the above method seems not work as below,
 because cachix needs accesses to some resources beyond nix-build process (such as nix-build's sandbox).
 
 ```bash
-nix-build test.nix
+nix-build example.nix
 ...
 cachix: CppStdException e "\ESC[31;1merror:\ESC[0m creating directory '\ESC[35;1m/nix/var\ESC[0m': \ESC[35;1mPermission denied\ESC[0m"(Just "nix::SysError")
 result 1
@@ -46,11 +46,11 @@ Even though I disable the nix-build sandbox by using `--no-sandbox`,
 the cachix still does not satisfy as below.
 
 ```bash
-$ nix-build test.nix --no-sandbox
+$ nix-build example.nix --no-sandbox
 ...
 cachix: CppStdException e "\ESC[31;1merror:\ESC[0m cannot open connection to remote store '\ESC[35;1mdaemon\ESC[0m': \ESC[35;1m\ESC[31;1merror:\ESC[0m reading from file: \ESC[35;1mConnection reset by peer\ESC[0m\ESC[0m"(Just "nix::Error")
 ...
 ```
 
-If you curious about my demo of `cachixPackages` and its test,
-see [cachix-package.nix](./cachix-package.nix.md) and [test.nix](./test.nix.md).
+If you curious about my demo of `cachixPackages` and its example,
+see [cachix-package.nix](./cachix-package.nix.md) and [example.nix](./example.nix.md).

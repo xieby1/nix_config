@@ -1,12 +1,12 @@
-#MC # Test for cachixPackage
+#MC # Example for cachixPackage
 #MC
-#MC To run the test:
+#MC To run the example:
 #MC
 #MC ```bash
 #MC # run with nix-build sandbox
-#MC nix-build test.nix
+#MC nix-build example.nix
 #MC # run without nix-build sandbox
-#MC nix-build test.nix --no-sandbox
+#MC nix-build example.nix --no-sandbox
 #MC ```
 let
   pkgs = import <nixpkgs> {};
