@@ -13,3 +13,8 @@ README.md: ./.markcode_progress.sh ${NIXs}
 ALL_MDs = $(shell find . -name "*.md" -not -name "SUMMARY.md")
 SUMMARY.md: .genSUMMARY.sh ${NIX_MDs} ${ALL_MDs}
 	./$< > $@
+
+TEST_NIXs = $(shell find . -name test.nix)
+test: $(addsuffix .run, ${TEST_NIXs})
+%test.nix.run: %test.nix
+	nix eval -f $< | tee /dev/tty | grep -q '\[ \]'
