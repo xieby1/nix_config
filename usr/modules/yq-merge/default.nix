@@ -3,7 +3,11 @@
     yq-merge = lib.mkOption {
       type = lib.types.attrs;
       default = {};
-      description = "TODO";
+      description = ''
+        Use yq to merge config file.
+        The yq-merge."<name>" receive attr same as `home.file`.
+      '';
+      example = ./test.nix;
     };
   };
   config = {
