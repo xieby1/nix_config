@@ -23,7 +23,10 @@
       screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
       binds = import ./binds.nix {inherit pkgs;};
       gestures.hot-corners.off = {};
-      overview.zoom = 0.25;
+      overview.zoom = 0.4;
+      switch-events = {
+        lid-close.spawn = ["dms" "ipc" "lock" "lock"];
+      };
     };
     target = ".config/niri/config.kdl";
   };

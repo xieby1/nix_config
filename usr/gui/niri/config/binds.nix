@@ -5,11 +5,11 @@
     spawn = "kitty";
   };
   # TODO: move to rofi
-  "Mod+D".spawn-sh = "rofi -show drun";
+  "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
   "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
-  "Super+Alt+L" = {
-    _props.hotkey-overlay-title = "Lock the Screen: swaylock";
-    spawn = "swaylock";
+  "Mod+L" = {
+    _props.hotkey-overlay-title = "Lock the Screen";
+    spawn-sh = "dms ipc lock lock";
   };
 
   XF86AudioRaiseVolume = {
