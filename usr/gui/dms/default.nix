@@ -28,6 +28,6 @@ in {
           hash = "sha256-NBGF7bo+nYSToDWtIXMwPeulzRxphX8JHzNRqLTOOqU=";
         };
       };
-    in flake-dgop.defaultNix.packages.${pkgs.system}.default;
+    in flake-dgop.defaultNix.packages.${builtins.currentSystem}.default;
   };
 }
