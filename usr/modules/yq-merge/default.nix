@@ -13,9 +13,12 @@
   config = {
     home.file = builtins.mapAttrs (old_target: value: (value // rec {
       target = "${dirOf old_target}/yq-merge.${baseNameOf old_target}";
-      onChange = ''
+      onChange = /*bash*/ ''
         if [[ -e ${old_target} ]]; then
-          ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . * $item )' ${old_target} ${target}
+          # Operator: `*d` means deeply merge and deeply merge array
+          # See: https://mikefarah.gitbook.io/yq/operators/multiply-merge
+          # Noted: If the element of array is string, the old array will be overwrite.
+          ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . *d $item )' ${old_target} ${target}
         else
           cat ${target} > ${old_target}
         fi
