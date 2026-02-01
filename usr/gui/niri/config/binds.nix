@@ -7,6 +7,7 @@
   "Mod+N".spawn-sh = "dms ipc notifications toggle";
   "Mod+X".spawn-sh = "dms ipc powermenu toggle";
   "Mod+V".spawn-sh = "dms ipc clipboard toggle";
+  "Mod+H".spawn-sh = "dms ipc bar toggleAutoHide name 'Main Bar'";
 
   XF86AudioRaiseVolume = {
     _props.allow-when-locked = true;
