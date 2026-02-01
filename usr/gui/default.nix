@@ -77,7 +77,6 @@ config = lib.mkIf config.isGui {
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     zotero
   ] ++ [
-    input-leap
     keepassxc
     # entertainment
     antimicrox
