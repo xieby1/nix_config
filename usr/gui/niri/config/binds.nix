@@ -1,16 +1,12 @@
 { pkgs }: {
-  "Mod+Shift+Slash".show-hotkey-overlay = {};
-  "Mod+T" = {
-    _props.hotkey-overlay-title = "Open a Terminal";
-    spawn = "kitty";
-  };
-  # TODO: move to rofi
+  "Mod+T".spawn = "kitty";
+  "Ctrl+Alt+T".spawn = "kitty";
   "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
   "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
-  "Mod+L" = {
-    _props.hotkey-overlay-title = "Lock the Screen";
-    spawn-sh = "dms ipc lock lock";
-  };
+  "Mod+L".spawn-sh = "dms ipc lock lock";
+  "Mod+N".spawn-sh = "dms ipc notifications toggle";
+  "Mod+X".spawn-sh = "dms ipc powermenu toggle";
+  "Mod+V".spawn-sh = "dms ipc clipboard toggle";
 
   XF86AudioRaiseVolume = {
     _props.allow-when-locked = true;
@@ -133,7 +129,6 @@
   "Mod+R".switch-preset-column-width = {};
   "Mod+Shift+R".switch-preset-window-height = {};
   "Mod+Ctrl+R".reset-window-height = {};
-  "Mod+F".maximize-column = {};
   "Mod+Shift+F".fullscreen-window = {};
 
   "Mod+Ctrl+F".expand-column-to-available-width = {};
@@ -141,13 +136,12 @@
   "Mod+C".center-column = {};
   "Mod+Ctrl+C".center-visible-columns = {};
 
-  "Mod+Minus".set-column-width = "-10%";
-  "Mod+Equal".set-column-width = "+10%";
-  "Mod+Shift+Minus".set-window-height = "-10%";
-  "Mod+Shift+Equal".set-window-height = "+10%";
+  "Mod+Minus".set-column-width = "-25%";
+  "Mod+Equal".set-column-width = "+25%";
+  "Mod+Shift+Minus".set-window-height = "-25%";
+  "Mod+Shift+Equal".set-window-height = "+25%";
 
-  "Mod+V".toggle-window-floating = {};
-  "Mod+Shift+V".switch-focus-between-floating-and-tiling = {};
+  "Mod+F".toggle-window-floating = {};
   "Print".screenshot = {};
   "Ctrl+Print".screenshot-screen = {};
   "Alt+Print".screenshot-window = {};
