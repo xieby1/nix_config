@@ -18,6 +18,16 @@
       rev = "53447431c4adcfe1572fed5f39ebddc239ca381c";
       hash = "sha256-onL4kGGpNHYNIaU11hN440RruSJKcTblSi7CwqMbYeM=";
     };
+    patches = [
+      # Fix dingtalk screen casting.
+      # https://forum.archlinuxcn.org/t/topic/15526/3
+      # [Support shm sharing #1791](https://github.com/YaLTeR/niri/pull/1791)
+      (pkgs.fetchurl {
+        name = "shm-sharing";
+        url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_2~19..tag_support-shm-sharing_2.patch";
+        sha256 = "0rs0rb0f7hhk3847ay3rvhbhbpw4y2wkpg7dh9knj768qsqvm324";
+      })
+    ];
     # https://nixos.wiki/wiki/Rust#Using_overrideArgs_with_Rust_Packages
     cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
       src = final.src;
