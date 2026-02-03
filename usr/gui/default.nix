@@ -47,7 +47,17 @@ config = lib.mkIf config.isGui {
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./weixin.nix {})
     wemeet
-    nur.repos.xddxdd.dingtalk
+    (nur.repos.xddxdd.dingtalk.overrideAttrs (old: {
+      installPhase = builtins.replaceStrings [
+        "libcef.so"
+        "--prefix LD_PRELOAD"
+      ][
+        "plugins/dtwebview/libcef.so"
+        # Fix: cannot enable executable stack as shared object requires: Invalid argument
+        # https://unix.stackexchange.com/questions/792460/dlopen-fails-after-debian-trixie-libc-transition-cannot-enable-executable-st
+        "--prefix GLIBC_TUNABLES : glibc.rtld.execstack=2 --prefix LD_PRELOAD"
+      ] old.installPhase;
+    }))
   ] ++ [
     transmission_4-gtk
     # text
