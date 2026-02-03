@@ -1,10 +1,49 @@
 {
   "pins": {
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+      "url": "https://github.com/NixOS/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz",
+      "hash": "0yqfa6rx8md81bcn4szfp0hjq2f3h9i8zjzhqqyfqdkrj5559nmw"
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.11",
       "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.5065.41e216c0ca66/nixexprs.tar.xz",
       "hash": "11l3mnblcqr3yxgplphs57ws0a01g5xcgkjkxhixyhjc1gx84srq"
+    },
+    "nur": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "NUR"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e3ce2c3e3ccd5a3d6025f678745dc2ba02b757dc",
+      "url": "https://github.com/nix-community/NUR/archive/e3ce2c3e3ccd5a3d6025f678745dc2ba02b757dc.tar.gz",
+      "hash": "0dcvsmb4m3yqjfliahka1g2n2kj0r15scr0iryab1x4av2i2p7qb"
+    },
+    "pkgsu": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f13746dd7154de4fedd2527d5c0c7f994fc58e5c",
+      "url": "https://github.com/NixOS/nixpkgs/archive/f13746dd7154de4fedd2527d5c0c7f994fc58e5c.tar.gz",
+      "hash": "1gqd26h3zp6kjcxasp73111xbfz3bzascj9nlxs06wci71fllhyp"
     }
   },
   "version": 5
