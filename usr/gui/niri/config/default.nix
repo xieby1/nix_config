@@ -1,6 +1,8 @@
 { config, pkgs, ... }: {
   home.file.niri_config = {
     text = config.lib.generators.toKDL {} {
+      # TODO: support multiple same name attr, e.g. include
+      include = "./dms/outputs.kdl";
       output = {
         _args = ["eDP-1"];
         scale = 2.0;
