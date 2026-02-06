@@ -1,5 +1,4 @@
 { pkgs }: {
-  "Mod+T".spawn = "kitty";
   "Ctrl+Alt+T".spawn = "kitty";
   "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
   "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
@@ -63,10 +62,17 @@
     close-window = {};
   };
 
-  "Mod+Left".move-column-left = {};
-  "Mod+Right".move-column-right = {};
-  "Mod+Up".maximize-column = {};
-  "Mod+Down".set-column-width = "50%";
+  "Mod+T".toggle-column-tabbed-display = {};
+
+  "Mod+Left".focus-column-left = {};
+  "Mod+Right".focus-column-right = {};
+  "Mod+Up".focus-window-up = {};
+  "Mod+Down".focus-window-down = {};
+
+  "Ctrl+Mod+Left".move-column-left = {};
+  "Ctrl+Mod+Right".move-column-right = {};
+  "Ctrl+Mod+Up".move-window-up = {};
+  "Ctrl+Mod+Down".move-window-down = {};
 
   "Ctrl+Alt+Left".focus-column-left = {};
   "Ctrl+Alt+Right".focus-column-right = {};
@@ -76,20 +82,15 @@
   "Mod+Ctrl+Home".move-column-to-first = {};
   "Mod+Ctrl+End".move-column-to-last = {};
 
-  "Mod+Shift+Left".focus-monitor-left = {};
-  "Mod+Shift+Down".focus-monitor-down = {};
-  "Mod+Shift+Up".focus-monitor-up = {};
-  "Mod+Shift+Right".focus-monitor-right = {};
+  "Shift+Mod+Left".move-column-to-monitor-left = {};
+  "Shift+Mod+Right".move-column-to-monitor-right = {};
+  "Shift+Mod+Up".move-column-to-workspace-up = {};
+  "Shift+Mod+Down".move-column-to-workspace-down = {};
 
-  "Mod+Shift+Ctrl+Left".move-column-to-monitor-left = {};
-  "Mod+Shift+Ctrl+Down".move-column-to-monitor-down = {};
-  "Mod+Shift+Ctrl+Up".move-column-to-monitor-up = {};
-  "Mod+Shift+Ctrl+Right".move-column-to-monitor-right = {};
-
-  "Mod+Page_Down".focus-workspace-down = {};
-  "Mod+Page_Up".focus-workspace-up = {};
-  "Mod+Ctrl+Page_Down".move-column-to-workspace-down = {};
-  "Mod+Ctrl+Page_Up".move-column-to-workspace-up = {};
+  "Ctrl+Shift+Mod+Left".focus-monitor-left = {};
+  "Ctrl+Shift+Mod+Right".focus-monitor-right = {};
+  "Ctrl+Shift+Mod+Up".focus-workspace-up = {};
+  "Ctrl+Shift+Mod+Down".focus-workspace-down = {};
 
   "Mod+Shift+Page_Down".move-workspace-down = {};
   "Mod+Shift+Page_Up".move-workspace-up = {};
@@ -137,8 +138,9 @@
   "Mod+C".center-column = {};
   "Mod+Ctrl+C".center-visible-columns = {};
 
-  "Mod+Minus".set-column-width = "-25%";
-  "Mod+Equal".set-column-width = "+25%";
+  "Mod+Minus".set-column-width = "50%";
+  "Mod+Equal".set-column-width = "100%";
+    # set-column-height = "100%";
   "Mod+Shift+Minus".set-window-height = "-25%";
   "Mod+Shift+Equal".set-window-height = "+25%";
 
