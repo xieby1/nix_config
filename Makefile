@@ -1,4 +1,6 @@
-all: SUMMARY.md
+all: test
+
+md: SUMMARY.md
 	mdbook build
 
 NIXs = $(shell find . -name "*.nix" -not -path "./book*")

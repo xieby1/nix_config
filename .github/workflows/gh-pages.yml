@@ -8,7 +8,7 @@ jobs:
     - uses: cachix/install-nix-action@v23
       with:
         nix_path: nixpkgs=channel:nixos-24.05
-    - run: nix-shell --run "make -j"
+    - run: nix-shell --run "make md -j"
     - uses: peaceiris/actions-gh-pages@v3
       if: ${{ github.ref == 'refs/heads/main' }}
       with:
