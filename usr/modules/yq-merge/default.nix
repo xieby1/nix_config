@@ -1,7 +1,25 @@
 { config, pkgs, lib, ... }: {
   options = {
     yq-merge = lib.mkOption {
-      type = lib.types.attrs;
+      type = lib.types.attrsOf (
+        lib.types.submodule {
+          options = {
+            text = lib.mkOption {
+              default = null;
+              type = lib.types.nullOr lib.types.lines;
+              description = "Pass to home.home.<xxx>.text";
+            };
+            preOnChange = lib.mkOption {
+              default = "";
+              type = lib.types.lines;
+            };
+            postOnChange = lib.mkOption {
+              default = "";
+              type = lib.types.lines;
+            };
+          };
+        }
+      );
       default = {};
       description = ''
         Use yq to merge config file.
@@ -11,9 +29,11 @@
     };
   };
   config = {
-    home.file = builtins.mapAttrs (old_target: value: (value // rec {
+    home.file = builtins.mapAttrs (old_target: value: rec {
+      inherit (value) text;
       target = "${dirOf old_target}/yq-merge.${baseNameOf old_target}";
       onChange = /*bash*/ ''
+        ${value.preOnChange}
         if [[ -e ${old_target} ]]; then
           # Operator: `*d` means deeply merge and deeply merge array
           # See: https://mikefarah.gitbook.io/yq/operators/multiply-merge
@@ -22,7 +42,8 @@
         else
           cat ${target} > ${old_target}
         fi
+        ${value.postOnChange}
       '';
-    })) config.yq-merge;
+    }) config.yq-merge;
   };
 }

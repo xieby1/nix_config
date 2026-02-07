@@ -8,6 +8,12 @@ let
       # Config to be tested
       yq-merge.".config/miao.json" = {
         text = "miao miao!";
+        preOnChange = ''
+          echo wang
+        '';
+        postOnChange = ''
+          echo zhi
+        '';
       };
     };
   };
@@ -22,6 +28,14 @@ in pkgs.lib.runTests {
   };
   test-onChange = {
     expr = hm.config.home.file.".config/miao.json".onChange != "";
+    expected = true;
+  };
+  test-preOnChange = {
+    expr = pkgs.lib.hasInfix "echo wang" hm.config.home.file.".config/miao.json".onChange;
+    expected = true;
+  };
+  test-postOnChange = {
+    expr = pkgs.lib.hasInfix "echo zhi" hm.config.home.file.".config/miao.json".onChange;
     expected = true;
   };
 }
