@@ -1,10 +1,8 @@
-# TODO: Why does this `pkgs` not work?
-# { pkgs, ... }: {
-{ config, ... }: let
-  pkgs = import <nixpkgs> {};
-in {
+{ pkgs, ... }: {
   imports = [
     (let
+      # TODO: Why does `pkgs` above not work?
+      pkgs = import <nixpkgs> {};
       flake-dms = pkgs.flake-compat {
         src = pkgs.fetchFromGitHub {
           owner = "AvengeMedia";
