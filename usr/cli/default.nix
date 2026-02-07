@@ -20,6 +20,7 @@ in
     ./git.nix
     ./fzf.nix
     ./tldr.nix
+    ./typst
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
