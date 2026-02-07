@@ -47,4 +47,10 @@ in {
     # https://github.com/Supreeeme/xwayland-satellite/pull/281
     pkgs.pkgsu.xwayland-satellite
   ];
+  services.gnome-keyring.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
+    configPackages = [ niri ];
+  };
 }
