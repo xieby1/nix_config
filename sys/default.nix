@@ -46,6 +46,11 @@
   ];
 
   nix.channel.enable = false;
+  # Preserve NIX_PATH for root and wheel
+  # https://superuser.com/questions/232231/how-do-i-make-sudo-preserve-my-environment-variables
+  security.sudo.extraConfig = ''
+    Defaults:root,%wheel env_keep+=NIX_PATH
+  '';
 
   #MC 设置时区。
   time.timeZone = "Asia/Shanghai";
