@@ -16,10 +16,7 @@
   ];
   news.display = "silent";
 
-  # Do not keep the old nix path set by sys/default.nix
-  nix.keepOldNixPath = false;
-  nix.nixPath = [
-    "nixpkgs=${(import ../npins).nixpkgs}"
-    "nixos-config=/etc/nixos/configuration.nix"
-  ];
+  programs.bash.bashrcExtra = ''
+    . ${toString ../scripts/nix-path.sh}
+  '';
 }
