@@ -14,12 +14,14 @@
   allowUnsupportedSystem = false;
   allowUnfree = true;
   packageOverrides = pkgs: rec {
+    # packages pinned by npins
+    npinsed = import ./npins;
     #MC 添加nix user repository (NUR)到nixpkgs里。
-    nur = import (import ./npins).nur { pkgs = pkgsu; };
+    nur = import npinsed.nur { pkgs = pkgsu; };
     #MC 添加非稳定版的nixpkgs到nixpkgs里，
     #MC 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
-    pkgsu = import (import ./npins).pkgsu {};
+    pkgsu = import npinsed.pkgsu {};
     #MC 添加flake-compat，用于在nix expression中使用flake的包
-    flake-compat = import (import ./npins).flake-compat;
+    flake-compat = import npinsed.flake-compat;
   };
 }
