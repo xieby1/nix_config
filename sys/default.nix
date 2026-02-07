@@ -40,15 +40,12 @@
   #MC 由于cache.nixos.org需要梯子，
   #MC 这里使用了清华Tuna提供的Nix binary cache镜像来加速。
   nix.settings.substituters = [
+    # TODO: tuna
     "https://cache.nixos.org/"
     "https://xieby1.cachix.org"
   ];
 
   nix.channel.enable = false;
-  nix.nixPath = [
-    "nixpkgs=${(import ../npins).nixpkgs}"
-    "nixos-config=/etc/nixos/configuration.nix"
-  ];
 
   #MC 设置时区。
   time.timeZone = "Asia/Shanghai";
