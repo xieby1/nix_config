@@ -7,6 +7,7 @@
   "Mod+X".spawn-sh = "dms ipc powermenu toggle";
   "Mod+V".spawn-sh = "dms ipc clipboard toggle";
   "Mod+H".spawn-sh = "dms ipc bar toggleAutoHide name 'Main Bar'";
+  "Mod+F".spawn-sh = "kitty bash -i fzf-doc";
 
   XF86AudioRaiseVolume = {
     _props.allow-when-locked = true;
@@ -76,6 +77,8 @@
 
   "Ctrl+Alt+Left".focus-column-left = {};
   "Ctrl+Alt+Right".focus-column-right = {};
+  "Ctrl+Alt+Up".focus-workspace-up = {};
+  "Ctrl+Alt+Down".focus-workspace-down = {};
 
   "Mod+Home".focus-column-first = {};
   "Mod+End".focus-column-last = {};
@@ -141,10 +144,10 @@
   "Mod+Minus".set-column-width = "50%";
   "Mod+Equal".set-column-width = "100%";
     # set-column-height = "100%";
-  "Mod+Shift+Minus".set-window-height = "-25%";
-  "Mod+Shift+Equal".set-window-height = "+25%";
+  "Mod+Shift+Minus".set-column-width = "-25%";
+  "Mod+Shift+Equal".set-column-width = "+25%";
 
-  "Mod+F".toggle-window-floating = {};
+  # "Mod+F".toggle-window-floating = {};
   "Print".screenshot = {};
   "Ctrl+Print".screenshot-screen = {};
   "Alt+Print".screenshot-window = {};
