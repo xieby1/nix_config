@@ -142,6 +142,7 @@ in
     #        nixos/doc/manual/default.nix
     sysconfig.system.build.manual.nixos-configuration-reference-manpage
     nurl
+    npins
   ];
 
   programs.eza.enable = true;
