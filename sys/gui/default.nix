@@ -26,7 +26,11 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.greetd}/bin/agreety --cmd niri-session";
+        command = toString [
+          "${pkgs.tuigreet}/bin/tuigreet"
+          "--time" "--asterisks" "--remember"
+          "--cmd niri-session"
+        ];
       };
     };
   };
