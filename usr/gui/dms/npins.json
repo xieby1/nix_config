@@ -1,0 +1,34 @@
+{
+  "pins": {
+    "DankMaterialShell": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.2.3",
+      "revision": "89c378d2f41621a39767ecb03a4569f6693c2629",
+      "url": "https://api.github.com/repos/AvengeMedia/DankMaterialShell/tarball/refs/tags/v1.2.3",
+      "hash": "sha256-P//moH3z9r4PXirTzXVsccQINsK5AIlF9RWOBwK3vLc="
+    },
+    "dgop": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "dgop"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "3cd297080573319c36884b28a3cc0dbfed79f53e",
+      "url": "https://github.com/AvengeMedia/dgop/archive/3cd297080573319c36884b28a3cc0dbfed79f53e.tar.gz",
+      "hash": "sha256-NBGF7bo+nYSToDWtIXMwPeulzRxphX8JHzNRqLTOOqU="
+    }
+  },
+  "version": 7
+}
