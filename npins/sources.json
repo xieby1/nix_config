@@ -1,0 +1,63 @@
+{
+  "pins": {
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+      "url": "https://github.com/NixOS/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz",
+      "hash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "release-25.11",
+      "submodules": false,
+      "revision": "0d782ee42c86b196acff08acfbf41bb7d13eed5b",
+      "url": "https://github.com/nix-community/home-manager/archive/0d782ee42c86b196acff08acfbf41bb7d13eed5b.tar.gz",
+      "hash": "sha256-3iVX1+7YUIt23hBx1WZsUllhbmP2EnXrV8tCRbLxHc8="
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-25.11",
+      "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.5065.41e216c0ca66/nixexprs.tar.xz",
+      "hash": "sha256-OGuC+gtMQt8j7FPOx3p5ASig+SkaXnpf9yNjRpetg4Y="
+    },
+    "nur": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "NUR"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e3ce2c3e3ccd5a3d6025f678745dc2ba02b757dc",
+      "url": "https://github.com/nix-community/NUR/archive/e3ce2c3e3ccd5a3d6025f678745dc2ba02b757dc.tar.gz",
+      "hash": "sha256-C58rotiK9LCUzxFkpkvIQE5hxQtqQhWpk9iPSlbVmzU="
+    },
+    "pkgsu": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "f13746dd7154de4fedd2527d5c0c7f994fc58e5c",
+      "url": "https://github.com/NixOS/nixpkgs/archive/f13746dd7154de4fedd2527d5c0c7f994fc58e5c.tar.gz",
+      "hash": "sha256-10NKXTiRcQN0pzZJptVf47vVQwjjXK06k9PcP6ARDb8="
+    }
+  },
+  "version": 7
+}
