@@ -20,3 +20,8 @@ TEST_NIXs = $(shell find . -name test.nix)
 test: $(addsuffix .run, ${TEST_NIXs})
 %.nix.run: %.nix
 	nix eval -f $< | tee /dev/tty | grep -q '\[ \]'
+
+SOURCES_JSONs = $(shell find . -name sources.json)
+npins-show: $(addsuffix .show, ${SOURCES_JSONs})
+%.json.show: %.json
+	npins --lock-file $< show | grep -v "^$$" | grep -v "^ " | sed 's/^/  /'

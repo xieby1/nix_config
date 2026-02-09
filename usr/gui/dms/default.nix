@@ -4,7 +4,7 @@
       # TODO: Why does `pkgs` above not work?
       pkgs = import <nixpkgs> {};
       flake-dms = pkgs.flake-compat {
-        src = (pkgs.npinsed {input = ./npins.json;}).DankMaterialShell;
+        src = (pkgs.npinsed {input = ./sources.json;}).DankMaterialShell;
       };
     in flake-dms.defaultNix.homeModules.dank-material-shell)
     ./settings.nix
@@ -14,7 +14,7 @@
     # https://github.com/AvengeMedia/DankMaterialShell/issues/1489
     dgop.package = let
       flake-dgop = pkgs.flake-compat {
-        src = (pkgs.npinsed {input = ./npins.json;}).dgop;
+        src = (pkgs.npinsed {input = ./sources.json;}).dgop;
       };
     in flake-dgop.defaultNix.packages.${builtins.currentSystem}.default;
   };
