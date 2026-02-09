@@ -215,5 +215,8 @@ in
     ];
   };
 
-  programs.command-not-found.enable = true;
+  programs.command-not-found = {
+    enable = true;
+    dbPath = "${pkgs.npinsed.nixpkgs.outPath}/programs.sqlite";
+  };
 }
