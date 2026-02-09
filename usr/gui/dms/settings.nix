@@ -15,6 +15,13 @@ in {
         autoHide = true;
         showOnWindowsOpen = true;
         openOnOverview = true;
+        leftWidgets = [
+          { enabled = true; id = "launcherButton"; }
+          { enabled = true; id = "wallpaperBing"; }
+          # { enabled = true; id = "workspaceSwitcher"; }
+          { enabled = true; id = "focusedWindow"; }
+          { enabled = true; id = "network_speed_monitor"; }
+        ];
         rightWidgets = [
           { enabled = true; id = "systemTray"; }
           { enabled = true; id = "cpuUsage"; }
