@@ -8,6 +8,7 @@
       };
     in flake-dms.defaultNix.homeModules.dank-material-shell)
     ./settings.nix
+    ./plugins.nix
   ];
   programs.dank-material-shell = {
     enable = true;
