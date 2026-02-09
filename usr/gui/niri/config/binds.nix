@@ -3,7 +3,7 @@
   "Ctrl+Alt+T".spawn = "kitty";
   "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
   "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
-  "Mod+L".spawn-sh = "dms ipc lock lock";
+  "Mod+Alt+L".spawn-sh = "dms ipc lock lock";
   "Mod+N".spawn-sh = "dms ipc notifications toggle";
   "Mod+X".spawn-sh = "dms ipc powermenu toggle";
   "Mod+V".spawn-sh = "dms ipc clipboard toggle";
