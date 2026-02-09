@@ -47,6 +47,7 @@ in {
   imports = [
     ./config
   ];
+  cachix_packages = [ niri ];
   home.packages = [
     niri
     # Use latest xwayland-satellite for wechat popup
