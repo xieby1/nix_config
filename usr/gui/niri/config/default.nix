@@ -20,6 +20,7 @@
           spread = 2;
           offset._props = {x=2; y=2;};
         };
+        empty-workspace-above-first = {};
       };
       spawn-at-startup = ["dms" "run"];
       screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";

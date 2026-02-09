@@ -1,3 +1,4 @@
+# Use `wev` to find out key name
 { pkgs }: {
   "Ctrl+Alt+T".spawn = "kitty";
   "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
@@ -75,8 +76,8 @@
   "Ctrl+Mod+Up".move-window-up = {};
   "Ctrl+Mod+Down".move-window-down = {};
 
-  "Ctrl+Alt+Left".focus-column-left = {};
-  "Ctrl+Alt+Right".focus-column-right = {};
+  "Ctrl+Alt+Left".focus-monitor-left = {};
+  "Ctrl+Alt+Right".focus-monitor-right = {};
   "Ctrl+Alt+Up".focus-workspace-up = {};
   "Ctrl+Alt+Down".focus-workspace-down = {};
 
@@ -89,11 +90,6 @@
   "Shift+Mod+Right".move-column-to-monitor-right = {};
   "Shift+Mod+Up".move-column-to-workspace-up = {};
   "Shift+Mod+Down".move-column-to-workspace-down = {};
-
-  "Ctrl+Shift+Mod+Left".focus-monitor-left = {};
-  "Ctrl+Shift+Mod+Right".focus-monitor-right = {};
-  "Ctrl+Shift+Mod+Up".focus-workspace-up = {};
-  "Ctrl+Shift+Mod+Down".focus-workspace-down = {};
 
   "Mod+Shift+Page_Down".move-workspace-down = {};
   "Mod+Shift+Page_Up".move-workspace-up = {};
@@ -147,7 +143,7 @@
   "Mod+Shift+Minus".set-column-width = "-25%";
   "Mod+Shift+Equal".set-column-width = "+25%";
 
-  # "Mod+F".toggle-window-floating = {};
+  "Mod+Backslash".toggle-window-floating = {};
   "Print".screenshot = {};
   "Ctrl+Print".screenshot-screen = {};
   "Alt+Print".screenshot-window = {};
