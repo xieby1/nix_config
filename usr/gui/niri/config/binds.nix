@@ -12,11 +12,11 @@
 
   XF86AudioRaiseVolume = {
     _props.allow-when-locked = true;
-    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1+ -l 1.0";
+    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05+ -l 1.0";
   };
   XF86AudioLowerVolume = {
     _props.allow-when-locked = true;
-    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.1-";
+    spawn-sh = "${pkgs.wireplumber}/bin/wpctl set-volume @DEFAULT_AUDIO_SINK@ 0.05-";
   };
   XF86AudioMute = {
     _props.allow-when-locked = true;
@@ -44,11 +44,11 @@
   };
   XF86MonBrightnessUp = {
     _props.allow-when-locked = true;
-    spawn-sh = "${pkgs.brightnessctl}/bin/brightnessctl --class=backlight set +10%";
+    spawn-sh = "${pkgs.brightnessctl}/bin/brightnessctl --class=backlight set +5%";
   };
   XF86MonBrightnessDown = {
     _props.allow-when-locked = true;
-    spawn-sh = "${pkgs.brightnessctl}/bin/brightnessctl --class=backlight set 10%-";
+    spawn-sh = "${pkgs.brightnessctl}/bin/brightnessctl --class=backlight set 5%-";
   };
 
   # Open/close the Overview: a zoomed-out view of workspaces and windows.
