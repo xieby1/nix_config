@@ -27,6 +27,12 @@
         url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_2~19..tag_support-shm-sharing_2.patch";
         sha256 = "0rs0rb0f7hhk3847ay3rvhbhbpw4y2wkpg7dh9knj768qsqvm324";
       })
+      # [feat: add window alignment actions#1929](https://github.com/niri-wm/niri/pull/1929)
+      (pkgs.fetchurl {
+        name = "window-alignment";
+        url = "https://github.com/niri-wm/niri/compare/d7184a04b904e07113f4623610775ae78d32394c..78d10a28e8a7a046e52ef16ad78bee4cdeee3d81.patch";
+        sha256 = "18zjnp2hgh9wsiab0w5m90gvdx0i4ab8wvpgnf9y0qjza6shwi7d";
+      })
     ];
     # https://nixos.wiki/wiki/Rust#Using_overrideArgs_with_Rust_Packages
     cargoDeps = pkgs.rustPlatform.fetchCargoVendor {

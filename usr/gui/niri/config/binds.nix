@@ -127,6 +127,9 @@
   "Mod+Comma".consume-window-into-column = {};
   "Mod+Period".expel-window-from-column = {};
 
+  "Mod+Semicolon".align-column-left = {};
+  "Mod+Apostrophe".align-column-right = {};
+
   "Mod+R".switch-preset-column-width = {};
   "Mod+Shift+R".switch-preset-window-height = {};
   "Mod+Ctrl+R".reset-window-height = {};
