@@ -3,6 +3,7 @@
     text = config.lib.generators.toKDL {} {
       # TODO: support multiple same name attr, e.g. include
       include = "./dms/outputs.kdl";
+      prefer-no-csd = {};
       output = {
         _args = ["eDP-1"];
         scale = 2.0;
