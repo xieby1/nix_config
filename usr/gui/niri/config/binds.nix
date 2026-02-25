@@ -63,13 +63,17 @@
     _props.repeat = false;
     close-window = {};
   };
+  "Mod+BackSpace" = {
+    _props.repeat = false;
+    close-window = {};
+  };
 
   "Mod+T".toggle-column-tabbed-display = {};
 
-  "Mod+Left".focus-column-left = {};
-  "Mod+Right".focus-column-right = {};
-  "Mod+Up".focus-window-up = {};
-  "Mod+Down".focus-window-down = {};
+  "Mod+Left".focus-column-or-monitor-left = {};
+  "Mod+Right".focus-column-or-monitor-right = {};
+  "Mod+Up".focus-window-or-workspace-up = {};
+  "Mod+Down".focus-window-or-workspace-down = {};
 
   "Ctrl+Mod+Left".move-column-left = {};
   "Ctrl+Mod+Right".move-column-right = {};
@@ -148,8 +152,11 @@
 
   "Mod+Backslash".toggle-window-floating = {};
   "Print".screenshot = {};
+  "Mod+P".screenshot = {};
   "Ctrl+Print".screenshot-screen = {};
+  "Ctrl+Mod+P".screenshot-screen = {};
   "Alt+Print".screenshot-window = {};
+  "Alt+Mod+P".screenshot-window = {};
 
   "Mod+Escape" = {
     _props.allow-inhibiting = false;
@@ -158,5 +165,4 @@
 
   "Mod+Shift+E".quit = {};
   "Ctrl+Alt+Delete".quit = {};
-  "Mod+Shift+P".power-off-monitors = {};
 }
