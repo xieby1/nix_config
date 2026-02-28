@@ -1,42 +1,35 @@
 { pkgs, ... }: let
   # /*lang*//* content... */
-  gen_c_style_query = node-name: set-lang: /*query*/''
+  gen_c_style_query = node: set-lang: /*query*/''
     ; extends
     (
-      (${node-name}) @injection.language
+      (${node}) @injection.language
       (#lua-match? @injection.language "/%*[%w%p]+%*/")
       .
-      (${node-name}) @injection.content
+      (${node}) @injection.content
       (#lua-match? @injection.content "/%*.*%*/")
       (#offset! @injection.content 0 2 0 -2)
       (#gsub! @injection.language "/%*([%w%p]+)%*/" "${if set-lang then "%1" else ""}")
       (#set! injection.combined)
     )
   '';
+  gen_c_style_toggle_fn = lang: node: /*lua*/ ''function()
+    if _G.${lang}_doccom_injection_enabled then
+      vim.treesitter.query.set("${lang}", "injections", [[${gen_c_style_query node false}]])
+      _G.${lang}_doccom_injection_enabled = false
+    else
+      vim.treesitter.query.set("${lang}", "injections", [[${gen_c_style_query node true}]])
+      _G.${lang}_doccom_injection_enabled = true
+    end
+    -- refresh current buffer
+    vim.cmd("e")
+  end'';
 in {
   programs.neovim = {
     # TODO: simplify
     extraLuaConfig = /*lua*/ ''
-      _G.enable_rust_doccom_injection = function()
-        vim.treesitter.query.set("rust", "injections", [[
-          ${gen_c_style_query "block_comment" true}
-        ]])
-      end
-      _G.disable_rust_doccom_injection = function()
-        vim.treesitter.query.set("rust", "injections", [[
-          ${gen_c_style_query "block_comment" false}
-        ]])
-      end
-      _G.enable_typst_doccom_injection = function()
-        vim.treesitter.query.set("typst", "injections", [[
-          ${gen_c_style_query "comment" true}
-        ]])
-      end
-      _G.disable_typst_doccom_injection = function()
-        vim.treesitter.query.set("typst", "injections", [[
-          ${gen_c_style_query "comment" false}
-        ]])
-      end
+      _G.toggle_rust_doccom_injection = ${gen_c_style_toggle_fn "rust" "block_comment"}
+      _G.toggle_typst_doccom_injection = ${gen_c_style_toggle_fn "typst" "comment"}
     '';
   };
 }
