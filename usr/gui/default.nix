@@ -46,7 +46,19 @@ config = lib.mkIf config.isGui {
     })
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./weixin.nix {})
+    # Non-xwayland wemeet will crash with "Segmentation fault", when start a meeting.
+    # So we add a WemeetApp-XWayland .desktop file
     wemeet
+    (pkgs.makeDesktopItem {
+      name = "WemeetApp-XWayland";
+      desktopName = "WemeetApp-XWayland";
+      exec = "wemeet-xwayland %u";
+      icon = "wemeet";
+      type = "Application";
+      terminal = false;
+      categories = ["AudioVideo"];
+      mimeTypes = ["x-scheme-handler/wemeet"];
+    })
     (nur.repos.xddxdd.dingtalk.overrideAttrs (old: {
       installPhase = builtins.replaceStrings [
         "libcef.so"
