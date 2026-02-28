@@ -33,6 +33,7 @@
     ./auto-session.nix
     ./nvim-treesitter-context.nix
     ./rustowl.nix
+    ./treesitter-injections
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
