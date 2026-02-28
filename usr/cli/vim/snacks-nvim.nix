@@ -9,6 +9,7 @@
     plugins = [{
       plugin = pkgs.vimPlugins.snacks-nvim;
       type = "lua";
+      # TODO: [feature: Ability to disable/toggle image inline rendering for buffer #1739](https://github.com/folke/snacks.nvim/issues/1739#issuecomment-3413850508)
       config = /*lua*/ ''
         require("snacks").setup({
           image = {
