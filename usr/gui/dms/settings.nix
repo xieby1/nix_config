@@ -19,8 +19,8 @@ in {
           { enabled = true; id = "launcherButton"; }
           { enabled = true; id = "wallpaperBing"; }
           # { enabled = true; id = "workspaceSwitcher"; }
-          { enabled = true; id = "focusedWindow"; }
           { enabled = true; id = "network_speed_monitor"; }
+          { enabled = true; id = "focusedWindow"; }
         ];
         rightWidgets = [
           { enabled = true; id = "systemTray"; }
