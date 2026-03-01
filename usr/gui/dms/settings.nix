@@ -22,6 +22,12 @@ in {
           { enabled = true; id = "network_speed_monitor"; }
           { enabled = true; id = "focusedWindow"; }
         ];
+        centerWidgets = [
+          { enabled = true; id = "music"; }
+          { enabled = true; id = "clock"; }
+          { enabled = true; id = "weather"; }
+          { enabled = true; id = "privacyIndicator"; }
+        ];
         rightWidgets = [
           { enabled = true; id = "systemTray"; }
           { enabled = true; id = "cpuUsage"; }
