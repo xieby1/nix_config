@@ -26,10 +26,15 @@
   end'';
 in {
   programs.neovim = {
-    # TODO: simplify
     extraLuaConfig = /*lua*/ ''
-      _G.toggle_rust_doccom_injection = ${gen_c_style_toggle_fn "rust" "block_comment"}
-      _G.toggle_typst_doccom_injection = ${gen_c_style_toggle_fn "typst" "comment"}
+      vim.api.nvim_create_user_command('DoccomInjectionToggle', function()
+        local fns = {
+          rust = ${gen_c_style_toggle_fn "rust" "block_comment"},
+          typst = ${gen_c_style_toggle_fn "typst" "comment"},
+        }
+        local fn = fns[vim.bo.filetype]
+        if fn ~= nil then fns[vim.bo.filetype]() end
+      end, {})
     '';
   };
 }
