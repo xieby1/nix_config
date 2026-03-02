@@ -39,6 +39,7 @@ in {
         email = "xieby1@outlook.com";
         name = "xieby1";
       };
+      protocol.file.allow = "always";
     };
     lfs.enable = true;
   };
