@@ -37,6 +37,7 @@
   imports = [
     ./timer.nix
     ./search.nix
+    ./kitty-scrollback-nvim.nix
   ];
 
   # shortcuts
@@ -70,6 +71,7 @@
     settings = {
       allow_remote_control = "yes";
       listen_on = "unix:/tmp/mykitty";
+      shell_integration = "enabled";
 
       hide_window_decorations = "yes";
       cursor_blink_interval = "0.8";
