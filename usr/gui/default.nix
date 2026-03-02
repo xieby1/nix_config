@@ -84,6 +84,9 @@ config = lib.mkIf config.isGui {
     inkscape
     gimp
     # viewer
+    evince
+    gnome-characters
+    nautilus
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex
     xelfviewer
