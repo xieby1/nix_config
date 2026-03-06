@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ pkgs, config, ... }: {
   imports = [
     ./module.nix
     { # my private calendars
@@ -25,4 +25,8 @@
       };
     };
   };
+
+  # Learn from <nixpkgs>/nixos/modules/services/desktops/gnome/evolution-data-server.nix
+  home.packages = [ pkgs.evolutionWithPlugins ];
+  dbus.packages = [ pkgs.evolutionWithPlugins ];
 }
