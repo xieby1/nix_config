@@ -24,7 +24,7 @@ in
     # ./plasma
     # ./hyprland
     ./dms
-    ./gnome/calendar
+    ./gnome-calendar
   ];
 
 config = lib.mkIf config.isGui {

@@ -1,7 +1,6 @@
 #MC Gnome settings
 { config, pkgs, lib, ... }: {
   imports = [
-    ./calendar
     ./extensions
   ];
   home.packages = with pkgs; [
