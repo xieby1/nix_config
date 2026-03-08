@@ -12,6 +12,7 @@
     ./brotab.nix
     ./vimium.nix
     ./chrome-mask.nix
+    ./webpage-summary.nix
   ];
 
   programs.firefox = {
