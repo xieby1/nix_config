@@ -60,6 +60,14 @@ in {
       config-model-list-is-edit-mode = true;
       right-floating-ball-top-page = "75%";
       enable-floating-ball = false;
+      user-custom-style = /*css*/ ''
+        --webpage-summary-panel-width: 50vw;
+        --webpage-summary-panel-dialog-max-height: 60vh;
+        --webpage-summary-panel-top: 10vh;
+        --webpage-summary-panel-right: 0.5em;
+        --webpage-summary-markdown-font-size: 10pt;
+        --webpage-summary-markdown-line-height: 1em;
+      '';
     };
   };
 
