@@ -1,12 +1,5 @@
 { pkgs, config, ... }: {
-  imports = [
-    ./module.nix
-    { # my private calendars
-      gnome-calendar = let
-        caldavs = "${config.home.homeDirectory}/Gist/Vault/caldavs.nix";
-      in if builtins.pathExists caldavs then import caldavs else {};
-    }
-  ];
+  imports = [ ./module.nix ];
 
   # public calendars
   gnome-calendar = {
@@ -24,7 +17,9 @@
         };
       };
     };
-  };
+  } // (let # my private calendars
+    caldavs = "${config.home.homeDirectory}/Gist/Vault/caldavs.nix";
+  in if builtins.pathExists caldavs then import caldavs else {});
 
   # Learn from <nixpkgs>/nixos/modules/services/desktops/gnome/evolution-data-server.nix
   home.packages = [ pkgs.evolutionWithPlugins ];
