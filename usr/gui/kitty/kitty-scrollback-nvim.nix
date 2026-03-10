@@ -8,7 +8,15 @@
       };
       type = "lua";
       config = /*lua*/''
-        require('kitty-scrollback').setup()
+        require('kitty-scrollback').setup({{
+          callbacks = {
+            after_ready = function()
+              -- Disable the auto quit all after `"+y`:
+              -- by clearing the autocommand that quits after yanking to clipboard
+              vim.api.nvim_clear_autocmds({ group = 'KittyScrollBackNvimTextYankPost' })
+            end,
+          },
+        }})
       '';
     }];
   };
