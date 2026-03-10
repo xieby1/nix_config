@@ -1,4 +1,13 @@
-{ config, pkgs, stdenv, lib, ... }: {
+{ pkgs, ... }:let
+  my-neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (old: {
+    patches = old.patches ++ [
+      # [:terminal - enable folding #5682](https://github.com/neovim/neovim/issues/5682)
+      ./enable-folding-in-terminal.patch
+    ];
+  });
+in {
+  cachix_packages = [ my-neovim-unwrapped ];
+
   #MC Plugins with customizations:
   imports = [
     ./fold.nix
@@ -44,6 +53,7 @@
 
   programs.neovim = {
     enable = true;
+    package = my-neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
     vimdiffAlias = true;
@@ -72,6 +82,8 @@
       "" indent
       """ On pressing tab, insert spaces
       set expandtab
+      set tabstop=2
+      set shiftwidth=2
       """ no markdown recommended indent style (recommended shiftwidth=4)
       let g:markdown_recommended_style = 0
       """ line wrap with ident
