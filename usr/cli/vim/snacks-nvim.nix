@@ -37,6 +37,11 @@
           },
           scroll = {
             enabled = true,
+            filter = function(buf)
+              -- default filter does not allow in terminal, remove this limit!
+              -- return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false and vim.bo[buf].buftype ~= "terminal"
+              return vim.g.snacks_scroll ~= false and vim.b[buf].snacks_scroll ~= false
+            end,
           },
         })
       '';
