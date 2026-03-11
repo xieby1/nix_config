@@ -1,8 +1,14 @@
 { config, pkgs, ... }: {
   home.file.niri_config = {
-    text = config.lib.generators.toKDL {} {
-      # TODO: support multiple same name attr, e.g. include
-      include = "./dms/outputs.kdl";
+    text = /*kdl*/ ''
+      include "./dms/colors.kdl"
+      include "./dms/cursor.kdl"
+      include "./dms/alttab.kdl"
+      include "./dms/wpblur.kdl"
+      // include "./dms/layout.kdl"
+      include "./dms/outputs.kdl"
+      include "./dms/binds.kdl"
+    '' + config.lib.generators.toKDL {} {
       prefer-no-csd = {};
       output = {
         _args = ["eDP-1"];
