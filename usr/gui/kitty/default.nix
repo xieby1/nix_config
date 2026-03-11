@@ -116,11 +116,10 @@
       # selection_background    = "#e2e2e3";
     };
     extraConfig = ''
-      map ctrl+equal change_font_size all +2.0
-      map ctrl+plus change_font_size all +2.0
-      map ctrl+kp_add change_font_size all +2.0
-      map ctrl+minus change_font_size all -2.0
-      map ctrl+kp_subtract change_font_size all -2.0
+      map ctrl+= change_font_size all +2.0
+      map ctrl+shift+= change_font_size all +1.0
+      map ctrl+- change_font_size all -2.0
+      map ctrl+shift+- change_font_size all -1.0
       map ctrl+0 change_font_size all 0
 
       map ctrl+shift+t new_tab_with_cwd
