@@ -24,4 +24,9 @@
   # Learn from <nixpkgs>/nixos/modules/services/desktops/gnome/evolution-data-server.nix
   home.packages = [ pkgs.evolutionWithPlugins ];
   dbus.packages = [ pkgs.evolutionWithPlugins ];
+  systemd.user.services.evolution-source-dummy-deps = {
+    Install.WantedBy = [ "graphical-session.target" ];
+    Unit.Wants = [ "evolution-source-registry.service" "evolution-alarm-notify.service"];
+    Service.ExecStart = "/usr/bin/env --version"; # dummy command
+  };
 }

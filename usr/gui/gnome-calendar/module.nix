@@ -35,7 +35,6 @@
   };
 
   config = {
-    home.packages = [ pkgs.gnome-calendar ];
     # Available options: <evolution-data-server>/glib-2.0/schemas/org.gnome.evolution-data-server.calendar.gschema.xml
     dconf.settings."org/gnome/evolution-data-server/calendar" = {
       # Currently, cannot use audio, otherwise no notification pops out.
