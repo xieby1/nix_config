@@ -8,6 +8,13 @@
       // include "./dms/layout.kdl"
       include "./dms/outputs.kdl"
       include "./dms/binds.kdl"
+      // TODO: move to evolution
+      window-rule {
+        match app-id="evolution-alarm-notify"
+        open-floating true
+        default-window-height { proportion 0.3; }
+        default-column-width { proportion 0.3; }
+      }
     '' + config.lib.generators.toKDL {} {
       prefer-no-csd = {};
       output = {
