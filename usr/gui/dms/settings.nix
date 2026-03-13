@@ -39,6 +39,9 @@ in {
           { enabled = true; id = "controlCenterButton"; }
         ];
       }];
+      notificationTimeoutLow = 5000;
+      notificationTimeoutNormal = 0;
+      notificationTimeoutCritical = 0;
     };
   };
 }
