@@ -1,7 +1,7 @@
-#MC # gnome-calendar module
+#MC # evolution-calendar module
 { config, pkgs, lib, ... }: {
   options = {
-    gnome-calendar = lib.mkOption {
+    evolution-calendar = lib.mkOption {
       # entry type
       type = lib.types.attrsOf (lib.types.submodule {
         options = {
@@ -19,7 +19,7 @@
       description = ''
         Attrs of calendars settings.
 
-        gnome-calendar = {
+        evolution-calendar = {
           calendar1 = {
             url = "...calendar1.ics";
             settings = {...calendar1 settings...}
@@ -98,6 +98,6 @@
             ${target} > ${lib.removeSuffix ".onChange" target}
         '';
       }
-    ) config.gnome-calendar;
+    ) config.evolution-calendar;
   };
 }

@@ -2,7 +2,7 @@
   imports = [ ./module.nix ];
 
   # public calendars
-  gnome-calendar = {
+  evolution-calendar = {
     china_calendar = {
       # 包含所有类型日历（暂时除农历、天干地支）(时间段版本)
       url = "https://yangh9.github.io/ChinaCalendar/calendar_1.ics";
