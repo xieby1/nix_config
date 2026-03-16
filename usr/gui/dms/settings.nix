@@ -8,6 +8,9 @@ in {
       fi
     '';
     text = builtins.toJSON {
+      currentThemeName = "dynamic";
+      currentThemeCategory = "dynamic";
+      cursorSettings.theme = "Adwaita";
       showDock = true;
       dockAutoHide = true;
       dockOpenOnOverview = true;
