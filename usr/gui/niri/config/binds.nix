@@ -9,6 +9,7 @@
   "Mod+V".spawn-sh = "dms ipc clipboard toggle";
   "Mod+H".spawn-sh = "dms ipc bar toggleAutoHide name 'Main Bar'";
   "Mod+F".spawn-sh = "kitty bash -i fzf-doc";
+  "Mod+S".spawn-sh = "${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click -o mode_floating.source=detect";
 
   XF86AudioRaiseVolume = {
     _props.allow-when-locked = true;
