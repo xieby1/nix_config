@@ -45,8 +45,8 @@
 
       # Default reminder for all events in chosen calendars
       defall-reminder-enabled = true;
-      # defall-reminder-interval = 15
-      # defall-reminder-units = minutes
+      defall-reminder-interval = 3;
+      defall-reminder-units = "minutes";
     };
     home.file = lib.mapAttrs (name: entry:
       let
