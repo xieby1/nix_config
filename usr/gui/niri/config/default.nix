@@ -44,6 +44,9 @@
       switch-events = {
         lid-close.spawn = ["dms" "ipc" "lock" "lock"];
       };
+      cursor = {
+        hide-when-typing = {};
+      };
     };
     target = ".config/niri/config.kdl";
   };
