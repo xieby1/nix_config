@@ -71,10 +71,10 @@
 
   "Mod+T".toggle-column-tabbed-display = {};
 
-  "Mod+Left".focus-column-or-monitor-left = {};
-  "Mod+Right".focus-column-or-monitor-right = {};
-  "Mod+Up".focus-window-or-workspace-up = {};
-  "Mod+Down".focus-window-or-workspace-down = {};
+  "Mod+Left".focus-column-left = {};
+  "Mod+Right".focus-column-right = {};
+  "Mod+Up".focus-window-up = {};
+  "Mod+Down".focus-window-down = {};
 
   "Ctrl+Mod+Left".move-column-left = {};
   "Ctrl+Mod+Right".move-column-right = {};
@@ -139,6 +139,7 @@
   "Mod+Shift+R".switch-preset-window-height = {};
   "Mod+Ctrl+R".reset-window-height = {};
   "Mod+Shift+F".fullscreen-window = {};
+  "Mod+Alt+F".fullscreen-window = {};
 
   "Mod+Ctrl+F".expand-column-to-available-width = {};
 
@@ -147,9 +148,10 @@
 
   "Mod+Minus".set-column-width = "50%";
   "Mod+Equal".set-column-width = "100%";
-    # set-column-height = "100%";
   "Mod+Shift+Minus".set-column-width = "-25%";
   "Mod+Shift+Equal".set-column-width = "+25%";
+  "Mod+0".set-window-height = "+25%";
+  "Mod+9".set-window-height = "-25%";
 
   "Mod+Backslash".toggle-window-floating = {};
   "Print".screenshot = {};
