@@ -48,8 +48,9 @@
       genericName = "weixin";
     };
   }{
+    # TODO: move to cheatsheet.nix
     name = "my_cheatsheet_html";
-    url = "${config.home.homeDirectory}/Documents/Tech/my_cheatsheet.html";
+    url = "${config.home.homeDirectory}/Documents/Tech/my_cheatsheet/index.html";
     keybinding = "<Super>space";
     desktopEntryExtras = {
       name = "Cheatsheet HTML";
