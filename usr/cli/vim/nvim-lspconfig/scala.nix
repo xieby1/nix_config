@@ -4,6 +4,7 @@
 # * check all dependent libs have been downloaded to workspace, e.g. update git submodule
 { config, pkgs, ... }: let
   jre-with-proxy = let
+    # TODO: use makeWrapper
     java-with-proxy = pkgs.writeShellScript "java" ''
       ${pkgs.jre}/bin/java \
         -Dhttp.proxyHost=127.0.0.1 \
@@ -17,6 +18,10 @@
     ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.jre} $out
     rm $out/bin/java
     ln -s ${java-with-proxy} $out/bin/java
+    # Metals will check the `release` in java home.
+    # If not exist, it will throw "release file missing JAVA_VERSION property - using Bloop's JVM version"
+    # The `release file is located in lib/openjdk/release`
+    ln -s $out/lib/openjdk/release $out/
   '';
 in {
   programs.neovim = {
