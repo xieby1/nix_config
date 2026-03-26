@@ -3,21 +3,15 @@
 # * rm -rf .metals/ ~/.bloop/* ~/.cache/mill/ ~/.cache/coursier/
 # * check all dependent libs have been downloaded to workspace, e.g. update git submodule
 { config, pkgs, ... }: let
-  jre-with-proxy = let
-    # TODO: use makeWrapper
-    java-with-proxy = pkgs.writeShellScript "java" ''
-      ${pkgs.jre}/bin/java \
-        -Dhttp.proxyHost=127.0.0.1 \
-        -Dhttp.proxyPort=${toString config.proxyPort} \
-        -Dhttps.proxyHost=127.0.0.1 \
-        -Dhttps.proxyPort=${toString config.proxyPort} \
-        "$@"
-    '';
-  in pkgs.runCommand "jre_with_proxy" {} ''
+  jre-with-proxy = pkgs.runCommand "jre-with-proxy" {
+    nativeBuildInputs = [pkgs.makeWrapper];
+  } ''
     mkdir -p $out
     ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.jre} $out
-    rm $out/bin/java
-    ln -s ${java-with-proxy} $out/bin/java
+    wrapProgram $out/bin/java --add-flag -Dhttp.proxyHost=127.0.0.1 \
+                              --add-flag -Dhttp.proxyPort=${toString config.proxyPort} \
+                              --add-flag -Dhttps.proxyHost=127.0.0.1 \
+                              --add-flag -Dhttps.proxyPort=${toString config.proxyPort}
     # Metals will check the `release` in java home.
     # If not exist, it will throw "release file missing JAVA_VERSION property - using Bloop's JVM version"
     # The `release file is located in lib/openjdk/release`
