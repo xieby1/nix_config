@@ -168,4 +168,23 @@
 
   "Mod+Shift+E".quit = {};
   "Ctrl+Alt+Delete".quit = {};
-}
+} // (let
+  # Inspired by: https://github.com/niri-wm/niri/discussions/2769
+  move-column-to-new-workspace-ARG = arg: pkgs.writeShellScript "move-column-to-new-workspace-up" ''
+    idx=$(niri msg --json workspaces \
+      | ${pkgs.yq-go}/bin/yq '.[] | select (.is_focused) | .idx')
+    niri msg action move-column-to-workspace 1
+    niri msg action move-workspace-to-index $((idx${arg}))
+  '';
+  move-column-to-new-workspace-up = move-column-to-new-workspace-ARG "";
+  move-column-to-new-workspace-down = move-column-to-new-workspace-ARG "+1";
+in {
+  "Ctrl+Shift+Mod+Up".spawn = toString move-column-to-new-workspace-up;
+  "Ctrl+Shift+Mod+Down".spawn = toString move-column-to-new-workspace-down;
+
+  # The focus-workspace, move-workspace-to-index trick not work,
+  # so create a dummy window first, then move-column-to-new-workspace, finally kill the dummy window.
+  # Luckily, this can be down by simply use a terminal to exec move-column-to-new-workspace
+  "Ctrl+Shift+Alt+Up".spawn-sh = "kitty ${move-column-to-new-workspace-up}";
+  "Ctrl+Shift+Alt+Down".spawn-sh = "kitty ${move-column-to-new-workspace-down}";
+})
