@@ -27,6 +27,10 @@
           cost_per_1m_in_cached = 0.2;
           cost_per_1m_out_cached = cost_per_1m_out;
           context_window = 160*1000;
+          # If not set the default_max_tokens is 0, then ai will output nothing.
+          # TODO: Are there any other parameters are not intrinsics for a given model?
+          #       How to set the the non-intrinsics parameters gracefully?
+          default_max_tokens = 4000;
         };
       };
     };
