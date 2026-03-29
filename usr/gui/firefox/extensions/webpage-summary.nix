@@ -67,6 +67,7 @@ in {
         --webpage-summary-markdown-font-size: 10pt;
         --webpage-summary-markdown-line-height: 1em;
       '';
+      expand-chat-input-box = true;
     };
   };
 
