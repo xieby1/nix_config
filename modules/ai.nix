@@ -32,6 +32,19 @@
           #       How to set the the non-intrinsics parameters gracefully?
           default_max_tokens = 4000;
         };
+        glm = rec {
+          name = "Siliconflow GLM-5";
+          id = "Pro/zai-org/GLM-5";
+          # [0,32k): 4; [32k, inf): 6
+          cost_per_1m_in = 6;
+          # [0,32k): 18; [32k, inf): 22
+          cost_per_1m_out = 22;
+          # [0,32k): 1; [32k, inf): 1.5
+          cost_per_1m_in_cached = 1.5;
+          cost_per_1m_out_cached = cost_per_1m_out;
+          context_window = 198*1000;
+          default_max_tokens = 4000;
+        };
       };
     };
   };

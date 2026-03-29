@@ -18,6 +18,7 @@
         };
         models = [
           config.ai.siliconflow.models.deepseek
+          config.ai.siliconflow.models.glm
         ];
       };
     };
