@@ -6,30 +6,15 @@
     providers = {
       deepseek = {
         type = "openai-compat";
-        inherit (config.ai.deepseek-official) base_url api_key;
-        models = [{
-          id = config.ai.deepseek-official.model;
-          inherit (config.ai.deepseek-official)
-            name
-            cost_per_1m_in
-            cost_per_1m_out
-            cost_per_1m_in_cached
-            cost_per_1m_out_cached
-            context_window
-            default_max_tokens
-          ;
-        }];
+        inherit (config.ai.deepseek) base_url api_key;
+        models = [config.ai.deepseek.models.latest];
       };
-      deepseek-siliconflow = with config.ai.deepseek-siliconflow; {
+      deepseek-siliconflow = {
         type = "openai-compat";
-        inherit base_url api_key;
-        models = [{
-          id = model;
-          inherit name
-            cost_per_1m_in cost_per_1m_out
-            cost_per_1m_in_cached cost_per_1m_out_cached
-            context_window;
-        }];
+        inherit (config.ai.siliconflow) base_url api_key;
+        models = [
+          config.ai.siliconflow.models.deepseek
+        ];
       };
     };
   };

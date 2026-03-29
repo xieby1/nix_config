@@ -9,8 +9,8 @@
         adapters = {
           http = {
             deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
-              env = { api_key = "${config.ai.deepseek-official.api_key}" },
-              schema = { model = { default = "${config.ai.deepseek-official.model}" } },
+              env = { api_key = "${config.ai.deepseek.api_key}" },
+              schema = { model = { default = "${config.ai.deepseek.models.latest.id}" } },
             }) end,
           },
         },

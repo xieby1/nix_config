@@ -39,23 +39,23 @@ in {
         at = 0;
       }];
       default-model-id = "p4s0PTKm1x4xga8X";
-      model-configs = [{
+      model-configs = [ (with config.ai.siliconflow; {
           id = "LwC1DkGB6Fs01U99";
-          name = "deepseek-siliconflow";
-          modelName = config.ai.deepseek-siliconflow.model;
-          apiKey = config.ai.deepseek-siliconflow.api_key;
           providerType = "deepseek";
-          baseURL = config.ai.deepseek-siliconflow.base_url;
+          name = models.deepseek.name;
+          modelName = models.deepseek.id;
+          apiKey = api_key;
+          baseURL = base_url;
           at = 0;
-      } {
+      }) (with config.ai.deepseek; {
           id = "p4s0PTKm1x4xga8X";
-          name = "deepseek-official";
-          modelName = config.ai.deepseek-official.model;
-          apiKey = config.ai.deepseek-official.api_key;
           providerType = "deepseek";
+          name = models.latest.name;
+          modelName = models.latest.id;
+          apiKey = api_key;
           baseURL = "";
           at = 0;
-      }];
+      })];
       config-model-list-is-edit-mode = true;
       right-floating-ball-top-page = "75%";
       enable-floating-ball = false;
