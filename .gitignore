@@ -6,3 +6,4 @@ SUMMARY.md
 nix/nix.conf.md
 opt-local.nix
 .ccache/
+.crush
