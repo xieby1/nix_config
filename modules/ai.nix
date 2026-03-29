@@ -4,13 +4,13 @@
     deepseek = {
       base_url = "https://api.deepseek.com/v1";
       api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/deepseek_api_key_nvim.txt");
-      models.latest = {
+      models.latest = rec {
         name = "Official Deepseek Latest";
         id = "deepseek-chat";
         cost_per_1m_in = 2;
         cost_per_1m_out = 3;
         cost_per_1m_in_cached = 0.2;
-        cost_per_1m_out_cached = 3;
+        cost_per_1m_out_cached = cost_per_1m_out;
         context_window = 128000;
         default_max_tokens = 4000;
       };
@@ -19,13 +19,13 @@
       base_url = "https://api.siliconflow.cn/v1";
       api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/siliconflow_api_key_chatbox.txt");
       models = {
-        deepseek = {
+        deepseek = rec {
           name = "Siliconflow Deepseek V3.2";
           id = "Pro/deepseek-ai/DeepSeek-V3.2";
           cost_per_1m_in = 2;
           cost_per_1m_out = 3;
           cost_per_1m_in_cached = 0.2;
-          cost_per_1m_out_cached = 3;
+          cost_per_1m_out_cached = cost_per_1m_out;
           context_window = 160*1000;
         };
       };

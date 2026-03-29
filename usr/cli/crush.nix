@@ -9,7 +9,7 @@
         inherit (config.ai.deepseek) base_url api_key;
         models = [config.ai.deepseek.models.latest];
       };
-      deepseek-siliconflow = {
+      siliconflow = {
         type = "openai-compat";
         inherit (config.ai.siliconflow) base_url api_key;
         models = [
