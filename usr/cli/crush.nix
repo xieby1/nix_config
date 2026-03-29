@@ -12,6 +12,10 @@
       siliconflow = {
         type = "openai-compat";
         inherit (config.ai.siliconflow) base_url api_key;
+        extra_body = {
+          # TODO: Why the think is enable by default for customized providers?
+          enable_thinking = false;
+        };
         models = [
           config.ai.siliconflow.models.deepseek
         ];
