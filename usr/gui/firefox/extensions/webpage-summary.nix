@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ pkgs, config, ... }: let
   addonId = "{b33fc9ba-eac3-4adb-a3c7-d0f50634182e}";
 in {
   programs.firefox.profiles.xieby1.extensions.packages = [(
@@ -41,17 +41,17 @@ in {
       default-model-id = "p4s0PTKm1x4xga8X";
       model-configs = [{
           id = "LwC1DkGB6Fs01U99";
-          name = "siliconflow-deepseek";
-          modelName = "Pro/deepseek-ai/DeepSeek-V3.2";
-          apiKey = pkgs.lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/siliconflow_api_key_chatbox.txt");
+          name = "deepseek-siliconflow";
+          modelName = config.ai.deepseek-siliconflow.model;
+          apiKey = config.ai.deepseek-siliconflow.api_key;
           providerType = "deepseek";
-          baseURL = "https://api.siliconflow.cn/v1";
+          baseURL = config.ai.deepseek-siliconflow.base_url;
           at = 0;
       } {
           id = "p4s0PTKm1x4xga8X";
-          name = "deepseek-offical";
-          modelName = "deepseek-chat";
-          apiKey = pkgs.lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/deepseek_api_key_nvim.txt");
+          name = "deepseek-official";
+          modelName = config.ai.deepseek-official.model;
+          apiKey = config.ai.deepseek-official.api_key;
           providerType = "deepseek";
           baseURL = "";
           at = 0;

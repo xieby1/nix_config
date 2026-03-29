@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   home.packages = [
     (import pkgs.npinsed.nur-charmbracelet {}).crush
   ];
@@ -6,17 +6,18 @@
     providers = {
       deepseek = {
         type = "openai-compat";
-        base_url = "https://api.deepseek.com/v1";
-        api_key = "$(cat ~/Gist/Vault/deepseek_api_key_nvim.txt)";
+        inherit (config.ai.deepseek-official) base_url api_key;
         models = [{
-          id = "deepseek-chat";
-          name = "Deepseek Latest";
-          cost_per_1m_in = 2;
-          cost_per_1m_out = 3;
-          cost_per_1m_in_cached = 0.2;
-          cost_per_1m_out_cached = 3;
-          context_window = 128000;
-          default_max_tokens = 4000;
+          id = config.ai.deepseek-official.model;
+          inherit (config.ai.deepseek-official)
+            name
+            cost_per_1m_in
+            cost_per_1m_out
+            cost_per_1m_in_cached
+            cost_per_1m_out_cached
+            context_window
+            default_max_tokens
+          ;
         }];
       };
     };

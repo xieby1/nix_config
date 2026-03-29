@@ -1,5 +1,5 @@
 #MC # Code Companion: AI
-{ lib, pkgs, ... }: {
+{ pkgs, config, ... }: {
   programs.neovim.plugins = [{
     plugin = pkgs.vimPlugins.codecompanion-nvim;
     type = "lua";
@@ -9,8 +9,8 @@
         adapters = {
           http = {
             deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
-              env = { api_key = "cmd:cat ~/Gist/Vault/deepseek_api_key_nvim.txt" },
-              schema = { model = { default = "deepseek-chat" } },
+              env = { api_key = "${config.ai.deepseek-official.api_key}" },
+              schema = { model = { default = "${config.ai.deepseek-official.model}" } },
             }) end,
           },
         },
