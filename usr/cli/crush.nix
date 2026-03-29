@@ -20,6 +20,17 @@
           ;
         }];
       };
+      deepseek-siliconflow = with config.ai.deepseek-siliconflow; {
+        type = "openai-compat";
+        inherit base_url api_key;
+        models = [{
+          id = model;
+          inherit name
+            cost_per_1m_in cost_per_1m_out
+            cost_per_1m_in_cached cost_per_1m_out_cached
+            context_window;
+        }];
+      };
     };
   };
 }

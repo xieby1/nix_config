@@ -14,10 +14,15 @@
       default_max_tokens = 4000;
     };
     deepseek-siliconflow = {
-      name = "siliconflow-deepseek";
+      name = "Deepseek Siliconflow V3.2";
       model = "Pro/deepseek-ai/DeepSeek-V3.2";
       base_url = "https://api.siliconflow.cn/v1";
       api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/siliconflow_api_key_chatbox.txt");
+      cost_per_1m_in = 2;
+      cost_per_1m_out = 3;
+      cost_per_1m_in_cached = 0.2;
+      cost_per_1m_out_cached = 3;
+      context_window = 160*1000;
     };
   };
 }
