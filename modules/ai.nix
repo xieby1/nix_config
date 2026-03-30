@@ -5,15 +5,9 @@
     deepseek = {
       base_url = "https://api.deepseek.com/v1";
       api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/deepseek_api_key_nvim.txt");
-      models.latest = rec {
+      models.latest = {
         name = "Official Deepseek Latest";
         id = "deepseek-chat";
-        cost_per_1m_in = 2;
-        cost_per_1m_out = 3;
-        cost_per_1m_in_cached = 0.2;
-        cost_per_1m_out_cached = cost_per_1m_out;
-        context_window = 128000;
-        default_max_tokens = 4000;
       };
     };
     siliconflow = {

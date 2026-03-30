@@ -13,11 +13,8 @@
   ];
   yq-merge.".config/crush/crush.json".text = builtins.toJSON {
     providers = {
-      deepseek = {
-        type = "openai-compat";
-        inherit (config.ai.deepseek) base_url api_key;
-        models = [config.ai.deepseek.models.latest];
-      };
+      # Catwalk includes deepseek
+      deepseek.api_key = config.ai.deepseek.api_key;
       siliconflow = {
         type = "openai-compat";
         inherit (config.ai.siliconflow) base_url api_key;
