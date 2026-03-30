@@ -40,7 +40,8 @@
   #MC 由于cache.nixos.org需要梯子，
   #MC 这里使用了清华Tuna提供的Nix binary cache镜像来加速。
   nix.settings.substituters = [
-    # TODO: tuna
+    # Tuna often throws 502, so replace it with USTC
+    "https://mirrors.ustc.edu.cn/nix-channels/store"
     "https://cache.nixos.org/"
     "https://xieby1.cachix.org"
   ];
