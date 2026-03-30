@@ -1,3 +1,12 @@
+# Alternatives Comparisons
+# - Opencode
+#   - Cons:
+#     - Lack of doc, currently I care about customized providers.
+#     - Does not compatible with kitty scrollback.
+#     - Use Esc instead of Ctrl-C to interrupt.
+#     - The input line does not support Home, End key.
+#   - Summary: Its quality is not comparable to neovim,
+#              though it declares "OpenCode is built by neovim users ...".
 { pkgs, config, ... }: {
   home.packages = [
     (import pkgs.npinsed.nur-charmbracelet {}).crush
