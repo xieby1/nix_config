@@ -77,6 +77,7 @@ in
     nix-tree
     ## text
     pandoc
+    poppler-utils
     ## compile
     gnumake
     makefile2graph
