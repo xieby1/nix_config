@@ -16,10 +16,7 @@
           # TODO: Why the think is enable by default for customized providers?
           enable_thinking = false;
         };
-        models = [
-          config.ai.siliconflow.models.deepseek
-          config.ai.siliconflow.models.glm
-        ];
+        models = builtins.attrValues config.ai.siliconflow.models;
       };
     };
   };
