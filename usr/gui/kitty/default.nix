@@ -66,7 +66,7 @@
     };
     font = {
       name = "";
-      size = 16;
+      size = 12;
     };
     settings = {
       allow_remote_control = "yes";
@@ -138,8 +138,8 @@
       enabled_layouts splits
 
       # Split and Create a new window
-      map f5 launch_window --location=hsplit
-      map f6 launch_window --location=vsplit
+      map alt+s launch_window --location=hsplit
+      map alt+v launch_window --location=vsplit
 
       # Goto window
       map alt+left neighboring_window left
