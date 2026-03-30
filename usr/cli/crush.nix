@@ -27,6 +27,8 @@
         };
         models = builtins.attrValues config.ai.siliconflow.models;
       };
+      # Catwalk includes minimax-china
+      minimax-china.api_key = config.ai.minimax-china.api_key;
     };
   };
 }

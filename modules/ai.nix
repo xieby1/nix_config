@@ -70,5 +70,8 @@
         };
       };
     };
+    minimax-china = {
+      api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/AI/minimax.txt");
+    };
   };
 }
