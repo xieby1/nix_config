@@ -1,6 +1,7 @@
 #MC # fold
 { ... }: {
   programs.neovim = {
+    # TODO: rewrite in lua
     extraConfig = ''
       "" Fold
       """ fold text to be the first and last line
@@ -39,6 +40,20 @@
       """ Set the foldlevel to a high setting,
       """ files are always loaded with opened folds.
       set foldlevel=20
+    '';
+    extraLuaConfig = /*lua*/''
+      -- Decrease foldcolumn
+      vim.keymap.set('n', 'z-', function()
+        local value = tonumber(vim.o.foldcolumn) or 0
+        if value > 0 then
+          vim.o.foldcolumn = tostring(value - 1)
+        end
+      end, { desc = 'Decrease foldcolumn' })
+      -- Increase foldcolumn
+      vim.keymap.set('n', 'z=', function()
+        local value = tonumber(vim.o.foldcolumn) or 0
+        vim.o.foldcolumn = tostring(value + 1)
+      end, { desc = 'Increase foldcolumn' })
     '';
   };
 }
