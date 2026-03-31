@@ -18,27 +18,37 @@ in {
         autoHide = true;
         showOnWindowsOpen = true;
         openOnOverview = true;
+        noBackground = true;
+        spacing = 0;
         leftWidgets = [
           { enabled = true; id = "launcherButton"; }
+          { enabled = true; id = "privacyIndicator"; }
           { enabled = true; id = "wallpaperBing"; }
-          # { enabled = true; id = "workspaceSwitcher"; }
-          { enabled = true; id = "network_speed_monitor"; }
+          { enabled = true; id = "separator"; }
+          { enabled = true; id = "music"; }
+          { enabled = true; id = "separator"; }
           { enabled = true; id = "focusedWindow"; }
         ];
         centerWidgets = [
-          { enabled = true; id = "music"; }
-          { enabled = true; id = "clock"; }
           { enabled = true; id = "weather"; }
-          { enabled = true; id = "privacyIndicator"; }
+          { enabled = true; id = "spacer"; size = 10; }
+          { enabled = true; id = "clock"; }
         ];
         rightWidgets = [
           { enabled = true; id = "systemTray"; }
+          { enabled = true; id = "separator"; }
+          { enabled = true; id = "network_speed_monitor"; }
+          { enabled = true; id = "separator"; }
           { enabled = true; id = "cpuUsage"; }
           { enabled = true; id = "memUsage"; showSwap = true; }
           { enabled = true; id = "diskUsage"; }
+          { enabled = true; id = "separator"; }
           { enabled = true; id = "clipboard"; }
+          { enabled = true; id = "separator"; }
           { enabled = true; id = "notificationButton"; }
+          { enabled = true; id = "separator"; }
           { enabled = true; id = "battery"; }
+          { enabled = true; id = "separator"; }
           { enabled = true; id = "controlCenterButton"; }
         ];
       }];
