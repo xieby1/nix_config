@@ -21,8 +21,9 @@ in {
         noBackground = true;
         spacing = 0;
         leftWidgets = [
-          { enabled = true; id = "launcherButton"; }
           { enabled = true; id = "privacyIndicator"; }
+          { enabled = true; id = "notificationButton"; }
+          { enabled = true; id = "clipboard"; }
           { enabled = true; id = "wallpaperBing"; }
           { enabled = true; id = "separator"; }
           { enabled = true; id = "music"; }
@@ -36,19 +37,11 @@ in {
         ];
         rightWidgets = [
           { enabled = true; id = "systemTray"; }
-          { enabled = true; id = "separator"; }
-          { enabled = true; id = "network_speed_monitor"; }
-          { enabled = true; id = "separator"; }
           { enabled = true; id = "cpuUsage"; }
           { enabled = true; id = "memUsage"; showSwap = true; }
           { enabled = true; id = "diskUsage"; }
-          { enabled = true; id = "separator"; }
-          { enabled = true; id = "clipboard"; }
-          { enabled = true; id = "separator"; }
-          { enabled = true; id = "notificationButton"; }
-          { enabled = true; id = "separator"; }
+          { enabled = true; id = "network_speed_monitor"; }
           { enabled = true; id = "battery"; }
-          { enabled = true; id = "separator"; }
           { enabled = true; id = "controlCenterButton"; }
         ];
       }];
