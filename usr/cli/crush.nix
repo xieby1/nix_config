@@ -27,5 +27,10 @@
       # Catwalk includes minimax-china
       minimax-china.api_key = config.ai.minimax-china.api_key;
     };
+    options = {
+      tui = {
+        transparent = true;
+      };
+    };
   };
 }
