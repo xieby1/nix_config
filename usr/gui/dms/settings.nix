@@ -1,4 +1,4 @@
-{ ... }: let
+{ pkgs, ... }: let
   settings-relpath = ".config/DankMaterialShell/settings.json";
 in {
   yq-merge.${settings-relpath} = {
@@ -6,6 +6,9 @@ in {
       if [[ ! -e ~/${settings-relpath} ]]; then
         cat ${import ./default-settings.nix} > ~/${settings-relpath}
       fi
+      ${pkgs.yq-go}/bin/yq -i ' .barConfigs[0].leftWidgets=[]
+                           | .barConfigs[0].centerWidgets=[]
+                           | .barConfigs[0].rightWidgets=[]' ~/${settings-relpath}
     '';
     text = builtins.toJSON {
       currentThemeName = "dynamic";
