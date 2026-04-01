@@ -1,10 +1,10 @@
-{ lib, ... }: {
+{ config, lib, ... }: {
   # TODO: Precisely define the type
   options.ai = lib.mkOption { type = lib.types.attrs; };
   config.ai = {
     deepseek = {
       base_url = "https://api.deepseek.com/v1";
-      api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/deepseek_api_key_nvim.txt");
+      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/deepseek_api_key_nvim.txt");
       models.latest = {
         name = "Official Deepseek Latest";
         id = "deepseek-chat";
@@ -12,7 +12,7 @@
     };
     siliconflow = {
       base_url = "https://api.siliconflow.cn/v1";
-      api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/siliconflow_api_key_chatbox.txt");
+      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/siliconflow_api_key_chatbox.txt");
       models = {
         deepseek = rec {
           name = "Siliconflow Deepseek V3.2";
@@ -65,7 +65,7 @@
       };
     };
     minimax-china = {
-      api_key = lib.trim (builtins.readFile "/home/xieby1/Gist/Vault/AI/minimax.txt");
+      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/minimax.txt");
     };
   };
 }
