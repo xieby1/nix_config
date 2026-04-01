@@ -45,13 +45,13 @@ in {
           name = models.deepseek.name;
           modelName = models.deepseek.id;
           apiKey = api_key;
-          baseURL = base_url;
+          baseURL = api_endpoint;
           at = 0;
       }) (with config.ai.deepseek; {
           id = "p4s0PTKm1x4xga8X";
           providerType = "deepseek";
-          name = models.latest.name;
-          modelName = models.latest.id;
+          name = models.deepseek-chat.name;
+          modelName = "deepseek-chat";
           apiKey = api_key;
           baseURL = "";
           at = 0;
