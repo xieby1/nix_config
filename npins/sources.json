@@ -16,6 +16,22 @@
       "url": "https://api.github.com/repos/AvengeMedia/DankMaterialShell/tarball/refs/tags/v1.2.3",
       "hash": "sha256-P//moH3z9r4PXirTzXVsccQINsK5AIlF9RWOBwK3vLc="
     },
+    "catwalk": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "charmbracelet",
+        "repo": "catwalk"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.33.2",
+      "revision": "9d2771dfe22bbe5d3642bcf1cd9734266ae26186",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.33.2",
+      "hash": "sha256-CbnJLJf3S36CWC4jwTBZT2eDzk5T62TElBs1YEQH7LE="
+    },
     "dgop": {
       "type": "Git",
       "repository": {
