@@ -14,6 +14,9 @@ in {
       currentThemeName = "dynamic";
       currentThemeCategory = "dynamic";
       cursorSettings.theme = "Adwaita";
+      centeringMode = "geometric";
+      clockDateFormat = "yyyy.MM.dd ddd";
+      lockDateFormat = "yyyy.MM.dd dddd";
       showDock = true;
       dockAutoHide = true;
       dockOpenOnOverview = true;
