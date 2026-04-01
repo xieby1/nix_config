@@ -20,7 +20,7 @@ in
     ./git.nix
     ./fzf.nix
     ./tldr.nix
-    ./crush.nix
+    ./ai
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
