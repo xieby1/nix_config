@@ -14,6 +14,8 @@
     ./cli
     ./gui
   ];
+  home.stateVersion = "25.05";
+
   news.display = "silent";
 
   programs.bash.bashrcExtra = ''
