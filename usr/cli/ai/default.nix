@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
     ./crush.nix
+    ./pi
   ];
 }

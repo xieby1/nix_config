@@ -9,6 +9,12 @@ in {
     };
     minimax-china = catwalk-providers.minimax-china // {
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/minimax.txt");
+      # The catwalk-providers.minimax-china.models.xxx does not contain can_reason field.
+      # Add the can_reason field here.
+      # TODO: Precisely define the type, so we can avoid the missing field.
+      models = builtins.mapAttrs (
+        _: model: model // {can_reason = true;}
+      ) catwalk-providers.minimax-china.models;
     };
     siliconflow = {
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/siliconflow_api_key_chatbox.txt");
