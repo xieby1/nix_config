@@ -1,7 +1,7 @@
 { lib, ... }: {
   imports = [
     ./cachix.nix
-    ./ai.nix
+    ./ai
   ];
 
   options = {
