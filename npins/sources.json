@@ -71,6 +71,19 @@
       "url": "https://api.github.com/repos/mikesmithgh/kitty-scrollback.nvim/tarball/refs/tags/v8.0.0",
       "hash": "sha256-mRAHH5KzC9Cz/HHGSJ1oIi5ybrs03GBgASaDMrNywxs="
     },
+    "nix-on-droid": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-on-droid"
+      },
+      "branch": "release-24.05",
+      "submodules": false,
+      "revision": "f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25",
+      "url": "https://github.com/nix-community/nix-on-droid/archive/f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25.tar.gz",
+      "hash": "sha256-UFzk/hZWO1VkciIO5UPaSpJN8s765wsngUSvtJM6d5Q="
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.11",
