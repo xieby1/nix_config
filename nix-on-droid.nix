@@ -76,7 +76,7 @@
     # Some common stuff that people expect to have
     diffutils
     findutils
-    utillinux
+    util-linux
     tzdata
     hostname
     man
