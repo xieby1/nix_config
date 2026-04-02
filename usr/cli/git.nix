@@ -33,7 +33,14 @@ in {
       credential.helper = "store";
       init.defaultBranch = "main";
       alias = {
-        viz = "log --all --decorate --oneline --graph";
+        # The original "log --decorate --oneline" does not contain date and author.
+        # Append time and author to `--decorate --oneline` style by a customized the format
+        viz = toString [
+          "log"
+          ''--format="%Cblue%ad %Cgreen%<(8,trunc)%an %C(auto)%h%d %s"''
+          ''--date=format:"%Y.%m.%d"''
+          "--graph"
+        ];
       };
       user = {
         email = "xieby1@outlook.com";
