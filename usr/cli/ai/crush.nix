@@ -5,6 +5,7 @@
 # - Pros:
 #   - Javascript based. The nix closure is not so large: 186MB!
 # - Cons:
+#   - Javascript based. The memory consumption of open a new opencode instance: ~400MB
 #   - Lack of doc, currently I care about customized providers.
 #   - Does not support terminal scrollback.
 #   - Use Esc instead of Ctrl-C to interrupt.
@@ -17,6 +18,8 @@
 #
 # - Pros:
 #   - Go lang based.
+#     - Small nix-closure.
+#     - Small memory consumption: crush instance that have several conversations: ~70MB
 # - Cons:
 #   - Token inefficiency: 300 line system prompt and cannot fully customize,
 #                         only supports system prompt prefix.
