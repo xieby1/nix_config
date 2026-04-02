@@ -19,4 +19,12 @@
       api = "openai-completions";
     };
   };
+  home.file.pi-ollama = {
+    target = ".pi/agent/extensions/ollama.ts";
+    text = import ./provider.nix {
+      inherit lib;
+      catwalk-provider = config.ai.ollama;
+      api = "openai-completions";
+    };
+  };
 }

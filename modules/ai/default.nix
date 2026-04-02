@@ -70,5 +70,24 @@ in {
         };
       };
     };
+    # TODO: Precisely define the type, so we can avoid the missing field.
+    ollama = {
+      api_key = "dummy";
+      api_endpoint = "http://localhost:11434/v1";
+      id = "ollama";
+      models = {
+        qwen3_5_9b = {
+          name = "Qwen3.5 9B";
+          id = "qwen3.5:9b";
+          cost_per_1m_in = 0;
+          cost_per_1m_out = 0;
+          cost_per_1m_in_cached = 0;
+          cost_per_1m_out_cached = 0;
+          context_window = 32000; # TODO: ollama setting
+          default_max_tokens = 4000;
+          can_reason = true;
+        };
+      };
+    };
   };
 }
