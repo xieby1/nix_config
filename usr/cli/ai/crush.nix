@@ -11,6 +11,8 @@
 #   - Use Esc instead of Ctrl-C to interrupt.
 #   - ~~The input line does not support Home, End key.~~
 #   - Token inefficiency
+#   - Does not support explicit skill invocation: https://github.com/anomalyco/opencode/issues/7846
+#     - Though opencode support /skill command, it still need natural language to trigger the skill.
 # - Summary: Its quality is not comparable to neovim,
 #            though it declares "OpenCode is built by neovim users ...".
 #
@@ -26,6 +28,7 @@
 #   - The input line support Home, End key, but does not support Ctrl+Left/Right.
 #   - Does not support terminal scrollback.
 #   - Notification cannot click and jump to the corresponding terminal.
+#   - Does not support explicit skill: https://github.com/charmbracelet/crush/discussions/2505 and no discussions!
 #
 # ## Aider
 #
