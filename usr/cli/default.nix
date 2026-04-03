@@ -213,4 +213,10 @@ in
     enable = true;
     dbPath = "${pkgs.npinsed.nixpkgs.outPath}/programs.sqlite";
   };
+
+  programs.zoxide = {
+    enable = true;
+    enableBashIntegration = true;
+    options = ["--cmd" "cd"];
+  };
 }
