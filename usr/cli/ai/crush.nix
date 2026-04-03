@@ -43,6 +43,28 @@
 #   - Python based, large codebase: nix closure > 2GB
 #   - Does not support skill, memory.
 #   - Models are out of date, e.g.: minimax 2.5, while latest is 2.7
+#
+# ## Codex
+#
+# - Cons:
+#   - Latest verions only support wire_api = "responses",
+#     does not support completion.
+#     So does not support deepseek, minimax, ....
+#     Fine!
+#
+# ## Forgecode
+#
+# - Cons:
+#   - Claims being #1. Really?
+#   - The global local is ~/forge/, really!? I doubt the project's taste of tech.
+#
+# ## Goose
+#
+# - Cons:
+#   - Why goose does not saved in nix binary cache, and 1.23.2 cannot build in x86-64 Linux: checkPhase failed!?
+#     Why the compiling time so long 7min+?
+#   - Why the output color render bug remain unsolved?
+#     Oh, I guess this project focus on desktop, instead of cli.
 { pkgs, config, ... }: {
   home.packages = [
     (import pkgs.npinsed.nur-charmbracelet {}).crush
