@@ -219,4 +219,7 @@ in
     enableBashIntegration = true;
     options = ["--cmd" "cd"];
   };
+
+  programs.bat.enable = true;
+  programs.bash.shellAliases.cat = "bat -pp";
 }
