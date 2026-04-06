@@ -52,6 +52,13 @@
 #     So does not support deepseek, minimax, ....
 #     Fine!
 #
+# ## Code (Codex Fork)
+#
+# - Pros:
+#   - Support wire_api = "chat"
+# - Cons:
+#   - A fork that always needs to rebase.
+#
 # ## Forgecode
 #
 # - Cons:
