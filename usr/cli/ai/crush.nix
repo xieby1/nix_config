@@ -51,6 +51,7 @@
 #     does not support completion.
 #     So does not support deepseek, minimax, ....
 #     Fine!
+#   - 603k source lines of rust, a pile of xxxx.
 #
 # ## Code (Codex Fork)
 #
