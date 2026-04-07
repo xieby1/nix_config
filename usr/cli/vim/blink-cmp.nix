@@ -17,7 +17,7 @@
       hash = "sha256-szCNbYLWkJTAVGWz9iRFh7NfQfM5t5jcQHdQeKzBx30=";
     };
     doCheck = false;
-  }) {
+  }) pkgs.pkgsu.vimPlugins.blink-cmp-avante {
     # match unicode characters => match alphabet characters instead.
     # E.g. I don't want to completion a long CJK sentence.
     # E.g. I want alphabet next to CJK can be completed: "例子example"
@@ -88,6 +88,7 @@
         },
         sources = {
           default = {
+            "avante",
             'lsp', 'path', 'buffer', 'snippets',
             'minuet',
             "dictionary"
@@ -119,6 +120,13 @@
                 }}" },
                 dictionary_directories = { vim.fn.expand('~/Gist/dicts/blink-cmp') },
               },
+            },
+            avante = {
+              module = 'blink-cmp-avante',
+              name = 'Avante',
+              opts = {
+                -- options for blink-cmp-avante
+              }
             },
           },
         },
