@@ -1,7 +1,7 @@
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
   programs.neovim.plugins = [{
-    plugin = pkgs.vimPlugins.codecompanion-nvim;
+    plugin = pkgs.pkgsu.vimPlugins.codecompanion-nvim;
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
     config = /*lua*/ ''
@@ -10,7 +10,15 @@
           http = {
             deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
               env = { api_key = "${config.ai.deepseek.api_key}" },
-              schema = { model = { default = "deepseek-chat" } },
+              schema = {
+                model = {
+                  choices = {
+                    -- The codecompanion-nvim default deepseek-reasoner cannot use tools, only deepseek-chat can
+                    -- So override the setting here, to enable deepseek-reasoner can_use_tools.
+                    ["deepseek-reasoner"] = { opts = { can_reason = true, can_use_tools = true } },
+                  },
+                },
+              },
             }) end,
           },
         },
