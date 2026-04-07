@@ -1,6 +1,11 @@
+# TODO:
+# - merge and clean reject.avante-nvim.nix
+# - A better name for avante scatch buffer, for window search in wayland
+# - Notifications
+# - Move blink-cmp setting to here
 { config, pkgs, ... }: {
   programs.neovim.plugins = [{
-    plugin = pkgs.vimPlugins.avante-nvim;
+    plugin = pkgs.pkgsu.vimPlugins.avante-nvim;
     type = "lua";
     config = /*lua*/''
       require("avante").setup({
@@ -27,4 +32,5 @@
       })
     '';
   }];
+  programs.bash.shellAliases.avante=''nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'';
 }
