@@ -1,5 +1,4 @@
 # TODO:
-# - merge and clean reject.avante-nvim.nix
 # - A better name for avante scatch buffer, for window search in wayland
 # - Notifications
 # - Move blink-cmp setting to here
