@@ -43,7 +43,7 @@ in {
     ./nvim-treesitter-context.nix
     ./rustowl.nix
     ./treesitter-injections
-    ./avante-nvim.nix
+    ./avante-nvim
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
