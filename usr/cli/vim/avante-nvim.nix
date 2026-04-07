@@ -2,6 +2,7 @@
 # - A better name for avante scatch buffer, for window search in wayland
 # - Notifications
 # - Move blink-cmp setting to here
+# - Outline
 { config, pkgs, ... }: {
   programs.neovim.plugins = [{
     plugin = pkgs.pkgsu.vimPlugins.avante-nvim;
