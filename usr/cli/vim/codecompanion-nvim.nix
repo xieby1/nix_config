@@ -20,6 +20,29 @@
                 },
               },
             }) end,
+            -- By crush+copilot
+            -- ## Root Cause (updated)
+            -- Setting `available_tools = {}` in `extend()` doesn't work because `vim.tbl_deep_extend` merges recursively. The Anthropic adapter's `available_tools` (containing `web_search`, `web_fetch`, `code_execution`, `memory`) **survives the merge**. So MiniMax still receives the Anthropic-proprietary `web_search_20250305` tool format, which it can't parse.
+            -- ## Fix
+            -- You need to set `available_tools` **after** the extend call. Change your config to:
+            minimax = function()
+              local adapter = require("codecompanion.adapters").extend("anthropic", {
+                name = "minimax",
+                formatted_name = "MiniMax",
+                url = "${config.ai.minimax-china.api_endpoint}/v1/messages",
+                env = { api_key = "${config.ai.minimax-china.api_key}" },
+                schema = {
+                  model = {
+                    default = "${config.ai.minimax-china.default_large_model_id}",
+                    choices = {
+                      ["${config.ai.minimax-china.default_large_model_id}"] = { opts = { can_reason = true, has_token_efficient_tools = true } },
+                    },
+                  },
+                }
+              })
+              adapter.available_tools = {}
+              return adapter
+            end,
           },
         },
         display = {
@@ -36,8 +59,8 @@
           },
         },
         strategies = {
-          chat = { adapter = "deepseek" },
-          inline = { adapter = "deepseek" },
+          chat = { adapter = "minimax" },
+          inline = { adapter = "minimax" },
         },
       })
 
