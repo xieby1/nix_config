@@ -60,6 +60,8 @@
               },
             },
             diff = { enabled = true },
+            fold_reasoning = false,
+            show_settings = true,
           },
         },
         strategies = {
