@@ -87,5 +87,5 @@
     '';
   }];
 
-  programs.bash.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1"'';
+  programs.bash.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1" -c Outline!'';
 }
