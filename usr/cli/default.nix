@@ -71,6 +71,7 @@ in
     ## text
     pandoc
     poppler-utils
+    yq-go
     ## compile
     gnumake
     makefile2graph
