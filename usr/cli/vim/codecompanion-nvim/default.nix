@@ -1,6 +1,8 @@
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
-  programs.neovim.plugins = [{
+  programs.neovim.plugins = [
+    pkgs.pkgsu.vimPlugins.codecompanion-history-nvim
+  {
     plugin = pkgs.pkgsu.vimPlugins.codecompanion-nvim;
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
@@ -71,6 +73,12 @@
           },
           inline = { adapter = "minimax", },
         },
+        extensions = {
+          -- TODO: move extensions config to separate file
+          history = {
+            enabled = true,
+          }
+        }
       })
 
       -- key bindings of AI
