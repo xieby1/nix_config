@@ -134,9 +134,18 @@ in {
           /* make vertical line more clear */
           /* original: --tabs-lvl-opacity: 0.16 */
           --tabs-lvl-opacity: 0.8;
-          /* white border for activated tab */
-          --tabs-activated-shadow: 0 0 0 1px white;
         }
+        @media (prefers-color-scheme: dark) {
+          #root.root {
+            --tabs-activated-shadow: 0 0 0 1px white;
+          }
+        }
+        @media (prefers-color-scheme: light) {
+          #root.root {
+            --tabs-activated-shadow: 0 0 0 1px black;
+          }
+        }
+
         /* make sure the top tab shadow (--tabs-activated-shadow) is not clipped */
         /* Why not using border?
            Because border will add size to the div, thus changing the layout.
