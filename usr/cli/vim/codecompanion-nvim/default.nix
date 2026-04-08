@@ -5,14 +5,9 @@
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
     config = /*lua*/ ''
-      require("codecompanion").setup(vim.tbl_deep_extend("force",
-        (function()
-          -- if it is first called: default config, else: previous config
-          local prev_config = vim.deepcopy(require("codecompanion.config").config)
-          prev_config.constants = nil
-          return prev_config
-        end)(),
-      {
+      -- codecompanion does not support call setup multiple times, I have tried, see 28de5b86.
+      -- If include history.nix with second setup, codecompanion cannot use history.
+      require("codecompanion").setup({
         adapters = {
           http = {
             deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
@@ -76,7 +71,7 @@
           },
           inline = { adapter = "minimax", },
         },
-      }))
+      })
 
       -- key bindings of AI
       vim.keymap.set('n', '<leader>a', ':CodeCompanionChat Toggle<CR>')
