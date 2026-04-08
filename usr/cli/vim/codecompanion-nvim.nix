@@ -59,8 +59,15 @@
           },
         },
         strategies = {
-          chat = { adapter = "minimax" },
-          inline = { adapter = "minimax" },
+          chat = {
+            adapter = "minimax",
+            tools = {
+              opts = {
+                default_tools = { "agent" },
+              },
+            },
+          },
+          inline = { adapter = "minimax", },
         },
       })
 
