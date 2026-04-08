@@ -46,6 +46,7 @@ in {
     ./treesitter-injections
     ./avante-nvim
     ./copilot-lua.nix
+    ./lazy
   ];
 
   programs.bash.shellAliases.view = "nvim -R";
