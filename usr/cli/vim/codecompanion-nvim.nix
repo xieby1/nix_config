@@ -20,7 +20,7 @@
                 },
               },
             }) end,
-            -- By crush+copilot
+            -- By crush+copilot(claude opus4.6)
             -- ## Root Cause (updated)
             -- Setting `available_tools = {}` in `extend()` doesn't work because `vim.tbl_deep_extend` merges recursively. The Anthropic adapter's `available_tools` (containing `web_search`, `web_fetch`, `code_execution`, `memory`) **survives the merge**. So MiniMax still receives the Anthropic-proprietary `web_search_20250305` tool format, which it can't parse.
             -- ## Fix
@@ -69,4 +69,6 @@
       vim.keymap.set('v', '<leader>a', ':CodeCompanionChat Add<CR>')
     '';
   }];
+
+  programs.bash.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1"'';
 }
