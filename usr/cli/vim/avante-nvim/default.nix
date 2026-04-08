@@ -1,8 +1,13 @@
 # TODO:
-# - A better name for avante scatch buffer, for window search in wayland
-# - Notifications
-# - Move blink-cmp setting to here
-# - Outline
+# - !!!: TLS error: it is a curl problem, which use the all_proxy env.
+# - A better name for avante scatch buffer, for window search in wayland.
+# - Notifications.
+# - Move blink-cmp setting to here.
+# - Outline.
+# - Always show tokens consumption.
+# - Enable language check in input scratch buffer.
+# - Enable LSP.
+# - start up with new session
 { config, pkgs, ... }: {
   programs.neovim.plugins = [{
     plugin = pkgs.pkgsu.vimPlugins.avante-nvim;
@@ -27,6 +32,12 @@
             parse_api_key = function() return "${config.ai.minimax-china.api_key}" end,
             endpoint = "${config.ai.minimax-china.api_endpoint}",
             model = "MiniMax-M2.7",
+          },
+        },
+        windows = {
+          position = "left",
+          ask = {
+            start_insert = false,
           },
         },
       })
