@@ -33,7 +33,8 @@ in {
     ./codecompanion-nvim
     ./close-windows.nix
     ./nvim-window-picker.nix
-    ./vim-matchup.nix
+    # TODO: remove/replace vim-matchup, which make nvim very laggy when edit/view large markdown (1k sloc)
+    # ./vim-matchup.nix
     ./nvim-nav.nix
     ./markdown-preview-nvim.nix
     ./venn-nvim.nix
