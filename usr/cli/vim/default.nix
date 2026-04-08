@@ -23,7 +23,6 @@ in {
     ./git-wip.nix
     ./vim-floaterm.nix
     ./outline-nvim.nix
-    ./vim-hexokinase.nix
     ./gitsigns-nvim.nix
     ./color-scheme.nix
     ./hbac-nvim.nix
