@@ -1,3 +1,4 @@
+# TODO: niri like buffer width/height adjust
 { pkgs, ... }:let
   my-neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (old: {
     patches = old.patches ++ [
@@ -30,7 +31,7 @@ in {
     ./smartyank-nvim.nix
     ./mini-nvim.nix
     ./vim-easy-align.nix
-    ./codecompanion-nvim.nix
+    ./codecompanion-nvim
     ./close-windows.nix
     ./nvim-window-picker.nix
     ./vim-matchup.nix
