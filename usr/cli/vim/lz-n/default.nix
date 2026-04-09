@@ -1,21 +1,14 @@
 # # lz.n vs lazy.nvim:
 # - lazy.nvim contains too many unnecessary features (unrelated to lazy)!
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   programs.neovim.plugins = [
     pkgs.vimPlugins.lz-n
-    rec {
-      plugin = pkgs.pkgsu.vimPlugins.copilot-lua;
-      type = "lua";
-      config = ''
-        require("lz.n").load {
-          [1] = "${plugin.pname}",
-          cmd = "Copilot",
-          after = function()
-            require("copilot").setup()
-          end,
-        }
-      '';
-      optional = true;
-    }
   ];
+
+  imports = [./module];
+  my.neovim.lz-n = [{
+    plugin = pkgs.pkgsu.vimPlugins.copilot-lua;
+    cmd = "Copilot";
+    after = lib.generators.mkLuaInline ''function() require("copilot").setup() end'';
+  }];
 }
