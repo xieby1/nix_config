@@ -61,7 +61,9 @@
             },
             diff = { enabled = true },
             fold_reasoning = false,
-            show_settings = true,
+            -- Adapter can't be changed when `display.chat.show_settings = true`
+            -- Fine!
+            -- show_settings = true,
           },
         },
         strategies = {
