@@ -45,7 +45,6 @@ in {
     ./rustowl.nix
     ./treesitter-injections
     ./avante-nvim
-    ./copilot-lua.nix
     ./lz-n
   ];
 
