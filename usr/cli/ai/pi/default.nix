@@ -15,5 +15,8 @@ in {
     (gen-home-file-entry config.ai.deepseek "openai-completions")
     (gen-home-file-entry config.ai.ollama "openai-completions")
   ];
+  yq-merge.".pi/agent/settings.json".text = builtins.toJSON {
+    defaultProvider = config.ai.minimax-china.id;
+    defaultModel = config.ai.minimax-china.default_large_model_id;
   };
 }
