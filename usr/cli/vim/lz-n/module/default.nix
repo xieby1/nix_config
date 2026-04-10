@@ -9,14 +9,14 @@ in {
   };
 
   config = lib.mkIf (cfg != []) {
-    programs.neovim.plugins = map (spec: {
-      plugin = spec.plugin;
+    programs.neovim.plugins = map (entry: {
+      plugin = entry.plugin;
       type = "lua";
       config = ''
         require("lz.n").load(
           vim.tbl_extend("force",
-            {"${spec.plugin.pname}"},
-            ${lib.generators.toLua {} spec}
+            {"${entry.plugin.pname}"},
+            ${lib.generators.toLua {} entry.spec}
           )
         )
       '';

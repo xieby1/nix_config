@@ -7,8 +7,10 @@ let
       home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
       my.neovim.lz-n = [{
         plugin = pkgs.vimPlugins.copilot-lua;
-        cmd = "Copilot";
-        after = pkgs.lib.generators.mkLuaInline ''function() require("copilot").setup() end'';
+        spec = {
+          cmd = "Copilot";
+          after = pkgs.lib.generators.mkLuaInline ''function() require("copilot").setup() end'';
+        };
       }];
     };
   };
@@ -25,6 +27,10 @@ in pkgs.lib.runTests {
   test-optional = {
     expr = pluginEntry.optional;
     expected = true;
+  };
+  test-config-does-not-have-plugin = {
+    expr = pkgs.lib.hasInfix ''["plugin"] ='' pluginEntry.config;
+    expected = false;
   };
   test-config-has-load = {
     expr = pkgs.lib.hasInfix ''require("lz.n").load'' pluginEntry.config;

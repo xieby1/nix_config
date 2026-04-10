@@ -8,7 +8,9 @@
   imports = [./module];
   my.neovim.lz-n = [{
     plugin = pkgs.pkgsu.vimPlugins.copilot-lua;
-    cmd = "Copilot";
-    after = lib.generators.mkLuaInline ''function() require("copilot").setup() end'';
+    spec = {
+      cmd = "Copilot";
+      after = lib.generators.mkLuaInline ''function() require("copilot").setup() end'';
+    };
   }];
 }
