@@ -12,13 +12,22 @@ in {
     programs.neovim.plugins = map (entry: {
       plugin = entry.plugin;
       type = "lua";
-      config = ''
-        require("lz.n").load(
-          vim.tbl_extend("force",
-            {"${entry.plugin.pname}"},
-            ${lib.generators.toLua {} entry.spec}
-          )
-        )
+      config = let
+        _1_spec = entry.spec // {"1" = entry.plugin.pname;};
+
+        /*_1_spec_lua_str = {
+          ["1"] = <pname>,
+          ...
+        }*/
+        _1_spec_lua_str = lib.generators.toLua {} _1_spec;
+
+        /*spec_lua_str = {
+          <pname>,
+          ...
+        }*/
+        spec_lua_str = lib.replaceString ''["1"] = '' "" _1_spec_lua_str;
+      in ''
+        require("lz.n").load(${spec_lua_str})
       '';
       optional = true;
     }) cfg;
