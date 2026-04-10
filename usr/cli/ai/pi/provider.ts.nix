@@ -1,7 +1,7 @@
+# TODO: lint
 {
   lib,
   catwalk-provider,
-  name ? catwalk-provider.id,
   api,
 }:
 assert lib.assertOneOf "api" api ["anthropic-messages" "openai-completions" "openai-responses"];
@@ -9,7 +9,7 @@ assert lib.assertOneOf "api" api ["anthropic-messages" "openai-completions" "ope
   import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
   export default function (pi: ExtensionAPI) {
-    pi.registerProvider("${name}", {
+    pi.registerProvider("${catwalk-provider.id}", {
       baseUrl: "${catwalk-provider.api_endpoint}",
       apiKey: "${catwalk-provider.api_key}",
       api: "${api}",
