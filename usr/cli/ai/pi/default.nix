@@ -4,7 +4,7 @@
   ];
   home.file.pi-minimax-cn = {
     target = ".pi/agent/extensions/minimax-cn.ts";
-    text = import ./provider.nix {
+    text = import ./provider.ts.nix {
       inherit lib;
       name = "minimax-cn";
       catwalk-provider = config.ai.minimax-china;
@@ -13,7 +13,7 @@
   };
   home.file.pi-deepseek = {
     target = ".pi/agent/extensions/deepseek.ts";
-    text = import ./provider.nix {
+    text = import ./provider.ts.nix {
       inherit lib;
       catwalk-provider = config.ai.deepseek;
       api = "openai-completions";
@@ -21,7 +21,7 @@
   };
   home.file.pi-ollama = {
     target = ".pi/agent/extensions/ollama.ts";
-    text = import ./provider.nix {
+    text = import ./provider.ts.nix {
       inherit lib;
       catwalk-provider = config.ai.ollama;
       api = "openai-completions";
