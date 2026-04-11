@@ -6,8 +6,6 @@ let
     type = "lua";
     config = /*lua*/ ''
       require('gitsigns').setup {
-        signs_staged_enable = false,
-        signcolumn = false,
         numhl      = true,
         linehl     = true,
 
@@ -54,6 +52,12 @@ let
           map({'o', 'x'}, 'ih', ':<C-U>Gitsigns select_hunk<CR>')
         end
       }
+      -- By default, staged hunks share the same background color as unstaged hunks.
+      -- Clear GitSignsStagedXXXLn highlight groups to remove background from staged hunks.
+      for _, ty in ipairs({'Add', 'Change', 'Delete', 'Topdelete', 'Changedelete'}) do
+        local hl_name = 'GitSignsStaged' .. ty .. "Ln"
+        vim.api.nvim_set_hl(0, hl_name, {})
+      end
     '';
   };
 in {
