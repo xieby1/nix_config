@@ -1,3 +1,6 @@
+# TODO: sonokai does not support light theme.
+#       Replace it with other colorscheme that both support dark and light theme.
+#       https://github.com/catppuccin may be a good choice, as it support tons of software.
 #MC # 🎨My nvim color scheme
 { config, pkgs, stdenv, lib, ... }:
 let
