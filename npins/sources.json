@@ -27,10 +27,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.33.2",
-      "revision": "9d2771dfe22bbe5d3642bcf1cd9734266ae26186",
-      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.33.2",
-      "hash": "sha256-CbnJLJf3S36CWC4jwTBZT2eDzk5T62TElBs1YEQH7LE="
+      "version": "v0.35.1",
+      "revision": "3b7535bd1b2ebd0c95e1cea62c508a60d06f2712",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.35.1",
+      "hash": "sha256-Jvx+ZULXZBpxLWohIUun3PY1lBWo77CH7fewt/ILku8="
     },
     "dgop": {
       "type": "Git",
@@ -115,9 +115,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "fef7a1307c8201fcf23c22e2963453d11f9fae84",
-      "url": "https://github.com/nix-community/NUR/archive/fef7a1307c8201fcf23c22e2963453d11f9fae84.tar.gz",
-      "hash": "sha256-VIrbBspqREgigAUY8yMLLKc60vkyAAxThHZMOTldS00="
+      "revision": "d133c9274d1c37d0e2e6104239a8d5c0181d2c39",
+      "url": "https://github.com/nix-community/NUR/archive/d133c9274d1c37d0e2e6104239a8d5c0181d2c39.tar.gz",
+      "hash": "sha256-c0B8tHUOElaB86IkPAAJwldLIyPpn3ck8Fa+g2fsbvo="
     },
     "nur-charmbracelet": {
       "type": "Git",
@@ -128,9 +128,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f9607d176b01f866257ce6fcdd8053083da2da2a",
-      "url": "https://github.com/charmbracelet/nur/archive/f9607d176b01f866257ce6fcdd8053083da2da2a.tar.gz",
-      "hash": "sha256-XNl3zqjTk0/Qpj4zd9A6oUOv0vZW/SNt5GwUQPYn9Ac="
+      "revision": "07948132b68b0d28da4394bab5c01cd102c564da",
+      "url": "https://github.com/charmbracelet/nur/archive/07948132b68b0d28da4394bab5c01cd102c564da.tar.gz",
+      "hash": "sha256-PJnPi1fT9V8Pqu8ZJVbcaVRokhqmZAAzta/8oo0GNy8="
     },
     "pkgsu": {
       "type": "Git",
@@ -141,9 +141,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "580c46742fcaffa79567bcc3d9328ec06b23ed3d",
-      "url": "https://github.com/NixOS/nixpkgs/archive/580c46742fcaffa79567bcc3d9328ec06b23ed3d.tar.gz",
-      "hash": "sha256-+akpohUZCQhbxe9IIsteNEKcQS4inT4SA+I4Vs/msWc="
+      "revision": "0152d05236f71273a58de76a4f92f92e254dc00f",
+      "url": "https://github.com/NixOS/nixpkgs/archive/0152d05236f71273a58de76a4f92f92e254dc00f.tar.gz",
+      "hash": "sha256-nYzQTeM47cnhentCBBzVY50YhRwf9OZkP5W82ZaNBc4="
     }
   },
   "version": 7
