@@ -3,7 +3,7 @@
     name = "pi-${catwalk-provider.id}";
     value = {
       target = ".pi/agent/extensions/${catwalk-provider.id}.ts";
-      text = import ./provider.ts.nix { inherit lib catwalk-provider api; };
+      source = pkgs.callPackage ./provider.ts.nix { inherit lib catwalk-provider api; };
     };
   };
 in {

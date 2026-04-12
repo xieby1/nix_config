@@ -1,11 +1,15 @@
-# TODO: lint
 {
   lib,
   catwalk-provider,
   api,
+
+  runCommand,
+  prettier,
 }:
 assert lib.assertOneOf "api" api ["anthropic-messages" "openai-completions" "openai-responses"];
-''
+runCommand "${catwalk-provider.id}.ts" {
+  nativeBuildInputs = [ prettier ];
+  content = ''
   import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
   export default function (pi: ExtensionAPI) {
@@ -32,4 +36,7 @@ assert lib.assertOneOf "api" api ["anthropic-messages" "openai-completions" "ope
       )}
     });
   }
-''
+'';
+  passAsFile = [ "content" ];
+  preferLocalBuild = true;
+} ''prettier --parser typescript "$contentPath" > $out''
