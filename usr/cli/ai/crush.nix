@@ -13,6 +13,7 @@
 #   - Token inefficiency
 #   - Does not support explicit skill invocation: https://github.com/anomalyco/opencode/issues/7846
 #     - Though opencode support /skill command, it still need natural language to trigger the skill.
+#   - Copilot uses more premium requests: https://github.com/anomalyco/opencode/issues/11753, ...
 # - Summary: Its quality is not comparable to neovim,
 #            though it declares "OpenCode is built by neovim users ...".
 #
@@ -64,7 +65,7 @@
 #
 # - Cons:
 #   - Claims being #1. Really?
-#   - The global local is ~/forge/, really!? I doubt the project's taste of tech.
+#   - Fixed: ~The global local is ~/forge/, really!? I doubt the project's taste of tech.~~
 #
 # ## Goose
 #
