@@ -5,7 +5,10 @@
     pkgs.vimPlugins.lz-n
   ];
 
-  imports = [./module];
+  imports = [
+    ./module
+    ./agentic.nix
+  ];
   my.neovim.lz-n = [{
     plugin = pkgs.pkgsu.vimPlugins.copilot-lua;
     spec = {
