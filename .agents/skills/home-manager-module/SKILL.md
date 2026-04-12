@@ -53,14 +53,6 @@ Tests use `nix eval -f test.nix` — success when output is `[ ]` (empty list).
 ```nix
 let
   pkgs = import <nixpkgs> {};
-  hm = import <home-manager/modules> {
-    inherit pkgs;
-    configuration = {
-      imports = [./.];
-      home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
-      # Set module options here
-    };
-  };
 in pkgs.lib.runTests {
   test-name = {
     expr = <expression>;
@@ -69,13 +61,38 @@ in pkgs.lib.runTests {
 }
 ```
 
-Run tests with: `nix eval -f test.nix | tee /dev/tty | grep -q '\[ \]'`
+Run tests with: `nix eval -f test.nix`
+
+## Testing Function-Style Modules
+
+Modules that are functions (not traditional home-manager modules with options/config) can still be tested:
+
+```nix
+let
+  pkgs = import <nixpkgs> {};
+in pkgs.lib.runTests {
+  test-module = pkgs.lib.testAllTrue [
+    (pkgs.lib.hasInfix "expected-string" content)
+    (pkgs.lib.hasInfix "another-string" content)
+  ];
+  test-assertion = {
+    expr = builtins.tryEval (import ./default.nix { invalid-param = true; });
+    expected = { success = false; value = false; };
+  };
+}
+```
+
+Where `content` is the output of the function, often obtained via `builtins.readFile`.
 
 ## Common Patterns
 
-- Use `lib.filterAttrs (_: v: v != null)` to drop unset optional fields before serialization
-- Use `lib.types.either lib.types.str (lib.types.listOf lib.types.str)` for fields accepting one or many strings
-- Use `lib.mkIf` to conditionally apply config only when the option is non-empty
+- Use `pkgs.lib.filterAttrs (_: v: v != null)` to drop unset optional fields before serialization
+- Use `pkgs.lib.types.either pkgs.lib.types.str (pkgs.lib.types.listOf pkgs.lib.types.str)` for fields accepting one or many strings
+- Use `pkgs.lib.mkIf` to conditionally apply config only when the option is non-empty
+- Use `pkgs.lib.testAllTrue` instead of manually comparing attrsets for simple boolean checks
+- Use `pkgs.lib.hasInfix` to check if a string contains a substring
+- Use `builtins.tryEval` to test code that should fail (e.g., assertion failures)
+- Declare variables in the narrowest scope needed — avoid top-level declarations when only used in one test
 - Reference example module at `~/.config/nixpkgs/usr/modules/yq-merge/`
 
 ## References
