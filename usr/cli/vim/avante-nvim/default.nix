@@ -11,6 +11,7 @@
 # Cons:
 # - Cannot change background?
 # - Does not support notifications?
+# - Copilot uses more premium request credits: https://github.com/yetone/avante.nvim/issues/2989
 { config, pkgs, ... }: {
   programs.neovim.plugins = [{
     plugin = pkgs.pkgsu.vimPlugins.avante-nvim;
