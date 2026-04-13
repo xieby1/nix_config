@@ -5,3 +5,4 @@
     - https://github.com/kovidgoyal/kitty/issues/7950
   - Possible solution: write a kitten (python script)
     - Pros: I can learn how to script kitty, and learn how kitten works!
+- 2026.04.13: try zsh
