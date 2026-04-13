@@ -1,0 +1,7 @@
+- 2026.04.13: kitty new tab pwd
+  - Current behavior: realpath of pwd
+  - Expected: original pwd (retain the symlink)
+  - Related discussions: https://github.com/kovidgoyal/kitty/issues/9335
+    - https://github.com/kovidgoyal/kitty/issues/7950
+  - Possible solution: write a kitten (python script)
+    - Pros: I can learn how to script kitty, and learn how kitten works!
