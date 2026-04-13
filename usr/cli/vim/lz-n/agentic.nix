@@ -1,3 +1,4 @@
+# TODO: structured nix => lua, no abused mkLuaInline
 { pkgs, lib, ... }: {
   my.neovim.lz-n = [{
     plugin = pkgs.vimUtils.buildVimPlugin {
@@ -15,6 +16,10 @@
       after = lib.generators.mkLuaInline ''
         function() require("agentic").setup({
           provider = "copilot-acp",
+          windows = {
+            position = "left",
+            width = 40,
+          },
         }) end
       '';
       keys = lib.generators.mkLuaInline ''
