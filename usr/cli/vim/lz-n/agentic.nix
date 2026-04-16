@@ -19,7 +19,14 @@
     spec = {
       after = lib.generators.mkLuaInline ''
         function() require("agentic").setup({
-          provider = "copilot-acp",
+          acp_providers = {
+            -- Add any new ACP-compatible provider — the name and command are up to you
+            ["pi"] = {
+              name = "pi",
+              command = "pi-acp",
+            },
+          },
+          provider = "pi",
           windows = {
             position = "left",
             width = 40,
