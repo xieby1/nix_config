@@ -5,6 +5,18 @@ let
     plugin = pkgs.vimPlugins.telescope-nvim;
     type = "lua";
     config = /*lua*/ ''
+      require('telescope').setup {
+        extensions = {fzf = {}},
+        defaults = {
+          layout_strategy = 'vertical',
+          layout_config = {
+            height = 0.95,
+            width = 0.95,
+            -- do not disable preview
+            preview_cutoff = 1,
+          },
+        },
+      }
       -- search relative to file
       -- https://github.com/nvim-telescope/telescope.nvim/pull/902
       vim.keymap.set('n', '<space>f', function() require('telescope.builtin').find_files({cwd=require'telescope.utils'.buffer_dir()}) end)
@@ -22,18 +34,6 @@ let
     plugin = pkgs.vimPlugins.telescope-fzf-native-nvim;
     type = "lua";
     config = /*lua*/ ''
-      require('telescope').setup {
-        extensions = {fzf = {}},
-        defaults = {
-          layout_strategy = 'vertical',
-          layout_config = {
-            height = 0.95,
-            width = 0.95,
-            -- do not disable preview
-            preview_cutoff = 1,
-          },
-        },
-      }
       require('telescope').load_extension('fzf')
     '';
   };
