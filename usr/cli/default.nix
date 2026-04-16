@@ -215,12 +215,6 @@ in
     dbPath = "${pkgs.npinsed.nixpkgs.outPath}/programs.sqlite";
   };
 
-  programs.zoxide = {
-    enable = true;
-    enableBashIntegration = true;
-    options = ["--cmd" "cd"];
-  };
-
   programs.bat.enable = true;
   programs.bash.shellAliases.cat = "bat -pp";
 }
