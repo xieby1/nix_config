@@ -4,7 +4,7 @@
 
 - **Cons**: Difficult to manage logically grouped sources (e.g., updating all AI-related sources requires touching a single large file).
 
-## 2. Hierarchical Structure within `<project_root>/npins/` and nest `pkgs.npinsed`:
+## ✅2. Hierarchical Structure within `<project_root>/npins/` and nest `pkgs.npinsed`:
 
 - Example:
   - ```
@@ -20,8 +20,10 @@
     ```
 - **Pros**: Solves the management issues above.
 - **Cons**: The hierarchy is disconnected from the nix script structure (`usr/cli/ai`, `usr/cli/vim`, ...), breaking modularity.
+- **Tradeoff**: The npins hierarchy can be different from nix script hierarchy.
+  - Example: there are AI-related nix scripts in `modules/ai/`, `usr/cli/ai/`, ...
 
-## ✅3. Hierarchical Structure within `<project_root>`
+## 3. Hierarchical Structure within `<project_root>`
 
 Places npins alongside their corresponding nix scripts:
 
@@ -52,5 +54,3 @@ Places npins alongside their corresponding nix scripts:
     ```
 - **Pros**: solve the Cons above
 - **Cons**: unnecessary complexity
-
-## Conclusion: use method 3 hierarchical structure within `<project_root>`
