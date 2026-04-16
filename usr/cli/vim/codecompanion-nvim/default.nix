@@ -91,6 +91,13 @@
           -- TODO: move extensions config to separate file
           history = {
             enabled = true,
+            opts = {
+              -- ACP adapters are not supported for title generation. So we use a http small model here
+              title_generation_opts = {
+                adapter = "minimax",
+                model = "${config.ai.minimax-china.default_small_model_id}",
+              },
+            },
           }
         }
       })
