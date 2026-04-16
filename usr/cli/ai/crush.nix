@@ -30,6 +30,7 @@
 #   - Does not support terminal scrollback.
 #   - Notification cannot click and jump to the corresponding terminal.
 #   - Does not support explicit skill: https://github.com/charmbracelet/crush/discussions/2505 and no discussions!
+#   - Generate `.crush/` in every folder where crush launched
 #
 # ## Aider
 #
@@ -74,6 +75,30 @@
 #     Why the compiling time so long 7min+?
 #   - Why the output color render bug remain unsolved?
 #     Oh, I guess this project focus on desktop, instead of cli.
+#
+# ## Avante.nvim
+#
+# - Pros:
+#   - Leverages Neovim muscle memory
+# - Cons:
+#   - No skills support
+#   - Uses plenary.nvim (curl without keepalive or auto-retry)
+#     - Frequent network issues cause interruptions that disrupt workflow
+#
+# ## Codecompanion.nvim
+#
+# - Pros:
+#   - Leverages Neovim muscle memory
+#   - Minimal/Clean UI
+# - Cons:
+#   - Use plenary.nvim, the same to Avante.nvim.
+#
+# ## Hermes
+#
+# - Cons:
+#   - Declare able to self-improvement (auto skill generating), but does not support per-project skill yet!?
+#     https://github.com/NousResearch/hermes-agent/issues/4667
+#     In my humble opinion, a auto-generating-skill skill is enough!
 { pkgs, config, ... }: {
   home.packages = [
     (import pkgs.npinsed.nur-charmbracelet {}).crush
