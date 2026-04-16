@@ -1,4 +1,4 @@
-# # Alternatives Comparisons
+# # Agents Comparisons
 #
 # ## Opencode
 #
@@ -99,6 +99,27 @@
 #   - Declare able to self-improvement (auto skill generating), but does not support per-project skill yet!?
 #     https://github.com/NousResearch/hermes-agent/issues/4667
 #     In my humble opinion, a auto-generating-skill skill is enough!
+#
+# Clients Comparisons
+#
+# ## Agentic.nvim
+#
+# - Pros:
+#   - simple and only cares about ACP
+# - Cons:
+#   - does not support any ACP capabilities, including fs.readTextFile, fs.writeTextFile, terminal.
+#     And it does not mentioned not support above ACP capabilities in doc.
+#   - Bugs:
+#     - when enter slash command like `/skill`, there is high, narrow auto completion floating window.
+#     - Cannot disable insert by default
+#     - Cannot hide winbar (need to edit source code)
+#
+# ## Codecompanion
+#
+# - Pros:
+#   - simple UI!
+#   - Support more ACP capabilities than Agentic.nvim: fs.readTextFile, fs.writeTextFile
+#     And it explicitly state support of ACP capabilities in doc!
 { pkgs, config, ... }: {
   home.packages = [
     (import pkgs.npinsed.nur-charmbracelet {}).crush
