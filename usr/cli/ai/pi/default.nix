@@ -9,6 +9,7 @@
 in {
   home.packages = [
     pkgs.pkgsu.pi-coding-agent
+    (pkgs.callPackage ./pi-acp.nix {})
   ];
   home.file = lib.listToAttrs [
     (gen-home-file-entry config.ai.minimax-china "anthropic-messages")
