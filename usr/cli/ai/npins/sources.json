@@ -1,5 +1,21 @@
 {
   "pins": {
+    "forgecode": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "tailcallhq",
+        "repo": "forgecode"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.9.9",
+      "revision": "22190fc985dbb57ac20094b8022230afc25640a8",
+      "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.9.9",
+      "hash": "sha256-rs3UA9WEi1mkguX5UeI7DC118uLc0FVAu3ehpxH7ucA="
+    },
     "pi-acp": {
       "type": "Git",
       "repository": {
