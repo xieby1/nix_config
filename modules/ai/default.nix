@@ -7,7 +7,7 @@ in {
     deepseek = catwalk-providers.deepseek // {
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/deepseek_api_key_nvim.txt");
     };
-    minimax-china = catwalk-providers.minimax-china // {
+    minimax-china = catwalk-providers.minimax-china // rec {
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/minimax.txt");
       # The catwalk-providers.minimax-china.models.xxx does not contain can_reason field.
       # Add the can_reason field here.
@@ -15,6 +15,7 @@ in {
       models = builtins.mapAttrs (
         _: model: model // {can_reason = true;}
       ) catwalk-providers.minimax-china.models;
+      default_small_model_id = let x="MiniMax-M2"; in assert models?${x}; x;
     };
     siliconflow = {
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/siliconflow_api_key_chatbox.txt");

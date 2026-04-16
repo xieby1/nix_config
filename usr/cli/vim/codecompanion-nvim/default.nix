@@ -40,6 +40,7 @@
                     default = "${config.ai.minimax-china.default_large_model_id}",
                     choices = {
                       ["${config.ai.minimax-china.default_large_model_id}"] = { opts = { can_reason = true, has_token_efficient_tools = true } },
+                      ["${config.ai.minimax-china.default_small_model_id}"] = { opts = { can_reason = true, has_token_efficient_tools = true } },
                     },
                   },
                 }
