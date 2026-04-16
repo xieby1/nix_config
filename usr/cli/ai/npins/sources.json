@@ -28,6 +28,22 @@
       "revision": "c30957b38608d37b85be2a7d793606c9f37e8c83",
       "url": "https://github.com/svkozak/pi-acp/archive/c30957b38608d37b85be2a7d793606c9f37e8c83.tar.gz",
       "hash": "sha256-MdEXjHvn8eCy2mPstgTwXUZh99whr8hCA4CTFis1h3g="
+    },
+    "pi-mono": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "badlogic",
+        "repo": "pi-mono"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.67.3",
+      "revision": "0299811c02a2a178cfdf12bbbf6b73a57e9a4c81",
+      "url": "https://api.github.com/repos/badlogic/pi-mono/tarball/refs/tags/v0.67.3",
+      "hash": "sha256-2hSf1X42sH5jhVKCiZM/EIEfQae2mFUX6FGVM/vgtPc="
     }
   },
   "version": 7
