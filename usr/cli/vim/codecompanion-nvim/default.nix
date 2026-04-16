@@ -48,6 +48,15 @@
               return adapter
             end,
           },
+          acp = {
+            pi = function()
+              return require("codecompanion.adapters").extend("opencode", {
+                name = "pi",
+                formatted_name = "Pi",
+                commands = { default = { "pi-acp", }, },
+              })
+            end,
+          },
         },
         display = {
           chat = {
@@ -68,14 +77,14 @@
         },
         strategies = {
           chat = {
-            adapter = "minimax",
+            adapter = "pi",
             tools = {
               opts = {
                 default_tools = { "agent" },
               },
             },
           },
-          inline = { adapter = "minimax", },
+          inline = { adapter = "pi", },
         },
         extensions = {
           -- TODO: move extensions config to separate file
