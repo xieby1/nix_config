@@ -1,11 +1,4 @@
 { pkgs, config, lib, ... }: let
-  gen-home-file-entry = catwalk-provider: api: {
-    name = "pi-${catwalk-provider.id}";
-    value = {
-      target = ".pi/agent/extensions/${catwalk-provider.id}.ts";
-      source = pkgs.callPackage ./provider.ts { inherit lib catwalk-provider api; };
-    };
-  };
 in {
   home.packages = [
     (pkgs.pkgsu.pi-coding-agent.overrideAttrs (final: prev: {
@@ -22,7 +15,15 @@ in {
     }))
     (pkgs.callPackage ./pi-acp.nix {})
   ];
-  home.file = lib.listToAttrs [
+  home.file = let
+    gen-home-file-entry = catwalk-provider: api: {
+      name = "pi-${catwalk-provider.id}";
+      value = {
+        target = ".pi/agent/extensions/${catwalk-provider.id}.ts";
+        source = pkgs.callPackage ./provider.ts { inherit lib catwalk-provider api; };
+      };
+    };
+  in lib.listToAttrs [
     (gen-home-file-entry config.ai.minimax-china "anthropic-messages")
     (gen-home-file-entry config.ai.deepseek "openai-completions")
     (gen-home-file-entry config.ai.ollama "openai-completions")
