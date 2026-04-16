@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "pi-acp": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "svkozak",
+        "repo": "pi-acp"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "c30957b38608d37b85be2a7d793606c9f37e8c83",
+      "url": "https://github.com/svkozak/pi-acp/archive/c30957b38608d37b85be2a7d793606c9f37e8c83.tar.gz",
+      "hash": "sha256-MdEXjHvn8eCy2mPstgTwXUZh99whr8hCA4CTFis1h3g="
+    }
+  },
+  "version": 7
+}
