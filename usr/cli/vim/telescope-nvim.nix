@@ -6,7 +6,12 @@ let
     type = "lua";
     config = /*lua*/ ''
       require('telescope').setup {
-        extensions = {fzf = {}},
+        extensions = {
+          fzf = {},
+          ["ui-select"] = {
+            require("telescope.themes").get_dropdown {}
+          },
+        },
         defaults = {
           layout_strategy = 'vertical',
           layout_config = {
@@ -46,6 +51,15 @@ let
       vim.keymap.set('n', '<space>G', require("telescope").extensions.live_grep_args.live_grep_args)
     '';
   };
+  my-telescope-ui-select-nvim = {
+    plugin = pkgs.vimPlugins.telescope-ui-select-nvim;
+    type = "lua";
+    config = /*lua*/ ''
+      -- To get ui-select loaded and working with telescope, you need to call
+      -- load_extension, somewhere after setup function:
+      require("telescope").load_extension("ui-select")
+    '';
+  };
 in {
   programs.neovim = {
     plugins = [
@@ -53,6 +67,7 @@ in {
       my-telescope-fzf-native-nvim
       pkgs.vimPlugins.plenary-nvim
       my-telescope-live-grep-args-nvim
+      my-telescope-ui-select-nvim
     ];
   };
 }
