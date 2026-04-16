@@ -17,7 +17,7 @@ in {
       centeringMode = "geometric";
       clockDateFormat = "yyyy.MM.dd ddd";
       lockDateFormat = "yyyy.MM.dd dddd";
-      showDock = true;
+      showDock = false;
       dockAutoHide = true;
       dockOpenOnOverview = true;
       barConfigs = [{
