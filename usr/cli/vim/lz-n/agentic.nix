@@ -10,6 +10,10 @@
         rev = "5234e93013b86de0af54d9691b1781d9f2820e22";
         hash = "sha256-SF41b4GC03OHUs2Zdce13cPjrH01HBwKqaFntgPlvqE=";
       };
+      postPatch = ''
+        # disable headers as nvim already has displayed info in statusline
+        sed -i '/^\s*set_winbar/d' lua/agentic/ui/window_decoration.lua
+      '';
       doCheck = false;
     };
     spec = {
