@@ -81,24 +81,31 @@
     noto-fonts-cjk-sans
     noto-fonts-cjk-serif
     noto-fonts-color-emoji
-    noto-fonts
-    # The best developer fonts, see https://www.nerdfonts.com/
-    nerd-fonts.hack
-    nerd-fonts.meslo-lg
-    nerd-fonts.sauce-code-pro
     nerd-fonts.fira-code
-    nerd-fonts.terminess-ttf
-    nerd-fonts.iosevka
-    nerd-fonts.monoid
-    nerd-fonts.fantasque-sans-mono
   ];
   # enable fontDir /run/current-system/sw/share/X11/fonts
   fonts.fontDir.enable = true;
   fonts.fontconfig.defaultFonts = {
-    monospace = [
-      "DejaVu Sans Mono"
+    emoji = [
       "Noto Color Emoji"
       "Noto Emoji"
+    ];
+    # Kitty you `fc-match monospace` to search fallback fonts
+    # More details see: https://github.com/kovidgoyal/kitty/discussions/4007
+    monospace = [
+      "DejaVu Sans Mono"
+      "Noto Sans Mono CJK SC"
+      "FiraCode Nerd Font Mono"
+    ];
+    sansSerif = [
+      "DejaVu Sans"
+      "Noto Sans CJK SC"
+      "FiraCode Nerd Font"
+    ];
+    serif = [
+      "DejaVu Serif"
+      "Noto Serif CJK SC"
+      "FiraCode Nerd Font"
     ];
   };
 
