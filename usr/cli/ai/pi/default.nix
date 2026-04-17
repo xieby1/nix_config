@@ -3,7 +3,7 @@
     # pi-coding-agent will check the version in check phase. The prefix "v" should be removed.
     # E.g.: "v0.67.3" => "0.67.3"
     version = pkgs.lib.removePrefix "v" final.src.version;
-    src = (pkgs.npinsed{input=../npins/sources.json;}).pi-mono;
+    src = pkgs.npinsed.ai.pi-mono;
     npmDepsHash = "sha256-3xFxY0iKiwjM0psijzdSqed5UOjIAOyWPwQ15fqfc4I=";
     npmDeps = pkgs.fetchNpmDeps {
       src = final.src;
