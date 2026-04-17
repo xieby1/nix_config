@@ -15,7 +15,7 @@
   allowUnfree = true;
   packageOverrides = pkgs: let
     # packages pinned by npins
-    npinsed = import ./npins;
+    npinsed = import ./npins/hierarchy.nix;
     # 添加非稳定版的nixpkgs到nixpkgs里，
     # 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
     pkgsu = import npinsed.pkgsu {};
