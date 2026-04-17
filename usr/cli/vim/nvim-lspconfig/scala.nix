@@ -38,6 +38,19 @@ in {
           # If mill command (specified by millScript) is not found,
           # then metals will use java to run mill.contrib.bloop.Bloop/install
           "-Dmetals.javaHome=${jre-with-proxy}"
+
+          # Cannot go-to-definition in build.sc.
+          # The problem can be solved by using mill-bsp as bsp, instead of using bloop,
+          # for more details see: https://github.com/com-lihaoyi/mill/discussions/2688
+          # According metals doc:
+          #   "Using Mill with Bloop is the current preferred way by Metals."
+          # I have tried defaultBspToBuildTool=true, which does not work!
+          #
+          # I learned from nvim-metals the following code to send `bsp-switch` command to metals.
+          # vim.lsp.get_client_by_id(1):request("workspace/executeCommand", {command="metals.bsp-switch"})
+          #
+          # NOTED: If using mill-bsp, make sure run `mill -i mill.bsp.BSP/install` before using.
+          "-Dmetals.defaultBspToBuildTool=true"
         ];
       }))
       (pkgs.coursier.override { jre = jre-with-proxy; })
