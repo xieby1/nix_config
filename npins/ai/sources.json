@@ -29,6 +29,19 @@
       "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.11.1",
       "hash": "sha256-ZWZXAlXE30hhCzsOtxiPmw8DBRkaPE8BZYUcoGhNiT8="
     },
+    "nixpkgs-for-copilot": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "663f0b499b6742fef9ee8552943705073088f083",
+      "url": "https://github.com/NixOS/nixpkgs/archive/663f0b499b6742fef9ee8552943705073088f083.tar.gz",
+      "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
+    },
     "pi-acp": {
       "type": "Git",
       "repository": {
