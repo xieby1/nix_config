@@ -4,7 +4,7 @@
     plugin = pkgs.vimUtils.buildVimPlugin {
       pname = "agentic.nvim";
       version = "latest";
-      src = (pkgs.npinsed{input=../npins/sources.json;}).agentic-nvim;
+      src = pkgs.npinsed.ai.agentic-nvim;
       postPatch = ''
         # disable headers as nvim already has displayed info in statusline
         sed -i '/^\s*set_winbar/d' lua/agentic/ui/window_decoration.lua

@@ -7,6 +7,5 @@
     - Pros: I can learn how to script kitty, and learn how kitten works!
 - 2026.04.13: try zsh
 - 2026.04.13: try nixvim, which has better nix-to-lua support
-- 2026.04.16: update organization strategy to prefer hierarchical structure in npins/
 - 2026.04.16: nvim: niri like window resize
   - niri: super+shift+{-/+}: -/+25% width
