@@ -4,7 +4,7 @@
       # TODO: Why does `pkgs` above not work?
       pkgs = import <nixpkgs> {};
       flake-dms = pkgs.flake-compat {
-        src = pkgs.npinsed.DankMaterialShell;
+        src = pkgs.npinsed.de.DankMaterialShell;
       };
     in flake-dms.defaultNix.homeModules.dank-material-shell)
     ./settings.nix
