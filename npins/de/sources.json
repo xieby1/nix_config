@@ -15,6 +15,19 @@
       "revision": "89c378d2f41621a39767ecb03a4569f6693c2629",
       "url": "https://api.github.com/repos/AvengeMedia/DankMaterialShell/tarball/refs/tags/v1.2.3",
       "hash": "sha256-P//moH3z9r4PXirTzXVsccQINsK5AIlF9RWOBwK3vLc="
+    },
+    "DankPluginBingWallpaper": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "max72bra",
+        "repo": "DankPluginBingWallpaper"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf",
+      "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf.tar.gz",
+      "hash": "sha256-30I7RZk5Wq4vJxL8753QnMG2rplw6b2iOR2vcSQmdw8="
     }
   },
   "version": 7
