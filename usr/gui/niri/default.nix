@@ -6,18 +6,7 @@
   niri = pkgs.niri.overrideAttrs (final: prev: {
     # Implement release keybinds and modifier-only binds
     # https://github.com/YaLTeR/niri/pull/2456/commits
-    # src = pkgs.fetchFromGitHub {
-    #   owner = "flowerysong";
-    #   repo = "niri";
-    #   rev = "86edeb3b0b3d1a08d4d4f59705cbc99a732f5e95";
-    #   hash = "sha256-VFOGkBKA03fIXf/BaXsN6CZqkwUTq1gPvTIGrEMmlTQ=";
-    # };
-    src = pkgs.fetchFromGitHub {
-      owner = "flowerysong";
-      repo = "niri";
-      rev = "53447431c4adcfe1572fed5f39ebddc239ca381c";
-      hash = "sha256-onL4kGGpNHYNIaU11hN440RruSJKcTblSi7CwqMbYeM=";
-    };
+    src = pkgs.npinsed.de.niri;
     patches = [
       # Fix dingtalk screen casting.
       # https://forum.archlinuxcn.org/t/topic/15526/3

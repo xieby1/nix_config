@@ -28,6 +28,19 @@
       "revision": "b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf",
       "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf.tar.gz",
       "hash": "sha256-30I7RZk5Wq4vJxL8753QnMG2rplw6b2iOR2vcSQmdw8="
+    },
+    "niri": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "flowerysong",
+        "repo": "niri"
+      },
+      "branch": "release-keybinds",
+      "submodules": false,
+      "revision": "53447431c4adcfe1572fed5f39ebddc239ca381c",
+      "url": "https://github.com/flowerysong/niri/archive/53447431c4adcfe1572fed5f39ebddc239ca381c.tar.gz",
+      "hash": "sha256-onL4kGGpNHYNIaU11hN440RruSJKcTblSi7CwqMbYeM="
     }
   },
   "version": 7
