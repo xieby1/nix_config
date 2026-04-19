@@ -32,10 +32,9 @@ in {
           { enabled = true; id = "notificationButton"; }
           { enabled = true; id = "clipboard"; }
           { enabled = true; id = "wallpaperBing"; }
-          { enabled = true; id = "separator"; }
           { enabled = true; id = "music"; }
-          { enabled = true; id = "separator"; }
-          { enabled = true; id = "focusedWindow"; }
+          { enabled = true; id = "spacer"; size = 10; }
+          { enabled = true; id = "unifiedTaskbar"; }
         ];
         centerWidgets = [
           { enabled = true; id = "weather"; }
