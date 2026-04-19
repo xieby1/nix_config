@@ -1,5 +1,5 @@
 # TODO: niri like buffer width/height adjust
-{ pkgs, ... }:let
+{ pkgs, config, ... }:let
   my-neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (old: {
     patches = old.patches ++ [
       # [:terminal - enable folding #5682](https://github.com/neovim/neovim/issues/5682)
@@ -162,5 +162,14 @@ in {
       nnoremap <C-W><C-Up>    <C-W><Up>
       nnoremap <C-W><C-Down>  <C-W><Down>
     '';
+  };
+
+  home.file.vim-pack-dir = {
+    target = ".config/nvim/pack-dir";
+    # The `finalPackdir` variable is defined inside a `let ... in` expression,
+    # within `config.programs.neovim.finalPackage`, making it inaccessible from outside.
+    # To obtain the pack directory path, we replicate the logic that generates `finalPackdir`.
+    # See <nixpkgs>/pkgs/applications/editors/neovim/wrapper.nix.
+    source = pkgs.neovimUtils.packDir config.programs.neovim.finalPackage.packpathDirs;
   };
 }
