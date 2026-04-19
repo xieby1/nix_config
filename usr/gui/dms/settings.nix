@@ -10,7 +10,8 @@ in {
                            | .barConfigs[0].centerWidgets=[]
                            | .barConfigs[0].rightWidgets=[]' ~/${settings-relpath}
     '';
-    text = builtins.toJSON {
+    generator = builtins.toJSON;
+    expr = {
       currentThemeName = "dynamic";
       currentThemeCategory = "dynamic";
       cursorSettings.theme = "Adwaita";

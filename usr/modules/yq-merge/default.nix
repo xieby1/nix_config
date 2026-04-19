@@ -4,10 +4,15 @@
       type = lib.types.attrsOf (
         lib.types.submodule {
           options = {
-            text = lib.mkOption {
+            expr = lib.mkOption {
               default = null;
-              type = lib.types.nullOr lib.types.lines;
-              description = "Pass to home.home.<xxx>.text";
+              type = lib.types.nullOr lib.types.anything;
+              description = "Value to be transformed by `generator` into home.home.<xxx>.text";
+            };
+            generator = lib.mkOption {
+              # Cannot set type to lib.types.functionTo lib.types.lines,
+              # or the output will be merged.
+              type = lib.types.anything;
             };
             preOnChange = lib.mkOption {
               default = "";
@@ -30,7 +35,7 @@
   };
   config = {
     home.file = builtins.mapAttrs (old_target: value: rec {
-      inherit (value) text;
+      text = value.generator value.expr;
       target = "${dirOf old_target}/yq-merge.${baseNameOf old_target}";
       onChange = /*bash*/ ''
         ${value.preOnChange}

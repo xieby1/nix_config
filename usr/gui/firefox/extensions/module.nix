@@ -68,15 +68,15 @@
       lib.mapAttrsToList (profile: per-profile-settings: (
         lib.mapAttrsToList (extensionId: per-extension-settings: {
           name = "${config.programs.firefox.configPath}/${profile}/browser-extension-data/${extensionId}/storage.js";
-          value.text = builtins.toJSON per-extension-settings.storage;
+          value = { generator = builtins.toJSON; expr = per-extension-settings.storage; };
         }) per-profile-settings.browser-extension-data
       )) config.firefox-extensions
     ))) // (
       lib.mapAttrs' (profile: per-profile-settings: {
         name = "${config.programs.firefox.configPath}/${profile}/extension-settings.json";
-        value.text = builtins.toJSON ({
+        value = { generator = builtins.toJSON; expr = ({
           version = 3;
-        } // per-profile-settings.extension-settings);
+        } // per-profile-settings.extension-settings); };
       }) config.firefox-extensions
     );
 

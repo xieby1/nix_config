@@ -124,7 +124,7 @@
   home.packages = [
     (import pkgs.npinsed.nur-charmbracelet {}).crush
   ];
-  yq-merge.".config/crush/crush.json".text = builtins.toJSON {
+  yq-merge.".config/crush/crush.json" = { generator = builtins.toJSON; expr = {
     providers = {
       # Catwalk includes deepseek
       deepseek.api_key = config.ai.deepseek.api_key;
@@ -145,5 +145,5 @@
         transparent = true;
       };
     };
-  };
+  };};
 }
