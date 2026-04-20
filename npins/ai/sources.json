@@ -73,6 +73,22 @@
       "revision": "0299811c02a2a178cfdf12bbbf6b73a57e9a4c81",
       "url": "https://api.github.com/repos/badlogic/pi-mono/tarball/refs/tags/v0.67.3",
       "hash": "sha256-2hSf1X42sH5jhVKCiZM/EIEfQae2mFUX6FGVM/vgtPc="
+    },
+    "pi-web-access": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-web-access"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.10.6",
+      "revision": "b378e5d80d424806058e819b262f72e5f6b58b7d",
+      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.10.6",
+      "hash": "sha256-OA1UpLXMV/g5CQgf03KwOjCoa34a32/Itwx8GePw2fk="
     }
   },
   "version": 7

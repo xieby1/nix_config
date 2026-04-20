@@ -12,6 +12,7 @@
     };
   });
 in {
+  imports = [ ./extensions ];
   home.packages = [
     pi-coding-agent
     (pkgs.callPackage ./pi-acp.nix {})
