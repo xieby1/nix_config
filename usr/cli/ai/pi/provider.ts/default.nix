@@ -1,8 +1,9 @@
 {
-  lib,
   catwalk-provider,
   api,
+  model-extra ? {},
 
+  lib,
   runCommand,
   prettier,
 }:
@@ -31,7 +32,7 @@ runCommand "${catwalk-provider.id}.ts" {
             };
             contextWindow = model.context_window;
             maxTokens = model.default_max_tokens;
-          }
+          } // model-extra
         ) catwalk-provider.models
       )}
     });

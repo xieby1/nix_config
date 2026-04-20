@@ -17,6 +17,24 @@ in {
       ) catwalk-providers.minimax-china.models;
       default_small_model_id = let x="MiniMax-M2"; in assert models?${x}; x;
     };
+    aliyun = {
+      id = "aliyun";
+      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/aliyun-zx.txt");
+      api_endpoint = "https://coding.dashscope.aliyuncs.com/v1";
+      models = {
+        qwen = rec {
+          name = "Aliyun qwen3.6-plus";
+          id = "qwen3.6-plus";
+          can_reason = true;
+          cost_per_1m_in = 2;
+          cost_per_1m_out = 12;
+          cost_per_1m_in_cached = 0.2;
+          cost_per_1m_out_cached = cost_per_1m_out;
+          context_window = 1000*1000;
+          default_max_tokens = 64*1000;
+        };
+      };
+    };
     siliconflow = {
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/siliconflow_api_key_chatbox.txt");
       api_endpoint = "https://api.siliconflow.cn/v1";
