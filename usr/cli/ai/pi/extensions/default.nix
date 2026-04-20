@@ -1,5 +1,9 @@
 { pkgs, ... }: {
   home.file = {
+    pi-subagents = {
+      target = ".pi/agent/extensions/pi-subagents";
+      source = pkgs.npinsed.ai.pi-subagents;
+    };
     pi-web-access = {
       target = ".pi/agent/extensions/pi-web-access";
       source = pkgs.buildNpmPackage (finalAttrs: {
