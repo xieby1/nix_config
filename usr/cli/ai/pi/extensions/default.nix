@@ -15,5 +15,9 @@
         dontNpmBuild = true;
       }) + /lib/node_modules/pi-web-access;
     };
+    pi-skill-evolution = {
+      target = ".pi/agent/extensions/pi-skill-evolution";
+      source = pkgs.npinsed.ai.pi-skill-evolution;
+    };
   };
 }

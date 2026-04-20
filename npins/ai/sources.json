@@ -74,6 +74,19 @@
       "url": "https://api.github.com/repos/badlogic/pi-mono/tarball/refs/tags/v0.67.3",
       "hash": "sha256-2hSf1X42sH5jhVKCiZM/EIEfQae2mFUX6FGVM/vgtPc="
     },
+    "pi-skill-evolution": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "samfoy",
+        "repo": "pi-skill-evolution"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "cd44a55cad3ddfa873d6eb27b0da017d98448de0",
+      "url": "https://github.com/samfoy/pi-skill-evolution/archive/cd44a55cad3ddfa873d6eb27b0da017d98448de0.tar.gz",
+      "hash": "sha256-6DYFxNZZq+gty+9eQ97ETsMzuDT63+EEu4LlA+9Ygeo="
+    },
     "pi-subagents": {
       "type": "GitRelease",
       "repository": {
