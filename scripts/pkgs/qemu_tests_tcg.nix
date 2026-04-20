@@ -1,6 +1,6 @@
 #!/usr/bin/env nix-build
 # TODO
-# Ref: ~/Documents/Tech/BT/QEMU/test.md
+# Ref: ~/Docs/Tech/BT/QEMU/test.md
 let
   pkgs = import <nixpkgs> {};
 in

@@ -54,7 +54,7 @@
         show-icons: true;
       }
       filebrowser {
-        directory: "~/Documents";
+        directory: "~/Docs";
       }
 
       /* man rofi-theme */
@@ -77,7 +77,7 @@
   #   target = ".config/rofi/file-browser";
   #   text = ''
   #     # This is a comment
-  #     dir ~/Documents
+  #     dir ~/Docs
   #     depth 0
   #     no-sort-by-type
   #     sort-by-depth

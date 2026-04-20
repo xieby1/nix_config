@@ -1,7 +1,7 @@
 { pkgs, config, ... }: let
   app-id = "cheatsheet_edit";
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
-    cd ${config.home.homeDirectory}/Documents/Tech/my_cheatsheet
+    cd ${config.home.homeDirectory}/Docs/Tech/my_cheatsheet
     # Open Outline and focus on code
     kitty --app-id ${app-id} nvim index.mkd -c Outline!
     make

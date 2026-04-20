@@ -29,7 +29,7 @@
       IFS="$IFS_OLD"
     }
 
-    cd ~/Documents
+    cd ~/Docs
     FILE=$(fzf)
     [ -z "$FILE" ] && exit
     cd $(dirname "$FILE")

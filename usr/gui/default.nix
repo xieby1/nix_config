@@ -38,17 +38,11 @@ config = lib.mkIf config.isGui {
     # network
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     feishu
-    (wechat-uos.override {
-      buildFHSEnv = args: buildFHSEnv (args // {
-        # bubble wrap wechat-uos's home directory
-        extraBwrapArgs = ["--bind ${config.home.homeDirectory}/.local/share/wechat-uos /home"];
-        chdirToPwd = false;
-      });
-    })
     # wine weixin waste too much memory, more than 4GB!!!
     #(import ./weixin.nix {})
     # Non-xwayland wemeet will crash with "Segmentation fault", when start a meeting.
     # So we add a WemeetApp-XWayland .desktop file
+    wechat
     wemeet
     (pkgs.makeDesktopItem {
       name = "WemeetApp-XWayland";

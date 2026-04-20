@@ -74,7 +74,7 @@
     #MC 我的`/home/xieby1/Gist/`文件夹存放着一些不方便放入Git仓库的文件，比如二进制文件，或是隐私文件。
     #MC 该文件由[syncthing](https://github.com/syncthing/syncthing)进行多设备同步。
     #MC 简单的说，我的备份理念是“git备份配置，syncthing备份数据”。
-    #MC “配置”即指这个[nix_config仓库](https://github.com/xieby1/nix_config)，“数据”指`~/Gist/`、`~/Documents/`等文件夹。
+    #MC “配置”即指这个[nix_config仓库](https://github.com/xieby1/nix_config)，“数据”指`~/Gist/`、`~/Docs/`等文件夹。
     #MC 有了这些备份就能轻松还原/复现我的整个工作环境。
     #MC TODO：单独专门介绍我的备份理念。
     openssh.authorizedKeys.keyFiles = [] ++ (
