@@ -25,4 +25,5 @@
       '';
     };
   }];
+  programs.bash.shellAliases.fugit2=''nvim -c Fugit2'';
 }
