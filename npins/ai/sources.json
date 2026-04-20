@@ -43,17 +43,20 @@
       "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
     },
     "pi-acp": {
-      "type": "Git",
+      "type": "GitRelease",
       "repository": {
         "type": "GitHub",
         "owner": "svkozak",
         "repo": "pi-acp"
       },
-      "branch": "main",
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": false,
-      "revision": "c30957b38608d37b85be2a7d793606c9f37e8c83",
-      "url": "https://github.com/svkozak/pi-acp/archive/c30957b38608d37b85be2a7d793606c9f37e8c83.tar.gz",
-      "hash": "sha256-MdEXjHvn8eCy2mPstgTwXUZh99whr8hCA4CTFis1h3g="
+      "version": "v0.0.26",
+      "revision": "783febac09169258b1173e78503db5bb3e67617c",
+      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.26",
+      "hash": "sha256-F5uwgWbUmbPcJIk6ylNtxNpKpKI+hFSUWxQ7ffrdUWM="
     },
     "pi-mono": {
       "type": "GitRelease",
