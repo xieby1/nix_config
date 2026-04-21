@@ -26,6 +26,13 @@
     # pi-constell-plan is a pi extension published by tridha643 from a fork that adds a packages/pi-constell directory to Owen
     # Gretzinger's original Constellagent desktop app, but its npm metadata incorrectly links to the upstream
     # owengretzinger/constellagent repo—which lacks that code—instead of the fork where the extension actually lives.
+    #
+    # OpenCode vs pi-constell-plan:
+    # I test OpenCode plan mode and pi-constell-plan: using the prompt:
+    # > Explain the essay "Memory dependence prediction using store sets" for me. You should first fetch it from internet, probably a
+    # > pdf, then process pdf, then work on the content let me know what this paper it talk about.
+    # OpenCode completely ignores plan mode, it call subagent to fetch pdf from the web, call subagent to explore, ...
+    # pi-constell-plan obey perfectly: it write a plan file, then start follow the plan file.
     pi-constell-plan = {
       target = ".pi/agent/extensions/pi-constell-plan";
       source = pkgs.npinsed.ai.pi-constell-plan + /packages/pi-constell;
