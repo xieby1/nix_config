@@ -19,5 +19,16 @@
         dontNpmBuild = true;
       }) + /lib/node_modules/pi-web-access;
     };
+    # - Plan Extensions Comparison:
+    #   - qmx/pi-plan-mode: fully read-only thus does not write md.
+    #   - backnotprop/plannotator: I don't need the web annotation UI.
+    #   - burneikis/pi-plan: no read-only support.
+    # pi-constell-plan is a pi extension published by tridha643 from a fork that adds a packages/pi-constell directory to Owen
+    # Gretzinger's original Constellagent desktop app, but its npm metadata incorrectly links to the upstream
+    # owengretzinger/constellagent repo—which lacks that code—instead of the fork where the extension actually lives.
+    pi-constell-plan = {
+      target = ".pi/agent/extensions/pi-constell-plan";
+      source = pkgs.npinsed.ai.pi-constell-plan + /packages/pi-constell;
+    };
   };
 }

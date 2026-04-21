@@ -58,6 +58,19 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.26",
       "hash": "sha256-F5uwgWbUmbPcJIk6ylNtxNpKpKI+hFSUWxQ7ffrdUWM="
     },
+    "pi-constell-plan": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "tridha643",
+        "repo": "constellagent"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "79a2c559dee3583a9ceedbc483c865078841a2d8",
+      "url": "https://github.com/tridha643/constellagent/archive/79a2c559dee3583a9ceedbc483c865078841a2d8.tar.gz",
+      "hash": "sha256-56phnimZkJkxLMU8uVRWY9Aa5wn47Byw62uy5/VLAI4="
+    },
     "pi-mono": {
       "type": "GitRelease",
       "repository": {
