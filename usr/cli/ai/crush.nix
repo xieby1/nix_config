@@ -5,15 +5,8 @@
 # - Pros:
 #   - Javascript based. The nix closure is not so large: 186MB!
 # - Cons:
-#   - Javascript based. The memory consumption of open a new opencode instance: ~400MB
-#   - Lack of doc, currently I care about customized providers.
-#   - Does not support terminal scrollback.
+#   - Javascript based. The memory consumption of open a new opencode instance: ~500MB
 #   - Use Esc instead of Ctrl-C to interrupt.
-#   - ~~The input line does not support Home, End key.~~
-#   - Token inefficiency
-#   - Does not support explicit skill invocation: https://github.com/anomalyco/opencode/issues/7846
-#     - Though opencode support /skill command, it still need natural language to trigger the skill.
-#   - Copilot uses more premium requests: https://github.com/anomalyco/opencode/issues/11753, ...
 # - Summary: Its quality is not comparable to neovim,
 #            though it declares "OpenCode is built by neovim users ...".
 #
