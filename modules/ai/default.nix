@@ -17,6 +17,9 @@ in {
       ) catwalk-providers.minimax-china.models;
       default_small_model_id = let x="MiniMax-M2"; in assert models?${x}; x;
     };
+    kimi = catwalk-providers.kimi // {
+      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/kimi.txt");
+    };
     aliyun = {
       id = "aliyun";
       api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/aliyun-zx.txt");
