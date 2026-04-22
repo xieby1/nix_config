@@ -122,7 +122,6 @@
       map ctrl+shift+- change_font_size all -1.0
       map ctrl+0 change_font_size all 0
 
-      map ctrl+t new_tab_with_cwd
       map ctrl+shift+t new_tab_with_cwd !neighbor
       map ctrl+shift+n new_os_window_with_cwd
 
