@@ -61,6 +61,8 @@ in {
       gui = {
         # screenMode = "half";
         mainPanelSplitMode = "horizontal";
+        expandFocusedSidePanel = true;
+        expandedSidePanelWeight = 4;
         commitAuthorLongLength = builtins.stringLength "xieby1";
 
         # https://pkg.go.dev/time#Time.Format
