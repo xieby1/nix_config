@@ -66,7 +66,8 @@ in
     ## archive
     unar
     ## manage
-    htop
+    # htop search in intuitive
+    btop
     nix-tree
     ## text
     pandoc
