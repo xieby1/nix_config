@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ pkgs, config, ... }: let
   forgecode = (pkgs.flake-compat {src = pkgs.npinsed.ai.forgecode;}).defaultNix.default
     # The version and APP_VERSION is 0.1.0-dev, which is out-of-date
     .overrideAttrs (_old: rec {
@@ -12,4 +12,15 @@
 in {
   home.packages = [ forgecode ];
   cachix_packages = [ forgecode ];
+  yq-merge.".forge/.credentials.json" = {
+    generator = builtins.toJSON;
+    expr = [{
+      id = "minimax";
+      auth_details.api_key = config.ai.minimax-china.api_key;
+      url_params.HOSTNAME = "api.minimaxi.com";
+    }{
+      id = "kimi_coding";
+      auth_details.api_key = config.ai.kimi.api_key;
+    }];
+  };
 }
