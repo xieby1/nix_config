@@ -3,7 +3,7 @@ let
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = {
-      imports = [./. {
+      imports = [../../. {
         yq-merge.".config/miao.json" = {
           generator = builtins.toJSON;
           expr = { wang = "wang wang!"; };
