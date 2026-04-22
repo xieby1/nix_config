@@ -43,7 +43,7 @@
           # Operator: `*d` means deeply merge and deeply merge array
           # See: https://mikefarah.gitbook.io/yq/operators/multiply-merge
           # Noted: If the element of array is string, the old array will be overwrite.
-          ${pkgs.yq-go}/bin/yq -i ea '. as $item ireduce ({}; . *d $item )' ~/${old_target} ~/${target}
+          run ${pkgs.yq-go}/bin/yq -i '. *d load("${target}")' ${old_target}
         else
           cat ~/${target} > ~/${old_target}
         fi
