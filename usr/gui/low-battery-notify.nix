@@ -1,5 +1,11 @@
 { pkgs, config, ... }: {
   systemd.user.services.low-battery-notify = {
+    Unit = {
+      Description = "Low battery notification";
+      # Only run this service on machines that have a battery.
+      # See `man 5 systemd.unit` for details on ConditionPathExistsGlob.
+      ConditionPathExistsGlob = "/sys/class/power_supply/BAT*";
+    };
     Service = {
       Type = "oneshot";
       # https://unix.stackexchange.com/questions/60778/how-can-i-get-an-alert-when-my-battery-is-about-to-die-in-linux-mint
@@ -27,6 +33,12 @@
   };
 
   systemd.user.timers.low-battery-notify = {
+    Unit = {
+      Description = "Check battery level every 10 minutes";
+      # Only activate this timer on machines that have a battery.
+      # See `man 5 systemd.unit` for details on ConditionPathExistsGlob.
+      ConditionPathExistsGlob = "/sys/class/power_supply/BAT*";
+    };
     Timer = {
       # The syntax of OnCalendar: `man systemd.time`
       OnCalendar = "*:0/10"; # every 10 minutes
