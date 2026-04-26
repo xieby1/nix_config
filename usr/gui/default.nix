@@ -25,6 +25,7 @@ in
     # ./hyprland
     ./dms
     ./evolution
+    ./low-battery-notify.nix
   ];
 
 config = lib.mkIf config.isGui {
