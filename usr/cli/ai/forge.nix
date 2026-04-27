@@ -23,4 +23,22 @@ in {
       auth_details.api_key = config.ai.kimi.api_key;
     }];
   };
+  yq-merge.".forge/.mcp.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      mcpServers = {
+        minimax-coding-plan-mcp = {
+          command = "${pkgs.uv}/bin/uvx";
+          args = [
+            "-p" "${pkgs.python3}/bin/python3"
+            "minimax-coding-plan-mcp" "-y"
+          ];
+          env = {
+            MINIMAX_API_KEY = config.ai.minimax-china.api_key;
+            MINIMAX_API_HOST = "https://api.minimaxi.com";
+          };
+        };
+      };
+    };
+  };
 }
