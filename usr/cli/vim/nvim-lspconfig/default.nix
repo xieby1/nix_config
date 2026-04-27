@@ -38,6 +38,8 @@
       type = "lua";
       #MC ## Global mappings.
       config = /*lua*/ ''
+        vim.lsp.log.set_level("OFF")
+
         -- See `:help vim.diagnostic.*` for documentation on any of the below functions
         vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
         vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count=-1, float=true, severity = { min = vim.diagnostic.severity.WARN } }) end)
