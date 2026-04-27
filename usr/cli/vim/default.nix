@@ -98,8 +98,6 @@ in {
       "" highlight unwanted whitespace
       set list
       set listchars=tab:>-,trail:-
-      "" syntax
-      syntax on
       "" backspace
       set backspace=indent,eol,start
       "" wrap line
