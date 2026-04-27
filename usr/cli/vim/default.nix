@@ -73,8 +73,6 @@ in {
     #MC Vim config
     extraConfig = /*vim*/ ''
       " vim
-      "" Highlight searches
-      set hlsearch
       nnoremap <F3> :nohlsearch<CR>
       "" Show line number
       set number
@@ -98,8 +96,6 @@ in {
       "" highlight unwanted whitespace
       set list
       set listchars=tab:>-,trail:-
-      "" backspace
-      set backspace=indent,eol,start
       "" wrap line
       """ https://stackoverflow.com/questions/248102/is-there-any-command-to-toggle-enable-auto-text-wrapping
       :function ToggleWrap()
@@ -140,9 +136,9 @@ in {
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
 
       " highlight
-      augroup HiglightTODO
+      augroup HighlightTODO
           autocmd!
-          autocmd WinEnter,VimEnter * :silent! call matchadd('Todo', 'TODO', -1)
+          autocmd WinEnter,VimEnter * :silent! call clearmatches() | call matchadd('Todo', 'TODO', -1)
       augroup END
 
       " TODO: replace wildmenu with blink-cmp cmdline
