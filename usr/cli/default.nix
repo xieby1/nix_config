@@ -71,7 +71,8 @@ in
     nix-tree
     ## text
     pandoc
-    poppler-utils
+    poppler-utils # pdftotext
+    pdfgrep
     yq-go
     ## compile
     gnumake
