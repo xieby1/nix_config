@@ -3,7 +3,7 @@
     ./crush.nix
     ./pi
     ./llms
-    ./forge.nix
+    ./forge
     ./kimi.nix
   ];
   home.packages = [
