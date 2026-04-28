@@ -21,6 +21,9 @@ in {
     }{
       id = "kimi_coding";
       auth_details.api_key = config.ai.kimi.api_key;
+    }{
+      id = "deepseek";
+      auth_details.api_key = config.ai.deepseek.api_key;
     }];
   };
   yq-merge.".forge/.mcp.json" = {
