@@ -8,6 +8,7 @@
       version = "${pkgs.npinsed.ai.forgecode.version}-dev";
       APP_VERSION=version;
       __intentionallyOverridingVersion=true;
+      patches = [./agents-skills-upward-discovery.patch];
     });
 in {
   home.packages = [ forgecode ];
