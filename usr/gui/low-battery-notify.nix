@@ -4,7 +4,7 @@
       Description = "Low battery notification";
       # Only run this service on machines that have a battery.
       # See `man 5 systemd.unit` for details on ConditionPathExistsGlob.
-      ConditionPathExistsGlob = "/sys/class/power_supply/BAT*";
+      ConditionPathExistsGlob = "/sys/class/power_supply/*";
     };
     Service = {
       Type = "oneshot";
@@ -37,7 +37,7 @@
       Description = "Check battery level every 10 minutes";
       # Only activate this timer on machines that have a battery.
       # See `man 5 systemd.unit` for details on ConditionPathExistsGlob.
-      ConditionPathExistsGlob = "/sys/class/power_supply/BAT*";
+      ConditionPathExistsGlob = "/sys/class/power_supply/*";
     };
     Timer = {
       # The syntax of OnCalendar: `man systemd.time`
