@@ -24,10 +24,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2.12.0",
-      "revision": "3a6187100d12c4a1b23f3209186a89cf2486d36c",
-      "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.12.0",
-      "hash": "sha256-gdIGMU2wHuetlg/wRjsdzjc6JH5GKNRRawvz4EtdTqA="
+      "version": "v2.12.9",
+      "revision": "8a9f3410f460d1618931dcc0a4b222e65eff0f58",
+      "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.12.9",
+      "hash": "sha256-tA/IOcFcE5vhNGpZNV7sAGEao/LlP6hY/QUnJz0hbeY="
     },
     "nixpkgs-for-copilot": {
       "type": "Git",
