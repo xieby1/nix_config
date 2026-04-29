@@ -3,7 +3,6 @@
     ./pi
     ./llms
     ./forge
-    ./kimi.nix
   ];
   home.packages = [
     # copilot error: Invalid shell ID: 0. Please supply a valid shell ID to read output from.
