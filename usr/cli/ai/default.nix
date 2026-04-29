@@ -1,6 +1,5 @@
 { pkgs, ... }: {
   imports = [
-    ./crush.nix
     ./pi
     ./llms
     ./forge
