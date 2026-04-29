@@ -16,6 +16,7 @@
     }];
     settings = {
       theme = "everforest-dark";
+      show_startup_tips = false;
       pane_frames = false;
       simplified_ui = true;
       default_layout = "simple";
