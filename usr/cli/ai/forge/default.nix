@@ -41,17 +41,6 @@ in {
           }/bin/ddgs'';
           args = ["mcp"];
         };
-        minimax-coding-plan-mcp = {
-          command = "${pkgs.uv}/bin/uvx";
-          args = [
-            "-p" "${pkgs.python3}/bin/python3"
-            "minimax-coding-plan-mcp" "-y"
-          ];
-          env = {
-            MINIMAX_API_KEY = config.ai.minimax-china.api_key;
-            MINIMAX_API_HOST = "https://api.minimaxi.com";
-          };
-        };
       };
     };
   };
