@@ -1,3 +1,8 @@
+# Pros:
+# Cons:
+# - does not support kitty image protocol.
+# - does not auto naming tab
+# - 1k+ open issues on github
 { ... }: {
   programs.zellij = {
     enable = true;

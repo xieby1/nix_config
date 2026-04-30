@@ -1,6 +1,6 @@
 # Use `wev` to find out key name
 { pkgs }: {
-  "Ctrl+Alt+T".spawn-sh = "kitty zellij";
+  "Ctrl+Alt+T".spawn = "kitty";
   "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
   "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
   "Mod+Alt+L".spawn-sh = "dms ipc lock lock";

@@ -122,17 +122,29 @@
       map ctrl+shift+- change_font_size all -1.0
       map ctrl+0 change_font_size all 0
 
-      map ctrl+shift+t
-      map ctrl+shift+n
-      map ctrl+shift+left
-      map ctrl+shift+right
+      map ctrl+shift+t new_tab_with_cwd !neighbor
+      map ctrl+shift+n new_os_window_with_cwd
 
       # disable opening of URLs with a plain click
       mouse_map left click ungrabbed no_op
 
+      #: asks which tab to move the window into
+      map f2 detach_window ask
+
+
       action_alias launch_window launch --cwd=current
       # Window layout
       enabled_layouts splits
+
+      # Split and Create a new window
+      map alt+s launch_window --location=hsplit
+      map alt+v launch_window --location=vsplit
+
+      # Goto window
+      map alt+left neighboring_window left
+      map alt+right neighboring_window right
+      map alt+up neighboring_window up
+      map alt+down neighboring_window down
     '';
   };
 }
