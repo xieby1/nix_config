@@ -17,11 +17,24 @@
   # We inject the exec into two bash startup files to cover all entry points:
   #   - profileExtra  → ~/.bash_profile  (login shells: SSH, TTY login)
   #   - bashrcExtra   → ~/.bashrc        (interactive non-login shells: new terminals)
-  programs.bash = {
+  programs.bash = let
+    # _ZSH_FORWARDED is a guard variable.
+    # We must not exec if we are already inside a zsh-forwarded
+    # session. Otherwise, explicitly running `bash` from zsh would immediately
+    # bounce back into zsh, making it impossible to get a bash shell on demand.
+    # The marker is set here and inherited through exec into zsh, so child bash
+    # processes see it and skip the forwarding logic.
+    zsh_forward = ''
+      if [[ -z "$_ZSH_FORWARDED" ]]; then
+          export _ZSH_FORWARDED=1
+          exec ${config.programs.zsh.package}/bin/zsh
+      fi
+    '';
+  in {
     # For login bash (e.g. SSH, console login)
-    profileExtra = lib.mkBefore "exec ${config.programs.zsh.package}/bin/zsh";
+    profileExtra = lib.mkBefore zsh_forward;
     # For interactive bash (e.g. new terminal emulator windows)
-    bashrcExtra  = lib.mkBefore "exec ${config.programs.zsh.package}/bin/zsh";
+    bashrcExtra = lib.mkBefore zsh_forward;
   };
   programs.zsh = {
     enable = true;
