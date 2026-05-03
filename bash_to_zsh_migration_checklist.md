@@ -59,14 +59,6 @@ Goal: Move bashrc content to zsh's `~/.zshrc` equivalent (`programs.zsh.initExtr
 - [ ] **Nix profile source**: Remove the `~/.nix-profile/etc/profile.d/nix.sh` source block (usually redundant in home-manager). If needed, place in `programs.zsh.envExtra`.
 - [ ] **Bash completion**: Remove the `bash-completion` source block entirely.
 - [ ] **Zsh completion**: Enable `programs.zsh.enableCompletion = true;`
-- [ ] **Prompt (PS1)**: Rewrite bash PS1 for zsh. Options:
-  - [ ] Option A: Use `programs.starship.enable = true;` (recommended)
-  - [ ] Option B: Write zsh-native `PROMPT` in `programs.zsh.initExtra`
-  - [ ] Option C: Enable `programs.zsh.oh-my-zsh` with a theme
-- [ ] **Window title**: Convert embedded `\[\e]2;\w\a\]` in PS1 to a zsh `precmd` hook:
-  ```zsh
-  precmd() { print -Pn "\e]2;%~\a" }
-  ```
 - [ ] **WSL2 directory sync**: Convert bash `PROMPT_COMMAND` to zsh `precmd`:
   ```zsh
   precmd() { printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")" }

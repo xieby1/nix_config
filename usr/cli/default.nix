@@ -23,6 +23,7 @@ in
     ./ai
     ./zellij.nix
     ./zsh
+    ./starship.nix
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
@@ -156,25 +157,6 @@ in
   # bash
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
-    # rewrite prompt format
-    u_green="\[\033[01;32m\]"
-    u_blue="\[\033[01;34m\]"
-    u_white="\[\033[00m\]"
-    PS1="''${debian_chroot:+($debian_chroot)}"
-    if [[ $HOSTNAME =~ qemu.* ]]; then
-        PS1+="(qemu)"
-    fi
-    if [[ -n "$IN_NIX_SHELL" ]]; then
-        PS1+="(''${name}.$IN_NIX_SHELL)"
-    fi
-    PS1+="''${u_green}\u${lib.optionalString (!config.isNixOnDroid) "@\\h"}''${u_white}:"
-    PS1+="''${u_blue}\w''${u_white}"
-    PS1+="\n''${u_green}\$''${u_white} "
-    unset u_green u_blue u_white
-    ## change title
-    ### https://unix.stackexchange.com/questions/177572/
-    PS1+="\[\e]2;\w\a\]"
-
     # source my bashrc
     if [[ -f ~/Gist/Config/bashrc ]]; then
         source ~/Gist/Config/bashrc
