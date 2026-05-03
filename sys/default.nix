@@ -63,7 +63,18 @@
   #MC 可以使用命令行工具`mkpasswd`来生成hash过的密码。
   #MC 给`root`用户设置hash过的密码。
   users.users.root.hashedPassword = "$6$wRBpbr4zSTA/nh$XI/KUASw3mELIqyAxN1hUTWizz9ZBzPhP2u4HNDCA49h4KOWkZsyuiextyXkUti7jYsUHE9fTiRjGAoxBg0Gq/";
+
+  #MC 将 zsh 设为登录 shell。
+  #MC 此前使用 bash-zsh-forward trick（在 ~/.bashrc 中 exec zsh），但遇到两个问题：
+  #MC   1. 显示管理器会话包装器（如 niri-session）会通过 bash -l 重新执行，
+  #MC      触发 ~/.bashrc 中的 zsh forward，导致桌面环境被劫持而无法启动。
+  #MC   2. bash -i 命令（如 kitty bash -i fzf-doc）会被立即转发到 zsh，
+  #MC      导致目标命令永远无法执行。
+  #MC 因此直接在 NixOS 系统配置中设置 zsh 为登录 shell。
+  #MC 同时需要 programs.zsh.enable = true 确保 zsh 被安装并出现在 /etc/shells 中。
+  programs.zsh.enable = true;
   users.users.xieby1 = {
+    shell = pkgs.zsh;
     isNormalUser = true;
     createHome = true;
     #MC 同上，给`xieby1`用户设置hash过的密码。
