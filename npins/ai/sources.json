@@ -1,0 +1,137 @@
+{
+  "pins": {
+    "agentic-nvim": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "carlos-algms",
+        "repo": "agentic.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "69da7037824780a8b5998f5d7dcb35fe9b099a9c",
+      "url": "https://github.com/carlos-algms/agentic.nvim/archive/69da7037824780a8b5998f5d7dcb35fe9b099a9c.tar.gz",
+      "hash": "sha256-+h/BC8ByDvjFINVL/zwgVxXUs6gwbtaHvc6tY2qOYa4="
+    },
+    "forgecode": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "tailcallhq",
+        "repo": "forgecode"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.12.9",
+      "revision": "8a9f3410f460d1618931dcc0a4b222e65eff0f58",
+      "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.12.9",
+      "hash": "sha256-tA/IOcFcE5vhNGpZNV7sAGEao/LlP6hY/QUnJz0hbeY="
+    },
+    "nixpkgs-for-copilot": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "663f0b499b6742fef9ee8552943705073088f083",
+      "url": "https://github.com/NixOS/nixpkgs/archive/663f0b499b6742fef9ee8552943705073088f083.tar.gz",
+      "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
+    },
+    "pi-acp": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "svkozak",
+        "repo": "pi-acp"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.0.26",
+      "revision": "783febac09169258b1173e78503db5bb3e67617c",
+      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.26",
+      "hash": "sha256-F5uwgWbUmbPcJIk6ylNtxNpKpKI+hFSUWxQ7ffrdUWM="
+    },
+    "pi-constell-plan": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "tridha643",
+        "repo": "constellagent"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "79a2c559dee3583a9ceedbc483c865078841a2d8",
+      "url": "https://github.com/tridha643/constellagent/archive/79a2c559dee3583a9ceedbc483c865078841a2d8.tar.gz",
+      "hash": "sha256-56phnimZkJkxLMU8uVRWY9Aa5wn47Byw62uy5/VLAI4="
+    },
+    "pi-mono": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "badlogic",
+        "repo": "pi-mono"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.67.3",
+      "revision": "0299811c02a2a178cfdf12bbbf6b73a57e9a4c81",
+      "url": "https://api.github.com/repos/badlogic/pi-mono/tarball/refs/tags/v0.67.3",
+      "hash": "sha256-2hSf1X42sH5jhVKCiZM/EIEfQae2mFUX6FGVM/vgtPc="
+    },
+    "pi-skill-evolution": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "samfoy",
+        "repo": "pi-skill-evolution"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "cd44a55cad3ddfa873d6eb27b0da017d98448de0",
+      "url": "https://github.com/samfoy/pi-skill-evolution/archive/cd44a55cad3ddfa873d6eb27b0da017d98448de0.tar.gz",
+      "hash": "sha256-6DYFxNZZq+gty+9eQ97ETsMzuDT63+EEu4LlA+9Ygeo="
+    },
+    "pi-subagents": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-subagents"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.17.1",
+      "revision": "aba3820f23e24d5a3f1b12f20feae03329f2ffc4",
+      "url": "https://api.github.com/repos/nicobailon/pi-subagents/tarball/refs/tags/v0.17.1",
+      "hash": "sha256-ZlRXoeBza6KnZhkPdTBbrSlg+AO9hNRTfsCx19Y4x8w="
+    },
+    "pi-web-access": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-web-access"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.10.6",
+      "revision": "b378e5d80d424806058e819b262f72e5f6b58b7d",
+      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.10.6",
+      "hash": "sha256-OA1UpLXMV/g5CQgf03KwOjCoa34a32/Itwx8GePw2fk="
+    }
+  },
+  "version": 7
+}

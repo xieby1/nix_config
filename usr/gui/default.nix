@@ -1,0 +1,96 @@
+{ config, pkgs, stdenv, lib, ... }:
+let
+  xelfviewer = pkgs.callPackage ./xelfviewer.nix {};
+in
+{
+  imports = [
+    ./mime.nix
+    ./kdeconnect.nix
+    ./xdot.nix
+    ./firefox
+    ./warpd.nix
+    ./rustdesk.nix
+    ./gnome
+    ./kitty
+    ./cheatsheet_edit.nix
+    ./xcolor.nix
+    ./wsl.nix
+    ./drawio.nix
+    ./flameshot.nix
+    ./fcitx5
+    # TODO: remove
+    ./niri
+    ./rofi.nix
+    # ./plasma
+    # ./hyprland
+    ./dms
+    ./evolution
+    ./low-battery-notify.nix
+  ];
+
+config = lib.mkIf config.isGui {
+  home.packages = with pkgs; [
+    (pkgs.writeShellScriptBin "o" ''nohup xdg-open "$@" &> /dev/null &'')
+    libnotify
+    # browser
+    # dont ask me for keyring chromium-like browsers!
+    (chromium.override {commandLineArgs="--password-store=basic";})
+  ] ++ [
+    # network
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    feishu
+    wechat
+    wemeet
+    (pkgs.makeDesktopItem {
+      name = "WemeetApp-XWayland";
+      desktopName = "WemeetApp-XWayland";
+      exec = "wemeet-xwayland %u";
+      icon = "wemeet";
+      type = "Application";
+      terminal = false;
+      categories = ["AudioVideo"];
+      mimeTypes = ["x-scheme-handler/wemeet"];
+    })
+    nur.repos.yakkhini.dingtalk
+  ] ++ [
+    transmission_4-gtk
+    # text
+    #wpsoffice
+    libreoffice
+    meld
+    # TODO: use this after switching to wayland
+    #wl-clipboard
+    textsnatcher
+    # draw
+    #aseprite-unfree
+    inkscape
+    gimp
+    # viewer
+    evince
+    gnome-characters
+    nautilus
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    imhex
+    xelfviewer
+  ] ++ [
+    vlc
+    obsidian
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    ghidra
+  ] ++ [
+    # management
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    zotero
+  ] ++ [
+    keepassxc
+    # entertainment
+    antimicrox
+  ];
+
+  # deskflow vs input-leap
+  # deskflow not support metakeys: window, alt-tab, alt-f4, ...
+  home.file.autostart_input_leap = {
+    source = "${pkgs.input-leap}/share/applications/io.github.input_leap.input-leap.desktop";
+    target = ".config/autostart/input-leap.desktop";
+  };
+};}
