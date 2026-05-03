@@ -21,7 +21,7 @@ in {
     ./leap-nvim.nix
     ./telescope-nvim.nix
     ./git-wip.nix
-    ./vim-floaterm.nix
+    ./terminal.nix
     ./outline-nvim.nix
     ./gitsigns-nvim.nix
     ./color-scheme.nix
