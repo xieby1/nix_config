@@ -22,6 +22,7 @@ in
     ./tldr.nix
     ./ai
     ./zellij.nix
+    ./zsh
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
