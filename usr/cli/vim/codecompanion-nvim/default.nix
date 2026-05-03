@@ -1,3 +1,4 @@
+# TODO: Let blink.cmp fetch words from codecompanion buffer
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
   programs.neovim.plugins = [
@@ -104,5 +105,5 @@
     '';
   }];
 
-  programs.bash.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1" -c Outline!'';
+  home.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1" -c Outline!'';
 }

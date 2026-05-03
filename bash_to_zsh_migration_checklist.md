@@ -29,20 +29,6 @@ Generated for home-manager configuration at `~/.config/nixpkgs`.
 
 ---
 
-## Phase 1: Migrate Shell Aliases
-
-Goal: Move from `programs.bash.shellAliases` to `home.shellAliases` so both shells can share them during transition.
-
-- [ ] `usr/cli/default.nix`: Change `programs.bash.shellAliases.cat` to `home.shellAliases.cat`
-- [ ] `usr/cli/git.nix`: Change `programs.bash.shellAliases.mr` to `home.shellAliases.mr`
-- [ ] `usr/cli/vim/default.nix`: Change `programs.bash.shellAliases.view` to `home.shellAliases.view`
-- [ ] `usr/cli/vim/default.nix`: Change `programs.bash.shellAliases.nman` to `home.shellAliases.nman`
-- [ ] `usr/cli/vim/codecompanion-nvim/default.nix`: Change `programs.bash.shellAliases.codecompanion` to `home.shellAliases.codecompanion`
-- [ ] `usr/cli/vim/lz-n/fugit2.nix`: Change `programs.bash.shellAliases.fugit2` to `home.shellAliases.fugit2`
-- [ ] `usr/cli/default.nix`: Move the inline `alias ls=eza` from `bashrcExtra` (lines 197-199) to `home.shellAliases.ls`
-
----
-
 ## Phase 2: Migrate Environment Variables
 
 Goal: Move exports from `bashrcExtra` to `home.sessionVariables` / `home.sessionVariablesExtra`.

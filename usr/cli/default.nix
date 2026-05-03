@@ -146,6 +146,7 @@ in
   ];
 
   programs.eza.enable = true;
+  home.shellAliases.ls = "eza";
 
   home.sessionVariables = {
     NIXPKGS_ALLOW_INSECURE = "1";
@@ -174,10 +175,6 @@ in
     XDG_DATA_DIRS+=":${config.home.path}/share"
     export XDG_DATA_DIRS
     . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
-
-    if [[ -n $(command -v eza) ]]; then
-        alias ls=eza
-    fi
   '' + lib.optionalString config.isWSL2 ''
     # use the working directory of the current tab as the starting directory for a new tab
     # https://learn.microsoft.com/en-us/windows/terminal/tutorials/new-tab-same-directory#using-actions-to-duplicate-the-path
@@ -200,5 +197,5 @@ in
   };
 
   programs.bat.enable = true;
-  programs.bash.shellAliases.cat = "bat -pp";
+  home.shellAliases.cat = "bat -pp";
 }

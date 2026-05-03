@@ -54,7 +54,7 @@ in {
     "L? %h/.mrconfig - - - - %h/Gist/Config/mrconfig"
   ];
   # mr status not work in non-home dir
-  programs.bash.shellAliases.mr = "mr -d ~";
+  home.shellAliases.mr = "mr -d ~";
   programs.lazygit = {
     enable = true;
     settings = {

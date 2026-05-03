@@ -47,11 +47,11 @@ in {
     ./lz-n
   ];
 
-  programs.bash.shellAliases.view = "nvim -R";
+  home.shellAliases.view = "nvim -R";
   #MC Set nvim as manpager.
   #MC see nvim `:h :Man`.
   #MC nvim manpage huge mange is SLOW! E.g. man configuration.nix.
-  programs.bash.shellAliases.nman = "env MANPAGER='nvim +Man!' man";
+  home.shellAliases.nman = "env MANPAGER='nvim +Man!' man";
 
   programs.neovim = {
     enable = true;
