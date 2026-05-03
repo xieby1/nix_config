@@ -29,7 +29,7 @@
         command = toString [
           "${pkgs.tuigreet}/bin/tuigreet"
           "--time" "--asterisks" "--remember"
-          "--cmd niri-session"
+          "--cmd 'niri --session'"
         ];
       };
     };
