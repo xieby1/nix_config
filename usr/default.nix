@@ -18,7 +18,7 @@
 
   news.display = "silent";
 
-  programs.bash.bashrcExtra = ''
+  programs.zsh.initContent = ''
     . ${toString ../scripts/nix-path.sh}
   '';
 }
