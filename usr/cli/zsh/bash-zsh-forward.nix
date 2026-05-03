@@ -24,7 +24,11 @@
     # bounce back into zsh, making it impossible to get a bash shell on demand.
     # The marker is set here and inherited through exec into zsh, so child bash
     # processes see it and skip the forwarding logic.
-    if [[ -z "$_ZSH_FORWARDED" ]]; then
+    #
+    # The $- == *i* check ensures we only forward interactive shells.
+    # Without this, non-interactive login shells (e.g. from niri-session's
+    # wrapper or other display manager session startup) would get hijacked.
+    if [[ -z "$_ZSH_FORWARDED" && $- == *i* ]]; then
         export _ZSH_FORWARDED=1
         exec ${config.programs.zsh.package}/bin/zsh
     fi
