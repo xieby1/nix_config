@@ -1,3 +1,5 @@
+> **Note to AI agents / humans:** When an item in this checklist is completed, delete it from the file to keep the checklist actionable. Do not leave completed items checked or unchecked.
+
 # Bash to Zsh Migration Checklist
 
 Generated for home-manager configuration at `~/.config/nixpkgs`.
@@ -45,14 +47,7 @@ Goal: Move from `programs.bash.shellAliases` to `home.shellAliases` so both shel
 
 Goal: Move exports from `bashrcExtra` to `home.sessionVariables` / `home.sessionVariablesExtra`.
 
-- [ ] Add to `home.sessionVariables`:
-  ```nix
-  NIXPKGS_ALLOW_INSECURE = "1";
-  NIX_USER_CONF_FILES = "\${config.home.homeDirectory}/.config/nixpkgs/nix/nix.conf";
-  LANG = "C.UTF-8";
-  ```
 - [ ] Migrate `XDG_DATA_DIRS` append logic to `home.sessionVariablesExtra` or `programs.zsh.envExtra`
-- [ ] Remove the above `export` statements from `programs.bash.bashrcExtra`
 
 ---
 

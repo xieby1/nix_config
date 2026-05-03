@@ -146,6 +146,13 @@ in
 
   programs.eza.enable = true;
 
+  home.sessionVariables = {
+    NIXPKGS_ALLOW_INSECURE = "1";
+    NIX_USER_CONF_FILES = "${config.home.homeDirectory}/.config/nixpkgs/nix/nix.conf";
+    # 解决tmux在nix-on-droid上不显示emoji和中文的问题
+    LANG = "C.UTF-8";
+  };
+
   # bash
   programs.bash.enable = true;
   programs.bash.bashrcExtra = ''
@@ -168,16 +175,11 @@ in
     ### https://unix.stackexchange.com/questions/177572/
     PS1+="\[\e]2;\w\a\]"
 
-    # nixos obsidian
-    export NIXPKGS_ALLOW_INSECURE=1
-
     # source my bashrc
     if [[ -f ~/Gist/Config/bashrc ]]; then
         source ~/Gist/Config/bashrc
     fi
 
-    # user nix config setting
-    export NIX_USER_CONF_FILES=~/.config/nixpkgs/nix/nix.conf
     if [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]]; then
         source ~/.nix-profile/etc/profile.d/nix.sh
     fi
@@ -190,9 +192,6 @@ in
     XDG_DATA_DIRS+=":${config.home.path}/share"
     export XDG_DATA_DIRS
     . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
-
-    # 解决tmux在nix-on-droid上不显示emoji和中文的问题
-    export LANG=C.UTF-8
 
     if [[ -n $(command -v eza) ]]; then
         alias ls=eza
