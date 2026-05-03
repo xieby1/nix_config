@@ -7,7 +7,6 @@
 
   imports = [
     ./module
-    ./agentic.nix
     ./fugit2.nix
   ];
   my.neovim.lz-n = [{
