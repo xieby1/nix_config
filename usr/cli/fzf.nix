@@ -45,16 +45,15 @@ in {
     go-there
     fzf-doc
   ];
-  programs.bash.bashrcExtra = ''
-    # FZF top-down display
-    export FZF_DEFAULT_OPTS="--reverse"
-  '';
   programs.fzf = {
     enable = true;
     # * hstr: not handle `~` correctly, always expand
     # * atuin: often not record my command, do know why
     #   * besides, the network sync is redundant for me
     # * mcfly: the fuzzy ranking algorithm is not as good/intuitive as fzf
-    enableBashIntegration = true;
+    enableZshIntegration = true;
+    defaultOptions = [
+      "--reverse"
+    ];
   };
 }
