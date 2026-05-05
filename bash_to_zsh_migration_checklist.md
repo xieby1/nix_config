@@ -33,7 +33,6 @@ Generated for home-manager configuration at `~/.config/nixpkgs`.
 
 For each module that injects into bash, add a zsh equivalent or use a home-manager native option.
 
-- [ ] `usr/cli/tailscale.nix`: Copy/adapt tailscale bashrc snippet to `programs.zsh.initExtra`
 - [ ] `usr/cli/vim/nvim-lspconfig/scala.nix`: Copy/adapt scala bashrc snippet to `programs.zsh.initExtra`
 
 ---

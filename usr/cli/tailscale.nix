@@ -1,17 +1,5 @@
 { config, pkgs, stdenv, lib, ... }:
 let
-  tailscale-bash-completion = builtins.derivation {
-    name = "tailscale-bash-completion";
-    system = builtins.currentSystem;
-    src = builtins.fetchurl "https://gist.githubusercontent.com/cmtsij/f0d0be209224a7bdd67592695e1427de/raw/tailscale";
-    builder = pkgs.writeShellScript "tailscale-bash-completion-builder" ''
-      source ${pkgs.stdenv}/setup
-      dstdir=$out/share/bash-completion/completions
-      dst=$dstdir/tailscale
-      mkdir -p $dstdir
-      cp $src $dst
-    '';
-  };
   tailscale-wrapper = {suffix, httpPort, socks5Port}: let
     tailscale-wrapped = pkgs.writeShellScriptBin "tailscale-${suffix}" ''
       tailscale --socket /tmp/tailscale-${suffix}.sock $@
@@ -28,25 +16,10 @@ let
         --statedir=${stateDir} \
         $@
     '';
-    tailscale-wrapped-bash-completion = builtins.derivation {
-      name = "tailscale-${suffix}-bash-completion";
-      system = builtins.currentSystem;
-      builder = pkgs.writeShellScript "tailscale-${suffix}-bash-completion-builder" ''
-        source ${pkgs.stdenv}/setup
-        reldir=share/bash-completion/completions
-        dstdir=$out/$reldir
-        dst=$dstdir/tailscale-${suffix}
-        mkdir -p $dstdir
-        touch $dst
-        echo ". ${tailscale-bash-completion}/$reldir/tailscale" >> $dst
-        echo "complete -F _tailscale tailscale-${suffix}" >> $dst
-      '';
-    };
   in {
     home.packages = [
       tailscale-wrapped
       tailscaled-wrapped
-      tailscale-wrapped-bash-completion
     ];
     systemd.user.services."tailscaled-${suffix}" = {
       Unit = {
@@ -66,7 +39,9 @@ let
         ExecStart = "${tailscaled-wrapped}/bin/tailscaled-${suffix}";
       };
     };
-    programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
+    programs.zsh.initContent = ''
+      compdef _tailscale tailscale-${suffix}
+    '' + lib.optionalString config.isNixOnDroid ''
       # start tailscale-${suffix}
       if [[ -z "$(pidof tailscaled-${suffix})" ]]; then
           tmux new -d -s tailscaled-${suffix} tailscaled-${suffix}
@@ -75,7 +50,7 @@ let
   };
 in {
   imports = [{
-    home.packages = [pkgs.tailscale tailscale-bash-completion];
+    home.packages = [pkgs.tailscale];
   }
     # (tailscale-wrapper {suffix="headscale"; httpPort="1055"; socks5Port="1065";})
     (tailscale-wrapper {suffix="official";  httpPort="1056"; socks5Port="1066";})
