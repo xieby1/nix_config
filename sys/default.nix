@@ -35,16 +35,23 @@
     ./gui
   ];
 
-  #MC Nix binary cache的地址。
-  #MC 越靠前优先级越高。
-  #MC 由于cache.nixos.org需要梯子，
-  #MC 这里使用了清华Tuna提供的Nix binary cache镜像来加速。
-  nix.settings.substituters = [
-    # Tuna often throws 502, so replace it with USTC
-    "https://mirrors.ustc.edu.cn/nix-channels/store"
-    "https://cache.nixos.org/"
-    "https://xieby1.cachix.org"
-  ];
+  nix.settings = {
+    substituters = [
+      # Tuna often throws 502, so replace it with USTC
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://cache.nixos.org/"
+      "https://xieby1.cachix.org"
+    ];
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "xieby1.cachix.org-1:hVhQjWqdV3oGsSnyXSvzPgmDqcKm+EeKFtqsNK+eRew="
+    ];
+    experimental-features = ["nix-command" "flakes"];
+    # make builtins.fetchurl expire in a long time
+    # although `man nix.conf` says tarball-ttl default is 4294967295
+    # `nix show-config` show default is 3600 (1 hour)
+    tarball-ttl = 4294967295; # max 32bit integer
+  };
 
   nix.channel.enable = false;
   # Preserve NIX_PATH for root and wheel

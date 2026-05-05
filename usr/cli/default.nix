@@ -150,7 +150,6 @@ in
 
   home.sessionVariables = {
     NIXPKGS_ALLOW_INSECURE = "1";
-    NIX_USER_CONF_FILES = "${config.home.homeDirectory}/.config/nixpkgs/nix/nix.conf";
     # 解决tmux在nix-on-droid上不显示emoji和中文的问题
     LANG = "C.UTF-8";
   };
