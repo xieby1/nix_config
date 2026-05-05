@@ -32,7 +32,7 @@
       proxyCommand = "nc -X connect -x 127.0.0.1:${toString config.proxyPort} %h %p";
     };
   };
-  programs.bash.bashrcExtra = lib.optionalString config.isNixOnDroid ''
+  programs.zsh.initContent = lib.optionalString config.isNixOnDroid ''
     # start sshd
     if [[ -z "$(pidof sshd-start)" ]]; then
         tmux new -d -s sshd-start sshd-start
