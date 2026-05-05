@@ -166,15 +166,6 @@ in
     if [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]]; then
         source ~/.nix-profile/etc/profile.d/nix.sh
     fi
-
-    # bash-completion, inspired by
-    ##  https://discourse.nixos.org/t/whats-the-nix-way-of-bash-completion-for-packages/20209/16
-    # system tools completion, e.g. nix
-    XDG_DATA_DIRS+=":${sysconfig.system.path}/share"
-    # home tools completion
-    XDG_DATA_DIRS+=":${config.home.path}/share"
-    export XDG_DATA_DIRS
-    . ${pkgs.bash-completion}/etc/profile.d/bash_completion.sh
   '';
 
   programs.direnv.enable = true;

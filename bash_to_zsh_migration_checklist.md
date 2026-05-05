@@ -33,8 +33,6 @@ Generated for home-manager configuration at `~/.config/nixpkgs`.
 
 Goal: Move exports from `bashrcExtra` to `home.sessionVariables` / `home.sessionVariablesExtra`.
 
-- [ ] Migrate `XDG_DATA_DIRS` append logic to `home.sessionVariablesExtra` or `programs.zsh.envExtra`
-
 ---
 
 ## Phase 3: Migrate Interactive Shell Config (`bashrcExtra` -> `initExtra`)
