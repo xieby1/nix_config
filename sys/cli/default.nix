@@ -6,7 +6,7 @@
 #MC * 系统环境管理（root的环境）
 #MC * 系统配置
 
-{ config, pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   #MC ## 系统环境管理（root的环境）
@@ -60,25 +60,13 @@
   #MC 任何程序都执行不了了，连关机都不行，只能强制重启。
   #MC 不过好在NixOS可以回滚，轻松复原实验前的环境。
   #MC 下面的`filterAttrs`就是用来保证不配置本地的binfmt。
-  boot.binfmt.registrations = pkgs.lib.filterAttrs (n: v: n!=builtins.currentSystem) {
-    x86_64-linux = {
-      interpreter = "${pkgs.pkgsStatic.qemu-user}/bin/qemu-x86_64";
-      magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\x3e\x00'';
-      mask = ''\xff\xff\xff\xff\xff\xfe\xfe\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
-      wrapInterpreterInShell = false;
-    };
-    aarch64-linux = {
-      interpreter = "${pkgs.pkgsStatic.qemu-user}/bin/qemu-aarch64";
-      magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xb7\x00'';
-      mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\x00\xff\xfe\xff\xff\xff'';
-      wrapInterpreterInShell = false;
-    };
-    riscv64-linux = {
-      interpreter = "${pkgs.pkgsStatic.qemu-user}/bin/qemu-riscv64";
-      magicOrExtension = ''\x7fELF\x02\x01\x01\x00\x00\x00\x00\x00\x00\x00\x00\x00\x02\x00\xf3\x00'';
-      mask = ''\xff\xff\xff\xff\xff\xff\xff\x00\xff\xff\xff\xff\xff\xff\xff\xff\xfe\xff\xff\xff'';
-      wrapInterpreterInShell = false;
-    };
+  boot.binfmt = {
+    emulatedSystems = lib.remove builtins.currentSystem [
+      "x86_64-linux"
+      "aarch64-linux"
+      "riscv64-linux"
+    ];
+    preferStaticEmulators = true;
   };
 
   #MC 启用docdev。
