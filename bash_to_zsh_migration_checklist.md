@@ -56,7 +56,6 @@ For each module that injects into bash, add a zsh equivalent or use a home-manag
 
 - [ ] `usr/cli/tmux.nix`: Copy/adapt tmux bashrc snippet to `programs.zsh.initExtra`
 - [ ] `usr/cli/ssh.nix`: Copy/adapt ssh bashrc snippet to `programs.zsh.initExtra`
-- [ ] `usr/cli/clash.nix`: Copy/adapt clash bashrc snippet to `programs.zsh.initExtra`
 - [ ] `usr/cli/fzf.nix`: Replace `bashrcExtra` with `programs.fzf.enableZshIntegration = true;`
 - [ ] `usr/cli/tailscale.nix`: Copy/adapt tailscale bashrc snippet to `programs.zsh.initExtra`
 - [ ] `usr/cli/vim/nvim-lspconfig/scala.nix`: Copy/adapt scala bashrc snippet to `programs.zsh.initExtra`
