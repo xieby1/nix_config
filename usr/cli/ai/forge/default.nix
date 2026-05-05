@@ -44,4 +44,7 @@ in {
       };
     };
   };
+  programs.zsh.initContent = ''
+    . ${pkgs.npinsed.ai.forgecode}/shell-plugin/forge.setup.zsh
+  '';
 }
