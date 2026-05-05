@@ -29,14 +29,6 @@ Generated for home-manager configuration at `~/.config/nixpkgs`.
 
 ---
 
-## Phase 4: Migrate Module-Specific `bashrcExtra` Snippets
-
-For each module that injects into bash, add a zsh equivalent or use a home-manager native option.
-
-- [ ] `usr/cli/vim/nvim-lspconfig/scala.nix`: Copy/adapt scala bashrc snippet to `programs.zsh.initExtra`
-
----
-
 ## Phase 5: Consolidate Zsh Configuration
 
 - [ ] Move or merge `programs.zsh.initContent` (`usr/default.nix:21`) into `programs.zsh.initExtra` if desired
