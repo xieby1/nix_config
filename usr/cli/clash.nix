@@ -30,6 +30,27 @@
       export http_proxy="$HTTP_PROXY"
       export https_proxy="$HTTP_PROXY"
       export ftp_proxy="$HTTP_PROXY"
+
+      unset_proxy() {
+        unset HTTPS_PROXY
+        unset HTTP_PROXY
+        unset FTP_PROXY
+        unset https_proxy
+        unset http_proxy
+        unset ftp_proxy
+        unset HTTPS_PORT
+        unset HTTP_PORT
+        unset FTP_PORT
+        unset https_port
+        unset http_port
+        unset ftp_port
+        unset ALL_PROXY
+        unset all_proxy
+        unset NO_PROXY
+        unset no_proxy
+        unset RSYNC_PROXY
+        unset rsync_proxy
+      }
     '');
   }];
 }
