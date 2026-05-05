@@ -29,23 +29,6 @@ Generated for home-manager configuration at `~/.config/nixpkgs`.
 
 ---
 
-## Phase 5: Consolidate Zsh Configuration
-
-- [ ] Move or merge `programs.zsh.initContent` (`usr/default.nix:21`) into `programs.zsh.initExtra` if desired
-- [ ] Add quality-of-life options to `usr/cli/zsh/default.nix`:
-  ```nix
-  programs.zsh = {
-    enable = true;
-    enableCompletion = true;
-    enableVteIntegration = true;  # keep existing
-    autosuggestion.enable = true;
-    syntaxHighlighting.enable = true;
-    history.size = 100000;
-  };
-  ```
-
----
-
 ## Phase 6: Decide on Login Shell Strategy
 
 ### Option A: Keep Bash Forwarding (Recommended)

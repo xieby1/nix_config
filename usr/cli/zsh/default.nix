@@ -2,6 +2,8 @@
   programs.zsh = {
     enable = true;
     enableVteIntegration = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
     initContent = ''
       # https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
       bindkey -M viins  "^[[1;5C" forward-word
