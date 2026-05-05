@@ -29,27 +29,6 @@ Generated for home-manager configuration at `~/.config/nixpkgs`.
 
 ---
 
-## Phase 2: Migrate Environment Variables
-
-Goal: Move exports from `bashrcExtra` to `home.sessionVariables` / `home.sessionVariablesExtra`.
-
----
-
-## Phase 3: Migrate Interactive Shell Config (`bashrcExtra` -> `initExtra`)
-
-Goal: Move bashrc content to zsh's `~/.zshrc` equivalent (`programs.zsh.initExtra`).
-
-- [ ] **External bashrc source**: Decide whether to convert `~/Gist/Config/bashrc` to zsh syntax or inline its contents into nix. Recommended: inline into nix.
-- [ ] **Nix profile source**: Remove the `~/.nix-profile/etc/profile.d/nix.sh` source block (usually redundant in home-manager). If needed, place in `programs.zsh.envExtra`.
-- [ ] **Bash completion**: Remove the `bash-completion` source block entirely.
-- [ ] **Zsh completion**: Enable `programs.zsh.enableCompletion = true;`
-- [ ] **WSL2 directory sync**: Convert bash `PROMPT_COMMAND` to zsh `precmd`:
-  ```zsh
-  precmd() { printf "\e]9;9;%s\e\\" "$(wslpath -w "$PWD")" }
-  ```
-
----
-
 ## Phase 4: Migrate Module-Specific `bashrcExtra` Snippets
 
 For each module that injects into bash, add a zsh equivalent or use a home-manager native option.

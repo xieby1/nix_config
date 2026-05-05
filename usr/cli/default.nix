@@ -157,12 +157,6 @@ in
 
   # bash
   programs.bash.enable = true;
-  programs.bash.bashrcExtra = ''
-    # source my bashrc
-    if [[ -f ~/Gist/Config/bashrc ]]; then
-        source ~/Gist/Config/bashrc
-    fi
-  '';
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;

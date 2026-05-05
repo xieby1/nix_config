@@ -12,6 +12,11 @@
       bindkey -M vicmd  "^[[1;5D" backward-word
       bindkey -M viopp  "^[[1;5C" forward-word
       bindkey -M viopp  "^[[1;5D" backward-word
+
+      # source my zshrc
+      if [[ -f ~/Gist/Config/zshrc ]]; then
+        source ~/Gist/Config/zshrc
+      fi
     '';
     plugins = [{
       name = "vi-mode";
