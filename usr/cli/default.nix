@@ -162,10 +162,6 @@ in
     if [[ -f ~/Gist/Config/bashrc ]]; then
         source ~/Gist/Config/bashrc
     fi
-
-    if [[ -e ~/.nix-profile/etc/profile.d/nix.sh ]]; then
-        source ~/.nix-profile/etc/profile.d/nix.sh
-    fi
   '';
 
   programs.direnv.enable = true;
