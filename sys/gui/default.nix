@@ -1,8 +1,4 @@
 { pkgs, ... }: {
-  imports = [
-    # Bug: authentication error, thus, current use greetd
-    # ./dms
-  ];
   # Enable the X11 windowing system.
   services.xserver.enable = true;
   services.xserver.videoDrivers = [
