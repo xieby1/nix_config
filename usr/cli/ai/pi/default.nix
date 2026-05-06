@@ -1,23 +1,9 @@
-{ pkgs, config, lib, ... }: let
-  pi-coding-agent = pkgs.pkgsu.pi-coding-agent.overrideAttrs (final: prev: {
-    # pi-coding-agent will check the version in check phase. The prefix "v" should be removed.
-    # E.g.: "v0.67.3" => "0.67.3"
-    version = pkgs.lib.removePrefix "v" final.src.version;
-    src = pkgs.npinsed.ai.pi-mono;
-    npmDepsHash = "sha256-3xFxY0iKiwjM0psijzdSqed5UOjIAOyWPwQ15fqfc4I=";
-    npmDeps = pkgs.fetchNpmDeps {
-      src = final.src;
-      name = "pi-mono-${final.version}-npm-deps";
-      hash = final.npmDepsHash;
-    };
-  });
-in {
+{ pkgs, config, lib, ... }: {
   imports = [ ./extensions ];
   home.packages = [
-    pi-coding-agent
+    pkgs.pkgsu.pi-coding-agent
     (pkgs.callPackage ./pi-acp.nix {})
   ];
-  cachix_packages = [pi-coding-agent];
   home.file = let
     gen-home-file-entry = args: {
       name = "pi-${args.catwalk-provider.id}";
