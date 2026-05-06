@@ -24,6 +24,7 @@
     #MC 添加nix user repository (NUR)到nixpkgs里。
     nur = import npinsed.nur { pkgs = pkgsu; };
     #MC 添加flake-compat，用于在nix expression中使用flake的包
-    flake-compat = import npinsed.flake-compat;
+    #MC 让flake-compat默认使用pkgs.stdenv.system，使得defaultNix.default为pkgs.stdenv.system的包
+    flake-compat = { src, system ? pkgs.stdenv.system }: import npinsed.flake-compat {inherit src system;};
   };
 }

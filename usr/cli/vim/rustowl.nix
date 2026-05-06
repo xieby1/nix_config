@@ -6,7 +6,7 @@
       rev = "a84881d43ecd4914b6e2791f7777c6133f489bf9";
       hash = "sha256-ejraI1mCGebB98mH/cIR+GG1UwDTVnZojrHPLFErCxE=";
     };
-  }).defaultNix.packages."${builtins.currentSystem}";
+  }).defaultNix.packages."${pkgs.stdenv.system}";
   rustowl = rustowl-pkgs.rustowl;
   rustowl-nvim = rustowl-pkgs.rustowl-nvim.overrideAttrs (old: {
     # This patch because:

@@ -14,11 +14,9 @@
   programs.dank-material-shell = {
     enable = true;
     # https://github.com/AvengeMedia/DankMaterialShell/issues/1489
-    dgop.package = let
-      flake-dgop = pkgs.flake-compat {
-        src = pkgs.npinsed.dgop;
-      };
-    in flake-dgop.defaultNix.packages.${builtins.currentSystem}.default;
+    dgop.package = (pkgs.flake-compat {
+      src = pkgs.npinsed.dgop;
+    }).defaultNix.default;
   };
   home.packages = [
     # App icons for many apps not showing in App Launcher.
