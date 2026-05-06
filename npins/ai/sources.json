@@ -29,6 +29,19 @@
       "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.12.9",
       "hash": "sha256-tA/IOcFcE5vhNGpZNV7sAGEao/LlP6hY/QUnJz0hbeY="
     },
+    "llm-agents": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "llm-agents.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "646ae209744976acee0c2c0eda0de7a68abbf015",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/646ae209744976acee0c2c0eda0de7a68abbf015.tar.gz",
+      "hash": "sha256-qWK6Oop8HuTqfZpy8QywAPjvx27SXetrerVbl0IHdKY="
+    },
     "nixpkgs-for-copilot": {
       "type": "Git",
       "repository": {
