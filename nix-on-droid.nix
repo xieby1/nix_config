@@ -120,4 +120,6 @@
       "xieby1.cachix.org-1:hVhQjWqdV3oGsSnyXSvzPgmDqcKm+EeKFtqsNK+eRew="
     ];
   };
+
+  user.shell = "${pkgs.zsh}/bin/zsh";
 }
