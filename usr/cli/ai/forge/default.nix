@@ -9,6 +9,13 @@
       APP_VERSION=version;
       __intentionallyOverridingVersion=true;
       patches = [./agents-skills-upward-discovery.patch];
+      # see ./is_terminal_bug.md
+      postPatch = ''
+        pattern='std::io::stdin().is_terminal()'
+        for file in $(grep $pattern -rl); do
+          substituteInPlace $file --replace-fail $pattern 'true'
+        done
+      '';
     });
 in {
   home.packages = [ forgecode ];
