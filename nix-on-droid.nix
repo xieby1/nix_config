@@ -107,4 +107,17 @@
   #MC 导入home-manager的配置文件[./usr](./usr/default.nix)的配置。
   #MC 如此操作，所有home-manager的软件和配置都能nix-on-droid中复用。
   home-manager.config = import ./usr;
+
+  nix = {
+    # TODO: reuse substituters from sys/default.nix
+    substituters = [
+      "https://mirrors.ustc.edu.cn/nix-channels/store"
+      "https://cache.nixos.org/"
+      "https://xieby1.cachix.org"
+    ];
+    trustedPublicKeys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "xieby1.cachix.org-1:hVhQjWqdV3oGsSnyXSvzPgmDqcKm+EeKFtqsNK+eRew="
+    ];
+  };
 }
