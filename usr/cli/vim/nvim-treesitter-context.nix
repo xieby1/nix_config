@@ -5,8 +5,8 @@
       type = "lua";
       config = /*lua*/ ''
         require'treesitter-context'.setup({
-          enable = false,
           multiwindow = true,
+          max_lines = "20%",
         })
         vim.cmd("hi TreesitterContextBottom gui=underline guisp=Grey")
         vim.cmd("hi link TreesitterContext NONE")
