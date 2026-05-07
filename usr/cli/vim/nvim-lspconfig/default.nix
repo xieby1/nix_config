@@ -6,16 +6,6 @@
     {programs.neovim={extraLuaConfig="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
     # html
     {programs.neovim={extraLuaConfig="vim.lsp.enable('html')\n";extraPackages=[pkgs.vscode-langservers-extracted];};}
-    # lua
-    # TODO: The symlink support has been added to upstream:
-    #       https://github.com/EmmyLuaLs/emmylua-analyzer-rust/commit/b087ffe4f47cdc2c48c99da16b33745dbae1a587
-    #       Remove the following patch once nixpkgs stable include it.
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('emmylua_ls')\n";extraPackages=[(pkgs.emmylua-ls.overrideAttrs(old: {
-      postPatch = (old.postPatch or "") + ''
-        grep 'follow_links(true)' crates/emmylua_code_analysis/src/vfs/loader.rs && exit
-        sed -i '/WalkDir::new(root)/a\.follow_links(true)' crates/emmylua_code_analysis/src/vfs/loader.rs
-      '';
-    }))];};}
     # nix
     {programs.neovim={extraLuaConfig="vim.lsp.enable('nixd')\n";extraPackages=[pkgs.nixd];};}
     # python
@@ -31,6 +21,7 @@
     ./rust.nix
     ./scala.nix
     ./typst.nix
+    ./lua.nix
   ];
   programs.neovim = {
     plugins = [{
