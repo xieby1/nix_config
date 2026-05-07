@@ -41,6 +41,11 @@
       set -g window-status-current-style "bg=black fg=green bold"
       set -g window-status-separator " ┇"
 
+      # Fix tmux color
+      # https://hmgle.github.io/terminal/tmux/color/2024/05/12/term-color.html
+      set -g default-terminal "xterm-256color"
+      set -as terminal-features ",xterm*:RGB"
+
       # enable mouse scroll
       set -g mouse on
 
