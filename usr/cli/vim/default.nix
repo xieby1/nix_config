@@ -55,6 +55,15 @@ in {
 
   programs.neovim = {
     enable = true;
+    # Set environment variable EDITOR to nvim.
+    # Per zshzle(1), when EDITOR or VISUAL contains "vi" at shell startup,
+    # zsh links "main" to "viins" instead of "emacs".
+    # This prevents a keymap race with zsh-vi-mode:
+    # that plugin defers initialization to the first precmd hook,
+    # then switches main→viins and resets all vi bindings — overwriting Forge's '^M' → 'forge-accept-line'.
+    # With EDITOR=nvim, main is viins from startup,
+    # so Forge's bindkey targets the right keymap immediately and survives.
+    defaultEditor = true;
     package = my-neovim-unwrapped;
     viAlias = true;
     vimAlias = true;
