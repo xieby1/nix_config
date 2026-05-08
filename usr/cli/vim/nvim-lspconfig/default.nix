@@ -18,7 +18,7 @@
     {programs.neovim={extraLuaConfig="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};}
     # language checker
     {programs.neovim={extraLuaConfig="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
-    ./rust.nix
+    ./rust
     ./scala.nix
     ./typst.nix
     ./lua.nix
