@@ -25,7 +25,14 @@
         command = toString [
           "${pkgs.tuigreet}/bin/tuigreet"
           "--time" "--asterisks" "--remember"
-          "--cmd 'niri --session'"
+          # Use niri-session instead of niri --session.
+          # niri-session is a NixOS wrapper that properly initializes the systemd user
+          # session, including activating graphical-session.target. Without this, portal
+          # services like xdg-desktop-portal-gnome fail to start (dependency failed), which
+          # causes xdg-desktop-portal to hang during D-Bus auto-start. GTK4 apps query
+          # org.freedesktop.portal.Desktop during startup and block for ~25s waiting for a
+          # reply that never comes, resulting in ~1 minute startup delays (e.g. gnome-characters).
+          "--cmd 'niri-session'"
         ];
       };
     };
