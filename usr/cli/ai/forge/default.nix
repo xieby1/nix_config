@@ -48,6 +48,11 @@ in {
           }/bin/ddgs'';
           args = ["mcp"];
         };
+        github = {
+          command = ''${pkgs.github-mcp-server}/bin/github-mcp-server'';
+          args = ["stdio"];
+          env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/github-mcp-server-minimal.txt");};
+        };
       };
     };
   };
