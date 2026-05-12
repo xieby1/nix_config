@@ -16,7 +16,7 @@ in pkgs.rustPlatform.buildRustPackage (finalAttrs: {
   env = {
     # ort need to donwload onnxruntime in build/main.rs, to prevent this:
     # refer to pkgs/by-name/hi/hieroglyphic/package.nix
-    ORT_LIB_LOCATION = "${pkgs.onnxruntime}/lib";
+    ORT_LIB_LOCATION = "${pkgs.pkgsu.onnxruntime}/lib";
     ORT_PREFER_DYNAMIC_LINK = "1";
   };
   doCheck = false;
