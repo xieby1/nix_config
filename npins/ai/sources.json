@@ -86,6 +86,22 @@
       "revision": "b378e5d80d424806058e819b262f72e5f6b58b7d",
       "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.10.6",
       "hash": "sha256-OA1UpLXMV/g5CQgf03KwOjCoa34a32/Itwx8GePw2fk="
+    },
+    "vestige": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "samvallad33",
+        "repo": "vestige"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.1.2",
+      "revision": "6e90a242c0135d80e76d85197f5452b73b733233",
+      "url": "https://api.github.com/repos/samvallad33/vestige/tarball/refs/tags/v2.1.2",
+      "hash": "sha256-5vrxHo0h+q/zqAUX+8nSLlmBlUGZBo+28K24srl6nIY="
     }
   },
   "version": 7
