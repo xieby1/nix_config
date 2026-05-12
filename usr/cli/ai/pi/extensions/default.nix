@@ -3,6 +3,7 @@
   imports = [
     # TODO: build broken
     # ./pi-continuous-learning.nix
+    ./mcp.nix
   ];
   home.file = {
     # - pi-skill-evolution: needs pi-session-search which needs embedding provider (llm support embedding)

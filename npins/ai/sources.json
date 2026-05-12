@@ -71,6 +71,22 @@
       "url": "https://github.com/tridha643/constellagent/archive/79a2c559dee3583a9ceedbc483c865078841a2d8.tar.gz",
       "hash": "sha256-56phnimZkJkxLMU8uVRWY9Aa5wn47Byw62uy5/VLAI4="
     },
+    "pi-mcp-adapter": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-mcp-adapter"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.5.0",
+      "revision": "9f98e390c813c02219ed822f809f6a5212199616",
+      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.5.0",
+      "hash": "sha256-FsE7JhA5TxiWWAlED5no5dkqUEzg47mzvQLNuhMiup4="
+    },
     "pi-web-access": {
       "type": "GitRelease",
       "repository": {
