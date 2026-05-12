@@ -1,5 +1,5 @@
-{ pkgs, ... }: let
-  vestige = pkgs.callPackage ./package.nix {src = pkgs.npinsed.ai.vestige;};
+{ ... }: let
+  vestige = import ./package.nix;
 in {
   home.packages = [vestige];
   cachix_packages = [vestige];

@@ -1,20 +1,14 @@
-{
-  rustPlatform,
-  src,
-  perl,
-  pkg-config,
-  openssl,
-  onnxruntime,
-}:
-rustPlatform.buildRustPackage (finalAttrs: {
+let
+  pkgs = import <nixpkgs> {};
+in pkgs.rustPlatform.buildRustPackage (finalAttrs: {
   name = "vestige";
-  inherit src;
+  src = pkgs.npinsed.ai.vestige;
   nativeBuildInputs = [
-    perl
-    pkg-config
+    pkgs.perl
+    pkgs.pkg-config
   ];
   buildInputs = [
-    openssl
+    pkgs.openssl
   ];
   cargoLock = {
     lockFile = finalAttrs.src + /Cargo.lock;
@@ -22,7 +16,7 @@ rustPlatform.buildRustPackage (finalAttrs: {
   env = {
     # ort need to donwload onnxruntime in build/main.rs, to prevent this:
     # refer to pkgs/by-name/hi/hieroglyphic/package.nix
-    ORT_LIB_LOCATION = "${onnxruntime}/lib";
+    ORT_LIB_LOCATION = "${pkgs.onnxruntime}/lib";
     ORT_PREFER_DYNAMIC_LINK = "1";
   };
   doCheck = false;
