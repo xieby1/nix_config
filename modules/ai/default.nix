@@ -111,5 +111,6 @@ in {
         };
       };
     };
+    tavily.api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/tavily.txt");
   };
 }

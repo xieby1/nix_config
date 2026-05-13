@@ -26,6 +26,9 @@ in {
         provider = "kimi-coding";
         base_url = config.ai.kimi.api_endpoint;
       };
+      web = {
+        backend = "tavily";
+      };
     };
   };
   yq-merge.".hermes/.env" = {
@@ -34,6 +37,7 @@ in {
     yqLoadFunc = "load_props";
     expr = {
       KIMI_API_KEY = config.ai.kimi.api_key;
+      TAVILY_API_KEY = config.ai.tavily.api_key;
     };
   };
 
