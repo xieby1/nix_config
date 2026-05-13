@@ -6,6 +6,9 @@
   hermes-agent = (pkgs.flake-compat {src=pkgs.npinsed.ai.llm-agents;})
     .defaultNix.packages.${pkgs.stdenv.system}.hermes-agent
     .overrideAttrs (old: {
+      # TODO: Remove patches once llm-agents updates past 2026.5.14.
+      # Upstream PR #25075 fixes zsh completion (_hermes "$@" -> compdef).
+      # The eval approach below will work once that lands.
       patches = old.patches or [] ++ [
         # zsh completion fix#22234
         (builtins.fetchurl {
