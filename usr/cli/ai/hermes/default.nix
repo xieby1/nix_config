@@ -55,4 +55,8 @@ in {
   programs.zsh.initContent = lib.mkBefore ''
     fpath+=("$HOME/.zsh/completions")
   '';
+
+  home.file.".hermes/memories/USER.md".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/hermes/memories/USER.md;
+  home.file.".hermes/memories/MEMORY.md".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/hermes/memories/MEMORY.md;
+  home.file.".hermes/skills".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/hermes/skills;
 }
