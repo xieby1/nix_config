@@ -1,3 +1,4 @@
+# TODO: goose is deprecated, remove it in future.
 { pkgs, lib, ... }: {
   home.packages = [
     # TODO: use latest nixpkgs and remove nixpkgs-goose-cli

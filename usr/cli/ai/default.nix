@@ -5,7 +5,6 @@
     ./forge
     ./picoclaw.nix
     ./mcp/vestige
-    ./goose
     ./hermes
   ];
   home.packages = [
