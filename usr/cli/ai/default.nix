@@ -3,7 +3,6 @@
     ./pi
     ./llms
     ./forge
-    ./picoclaw.nix
     ./mcp/vestige
     ./hermes
   ];
