@@ -57,34 +57,24 @@
 
 ## Forgecode
 
+- Pros:
+  - Moved to AAIF at Linux Foundation: more stable, more reliable
 - Cons:
   - Claims being #1. Really?
   - Fixed: ~The global local is ~/forge/, really!? I doubt the project's taste of tech.~~
+  - Does not support prompt injection, e.g. hook scripts.
+    - The pull request is stale
+      - https://github.com/tailcallhq/forgecode/issues/2562
+      - https://github.com/tailcallhq/forgecode/pull/2757
+  - Does not support ACP, and the pull request is stale.
 
 ## Goose
 
 - Cons:
-  - Why goose does not saved in nix binary cache, and 1.23.2 cannot build in x86-64 Linux: checkPhase failed!?
-    Why the compiling time so long 7min+?
-  - Why the output color render bug remain unsolved?
+  - Fixed: ~~Why goose does not saved in nix binary cache, and 1.23.2 cannot build in x86-64 Linux: checkPhase failed!?~~
+    ~~Why the compiling time so long 7min+?~~
+  - Fixed: ~~Why the output color render bug remain unsolved?~~
     Oh, I guess this project focus on desktop, instead of cli.
-
-## Avante.nvim
-
-- Pros:
-  - Leverages Neovim muscle memory
-- Cons:
-  - No skills support
-  - Uses plenary.nvim (curl without keepalive or auto-retry)
-    - Frequent network issues cause interruptions that disrupt workflow
-
-## Codecompanion.nvim
-
-- Pros:
-  - Leverages Neovim muscle memory
-  - Minimal/Clean UI
-- Cons:
-  - Use plenary.nvim, the same to Avante.nvim.
 
 ## Hermes
 
@@ -95,7 +85,40 @@
 
 Clients Comparisons
 
-## Agentic.nvim
+## pi
+
+- Pros:
+  - minimalist
+- Cons:
+  - minimalist: lack of many features
+    - lack of high-quality plugins such as memory, plan, subagents.
+  - typescript-based
+
+## pi_agent_rust
+
+- Cons:
+  - Single developer, thus less reliable.
+
+## nvim
+
+### Avante.nvim
+
+- Pros:
+  - Leverages Neovim muscle memory
+- Cons:
+  - No skills support
+  - Uses plenary.nvim (curl without keepalive or auto-retry)
+    - Frequent network issues cause interruptions that disrupt workflow
+
+### Codecompanion.nvim
+
+- Pros:
+  - Leverages Neovim muscle memory
+  - Minimal/Clean UI
+- Cons:
+  - Use plenary.nvim, the same to Avante.nvim.
+
+### Agentic.nvim
 
 - Pros:
   - simple and only cares about ACP
@@ -107,7 +130,7 @@ Clients Comparisons
     - Cannot disable insert by default
     - Cannot hide winbar (need to edit source code)
 
-## Codecompanion
+### Codecompanion
 
 - Pros:
   - simple UI!
