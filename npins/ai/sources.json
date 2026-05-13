@@ -42,6 +42,19 @@
       "url": "https://github.com/NixOS/nixpkgs/archive/663f0b499b6742fef9ee8552943705073088f083.tar.gz",
       "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
     },
+    "nixpkgs-goose-cli": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "54402b393940b01e061a866ac1448bd209425501",
+      "url": "https://github.com/NixOS/nixpkgs/archive/54402b393940b01e061a866ac1448bd209425501.tar.gz",
+      "hash": "sha256-7y4V/VTFxBSnwPHlIyaTzoDCzOhc/i1vnJmwilfpmD4="
+    },
     "pi-acp": {
       "type": "GitRelease",
       "repository": {
