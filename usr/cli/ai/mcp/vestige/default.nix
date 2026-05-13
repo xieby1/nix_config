@@ -1,3 +1,4 @@
+# vestige lurks in background consuming 1GB memory!
 { pkgs, ... }: let
   vestige = import ./package.nix;
 in {
