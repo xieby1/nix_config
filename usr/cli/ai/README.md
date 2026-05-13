@@ -74,7 +74,15 @@
   - Fixed: ~~Why goose does not saved in nix binary cache, and 1.23.2 cannot build in x86-64 Linux: checkPhase failed!?~~
     ~~Why the compiling time so long 7min+?~~
   - Fixed: ~~Why the output color render bug remain unsolved?~~
-    Oh, I guess this project focus on desktop, instead of cli.
+    **VERY IMPORTANT**: **Oh, I guess this project focus on desktop, instead of cli.**
+  - zsh cursor sometimes disappear?
+  - `goose configure` cannot configure kimi, minimax succussfully, only by manually add a costum_xxx.json
+  - minimax is still 2.5
+    - https://github.com/aaif-goose/goose/pull/7981
+  - cannot switch model during conversation
+    - https://github.com/aaif-goose/goose/pull/8747
+  - the context length is wrong
+    - goose/2026-05-13-custom-provider-context-limit-bug.md
 
 ## Hermes
 
