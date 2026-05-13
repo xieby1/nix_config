@@ -58,6 +58,22 @@
                 commands = { default = { "pi-acp", }, },
               })
             end,
+            -- codecompanion only support ACP standard: session/set_config_option
+            -- - https://github.com/olimorris/codecompanion.nvim/pull/2977
+            -- - https://github.com/olimorris/codecompanion.nvim/pull/3106
+            -- However, hermes-acp only support non-standard: session/set_model
+            -- - https://github.com/NousResearch/hermes-agent/pull/3675
+            -- unless use_unstable_protocol=True => use_unstable_protocol=False.
+            -- See hermes config.
+            -- TODO: However, hermes set_config_option does not provide models selection!
+            --       As a result, the model selection still does not work.
+            hermes = function()
+              return require("codecompanion.adapters").extend("opencode", {
+                name = "hermes",
+                formatted_name = "Hermes",
+                commands = { default = { "hermes-acp", }, },
+              })
+            end,
           },
         },
         display = {
@@ -79,14 +95,14 @@
         },
         strategies = {
           chat = {
-            adapter = "pi",
+            adapter = "hermes",
             tools = {
               opts = {
                 default_tools = { "agent" },
               },
             },
           },
-          inline = { adapter = "pi", },
+          inline = { adapter = "hermes", },
         },
         extensions = {
           -- TODO: move extensions config to separate file

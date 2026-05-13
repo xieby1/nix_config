@@ -16,6 +16,10 @@
           sha256 = "0qc1nakb74xliw8m7kcj9bb2fxn4rpvr85hbvm39anqla0kqxyib";
         })
       ];
+      # use stable protocol such as session/set_config_option, see codecompanion-nvim config
+      postPatch = old.postPatch or "" + ''
+        substituteInPlace acp_adapter/entry.py --replace-fail "use_unstable_protocol=True" "use_unstable_protocol=False"
+      '';
     });
 in {
   home.packages = [
