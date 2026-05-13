@@ -25,9 +25,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "646ae209744976acee0c2c0eda0de7a68abbf015",
-      "url": "https://github.com/numtide/llm-agents.nix/archive/646ae209744976acee0c2c0eda0de7a68abbf015.tar.gz",
-      "hash": "sha256-qWK6Oop8HuTqfZpy8QywAPjvx27SXetrerVbl0IHdKY="
+      "revision": "63eaec5890d3dfab83d7fdee5a2dd2bad06e165b",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/63eaec5890d3dfab83d7fdee5a2dd2bad06e165b.tar.gz",
+      "hash": "sha256-rGb5Lywt3gMaWaVBLlWNTgypCWjiekuYG0i39Q6qusY="
     },
     "nixpkgs-for-copilot": {
       "type": "Git",
