@@ -6,6 +6,7 @@
     ./picoclaw.nix
     ./mcp/vestige
     ./goose
+    ./hermes
   ];
   home.packages = [
     # TODO: use latest nixpkgs and remove nixpkgs-for-copilot
