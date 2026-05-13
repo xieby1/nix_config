@@ -62,7 +62,6 @@
 
   #MC 设置时区。
   time.timeZone = "Asia/Shanghai";
-  time.hardwareClockInLocalTime = true;
 
   #MC 设置Linux账户信息。
   users.mutableUsers = false;
