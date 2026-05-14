@@ -34,6 +34,9 @@ in {
       web = {
         backend = "tavily";
       };
+      display = {
+        show_reasoning = true;
+      };
     };
   };
   yq-merge.".hermes/.env" = {
