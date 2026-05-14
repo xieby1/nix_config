@@ -27,6 +27,7 @@ in {
   ];
   yq-merge.".hermes/config.yaml" = {
     generator = builtins.toJSON;
+    yqExtraArgs = "-P";
     expr = {
       model = {
         default = "kimi-for-coding";
