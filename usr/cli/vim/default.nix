@@ -137,7 +137,7 @@ in {
 
       " set terminal title
       "" https://stackoverflow.com/questions/15123477/tmux-tabs-with-name-of-file-open-in-vim
-      autocmd BufEnter * let &titlestring = "" . expand("%:t")
+      autocmd BufEnter * let &titlestring = expand("%:p:h:t") . "/" . expand("%:t")
       set title
 
       nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
