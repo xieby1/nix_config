@@ -34,6 +34,21 @@ in {
         provider = "kimi-coding";
         base_url = config.ai.kimi.api_endpoint;
       };
+      # the avaliable fields see: <hermes-agent>/hermes_cli/config.py: _normalize_custom_provider_entry
+      providers = {
+        jw-claude = {
+          name = "JW Claude";
+          api = config.ai.jw-claude.api_endpoint;
+          api_key = config.ai.jw-claude.api_key;
+          transport = "anthropic_messages";
+        };
+        jw-codex = {
+          name = "JW Codex";
+          api = config.ai.jw-codex.api_endpoint;
+          api_key = config.ai.jw-codex.api_key;
+          transport = "codex_responses";
+        };
+      };
       web = {
         backend = "tavily";
       };

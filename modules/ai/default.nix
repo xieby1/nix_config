@@ -112,5 +112,13 @@ in {
       };
     };
     tavily.api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/tavily.txt");
+    jw-claude = {
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-claude.txt);
+    };
+    jw-codex = {
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-codex.txt);
+    };
   };
 }
