@@ -17,6 +17,8 @@
         })
         # ACP configOptions for codecompanion.nvim model switching (ga)
         ./acp-configOptions.patch
+        # Add project-local skill discovery#17328 (rebased for v2026.5.7)
+        ./project-local-skills.patch
       ];
     });
 in {
