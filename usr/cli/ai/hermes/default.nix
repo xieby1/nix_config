@@ -18,10 +18,6 @@
         # ACP configOptions for codecompanion.nvim model switching (ga)
         ./acp-configOptions.patch
       ];
-      # use stable protocol such as session/set_config_option, see codecompanion-nvim config
-      postPatch = old.postPatch or "" + ''
-        substituteInPlace acp_adapter/entry.py --replace-fail "use_unstable_protocol=True" "use_unstable_protocol=False"
-      '';
     });
 in {
   home.packages = [
