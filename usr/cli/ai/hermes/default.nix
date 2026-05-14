@@ -19,6 +19,8 @@
         ./acp-configOptions.patch
         # Add project-local skill discovery#17328 (rebased for v2026.5.7)
         ./project-local-skills.patch
+        # Remember last session-only /model switch across CLI/TUI restarts.
+        ./remember-last-used-model.patch
       ];
     });
 in {
