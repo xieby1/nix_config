@@ -4,6 +4,10 @@
     enableVteIntegration = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    envExtra = ''
+      # Avoid duplicate NixOS global zsh init (/etc/zshrc); Home Manager config is enough.
+      setopt no_global_rcs
+    '';
     completionInit = ''
       # Load the zsh/complist module, which provides colored completion listings,
       # scrolling through long lists, and an alternative menu selection style.
