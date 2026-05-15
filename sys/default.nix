@@ -119,4 +119,13 @@
   #MC * 我的syncthing配置[./usr/cli: syncthing](./usr/cli/default.nix.md#syncthing)
   #MC * 我的clash配置[./usr/cli/clash.nix](./usr/cli/clash.nix.md)
   #MC * 我的tailscale配置[./usr/cli/tailscale.nix](./usr/cli/tailscale.nix.md)
+
+  services.logind.settings.Login = {
+    # On battery: closing the lid suspends.
+    HandleLidSwitch = "suspend";
+    # On AC power: keep running when lid closes.
+    HandleLidSwitchExternalPower = "ignore";
+    # With external monitor/dock: keep running.
+    HandleLidSwitchDocked = "ignore";
+  };
 }
