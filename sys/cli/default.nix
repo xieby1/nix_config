@@ -86,6 +86,10 @@
 
   # The following are mkDefault when desktopManager.gnome.enable is true
   networking.networkmanager.enable = true;
+  # Podman user Quadlets wait for the system network-online.target via
+  # podman-user-wait-network-online.service; pull it in at boot so the user
+  # wait service does not time out while polling an inactive passive target.
+  systemd.targets.network-online.wantedBy = [ "multi-user.target" ];
   hardware.bluetooth.enable = true;
   services.upower.enable = true;
   # TODO: remove, currently home-manager switch needs
