@@ -21,6 +21,8 @@
         ./project-local-skills.patch
         # Remember last session-only /model switch across CLI/TUI restarts.
         ./remember-last-used-model.patch
+        # Fix cron script bash invocation, pick from hermes-agent commit e93bfc6c93 (2026.05.07).
+        ./cron-bin-bash.patch
       ];
     });
 in {
