@@ -48,5 +48,7 @@ config = lib.mkIf (!config.isMinimalConfig) {
     # runXonY
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
+
+  services.podman.enable = true;
 };
 }

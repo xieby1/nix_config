@@ -46,11 +46,6 @@
   #MC 如此就可以在NixOS/Windows双系统的电脑上挂在Windows的分区啦。
   boot.supportedFilesystems = [ "ntfs" ];
 
-  #MC 启用podman。
-  #MC podman是一个十分好用的docker实现。
-  #MC 支持用户态容器（不需要sudo），可以方便地挂在容器镜像的文件系统。
-  virtualisation.podman.enable = true;
-
   #MC 配置binfmt，让非本地指令集的用户程序可以正常运行。
   #MC 比如在x86_64-linux上运行aarch64-linux的用户程序。
   #MC 注意：不能在配和本地一样的binfmt，比如不能在x86_64-linux的机器上配置x86_64-linux的binfmt。
