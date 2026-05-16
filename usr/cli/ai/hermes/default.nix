@@ -27,6 +27,8 @@ in {
   home.packages = [
     hermes-agent
   ];
+  home.shellAliases.hermes-tui = "hermes --tui";
+
   yq-merge.".hermes/config.yaml" = {
     generator = builtins.toJSON;
     yqExtraArgs = "-P";
