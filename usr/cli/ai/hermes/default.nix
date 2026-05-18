@@ -28,6 +28,10 @@
       ];
     });
 in {
+  imports = [
+    ./container-service
+  ];
+
   home.packages = [
     hermes-agent
   ];
