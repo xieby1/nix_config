@@ -18,9 +18,9 @@ in pkgs.buildEnv {
       # init
       if [[ ! -d ~/.hermes ]]; then
         hermes setup --non-interactive
-        hermes config set model.provider "kimi-coding"
-        hermes config set model.base_url "https://api.kimi.com/coding";
-        hermes config set model.default "kimi-for-coding"
+        hermes config set model.provider "minimax-cn"
+        hermes config set model.base_url "https://api.minimaxi.com/anthropic";
+        hermes config set model.default "MiniMax-M2.7"
       fi
       hermes gateway run
     '')
