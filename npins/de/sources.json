@@ -1,0 +1,63 @@
+{
+  "pins": {
+    "DankMaterialShell": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.2.3",
+      "revision": "89c378d2f41621a39767ecb03a4569f6693c2629",
+      "url": "https://api.github.com/repos/AvengeMedia/DankMaterialShell/tarball/refs/tags/v1.2.3",
+      "hash": "sha256-P//moH3z9r4PXirTzXVsccQINsK5AIlF9RWOBwK3vLc="
+    },
+    "DankPluginBingWallpaper": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "max72bra",
+        "repo": "DankPluginBingWallpaper"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf",
+      "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf.tar.gz",
+      "hash": "sha256-30I7RZk5Wq4vJxL8753QnMG2rplw6b2iOR2vcSQmdw8="
+    },
+    "dms-unified-taskbar": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "jslandau",
+        "repo": "dms-unified-taskbar"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.0.0",
+      "revision": "ded024c024bd3690ecbd5704b808cf1669a847a7",
+      "url": "https://api.github.com/repos/jslandau/dms-unified-taskbar/tarball/refs/tags/v1.0.0",
+      "hash": "sha256-Fe3C/QbD7gVfWOLZsX+TszkkPv5fugqcVCDtXxOh8bE="
+    },
+    "niri": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "flowerysong",
+        "repo": "niri"
+      },
+      "branch": "release-keybinds",
+      "submodules": false,
+      "revision": "53447431c4adcfe1572fed5f39ebddc239ca381c",
+      "url": "https://github.com/flowerysong/niri/archive/53447431c4adcfe1572fed5f39ebddc239ca381c.tar.gz",
+      "hash": "sha256-onL4kGGpNHYNIaU11hN440RruSJKcTblSi7CwqMbYeM="
+    }
+  },
+  "version": 7
+}

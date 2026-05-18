@@ -1,0 +1,43 @@
+{ pkgs, config, lib, ... }: let
+  forgecode = (pkgs.flake-compat {src = pkgs.npinsed.ai.forgecode;}).defaultNix.default
+    # The version and APP_VERSION is 0.1.0-dev, which is out-of-date
+    .overrideAttrs (_old: rec {
+      # Forge skips update checks when version contains "dev", avoiding prompts like:
+      # `Confirm upgrade from v2.9.9 -> v2.10.0 (latest)? Y/n:`
+      # See: crates/forge_main/src/update.rs
+      version = "${pkgs.npinsed.ai.forgecode.version}-dev";
+      APP_VERSION=version;
+      __intentionallyOverridingVersion=true;
+      patches = [./agents-skills-upward-discovery.patch];
+      # see ./is_terminal_bug.md
+      postPatch = ''
+        pattern='std::io::stdin().is_terminal()'
+        for file in $(grep $pattern -rl); do
+          substituteInPlace $file --replace-fail $pattern 'true'
+        done
+      '';
+    });
+in {
+  imports = [
+    ./mcp
+  ];
+  home.packages = [ forgecode ];
+  cachix_packages = [ forgecode ];
+  yq-merge.".forge/.credentials.json" = {
+    generator = builtins.toJSON;
+    expr = [{
+      id = "minimax";
+      auth_details.api_key = config.ai.minimax-china.api_key;
+      url_params.HOSTNAME = "api.minimaxi.com";
+    }{
+      id = "kimi_coding";
+      auth_details.api_key = config.ai.kimi.api_key;
+    }{
+      id = "deepseek";
+      auth_details.api_key = config.ai.deepseek.api_key;
+    }];
+  };
+  programs.zsh.initContent = lib.mkAfter ''
+    . ${pkgs.npinsed.ai.forgecode}/shell-plugin/forge.setup.zsh
+  '';
+}

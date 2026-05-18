@@ -1,0 +1,140 @@
+diff --git a/crates/forge_domain/src/env.rs b/crates/forge_domain/src/env.rs
+index 7e6ee3060..3c388de0e 100644
+--- a/crates/forge_domain/src/env.rs
++++ b/crates/forge_domain/src/env.rs
+@@ -126,6 +126,35 @@ impl Environment {
+         self.home.as_ref().map(|home| home.join(".agents/skills"))
+     }
+ 
++    /// Returns all `.agents/skills` directory paths discovered by walking from
++    /// cwd up through all parent directories to `/`.
++    ///
++    /// The returned paths are ordered from the root-most ancestor to the
++    /// current working directory, so that skills loaded later (closer to cwd)
++    /// take precedence when conflicts are resolved.
++    pub fn agents_skills_paths(&self) -> Vec<PathBuf> {
++        let mut paths = Vec::new();
++        let mut current = Some(self.cwd.as_path());
++
++        while let Some(dir) = current {
++            let agents_dir = dir.join(".agents/skills");
++            paths.push(agents_dir);
++            current = dir.parent();
++        }
++
++        paths.reverse();
++
++        // Also include home .agents/skills if not already in the path
++        if let Some(home) = &self.home {
++            let home_agents = home.join(".agents/skills");
++            if !paths.contains(&home_agents) {
++                paths.push(home_agents);
++            }
++        }
++
++        paths
++    }
++
+     /// Returns the project-local skills directory path (.forge/skills)
+     pub fn local_skills_path(&self) -> PathBuf {
+         self.cwd.join(".forge/skills")
+@@ -380,4 +409,56 @@ mod tests {
+ 
+         assert_eq!(actual, expected);
+     }
++
++    #[test]
++    fn test_agents_skills_paths_walks_up_from_cwd() {
++        let fixture: Environment = Faker.fake();
++        let fixture = fixture
++            .cwd(PathBuf::from("/home/user/project"))
++            .home(PathBuf::from("/home/user"));
++
++        let actual = fixture.agents_skills_paths();
++
++        let expected = vec![
++            PathBuf::from("/.agents/skills"),
++            PathBuf::from("/home/.agents/skills"),
++            PathBuf::from("/home/user/.agents/skills"),
++            PathBuf::from("/home/user/project/.agents/skills"),
++        ];
++        assert_eq!(actual, expected);
++    }
++
++    #[test]
++    fn test_agents_skills_paths_includes_home_when_not_on_cwd_path() {
++        let fixture: Environment = Faker.fake();
++        let fixture = fixture
++            .cwd(PathBuf::from("/tmp/project"))
++            .home(PathBuf::from("/home/user"));
++
++        let actual = fixture.agents_skills_paths();
++
++        let expected = vec![
++            PathBuf::from("/.agents/skills"),
++            PathBuf::from("/tmp/.agents/skills"),
++            PathBuf::from("/tmp/project/.agents/skills"),
++            PathBuf::from("/home/user/.agents/skills"),
++        ];
++        assert_eq!(actual, expected);
++    }
++
++    #[test]
++    fn test_agents_skills_paths_dedupes_home_when_on_cwd_path() {
++        let fixture: Environment = Faker.fake();
++        let fixture = fixture
++            .cwd(PathBuf::from("/home/user/project"))
++            .home(PathBuf::from("/home/user"));
++
++        let actual = fixture.agents_skills_paths();
++
++        let home_count = actual
++            .iter()
++            .filter(|p| **p == PathBuf::from("/home/user/.agents/skills"))
++            .count();
++        assert_eq!(home_count, 1);
++    }
+ }
+diff --git a/crates/forge_repo/src/skill.rs b/crates/forge_repo/src/skill.rs
+index 1b598b0fb..e692a7422 100644
+--- a/crates/forge_repo/src/skill.rs
++++ b/crates/forge_repo/src/skill.rs
+@@ -13,13 +13,14 @@ use serde::Deserialize;
+ /// Repository implementation for loading skills from multiple sources:
+ /// 1. Built-in skills (embedded in the application)
+ /// 2. Global custom skills (from ~/forge/skills/ directory)
+-/// 3. Agents skills (from ~/.agents/skills/ directory)
+-/// 4. Project-local skills (from .forge/skills/ directory in current working
++/// 3. Agents skills (from `.agents/skills/` directories discovered by walking
++///    from cwd up through all parent directories to `/`)
++/// 4. Project-local skills (from `.forge/skills/` directory in current working
+ ///    directory)
+ ///
+ /// ## Skill Precedence
+ /// When skills have duplicate names across different sources, the precedence
+-/// order is: **CWD (project-local) > Agents (~/.agents/skills) > Global
++/// order is: **CWD (project-local) > Agents (closest `.agents/skills`) > Global
+ /// custom > Built-in**
+ ///
+ /// This means project-local skills can override agents skills, which can
+@@ -28,7 +29,8 @@ use serde::Deserialize;
+ /// ## Directory Resolution
+ /// - **Built-in skills**: Embedded in application binary
+ /// - **Global skills**: `~/forge/skills/<skill-name>/SKILL.md`
+-/// - **Agents skills**: `~/.agents/skills/<skill-name>/SKILL.md`
++/// - **Agents skills**: `<parent-dir>/.agents/skills/<skill-name>/SKILL.md`
++///   (discovered from cwd up to `/`)
+ /// - **CWD skills**: `./.forge/skills/<skill-name>/SKILL.md` (relative to
+ ///   current working directory)
+ ///
+@@ -88,8 +90,8 @@ impl<I: FileInfoInfra + EnvironmentInfra + FileReaderInfra + WalkerInfra> SkillR
+         let global_skills = self.load_skills_from_dir(&global_dir).await?;
+         skills.extend(global_skills);
+ 
+-        // Load agents skills (~/.agents/skills)
+-        if let Some(agents_dir) = env.agents_skills_path() {
++        // Load agents skills (discovered from cwd up to `/`)
++        for agents_dir in env.agents_skills_paths() {
+             let agents_skills = self.load_skills_from_dir(&agents_dir).await?;
+             skills.extend(agents_skills);
+         }

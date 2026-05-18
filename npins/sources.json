@@ -1,0 +1,134 @@
+{
+  "pins": {
+    "catwalk": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "charmbracelet",
+        "repo": "catwalk"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.35.1",
+      "revision": "3b7535bd1b2ebd0c95e1cea62c508a60d06f2712",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.35.1",
+      "hash": "sha256-Jvx+ZULXZBpxLWohIUun3PY1lBWo77CH7fewt/ILku8="
+    },
+    "dgop": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "dgop"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "3cd297080573319c36884b28a3cc0dbfed79f53e",
+      "url": "https://github.com/AvengeMedia/dgop/archive/3cd297080573319c36884b28a3cc0dbfed79f53e.tar.gz",
+      "hash": "sha256-NBGF7bo+nYSToDWtIXMwPeulzRxphX8JHzNRqLTOOqU="
+    },
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+      "url": "https://github.com/NixOS/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz",
+      "hash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "release-25.11",
+      "submodules": false,
+      "revision": "a0bb0d11514f92b639514220114ac8063c72d0a3",
+      "url": "https://github.com/nix-community/home-manager/archive/a0bb0d11514f92b639514220114ac8063c72d0a3.tar.gz",
+      "hash": "sha256-deix7yg3j6AhjMPnFDCmWB3f83LsajaaULP5HH2j34k="
+    },
+    "kitty-scrollback-nvim": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "mikesmithgh",
+        "repo": "kitty-scrollback.nvim"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v8.0.0",
+      "revision": "a517979f4130ef29ba0e5a9e25b38a6e877e3133",
+      "url": "https://api.github.com/repos/mikesmithgh/kitty-scrollback.nvim/tarball/refs/tags/v8.0.0",
+      "hash": "sha256-mRAHH5KzC9Cz/HHGSJ1oIi5ybrs03GBgASaDMrNywxs="
+    },
+    "nix-on-droid": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-on-droid"
+      },
+      "branch": "release-24.05",
+      "submodules": false,
+      "revision": "f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25",
+      "url": "https://github.com/nix-community/nix-on-droid/archive/f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25.tar.gz",
+      "hash": "sha256-UFzk/hZWO1VkciIO5UPaSpJN8s765wsngUSvtJM6d5Q="
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-25.11",
+      "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.8107.1073dad219cb/nixexprs.tar.xz",
+      "hash": "sha256-cUgsPWt0NJz21K4i/5191mWaizw4XtT20WFqyxzSuQI="
+    },
+    "nur": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "NUR"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d133c9274d1c37d0e2e6104239a8d5c0181d2c39",
+      "url": "https://github.com/nix-community/NUR/archive/d133c9274d1c37d0e2e6104239a8d5c0181d2c39.tar.gz",
+      "hash": "sha256-c0B8tHUOElaB86IkPAAJwldLIyPpn3ck8Fa+g2fsbvo="
+    },
+    "nur-charmbracelet": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "charmbracelet",
+        "repo": "nur"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "07948132b68b0d28da4394bab5c01cd102c564da",
+      "url": "https://github.com/charmbracelet/nur/archive/07948132b68b0d28da4394bab5c01cd102c564da.tar.gz",
+      "hash": "sha256-PJnPi1fT9V8Pqu8ZJVbcaVRokhqmZAAzta/8oo0GNy8="
+    },
+    "pkgsu": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "0152d05236f71273a58de76a4f92f92e254dc00f",
+      "url": "https://github.com/NixOS/nixpkgs/archive/0152d05236f71273a58de76a4f92f92e254dc00f.tar.gz",
+      "hash": "sha256-nYzQTeM47cnhentCBBzVY50YhRwf9OZkP5W82ZaNBc4="
+    }
+  },
+  "version": 7
+}
