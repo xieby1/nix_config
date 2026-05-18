@@ -23,6 +23,8 @@
         ./remember-last-used-model.patch
         # Fix cron script bash invocation, pick from hermes-agent commit e93bfc6c93 (2026.05.07).
         ./cron-bin-bash.patch
+        # Honor custom provider context_length for auxiliary compression#21953
+        ./aux-compression-honor-providers.patch
       ];
     });
 in {
@@ -53,6 +55,9 @@ in {
           api = config.ai.jw-codex.api_endpoint;
           api_key = config.ai.jw-codex.api_key;
           transport = "codex_responses";
+          models."gpt-5.5" = {
+            context_length = 1000 * 1000;
+          };
         };
       };
       web = {
