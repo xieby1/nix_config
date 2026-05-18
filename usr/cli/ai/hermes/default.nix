@@ -60,6 +60,9 @@ in {
       };
       display = {
         show_reasoning = true;
+        tool_progress = "all";
+        tool_preview_length = 0; # unlimited
+        streaming = true;
       };
     };
   };
