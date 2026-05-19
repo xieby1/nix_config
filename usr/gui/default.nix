@@ -69,6 +69,7 @@ config = lib.mkIf config.isGui {
     evince
     gnome-characters
     nautilus
+    pkgsu.surfer
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex
     xelfviewer
