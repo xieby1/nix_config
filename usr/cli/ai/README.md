@@ -17,12 +17,13 @@
     - Small nix-closure.
     - Small memory consumption: crush instance that have several conversations: ~70MB
 - Cons:
-  - Token inefficiency: 300 line system prompt and cannot fully customize,
-                        only supports system prompt prefix.
+  - It's Ok for me now ~~Token inefficiency: 300 line system prompt and cannot fully customize,
+                        only supports system prompt prefix.~~
   - The input line support Home, End key, but does not support Ctrl+Left/Right.
-  - Does not support terminal scrollback.
-  - Notification cannot click and jump to the corresponding terminal.
-  - Does not support explicit skill: https://github.com/charmbracelet/crush/discussions/2505 and no discussions!
+  - It's Ok for me now ~~Does not support terminal scrollback.~~
+  - It's Ok for me now ~~Notification cannot click and jump to the corresponding terminal.~~
+  - I need auto generating skill, so this is unnecessary now
+    ~~Does not support explicit skill: https://github.com/charmbracelet/crush/discussions/2505 and no discussions!~~
   - Generate `.crush/` in every folder where crush launched
 
 ## Aider
@@ -90,8 +91,16 @@
   - Declare able to self-improvement (auto skill generating), but does not support per-project skill yet!?
     https://github.com/NousResearch/hermes-agent/issues/4667
     In my humble opinion, a auto-generating-skill skill is enough!
+  - Why CLI+TUI? Why not unify them? split experience, split community?
+    - TUI
+      - scroll glitch
+      - does not filter configured providers/models when selecting them, however CLI does.
+    - CLI
+      - resize => re-render
+      - resume does not support selection UI, but TUI does.
+  - Too many bugs that influence my experience, see my patches.
 
-Clients Comparisons
+# Clients Comparisons
 
 ## pi
 
