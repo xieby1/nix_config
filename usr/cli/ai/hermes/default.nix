@@ -25,6 +25,8 @@
         ./cron-bin-bash.patch
         # Honor custom provider context_length for auxiliary compression#21953
         ./aux-compression-honor-providers.patch
+        # List all skills in `hermes insights`
+        ./insights-list-all-skills.patch
       ];
     });
 in {

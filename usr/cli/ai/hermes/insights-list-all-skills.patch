@@ -1,0 +1,22 @@
+diff --git a/agent/insights.py b/agent/insights.py
+index 70907b4f3..fa127e523 100644
+--- a/agent/insights.py
++++ b/agent/insights.py
+@@ -805,7 +805,7 @@ class InsightsEngine:
+             lines.append("  🧠 Top Skills")
+             lines.append("  " + "─" * 56)
+             lines.append(f"  {'Skill':<28} {'Loads':>7} {'Edits':>7} {'Last used':>11}")
+-            for skill in top_skills[:10]:
++            for skill in top_skills:
+                 last_used = "—"
+                 if skill.get("last_used_at"):
+                     last_used = datetime.fromtimestamp(skill["last_used_at"]).strftime("%b %d")
+@@ -906,7 +906,7 @@ class InsightsEngine:
+         skills = report.get("skills", {})
+         if skills.get("top_skills"):
+             lines.append("**🧠 Top Skills:**")
+-            for skill in skills["top_skills"][:5]:
++            for skill in skills["top_skills"]:
+                 suffix = ""
+                 if skill.get("last_used_at"):
+                     suffix = f", last used {datetime.fromtimestamp(skill['last_used_at']).strftime('%b %d')}"
