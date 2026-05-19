@@ -5,6 +5,19 @@
     ./apps
     ./extensions
   ];
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "text/html" = [ "firefox.desktop" ];
+      "text/xml" = [ "firefox.desktop" ];
+      "application/xhtml+xml" = [ "firefox.desktop" ];
+      "application/vnd.mozilla.xul+xml" = [ "firefox.desktop" ];
+      "x-scheme-handler/http" = [ "firefox.desktop" ];
+      "x-scheme-handler/https" = [ "firefox.desktop" ];
+    };
+  };
+
   programs.firefox = {
     enable = true;
     # If state version ≥ 19.09 then this should be a wrapped Firefox
