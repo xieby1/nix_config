@@ -6,4 +6,5 @@ in {
     extraLuaConfig = "vim.lsp.enable('nixd')\n";
     extraPackages=[nixd];
   };
+  cachix_packages = [nixd];
 }
