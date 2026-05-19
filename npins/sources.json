@@ -84,6 +84,19 @@
       "url": "https://github.com/nix-community/nix-on-droid/archive/f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25.tar.gz",
       "hash": "sha256-UFzk/hZWO1VkciIO5UPaSpJN8s765wsngUSvtJM6d5Q="
     },
+    "nixd": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "nixd"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "f097ac55ba3a366a83cfd8a55f168ee18b209b4b",
+      "url": "https://github.com/xieby1/nixd/archive/f097ac55ba3a366a83cfd8a55f168ee18b209b4b.tar.gz",
+      "hash": "sha256-3HlLYrtNV2/fadKyWJZUmI1qcyZ5NvrnoWCEK6LhuGI="
+    },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-25.11",

@@ -6,8 +6,7 @@
     {programs.neovim={extraLuaConfig="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
     # html
     {programs.neovim={extraLuaConfig="vim.lsp.enable('html')\n";extraPackages=[pkgs.vscode-langservers-extracted];};}
-    # nix
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('nixd')\n";extraPackages=[pkgs.nixd];};}
+    ./nix
     # python
     {programs.neovim={extraLuaConfig="vim.lsp.enable('pyright')\n";extraPackages=[pkgs.pyright];};}
     # typos
