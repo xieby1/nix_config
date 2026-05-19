@@ -5,10 +5,10 @@ in {
   options.ai = lib.mkOption { type = lib.types.attrs; };
   config.ai = {
     deepseek = catwalk-providers.deepseek // {
-      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/deepseek_api_key_nvim.txt");
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/deepseek_api_key_nvim.txt);
     };
     minimax-china = catwalk-providers.minimax-china // rec {
-      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/minimax.txt");
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/minimax.txt);
       # The catwalk-providers.minimax-china.models.xxx does not contain can_reason field.
       # Add the can_reason field here.
       # TODO: Precisely define the type, so we can avoid the missing field.
@@ -18,11 +18,11 @@ in {
       default_small_model_id = let x="MiniMax-M2"; in assert models?${x}; x;
     };
     kimi = catwalk-providers.kimi // {
-      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/kimi.txt");
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/kimi.txt);
     };
     aliyun = {
       id = "aliyun";
-      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/aliyun-zx.txt");
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/aliyun-zx.txt);
       api_endpoint = "https://coding.dashscope.aliyuncs.com/v1";
       models = {
         qwen = rec {
@@ -39,7 +39,7 @@ in {
       };
     };
     siliconflow = {
-      api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/siliconflow_api_key_chatbox.txt");
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/siliconflow_api_key_chatbox.txt);
       api_endpoint = "https://api.siliconflow.cn/v1";
       models = {
         deepseek = rec {
@@ -111,7 +111,7 @@ in {
         };
       };
     };
-    tavily.api_key = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/tavily.txt");
+    tavily.api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/tavily.txt);
     jw-claude = {
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-claude.txt);
