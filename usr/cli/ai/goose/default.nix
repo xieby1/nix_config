@@ -1,20 +1,17 @@
-# TODO: goose is deprecated, remove it in future.
 { pkgs, lib, ... }: let
-  flake = pkgs.flake-compat { src = pkgs.npinsed.ai.goose; };
-  flake-goose = flake.defaultNix.packages.${pkgs.stdenv.system}.default;
-  flake-pkgs = import flake.defaultNix.inputs.nixpkgs {};
-  # TODO: use latest nixpkgs and remove nixpkgs-goose-cli
-  # https://github.com/NixOS/nixpkgs/issues/507256
-  goose-unwrapped = flake-goose
-  .overrideAttrs (old: {
-    cargoDeps = flake-pkgs.rustPlatform.importCargoLock {
-      lockFile = pkgs.npinsed.ai.goose + /Cargo.lock;
-      outputHashes = {
-        "cudaforge-0.1.6" = "sha256-w0e/mfx08BkphDEFEWxuyxyZu/gHiG0m6RHx+3BLzDY=";
-        "opentelemetry-0.31.0" = "sha256-WmrsJUT+hhY9A0YrDMPCB+U23ZPNyX6eZlZ4VYlLk5Y=";
-      };
+  goose-unwrapped = (pkgs.flake-compat {
+    src = pkgs.applyPatches {
+      name = "patched-goose-source";
+      src = pkgs.npinsed.ai.goose;
+      patches = [
+        # fix(flake): #8514 - added output hashes to flake.nix ...#9319
+        (builtins.fetchurl {
+          url = "https://github.com/aaif-goose/goose/pull/9319.patch";
+          sha256 = "0ca1bnn680br8i98c27h9w3ppyqqpscbxhm8mprxyd7chw40xj2a";
+        })
+      ];
     };
-  });
+  }).defaultNix.packages.${pkgs.stdenv.system}.default;
   goose-wrapped = pkgs.runCommand "goose-wrapped" {
     nativeBuildInputs = [pkgs.makeWrapper];
     passthru.unwrapped = goose-unwrapped;
