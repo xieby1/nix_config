@@ -16,6 +16,19 @@
       "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.12.9",
       "hash": "sha256-tA/IOcFcE5vhNGpZNV7sAGEao/LlP6hY/QUnJz0hbeY="
     },
+    "goose": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "aaif-goose",
+        "repo": "goose"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "1997799a4a7b49048e73e861f57c334d964768b8",
+      "url": "https://github.com/aaif-goose/goose/archive/1997799a4a7b49048e73e861f57c334d964768b8.tar.gz",
+      "hash": "sha256-hzIInFl4Uu437SG1Msr6vGh3IFpH6vl/VbgM3XWLdcs="
+    },
     "llm-agents": {
       "type": "Git",
       "repository": {
@@ -41,19 +54,6 @@
       "revision": "663f0b499b6742fef9ee8552943705073088f083",
       "url": "https://github.com/NixOS/nixpkgs/archive/663f0b499b6742fef9ee8552943705073088f083.tar.gz",
       "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
-    },
-    "nixpkgs-goose-cli": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "NixOS",
-        "repo": "nixpkgs"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "54402b393940b01e061a866ac1448bd209425501",
-      "url": "https://github.com/NixOS/nixpkgs/archive/54402b393940b01e061a866ac1448bd209425501.tar.gz",
-      "hash": "sha256-7y4V/VTFxBSnwPHlIyaTzoDCzOhc/i1vnJmwilfpmD4="
     },
     "pi-acp": {
       "type": "GitRelease",
