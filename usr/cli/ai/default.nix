@@ -5,6 +5,7 @@
     ./forge
     ./mcp/vestige
     ./hermes
+    ./goose
   ];
   home.packages = [
     # TODO: use latest nixpkgs and remove nixpkgs-for-copilot
