@@ -13,6 +13,8 @@
         ./project-local-skills.patch
         # Remember last session-only /model switch across CLI/TUI restarts.
         ./remember-last-used-model.patch
+        # Ship plugin.yaml manifests so bundled backend plugins (web providers, etc.) load in packaged builds.
+        ./package-plugin-manifests.patch
         # List all skills in `hermes insights`
         ./insights-list-all-skills.patch
       ];
@@ -56,6 +58,8 @@ in {
       };
       web = {
         backend = "tavily";
+        search_backend = "tavily";
+        extract_backend = "tavily";
       };
       display = {
         show_reasoning = true;
