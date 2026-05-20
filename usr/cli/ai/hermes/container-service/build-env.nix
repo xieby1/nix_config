@@ -26,6 +26,7 @@ in pkgs.buildEnv {
       hermes config set web.backend "tavily"
       hermes config set web.search_backend "tavily"
       hermes config set web.extract_backend "tavily"
+      hermes config set discord.require_mention false
 
       # Replace the shell wrapper with Hermes so Podman stop sends SIGTERM
       # directly to the gateway process instead of leaving it behind as a child.
