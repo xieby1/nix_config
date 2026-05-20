@@ -22,7 +22,10 @@ in pkgs.buildEnv {
         hermes config set model.base_url "https://api.minimaxi.com/anthropic";
         hermes config set model.default "MiniMax-M2.7"
       fi
-      hermes gateway run
+
+      # Replace the shell wrapper with Hermes so Podman stop sends SIGTERM
+      # directly to the gateway process instead of leaving it behind as a child.
+      exec hermes gateway run
     '')
   ];
 }
