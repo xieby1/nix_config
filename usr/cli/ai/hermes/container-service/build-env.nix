@@ -18,10 +18,10 @@ in pkgs.buildEnv {
       # init
       if [[ ! -d ~/.hermes ]]; then
         hermes setup --non-interactive
-        hermes config set model.provider "minimax-cn"
-        hermes config set model.base_url "https://api.minimaxi.com/anthropic";
-        hermes config set model.default "MiniMax-M2.7"
       fi
+      hermes config set model.provider "minimax-cn"
+      hermes config set model.base_url "https://api.minimaxi.com/anthropic";
+      hermes config set model.default "MiniMax-M2.7"
 
       # Replace the shell wrapper with Hermes so Podman stop sends SIGTERM
       # directly to the gateway process instead of leaving it behind as a child.
