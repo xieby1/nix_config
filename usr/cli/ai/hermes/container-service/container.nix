@@ -34,6 +34,8 @@ in pkgs.writeShellScript "container.sh" ''
   NIX_PROFILES=${builtins.getEnv "HOME"}/.local/state/hermes-container-nix-profiles
   mkdir -p $NIX_PROFILES
 
+  # Run without -it: this is a systemd-managed service, not an interactive
+  # terminal session, so non-interactive stdio/signal behavior is preferred.
   ${pkgs.podman}/bin/podman run \
     --name hermes-container \
     --rm --replace \
@@ -55,6 +57,5 @@ in pkgs.writeShellScript "container.sh" ''
     --env ftp_proxy="http://127.0.0.1:8889" \
     --env-file=${builtins.getEnv "HOME"}/.hermes/.env \
     --network=host \
-    -it \
     --rootfs $CONTAINER_HOME start-hermes
 ''
