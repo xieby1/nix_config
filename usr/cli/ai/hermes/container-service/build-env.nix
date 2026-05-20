@@ -12,8 +12,7 @@ in pkgs.buildEnv {
     pkgs.nix
     pkgs.wget
 
-    (pkgs.flake-compat {src=pkgs.npinsed.ai.llm-agents;})
-      .defaultNix.packages.${pkgs.stdenv.system}.hermes-agent
+    (import ../package.nix)
     (pkgs.writeShellScriptBin "start-hermes" ''
       # init
       if [[ ! -d ~/.hermes ]]; then
