@@ -6,25 +6,13 @@
   hermes-agent = (pkgs.flake-compat {src=pkgs.npinsed.ai.llm-agents;})
     .defaultNix.packages.${pkgs.stdenv.system}.hermes-agent
     .overrideAttrs (old: {
-      # TODO: Remove patches once llm-agents updates past 2026.5.14.
-      # Upstream PR #25075 fixes zsh completion (_hermes "$@" -> compdef).
-      # The eval approach below will work once that lands.
       patches = old.patches or [] ++ [
-        # zsh completion fix#22234
-        (builtins.fetchurl {
-          url = "https://github.com/NousResearch/hermes-agent/pull/22234.patch";
-          sha256 = "0qc1nakb74xliw8m7kcj9bb2fxn4rpvr85hbvm39anqla0kqxyib";
-        })
         # ACP configOptions for codecompanion.nvim model switching (ga)
         ./acp-configOptions.patch
         # Add project-local skill discovery#17328 (rebased for v2026.5.7)
         ./project-local-skills.patch
         # Remember last session-only /model switch across CLI/TUI restarts.
         ./remember-last-used-model.patch
-        # Fix cron script bash invocation, pick from hermes-agent commit e93bfc6c93 (2026.05.07).
-        ./cron-bin-bash.patch
-        # Honor custom provider context_length for auxiliary compression#21953
-        ./aux-compression-honor-providers.patch
         # List all skills in `hermes insights`
         ./insights-list-all-skills.patch
       ];
