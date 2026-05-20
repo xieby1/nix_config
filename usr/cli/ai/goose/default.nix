@@ -28,5 +28,6 @@ in {
   cachix_packages = [ goose-unwrapped ];
   programs.zsh.initContent = lib.mkAfter ''
     eval "$(goose completion zsh)"
+    eval "$(goose term init zsh)"
   '';
 }
