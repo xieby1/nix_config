@@ -49,6 +49,9 @@ in pkgs.writeShellScript "container.sh" ''
     --env HOME=/$CONTAINER_USER \
     --env PATH=/bin:/$CONTAINER_USER/.nix-profile/bin \
     --env NIX_PATH=nixpkgs=${<nixpkgs>}:home-manager=${<home-manager>} \
+    --env SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt \
+    --env NIX_SSL_CERT_FILE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt \
+    --env REQUESTS_CA_BUNDLE=${pkgs.cacert}/etc/ssl/certs/ca-bundle.crt \
     --env HTTPS_PROXY="http://127.0.0.1:8889" \
     --env HTTP_PROXY="http://127.0.0.1:8889" \
     --env FTP_PROXY="http://127.0.0.1:8889" \
