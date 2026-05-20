@@ -52,6 +52,7 @@ config = lib.mkIf config.isGui {
       mimeTypes = ["x-scheme-handler/wemeet"];
     })
     nur.repos.yakkhini.dingtalk
+    discord
   ] ++ [
     transmission_4-gtk
     # text
