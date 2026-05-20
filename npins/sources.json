@@ -88,14 +88,14 @@
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "xieby1",
+        "owner": "nix-community",
         "repo": "nixd"
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f097ac55ba3a366a83cfd8a55f168ee18b209b4b",
-      "url": "https://github.com/xieby1/nixd/archive/f097ac55ba3a366a83cfd8a55f168ee18b209b4b.tar.gz",
-      "hash": "sha256-3HlLYrtNV2/fadKyWJZUmI1qcyZ5NvrnoWCEK6LhuGI="
+      "revision": "563d9b1bea72102c74e45eb37869f3eb8f1a1bd1",
+      "url": "https://github.com/nix-community/nixd/archive/563d9b1bea72102c74e45eb37869f3eb8f1a1bd1.tar.gz",
+      "hash": "sha256-GEyLKvGiJPMDDwft00SeVVpR2F0Z5aCWtAQhda+d0wk="
     },
     "nixpkgs": {
       "type": "Channel",
