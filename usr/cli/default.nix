@@ -174,4 +174,17 @@ in
 
   programs.bat.enable = true;
   home.shellAliases.cat = "bat -pp";
+
+  # ~/.config/npins/nixpkgs, home-manager, and nix-on-droid are defined in nix-path.sh,
+  # because <nixpkgs>, <home-manager>, and <nix-on-droid> are needed to bootstrap
+  # nixos-rebuild, home-manager, and nix-on-droid.
+  # However, pkgsu and nur are not needed during bootstrap, so they are defined here.
+  home.file.pkgsu = {
+    target = ".config/npins/pkgsu";
+    source = pkgs.npinsed.pkgsu;
+  };
+  home.file.nur = {
+    target = ".config/npins/nur";
+    source = pkgs.npinsed.nur;
+  };
 }
