@@ -4,6 +4,7 @@
     ./llms
     ./forge
     ./mcp/vestige
+    ./mcp/xiaohongshu
     ./hermes
     ./goose
   ];

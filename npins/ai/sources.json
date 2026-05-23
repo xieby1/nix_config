@@ -131,6 +131,19 @@
       "revision": "6e90a242c0135d80e76d85197f5452b73b733233",
       "url": "https://api.github.com/repos/samvallad33/vestige/tarball/refs/tags/v2.1.2",
       "hash": "sha256-5vrxHo0h+q/zqAUX+8nSLlmBlUGZBo+28K24srl6nIY="
+    },
+    "xiaohongshu-mcp": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "xiaohongshu-mcp"
+      },
+      "branch": "fix/mcp-2025-11-25-compat",
+      "submodules": false,
+      "revision": "3a6cc624de5e10dc1fb7da3568cd478864e73335",
+      "url": "https://github.com/xieby1/xiaohongshu-mcp/archive/3a6cc624de5e10dc1fb7da3568cd478864e73335.tar.gz",
+      "hash": "sha256-85fZvoJfKLfmF8ITHO7Cwli3PPuK+4vGz3zAJgx6OQ4="
     }
   },
   "version": 7
