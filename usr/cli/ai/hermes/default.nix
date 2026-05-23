@@ -48,6 +48,14 @@ in {
         tool_preview_length = 0; # unlimited
         streaming = true;
       };
+      mcp_servers = {
+        xiaohongshu = {
+          url = "http://localhost:18060/mcp";
+          enabled = true;
+          timeout = 300;
+          connect_timeout = 30;
+        };
+      };
     };
   };
   yq-merge.".hermes/.env" = {
