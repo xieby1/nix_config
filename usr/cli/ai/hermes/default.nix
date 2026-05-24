@@ -51,7 +51,7 @@ in {
       mcp_servers = {
         xiaohongshu = {
           url = "http://localhost:18060/mcp";
-          enabled = true;
+          enabled = false;
           timeout = 300;
           connect_timeout = 30;
         };
