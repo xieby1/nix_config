@@ -1,5 +1,5 @@
 pkgs: let
-  configs-dir = "${pkgs.npinsed.catwalk}/internal/providers/configs";
+  configs-dir = "${pkgs.npinsed.ai.catwalk}/internal/providers/configs";
   name_jsons = builtins.attrNames (builtins.readDir configs-dir);
 in pkgs.lib.listToAttrs (
   map (name_json: {
