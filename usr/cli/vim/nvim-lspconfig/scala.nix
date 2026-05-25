@@ -20,6 +20,11 @@
 in {
   programs.neovim = {
     extraLuaConfig = /*lua*/ ''
+      vim.lsp.config("metals", {
+        init_options = {
+          statusBarProvider = "off",
+        },
+      })
       vim.lsp.enable("metals")
     '';
     extraPackages = [
