@@ -32,9 +32,8 @@ in {
           api = config.ai.jw-codex.api_endpoint;
           api_key = config.ai.jw-codex.api_key;
           transport = "codex_responses";
-          models."gpt-5.5" = {
-            context_length = 1000 * 1000;
-          };
+          models."gpt-5.5".context_length = 256 * 1000; # yes, jw gpt-5.5 is 256k
+          models."gpt-5.4".context_length = 1000 * 1000;
         };
       };
       web = {
