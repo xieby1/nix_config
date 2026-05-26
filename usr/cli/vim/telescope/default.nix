@@ -1,15 +1,6 @@
 #MC # telescope-nvim
 { config, pkgs, stdenv, lib, ... }:
 let
-  # Problem: unable to fuzzy search parenthesis '('
-  # https://github.com/nvim-telescope/telescope-fzf-native.nvim/issues/141
-  my-telescope-fzf-native-nvim = {
-    plugin = pkgs.vimPlugins.telescope-fzf-native-nvim;
-    type = "lua";
-    config = /*lua*/ ''
-      require('telescope').load_extension('fzf')
-    '';
-  };
   my-telescope-live-grep-args-nvim = {
     plugin = pkgs.vimPlugins.telescope-live-grep-args-nvim;
     type = "lua";
@@ -29,6 +20,9 @@ let
     '';
   };
 in {
+  imports = [
+    ./fzf-native.nix
+  ];
   programs.neovim = {
     plugins = [{
       plugin = pkgs.vimPlugins.telescope-nvim;
@@ -36,7 +30,6 @@ in {
       config = /*lua*/ ''
         require('telescope').setup {
           extensions = {
-            fzf = {},
             ["ui-select"] = {
               require("telescope.themes").get_dropdown {}
             },
@@ -62,7 +55,6 @@ in {
         vim.keymap.set('n', '<space>C', require('telescope.builtin').commands)
       '';
     }
-      my-telescope-fzf-native-nvim
       pkgs.vimPlugins.plenary-nvim
       my-telescope-live-grep-args-nvim
       my-telescope-ui-select-nvim
