@@ -1,19 +1,9 @@
 #MC # telescope-nvim
-{ config, pkgs, stdenv, lib, ... }:
-let
-  my-telescope-ui-select-nvim = {
-    plugin = pkgs.vimPlugins.telescope-ui-select-nvim;
-    type = "lua";
-    config = /*lua*/ ''
-      -- To get ui-select loaded and working with telescope, you need to call
-      -- load_extension, somewhere after setup function:
-      require("telescope").load_extension("ui-select")
-    '';
-  };
-in {
+{ config, pkgs, stdenv, lib, ... }: {
   imports = [
     ./fzf-native.nix
     ./live-grep-args.nix
+    ./ui-select.nix
   ];
   programs.neovim = {
     plugins = [{
@@ -21,11 +11,6 @@ in {
       type = "lua";
       config = /*lua*/ ''
         require('telescope').setup {
-          extensions = {
-            ["ui-select"] = {
-              require("telescope.themes").get_dropdown {}
-            },
-          },
           defaults = {
             layout_strategy = 'vertical',
             layout_config = {
@@ -48,7 +33,6 @@ in {
       '';
     }
       pkgs.vimPlugins.plenary-nvim
-      my-telescope-ui-select-nvim
     ];
   };
 }
