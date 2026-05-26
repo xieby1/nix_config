@@ -26,10 +26,6 @@
               default = "";
               type = lib.types.str;
             };
-            yqLoadFunc = lib.mkOption {
-              default = "load";
-              type = lib.types.str;
-            };
           };
         }
       );
@@ -51,7 +47,7 @@
           # Operator: `*d` means deeply merge and deeply merge array
           # See: https://mikefarah.gitbook.io/yq/operators/multiply-merge
           # Noted: If the element of array is string, the old array will be overwrite.
-          run ${pkgs.yq-go}/bin/yq ${value.yqExtraArgs} -i '. *d ${value.yqLoadFunc}("${target}")' ${old_target}
+          run ${pkgs.yq-go}/bin/yq ea ${value.yqExtraArgs} -i 'select(fileIndex == 0) *d select(fileIndex == 1)' ${old_target} ${target}
         else
           cat ~/${target} > ~/${old_target}
         fi

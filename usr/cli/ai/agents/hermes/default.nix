@@ -79,7 +79,6 @@ in {
   yq-merge.".hermes/.env" = {
     generator = lib.generators.toKeyValue {};
     yqExtraArgs = "-p=props -o=props --properties-separator='='";
-    yqLoadFunc = "load_props";
     expr = {
       KIMI_API_KEY = config.ai.kimi.api_key;
       MINIMAX_CN_API_KEY = config.ai.minimax-china.api_key;
