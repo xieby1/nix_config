@@ -36,6 +36,10 @@ in {
           models."gpt-5.4".context_length = 1000 * 1000;
         };
       };
+      compression = {
+        enabled = true;
+        threshold = 0.8;
+      };
       web = {
         backend = "tavily";
         search_backend = "tavily";
