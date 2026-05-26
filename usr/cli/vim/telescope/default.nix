@@ -1,5 +1,4 @@
-#MC # telescope-nvim
-{ config, pkgs, stdenv, lib, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./fzf-native.nix
     ./live-grep-args.nix
@@ -31,8 +30,6 @@
         vim.keymap.set('n', '<space>c', require('telescope.builtin').command_history)
         vim.keymap.set('n', '<space>C', require('telescope.builtin').commands)
       '';
-    }
-      pkgs.vimPlugins.plenary-nvim
-    ];
+    }];
   };
 }
