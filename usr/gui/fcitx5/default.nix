@@ -4,7 +4,7 @@
 #MC * ibus mozc not support shift toggle activation
 #MC * ibus configuration use db, not file
 #MC * ibus cannot be configured by user (home-manager)
-{ pkgs, ... }: let
+{ pkgs, lib, ... }: let
   # 自建拼音字典
   #   参考：https://wiki.archlinux.org/title/Fcitx5
   #         https://github.com/fcitx/libime/blob/master/tools/libime_pinyindict.cpp
@@ -30,6 +30,20 @@ in {
   };
 
   imports = [ ./module.nix ];
+  yq-merge.".config/fcitx5/config" = {
+    expr = {
+      # Disable default super+space, shift+super+space
+      "Hotkey/EnumerateGroupForwardKeys"."0" = "";
+      "Hotkey/EnumerateGroupBackwardKeys"."0" = "";
+      "Hotkey/TriggerKeys"."0"="Shift_L";
+      "Hotkey/EnumerateForwardKeys"."0"="Control+space";
+      "Hotkey/EnumerateBackwardKeys"."0"="Control+Shift+space";
+    };
+    generator = lib.generators.toINI {};
+    yqExtraArgs = "-o ini -p ini";
+    # yq arg `--properties-separator '='` only works for props, does not works for ini
+    postOnChange = "sed -i 's/ = /=/' ~/.config/fcitx5/config";
+  };
   config_fcitx5 = {
     profile = (pkgs.formats.ini {}).generate "profile" {
       "Groups/0" = {
@@ -47,22 +61,6 @@ in {
       };
       "Groups/0/Items/3" = {
         Name="hangul";
-      };
-    };
-    config = (pkgs.formats.ini {}).generate "config" {
-      "Hotkey" = {
-        # Disable default super+space, shift+super+space
-        EnumerateGroupForwardKeys="";
-        EnumerateGroupBackwardKeys="";
-      };
-      "Hotkey/TriggerKeys" = {
-        "0"="Shift_L";
-      };
-      "Hotkey/EnumerateForwardKeys" = {
-        "0"="Control+space";
-      };
-      "Hotkey/EnumerateBackwardKeys" = {
-        "0"="Control+Shift+space";
       };
     };
     "conf/classicui.conf" = (pkgs.formats.keyValue {}).generate "classicui.conf" {
