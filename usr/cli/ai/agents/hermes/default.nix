@@ -65,7 +65,12 @@ in {
         github = {
           command = ''${pkgs.github-mcp-server}/bin/github-mcp-server'';
           args = ["stdio"];
-          env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile "${config.home.homeDirectory}/Gist/Vault/AI/github-mcp-server-minimal.txt");};
+          env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile ~/Gist/Vault/AI/github-mcp-server-all-repos-daily.txt);};
+        };
+        github-guanchuan = {
+          command = ''${pkgs.github-mcp-server}/bin/github-mcp-server'';
+          args = ["stdio"];
+          env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile ~/Gist/Vault/AI/github-mcp-server-guanchuan-all-ro.txt);};
         };
         xiaohongshu = {
           url = "http://localhost:18060/mcp";
