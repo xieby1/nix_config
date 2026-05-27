@@ -30,8 +30,8 @@ in {
   };
 
   imports = [ ./module ];
-  yq-merge.".config/fcitx5/config" = {
-    expr = {
+  my.config-fcitx5.".config/fcitx5/config" = {
+    expr.sections = {
       # Disable default super+space, shift+super+space
       "Hotkey/EnumerateGroupForwardKeys"."0" = "";
       "Hotkey/EnumerateGroupBackwardKeys"."0" = "";
@@ -39,13 +39,9 @@ in {
       "Hotkey/EnumerateForwardKeys"."0"="Super+space";
       "Hotkey/EnumerateBackwardKeys"."0"="Super+Shift+space";
     };
-    generator = lib.generators.toINI {};
-    yqExtraArgs = "-o ini -p ini";
-    # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/config'';
   };
-  yq-merge.".config/fcitx5/profile" = {
-    expr = {
+  my.config-fcitx5.".config/fcitx5/profile" = {
+    expr.sections = {
       "Groups/0" = {
         Name="Default";
         "Default Layout"="us";
@@ -63,13 +59,9 @@ in {
         Name="hangul";
       };
     };
-    generator = lib.generators.toINI {};
-    yqExtraArgs = "-o ini -p ini";
-    # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/profile'';
   };
-  yq-merge.".config/fcitx5/conf/classicui.conf" = {
-    expr = {
+  my.config-fcitx5.".config/fcitx5/conf/classicui.conf" = {
+    expr.globalSection = {
       Font=''"Sans Serif 16"'';
       MenuFont=''"Sans Serif 16"'';
       TrayFont=''"Sans Serif 16"'';
@@ -80,29 +72,17 @@ in {
       # Follow system accent color if it is supported by theme and desktop
       UseAccentColor="True";
     };
-    generator = lib.generators.toKeyValue {};
-    yqExtraArgs = "-o ini -p ini";
-    # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/conf/classicui.conf'';
   };
-  yq-merge.".config/fcitx5/conf/punctuation.conf" = {
-    expr = {
+  my.config-fcitx5.".config/fcitx5/conf/punctuation.conf" = {
+    expr.globalSection = {
       # Half width punctuation after latin letter or number
       HalfWidthPuncAfterLetterOrNumber = "False";
     };
-    generator = lib.generators.toKeyValue {};
-    yqExtraArgs = "-o ini -p ini";
-    # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/conf/punctuation.conf'';
   };
-  yq-merge.".config/fcitx5/conf/chttrans.conf" = {
-    expr = {
+  my.config-fcitx5.".config/fcitx5/conf/chttrans.conf" = {
+    expr.sections = {
       Hotkey."0" = "Alt+F";
     };
-    generator = lib.generators.toINI {};
-    yqExtraArgs = "-o ini -p ini";
-    # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/conf/chttrans.conf'';
   };
   home.file.punc_mb_zh_CN = {
     source = pkgs.runCommand "punc.mb.zh_CN" {} /*bash*/ ''
