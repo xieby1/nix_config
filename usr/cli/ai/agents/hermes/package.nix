@@ -28,5 +28,8 @@ in (pkgs.flake-compat {
 .override {
   # Providers that route through Anthropic-compatible API need the anthropic
   # SDK pre-installed (nix store is read-only, pip install at runtime fails).
-  extraDependencyGroups = [ "anthropic" ];
+  extraDependencyGroups = [
+    "anthropic"
+    "messaging" # discord
+  ];
 }
