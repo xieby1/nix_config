@@ -14,8 +14,6 @@ in (pkgs.flake-compat {
     src = pkgs.npinsed.ai.hermes-agent;
     name = "hermes-source-code";
     patches = [
-      # ACP configOptions for codecompanion.nvim model switching (ga)
-      ./acp-configOptions.patch
       # Add project-local skill discovery#17328 (rebased for v2026.5.7)
       ./project-local-skills.patch
       # Remember last session-only /model switch across CLI/TUI restarts.
