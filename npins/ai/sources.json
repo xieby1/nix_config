@@ -45,6 +45,22 @@
       "url": "https://github.com/aaif-goose/goose/archive/1997799a4a7b49048e73e861f57c334d964768b8.tar.gz",
       "hash": "sha256-hzIInFl4Uu437SG1Msr6vGh3IFpH6vl/VbgM3XWLdcs="
     },
+    "hermes-agent": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NousResearch",
+        "repo": "hermes-agent"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2026.5.16",
+      "revision": "8487dfb57d2f2f7b310a2b3eb692b32674af22cd",
+      "url": "https://api.github.com/repos/NousResearch/hermes-agent/tarball/refs/tags/v2026.5.16",
+      "hash": "sha256-d9qhrTy45Q5UsmjapqMHOVi9e+gR9zE8Nq9Z0wObLmc="
+    },
     "llm-agents": {
       "type": "Git",
       "repository": {
