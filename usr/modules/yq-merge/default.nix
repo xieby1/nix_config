@@ -54,5 +54,18 @@
         ${value.postOnChange}
       '';
     }) config.yq-merge;
+
+    nixpkgs.overlays = [(final: prev: {
+      yq-go = prev.yq-go.overrideAttrs (old: {
+        patches = old.patches or [] ++ [(
+          builtins.fetchurl {
+            # fix: reset INI decoder state on init#2719
+            url = "https://github.com/mikefarah/yq/pull/2719.patch";
+            sha256 = "0skxii08vckxyg89f6dz66y1aspbyq25c99d9yzn8s2gdnksb5vc";
+          }
+        )];
+      });
+    })];
+    cachix_packages = [ pkgs.yq-go ];
   };
 }
