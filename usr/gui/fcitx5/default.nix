@@ -68,8 +68,8 @@ in {
     # yq arg `--properties-separator '='` only works for props, does not works for ini
     postOnChange = ''sed -i 's/\s\+=\s\+/=/' ~/.config/fcitx5/config'';
   };
-  config_fcitx5 = {
-    "conf/classicui.conf" = (pkgs.formats.keyValue {}).generate "classicui.conf" {
+  yq-merge.".config/fcitx5/conf/classicui.conf" = {
+    expr = {
       Font=''"Sans Serif 16"'';
       MenuFont=''"Sans Serif 16"'';
       TrayFont=''"Sans Serif 16"'';
@@ -80,6 +80,10 @@ in {
       # Follow system accent color if it is supported by theme and desktop
       UseAccentColor="True";
     };
+    generator = lib.generators.toKeyValue {};
+    yqExtraArgs = "-p=props -o=props --properties-separator='='";
+  };
+  config_fcitx5 = {
     "conf/punctuation.conf" = (pkgs.formats.keyValue {}).generate "punctuation.conf" {
       # Half width punctuation after latin letter or number
       HalfWidthPuncAfterLetterOrNumber = "False";
