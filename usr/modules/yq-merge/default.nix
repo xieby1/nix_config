@@ -66,6 +66,5 @@
         )];
       });
     })];
-    cachix_packages = [ pkgs.yq-go ];
   };
 }
