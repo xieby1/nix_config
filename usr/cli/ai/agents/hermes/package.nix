@@ -22,6 +22,8 @@ in (pkgs.flake-compat {
       ./package-plugin-manifests.patch
       # List all skills in `hermes insights`
       ./insights-list-all-skills.patch
+      # TUI status bar: estimate context usage when provider omits response.usage
+      ./tui-context-usage-fallback-estimation.patch
     ];
   };
 }).defaultNix.packages.${pkgs.stdenv.system}.default
