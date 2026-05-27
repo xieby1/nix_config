@@ -42,7 +42,7 @@ in {
     generator = lib.generators.toINI {};
     yqExtraArgs = "-o ini -p ini";
     # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' ~/.config/fcitx5/config'';
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/config'';
   };
   yq-merge.".config/fcitx5/profile" = {
     expr = {
@@ -66,7 +66,7 @@ in {
     generator = lib.generators.toINI {};
     yqExtraArgs = "-o ini -p ini";
     # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = ''sed -i 's/\s\+=\s\+/=/' ~/.config/fcitx5/config'';
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/profile'';
   };
   yq-merge.".config/fcitx5/conf/classicui.conf" = {
     expr = {
@@ -81,17 +81,28 @@ in {
       UseAccentColor="True";
     };
     generator = lib.generators.toKeyValue {};
-    yqExtraArgs = "-p=props -o=props --properties-separator='='";
+    yqExtraArgs = "-o ini -p ini";
+    # yq arg `--properties-separator '='` only works for props, does not works for ini
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/conf/classicui.conf'';
   };
-  config_fcitx5 = {
-    "conf/punctuation.conf" = (pkgs.formats.keyValue {}).generate "punctuation.conf" {
+  yq-merge.".config/fcitx5/conf/punctuation.conf" = {
+    expr = {
       # Half width punctuation after latin letter or number
       HalfWidthPuncAfterLetterOrNumber = "False";
     };
-    # simplified/traditional chinese conversion
-    "conf/chttrans.conf" = (pkgs.formats.ini {}).generate "chttrans.conf" {
+    generator = lib.generators.toKeyValue {};
+    yqExtraArgs = "-o ini -p ini";
+    # yq arg `--properties-separator '='` only works for props, does not works for ini
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/conf/punctuation.conf'';
+  };
+  yq-merge.".config/fcitx5/conf/chttrans.conf" = {
+    expr = {
       Hotkey."0" = "Alt+F";
     };
+    generator = lib.generators.toINI {};
+    yqExtraArgs = "-o ini -p ini";
+    # yq arg `--properties-separator '='` only works for props, does not works for ini
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' .config/fcitx5/conf/chttrans.conf'';
   };
   home.file.punc_mb_zh_CN = {
     source = pkgs.runCommand "punc.mb.zh_CN" {} /*bash*/ ''
