@@ -62,12 +62,11 @@ Subject: [PATCH 1/2] Re: Add project-local skill discovery (PR #17328, rebased
 # - The _resolve_cwd git-repo gating can be dropped if upstream
 #   adopts a similar fix.  The .agents/skills path should be kept
 #   unless upstream adds it too.
-
 diff --git a/agent/prompt_builder.py b/agent/prompt_builder.py
-index 2f00020cc..0e06ac82a 100644
+index 2f91a35e2..e5d9b580d 100644
 --- a/agent/prompt_builder.py
 +++ b/agent/prompt_builder.py
-@@ -733,10 +733,15 @@ def build_skills_system_prompt(
+@@ -999,10 +999,15 @@ def build_skills_system_prompt(
      are read-only — they appear in the index but new skills are always created
      in the local dir.  Local skills take precedence when names collide.
      """
@@ -88,7 +87,7 @@ index 2f00020cc..0e06ac82a 100644
  
      # ── Layer 1: in-process LRU cache ─────────────────────────────────
 diff --git a/agent/skill_utils.py b/agent/skill_utils.py
-index cecbb1fc6..bc30e9a0c 100644
+index 5b8e4c22a..73331db8e 100644
 --- a/agent/skill_utils.py
 +++ b/agent/skill_utils.py
 @@ -8,6 +8,7 @@ tool registration or provider resolution.
@@ -99,23 +98,44 @@ index cecbb1fc6..bc30e9a0c 100644
  import sys
  from pathlib import Path
  from typing import Any, Dict, List, Optional, Set, Tuple
-@@ -168,7 +169,76 @@ def _normalize_string_set(values) -> Set[str]:
+@@ -222,6 +223,105 @@ def _normalize_string_set(values) -> Set[str]:
      return {str(v).strip() for v in values if str(v).strip()}
  
  
--# ── External skills directories ──────────────────────────────────────────
 +# ── Skill directory discovery ────────────────────────────────────────────
 +
 +
 +def _resolve_cwd(cwd: Optional[os.PathLike | str] = None) -> Path:
-+    """Return the session working directory used for project-local discovery."""
-+    raw_cwd = (
-+        cwd
-+        or os.getenv("TERMINAL_CWD")
-+        or os.getenv("HERMES_CWD")
-+        or os.getcwd()
-+    )
-+    return Path(raw_cwd).expanduser().resolve()
++    """Return the session working directory used for project-local discovery.
++
++    Prefers ``TERMINAL_CWD`` / ``HERMES_CWD`` when they lead to a git repo;
++    falls back to ``os.getcwd()`` otherwise, so stale env vars from a
++    previous terminal-tool session don't shadow the actual shell CWD.
++    """
++    env_candidates: List[Optional[str]] = []
++    if cwd is not None:
++        env_candidates.append(str(cwd))
++    else:
++        for var in ("TERMINAL_CWD", "HERMES_CWD"):
++            v = os.getenv(var)
++            if v:
++                env_candidates.append(v)
++    env_candidates.append(os.getcwd())
++
++    # Try env-var CWDs first, but only accept them if they are inside a git
++    # repo (or are themselves a git repo).  If none qualify, use os.getcwd().
++    for i, raw in enumerate(env_candidates):
++        candidate = Path(raw).expanduser().resolve()
++        is_last = (i == len(env_candidates) - 1)
++        if is_last:
++            return candidate  # os.getcwd() always wins on last try
++        # Accept env-var CWD only if it sits inside a git repo
++        if (candidate / ".git").exists():
++            return candidate
++        for parent in candidate.parents:
++            if (parent / ".git").exists():
++                return candidate
++    return Path(env_candidates[-1]).expanduser().resolve()
 +
 +
 +def _find_project_root(cwd: Optional[os.PathLike | str] = None) -> Path:
@@ -149,12 +169,17 @@ index cecbb1fc6..bc30e9a0c 100644
 +    A git root is used when available.  Existing directories are returned in
 +    precedence order before global/external skills:
 +
-+    1. ``<project-root>/.hermes/skills``
-+    2. ``<project-root>/.ai/skills``
++    1. ``<project-root>/.agents/skills``
++    2. ``<project-root>/.hermes/skills``
++    3. ``<project-root>/.ai/skills``
 +    """
 +    root = _find_project_root(cwd)
 +    global_skills = get_skills_dir().resolve()
-+    candidates = [root / ".hermes" / "skills", root / ".ai" / "skills"]
++    candidates = [
++        root / ".agents" / "skills",
++        root / ".hermes" / "skills",
++        root / ".ai" / "skills",
++    ]
 +    result: List[Path] = []
 +    seen: Set[Path] = set()
 +    for candidate in candidates:
@@ -174,10 +199,12 @@ index cecbb1fc6..bc30e9a0c 100644
 +    so empty/non-existent project skill roots do not pollute listings.
 +    """
 +    return (_find_project_root(cwd) / ".hermes" / "skills").resolve()
++
++
+ # ── External skills directories ──────────────────────────────────────────
  
- 
- def get_external_skills_dirs() -> List[Path]:
-@@ -232,14 +302,22 @@ def get_external_skills_dirs() -> List[Path]:
+ # (config_path_str, mtime_ns) -> resolved external dirs list.  Keyed by
+@@ -324,14 +424,22 @@ def get_external_skills_dirs() -> List[Path]:
      return result
  
  
@@ -207,7 +234,7 @@ index cecbb1fc6..bc30e9a0c 100644
  
  
 diff --git a/tests/agent/test_external_skills.py b/tests/agent/test_external_skills.py
-index 1a9cd63d5..865f6412c 100644
+index 1a9cd63d5..aa3eea27b 100644
 --- a/tests/agent/test_external_skills.py
 +++ b/tests/agent/test_external_skills.py
 @@ -1,6 +1,7 @@
@@ -282,7 +309,7 @@ index 1a9cd63d5..865f6412c 100644
  
  class TestExternalSkillView:
      def test_skill_view_finds_external(self, hermes_home, external_skills_dir):
-@@ -155,3 +206,26 @@ class TestExternalSkillView:
+@@ -155,3 +206,25 @@ class TestExternalSkillView:
              result = json.loads(skill_view("my-external-skill"))
          assert result["success"] is True
          assert "external things" in result["content"]
@@ -308,9 +335,8 @@ index 1a9cd63d5..865f6412c 100644
 +        assert result["success"] is True
 +        assert "Project local content" in result["content"]
 +        assert "outside the trusted skills directory" not in caplog.text
-+
 diff --git a/tests/agent/test_prompt_builder.py b/tests/agent/test_prompt_builder.py
-index d99e6944f..9aa6096d9 100644
+index 76d13f5d2..2ce470e10 100644
 --- a/tests/agent/test_prompt_builder.py
 +++ b/tests/agent/test_prompt_builder.py
 @@ -428,6 +428,29 @@ class TestBuildSkillsSystemPrompt:
@@ -344,7 +370,7 @@ index d99e6944f..9aa6096d9 100644
  class TestBuildNousSubscriptionPrompt:
      def test_includes_active_subscription_features(self, monkeypatch):
 diff --git a/tests/tools/test_skill_manager_tool.py b/tests/tools/test_skill_manager_tool.py
-index 96c3a361f..ebc9bea3e 100644
+index 33efbb98a..5086cdfcd 100644
 --- a/tests/tools/test_skill_manager_tool.py
 +++ b/tests/tools/test_skill_manager_tool.py
 @@ -196,6 +196,46 @@ class TestCreateSkill:
@@ -395,18 +421,9 @@ index 96c3a361f..ebc9bea3e 100644
          with _skill_dir(tmp_path):
              result = _create_skill("my-skill", VALID_SKILL_CONTENT, category="devops")
 diff --git a/tools/skill_manager_tool.py b/tools/skill_manager_tool.py
-index d253cd2a7..f877abf55 100644
+index 4ce5f06e4..2230990ec 100644
 --- a/tools/skill_manager_tool.py
 +++ b/tools/skill_manager_tool.py
-@@ -40,7 +40,7 @@ import shutil
- import tempfile
- from pathlib import Path
- from hermes_constants import get_hermes_home, display_hermes_home
--from typing import Dict, Any, Optional, Tuple
-+from typing import Dict, Any, List, Optional, Tuple
- 
- from utils import atomic_replace, is_truthy_value
- from hermes_cli.config import cfg_get
 @@ -104,7 +104,7 @@ def _security_scan_skill(skill_dir: Path) -> Optional[str]:
  import yaml
  
@@ -465,7 +482,7 @@ index d253cd2a7..f877abf55 100644
  
  
  def _find_skill(name: str) -> Optional[Dict[str, Any]]:
-@@ -370,7 +379,7 @@ def _atomic_write_text(file_path: Path, content: str, encoding: str = "utf-8") -
+@@ -473,7 +482,7 @@ def _atomic_write_text(file_path: Path, content: str, encoding: str = "utf-8") -
  # Core actions
  # =============================================================================
  
@@ -474,7 +491,7 @@ index d253cd2a7..f877abf55 100644
      """Create a new user skill with SKILL.md content."""
      # Validate name
      err = _validate_name(name)
-@@ -381,6 +390,9 @@ def _create_skill(name: str, content: str, category: str = None) -> Dict[str, An
+@@ -484,6 +493,9 @@ def _create_skill(name: str, content: str, category: str = None) -> Dict[str, An
      if err:
          return {"success": False, "error": err}
  
@@ -484,7 +501,7 @@ index d253cd2a7..f877abf55 100644
      # Validate content
      err = _validate_frontmatter(content)
      if err:
-@@ -399,7 +411,7 @@ def _create_skill(name: str, content: str, category: str = None) -> Dict[str, An
+@@ -502,7 +514,7 @@ def _create_skill(name: str, content: str, category: str = None) -> Dict[str, An
          }
  
      # Create the skill directory
@@ -493,7 +510,7 @@ index d253cd2a7..f877abf55 100644
      skill_dir.mkdir(parents=True, exist_ok=True)
  
      # Write SKILL.md atomically
-@@ -415,8 +427,9 @@ def _create_skill(name: str, content: str, category: str = None) -> Dict[str, An
+@@ -518,8 +530,9 @@ def _create_skill(name: str, content: str, category: str = None) -> Dict[str, An
      result = {
          "success": True,
          "message": f"Skill '{name}' created.",
@@ -504,7 +521,7 @@ index d253cd2a7..f877abf55 100644
      }
      if category:
          result["category"] = category
-@@ -596,9 +609,9 @@ def _delete_skill(name: str, absorbed_into: Optional[str] = None) -> Dict[str, A
+@@ -699,9 +712,9 @@ def _delete_skill(name: str, absorbed_into: Optional[str] = None) -> Dict[str, A
      skills_root = _containing_skills_root(skill_dir)
      shutil.rmtree(skill_dir)
  
@@ -516,7 +533,7 @@ index d253cd2a7..f877abf55 100644
          parent.rmdir()
  
      message = f"Skill '{name}' deleted."
-@@ -721,6 +734,7 @@ def skill_manage(
+@@ -824,6 +837,7 @@ def skill_manage(
      new_string: str = None,
      replace_all: bool = False,
      absorbed_into: str = None,
@@ -524,7 +541,7 @@ index d253cd2a7..f877abf55 100644
  ) -> str:
      """
      Manage user-created skills. Dispatches to the appropriate action handler.
-@@ -730,7 +744,7 @@ def skill_manage(
+@@ -833,7 +847,7 @@ def skill_manage(
      if action == "create":
          if not content:
              return tool_error("content is required for 'create'. Provide the full SKILL.md text (frontmatter + body).", success=False)
@@ -533,7 +550,7 @@ index d253cd2a7..f877abf55 100644
  
      elif action == "edit":
          if not content:
-@@ -799,7 +813,7 @@ SKILL_MANAGE_SCHEMA = {
+@@ -902,7 +916,7 @@ SKILL_MANAGE_SCHEMA = {
      "description": (
          "Manage skills (create, update, delete). Skills are your procedural "
          "memory — reusable approaches for recurring task types. "
@@ -542,7 +559,7 @@ index d253cd2a7..f877abf55 100644
          "Actions: create (full SKILL.md + optional category), "
          "patch (old_string/new_string — preferred for fixes), "
          "edit (full SKILL.md rewrite — major overhauls only), "
-@@ -876,6 +890,15 @@ SKILL_MANAGE_SCHEMA = {
+@@ -979,6 +993,15 @@ SKILL_MANAGE_SCHEMA = {
                      "Only used with 'create'."
                  )
              },
@@ -558,7 +575,7 @@ index d253cd2a7..f877abf55 100644
              "file_path": {
                  "type": "string",
                  "description": (
-@@ -926,6 +949,7 @@ registry.register(
+@@ -1029,6 +1052,7 @@ registry.register(
          old_string=args.get("old_string"),
          new_string=args.get("new_string"),
          replace_all=args.get("replace_all", False),
@@ -568,10 +585,10 @@ index d253cd2a7..f877abf55 100644
      emoji="📝",
  )
 diff --git a/tools/skills_tool.py b/tools/skills_tool.py
-index 5da340c86..624a07dad 100644
+index 0cd61cc75..c4cd1da66 100644
 --- a/tools/skills_tool.py
 +++ b/tools/skills_tool.py
-@@ -450,12 +450,13 @@ def _get_category_from_path(skill_path: Path) -> Optional[str]:
+@@ -451,12 +451,13 @@ def _get_category_from_path(skill_path: Path) -> Optional[str]:
      For paths like: ~/.hermes/skills/mlops/axolotl/SKILL.md -> "mlops"
      Also works for external skill dirs configured via skills.external_dirs.
      """
@@ -589,7 +606,7 @@ index 5da340c86..624a07dad 100644
      except Exception:
          pass
      for skills_dir in dirs_to_check:
-@@ -557,7 +558,7 @@ def _find_all_skills(*, skip_disabled: bool = False) -> List[Dict[str, Any]]:
+@@ -558,7 +559,7 @@ def _find_all_skills(*, skip_disabled: bool = False) -> List[Dict[str, Any]]:
      Returns:
          List of skill metadata dicts (name, description, category).
      """
@@ -598,7 +615,7 @@ index 5da340c86..624a07dad 100644
  
      skills = []
      seen_names: set = set()
-@@ -565,11 +566,17 @@ def _find_all_skills(*, skip_disabled: bool = False) -> List[Dict[str, Any]]:
+@@ -566,11 +567,17 @@ def _find_all_skills(*, skip_disabled: bool = False) -> List[Dict[str, Any]]:
      # Load disabled set once (not per-skill)
      disabled = set() if skip_disabled else _get_disabled_skill_names()
  
@@ -620,7 +637,7 @@ index 5da340c86..624a07dad 100644
  
      for scan_dir in dirs_to_scan:
          for skill_md in iter_skill_index_files(scan_dir, "SKILL.md"):
-@@ -936,13 +943,18 @@ def skill_view(
+@@ -937,13 +944,18 @@ def skill_view(
              if bare:
                  local_category_name = f"{namespace}/{bare}"
  
@@ -644,7 +661,7 @@ index 5da340c86..624a07dad 100644
  
          if not all_dirs:
              return json.dumps(
-@@ -1024,14 +1036,16 @@ def skill_view(
+@@ -1059,14 +1071,16 @@ def skill_view(
                  ensure_ascii=False,
              )
  
@@ -666,106 +683,3 @@ index 5da340c86..624a07dad 100644
          for _td in _trusted_dirs:
              try:
                  skill_md.resolve().relative_to(_td)
--- 
-2.51.2
-
-
-From b6763173ad71bd5fb19bbc4f94fc0719f4b007f9 Mon Sep 17 00:00:00 2001
-From: xieby1 <xieby1@outlook.com>
-Date: Thu, 14 May 2026 13:56:39 +0800
-Subject: [PATCH 2/2] fix: add .agents/skills discovery + handle stale
- TERMINAL_CWD
-
----
- agent/skill_utils.py | 49 ++++++++++++++++++++++++++++++++++----------
- 1 file changed, 38 insertions(+), 11 deletions(-)
-
-# === PATCH 2/2 NOTES ===
-# This is a LOCAL addition, not from the upstream PR.
-# It fixes two issues found during testing:
-#
-# 1. Stale TERMINAL_CWD: the env var can be leftover from a previous
-#    terminal-tool `cd` session, pointing to a non-git directory.
-#    _resolve_cwd now gates env-var CWDs on git-repo membership;
-#    os.getcwd() wins when env vars are stale.  This is the main fix.
-#
-# 2. Missing .agents/skills directory: the original PR only discovered
-#    .hermes/skills and .ai/skills.  Added .agents/skills (first in
-#    precedence) because this user's project skills live there.
-#
-# If upstream later adds similar CWD handling or .agents/skills
-# discovery, this whole commit can be dropped.
-
-diff --git a/agent/skill_utils.py b/agent/skill_utils.py
-index bc30e9a0c..987c26a79 100644
---- a/agent/skill_utils.py
-+++ b/agent/skill_utils.py
-@@ -173,14 +173,36 @@ def _normalize_string_set(values) -> Set[str]:
- 
- 
- def _resolve_cwd(cwd: Optional[os.PathLike | str] = None) -> Path:
--    """Return the session working directory used for project-local discovery."""
--    raw_cwd = (
--        cwd
--        or os.getenv("TERMINAL_CWD")
--        or os.getenv("HERMES_CWD")
--        or os.getcwd()
--    )
--    return Path(raw_cwd).expanduser().resolve()
-+    """Return the session working directory used for project-local discovery.
-+
-+    Prefers ``TERMINAL_CWD`` / ``HERMES_CWD`` when they lead to a git repo;
-+    falls back to ``os.getcwd()`` otherwise, so stale env vars from a
-+    previous terminal-tool session don't shadow the actual shell CWD.
-+    """
-+    env_candidates: List[Optional[str]] = []
-+    if cwd is not None:
-+        env_candidates.append(str(cwd))
-+    else:
-+        for var in ("TERMINAL_CWD", "HERMES_CWD"):
-+            v = os.getenv(var)
-+            if v:
-+                env_candidates.append(v)
-+    env_candidates.append(os.getcwd())
-+
-+    # Try env-var CWDs first, but only accept them if they are inside a git
-+    # repo (or are themselves a git repo).  If none qualify, use os.getcwd().
-+    for i, raw in enumerate(env_candidates):
-+        candidate = Path(raw).expanduser().resolve()
-+        is_last = (i == len(env_candidates) - 1)
-+        if is_last:
-+            return candidate  # os.getcwd() always wins on last try
-+        # Accept env-var CWD only if it sits inside a git repo
-+        if (candidate / ".git").exists():
-+            return candidate
-+        for parent in candidate.parents:
-+            if (parent / ".git").exists():
-+                return candidate
-+    return Path(env_candidates[-1]).expanduser().resolve()
- 
- 
- def _find_project_root(cwd: Optional[os.PathLike | str] = None) -> Path:
-@@ -214,12 +236,17 @@ def get_project_skills_dirs(cwd: Optional[os.PathLike | str] = None) -> List[Pat
-     A git root is used when available.  Existing directories are returned in
-     precedence order before global/external skills:
- 
--    1. ``<project-root>/.hermes/skills``
--    2. ``<project-root>/.ai/skills``
-+    1. ``<project-root>/.agents/skills``
-+    2. ``<project-root>/.hermes/skills``
-+    3. ``<project-root>/.ai/skills``
-     """
-     root = _find_project_root(cwd)
-     global_skills = get_skills_dir().resolve()
--    candidates = [root / ".hermes" / "skills", root / ".ai" / "skills"]
-+    candidates = [
-+        root / ".agents" / "skills",
-+        root / ".hermes" / "skills",
-+        root / ".ai" / "skills",
-+    ]
-     result: List[Path] = []
-     seen: Set[Path] = set()
-     for candidate in candidates:
--- 
-2.51.2
-

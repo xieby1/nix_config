@@ -1,3 +1,10 @@
+# Patch: List all skills in `hermes insights`
+#
+# The default `hermes insights` output truncates the Top Skills list to 10 items
+# (CLI) and 5 items (markdown report). This patch removes the truncation so all
+# skills are shown — useful when you have dozens of skills and want a complete
+# picture in the insights view.
+#
 diff --git a/agent/insights.py b/agent/insights.py
 index 70907b4f3..fa127e523 100644
 --- a/agent/insights.py

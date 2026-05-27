@@ -14,33 +14,26 @@
 #   - Related PRs: #28162, #28170 (ship plugin manifests in wheel/sdist)
 #
 # Rebase notes:
-#   Generated against upstream tag v2026.5.16, which is the hermes-agent pin
-#   used by the current llm-agents.nix package. Remove this patch once the
-#   pinned package includes equivalent package-data entries upstream.
+#   Generated against upstream main branch.
+#   Upstream has partially merged (dashboard entries exist) but is still missing
+#   plugin.yaml/yml globs. Remove this patch once upstream adds them.
 #
 # Regenerate:
 #   cd ~/Codes/hermes-agent
-#   git checkout v2026.5.16
-#   edit pyproject.toml [tool.setuptools.package-data]
-#   git diff > ~/.config/nixpkgs/usr/cli/ai/hermes/package-plugin-manifests.patch
+#   git diff -- pyproject.toml >> .../package-plugin-manifests.patch
 #
 diff --git a/pyproject.toml b/pyproject.toml
-index ba66d0da7..b12dec6de 100644
+index 05ce2fbe0..50631c121 100644
 --- a/pyproject.toml
 +++ b/pyproject.toml
-@@ -212,6 +212,15 @@ py-modules = ["run_agent", "model_tools", "toolsets", "batch_runner", "trajector
- [tool.setuptools.package-data]
- hermes_cli = ["web_dist/**/*"]
+@@ -224,6 +224,10 @@ py-modules = ["run_agent", "model_tools", "toolsets", "batch_runner", "trajector
+ hermes_cli = ["web_dist/**/*", "tui_dist/**/*", "scripts/install.sh", "scripts/install.ps1"]
  gateway = ["assets/**/*"]
-+plugins = [
+ plugins = [
 +  "*/plugin.yaml",
 +  "*/*/plugin.yaml",
 +  "*/plugin.yml",
 +  "*/*/plugin.yml",
-+  "*/dashboard/manifest.json",
-+  "*/dashboard/dist/*",
-+  "*/dashboard/dist/**/*",
-+]
- 
- [tool.setuptools.packages.find]
- include = ["agent", "agent.*", "tools", "tools.*", "hermes_cli", "gateway", "gateway.*", "tui_gateway", "tui_gateway.*", "cron", "acp_adapter", "plugins", "plugins.*", "providers", "providers.*"]
+   "*/dashboard/manifest.json",
+   "*/dashboard/dist/*",
+   "*/dashboard/dist/**/*",
