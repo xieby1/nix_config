@@ -8,7 +8,7 @@ let
 #   - Update less frequently, thus bugs cannot be fixed in time
 # hermes-agent/flake.nix
 # - Cons:
-#  - non-cached closure size: 1,336,474,112B
+#  - non-cached closure size: 404,901,944B
 in (pkgs.flake-compat {
   src = pkgs.applyPatches {
     src = pkgs.npinsed.ai.hermes-agent;
