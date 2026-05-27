@@ -29,7 +29,7 @@ in {
     };
   };
 
-  imports = [ ./module.nix ];
+  imports = [ ./module ];
   yq-merge.".config/fcitx5/config" = {
     expr = {
       # Disable default super+space, shift+super+space
