@@ -25,3 +25,8 @@ in (pkgs.flake-compat {
     ];
   };
 }).defaultNix.packages.${pkgs.stdenv.system}.default
+.override {
+  # Providers that route through Anthropic-compatible API need the anthropic
+  # SDK pre-installed (nix store is read-only, pip install at runtime fails).
+  extraDependencyGroups = [ "anthropic" ];
+}
