@@ -23,6 +23,7 @@ in pkgs.lib.runTests {
     expected = "miao=miao miao!\nwang=wang~\n";
   };
   test-onChange = let
+    # TODO: modularize the test-onChange, e.g. create a standalone dummy-home generation function
     dummy-home = pkgs.runCommand "test-onChange" {} ''
       mkdir -p $out/.config
       cd $out
@@ -32,7 +33,6 @@ in pkgs.lib.runTests {
       ${hm.config.home.file.".config/env".text}EOF
       run() { "$@"; }
       ${hm.config.home.file.".config/env".onChange}
-      diff -u <(printf 'miao=miao miao!\nzhi=1\nwang=wang~\n') .config/env
     '';
   in {
     expr = builtins.readFile (dummy-home + /.config/env);
