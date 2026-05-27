@@ -36,8 +36,8 @@ in {
       "Hotkey/EnumerateGroupForwardKeys"."0" = "";
       "Hotkey/EnumerateGroupBackwardKeys"."0" = "";
       "Hotkey/TriggerKeys"."0"="Shift_L";
-      "Hotkey/EnumerateForwardKeys"."0"="Control+space";
-      "Hotkey/EnumerateBackwardKeys"."0"="Control+Shift+space";
+      "Hotkey/EnumerateForwardKeys"."0"="Super+space";
+      "Hotkey/EnumerateBackwardKeys"."0"="Super+Shift+space";
     };
     generator = lib.generators.toINI {};
     yqExtraArgs = "-o ini -p ini";
