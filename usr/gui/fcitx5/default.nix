@@ -42,10 +42,10 @@ in {
     generator = lib.generators.toINI {};
     yqExtraArgs = "-o ini -p ini";
     # yq arg `--properties-separator '='` only works for props, does not works for ini
-    postOnChange = "sed -i 's/ = /=/' ~/.config/fcitx5/config";
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' ~/.config/fcitx5/config'';
   };
-  config_fcitx5 = {
-    profile = (pkgs.formats.ini {}).generate "profile" {
+  yq-merge.".config/fcitx5/profile" = {
+    expr = {
       "Groups/0" = {
         Name="Default";
         "Default Layout"="us";
@@ -63,6 +63,12 @@ in {
         Name="hangul";
       };
     };
+    generator = lib.generators.toINI {};
+    yqExtraArgs = "-o ini -p ini";
+    # yq arg `--properties-separator '='` only works for props, does not works for ini
+    postOnChange = ''sed -i 's/\s\+=\s\+/=/' ~/.config/fcitx5/config'';
+  };
+  config_fcitx5 = {
     "conf/classicui.conf" = (pkgs.formats.keyValue {}).generate "classicui.conf" {
       Font=''"Sans Serif 16"'';
       MenuFont=''"Sans Serif 16"'';
