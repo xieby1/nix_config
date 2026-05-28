@@ -49,6 +49,7 @@ in {
         show_reasoning = true;
         tool_progress = "all";
         tool_preview_length = 0; # unlimited
+        tui_compact = false;
         streaming = true;
       };
       mcp_servers = {
