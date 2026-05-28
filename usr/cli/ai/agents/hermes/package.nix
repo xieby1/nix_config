@@ -24,6 +24,8 @@ in (pkgs.flake-compat {
       ./insights-list-all-skills.patch
       # TUI status bar: estimate context usage when provider omits response.usage
       ./tui-context-usage-fallback-estimation.patch
+      # Classic CLI status bar: estimate context usage when provider omits response.usage
+      ./cli-context-usage-fallback-estimation.patch
       # Show 50 rows in in-session recent-session views (/sessions, empty /resume, empty /history).
       ./recent-sessions-limit-50.patch
     ];
