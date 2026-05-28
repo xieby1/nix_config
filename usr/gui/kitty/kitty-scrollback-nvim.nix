@@ -5,6 +5,12 @@
         name = "kitty-scrollback.nvim";
         # TODO: use the kitty-scrollback.nvim from nixpkgs when it reachs 8.0.0
         src = pkgs.npinsed.kitty-scrollback-nvim;
+        postPatch = ''
+          # Move status icons from top-right to bottom-left.
+          substituteInPlace lua/kitty-scrollback/windows.lua \
+            --replace-fail 'row = 0,' 'row = vim.o.lines - 2,' \
+            --replace-fail 'col = vim.o.columns,' 'col = 0,'
+        '';
       };
       type = "lua";
       config = /*lua*/''
