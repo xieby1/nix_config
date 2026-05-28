@@ -14,6 +14,6 @@ in (bifrost-pkgs.bifrost-http.override {
   });
 }).overrideAttrs (old: {
   goModules = old.goModules.overrideAttrs (_: {
-    outputHash = "sha256-Sv3zT07ud32j6Yzc8SsjscBxYGu47hQoOOysQyiNB+I=";
+    outputHash = "sha256-yHoZK5cfDYCCZCmBm0a849wKEDXcYnNWN16kfCdwK7w=";
   });
 })
