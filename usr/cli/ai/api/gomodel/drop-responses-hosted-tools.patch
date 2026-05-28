@@ -1,0 +1,99 @@
+# GoModel local patch: drop Responses hosted/server tools before Chat translation.
+#
+# Context:
+# - Codex CLI uses OpenAI Responses wire format and may send hosted tool
+#   advertisements such as `web_search_preview`, `file_search`, and `container`.
+# - GoModel's Responses-to-Chat bridge previously forwarded those tool entries
+#   to Chat Completions providers.
+# - Non-OpenAI providers such as Anthropic only accept ordinary function tools
+#   in this path, so they returned `unsupported tool type` before a request could
+#   complete.
+#
+# Fix:
+# - Keep ordinary `type: function` tools.
+# - Drop non-function Responses hosted/server tools when adapting to Chat.
+# - If all tools are dropped, omit the Chat `tools` field.
+#
+# Generated from /home/xieby1/Codes/GoModel local diff against pinned GoModel
+# v0.1.33 source revision 05775df604545ffb06c40509defc6cd16d26e6f6.
+diff --git a/internal/providers/responses_adapter.go b/internal/providers/responses_adapter.go
+index c50faf5..2f2e558 100644
+--- a/internal/providers/responses_adapter.go
++++ b/internal/providers/responses_adapter.go
+@@ -74,11 +74,27 @@ func normalizeResponsesToolsForChat(tools []map[string]any) []map[string]any {
+ 
+ 	normalized := make([]map[string]any, 0, len(tools))
+ 	for _, tool := range tools {
++		if shouldDropResponsesToolForChat(tool) {
++			continue
++		}
+ 		normalized = append(normalized, normalizeResponsesToolForChat(tool))
+ 	}
++	if len(normalized) == 0 {
++		return nil
++	}
+ 	return normalized
+ }
+ 
++// shouldDropResponsesToolForChat removes Responses hosted/server tools before
++// adapting a request to Chat Completions. Chat-style upstreams expect ordinary
++// JSON-schema function tools only; forwarding hosted tool advertisements such
++// as web_search_preview, file_search, or container makes non-OpenAI providers
++// reject the request even though the gateway cannot execute those hosted tools.
++func shouldDropResponsesToolForChat(tool map[string]any) bool {
++	toolType, _ := tool["type"].(string)
++	return strings.TrimSpace(toolType) != "" && strings.TrimSpace(toolType) != "function"
++}
++
+ func normalizeResponsesToolForChat(tool map[string]any) map[string]any {
+ 	if len(tool) == 0 {
+ 		return tool
+diff --git a/internal/providers/responses_adapter_test.go b/internal/providers/responses_adapter_test.go
+index a0b5cd7..e918b44 100644
+--- a/internal/providers/responses_adapter_test.go
++++ b/internal/providers/responses_adapter_test.go
+@@ -128,6 +128,44 @@ func TestConvertResponsesRequestToChat(t *testing.T) {
+ 				}
+ 			},
+ 		},
++		{
++			name: "drops responses hosted tools for chat upstreams",
++			input: &core.ResponsesRequest{
++				Model: "test-model",
++				Input: "Hello",
++				Tools: []map[string]any{
++					{"type": "web_search_preview"},
++					{"type": "file_search", "vector_store_ids": []string{"vs_test"}},
++					{"type": "container"},
++					{"type": "function", "function": map[string]any{"name": "lookup_weather"}},
++				},
++			},
++			checkFn: func(t *testing.T, req *core.ChatRequest) {
++				if len(req.Tools) != 1 {
++					t.Fatalf("len(Tools) = %d, want only the function tool", len(req.Tools))
++				}
++				function, ok := req.Tools[0]["function"].(map[string]any)
++				if !ok || function["name"] != "lookup_weather" {
++					t.Fatalf("unexpected retained tool: %+v", req.Tools[0])
++				}
++			},
++		},
++		{
++			name: "drops all responses hosted tools for chat upstreams",
++			input: &core.ResponsesRequest{
++				Model: "test-model",
++				Input: "Hello",
++				Tools: []map[string]any{
++					{"type": "web_search_preview"},
++					{"type": "container"},
++				},
++			},
++			checkFn: func(t *testing.T, req *core.ChatRequest) {
++				if req.Tools != nil {
++					t.Fatalf("Tools = %+v, want nil after dropping hosted tools", req.Tools)
++				}
++			},
++		},
+ 		{
+ 			name: "normalizes native responses tool format",
+ 			input: &core.ResponsesRequest{

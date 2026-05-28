@@ -5,6 +5,9 @@ in pkgs.pkgsu.buildGoModule {
   name = "gomodel";
   src = pkgs.npinsed.ai.GoModel;
   vendorHash = "sha256-asthNpHYPZMxQ793LgZJPNFdsD2qzQu3OhAaQ/nPzrg=";
+  patches = [
+    ./drop-responses-hosted-tools.patch
+  ];
   postPatch = ''
     substituteInPlace go.mod --replace-fail "go 1.26.3" "go 1.26.1"
   '';
