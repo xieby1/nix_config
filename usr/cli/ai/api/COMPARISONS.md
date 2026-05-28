@@ -33,20 +33,21 @@ So always distinguish:
 
 ## Compiled-language alternatives to LiteLLM
 
-||| Project | Language | Closest to LiteLLM? | Main focus | Notes for Codex `/v1/responses` |
-|---|---|---|---|---:|---|---|
-||| **GoModel** | Go | Very close | Lightweight multi-provider AI gateway (~17 MB image, semantic caching, usage tracking) | OpenAI-compatible passthrough; verify Responses API and streaming/tool parity |
-||| **Bifrost** | Go | Very close | High-performance multi-provider AI gateway | Promising; verify Responses API and streaming/tool parity |
-||| **Barbacane** | Rust | Close | Spec-driven API gateway with bidirectional AI + MCP support | OpenAPI-spec-as-config; `ai-proxy` plugin supports Chat Completions + stateless Responses API; verify streaming/tool parity |
-||| **OmniRoute** | Node.js/TypeScript | Close | Free self-hosted AI gateway (160+ providers, 13 routing strategies, semantic cache, MCP) | MIT license; npm/Docker/Electron/Termux deploy; verify Responses API support |
-||| **Hecate** | Go | Close | Local-first AI runtime console + gateway for cloud/local models | Coding-agent console, task approvals, OpenTelemetry; early stage (16 stars); verify maturity |
-||| **Traceloop Hub** | Rust | Close | LLM gateway + OpenTelemetry observability | Docs emphasize chat/completions; verify Responses API |
-||| **Envoy AI Gateway** | Go control plane + Envoy/C++ data plane | Close, infra-native | Kubernetes/Envoy LLM gateway | Good infra story; verify Responses transform support |
-||| **AISIX** | Rust | Close but young | Rust AI gateway / LLM proxy | Promising; verify maturity and Responses API |
-||| **LocalAI** | Go + native backends | Partial | Local model serving with OpenAI-compatible API | Useful for local inference, not a pure multi-provider gateway |
-||| **Kong AI Gateway** | Nginx/OpenResty/Lua ecosystem, Go components | Partial/enterprise | API gateway with AI plugins | Strong gateway features, not a simple LiteLLM clone |
-||| **Apache APISIX AI Gateway** | OpenResty/Lua + etcd ecosystem | Partial/infra | API gateway with AI plugins | Infra-grade, less automatic provider normalization |
-||| **agentgateway** | Rust | Partial | AI-native proxy for LLM/MCP/agent traffic | Interesting for agent/MCP traffic; verify LLM provider breadth |
+| Project | Language | Closest to LiteLLM? | Main focus | Notes for Codex `/v1/responses` |
+|---|---|---:|---|---|
+| **GoModel** | Go | Very close | Lightweight multi-provider AI gateway (~17 MB image, semantic caching, usage tracking) | OpenAI-compatible passthrough; verify Responses API and streaming/tool parity |
+| **Bifrost** | Go | Very close | High-performance multi-provider AI gateway | Promising; verify Responses API and streaming/tool parity |
+| **Moon Bridge** | Go | Close for Codex/Responses use cases, narrower as a general LiteLLM clone | OpenAI Responses API front door that routes/translates to Anthropic Messages, Google Gemini, OpenAI Chat Completions, or OpenAI Responses upstreams | Strong candidate when the decisive requirement is `/v1/responses`: it is explicitly built around Codex CLI + Responses streaming/tool-call translation; verify provider breadth and production maturity |
+| **Barbacane** | Rust | Close | Spec-driven API gateway with bidirectional AI + MCP support | OpenAPI-spec-as-config; `ai-proxy` plugin supports Chat Completions + stateless Responses API; verify streaming/tool parity |
+| **OmniRoute** | Node.js/TypeScript | Close | Free self-hosted AI gateway (160+ providers, 13 routing strategies, semantic cache, MCP) | MIT license; npm/Docker/Electron/Termux deploy; verify Responses API support |
+| **Hecate** | Go | Close | Local-first AI runtime console + gateway for cloud/local models | Coding-agent console, task approvals, OpenTelemetry; early stage (16 stars); verify maturity |
+| **Traceloop Hub** | Rust | Close | LLM gateway + OpenTelemetry observability | Docs emphasize chat/completions; verify Responses API |
+| **Envoy AI Gateway** | Go control plane + Envoy/C++ data plane | Close, infra-native | Kubernetes/Envoy LLM gateway | Good infra story; verify Responses transform support |
+| **AISIX** | Rust | Close but young | Rust AI gateway / LLM proxy | Promising; verify maturity and Responses API |
+| **LocalAI** | Go + native backends | Partial | Local model serving with OpenAI-compatible API | Useful for local inference, not a pure multi-provider gateway |
+| **Kong AI Gateway** | Nginx/OpenResty/Lua ecosystem, Go components | Partial/enterprise | API gateway with AI plugins | Strong gateway features, not a simple LiteLLM clone |
+| **Apache APISIX AI Gateway** | OpenResty/Lua + etcd ecosystem | Partial/infra | API gateway with AI plugins | Infra-grade, less automatic provider normalization |
+| **agentgateway** | Rust | Partial | AI-native proxy for LLM/MCP/agent traffic | Interesting for agent/MCP traffic; verify LLM provider breadth |
 
 ## Recommendation
 
@@ -54,12 +55,13 @@ If the goal is "LiteLLM but compiled-language and lower overhead," evaluate in t
 
 1. **GoModel** — smallest footprint (~17 MB), semantic caching, usage tracking, fully OSS.
 2. **Bifrost** — closest conceptual Go replacement; production-grade with MCP support.
-3. **Barbacane** — Rust-native, spec-driven (OpenAPI-as-config), bidirectional AI + MCP gateway; best if you already use OpenAPI specs and want AI traffic governed same as other HTTP traffic.
-4. **OmniRoute** — MIT-licensed, 160+ providers, 13 routing strategies, semantic cache, MCP; TypeScript-based but self-hostable via npm/Docker.
-5. **Hecate** — local-first Go runtime with coding-agent console; early stage but interesting for agent workloads.
-6. **Traceloop Hub** — Rust gateway with observability.
-7. **AISIX** — Rust, promising but younger.
-8. **Envoy AI Gateway** — best if running Kubernetes/Envoy and wanting infra-grade control.
+3. **Moon Bridge** — best fit among the listed Go projects when the immediate target is Codex CLI over `/v1/responses`; less broad than LiteLLM/GoModel/Bifrost as a general multi-provider gateway, but its architecture is explicitly Responses-first.
+4. **Barbacane** — Rust-native, spec-driven (OpenAPI-as-config), bidirectional AI + MCP gateway; best if you already use OpenAPI specs and want AI traffic governed same as other HTTP traffic.
+5. **OmniRoute** — MIT-licensed, 160+ providers, 13 routing strategies, semantic cache, MCP; TypeScript-based but self-hostable via npm/Docker.
+6. **Hecate** — local-first Go runtime with coding-agent console; early stage but interesting for agent workloads.
+7. **Traceloop Hub** — Rust gateway with observability.
+8. **AISIX** — Rust, promising but younger.
+9. **Envoy AI Gateway** — best if running Kubernetes/Envoy and wanting infra-grade control.
 
 If the goal is specifically **new Codex compatibility**, the decisive requirement is:
 
