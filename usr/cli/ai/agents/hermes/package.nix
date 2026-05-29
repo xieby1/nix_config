@@ -28,6 +28,8 @@ in (pkgs.flake-compat {
       ./cli-context-usage-fallback-estimation.patch
       # Show 50 rows in in-session recent-session views (/sessions, empty /resume, empty /history).
       ./recent-sessions-limit-50.patch
+      # Render in-session recent-session rows oldest-to-newest so the most recent entry is nearest the prompt.
+      ./recent-sessions-reverse-display-order.patch
     ];
   };
 }).defaultNix.packages.${pkgs.stdenv.system}.default
