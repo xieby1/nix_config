@@ -83,9 +83,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "81a4f280d24e2ab77e1a10196c0a601838716111",
-      "url": "https://github.com/NousResearch/hermes-agent/archive/81a4f280d24e2ab77e1a10196c0a601838716111.tar.gz",
-      "hash": "sha256-Oii5ns4jmO3d6M1/wvk6F/o6YLVnCcHd4J6J4jgGECM="
+      "revision": "e71a2bd11b733f3be7cf99deafde0066c343d462",
+      "url": "https://github.com/NousResearch/hermes-agent/archive/e71a2bd11b733f3be7cf99deafde0066c343d462.tar.gz",
+      "hash": "sha256-4SwFC4IjwdQi27dHXTd8QYS1eJHiQY0ja2LxyeW6KjE="
     },
     "llm-agents": {
       "type": "Git",
