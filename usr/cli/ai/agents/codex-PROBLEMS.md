@@ -1,19 +1,54 @@
 # Codex Problems
 
-## Cannot switch to custom models from within the TUI
+## Cannot switch arbitrary custom model IDs in the TUI
 
-**Location:** `codex-rs/tui/src/chatwidget/model_popups.rs`, `codex-rs/tui/src/slash_command.rs`
+**Files:**
+- `codex-rs/tui/src/chatwidget/model_popups.rs`
+- `codex-rs/tui/src/slash_command.rs`
+- `codex-rs/tui/src/chatwidget/slash_dispatch.rs`
+- `codex-rs/tui/src/app/event_dispatch.rs`
+- `codex-rs/tui/src/app/thread_settings.rs`
+- `codex-rs/app-server/src/request_processors/turn_processor.rs`
+- `codex-rs/core/src/codex_thread.rs`
 
-**Description:**
-The `/model` slash command only shows a picker populated from the server-provided `ModelCatalog` (a fixed list of `ModelPreset` entries). There is no free-text input to type an arbitrary model name. The underlying `AppEvent::UpdateModel(String)` event accepts any string, but it is only ever fired from preset selections — there is no UI path that lets a user supply a custom model identifier at runtime.
+**Problem:**
+`/model` only shows visible `ModelPreset`s from the resolved model catalog (`try_list_models()` + `show_in_picker`). There is no `/model <model_id>` path and no free-text "Custom model…" picker entry.
+
+The runtime path can already accept arbitrary model strings:
+`AppEvent::UpdateModel(String)` → `thread/settings/update` → `Op::ThreadSettings` → `collaboration_mode.with_updates(model, effort, ...)`.
+
+So the small missing piece is UI/command input for an arbitrary model ID.
+
+**Important limitation:**
+This is model-string switching only. `UpdateModel` does not switch `model_provider`. Switching providers/profiles in-session is a separate, larger problem and may require a new/forked session to avoid provider/auth/history incompatibilities.
 
 **Impact:**
-Users who rely on custom or self-hosted models (e.g. via a custom `base_url`) cannot switch between them interactively. They must restart the TUI with `codex -m <model_name>` or manually edit `config.toml` while the TUI is running.
+Custom/self-hosted model users cannot switch among uncataloged model IDs interactively. They must restart or preconfigure the desired model/catalog.
 
 **Workarounds:**
-- Pass the model at startup: `codex -m <model_name>`
-- Set `model` in `config.toml` before launching
-- Edit `config.toml` while the TUI is running (the TUI picks up config changes via `write_config_batch`)
+- Start with `codex -m <model_name>`.
+- Start with `codex -p <profile>` for provider+model.
+- Set `model` / `model_provider` in `config.toml` before launch.
+- Use startup-only `model_catalog_json` so custom models appear in `/model`.
 
-**Suggested fix:**
-Add a "Custom model…" entry at the bottom of the `/model` picker that opens a free-text input prompt. On confirmation, fire `AppEvent::UpdateModel` and `AppEvent::PersistModelSelection` with the entered string, matching the existing flow used by preset selections.
+**Related upstream issues:**
+- `openai/codex#5841`: dynamic custom model switching; closed not planned.
+- `openai/codex#22160`: expose profiles/custom aliases in pickers; closed not planned.
+- `openai/codex#24659`: custom models not loaded from `models_cache.json`; `model_catalog_json` workaround.
+- `openai/codex#24612`: cross-provider switching can fail due to incompatible history items.
+
+**Suggested minimal fix:**
+Support inline model args:
+
+```text
+/model <model_id>
+```
+
+Implementation:
+1. Add `SlashCommand::Model` to `supports_inline_args()`.
+2. In `slash_dispatch.rs`, handle non-empty `/model` args.
+3. Dispatch `UpdateModel(model)` and `PersistModelSelection { model, effort: None }`.
+4. Warn/document that this changes only the model string for the current provider.
+
+**Optional UI fix:**
+Add "Custom model…" to the `/model` picker and reuse the same helper as `/model <model_id>`.
