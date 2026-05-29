@@ -30,6 +30,8 @@ in (pkgs.flake-compat {
       ./recent-sessions-limit-50.patch
       # Render in-session recent-session rows oldest-to-newest so the most recent entry is nearest the prompt.
       ./recent-sessions-reverse-display-order.patch
+      # Sort in-session recent-session rows by last activity, not creation time.
+      ./recent-sessions-sort-by-last-active.patch
     ];
   };
 }).defaultNix.packages.${pkgs.stdenv.system}.default
