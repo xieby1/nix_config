@@ -45,8 +45,18 @@ in {
         search_backend = "tavily";
         extract_backend = "tavily";
       };
+      # CLI vs TUI
+      # CLI
+      # - Cons
+      #   - No session selection UI
+      # TUI
+      # - Cons
+      #   - The providers/models selection UI does not filter out un-configured providers.
+      #   - The scroll sometimes jump/glitch
+      #   - Does not respect tool_preview_length = 0
       display = {
         show_reasoning = true;
+        # The hermes verbose does not output gracefully: the newline is printde as "\n"!
         tool_progress = "all";
         tool_preview_length = 0; # unlimited
         tui_compact = false;
