@@ -35,6 +35,9 @@
               end)(), -- end of a local scope
             },
           },
+          -- Comparisons:
+          -- - neoscroll.nvim: only support few scroll motion, does not support gg, G, S-up, S-down,
+          --                   see: https://github.com/karb94/neoscroll.nvim/issues/23
           scroll = {
             enabled = true,
             filter = function(buf)
