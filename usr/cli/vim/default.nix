@@ -38,7 +38,7 @@ in {
     ./nvim-nav.nix
     ./markdown-preview-nvim.nix
     ./venn-nvim.nix
-    ./snacks-nvim.nix
+    ./snacks
     ./minuet-ai-nvim.nix
     ./auto-session.nix
     ./nvim-treesitter-context.nix
