@@ -9,3 +9,4 @@
 - 2026.04.13: try nixvim, which has better nix-to-lua support
 - 2026.04.16: nvim: niri like window resize
   - niri: super+shift+{-/+}: -/+25% width
+- 2026.05.31: completely remove telescope
