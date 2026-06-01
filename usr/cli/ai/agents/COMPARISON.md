@@ -100,6 +100,13 @@
       - resume does not support selection UI, but TUI does.
   - Too many bugs that influence my experience, see my patches.
 
+## VTCode
+
+- Pros:
+  - Author response very quickly.
+- Cons:
+  - Single person maintained
+
 # Clients Comparisons
 
 ## pi
