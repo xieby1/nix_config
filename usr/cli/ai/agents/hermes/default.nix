@@ -49,6 +49,7 @@ in {
       # CLI
       # - Cons
       #   - No session selection UI
+      #   - Does not support `/background`: the `/background` behavior is the same as /queue
       # TUI
       # - Cons
       #   - The providers/models selection UI does not filter out un-configured providers.
@@ -61,6 +62,7 @@ in {
         tool_preview_length = 0; # unlimited
         tui_compact = false;
         streaming = true;
+        final_response_markdown = "render";
       };
       mcp_servers = {
         ddgs = {
