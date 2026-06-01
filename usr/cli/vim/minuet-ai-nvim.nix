@@ -21,17 +21,17 @@
         },
       }
 
-      -- function update_minuet_statusline()
-      --   local minuet = require("minuet")
-      --   vim.o.statusline = string.gsub(vim.o.statusline, "[ᯤ]*$",
-      --     minuet.config.blink.enable_auto_complete and "ᯤ" or "")
-      -- end
-      -- vim.keymap.set({'n','i'}, '<A-a>', function()
-      --   local minuet = require("minuet")
-      --   minuet.config.blink.enable_auto_complete = not minuet.config.blink.enable_auto_complete
-      --   update_minuet_statusline()
-      -- end)
-      -- update_minuet_statusline()
+      function update_minuet_statusline()
+        local minuet = require("minuet")
+        vim.o.statusline = string.gsub(vim.o.statusline, "[ᯤ]*$",
+          minuet.config.blink.enable_auto_complete and "ᯤ" or "")
+      end
+      vim.keymap.set({'n','i'}, '<A-a>', function()
+        local minuet = require("minuet")
+        minuet.config.blink.enable_auto_complete = not minuet.config.blink.enable_auto_complete
+        update_minuet_statusline()
+      end)
+      update_minuet_statusline()
     '';
   }];
 }
