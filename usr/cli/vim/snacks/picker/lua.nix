@@ -13,6 +13,7 @@
         { win = "list", border = "none" },
         { win = "input", height = 1, border = "top" },
       },
+      reverse = true,
       fullscreen = true,
     },
   },
