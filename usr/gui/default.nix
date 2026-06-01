@@ -26,6 +26,7 @@ in
     ./dms
     ./evolution
     ./low-battery-notify.nix
+    ./daily-work-reminder.nix
   ];
 
 config = lib.mkIf config.isGui {
