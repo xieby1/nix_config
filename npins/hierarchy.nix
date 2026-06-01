@@ -7,4 +7,5 @@ in (import ./.) // {
   ai = import ./ai npinsFun;
   # Desktop Environment
   de = import ./de npinsFun;
+  nvim = import ./nvim npinsFun;
 }

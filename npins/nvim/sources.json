@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "hbac": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "axkirillov",
+        "repo": "hbac.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2c85485ea28e5e3754650829e0bca612960e1b73",
+      "url": "https://github.com/axkirillov/hbac.nvim/archive/2c85485ea28e5e3754650829e0bca612960e1b73.tar.gz",
+      "hash": "sha256-A+C9N7xorS7DV0w8N5TjyD7OvWdxUQ4PJaKW3kwkQS0="
+    }
+  },
+  "version": 7
+}

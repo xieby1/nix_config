@@ -4,12 +4,7 @@ let
   my-hbac = {
     plugin = pkgs.vimUtils.buildVimPlugin {
       name = "hbac.nvim";
-      src = pkgs.fetchFromGitHub {
-        owner = "axkirillov";
-        repo = "hbac.nvim";
-        rev = "2c85485ea28e5e3754650829e0bca612960e1b73";
-        hash = "sha256-A+C9N7xorS7DV0w8N5TjyD7OvWdxUQ4PJaKW3kwkQS0=";
-      };
+      src = pkgs.npinsed.nvim.hbac;
       doCheck = false;
     };
     type = "lua";
