@@ -15,9 +15,9 @@ in {
     yqExtraArgs = "-P";
     expr = {
       model = {
-        default = "kimi-for-coding";
-        provider = "kimi-coding";
-        base_url = config.ai.kimi.api_endpoint;
+        default = config.ai.minimax-china.default_large_model_id;
+        provider = "minimax-cn";
+        base_url = config.ai.minimax-china.api_endpoint;
       };
       # the avaliable fields see: <hermes-agent>/hermes_cli/config.py: _normalize_custom_provider_entry
       providers = {
