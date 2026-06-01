@@ -16,9 +16,6 @@ let
           vim.api.nvim_buf_delete(bufnr, {})
         end,
         close_buffers_with_windows = false, -- hbac will close buffers with associated windows if this option is `true`
-        telescope = {
-          -- See #telescope-configuration below
-          },
       })
     '';
   };
