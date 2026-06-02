@@ -13,12 +13,12 @@ in {
         - spec:    Additional lz.n spec attributes (optional).
                    Common attributes include:
                      - event:   Lazy-load on event(s) (e.g. "BufRead").
-                     - cmd:     Lazy-load on command(s) (e.g. "Telescope").
+                     - cmd:     Lazy-load on command(s) (e.g. "Snacks").
                      - keys:    Lazy-load on keymap(s). Each entry is a Nix list
                                 that serializes to a Lua array. Examples:
                                   keys = [ "<leader>ff" ];
-                                  keys = [ [ "<leader>ff" "<cmd>Telescope find_files<cr>" ] ];
-                                  keys = [ [ "<leader>ff" "<cmd>Telescope find_files<cr>" { desc = "Find files"; } ] ];
+                                  keys = [ [ "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" ] ];
+                                  keys = [ [ "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "Find files"; } ] ];
                      - ft:      Lazy-load on filetype(s).
                      - before:  Lua code to run before loading.
                      - after:   Lua code to run after loading.
@@ -28,11 +28,11 @@ in {
 
       Example:
         {
-          plugin = pkgs.vimPlugins.telescope-nvim;
+          plugin = pkgs.vimPlugins.snacks-nvim;
           spec = {
-            cmd = [ "Telescope" ];
+            cmd = [ "Snacks" ];
             keys = [
-              [ "<leader>ff" "<cmd>Telescope find_files<cr>" { desc = "Find files"; } ]
+              [ "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "Find files"; } ]
             ];
           };
         }
