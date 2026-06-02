@@ -36,8 +36,8 @@
         vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count= 1, float=true, severity = { min = vim.diagnostic.severity.WARN } }) end)
         vim.keymap.set('n', '[D', function() vim.diagnostic.jump({ count=-1, float=true, }) end)
         vim.keymap.set('n', ']D', function() vim.diagnostic.jump({ count= 1, float=true, }) end)
-        vim.keymap.set('n', '<space>d', function() require('telescope.builtin').diagnostics({bufnr=0}) end)
-        vim.keymap.set('n', '<space>D', require('telescope.builtin').diagnostics)
+        vim.keymap.set('n', '<space>d', Snacks.picker.diagnostics_buffer)
+        vim.keymap.set('n', '<space>D', Snacks.picker.diagnostics)
         vim.diagnostic.config({
           float = {
             source = true,  -- Show the source (LSP server name)
@@ -48,16 +48,14 @@
         -- after the language server attaches to the current buffer
         vim.api.nvim_create_autocmd('LspAttach', {
           group = vim.api.nvim_create_augroup('UserLspConfig', {}),
-          callback = function(ev)
-            local opts = { buffer = ev.buf }
-            local builtin = require("telescope.builtin")
-            vim.keymap.set('n', 'gd', builtin.lsp_definitions, opts)
-            vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
-            vim.keymap.set('n', 'gt', builtin.lsp_type_definitions, opts)
-            vim.keymap.set('n', 'gr', builtin.lsp_references, opts)
-            vim.keymap.set('n', 'gi', builtin.lsp_implementations, opts)
-            vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
-            vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename, opts)
+          callback = function(_args)
+            vim.keymap.set('n', 'gd', Snacks.picker.lsp_definitions)
+            vim.keymap.set('n', 'gD', Snacks.picker.lsp_declarations)
+            vim.keymap.set('n', 'gt', Snacks.picker.lsp_type_definitions)
+            vim.keymap.set('n', 'gr', Snacks.picker.lsp_references)
+            vim.keymap.set('n', 'gi', Snacks.picker.lsp_implementations)
+            vim.keymap.set('n', 'K', vim.lsp.buf.hover)
+            vim.keymap.set('n', '<space>rn', vim.lsp.buf.rename)
 
             -- make sure lsp/vim native indent(share/nvim/runtime/indent/python.vim)
             -- don't override my setting
