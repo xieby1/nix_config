@@ -27,9 +27,6 @@
             },
           },
         }
-        vim.keymap.set('n', '<space>t', require('telescope.builtin').treesitter)
-        vim.keymap.set('n', '<space>c', require('telescope.builtin').command_history)
-        vim.keymap.set('n', '<space>C', require('telescope.builtin').commands)
       '';
     }];
   };

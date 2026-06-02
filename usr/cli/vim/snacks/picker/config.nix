@@ -15,6 +15,10 @@
         vim.keymap.set('n', "<space>g", function() Snacks.picker.grep({ cwd = get_buffer_dir() }) end)
         vim.keymap.set('n', "<space>G", function() Snacks.picker.grep() end)
         vim.keymap.set('n', "<space>h", function() Snacks.picker.help() end)
+
+        vim.keymap.set('n', '<space>t', Snacks.picker.treesitter)
+        vim.keymap.set('n', '<space>c', Snacks.picker.command_history)
+        vim.keymap.set('n', '<space>C', Snacks.picker.commands)
       end
     '';
   };
