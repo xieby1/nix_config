@@ -76,6 +76,7 @@ in {
       vim-commentary
       vim-surround
       otter-nvim
+      todo-comments-nvim
     ];
 
     #MC Vim config
@@ -142,12 +143,6 @@ in {
       nnoremap <F10> :echo "hi<" . synIDattr(synID(line("."),col("."),1),"name") . '> trans<'
       \ . synIDattr(synID(line("."),col("."),0),"name") . "> lo<"
       \ . synIDattr(synIDtrans(synID(line("."),col("."),1)),"name") . ">"<CR>
-
-      " highlight
-      augroup HighlightTODO
-          autocmd!
-          autocmd WinEnter,VimEnter * :silent! call clearmatches() | call matchadd('Todo', 'TODO', -1)
-      augroup END
 
       " TODO: replace wildmenu with blink-cmp cmdline
       " wildmenu
