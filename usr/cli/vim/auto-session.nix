@@ -4,7 +4,7 @@
 #MC
 #MC * auto-session support multiple sessions per path (customized session name),
 #MC   while other two not support
-#MC * persisted-nvim support telescope, while persistence-nvim not
+#MC * persisted-nvim support customized pickers, while persistence-nvim not
 { pkgs, ... }: { programs.neovim.plugins = [{
   plugin = pkgs.vimPlugins.auto-session;
   type = "lua";
@@ -24,10 +24,6 @@
       args_allow_files_auto_save = true,
       -- auto purge session after 30 days
       purge_after_minutes = 60*24*30,
-      session_lens = {
-        -- for telescope
-        picker_opts = { layout_config = { width = 0.95 } },
-      },
     })
     vim.keymap.set('n', '<space>s', '<cmd>AutoSession search<CR>')
     vim.api.nvim_create_autocmd("VimLeavePre", { callback = function()
