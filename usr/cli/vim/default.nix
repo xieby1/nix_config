@@ -19,7 +19,6 @@ in {
     ./nvim-treesitter.nix
     ./nvim-config-local.nix
     ./leap-nvim.nix
-    ./telescope
     ./git-wip.nix
     ./terminal.nix
     ./outline-nvim.nix

@@ -1,6 +1,6 @@
 /*lua*/''
   picker = {
-    -- ui_select = true, TODO: after completely remove telescope, enable this.
+    ui_select = true,
     layout = {
       -- based on vertical layout
       layout = {
