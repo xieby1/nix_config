@@ -5,6 +5,8 @@
     type = "lua";
     config = /*lua*/ ''
       require('minuet').setup {
+        -- Disable auto complete, only trigger minuet manually
+        blink = { enable_auto_complete = false },
         -- FIM is usually better for completion;
         -- use Claude here because MiniMax's Anthropic API works better.
         provider = 'openai_fim_compatible',
