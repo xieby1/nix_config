@@ -16,7 +16,6 @@
         vim.keymap.set('n', "<space>G", function() Snacks.picker.grep() end)
         vim.keymap.set('n', "<space>h", function() Snacks.picker.help() end)
 
-        vim.keymap.set('n', '<space>t', function() Snacks.picker.treesitter() end)
         vim.keymap.set('n', '<space>c', function() Snacks.picker.command_history() end)
         vim.keymap.set('n', '<space>C', function() Snacks.picker.commands() end)
       end
