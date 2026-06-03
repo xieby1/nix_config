@@ -70,9 +70,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1997799a4a7b49048e73e861f57c334d964768b8",
-      "url": "https://github.com/aaif-goose/goose/archive/1997799a4a7b49048e73e861f57c334d964768b8.tar.gz",
-      "hash": "sha256-hzIInFl4Uu437SG1Msr6vGh3IFpH6vl/VbgM3XWLdcs="
+      "revision": "9626b4c3c143ffc390cf40b4cbd314d2e318d3e2",
+      "url": "https://github.com/aaif-goose/goose/archive/9626b4c3c143ffc390cf40b4cbd314d2e318d3e2.tar.gz",
+      "hash": "sha256-/LANyRvbwXZRubpJTW+Bsa1MyRitJvyDkOtfK8AYpYk="
     },
     "hermes-agent": {
       "type": "Git",
