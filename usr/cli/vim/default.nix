@@ -44,6 +44,7 @@ in {
     ./rustowl.nix
     ./treesitter-injections
     ./lz-n
+    ./todo-comments.nix
   ];
 
   home.shellAliases.view = "nvim -R";
@@ -76,7 +77,6 @@ in {
       vim-commentary
       vim-surround
       otter-nvim
-      todo-comments-nvim
     ];
 
     #MC Vim config
