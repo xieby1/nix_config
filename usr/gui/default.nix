@@ -30,6 +30,13 @@ in
   ];
 
 config = lib.mkIf config.isGui {
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = [ "org.gnome.Evince.desktop" ];
+    };
+  };
+
   home.packages = with pkgs; [
     (pkgs.writeShellScriptBin "o" ''nohup xdg-open "$@" &> /dev/null &'')
     libnotify
