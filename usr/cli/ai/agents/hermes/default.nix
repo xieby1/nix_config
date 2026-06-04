@@ -85,12 +85,6 @@ in {
           args = ["stdio"];
           env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile ~/Gist/Vault/AI/github-mcp-server-guanchuan-all-ro.txt);};
         };
-        xiaohongshu = {
-          url = "http://localhost:18060/mcp";
-          enabled = false;
-          timeout = 300;
-          connect_timeout = 30;
-        };
       };
     };
   };
