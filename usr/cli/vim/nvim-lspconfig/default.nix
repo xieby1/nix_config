@@ -56,6 +56,7 @@
         vim.api.nvim_create_autocmd('LspAttach', {
           group = vim.api.nvim_create_augroup('UserLspConfig', {}),
           callback = function(_args)
+            vim.lsp.inlay_hint.enable(true, { bufnr = _args.buf })
             vim.keymap.set('n', 'gd', Snacks.picker.lsp_definitions)
             vim.keymap.set('n', 'gD', Snacks.picker.lsp_declarations)
             vim.keymap.set('n', 'gt', Snacks.picker.lsp_type_definitions)
