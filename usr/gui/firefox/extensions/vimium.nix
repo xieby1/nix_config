@@ -13,6 +13,12 @@ in {
     # retrieve json:
     # sqlite3 storage-sync-v2.sqlite "SELECT data FROM storage_sync_data WHERE ext_id='{d7742d87-e61d-4b78-b8a1-b469842139fa}';"
     json = lib.generators.toJSON {} {
+      keyMappings = ''
+        unmap f
+        unmap F
+        map s LinkHints.activateMode
+        map S LinkHints.activateModeToOpenInNewTab
+      '';
       exclusionRules = [{
         passKeys = "";
         pattern = "*:77[0-9][0-9]*";
