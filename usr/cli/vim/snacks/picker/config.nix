@@ -18,6 +18,9 @@
 
         vim.keymap.set('n', '<space>c', function() Snacks.picker.command_history() end)
         vim.keymap.set('n', '<space>C', function() Snacks.picker.commands() end)
+
+        vim.keymap.set('n', '<space>S', function() Snacks.picker.git_status() end)
+        vim.keymap.set('n', '<space>p', function() Snacks.picker.pickers() end)
       end
     '';
   };
