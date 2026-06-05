@@ -2,7 +2,16 @@
 { config, pkgs, stdenv, lib, ... }:
 let
   my-gitsigns-nvim = {
-    plugin = pkgs.vimPlugins.gitsigns-nvim;
+    plugin = pkgs.vimPlugins.gitsigns-nvim.overrideAttrs (old: {
+      # Use hl_group+hl_eol instead of line_hl_group so that higher-priority
+      # character-level extmarks (e.g. todo-comments) can override the line
+      # background. Workaround for neovim/neovim#31151.
+      postPatch = (old.postPatch or "") + ''
+        substituteInPlace lua/gitsigns/signs.lua \
+          --replace-fail "line_hl_group = self:hl(ty, 'linehl')," \
+                         "hl_group = self:hl(ty, 'linehl'), hl_eol = true, end_row = lnum, end_col = 0,"
+      '';
+    });
     type = "lua";
     config = /*lua*/ ''
       require('gitsigns').setup {
