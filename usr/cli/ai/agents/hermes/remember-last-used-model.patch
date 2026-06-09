@@ -31,7 +31,7 @@ diff --git a/cli.py b/cli.py
 index c05c361a7..768213c67 100644
 --- a/cli.py
 +++ b/cli.py
-@@ -3003,8 +3003,9 @@ class HermesCLI:
+@@ -3193,8 +3193,9 @@ class HermesCLI:
          # env vars would stomp each other.
          _model_config = CLI_CONFIG.get("model", {})
          _config_model = (_model_config.get("default") or _model_config.get("model") or "") if isinstance(_model_config, dict) else (_model_config or "")
@@ -39,9 +39,9 @@ index c05c361a7..768213c67 100644
          _DEFAULT_CONFIG_MODEL = ""
 -        self.model = model or _config_model or _DEFAULT_CONFIG_MODEL
 +        self.model = model or _last_used_model or _config_model or _DEFAULT_CONFIG_MODEL
-         # Auto-detect model from local server if still on default
-         if self.model == _DEFAULT_CONFIG_MODEL:
-             _base_url = (_model_config.get("base_url") or "") if isinstance(_model_config, dict) else ""
+         # Read max_tokens from config (env var override: HERMES_MAX_TOKENS)
+         _env_mt = os.environ.get("HERMES_MAX_TOKENS")
+         if _env_mt:
 @@ -3019,7 +3020,7 @@ class HermesCLI:
          # A config model that matches the global fallback is NOT considered an
          # explicit choice — the user just never changed it.  But a config model

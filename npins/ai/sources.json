@@ -75,17 +75,20 @@
       "hash": "sha256-/LANyRvbwXZRubpJTW+Bsa1MyRitJvyDkOtfK8AYpYk="
     },
     "hermes-agent": {
-      "type": "Git",
+      "type": "GitRelease",
       "repository": {
         "type": "GitHub",
         "owner": "NousResearch",
         "repo": "hermes-agent"
       },
-      "branch": "main",
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
       "submodules": false,
-      "revision": "e71a2bd11b733f3be7cf99deafde0066c343d462",
-      "url": "https://github.com/NousResearch/hermes-agent/archive/e71a2bd11b733f3be7cf99deafde0066c343d462.tar.gz",
-      "hash": "sha256-4SwFC4IjwdQi27dHXTd8QYS1eJHiQY0ja2LxyeW6KjE="
+      "version": "v2026.6.5",
+      "revision": "d6b9cfa3e1f460f5729553ef42b174da28b765c7",
+      "url": "https://api.github.com/repos/NousResearch/hermes-agent/tarball/refs/tags/v2026.6.5",
+      "hash": "sha256-ngpkopVczNrT0bfCXHm38QjgrZT96Bm/rO89NA/ls3Y="
     },
     "llm-agents": {
       "type": "Git",
