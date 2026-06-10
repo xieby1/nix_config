@@ -25,6 +25,7 @@
       ]);
       type = "lua";
       config = /*lua*/''
+        vim.filetype.add({ extension = { mdx = "markdown" } })
         require 'nvim-treesitter.configs'.setup {
           -- TODO: https://github.com/NixOS/nixpkgs/issues/189838
           -- ensure_installed = {"c", "cpp", "python", "markdown"},

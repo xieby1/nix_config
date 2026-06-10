@@ -14,7 +14,14 @@
     # xml
     {programs.neovim={extraLuaConfig="vim.lsp.enable('lemminx')\n";extraPackages=[pkgs.lemminx];};}
     # markdown
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};}
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};
+      # index .mdx files
+      # https://github.com/artempyanykh/marksman/issues/114
+      xdg.configFile."marksman/config.toml".text = ''
+        [core]
+        markdown.file_extensions = ["md", "markdown", "mdx"]
+      '';
+    }
     # language checker
     {programs.neovim={extraLuaConfig="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
     ./rust
