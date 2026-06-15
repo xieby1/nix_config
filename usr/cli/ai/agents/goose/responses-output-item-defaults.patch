@@ -1,0 +1,27 @@
+diff -uNr a/crates/goose/src/providers/formats/openai_responses.rs b/crates/goose/src/providers/formats/openai_responses.rs
+--- a/crates/goose/src/providers/formats/openai_responses.rs	2026-06-15 15:40:54.120107430 +0800
++++ b/crates/goose/src/providers/formats/openai_responses.rs	2026-06-15 15:40:54.121549750 +0800
+@@ -286,18 +286,23 @@
+ #[serde(rename_all = "snake_case")]
+ pub enum ResponseOutputItemInfo {
+     Reasoning {
++        #[serde(default)]
+         id: String,
+         #[serde(default)]
+         summary: Vec<SummaryText>,
+     },
+     Message {
++        #[serde(default)]
+         id: String,
++        #[serde(default)]
+         status: String,
+         role: String,
+         content: Vec<ContentPart>,
+     },
+     FunctionCall {
++        #[serde(default)]
+         id: String,
++        #[serde(default)]
+         status: String,
+         #[serde(skip_serializing_if = "Option::is_none")]
+         call_id: Option<String>,
