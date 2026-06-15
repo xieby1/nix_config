@@ -1,6 +1,15 @@
 /*lua*/''
   picker = {
     ui_select = true,
+    win = {
+      list = {
+        wo = {
+          -- Global list window config: show ">" on cursor line as current-item indicator
+          -- for all picker layouts, not only the custom my_vertical preset.
+          statuscolumn = "%#SnacksPickerListCursorLine#%{v:relnum==0?\">\":\" \"}%*",
+        },
+      },
+    },
     layouts = {
       -- custom presets
       my_vertical = {
@@ -11,8 +20,7 @@
           title = "{title} {live} {flags}",
           title_pos = "center",
           { win = "preview", title = "{preview}", height = 0.6, border = "bottom" },
-          -- statuscolumn: show ">" on cursor line as current-item indicator
-          { win = "list", border = "none", wo = { statuscolumn = "%#SnacksPickerListCursorLine#%{v:relnum==0?\">\":\" \"}%*" } },
+          { win = "list", border = "none" },
           { win = "input", height = 1, border = "top" },
         },
         reverse = true,
