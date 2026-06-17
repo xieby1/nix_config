@@ -1,0 +1,45 @@
+--- a/lua/avante/llm.lua	2026-06-17 22:29:32.887141083 +0800
++++ b/lua/avante/llm.lua	2026-06-17 22:29:32.887373131 +0800
+@@ -1172,26 +1172,26 @@
+ 
+           if update.sessionUpdate == "available_commands_update" then
+             local commands = update.availableCommands
++            for _, command in ipairs(commands) do
++              local exists = false
++              for _, command_ in ipairs(Config.slash_commands) do
++                if command_.name == command.name then
++                  exists = true
++                  break
++                end
++              end
++              if not exists then
++                table.insert(Config.slash_commands, {
++                  name = command.name,
++                  description = command.description,
++                  details = command.description,
++                })
++              end
++            end
+             local has_cmp, cmp = pcall(require, "cmp")
+             if has_cmp then
+               local slash_commands_id = require("avante").slash_commands_id
+               if slash_commands_id ~= nil then cmp.unregister_source(slash_commands_id) end
+-              for _, command in ipairs(commands) do
+-                local exists = false
+-                for _, command_ in ipairs(Config.slash_commands) do
+-                  if command_.name == command.name then
+-                    exists = true
+-                    break
+-                  end
+-                end
+-                if not exists then
+-                  table.insert(Config.slash_commands, {
+-                    name = command.name,
+-                    description = command.description,
+-                    details = command.description,
+-                  })
+-                end
+-              end
+               local avante = require("avante")
+               avante.slash_commands_id = cmp.register_source("avante_commands", require("cmp_avante.commands"):new())
+             end

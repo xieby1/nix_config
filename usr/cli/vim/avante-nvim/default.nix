@@ -14,7 +14,13 @@
 # - Copilot uses more premium request credits: https://github.com/yetone/avante.nvim/issues/2989
 { config, pkgs, ... }: {
   programs.neovim.plugins = [{
-    plugin = pkgs.pkgsu.vimPlugins.avante-nvim;
+    plugin = pkgs.pkgsu.vimPlugins.avante-nvim.overrideAttrs (old: {
+      # Avante receives ACP available_commands_update events, but currently only
+      # copies them into Config.slash_commands inside an nvim-cmp-only branch.
+      # Move that state update outside the cmp guard so blink-cmp-avante can read
+      # ACP slash commands from require("avante.utils").get_commands().
+      patches = (old.patches or []) ++ [ ./acp-slash-commands-for-blink.patch ];
+    });
     type = "lua";
     config = /*lua*/''
       require("avante").setup({
