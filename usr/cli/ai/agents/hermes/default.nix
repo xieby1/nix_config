@@ -32,8 +32,10 @@ in {
           api = config.ai.jw-codex.api_endpoint;
           api_key = config.ai.jw-codex.api_key;
           transport = "codex_responses";
-          models."gpt-5.5".context_length = 256 * 1000; # yes, jw gpt-5.5 is 256k
-          models."gpt-5.4".context_length = 1000 * 1000;
+          models."${config.ai.jw-codex.default_large_model_id}".context_length
+            = config.ai.jw-codex.models."${config.ai.jw-codex.default_large_model_id}".context_window;
+          models."${config.ai.jw-codex.default_small_model_id}".context_length
+            = config.ai.jw-codex.models."${config.ai.jw-codex.default_small_model_id}".context_window;
         };
       };
       compression = {
