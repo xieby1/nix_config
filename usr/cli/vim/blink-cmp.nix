@@ -5,7 +5,9 @@
 #MC # * and minuet-ai-nvim delay in nvim-cmp and not solved, blink-cmp is async
 # TODO: split providers into separate files
 { pkgs, ... }: { programs.neovim = {
-  plugins = [pkgs.vimPlugins.blink-cmp-dictionary
+  plugins = [
+  pkgs.vimPlugins.blink-cmp-dictionary
+  pkgs.pkgsu.vimPlugins.blink-cmp-avante
   {
     # match unicode characters => match alphabet characters instead.
     # E.g. I don't want to completion a long CJK sentence.
@@ -77,6 +79,7 @@
         },
         sources = {
           default = {
+            "avante",
             'lsp', 'path', 'buffer', 'snippets',
             'minuet',
             "dictionary"
@@ -107,6 +110,13 @@
               -- since minuet.config.request_timeout is in seconds
               timeout_ms = 3000,
               score_offset = -1,
+            },
+            avante = {
+              module = 'blink-cmp-avante',
+              name = 'Avante',
+              opts = {
+                -- options for blink-cmp-avante
+              }
             },
             -- blink-cmp-dictionary vs blink-cmp-dat-word
             -- former can handle capitalization proper, while latter cannot

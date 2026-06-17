@@ -43,6 +43,7 @@ in {
     ./nvim-treesitter-context.nix
     ./rustowl.nix
     ./treesitter-injections
+    ./avante-nvim
     ./lz-n
     ./todo-comments.nix
   ];

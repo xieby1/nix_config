@@ -141,6 +141,8 @@
   - Minimal/Clean UI
 - Cons:
   - Use plenary.nvim, the same to Avante.nvim.
+  - Codecompanion-history does not support ACP session restore.
+  - tool calls display are trunct to 60 chars, and no way to configure it.
 
 ### Agentic.nvim
 
