@@ -19,7 +19,10 @@
       # copies them into Config.slash_commands inside an nvim-cmp-only branch.
       # Move that state update outside the cmp guard so blink-cmp-avante can read
       # ACP slash commands from require("avante.utils").get_commands().
-      patches = (old.patches or []) ++ [ ./acp-slash-commands-for-blink.patch ];
+      patches = (old.patches or []) ++ [
+        ./acp-slash-commands-for-blink.patch
+        ./switch-provider-acp-providers.patch
+      ];
     });
     type = "lua";
     config = /*lua*/''
