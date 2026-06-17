@@ -130,18 +130,25 @@
 - Pros:
   - Leverages Neovim muscle memory
 - Cons:
-  - No skills support
+  - ~~No skills support~~ Supported by ACP agents.
   - Uses plenary.nvim (curl without keepalive or auto-retry)
     - Frequent network issues cause interruptions that disrupt workflow
+  - Second class ACP support: does not support ACP model switch.
+    - Latest version add `AvanteACPModels`. Why not reusing `AvanteModels`? The implementation is not CLEAN!
+  - The build is complicated (nixpkgs vim plugins non-generated), which has not updated for 3 months.
 
 ### Codecompanion.nvim
 
 - Pros:
   - Leverages Neovim muscle memory
   - Minimal/Clean UI
+  - Support more ACP capabilities than Agentic.nvim: fs.readTextFile, fs.writeTextFile
+    And it explicitly state support of ACP capabilities in doc!
+  - build is simple
 - Cons:
-  - Use plenary.nvim, the same to Avante.nvim.
-  - Codecompanion-history does not support ACP session restore.
+  - ~~No skills support~~ Supported by ACP agents.
+  - ~~Use plenary.nvim, the same to Avante.nvim.~~: Use ACP agent!
+  - ~~Codecompanion-history does not support ACP session restore.~~: If ACP client supports, we can use `/resume`!
   - tool calls display are trunct to 60 chars, and no way to configure it.
 
 ### Agentic.nvim
@@ -155,10 +162,3 @@
     - when enter slash command like `/skill`, there is high, narrow auto completion floating window.
     - Cannot disable insert by default
     - Cannot hide winbar (need to edit source code)
-
-### Codecompanion
-
-- Pros:
-  - simple UI!
-  - Support more ACP capabilities than Agentic.nvim: fs.readTextFile, fs.writeTextFile
-    And it explicitly state support of ACP capabilities in doc!
