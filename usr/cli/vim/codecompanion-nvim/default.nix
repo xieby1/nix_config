@@ -1,15 +1,11 @@
 # TODO: Let blink.cmp fetch words from codecompanion buffer
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
-  programs.neovim.plugins = [
-    pkgs.pkgsu.vimPlugins.codecompanion-history-nvim
-  {
+  programs.neovim.plugins = [{
     plugin = pkgs.pkgsu.vimPlugins.codecompanion-nvim;
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
     config = /*lua*/ ''
-      -- codecompanion does not support call setup multiple times, I have tried, see 28de5b86.
-      -- If include history.nix with second setup, codecompanion cannot use history.
       require("codecompanion").setup({
         adapters = {
           http = {
@@ -95,15 +91,6 @@
           chat = { adapter = "goose-${config.ai.jw-codex.id}", },
           inline = { adapter = "goose-${config.ai.jw-codex.id}", },
         },
-        extensions = {
-          -- TODO: move extensions config to separate file
-          history = {
-            enabled = true,
-            opts = {
-              auto_generate_title = false;
-            },
-          }
-        }
       })
 
       -- key bindings of AI
