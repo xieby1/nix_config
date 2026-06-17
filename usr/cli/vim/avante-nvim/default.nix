@@ -47,5 +47,5 @@
       })
     '';
   }];
-  home.shellAliases.avante=''nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'';
+  home.shellAliases.avante=''nvim -c "lua vim.defer_fn(function()require(\"avante.api\").ask({ new_chat = true })end, 100)"'';
 }
