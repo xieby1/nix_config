@@ -72,6 +72,13 @@
                 env = { GOOSE_PROVIDER = "${config.ai.kimi.id}", },
               })
             end,
+            ["goose-${config.ai.minimax-china.id}"] = function()
+              return require("codecompanion.adapters.acp").extend("goose", {
+                name = "goose-${config.ai.minimax-china.id}",
+                formatted_name = "Goose ${config.ai.minimax-china.name}",
+                env = { GOOSE_PROVIDER = "${config.ai.minimax-china.id}", },
+              })
+            end,
           },
         },
         display = {
