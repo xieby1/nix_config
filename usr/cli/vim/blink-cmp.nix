@@ -85,6 +85,20 @@
             -- > By default, the buffer source will only show when the LSP source returns no items
             -- Always show buffer completion, defaults to `{ 'buffer' }`
             lsp = { fallbacks = {}, },
+            buffer = {
+              opts = {
+                -- copy from the default get_bufnrs (all visible buffers).
+                get_bufnrs = function()
+                  return vim
+                    .iter(vim.api.nvim_list_wins())
+                    :map(function(win) return vim.api.nvim_win_get_buf(win) end)
+                    -- The default get_bufnrs filter out nofile buffers (codecompanion, vim help, ...).
+                    -- Here, we remove the filter.
+                    -- :filter(function(buf) return vim.bo[buf].buftype ~= 'nofile' end)
+                    :totable()
+                end,
+              },
+            },
             minuet = {
               name = 'minuet',
               module = 'minuet.blink',
