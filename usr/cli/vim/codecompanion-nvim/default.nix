@@ -79,6 +79,13 @@
                 env = { GOOSE_PROVIDER = "${config.ai.minimax-china.id}", },
               })
             end,
+            ["goose-${config.ai.jw-codex.id}"] = function()
+              return require("codecompanion.adapters.acp").extend("goose", {
+                name = "goose-${config.ai.jw-codex.id}",
+                formatted_name = "Goose ${config.ai.jw-codex.name}",
+                env = { GOOSE_PROVIDER = "${config.ai.jw-codex.id}", },
+              })
+            end,
           },
         },
         display = {
@@ -100,14 +107,14 @@
         },
         strategies = {
           chat = {
-            adapter = "hermes",
+            adapter = "goose-${config.ai.jw-codex.id}",
             tools = {
               opts = {
                 default_tools = { "agent" },
               },
             },
           },
-          inline = { adapter = "hermes", },
+          inline = { adapter = "goose-${config.ai.jw-codex.id}", },
         },
         extensions = {
           -- TODO: move extensions config to separate file
