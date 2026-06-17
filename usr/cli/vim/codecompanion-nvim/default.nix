@@ -65,6 +65,13 @@
                 commands = { default = { "hermes-acp", }, },
               })
             end,
+            ["goose-${config.ai.kimi.id}"] = function()
+              return require("codecompanion.adapters.acp").extend("goose", {
+                name = "goose-${config.ai.kimi.id}",
+                formatted_name = "Goose ${config.ai.kimi.name}",
+                env = { GOOSE_PROVIDER = "${config.ai.kimi.id}", },
+              })
+            end,
           },
         },
         display = {
