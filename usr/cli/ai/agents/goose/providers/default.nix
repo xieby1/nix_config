@@ -1,7 +1,9 @@
-{ ... }: {
+{ config, lib, ... }: let
+  catwalkToCustomProvider = import ./catwalk-to-custom-provider.nix lib;
+in {
   imports = [
-    ./kimi.nix
-    ./minimax.nix
-    ./jw_codex.nix
+    (catwalkToCustomProvider config.ai.kimi)
+    (catwalkToCustomProvider config.ai.minimax-china)
+    (catwalkToCustomProvider config.ai.jw-codex)
   ];
 }
