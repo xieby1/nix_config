@@ -1,4 +1,4 @@
-{ pkgs, lib }: catwalk: let
+{ pkgs, lib, goose-unwrapped }: catwalk: let
   api_key_env = lib.toUpper (builtins.replaceStrings ["-"] ["_"] catwalk.id);
 in {
   yq-merge.".config/goose/config.yaml" = {
@@ -44,8 +44,6 @@ in {
   };
 
   home.packages = let
-    # TODO: re-organize the folder structure
-    goose-unwrapped = import ../package.nix;
     goose-wrapped = pkgs.runCommand "goose-${catwalk.id}" {
       nativeBuildInputs = [pkgs.makeWrapper];
       passthru.unwrapped = goose-unwrapped;

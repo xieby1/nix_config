@@ -1,21 +1,15 @@
-{ pkgs, lib, ... }: let
+{ pkgs, config, lib, ... }: let
   goose-unwrapped = import ./package.nix;
-  goose-wrapped = pkgs.runCommand "goose-wrapped" {
-    nativeBuildInputs = [pkgs.makeWrapper];
-    passthru.unwrapped = goose-unwrapped;
-  } ''
-    mkdir -p $out
-    ${pkgs.xorg.lndir}/bin/lndir -silent ${goose-unwrapped} $out
-    for bin in $out/bin/*; do
-      wrapProgram $bin \
-        --set GOOSE_DISABLE_KEYRING 1
-    done
-  '';
+  catwalkToCustomProvider = import ./catwalk-to-custom-provider.nix {inherit pkgs lib goose-unwrapped;};
 in {
   imports = [
-    ./providers
+    (catwalkToCustomProvider config.ai.kimi)
+    (catwalkToCustomProvider config.ai.minimax-china)
+    (catwalkToCustomProvider config.ai.jw-codex)
   ];
-  home.packages = [ goose-wrapped ];
+  # If zsh alias goose=goose-jw-codex, then the completion does not works for this aliased goose, I do not know why.
+  # So I create a simple executable wrapper.
+  home.packages = [(pkgs.writeShellScriptBin "goose" "goose-jw-codex $@")];
   cachix_packages = [ goose-unwrapped ];
   programs.zsh.initContent = lib.mkAfter ''
     eval "$(goose completion zsh)"
