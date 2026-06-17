@@ -51,20 +51,6 @@
             end,
           },
           acp = {
-            pi = function()
-              return require("codecompanion.adapters").extend("opencode", {
-                name = "pi",
-                formatted_name = "Pi",
-                commands = { default = { "pi-acp", }, },
-              })
-            end,
-            hermes = function()
-              return require("codecompanion.adapters").extend("opencode", {
-                name = "hermes",
-                formatted_name = "Hermes",
-                commands = { default = { "hermes-acp", }, },
-              })
-            end,
             ["goose-${config.ai.kimi.id}"] = function()
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.kimi.id}",
