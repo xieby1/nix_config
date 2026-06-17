@@ -117,8 +117,25 @@ in {
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-claude.txt);
     };
     jw-codex = {
+      id = "jw-codex";
+      name = "JW Codex";
+      type = "openai-compat";
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-codex.txt);
+      default_large_model_id = "gpt-5.5";
+      default_small_model_id = "gpt-5.4";
+      models = {
+        "gpt-5.5" = {
+          id = "gpt-5.5";
+          name = "gpt-5.5";
+          context_window = 256 * 1000; # yes, jw gpt-5.5 is 256k
+        };
+        "gpt-5.4" = {
+          id = "gpt-5.4";
+          name = "gpt-5.4";
+          context_window = 1000 * 1000;
+        };
+      };
     };
   };
 }
