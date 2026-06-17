@@ -5,19 +5,8 @@
 #MC # * and minuet-ai-nvim delay in nvim-cmp and not solved, blink-cmp is async
 # TODO: split providers into separate files
 { pkgs, ... }: { programs.neovim = {
-  plugins = [(pkgs.vimUtils.buildVimPlugin {
-    name = "blink-cmp-dictionary";
-    version = "2025-09-17";
-    # current nixpkgs version does not support capitalize_first & capitalize_whole_word
-    # TODO: use latest version from nixpkgs when support above options
-    src = pkgs.fetchFromGitHub {
-      owner = "Kaiser-Yang";
-      repo = "blink-cmp-dictionary";
-      rev = "43b701fe9728a704bc63e4667c5d8b398bf129b2";
-      hash = "sha256-szCNbYLWkJTAVGWz9iRFh7NfQfM5t5jcQHdQeKzBx30=";
-    };
-    doCheck = false;
-  }) {
+  plugins = [pkgs.vimPlugins.blink-cmp-dictionary
+  {
     # match unicode characters => match alphabet characters instead.
     # E.g. I don't want to completion a long CJK sentence.
     # E.g. I want alphabet next to CJK can be completed: "例子example"
