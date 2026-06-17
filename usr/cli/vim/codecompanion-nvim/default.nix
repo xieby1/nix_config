@@ -69,21 +69,21 @@
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.kimi.id}",
                 formatted_name = "Goose ${config.ai.kimi.name}",
-                env = { GOOSE_PROVIDER = "${config.ai.kimi.id}", },
+                commands = { default = { "goose-${config.ai.kimi.id}", "acp", }, },
               })
             end,
             ["goose-${config.ai.minimax-china.id}"] = function()
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.minimax-china.id}",
                 formatted_name = "Goose ${config.ai.minimax-china.name}",
-                env = { GOOSE_PROVIDER = "${config.ai.minimax-china.id}", },
+                commands = { default = { "goose-${config.ai.minimax-china.id}", "acp", }, },
               })
             end,
             ["goose-${config.ai.jw-codex.id}"] = function()
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.jw-codex.id}",
                 formatted_name = "Goose ${config.ai.jw-codex.name}",
-                env = { GOOSE_PROVIDER = "${config.ai.jw-codex.id}", },
+                commands = { default = { "goose-${config.ai.jw-codex.id}", "acp", }, },
               })
             end,
           },

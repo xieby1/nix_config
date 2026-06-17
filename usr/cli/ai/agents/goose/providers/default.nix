@@ -1,5 +1,5 @@
-{ config, lib, ... }: let
-  catwalkToCustomProvider = import ./catwalk-to-custom-provider.nix lib;
+{ pkgs, config, lib, ... }: let
+  catwalkToCustomProvider = import ./catwalk-to-custom-provider.nix {inherit pkgs lib;};
 in {
   imports = [
     (catwalkToCustomProvider config.ai.kimi)
