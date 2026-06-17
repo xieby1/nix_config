@@ -92,14 +92,7 @@
           },
         },
         strategies = {
-          chat = {
-            adapter = "goose-${config.ai.jw-codex.id}",
-            tools = {
-              opts = {
-                default_tools = { "agent" },
-              },
-            },
-          },
+          chat = { adapter = "goose-${config.ai.jw-codex.id}", },
           inline = { adapter = "goose-${config.ai.jw-codex.id}", },
         },
         extensions = {
