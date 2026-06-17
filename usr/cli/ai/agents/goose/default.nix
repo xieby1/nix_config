@@ -12,6 +12,9 @@
     done
   '';
 in {
+  imports = [
+    ./providers
+  ];
   home.packages = [ goose-wrapped ];
   cachix_packages = [ goose-unwrapped ];
   programs.zsh.initContent = lib.mkAfter ''
