@@ -8,6 +8,8 @@
       patches = [
         # For codecompanion ACP tools calls: display tool call input and output
         ./preserve-acp-raw-tool-io.patch
+        # Keep CodeCompanion slash completions from outranking normal path completion.
+        ./blink-completion-path-friendly.patch
       ];
       # For codecompanion native tools calls: display with longer truncation
       postPatch = ''
