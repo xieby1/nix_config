@@ -1,6 +1,8 @@
---- a/lua/codecompanion/interactions/chat/acp/formatters.lua	2026-06-18 09:23:50.882198237 +0800
-+++ b/lua/codecompanion/interactions/chat/acp/formatters.lua	2026-06-18 09:23:50.902649758 +0800
-@@ -229,6 +229,44 @@
+diff --git a/lua/codecompanion/interactions/chat/acp/formatters.lua b/lua/codecompanion/interactions/chat/acp/formatters.lua
+index 9ad9c59..cbd860f 100644
+--- a/lua/codecompanion/interactions/chat/acp/formatters.lua
++++ b/lua/codecompanion/interactions/chat/acp/formatters.lua
+@@ -229,6 +229,37 @@ function M.summarize_tool_content(tool_call)
    return extract_content_summary(tool_call)
  end
  
@@ -24,28 +26,21 @@
 +  return vim.inspect(value)
 +end
 +
-+---Build the raw ACP input/output suffix for verbose tool display
++---Build the raw ACP input suffix for verbose tool display
 +---@param tool_call table
 +---@return string|nil
 +local function raw_tool_summary(tool_call)
-+  local parts = {}
 +  local raw_input = format_raw_tool_data(tool_call.rawInput)
-+  local raw_output = format_raw_tool_data(tool_call.rawOutput)
-+
 +  if raw_input and raw_input ~= "" then
-+    table.insert(parts, "input: " .. raw_input)
++    return "input: " .. raw_input
 +  end
-+  if raw_output and raw_output ~= "" then
-+    table.insert(parts, "output: " .. raw_output)
-+  end
-+
-+  return #parts > 0 and table.concat(parts, " — ") or nil
++  return nil
 +end
 +
  ---Generate a smart summary based on tool kind and content
  ---@param tool_call table
  ---@param adapter CodeCompanion.ACPAdapter
-@@ -246,6 +284,11 @@
+@@ -246,6 +277,11 @@ local function generate_smart_summary(tool_call, adapter)
    end
  
    -- Generate detailed summary based on kind
@@ -57,21 +52,19 @@
    local content_summary = extract_content_summary(tool_call)
  
    if kind == "read" then
-@@ -365,6 +408,8 @@
+@@ -365,6 +401,7 @@ function M.normalize_tool_call(tool_call)
        status = "failed",
        content = {},
        locations = {},
 +      rawInput = nil,
-+      rawOutput = nil,
      }
    end
  
-@@ -375,6 +420,8 @@
+@@ -375,6 +412,7 @@ function M.normalize_tool_call(tool_call)
      status = tool_call.status or "pending",
      content = tool_call.content or {},
      locations = tool_call.locations or {},
 +    rawInput = tool_call.rawInput or tool_call.raw_input,
-+    rawOutput = tool_call.rawOutput or tool_call.raw_output,
    }
  end
  
