@@ -20,6 +20,31 @@
         local sections = vim.tbl_extend('force', inactive_sections, {
           lualine_c = {
             function() return require('nvim-navic').get_location() end,
+            { -- TODO: move it to codecompanion nix script
+              function()
+                local chat_metadata = _G.codecompanion_chat_metadata[vim.api.nvim_get_current_buf()]
+                if not chat_metadata then
+                  return ""
+                end
+
+                local adapter = chat_metadata.adapter or {}
+                local parts = { adapter.name or "CodeCompanion" }
+                if adapter.model then
+                  table.insert(parts, adapter.model)
+                end
+                if chat_metadata.tokens and chat_metadata.tokens ~= 0 then
+                  table.insert(parts, tostring(chat_metadata.tokens) .. " tokens")
+                end
+                if chat_metadata.tools and chat_metadata.tools ~= 0 then
+                  table.insert(parts, tostring(chat_metadata.tools) .. " tools")
+                end
+
+                return "󰚩 " .. table.concat(parts, " · ")
+              end,
+              cond = function()
+                return vim.bo.filetype == "codecompanion" and _G.codecompanion_chat_metadata ~= nil
+              end,
+            },
           },
         })
 
