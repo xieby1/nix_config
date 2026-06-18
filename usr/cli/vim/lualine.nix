@@ -18,7 +18,7 @@
             end)(),
           },
           sections = {
-            lualine_a = {'filename'},
+            lualine_a = { {'filename', path = 1 --[[relative path]],}, },
             lualine_b = {'branch', 'diagnostics'},
             lualine_c = {},
             lualine_x = {},
