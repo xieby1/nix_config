@@ -6,6 +6,7 @@ in {
     (catwalkToCustomProvider config.ai.kimi)
     (catwalkToCustomProvider config.ai.minimax-china)
     (catwalkToCustomProvider config.ai.jw-codex)
+    ./mcp.nix
   ];
   # If zsh alias goose=goose-jw-codex, then the completion does not works for this aliased goose, I do not know why.
   # So I create a simple executable wrapper.
