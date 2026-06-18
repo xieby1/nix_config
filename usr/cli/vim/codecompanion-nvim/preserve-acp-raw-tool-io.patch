@@ -1,0 +1,77 @@
+--- a/lua/codecompanion/interactions/chat/acp/formatters.lua	2026-06-18 09:23:50.882198237 +0800
++++ b/lua/codecompanion/interactions/chat/acp/formatters.lua	2026-06-18 09:23:50.902649758 +0800
+@@ -229,6 +229,44 @@
+   return extract_content_summary(tool_call)
+ end
+ 
++---Encode raw ACP tool data for inline display
++---@param value any
++---@return string|nil
++local function format_raw_tool_data(value)
++  if value == nil or value == vim.NIL then
++    return nil
++  end
++
++  if type(value) == "string" then
++    return value
++  end
++
++  local ok, encoded = pcall(vim.json.encode, value)
++  if ok and encoded and encoded ~= "" then
++    return encoded
++  end
++
++  return vim.inspect(value)
++end
++
++---Build the raw ACP input/output suffix for verbose tool display
++---@param tool_call table
++---@return string|nil
++local function raw_tool_summary(tool_call)
++  local parts = {}
++  local raw_input = format_raw_tool_data(tool_call.rawInput)
++  local raw_output = format_raw_tool_data(tool_call.rawOutput)
++
++  if raw_input and raw_input ~= "" then
++    table.insert(parts, "input: " .. raw_input)
++  end
++  if raw_output and raw_output ~= "" then
++    table.insert(parts, "output: " .. raw_output)
++  end
++
++  return #parts > 0 and table.concat(parts, " — ") or nil
++end
++
+ ---Generate a smart summary based on tool kind and content
+ ---@param tool_call table
+ ---@param adapter CodeCompanion.ACPAdapter
+@@ -246,6 +284,11 @@
+   end
+ 
+   -- Generate detailed summary based on kind
++  local raw_summary = raw_tool_summary(tool_call)
++  if raw_summary then
++    return title .. " — " .. raw_summary
++  end
++
+   local content_summary = extract_content_summary(tool_call)
+ 
+   if kind == "read" then
+@@ -365,6 +408,8 @@
+       status = "failed",
+       content = {},
+       locations = {},
++      rawInput = nil,
++      rawOutput = nil,
+     }
+   end
+ 
+@@ -375,6 +420,8 @@
+     status = tool_call.status or "pending",
+     content = tool_call.content or {},
+     locations = tool_call.locations or {},
++    rawInput = tool_call.rawInput or tool_call.raw_input,
++    rawOutput = tool_call.rawOutput or tool_call.raw_output,
+   }
+ end
+ 

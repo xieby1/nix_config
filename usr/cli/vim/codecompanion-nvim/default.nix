@@ -2,7 +2,18 @@
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
   programs.neovim.plugins = [{
-    plugin = pkgs.pkgsu.vimPlugins.codecompanion-nvim;
+    plugin = pkgs.pkgsu.vimPlugins.codecompanion-nvim.overrideAttrs (old: {
+      patches = (old.patches or []) ++ [
+        # For codecompanion ACP tools calls: display tool call input and output
+        ./preserve-acp-raw-tool-io.patch
+      ];
+      # For codecompanion native tools calls: display with longer truncation
+      postPatch = (old.postPatch or "") + ''
+        substituteInPlace lua/codecompanion/interactions/chat/acp/formatters.lua \
+          --replace-fail 'operation > 60' 'operation > 999' \
+          --replace-fail '57' '997'
+      '';
+    });
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
     config = /*lua*/ ''
@@ -51,6 +62,7 @@
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.kimi.id}",
                 formatted_name = "Goose ${config.ai.kimi.name}",
+                opts = { verbose_output = true },
                 commands = { default = { "goose-${config.ai.kimi.id}", "acp", }, },
               })
             end,
@@ -58,6 +70,7 @@
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.minimax-china.id}",
                 formatted_name = "Goose ${config.ai.minimax-china.name}",
+                opts = { verbose_output = true },
                 commands = { default = { "goose-${config.ai.minimax-china.id}", "acp", }, },
               })
             end,
@@ -65,6 +78,7 @@
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.jw-codex.id}",
                 formatted_name = "Goose ${config.ai.jw-codex.name}",
+                opts = { verbose_output = true },
                 commands = { default = { "goose-${config.ai.jw-codex.id}", "acp", }, },
               })
             end,
