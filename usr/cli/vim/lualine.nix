@@ -8,6 +8,21 @@
       });
       type = "lua";
       config = /*lua*/ ''
+        local inactive_sections = {
+          lualine_a = { {'filename', path = 1 --[[relative path]],}, },
+          lualine_b = {'branch', 'diagnostics'},
+          lualine_c = {},
+          lualine_x = {},
+          lualine_y = {'filetype'},
+          lualine_z = {'location', 'progress'},
+        }
+
+        local sections = vim.tbl_extend('force', inactive_sections, {
+          lualine_c = {
+            function() return require('nvim-navic').get_location() end,
+          },
+        })
+
         require("lualine").setup({
           options = {
             theme = (function()
@@ -35,24 +50,8 @@
             component_separators = { left = "", right = ""},
             section_separators = { left = '┇', right = '┇'},
           },
-          sections = {
-            lualine_a = { {'filename', path = 1 --[[relative path]],}, },
-            lualine_b = {'branch', 'diagnostics'},
-            lualine_c = {
-              function() return require('nvim-navic').get_location() end,
-            },
-            lualine_x = {},
-            lualine_y = {'filetype'},
-            lualine_z = {'location', 'progress'}
-          },
-          inactive_sections = {
-            lualine_a = {'filename'},
-            lualine_b = {'branch', 'diagnostics'},
-            lualine_c = {},
-            lualine_x = {},
-            lualine_y = {'filetype'},
-            lualine_z = {'location', 'progress'}
-          },
+          inactive_sections = inactive_sections,
+          sections = sections,
         })
       '';
     }];
