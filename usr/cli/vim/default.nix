@@ -46,6 +46,7 @@ in {
     ./avante-nvim
     ./lz-n
     ./todo-comments.nix
+    ./lualine.nix
   ];
 
   home.shellAliases.view = "nvim -R";
