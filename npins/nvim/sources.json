@@ -1,5 +1,21 @@
 {
   "pins": {
+    "codecompanion": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "olimorris",
+        "repo": "codecompanion.nvim"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v19.16.0",
+      "revision": "65b8938ec42d0226bb456b8df20aa6729e2849b3",
+      "url": "https://api.github.com/repos/olimorris/codecompanion.nvim/tarball/refs/tags/v19.16.0",
+      "hash": "sha256-EUzpQYHEtIP5pVdhsUNWF0Gv7PegMVd25j9WC3Knsq4="
+    },
     "hbac": {
       "type": "Git",
       "repository": {

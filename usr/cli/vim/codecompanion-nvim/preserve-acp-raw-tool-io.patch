@@ -1,9 +1,9 @@
 diff --git a/lua/codecompanion/interactions/chat/acp/formatters.lua b/lua/codecompanion/interactions/chat/acp/formatters.lua
-index 9ad9c59..cbd860f 100644
+index 92ed255..94ea8ae 100644
 --- a/lua/codecompanion/interactions/chat/acp/formatters.lua
 +++ b/lua/codecompanion/interactions/chat/acp/formatters.lua
-@@ -229,6 +229,37 @@ function M.summarize_tool_content(tool_call)
-   return extract_content_summary(tool_call)
+@@ -228,6 +228,37 @@ local function clean_for_buffer(text)
+   return text
  end
  
 +---Encode raw ACP tool data for inline display
@@ -37,34 +37,34 @@ index 9ad9c59..cbd860f 100644
 +  return nil
 +end
 +
- ---Generate a smart summary based on tool kind and content
+ ---Fill in defaults for missing tool call fields
  ---@param tool_call table
- ---@param adapter CodeCompanion.ACPAdapter
-@@ -246,6 +277,11 @@ local function generate_smart_summary(tool_call, adapter)
-   end
- 
-   -- Generate detailed summary based on kind
-+  local raw_summary = raw_tool_summary(tool_call)
-+  if raw_summary then
-+    return title .. " — " .. raw_summary
-+  end
-+
-   local content_summary = extract_content_summary(tool_call)
- 
-   if kind == "read" then
-@@ -365,6 +401,7 @@ function M.normalize_tool_call(tool_call)
+ ---@return table
+@@ -240,6 +271,7 @@ local function normalize(tool_call)
        status = "failed",
-       content = {},
-       locations = {},
+       title = "Invalid tool call",
+       toolCallId = "unknown",
 +      rawInput = nil,
      }
    end
  
-@@ -375,6 +412,7 @@ function M.normalize_tool_call(tool_call)
+@@ -250,6 +282,7 @@ local function normalize(tool_call)
      status = tool_call.status or "pending",
-     content = tool_call.content or {},
-     locations = tool_call.locations or {},
+     title = tool_call.title or "Tool call",
+     toolCallId = tool_call.toolCallId or "unknown",
 +    rawInput = tool_call.rawInput or tool_call.raw_input,
    }
  end
  
+@@ -272,6 +305,11 @@ function M.tool_message(tool_call, adapter)
+     return clean_for_buffer(diff)
+   end
+ 
++  local raw_summary = raw_tool_summary(call)
++  if raw_summary then
++    return clean_for_buffer(label .. " — " .. raw_summary)
++  end
++
+   local summary = content_summary(call)
+   if summary and summary ~= "" then
+     return clean_for_buffer(label .. " — " .. summary)

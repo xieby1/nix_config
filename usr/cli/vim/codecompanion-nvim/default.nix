@@ -2,18 +2,21 @@
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
   programs.neovim.plugins = [{
-    plugin = pkgs.pkgsu.vimPlugins.codecompanion-nvim.overrideAttrs (old: {
-      patches = (old.patches or []) ++ [
+    plugin = pkgs.vimUtils.buildVimPlugin {
+      name = "codecompanion";
+      src = pkgs.npinsed.nvim.codecompanion;
+      patches = [
         # For codecompanion ACP tools calls: display tool call input and output
         ./preserve-acp-raw-tool-io.patch
       ];
       # For codecompanion native tools calls: display with longer truncation
-      postPatch = (old.postPatch or "") + ''
+      postPatch = ''
         substituteInPlace lua/codecompanion/interactions/chat/acp/formatters.lua \
-          --replace-fail 'operation > 60' 'operation > 999' \
-          --replace-fail '57' '997'
+          --replace-fail 'local MAX_TITLE = 60' 'local MAX_TITLE = 999' \
+          --replace-fail 'local MAX_TEXT = 100' 'local MAX_TEXT = 999'
       '';
-    });
+      doCheck = false;
+    };
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
     config = /*lua*/ ''
