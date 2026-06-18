@@ -83,7 +83,13 @@
               return require("codecompanion.adapters.acp").extend("goose", {
                 name = "goose-${config.ai.jw-codex.id}",
                 formatted_name = "Goose ${config.ai.jw-codex.name}",
-                opts = { verbose_output = true },
+                -- TODO: add other agents' model_metadata
+                opts = {
+                  verbose_output = true,
+                  model_metadata = {
+                    ["gpt-5.5"] = { context_window = 256000, },
+                  },
+                },
                 commands = { default = { "goose-${config.ai.jw-codex.id}", "acp", }, },
               })
             end,

@@ -37,13 +37,23 @@
                 local adapter_opts = chat and chat.adapter and chat.adapter.opts or {}
                 local model_metadata = adapter.model and adapter_opts.model_metadata and adapter_opts.model_metadata[adapter.model]
                 local context_window = (model_metadata and model_metadata.context_window) or adapter_opts.context_window
+                local function abbr(num)
+                  if num >= 1000000 then
+                    return string.format("%.1fm", num / 1000000):gsub("%.0m$", "m")
+                  elseif num >= 1000 then
+                    return string.format("%.1fk", num / 1000):gsub("%.0k$", "k")
+                  end
+                  return tostring(num)
+                end
+                token_info = ""
+                if chat_metadata.tokens and chat_metadata.tokens then
+                  token_info = token_info .. abbr(chat_metadata.tokens)
+                end
                 if context_window then
-                  table.insert(parts, tostring(context_window) .. " ctx")
+                  token_info = token_info .. "/" .. abbr(context_window)
                 end
+                table.insert(parts, token_info)
 
-                if chat_metadata.tokens and chat_metadata.tokens ~= 0 then
-                  table.insert(parts, tostring(chat_metadata.tokens) .. " tokens")
-                end
                 if chat_metadata.tools and chat_metadata.tools ~= 0 then
                   table.insert(parts, tostring(chat_metadata.tools) .. " tools")
                 end
