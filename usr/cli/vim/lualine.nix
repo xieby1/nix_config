@@ -32,6 +32,15 @@
                 if adapter.model then
                   table.insert(parts, adapter.model)
                 end
+
+                local chat = require("codecompanion").buf_get_chat(0)
+                local adapter_opts = chat and chat.adapter and chat.adapter.opts or {}
+                local model_metadata = adapter.model and adapter_opts.model_metadata and adapter_opts.model_metadata[adapter.model]
+                local context_window = (model_metadata and model_metadata.context_window) or adapter_opts.context_window
+                if context_window then
+                  table.insert(parts, tostring(context_window) .. " ctx")
+                end
+
                 if chat_metadata.tokens and chat_metadata.tokens ~= 0 then
                   table.insert(parts, tostring(chat_metadata.tokens) .. " tokens")
                 end
