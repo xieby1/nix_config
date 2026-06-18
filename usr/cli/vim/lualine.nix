@@ -20,7 +20,9 @@
           sections = {
             lualine_a = { {'filename', path = 1 --[[relative path]],}, },
             lualine_b = {'branch', 'diagnostics'},
-            lualine_c = {},
+            lualine_c = {
+              function() return require('nvim-navic').get_location() end,
+            },
             lualine_x = {},
             lualine_y = {'filetype'},
             lualine_z = {'location', 'progress'}
