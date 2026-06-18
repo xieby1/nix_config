@@ -1,0 +1,21 @@
+diff --git a/lua/lualine.lua b/lua/lualine.lua
+--- a/lua/lualine.lua
++++ b/lua/lualine.lua
+@@ -111,6 +111,8 @@ local function apply_transitional_separators(status, is_focused)
+         local trans_sep = fill_section_separator(status, is_focused, str_checked, last_hl, sep, false)
+         if trans_sep then
+           table.insert(status_applied, trans_sep)
++        elseif sep == "┇" then
++          table.insert(status_applied, sep)
+         end
+       end
+       if last_hl_reseted then
+@@ -131,6 +133,8 @@ local function apply_transitional_separators(status, is_focused)
+       local trans_sep = fill_section_separator(status, is_focused, str_checked, last_hl, sep, true)
+       if trans_sep then
+         table.insert(status_applied, trans_sep)
++      elseif sep == "┇" then
++        table.insert(status_applied, sep)
+       end
+       copied_pos = str_checked
+     elseif next_char == '%' then

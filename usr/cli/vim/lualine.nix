@@ -1,21 +1,39 @@
 { pkgs, ... }: {
   programs.neovim = {
     plugins = [{
-      plugin = pkgs.vimPlugins.lualine-nvim;
+      plugin = pkgs.vimPlugins.lualine-nvim.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          ./lualine-show-identical-bg-section-separators.patch
+        ];
+      });
       type = "lua";
       config = /*lua*/ ''
         require("lualine").setup({
           options = {
-            -- make the inactive theme same as active theme
             theme = (function()
-              local t = require("lualine.themes.auto")
-              t.inactive = {
-                a = t.normal.a,
-                b = t.normal.b,
-                c = t.normal.c,
+              local function hl(name)
+                local highlight = vim.api.nvim_get_hl(0, { name = name })
+                return {
+                  fg = highlight.fg and string.format("#%06x", highlight.fg) or nil,
+                  bg = highlight.bg and string.format("#%06x", highlight.bg) or nil,
+                  gui = highlight.bold and "bold" or nil,
+                }
+              end
+
+              local active = hl("StatusLine")
+              local inactive = hl("StatusLineNC")
+
+              return {
+                normal =   { a =   active, b =   active, c =   active },
+                insert =   { a =   active, b =   active, c =   active },
+                visual =   { a =   active, b =   active, c =   active },
+                replace =  { a =   active, b =   active, c =   active },
+                command =  { a =   active, b =   active, c =   active },
+                inactive = { a = inactive, b = inactive, c = inactive },
               }
-              return t
             end)(),
+            component_separators = { left = "", right = ""},
+            section_separators = { left = '┇', right = '┇'},
           },
           sections = {
             lualine_a = { {'filename', path = 1 --[[relative path]],}, },
