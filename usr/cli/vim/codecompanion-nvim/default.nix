@@ -99,5 +99,5 @@
     '';
   }];
 
-  home.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1" -c Outline!'';
+  home.shellAliases.codecompanion=''nvim -c CodeCompanionChat -c "bd 1"'';
 }
