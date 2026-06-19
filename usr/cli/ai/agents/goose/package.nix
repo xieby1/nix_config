@@ -14,6 +14,9 @@ let
 in llm-agent-flake.defaultNix.packages."${builtins.currentSystem}".goose-cli.overrideAttrs (old: {
   patches = (old.patches or []) ++ [
     # Fix JW Codex
+    # 1. Tolerate missing `sequence_number` on Responses stream events
     ./responses-output-item-defaults.patch
+    # 2. Tolerate `response.completed` whose output items omit `id`/`status`
+    ./responses-output-item-message-defaults.patch
   ];
 })
