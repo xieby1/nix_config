@@ -41,8 +41,8 @@
         vim.keymap.set('n', '<leader>d', vim.diagnostic.open_float)
         vim.keymap.set('n', '[d', function() vim.diagnostic.jump({ count=-1, float=true, severity = { min = vim.diagnostic.severity.WARN } }) end)
         vim.keymap.set('n', ']d', function() vim.diagnostic.jump({ count= 1, float=true, severity = { min = vim.diagnostic.severity.WARN } }) end)
-        vim.keymap.set('n', '[D', function() vim.diagnostic.jump({ count=-1, float=true, }) end)
-        vim.keymap.set('n', ']D', function() vim.diagnostic.jump({ count= 1, float=true, }) end)
+        vim.keymap.set('n', '[D', function() vim.diagnostic.jump({ count=-1, float=true, severity = { min = vim.diagnostic.severity.INFO } }) end)
+        vim.keymap.set('n', ']D', function() vim.diagnostic.jump({ count= 1, float=true, severity = { min = vim.diagnostic.severity.INFO } }) end)
         vim.keymap.set('n', '<space>d', Snacks.picker.diagnostics_buffer)
         vim.keymap.set('n', '<space>D', Snacks.picker.diagnostics)
         vim.diagnostic.config({
