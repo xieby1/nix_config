@@ -4,6 +4,7 @@
     ./forge
     ./hermes
     ./goose
+    ./zerostack
   ];
   home.packages = [
     # TODO: use latest nixpkgs and remove nixpkgs-for-copilot

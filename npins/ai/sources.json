@@ -192,6 +192,22 @@
       "revision": "6e90a242c0135d80e76d85197f5452b73b733233",
       "url": "https://api.github.com/repos/samvallad33/vestige/tarball/refs/tags/v2.1.2",
       "hash": "sha256-5vrxHo0h+q/zqAUX+8nSLlmBlUGZBo+28K24srl6nIY="
+    },
+    "zerostack": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "gi-dellav",
+        "repo": "zerostack"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.5.0",
+      "revision": "029b3c04ddd7abfaba5bbbe8a3d9f1d742f5a047",
+      "url": "https://api.github.com/repos/gi-dellav/zerostack/tarball/refs/tags/v1.5.0",
+      "hash": "sha256-CLBb7SaSaE4kpQqTOWdjneg9smszE5uJfvNJ8fQDmrg="
     }
   },
   "version": 7

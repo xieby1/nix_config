@@ -179,3 +179,4 @@
   - The discussions/plans are the explicit: e.g. [Make zerostack extensible](https://github.com/gi-dellav/zerostack/issues/108)
   - Does not support hooks
   - Does not support per-model context window
+  - ACP support incomplete: session resume, model switch
