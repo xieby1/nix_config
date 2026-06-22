@@ -38,11 +38,27 @@ in {
           id = "gpt-5.5";
           name = "gpt-5.5";
           context_window = 256 * 1000; # yes, jw gpt-5.5 is 256k
+
+          # TODO: Precisely define the type, so we can avoid the missing field.
+          can_reason = true;
+          cost_per_1m_in = 0;
+          cost_per_1m_out = 0;
+          cost_per_1m_in_cached = 0;
+          cost_per_1m_out_cached = 0;
+          default_max_tokens = 4000;
         };
         "gpt-5.4" = {
           id = "gpt-5.4";
           name = "gpt-5.4";
           context_window = 1000 * 1000;
+
+          # TODO: Precisely define the type, so we can avoid the missing field.
+          can_reason = true;
+          cost_per_1m_in = 0;
+          cost_per_1m_out = 0;
+          cost_per_1m_in_cached = 0;
+          cost_per_1m_out_cached = 0;
+          default_max_tokens = 4000;
         };
       };
     };
