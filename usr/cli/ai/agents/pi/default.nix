@@ -2,7 +2,6 @@
   imports = [ ./extensions ];
   home.packages = [
     pkgs.pkgsu.pi-coding-agent
-    (pkgs.callPackage ./pi-acp.nix {})
   ];
   home.file = let
     gen-home-file-entry = args: {
