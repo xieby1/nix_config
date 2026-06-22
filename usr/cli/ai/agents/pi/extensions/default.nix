@@ -26,8 +26,7 @@
     #     dontNpmBuild = true;
     #   }) + /lib/node_modules/pi-subagents;
     # };
-    pi-web-access = {
-      target = ".pi/agent/extensions/pi-web-access";
+    ".pi/agent/extensions/pi-web-access" = {
       source = pkgs.buildNpmPackage (finalAttrs: {
         name = "pi-web-access";
         src = pkgs.npinsed.ai.pi.web-access;
@@ -51,8 +50,7 @@
     # > pdf, then process pdf, then work on the content let me know what this paper it talk about.
     # OpenCode completely ignores plan mode, it call subagent to fetch pdf from the web, call subagent to explore, ...
     # pi-constell-plan obey perfectly: it write a plan file, then start follow the plan file.
-    pi-constell-plan = {
-      target = ".pi/agent/extensions/pi-constell-plan";
+    ".pi/agent/extensions/pi-constell-plan" = {
       source = pkgs.npinsed.ai.pi.constell-plan + /packages/pi-constell;
     };
   };

@@ -1,7 +1,6 @@
 { pkgs, ... }: {
   home.file = {
-    pi-mcp-adapter = {
-      target = ".pi/agent/extensions/pi-mcp-adapter";
+    ".pi/agent/extensions/pi-mcp-adapter" = {
       source = pkgs.buildNpmPackage (finalAttrs: {
         name = "pi-mcp-adapter";
         src = pkgs.npinsed.ai.pi.mcp-adapter;

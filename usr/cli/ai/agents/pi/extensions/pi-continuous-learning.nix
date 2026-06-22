@@ -11,8 +11,7 @@
 in {
   home.packages = [pi-continuous-learning-build];
   home.file = {
-    pi-continuous-learning = {
-      target = ".pi/agent/extensions/pi-continuous-learning";
+    ".pi/agent/extensions/pi-continuous-learning" = {
       source = pi-continuous-learning-build + /lib/node_modules/pi-continuous-learning;
     };
   };
