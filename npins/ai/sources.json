@@ -116,67 +116,6 @@
       "url": "https://github.com/NixOS/nixpkgs/archive/663f0b499b6742fef9ee8552943705073088f083.tar.gz",
       "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
     },
-    "pi-acp": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "svkozak",
-        "repo": "pi-acp"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.0.26",
-      "revision": "783febac09169258b1173e78503db5bb3e67617c",
-      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.26",
-      "hash": "sha256-F5uwgWbUmbPcJIk6ylNtxNpKpKI+hFSUWxQ7ffrdUWM="
-    },
-    "pi-constell-plan": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "tridha643",
-        "repo": "constellagent"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "79a2c559dee3583a9ceedbc483c865078841a2d8",
-      "url": "https://github.com/tridha643/constellagent/archive/79a2c559dee3583a9ceedbc483c865078841a2d8.tar.gz",
-      "hash": "sha256-56phnimZkJkxLMU8uVRWY9Aa5wn47Byw62uy5/VLAI4="
-    },
-    "pi-mcp-adapter": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nicobailon",
-        "repo": "pi-mcp-adapter"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v2.5.0",
-      "revision": "9f98e390c813c02219ed822f809f6a5212199616",
-      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.5.0",
-      "hash": "sha256-FsE7JhA5TxiWWAlED5no5dkqUEzg47mzvQLNuhMiup4="
-    },
-    "pi-web-access": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nicobailon",
-        "repo": "pi-web-access"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.10.6",
-      "revision": "b378e5d80d424806058e819b262f72e5f6b58b7d",
-      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.10.6",
-      "hash": "sha256-OA1UpLXMV/g5CQgf03KwOjCoa34a32/Itwx8GePw2fk="
-    },
     "vestige": {
       "type": "GitRelease",
       "repository": {

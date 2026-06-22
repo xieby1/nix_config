@@ -4,7 +4,7 @@
 }:
 buildNpmPackage (finalAttrs: {
   name = "pi-acp";
-  src = npinsed.ai.pi-acp;
+  src = npinsed.ai.pi.acp;
   # Patch pi-acp to support standard ACP model switching:
   # - Upgrades @agentclientprotocol/sdk from 0.12.0 to 0.19.0 for setSessionConfigOption support
   # - Adds configOptions (category: "model") to session/new and session/load responses
