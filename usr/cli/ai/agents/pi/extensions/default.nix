@@ -26,16 +26,7 @@
     #     dontNpmBuild = true;
     #   }) + /lib/node_modules/pi-subagents;
     # };
-    ".pi/agent/extensions/pi-web-access" = {
-      source = pkgs.buildNpmPackage (finalAttrs: {
-        name = "pi-web-access";
-        src = pkgs.npinsed.ai.pi.web-access;
-        # The package-lock.json in src is out of date, so we need to manually specify npmDepsHash
-        # npmDeps = pkgs.importNpmLock { npmRoot = pkgs.npinsed.ai.pi-web-access; };
-        npmDepsHash = "sha256-QKmgVmIvqLbqnUmKBKniT0CvNIgZWZ9mUkha0LJMMVQ=";
-        dontNpmBuild = true;
-      }) + /lib/node_modules/pi-web-access;
-    };
+
     # - Plan Extensions Comparison:
     #   - qmx/pi-plan-mode: fully read-only thus does not write md.
     #   - backnotprop/plannotator: I don't need the web annotation UI.

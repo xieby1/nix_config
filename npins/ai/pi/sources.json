@@ -41,22 +41,6 @@
       "revision": "e6120b5ab58a0cc171db34583078c177630eeac4",
       "url": "https://github.com/fmoda3/nix-configs/archive/e6120b5ab58a0cc171db34583078c177630eeac4.tar.gz",
       "hash": "sha256-UFYy5x3h/8EPG95VC25bnu9lTIJ4reNfYLLwjM02NW8="
-    },
-    "web-access": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nicobailon",
-        "repo": "pi-web-access"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.10.7",
-      "revision": "076bf0db5e739b200286ca37486e4edd8d19123c",
-      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.10.7",
-      "hash": "sha256-D9no4SLigH/t3/WfirixMbTEjcEwZwJXld8j7pwBCew="
     }
   },
   "version": 7
