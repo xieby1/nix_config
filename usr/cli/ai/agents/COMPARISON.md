@@ -43,7 +43,7 @@
 ## Codex
 
 - Cons:
-  - Latest verions only support wire_api = "responses",
+  - Latest versions only support wire_api = "responses",
     does not support completion.
     So does not support deepseek, minimax, ....
     Fine!
@@ -77,7 +77,7 @@
   - Fixed: ~~Why the output color render bug remain unsolved?~~
     **VERY IMPORTANT**: **Oh, I guess this project focus on desktop, instead of cli.**
   - zsh cursor sometimes disappear?
-  - `goose configure` cannot configure kimi, minimax succussfully, only by manually add a costum_xxx.json
+  - `goose configure` cannot configure kimi, minimax successfully, only by manually add a custom_xxx.json
   - minimax is still 2.5
     - https://github.com/aaif-goose/goose/pull/7981
   - cannot switch model during conversation
@@ -106,8 +106,8 @@
   - Author response very quickly.
 - Cons:
   - Single person maintained
-
-# Clients Comparisons
+  - ctrl-g does not run async
+  - config files in a mess: `~/.config/vtcode/config.toml`, `~/.config/vtcode/vtcode.toml`, `~/.vtcode/`
 
 ## pi
 
@@ -162,3 +162,20 @@
     - when enter slash command like `/skill`, there is high, narrow auto completion floating window.
     - Cannot disable insert by default
     - Cannot hide winbar (need to edit source code)
+
+## TODO: zot
+
+- https://news.ycombinator.com/item?id=48319524
+- Pros:
+  - extensions in any language via subprocess + json-rpc
+- Cons:
+  - Does not support ACP
+  - Does not support MCP
+
+## TODO: zerostack
+
+- https://news.ycombinator.com/item?id=48164287
+- Cons:
+  - The discussions/plans are the explicit: e.g. [Make zerostack extensible](https://github.com/gi-dellav/zerostack/issues/108)
+  - Does not support hooks
+  - Does not support per-model context window
