@@ -1,6 +1,6 @@
 { config, ... }: {
   imports = [
-    (import ./catwalk-to-custom-provider config.ai.jw-codex)
+    (import ./catwalk-to-custom-provider.nix config.ai.jw-codex)
   ];
   yq-merge.".pi/agent/auth.json" = {
     generator = builtins.toJSON;
