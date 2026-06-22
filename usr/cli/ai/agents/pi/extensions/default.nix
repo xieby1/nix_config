@@ -4,6 +4,7 @@
     # TODO: build broken
     # ./pi-continuous-learning.nix
     ./mcp.nix
+    ./pi-hermes-memory.nix
     ./rpiv-todo.nix
   ];
   home.packages = [

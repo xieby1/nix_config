@@ -42,6 +42,19 @@
       "url": "https://github.com/fmoda3/nix-configs/archive/e6120b5ab58a0cc171db34583078c177630eeac4.tar.gz",
       "hash": "sha256-UFYy5x3h/8EPG95VC25bnu9lTIJ4reNfYLLwjM02NW8="
     },
+    "pi-hermes-memory": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "chandra447",
+        "repo": "pi-hermes-memory"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "df6cc78988df596e96a4cb546d1cfedd57cae295",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/df6cc78988df596e96a4cb546d1cfedd57cae295.tar.gz",
+      "hash": "sha256-1wbRCZTrDoSYdBBPh5JDXlKKhgGuEk+HxrgcggOObgA="
+    },
     "rpiv-mono": {
       "type": "Git",
       "repository": {
