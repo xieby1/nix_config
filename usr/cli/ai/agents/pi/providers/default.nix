@@ -1,10 +1,15 @@
 { config, ... }: {
   imports = [
-    (import ./catwalk-to-custom-provider config.ai.minimax-china)
-    (import ./catwalk-to-custom-provider config.ai.kimi)
-    (import ./catwalk-to-custom-provider config.ai.deepseek)
     (import ./catwalk-to-custom-provider config.ai.jw-codex)
   ];
+  yq-merge.".pi/agent/auth.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      minimax-cn = {type="api_key"; key=config.ai.minimax-china.api_key;};
+      kimi-coding = {type="api_key"; key=config.ai.kimi.api_key;};
+      deepseek = {type="api_key"; key=config.ai.deepseek.api_key;};
+    };
+  };
   yq-merge.".pi/agent/settings.json" = {
     generator = builtins.toJSON;
     expr = {
