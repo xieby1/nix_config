@@ -21,6 +21,7 @@ in {
     expr = {
       name = catwalk.id;
       engine = if catwalk.type == "anthropic" then "anthropic"
+          else if catwalk.type == "openai" then "openai"
           else if catwalk.type == "openai-compat" then "openai"
           else throw "Unknown engine from catwalk.type ${catwalk.type}";
       display_name = catwalk.name;

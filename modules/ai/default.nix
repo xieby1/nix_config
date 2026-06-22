@@ -28,7 +28,7 @@ in {
     jw-codex = {
       id = "jw-codex";
       name = "JW Codex";
-      type = "openai-compat";
+      type = "openai";
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-codex.txt);
       default_large_model_id = "gpt-5.5";
