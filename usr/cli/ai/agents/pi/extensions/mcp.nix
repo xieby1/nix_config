@@ -1,4 +1,4 @@
-{ pkgs, config, ... }: {
+{ pkgs, ... }: {
   home.file = {
     pi-mcp-adapter = {
       target = ".pi/agent/extensions/pi-mcp-adapter";
@@ -9,15 +9,23 @@
         dontNpmBuild = true;
       }) + /lib/node_modules/pi-mcp-adapter;
     };
-    pi-mcp-json = {
-      target = ".pi/agent/mcp.json";
-      # TODO: symlink real ~/.forge/.mcp.json
-      inherit (config.home.file.".forge/.mcp.json") source;
-    };
-    agents_md = {
-      target = ".pi/agent/AGENTS.md";
-      # TODO: symlink real ~/.forge/AGENTS.md
-      inherit (config.home.file.forge_agents_md) source;
+  };
+
+  yq-merge.".pi/agent/mcp.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      mcpServers = {
+        ddgs = {
+          command = ''${
+            pkgs.pkgsu.python3Packages.ddgs.overridePythonAttrs (old: {
+              dependencies = old.dependencies
+                ++ old.optional-dependencies.mcp
+                ++ old.optional-dependencies.api;
+            })
+          }/bin/ddgs'';
+          args = ["mcp"];
+        };
+      };
     };
   };
 }
