@@ -180,3 +180,4 @@
   - Does not support hooks
   - Does not support per-model context window
   - ACP support incomplete: session resume, model switch
+  - Explicitly state that skills is not supported. It prefer prompts.
