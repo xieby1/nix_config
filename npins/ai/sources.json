@@ -40,10 +40,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.35.1",
-      "revision": "3b7535bd1b2ebd0c95e1cea62c508a60d06f2712",
-      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.35.1",
-      "hash": "sha256-Jvx+ZULXZBpxLWohIUun3PY1lBWo77CH7fewt/ILku8="
+      "version": "v0.45.1",
+      "revision": "6364689891356d07f937faa569850d0ee1347ddd",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.45.1",
+      "hash": "sha256-cikuLRyNDUL6Sd48P1jtqHnvI6ircDjUSOe6UBlHo3w="
     },
     "forgecode": {
       "type": "GitRelease",

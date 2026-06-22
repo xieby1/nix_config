@@ -42,8 +42,8 @@ in {
       model-configs = [(with config.ai.deepseek; {
           id = "p4s0PTKm1x4xga8X";
           providerType = "deepseek";
-          name = models.deepseek-chat.name;
-          modelName = "deepseek-chat";
+          name = models.${default_small_model_id}.name;
+          modelName = default_small_model_id;
           apiKey = api_key;
           baseURL = "";
           at = 0;

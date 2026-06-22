@@ -3,10 +3,10 @@ json-file: let
     raw_nix = {
       ...
       models = [{
-        id = "deepseek-chat";
+        id = "deepseek-flash";
         ...
       }{
-        id = "deepseek-reasoner";
+        id = "deepseek-pro";
         ...
       }];
     };
@@ -16,12 +16,12 @@ json-file: let
   output: {
     ...
     models = {
-      deepseek-chat = {
-        id = "deepseek-chat";
+      deepseek-flash = {
+        id = "deepseek-flash";
         ...
       };
-      deepseek-reasoner = {
-        id = "deepseek-reasoner";
+      deepseek-pro = {
+        id = "deepseek-pro";
         ...
       };
     };

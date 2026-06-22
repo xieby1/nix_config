@@ -25,18 +25,6 @@
       require("codecompanion").setup({
         adapters = {
           http = {
-            deepseek = function() return require("codecompanion.adapters").extend("deepseek", {
-              env = { api_key = "${config.ai.deepseek.api_key}" },
-              schema = {
-                model = {
-                  choices = {
-                    -- The codecompanion-nvim default deepseek-reasoner cannot use tools, only deepseek-chat can
-                    -- So override the setting here, to enable deepseek-reasoner can_use_tools.
-                    ["deepseek-reasoner"] = { opts = { can_reason = true, can_use_tools = true } },
-                  },
-                },
-              },
-            }) end,
             -- By crush+copilot(claude opus4.6)
             -- ## Root Cause (updated)
             -- Setting `available_tools = {}` in `extend()` doesn't work because `vim.tbl_deep_extend` merges recursively. The Anthropic adapter's `available_tools` (containing `web_search`, `web_fetch`, `code_execution`, `memory`) **survives the merge**. So MiniMax still receives the Anthropic-proprietary `web_search_20250305` tool format, which it can't parse.
