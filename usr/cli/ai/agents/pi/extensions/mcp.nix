@@ -1,12 +1,7 @@
 { pkgs, ... }: {
   home.file = {
     ".pi/agent/extensions/pi-mcp-adapter" = {
-      source = pkgs.buildNpmPackage (finalAttrs: {
-        name = "pi-mcp-adapter";
-        src = pkgs.npinsed.ai.pi.mcp-adapter;
-        npmDepsHash = "sha256-ml5sC0dUPpZU30tSNi48a0bP5SRUg2FtwR8nYRW4FhU=";
-        dontNpmBuild = true;
-      }) + /lib/node_modules/pi-mcp-adapter;
+      source = pkgs.pkgspi.piExtensions.pi-mcp-adapter;
     };
   };
 
