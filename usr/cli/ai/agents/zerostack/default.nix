@@ -1,4 +1,8 @@
 { ... }: {
+  imports = [
+    ./providers
+  ];
+
   home.packages = [
     (import ./package.nix)
   ];
