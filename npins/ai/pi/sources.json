@@ -41,6 +41,20 @@
       "revision": "e6120b5ab58a0cc171db34583078c177630eeac4",
       "url": "https://github.com/fmoda3/nix-configs/archive/e6120b5ab58a0cc171db34583078c177630eeac4.tar.gz",
       "hash": "sha256-UFYy5x3h/8EPG95VC25bnu9lTIJ4reNfYLLwjM02NW8="
+    },
+    "rpiv-mono": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "juicesharp",
+        "repo": "rpiv-mono"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "060373d9292aeb46aeedc23a6d818a997200a6e5",
+      "url": "https://github.com/juicesharp/rpiv-mono/archive/060373d9292aeb46aeedc23a6d818a997200a6e5.tar.gz",
+      "hash": "sha256-t2WVwhyT7x5D049iot4UDUWp+oM+XDudHbq/nBL/b84=",
+      "frozen": true
     }
   },
   "version": 7
