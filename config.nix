@@ -19,12 +19,18 @@
     # 添加非稳定版的nixpkgs到nixpkgs里，
     # 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
     pkgsu = import npinsed.pkgsu {};
-  in {
-    inherit npinsed pkgsu;
-    #MC 添加nix user repository (NUR)到nixpkgs里。
-    nur = import npinsed.nur { pkgs = pkgsu; };
     #MC 添加flake-compat，用于在nix expression中使用flake的包
     #MC 让flake-compat默认使用pkgs.stdenv.system，使得defaultNix.default为pkgs.stdenv.system的包
     flake-compat = { src, system ? pkgs.stdenv.system }: import npinsed.flake-compat {inherit src system;};
+  in {
+    inherit npinsed pkgsu flake-compat;
+    #MC 添加nix user repository (NUR)到nixpkgs里。
+    nur = import npinsed.nur { pkgs = pkgsu; };
+    # pkgs for pi, using fmoda3-nix-configs
+    pkgspi = let
+      flake = flake-compat { src = npinsed.ai.pi.fmoda3-nix-configs; };
+    in import flake.defaultNix.inputs.nixpkgs {
+      overlays = [(import "${npinsed.ai.pi.fmoda3-nix-configs}/pkgs")];
+    };
   };
 }

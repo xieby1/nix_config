@@ -44,6 +44,18 @@
       "revision": "9f98e390c813c02219ed822f809f6a5212199616",
       "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.5.0",
       "hash": "sha256-FsE7JhA5TxiWWAlED5no5dkqUEzg47mzvQLNuhMiup4="
+    "fmoda3-nix-configs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "fmoda3",
+        "repo": "nix-configs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "e6120b5ab58a0cc171db34583078c177630eeac4",
+      "url": "https://github.com/fmoda3/nix-configs/archive/e6120b5ab58a0cc171db34583078c177630eeac4.tar.gz",
+      "hash": "sha256-UFYy5x3h/8EPG95VC25bnu9lTIJ4reNfYLLwjM02NW8="
     },
     "web-access": {
       "type": "GitRelease",
