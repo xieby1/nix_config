@@ -39,15 +39,7 @@ in {
         at = 0;
       }];
       default-model-id = "p4s0PTKm1x4xga8X";
-      model-configs = [ (with config.ai.siliconflow; {
-          id = "LwC1DkGB6Fs01U99";
-          providerType = "deepseek";
-          name = models.deepseek.name;
-          modelName = models.deepseek.id;
-          apiKey = api_key;
-          baseURL = api_endpoint;
-          at = 0;
-      }) (with config.ai.deepseek; {
+      model-configs = [(with config.ai.deepseek; {
           id = "p4s0PTKm1x4xga8X";
           providerType = "deepseek";
           name = models.deepseek-chat.name;
