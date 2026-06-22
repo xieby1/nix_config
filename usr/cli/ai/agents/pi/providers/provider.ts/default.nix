@@ -1,23 +1,23 @@
 {
-  catwalk-provider,
-  api,
-  model-extra ? {},
-
   lib,
   runCommand,
   prettier,
 }:
-assert lib.assertOneOf "api" api ["anthropic-messages" "openai-completions" "openai-responses"];
-runCommand "${catwalk-provider.id}.ts" {
+catwalk:
+runCommand "${catwalk.id}.ts" {
   nativeBuildInputs = [ prettier ];
   content = ''
   import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 
   export default function (pi: ExtensionAPI) {
-    pi.registerProvider("${catwalk-provider.id}", {
-      baseUrl: "${catwalk-provider.api_endpoint}",
-      apiKey: "${catwalk-provider.api_key}",
-      api: "${api}",
+    pi.registerProvider("${catwalk.id}", {
+      baseUrl: "${catwalk.api_endpoint}",
+      apiKey: "${catwalk.api_key}",
+      api: "${ if catwalk.type == "anthropic" then "anthropic-messages"
+          else if catwalk.type == "openai" then "openai-responses"
+          else if catwalk.type == "openai-compat" then "openai-completions"
+          else throw "Unknown api from catwalk.type ${catwalk.type}"
+      }",
       models: ${builtins.toJSON (
         lib.mapAttrsToList (
           _: model: {
@@ -32,8 +32,8 @@ runCommand "${catwalk-provider.id}.ts" {
             };
             contextWindow = model.context_window;
             maxTokens = model.default_max_tokens;
-          } // model-extra
-        ) catwalk-provider.models
+          }
+        ) catwalk.models
       )}
     });
   }

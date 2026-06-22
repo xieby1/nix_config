@@ -1,16 +1,16 @@
 { pkgs, config, lib, ... }: {
   home.file = let
-    gen-home-file-entry = args: {
-      name = "pi-${args.catwalk-provider.id}";
+    gen-home-file-entry = catwalk: {
+      name = "pi-${catwalk.id}";
       value = {
-        target = ".pi/agent/extensions/${args.catwalk-provider.id}.ts";
-        source = pkgs.callPackage ./provider.ts args;
+        target = ".pi/agent/extensions/${catwalk.id}.ts";
+        source = pkgs.callPackage ./provider.ts {} catwalk;
       };
     };
   in lib.listToAttrs [
-    (gen-home-file-entry {catwalk-provider=config.ai.minimax-china; api="anthropic-messages";})
-    (gen-home-file-entry {catwalk-provider=config.ai.kimi; api="anthropic-messages";})
-    (gen-home-file-entry {catwalk-provider=config.ai.deepseek; api="openai-completions";})
+    (gen-home-file-entry config.ai.minimax-china)
+    (gen-home-file-entry config.ai.kimi)
+    (gen-home-file-entry config.ai.deepseek)
   ];
   yq-merge.".pi/agent/settings.json" = { generator = builtins.toJSON; expr = {
     defaultProvider = config.ai.minimax-china.id;
