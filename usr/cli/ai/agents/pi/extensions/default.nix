@@ -8,7 +8,7 @@
     ./rpiv-todo.nix
   ];
   home.packages = [
-    (pkgs.callPackage ./acp {})
+    (pkgs.callPackage ./acp.nix {})
   ];
   home.file = {
     # - pi-skill-evolution: needs pi-session-search which needs embedding provider (llm support embedding)
