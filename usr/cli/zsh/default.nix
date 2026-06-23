@@ -37,6 +37,12 @@
       bindkey -M viopp  "^[[1;5C" forward-word
       bindkey -M viopp  "^[[1;5D" backward-word
 
+      # Match Neovim's default 'iskeyword' word model for ctrl+left/right:
+      # letters, digits, and `_` are words; punctuation such as `/`, `.`, and
+      # `-` are boundaries. This makes URL/path movement in zsh line up with
+      # Neovim's small-word motions (`w`/`b`/`e`).
+      WORDCHARS=_
+
       # source my zshrc
       if [[ -f ~/Gist/Config/zshrc ]]; then
         source ~/Gist/Config/zshrc
