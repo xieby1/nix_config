@@ -29,6 +29,19 @@
       "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf.tar.gz",
       "hash": "sha256-30I7RZk5Wq4vJxL8753QnMG2rplw6b2iOR2vcSQmdw8="
     },
+    "dgop": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "AvengeMedia",
+        "repo": "dgop"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "3cd297080573319c36884b28a3cc0dbfed79f53e",
+      "url": "https://github.com/AvengeMedia/dgop/archive/3cd297080573319c36884b28a3cc0dbfed79f53e.tar.gz",
+      "hash": "sha256-NBGF7bo+nYSToDWtIXMwPeulzRxphX8JHzNRqLTOOqU="
+    },
     "dms-unified-taskbar": {
       "type": "GitRelease",
       "repository": {

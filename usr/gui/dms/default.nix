@@ -15,7 +15,7 @@
     enable = true;
     # https://github.com/AvengeMedia/DankMaterialShell/issues/1489
     dgop.package = (pkgs.flake-compat {
-      src = pkgs.npinsed.dgop;
+      src = pkgs.npinsed.de.dgop;
     }).defaultNix.default;
   };
   home.packages = [

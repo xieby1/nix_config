@@ -1,18 +1,5 @@
 {
   "pins": {
-    "dgop": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "AvengeMedia",
-        "repo": "dgop"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "3cd297080573319c36884b28a3cc0dbfed79f53e",
-      "url": "https://github.com/AvengeMedia/dgop/archive/3cd297080573319c36884b28a3cc0dbfed79f53e.tar.gz",
-      "hash": "sha256-NBGF7bo+nYSToDWtIXMwPeulzRxphX8JHzNRqLTOOqU="
-    },
     "flake-compat": {
       "type": "Git",
       "repository": {
