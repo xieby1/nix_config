@@ -103,19 +103,6 @@
       "url": "https://github.com/numtide/llm-agents.nix/archive/02775cea5240a05825a4ca454806d0a838289dec.tar.gz",
       "hash": "sha256-AmTzz9SOkEuBmBEhmppxmxJTRoc+AtAe3xI5SLGtXI8="
     },
-    "nixpkgs-for-copilot": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "NixOS",
-        "repo": "nixpkgs"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "663f0b499b6742fef9ee8552943705073088f083",
-      "url": "https://github.com/NixOS/nixpkgs/archive/663f0b499b6742fef9ee8552943705073088f083.tar.gz",
-      "hash": "sha256-GEkxBStD58/toaEh5zyh7TZnybZOcZCh6LOSHiisjN8="
-    },
     "vestige": {
       "type": "GitRelease",
       "repository": {

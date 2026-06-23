@@ -9,11 +9,5 @@
     ./module
     ./fugit2.nix
   ];
-  my.neovim.lz-n = [{
-    plugin = pkgs.pkgsu.vimPlugins.copilot-lua;
-    spec = {
-      cmd = "Copilot";
-      after = lib.generators.mkLuaInline ''function() require("copilot").setup() end'';
-    };
-  }];
+  my.neovim.lz-n = [];
 }
