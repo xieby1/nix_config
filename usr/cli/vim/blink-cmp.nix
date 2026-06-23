@@ -117,9 +117,11 @@
               min_keyword_length = 3,
               score_offset = -4, -- lower priority than buffer's -3
               opts = {
+                -- TODO: clean this words list:
+                -- - remove word < 3 characters
                 dictionary_files = { "${pkgs.fetchurl {
-                  url = "https://github.com/first20hours/google-10000-english/raw/bdf4c221bc120b0b7f6c3f1eff1cc1abb975f8d8/google-10000-english-no-swears.txt";
-                  sha256 = "11pd0p6ckixr1b5qvi6qxj389wmzq1k42is1bm9fc2y3397y1cyn";
+                  url = "https://github.com/dwyl/english-words/raw/8179fe68775df3f553ef19520db065228e65d1d3/words_alpha.txt";
+                  sha256 = "sha256-PtDJRhDYvPfBG7tJxWqknHI00ytmgk35H1VBaeVy2kg=";
                 }}" },
                 dictionary_directories = { vim.fn.expand('~/Gist/dicts/blink-cmp') },
               },
