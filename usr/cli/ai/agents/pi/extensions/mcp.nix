@@ -1,7 +1,11 @@
 { pkgs, ... }: {
   home.file = {
     ".pi/agent/extensions/pi-mcp-adapter" = {
-      source = pkgs.pkgspi.piExtensions.pi-mcp-adapter;
+      source = pkgs.pkgspi.piExtensions.pi-mcp-adapter.overrideAttrs (old: {
+        patches = (old.patches or []) ++ [
+          ./patches/pi-mcp-adapter-muted.patch
+        ];
+      });
     };
   };
 
