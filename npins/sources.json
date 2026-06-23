@@ -58,19 +58,6 @@
       "url": "https://github.com/nix-community/NUR/archive/d133c9274d1c37d0e2e6104239a8d5c0181d2c39.tar.gz",
       "hash": "sha256-c0B8tHUOElaB86IkPAAJwldLIyPpn3ck8Fa+g2fsbvo="
     },
-    "nur-charmbracelet": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "charmbracelet",
-        "repo": "nur"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "07948132b68b0d28da4394bab5c01cd102c564da",
-      "url": "https://github.com/charmbracelet/nur/archive/07948132b68b0d28da4394bab5c01cd102c564da.tar.gz",
-      "hash": "sha256-PJnPi1fT9V8Pqu8ZJVbcaVRokhqmZAAzta/8oo0GNy8="
-    },
     "pkgsu": {
       "type": "Git",
       "repository": {
