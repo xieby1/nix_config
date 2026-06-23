@@ -16,5 +16,4 @@ in {
     eval "$(goose completion zsh)"
     eval "$(goose term init zsh)"
   '';
-  home.file.".agents/skills".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/hermes/skills;
 }
