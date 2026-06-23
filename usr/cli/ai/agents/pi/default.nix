@@ -4,7 +4,8 @@
     ./providers
   ];
   home.packages = [
-    (pkgs.flake-compat {src = pkgs.npinsed.ai.llm-agents;})
+    # TODO: using pi in pkgsu?
+    (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})
       .defaultNix.packages.x86_64-linux.pi
   ];
   home.file.".pi/agent/projects-memory".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/projects-memory;

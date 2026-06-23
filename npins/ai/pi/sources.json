@@ -42,6 +42,19 @@
       "url": "https://github.com/fmoda3/nix-configs/archive/e6120b5ab58a0cc171db34583078c177630eeac4.tar.gz",
       "hash": "sha256-UFYy5x3h/8EPG95VC25bnu9lTIJ4reNfYLLwjM02NW8="
     },
+    "llm-agents": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "llm-agents.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d4bdfa7950b2e27b553f8c1fd92f6f44b926f776",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/d4bdfa7950b2e27b553f8c1fd92f6f44b926f776.tar.gz",
+      "hash": "sha256-jDXyzgRtViPSj38evX6dkqMXISulDrx8aTVLTxHQnYI="
+    },
     "pi-hermes-memory": {
       "type": "Git",
       "repository": {
