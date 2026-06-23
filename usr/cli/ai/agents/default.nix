@@ -1,7 +1,6 @@
 { config, pkgs, ... }: {
   imports = [
     ./pi
-    ./forge
     ./hermes
     ./goose
     ./zerostack

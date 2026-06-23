@@ -45,22 +45,6 @@
       "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.45.1",
       "hash": "sha256-cikuLRyNDUL6Sd48P1jtqHnvI6ircDjUSOe6UBlHo3w="
     },
-    "forgecode": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "tailcallhq",
-        "repo": "forgecode"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v2.12.9",
-      "revision": "8a9f3410f460d1618931dcc0a4b222e65eff0f58",
-      "url": "https://api.github.com/repos/tailcallhq/forgecode/tarball/refs/tags/v2.12.9",
-      "hash": "sha256-tA/IOcFcE5vhNGpZNV7sAGEao/LlP6hY/QUnJz0hbeY="
-    },
     "goose": {
       "type": "Git",
       "repository": {
