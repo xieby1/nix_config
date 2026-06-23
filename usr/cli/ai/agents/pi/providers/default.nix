@@ -1,6 +1,11 @@
 { config, ... }: {
   imports = [
     (import ./catwalk-to-custom-provider.nix config.ai.jw-codex)
+
+    # jw-deepseek proxy rejects 'developer' role (only accepts system/user/assistant/tool).
+    # Setting supportsDeveloperRole=false makes pi send the system prompt as 'system' instead.
+    {yq-merge.".pi/agent/models.json".expr.providers.jw-deepseek.compat.supportsDeveloperRole = false;}
+    (import ./catwalk-to-custom-provider.nix config.ai.jw-deepseek)
   ];
   yq-merge.".pi/agent/auth.json" = {
     generator = builtins.toJSON;

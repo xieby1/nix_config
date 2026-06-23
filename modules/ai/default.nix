@@ -1,4 +1,4 @@
-{ pkgs, config, lib, ... }: let
+{ pkgs, lib, ... }: let
   catwalk-providers = import ./catwalk-providers pkgs;
 in {
   # TODO: Precisely define the type
@@ -61,6 +61,12 @@ in {
           default_max_tokens = 4000;
         };
       };
+    };
+    jw-deepseek = catwalk-providers.deepseek // {
+      id = "jw-deepseek";
+      name = "JW DeepSeek";
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt) + "/v1";
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-deepseek.txt);
     };
   };
 }
