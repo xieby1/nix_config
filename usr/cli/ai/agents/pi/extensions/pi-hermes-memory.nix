@@ -1,4 +1,4 @@
-{ pkgs, ... }: let
+{ config, pkgs, ... }: let
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.
   pkgspi = import (
@@ -17,4 +17,8 @@ in {
       ];
     } + /lib/node_modules/pi-hermes-memory;
   };
+  home.file.".pi/agent/projects-memory".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/projects-memory;
+  home.file.".pi/agent/pi-hermes-memory/MEMORY.md".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/pi-hermes-memory/MEMORY.md;
+  home.file.".pi/agent/pi-hermes-memory/USER.md".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/pi-hermes-memory/USER.md;
+  home.file.".pi/agent/pi-hermes-memory/skills".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/pi-hermes-memory/skills;
 }
