@@ -3,6 +3,7 @@
     ../../modules
     ./cachix.nix
     ./yq-merge
+    ./syncthing-gist-ignore.nix
   ];
   # Why move pkgs.yq-go here instead of inside of yq-merge?
   # Becasue: the yq-merge module may be use outside of my config (e.g. test.nix),
