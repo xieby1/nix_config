@@ -25,6 +25,11 @@
       # same colon-separated format as GNU ls. The (s.:.) flag splits LS_COLORS
       # by colons so each name=value pair is passed as a separate argument.
       zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
+
+      # Show normal listings and enter interactive menu selection
+      zstyle ':completion:*' menu select=1
+      # Shift-Tab for reverse cycling
+      bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
     '';
     initContent = ''
       # https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
