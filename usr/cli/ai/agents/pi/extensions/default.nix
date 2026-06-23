@@ -37,5 +37,11 @@
     ".pi/agent/extensions/pi-constell-plan" = {
       source = pkgs.npinsed.ai.pi.constell-plan + /packages/pi-constell;
     };
+
+    ".pi/agent/extensions/titlebar-spinner.ts" = {
+      source = (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})
+        .defaultNix.packages.x86_64-linux.pi
+        +"/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/titlebar-spinner.ts";
+    };
   };
 }
