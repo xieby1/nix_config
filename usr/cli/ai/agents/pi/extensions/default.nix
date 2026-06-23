@@ -34,6 +34,11 @@
     # > pdf, then process pdf, then work on the content let me know what this paper it talk about.
     # OpenCode completely ignores plan mode, it call subagent to fetch pdf from the web, call subagent to explore, ...
     # pi-constell-plan obey perfectly: it write a plan file, then start follow the plan file.
+    # Compared with upstream pi examples/extensions/plan-mode:
+    # - upstream example: read-only planning + in-session todo execution tracking with [DONE:n] markers.
+    # - pi-constell-plan: clarification-gated plan-file export to ~/.pi-constell/plans/, Constellagent-compatible, no todo executor.
+    # - pi-constell-plan keeps write/edit available only for the active plan file after askUserQuestion; upstream disables write/edit entirely.
+    # TODO: considering replace pi-constell-plan with builtin plan-mode?
     ".pi/agent/extensions/pi-constell-plan" = {
       source = pkgs.npinsed.ai.pi.constell-plan + /packages/pi-constell;
     };
