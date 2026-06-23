@@ -1,18 +1,5 @@
 {
   "pins": {
-    "bifrost": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "maximhq",
-        "repo": "bifrost"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "68fd46c6d89bc43bff1d686598ee1daf80a243fc",
-      "url": "https://github.com/maximhq/bifrost/archive/68fd46c6d89bc43bff1d686598ee1daf80a243fc.tar.gz",
-      "hash": "sha256-AO7gFWS2YtR5okvlSKQ7kkiu/F7ksBggziODhampEB8="
-    },
     "catwalk": {
       "type": "GitRelease",
       "repository": {
