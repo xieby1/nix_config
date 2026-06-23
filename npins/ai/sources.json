@@ -1,21 +1,5 @@
 {
   "pins": {
-    "GoModel": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "ENTERPILOT",
-        "repo": "GoModel"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.1.33",
-      "revision": "05775df604545ffb06c40509defc6cd16d26e6f6",
-      "url": "https://api.github.com/repos/ENTERPILOT/GoModel/tarball/refs/tags/v0.1.33",
-      "hash": "sha256-CovHMxNks+LstE8W6zPuB/z9mkg8c4GCdIlU7conBFU="
-    },
     "bifrost": {
       "type": "Git",
       "repository": {
