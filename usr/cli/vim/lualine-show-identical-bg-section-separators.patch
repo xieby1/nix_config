@@ -6,7 +6,7 @@ diff --git a/lua/lualine.lua b/lua/lualine.lua
          if trans_sep then
            table.insert(status_applied, trans_sep)
 +        elseif sep == "┇" then
-+          table.insert(status_applied, sep)
++          table.insert(status_applied, '%*' .. sep)
          end
        end
        if last_hl_reseted then
@@ -15,7 +15,7 @@ diff --git a/lua/lualine.lua b/lua/lualine.lua
        if trans_sep then
          table.insert(status_applied, trans_sep)
 +      elseif sep == "┇" then
-+        table.insert(status_applied, sep)
++        table.insert(status_applied, '%*' .. sep)
        end
        copied_pos = str_checked
      elseif next_char == '%' then
