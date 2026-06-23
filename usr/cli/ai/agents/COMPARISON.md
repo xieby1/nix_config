@@ -114,8 +114,8 @@
 - Pros:
   - minimalist
 - Cons:
-  - minimalist: lack of many features
-    - lack of high-quality plugins such as memory, plan, subagents.
+  - ~minimalist: lack of many features~
+    - ~lack of high-quality plugins such as memory, plan, subagents.~
   - typescript-based
 
 ## pi_agent_rust
