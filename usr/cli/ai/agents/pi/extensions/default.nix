@@ -38,10 +38,8 @@
     # - upstream example: read-only planning + in-session todo execution tracking with [DONE:n] markers.
     # - pi-constell-plan: clarification-gated plan-file export to ~/.pi-constell/plans/, Constellagent-compatible, no todo executor.
     # - pi-constell-plan keeps write/edit available only for the active plan file after askUserQuestion; upstream disables write/edit entirely.
-    # TODO: considering replace pi-constell-plan with builtin plan-mode?
-    ".pi/agent/extensions/pi-constell-plan" = {
-      source = pkgs.npinsed.ai.pi.constell-plan + /packages/pi-constell;
-    };
+    # - pi-constell-plan does not allow DDGS MCP.
+    # - builtin plan-mode also has `/todos`, which is the same name as rpiv-todo
 
     ".pi/agent/extensions/titlebar-spinner.ts" = {
       source = (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})

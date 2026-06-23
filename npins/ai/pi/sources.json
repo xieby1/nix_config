@@ -16,19 +16,6 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.31",
       "hash": "sha256-bM3V/3fxkY2Ib+OyfT82StIIRSLXGDuYUbt1CZKpTuo="
     },
-    "constell-plan": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "tridha643",
-        "repo": "constellagent"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "5d921000a6f5ad907f2a0139e0d2bbc06b5c9b0b",
-      "url": "https://github.com/tridha643/constellagent/archive/5d921000a6f5ad907f2a0139e0d2bbc06b5c9b0b.tar.gz",
-      "hash": "sha256-yqvGLLNdEvS2zCnxsXiyCEVNnl3c67TpSZS28hNVsZU="
-    },
     "fmoda3-nix-configs": {
       "type": "Git",
       "repository": {
