@@ -1,7 +1,4 @@
 { pkgs, config, lib, ... }: {
-  imports = [
-    ./vestige.nix
-  ];
   yq-merge.".forge/.mcp.json" = {
     generator = builtins.toJSON;
     expr = {

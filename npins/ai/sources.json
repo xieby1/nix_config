@@ -103,22 +103,6 @@
       "url": "https://github.com/numtide/llm-agents.nix/archive/02775cea5240a05825a4ca454806d0a838289dec.tar.gz",
       "hash": "sha256-AmTzz9SOkEuBmBEhmppxmxJTRoc+AtAe3xI5SLGtXI8="
     },
-    "vestige": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "samvallad33",
-        "repo": "vestige"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v2.1.2",
-      "revision": "6e90a242c0135d80e76d85197f5452b73b733233",
-      "url": "https://api.github.com/repos/samvallad33/vestige/tarball/refs/tags/v2.1.2",
-      "hash": "sha256-5vrxHo0h+q/zqAUX+8nSLlmBlUGZBo+28K24srl6nIY="
-    },
     "zerostack": {
       "type": "GitRelease",
       "repository": {
