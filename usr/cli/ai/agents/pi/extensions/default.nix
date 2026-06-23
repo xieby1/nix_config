@@ -1,19 +1,12 @@
 # My feeling: configure javascript/typescript plugins is awful.
 { pkgs, ... }: {
   imports = [
-    # TODO: build broken
-    # ./pi-continuous-learning.nix
     ./mcp.nix
     ./acp.nix
     ./pi-hermes-memory.nix
     ./rpiv-todo.nix
   ];
   home.file = {
-    # - pi-skill-evolution: needs pi-session-search which needs embedding provider (llm support embedding)
-    # - pi-memory does not work: hard to trigger, too many slash commands
-    # - taskplane: too complex, and subagent call does not work due to `npm root -g` cannot find pi, why not use $PATH?
-    # - pi-messenger: communication cost too expensive
-
     # tintinweb/pi-subagents (this) vs nicobailon/pi-subagents (previous)
     # - previous:
     #   - non-intuitive: need explicitly specify the subagents call
