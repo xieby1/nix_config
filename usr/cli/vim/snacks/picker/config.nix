@@ -29,7 +29,7 @@
         -- - blink.cmp path source: also current-level path completion, not recursive fuzzy pick.
         -- - fzf-lua complete_path: works, but duplicates Snacks picker functionality.
         -- - plain Snacks put action: pastes a file but does not use/replace typed prefixes.
-        vim.keymap.set("i", "<C-x><C-f>", function()
+        local function insert_file_path(base_dir)
           -- Hide blink.cmp so its path menu does not overlap the Snacks picker.
           pcall(function() require("blink.cmp").hide() end)
 
@@ -40,10 +40,9 @@
 
           -- Path-like token before the cursor, e.g. `./foo/ba`.
           local prefix = line:sub(1, col):match("[^%s'\"`{}%[%]()<>,;:]*$") or ""
-          -- Directory part is preserved in inserted text; cwd resolves like blink.cmp path source.
+          -- Directory part is preserved in inserted text; cwd resolves from the chosen base_dir.
           local dir_prefix = prefix:match("^(.*/)") or ""
-          local buf_dir = vim.fn.expand(("#%d:p:h"):format(buf))
-          local picker_cwd = dir_prefix ~= "" and vim.fn.resolve(buf_dir .. "/" .. dir_prefix) or buf_dir
+          local picker_cwd = dir_prefix ~= "" and vim.fn.resolve(base_dir .. "/" .. dir_prefix) or base_dir
 
           Snacks.picker.files({
             cwd = picker_cwd,
@@ -65,7 +64,14 @@
               end)
             end,
           })
-        end, { desc = "Insert file path" })
+        end
+
+        vim.keymap.set("i", "<C-x><C-f>", function()
+          insert_file_path(vim.fn.expand(("#%d:p:h"):format(vim.api.nvim_get_current_buf())))
+        end, { desc = "Insert file path from buffer dir" })
+        vim.keymap.set("i", "<C-x><C-w>", function()
+          insert_file_path(vim.fn.getcwd())
+        end, { desc = "Insert file path from cwd" })
       end
     '';
   };
