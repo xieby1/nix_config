@@ -91,10 +91,23 @@
               module = 'blink.cmp.sources.path',
               -- same priority as the default path source
               score_offset = 3,
-              -- Skip CwdPath when buffer dir == cwd to avoid duplicate suggestions.
+              -- Disable CwdPath according to following conditions:
               enabled = function()
                 local buf_dir = vim.fn.expand(('#%d:p:h'):format(vim.api.nvim_get_current_buf()))
-                return vim.fn.resolve(buf_dir) ~= vim.fn.resolve(vim.fn.getcwd())
+                -- Condition 1: Same dir → Path source already covers it.
+                if vim.fn.resolve(buf_dir) == vim.fn.resolve(vim.fn.getcwd()) then
+                  return false
+                end
+                -- Condition 2: Absolute path (~/ or /) → doesn't depend on cwd.
+                do
+                  local col = vim.api.nvim_win_get_cursor(0)[2]
+                  local line = vim.api.nvim_get_current_line()
+                  local prefix = line:sub(1, col):match("[^%s'\"`{}%[%]()<>,;:]*$") or ""
+                  if prefix:match("^[~/]") ~= nil then
+                    return false
+                  end
+                end
+                return true
               end,
               opts = {
                 get_cwd = function(_)
