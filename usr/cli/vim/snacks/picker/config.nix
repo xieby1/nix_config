@@ -21,6 +21,49 @@
 
         vim.keymap.set('n', '<space>S', function() Snacks.picker.git_status() end)
         vim.keymap.set('n', '<space>p', function() Snacks.picker.pickers() end)
+
+        -- By pi + gpt-5.5
+        -- Fuzzy recursive file insertion via Snacks picker.
+        -- Alternatives not chosen:
+        -- - builtin <C-x><C-f>: only completes files in the current path level.
+        -- - blink.cmp path source: also current-level path completion, not recursive fuzzy pick.
+        -- - fzf-lua complete_path: works, but duplicates Snacks picker functionality.
+        -- - plain Snacks put action: pastes a file but does not use/replace typed prefixes.
+        vim.keymap.set("i", "<C-x><C-f>", function()
+          -- Hide blink.cmp so its path menu does not overlap the Snacks picker.
+          pcall(function() require("blink.cmp").hide() end)
+
+          local win = vim.api.nvim_get_current_win()
+          local buf = vim.api.nvim_get_current_buf()
+          local row, col = unpack(vim.api.nvim_win_get_cursor(win))
+          local line = vim.api.nvim_get_current_line()
+
+          -- Path-like token before the cursor, e.g. `./foo/ba`.
+          local prefix = line:sub(1, col):match("[^%s'\"`{}%[%]()<>,;:]*$") or ""
+          -- Directory part used as picker cwd and preserved in inserted text.
+          local dir_prefix = prefix:match("^(.*/)") or ""
+
+          Snacks.picker.files({
+            cwd = dir_prefix ~= "" and dir_prefix or nil,
+            confirm = function(picker, item)
+              picker:close()
+              if not item then
+                return
+              end
+
+              -- Replace the typed prefix with the selected file path.
+              local file = dir_prefix .. (item.file or item.text)
+              if prefix ~= "" then
+                vim.api.nvim_buf_set_text(buf, row - 1, col - #prefix, row - 1, col, {})
+              end
+              vim.api.nvim_win_set_cursor(win, { row, col - #prefix })
+              vim.api.nvim_paste(file, true, -1)
+              vim.schedule(function()
+                vim.cmd.startinsert({ bang = true })
+              end)
+            end,
+          })
+        end, { desc = "Insert file path" })
       end
     '';
   };
