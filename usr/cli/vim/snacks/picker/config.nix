@@ -42,7 +42,8 @@
           local prefix = line:sub(1, col):match("[^%s'\"`{}%[%]()<>,;:]*$") or ""
           -- Directory part is preserved in inserted text; cwd resolves from the chosen base_dir.
           local dir_prefix = prefix:match("^(.*/)") or ""
-          local picker_cwd = dir_prefix ~= "" and vim.fn.resolve(base_dir .. "/" .. dir_prefix) or base_dir
+          local is_absolute = dir_prefix:match("^[~/]") ~= nil
+          local picker_cwd = dir_prefix ~= "" and (is_absolute and vim.fn.resolve(dir_prefix) or vim.fn.resolve(base_dir .. "/" .. dir_prefix)) or base_dir
 
           Snacks.picker.files({
             cwd = picker_cwd,
