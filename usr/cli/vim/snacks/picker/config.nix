@@ -40,11 +40,13 @@
 
           -- Path-like token before the cursor, e.g. `./foo/ba`.
           local prefix = line:sub(1, col):match("[^%s'\"`{}%[%]()<>,;:]*$") or ""
-          -- Directory part used as picker cwd and preserved in inserted text.
+          -- Directory part is preserved in inserted text; cwd resolves like blink.cmp path source.
           local dir_prefix = prefix:match("^(.*/)") or ""
+          local buf_dir = vim.fn.expand(("#%d:p:h"):format(buf))
+          local picker_cwd = dir_prefix ~= "" and vim.fn.resolve(buf_dir .. "/" .. dir_prefix) or buf_dir
 
           Snacks.picker.files({
-            cwd = dir_prefix ~= "" and dir_prefix or nil,
+            cwd = picker_cwd,
             confirm = function(picker, item)
               picker:close()
               if not item then
