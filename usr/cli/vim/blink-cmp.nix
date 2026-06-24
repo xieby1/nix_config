@@ -78,7 +78,7 @@
         },
         sources = {
           default = {
-            'lsp', 'path', 'buffer', 'snippets',
+            'lsp', 'path', 'cwd_path', 'buffer', 'snippets',
             'minuet',
             "dictionary"
           },
@@ -86,6 +86,22 @@
             -- > By default, the buffer source will only show when the LSP source returns no items
             -- Always show buffer completion, defaults to `{ 'buffer' }`
             lsp = { fallbacks = {}, },
+            cwd_path = {
+              name = 'CwdPath',
+              module = 'blink.cmp.sources.path',
+              -- same priority as the default path source
+              score_offset = 3,
+              -- Skip CwdPath when buffer dir == cwd to avoid duplicate suggestions.
+              enabled = function()
+                local buf_dir = vim.fn.expand(('#%d:p:h'):format(vim.api.nvim_get_current_buf()))
+                return vim.fn.resolve(buf_dir) ~= vim.fn.resolve(vim.fn.getcwd())
+              end,
+              opts = {
+                get_cwd = function(_)
+                  return vim.fn.getcwd()
+                end,
+              },
+            },
             buffer = {
               opts = {
                 -- copy from the default get_bufnrs (all visible buffers).
