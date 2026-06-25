@@ -72,6 +72,7 @@
 
         require("lualine").setup({
           options = {
+            padding = 0,
             theme = (function()
               local function hl(name)
                 local highlight = vim.api.nvim_get_hl(0, { name = name })
