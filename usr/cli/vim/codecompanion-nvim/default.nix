@@ -81,6 +81,13 @@
                 commands = { default = { "goose-${config.ai.jw-codex.id}", "acp", }, },
               })
             end,
+            pi = function()
+              return require("codecompanion.adapters.acp").extend("opencode", {
+                name = "pi",
+                formatted_name = "Pi",
+                commands = { default = { "pi-acp", }, },
+              })
+            end,
           },
         },
         display = {
@@ -101,8 +108,8 @@
           },
         },
         strategies = {
-          chat = { adapter = "goose-${config.ai.jw-codex.id}", },
-          inline = { adapter = "goose-${config.ai.jw-codex.id}", },
+          chat = { adapter = "pi", },
+          inline = { adapter = "pi", },
         },
       })
 
