@@ -16,8 +16,11 @@
           },
           lualine_c = {},
           lualine_x = {},
-          lualine_y = {'filetype'},
-          lualine_z = {'location', 'progress'},
+          lualine_y = { { 'filetype', icons_enabled = false } },
+          lualine_z = {
+            'location',
+            { 'progress', padding = {left = 1, right = 0 }, },
+          },
         }
 
         local sections = vim.tbl_extend('force', inactive_sections, {
