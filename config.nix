@@ -26,11 +26,5 @@
     inherit npinsed pkgsu flake-compat;
     #MC 添加nix user repository (NUR)到nixpkgs里。
     nur = import npinsed.nur { pkgs = pkgsu; };
-    # pkgs for pi, using fmoda3-nix-configs
-    pkgspi = let
-      flake = flake-compat { src = npinsed.ai.pi.fmoda3-nix-configs; };
-    in import flake.defaultNix.inputs.nixpkgs {
-      overlays = [(import "${npinsed.ai.pi.fmoda3-nix-configs}/pkgs")];
-    };
   };
 }

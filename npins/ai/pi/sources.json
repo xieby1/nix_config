@@ -16,19 +16,6 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.31",
       "hash": "sha256-bM3V/3fxkY2Ib+OyfT82StIIRSLXGDuYUbt1CZKpTuo="
     },
-    "fmoda3-nix-configs": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "fmoda3",
-        "repo": "nix-configs"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "e6120b5ab58a0cc171db34583078c177630eeac4",
-      "url": "https://github.com/fmoda3/nix-configs/archive/e6120b5ab58a0cc171db34583078c177630eeac4.tar.gz",
-      "hash": "sha256-UFYy5x3h/8EPG95VC25bnu9lTIJ4reNfYLLwjM02NW8="
-    },
     "llm-agents": {
       "type": "Git",
       "repository": {
@@ -41,6 +28,22 @@
       "revision": "d4bdfa7950b2e27b553f8c1fd92f6f44b926f776",
       "url": "https://github.com/numtide/llm-agents.nix/archive/d4bdfa7950b2e27b553f8c1fd92f6f44b926f776.tar.gz",
       "hash": "sha256-jDXyzgRtViPSj38evX6dkqMXISulDrx8aTVLTxHQnYI="
+    },
+    "mcp-adapter": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-mcp-adapter"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.10.0",
+      "revision": "a764c25609d8daf76e607bc99557621fc3ed8aa9",
+      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.10.0",
+      "hash": "sha256-MrorLzxbn3O81B47Nd0d0xnd0xhXgMdobnXgD0axldE="
     },
     "pi-hermes-memory": {
       "type": "Git",
