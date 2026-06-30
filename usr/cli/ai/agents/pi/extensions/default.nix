@@ -1,7 +1,7 @@
 # My feeling: configure javascript/typescript plugins is awful.
 { pkgs, ... }: {
   imports = [
-    ./mcp.nix
+    ./mcp
     ./acp.nix
     ./pi-hermes-memory.nix
     ./rpiv-todo.nix
