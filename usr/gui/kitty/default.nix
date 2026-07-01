@@ -68,7 +68,7 @@
       name = "";
       # My zsh does not export HOSTNAME, so `builtins.getEnv "HOSTNAME"` does not work.
       # Therefore, I use /etc/hostname here.
-      size = (import ~/Gist/Config/kitty-font-size.nix).${builtins.readFile /etc/hostname} or 14;
+      size = (import ~/Gist/Config/kitty-font-size.nix).${pkgs.lib.trim (builtins.readFile /etc/hostname)} or 14;
     };
     settings = {
       allow_remote_control = "yes";
