@@ -1,0 +1,39 @@
+# Patch: ship plugin.yaml manifests in packaged Hermes wheels
+#
+# Root cause:
+#   Hermes plugin discovery only loads directory plugins that contain
+#   plugin.yaml/plugin.yml. The v2026.5.16 Python package installed by the
+#   Home Manager/Nix build included plugins/web/*/__init__.py and provider.py
+#   files, but omitted plugin.yaml package data. As a result bundled web
+#   providers (tavily, firecrawl, exa, etc.) were never registered and
+#   web_search returned "No web search provider configured" despite a valid
+#   TAVILY_API_KEY.
+#
+# Upstream context:
+#   - Issue: NousResearch/hermes-agent#28149
+#   - Related PRs: #28162, #28170 (ship plugin manifests in wheel/sdist)
+#
+# Rebase notes:
+#   Generated against upstream main branch.
+#   Upstream has partially merged (dashboard entries exist) but is still missing
+#   plugin.yaml/yml globs. Remove this patch once upstream adds them.
+#
+# Regenerate:
+#   cd ~/Codes/hermes-agent
+#   git diff -- pyproject.toml >> .../package-plugin-manifests.patch
+#
+diff --git a/pyproject.toml b/pyproject.toml
+index 05ce2fbe0..50631c121 100644
+--- a/pyproject.toml
++++ b/pyproject.toml
+@@ -224,6 +224,10 @@ py-modules = ["run_agent", "model_tools", "toolsets", "batch_runner", "trajector
+ hermes_cli = ["web_dist/**/*", "tui_dist/**/*", "scripts/install.sh", "scripts/install.ps1"]
+ gateway = ["assets/**/*"]
+ plugins = [
++  "*/plugin.yaml",
++  "*/*/plugin.yaml",
++  "*/plugin.yml",
++  "*/*/plugin.yml",
+   "*/dashboard/manifest.json",
+   "*/dashboard/dist/*",
+   "*/dashboard/dist/**/*",

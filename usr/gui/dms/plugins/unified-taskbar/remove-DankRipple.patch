@@ -1,0 +1,26 @@
+diff --git a/UnifiedTaskbar.qml b/UnifiedTaskbar.qml
+index bdfae16..f866652 100644
+--- a/UnifiedTaskbar.qml
++++ b/UnifiedTaskbar.qml
+@@ -624,10 +624,6 @@ PluginComponent {
+                     }
+                 }
+ 
+-                DankRipple {
+-                    id: entryRipple
+-                    cornerRadius: Theme.cornerRadius * 1.5
+-                }
+             }
+ 
+             MouseArea {
+@@ -636,10 +632,6 @@ PluginComponent {
+                 hoverEnabled: true
+                 cursorShape: Qt.PointingHandCursor
+                 acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
+-                onPressed: mouse => {
+-                    const pos = mapToItem(entryBackground, mouse.x, mouse.y);
+-                    entryRipple.trigger(pos.x, pos.y);
+-                }
+                 onClicked: mouse => {
+                     if (mouse.button === Qt.LeftButton) {
+                         if (appEntry.isGrouped && appEntry.windowCount > 1) {

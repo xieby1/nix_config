@@ -1,0 +1,7 @@
+{ ... }: {
+  imports = [
+    ./llms
+    ./mcp
+    ./agents
+  ];
+}

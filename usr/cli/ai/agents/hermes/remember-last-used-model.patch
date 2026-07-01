@@ -1,0 +1,410 @@
+# Patch: remember session-only /model switches across CLI/TUI restarts
+#
+# Purpose
+# - Keep the user's configured model.default as static fallback
+# - Persist every successful /model switch to model.last_used_model
+
+diff --git a/agent/auxiliary_client.py b/agent/auxiliary_client.py
+index 18197ae30..2e61f0b40 100644
+--- a/agent/auxiliary_client.py
++++ b/agent/auxiliary_client.py
+@@ -1683,6 +1683,9 @@ def _read_main_model() -> str:
+         if isinstance(model_cfg, str) and model_cfg.strip():
+             return model_cfg.strip()
+         if isinstance(model_cfg, dict):
++            last_used = model_cfg.get("last_used_model", "")
++            if isinstance(last_used, str) and last_used.strip():
++                return last_used.strip()
+             default = model_cfg.get("default", "")
+             if isinstance(default, str) and default.strip():
+                 return default.strip()
+@@ -1708,7 +1711,7 @@ def _read_main_provider() -> str:
+         cfg = load_config()
+         model_cfg = cfg.get("model", {})
+         if isinstance(model_cfg, dict):
+-            provider = model_cfg.get("provider", "")
++            provider = model_cfg.get("last_used_provider", "") or model_cfg.get("provider", "")
+             if isinstance(provider, str) and provider.strip():
+                 return provider.strip().lower()
+     except Exception:
+diff --git a/cli.py b/cli.py
+index c05c361a7..768213c67 100644
+--- a/cli.py
++++ b/cli.py
+@@ -3193,8 +3193,9 @@ class HermesCLI:
+         # env vars would stomp each other.
+         _model_config = CLI_CONFIG.get("model", {})
+         _config_model = (_model_config.get("default") or _model_config.get("model") or "") if isinstance(_model_config, dict) else (_model_config or "")
++        _last_used_model = (_model_config.get("last_used_model") or "") if isinstance(_model_config, dict) else ""
+         _DEFAULT_CONFIG_MODEL = ""
+-        self.model = model or _config_model or _DEFAULT_CONFIG_MODEL
++        self.model = model or _last_used_model or _config_model or _DEFAULT_CONFIG_MODEL
+         # Read max_tokens from config (env var override: HERMES_MAX_TOKENS)
+         _env_mt = os.environ.get("HERMES_MAX_TOKENS")
+         if _env_mt:
+@@ -3019,7 +3020,7 @@ class HermesCLI:
+         # A config model that matches the global fallback is NOT considered an
+         # explicit choice — the user just never changed it.  But a config model
+         # like "gpt-5.3-codex" IS explicit and must be preserved.
+-        self._model_is_default = not model and (
++        self._model_is_default = not model and not _last_used_model and (
+             not _config_model or _config_model == _DEFAULT_CONFIG_MODEL
+         )
+ 
+@@ -3029,6 +3030,7 @@ class HermesCLI:
+         # Provider selection is resolved lazily at use-time via _ensure_runtime_credentials().
+         self.requested_provider = (
+             provider
++            or (CLI_CONFIG["model"].get("last_used_provider") if isinstance(CLI_CONFIG.get("model"), dict) else None)
+             or CLI_CONFIG["model"].get("provider")
+             or os.getenv("HERMES_INFERENCE_PROVIDER")
+             or "auto"
+@@ -7471,6 +7473,9 @@ class HermesCLI:
+             _cprint("    Prompt caching: enabled")
+         if result.warning_message:
+             _cprint(f"    ⚠ {result.warning_message}")
++        save_config_value("model.last_used_model", result.new_model)
++        if result.target_provider:
++            save_config_value("model.last_used_provider", result.target_provider)
+         if persist_global:
+             save_config_value("model.default", result.new_model)
+             if result.provider_changed:
+@@ -7708,6 +7713,9 @@ class HermesCLI:
+             _cprint(f"    ⚠ {result.warning_message}")
+ 
+         # Persistence
++        save_config_value("model.last_used_model", result.new_model)
++        if result.target_provider:
++            save_config_value("model.last_used_provider", result.target_provider)
+         if persist_global:
+             save_config_value("model.default", result.new_model)
+             if result.provider_changed:
+diff --git a/gateway/run.py b/gateway/run.py
+index a2e41c609..bd5ac1af0 100644
+--- a/gateway/run.py
++++ b/gateway/run.py
+@@ -1455,7 +1455,7 @@ def _resolve_gateway_model(config: dict | None = None) -> str:
+     if isinstance(model_cfg, str):
+         return model_cfg
+     elif isinstance(model_cfg, dict):
+-        return model_cfg.get("default") or model_cfg.get("model") or ""
++        return model_cfg.get("last_used_model") or model_cfg.get("default") or model_cfg.get("model") or ""
+     return ""
+ 
+ 
+diff --git a/hermes_cli/auth.py b/hermes_cli/auth.py
+index 1cffe2728..38bf8fc0c 100644
+--- a/hermes_cli/auth.py
++++ b/hermes_cli/auth.py
+@@ -6276,8 +6276,9 @@ def _save_model_choice(model_id: str) -> None:
+     # Always use dict format so provider/base_url can be stored alongside
+     if isinstance(config.get("model"), dict):
+         config["model"]["default"] = model_id
++        config["model"]["last_used_model"] = model_id
+     else:
+-        config["model"] = {"default": model_id}
++        config["model"] = {"default": model_id, "last_used_model": model_id}
+     save_config(config)
+ 
+ 
+diff --git a/hermes_cli/oneshot.py b/hermes_cli/oneshot.py
+index b79644f67..432f7b0ff 100644
+--- a/hermes_cli/oneshot.py
++++ b/hermes_cli/oneshot.py
+@@ -238,11 +238,15 @@ def _run_agent(
+     model_cfg = cfg.get("model") or {}
+     if isinstance(model_cfg, str):
+         cfg_model = model_cfg
++        last_used_model = ""
++        last_used_provider = ""
+     else:
+         cfg_model = model_cfg.get("default") or model_cfg.get("model") or ""
++        last_used_model = model_cfg.get("last_used_model") or ""
++        last_used_provider = model_cfg.get("last_used_provider") or ""
+ 
+     env_model = os.getenv("HERMES_INFERENCE_MODEL", "").strip()
+-    effective_model = (model or "").strip() or env_model or cfg_model
++    effective_model = (model or "").strip() or env_model or last_used_model or cfg_model
+ 
+     # Resolve effective provider: explicit arg → (auto-detect from model if
+     # model was explicit) → env / config (handled inside resolve_runtime_provider).
+@@ -253,6 +257,8 @@ def _run_agent(
+     # the user's configured default provider, which may not host the model
+     # the caller just asked for.
+     effective_provider = (provider or "").strip() or None
++    if effective_provider is None and not (model or env_model) and last_used_model and last_used_provider:
++        effective_provider = str(last_used_provider).strip() or None
+     explicit_base_url_from_alias: Optional[str] = None
+     if effective_provider is None and (model or env_model):
+         # Only auto-detect when the model was explicitly requested via arg or
+diff --git a/tests/hermes_cli/test_last_used_model.py b/tests/hermes_cli/test_last_used_model.py
+new file mode 100644
+index 000000000..bcb1dfa00
+--- /dev/null
++++ b/tests/hermes_cli/test_last_used_model.py
+@@ -0,0 +1,190 @@
++"""Regression tests for remembering session-only /model switches."""
++
++import importlib
++from pathlib import Path
++from types import SimpleNamespace
++from unittest.mock import MagicMock, patch
++
++import pytest
++import yaml
++
++
++@pytest.fixture
++def isolated_hermes_home(tmp_path, monkeypatch):
++    hermes_home = tmp_path / ".hermes"
++    hermes_home.mkdir()
++    monkeypatch.setenv("HERMES_HOME", str(hermes_home))
++    monkeypatch.setattr(Path, "home", lambda: tmp_path)
++    return hermes_home
++
++
++def write_config(hermes_home: Path, data: dict) -> Path:
++    config_path = hermes_home / "config.yaml"
++    config_path.write_text(yaml.safe_dump(data), encoding="utf-8")
++    return config_path
++
++
++def read_config(hermes_home: Path) -> dict:
++    return yaml.safe_load((hermes_home / "config.yaml").read_text(encoding="utf-8")) or {}
++
++
++def test_cli_session_model_switch_records_last_used_without_changing_default(isolated_hermes_home, monkeypatch):
++    write_config(
++        isolated_hermes_home,
++        {
++            "model": {"default": "configured-default", "provider": "openrouter"},
++            "display": {"skin": "default"},
++            "agent": {},
++        },
++    )
++    import cli
++
++    monkeypatch.setattr(cli, "_cprint", lambda *args, **kwargs: None)
++    switch_result = MagicMock(
++        success=True,
++        new_model="anthropic/claude-sonnet-4",
++        target_provider="anthropic",
++        provider_changed=True,
++        api_key="",
++        base_url="",
++        api_mode="anthropic_messages",
++        provider_label="Anthropic",
++        model_info=None,
++        warning_message="",
++    )
++    cli_obj = cli.HermesCLI.__new__(cli.HermesCLI)
++    cli_obj.model = "configured-default"
++    cli_obj.provider = "openrouter"
++    cli_obj.requested_provider = "openrouter"
++    cli_obj.api_key = ""
++    cli_obj.base_url = ""
++    cli_obj.api_mode = "chat_completions"
++    cli_obj.agent = None
++
++    cli.HermesCLI._apply_model_switch_result(cli_obj, switch_result, persist_global=False)
++
++    model_cfg = read_config(isolated_hermes_home)["model"]
++    assert model_cfg["default"] == "configured-default"
++    assert model_cfg["provider"] == "openrouter"
++    assert model_cfg["last_used_model"] == "anthropic/claude-sonnet-4"
++    assert model_cfg["last_used_provider"] == "anthropic"
++
++
++def test_cli_startup_prefers_last_used_model_over_config_default(isolated_hermes_home, monkeypatch):
++    import cli
++
++    monkeypatch.setattr(
++        cli,
++        "CLI_CONFIG",
++        {
++            "model": {
++                "default": "configured-default",
++                "provider": "openrouter",
++                "last_used_model": "anthropic/claude-sonnet-4",
++                "last_used_provider": "anthropic",
++            },
++            "display": {},
++            "agent": {},
++            "checkpoints": {},
++        },
++    )
++    monkeypatch.setattr(cli, "_configure_output_history", lambda **kwargs: None)
++    cli_obj = cli.HermesCLI(model=None, compact=True)
++
++    assert cli_obj.model == "anthropic/claude-sonnet-4"
++    assert cli_obj.requested_provider == "anthropic"
++    assert cli_obj._model_is_default is False
++
++
++def test_oneshot_uses_last_used_model_before_config_default(isolated_hermes_home, monkeypatch):
++    write_config(
++        isolated_hermes_home,
++        {
++            "model": {
++                "default": "configured-default",
++                "provider": "openrouter",
++                "last_used_model": "anthropic/claude-sonnet-4",
++                "last_used_provider": "anthropic",
++            },
++            "tools": {"platforms": {"cli": []}},
++        },
++    )
++    import hermes_cli.oneshot as oneshot
++
++    captured = {}
++
++    class FakeAgent:
++        def __init__(self, **kwargs):
++            captured.update(kwargs)
++            self.suppress_status_output = False
++            self.stream_delta_callback = object()
++            self.tool_gen_callback = object()
++
++        def chat(self, prompt):
++            return "ok"
++
++    monkeypatch.delenv("HERMES_INFERENCE_MODEL", raising=False)
++    monkeypatch.delenv("HERMES_INFERENCE_PROVIDER", raising=False)
++    monkeypatch.setattr("hermes_cli.runtime_provider.resolve_runtime_provider", lambda **kwargs: {"provider": kwargs.get("requested"), "api_key": "k", "base_url": "u", "api_mode": "chat_completions"})
++    monkeypatch.setattr("run_agent.AIAgent", FakeAgent)
++
++    assert oneshot._run_agent("hello", use_config_toolsets=False) == "ok"
++    assert captured["model"] == "anthropic/claude-sonnet-4"
++    assert captured["provider"] == "anthropic"
++
++
++def test_tui_resolve_model_prefers_last_used_model(isolated_hermes_home, monkeypatch):
++    write_config(
++        isolated_hermes_home,
++        {
++            "model": {
++                "default": "configured-default",
++                "provider": "openrouter",
++                "last_used_model": "anthropic/claude-sonnet-4",
++                "last_used_provider": "anthropic",
++            }
++        },
++    )
++    monkeypatch.delenv("HERMES_MODEL", raising=False)
++    monkeypatch.delenv("HERMES_INFERENCE_MODEL", raising=False)
++    import tui_gateway.server as server
++
++    server = importlib.reload(server)
++    assert server._resolve_model() == "anthropic/claude-sonnet-4"
++    assert server._resolve_startup_runtime() == ("anthropic/claude-sonnet-4", "anthropic")
++
++
++def test_tui_session_model_switch_records_last_used_without_changing_default(isolated_hermes_home, monkeypatch):
++    write_config(
++        isolated_hermes_home,
++        {
++            "model": {"default": "configured-default", "provider": "openrouter"},
++        },
++    )
++    import tui_gateway.server as server
++
++    server = importlib.reload(server)
++    result = SimpleNamespace(
++        new_model="anthropic/claude-sonnet-4",
++        target_provider="anthropic",
++        base_url="https://api.anthropic.example/v1",
++    )
++
++    server._persist_model_switch(result, persist_global=False)
++
++    model_cfg = read_config(isolated_hermes_home)["model"]
++    assert model_cfg["default"] == "configured-default"
++    assert model_cfg["provider"] == "openrouter"
++    assert model_cfg["last_used_model"] == "anthropic/claude-sonnet-4"
++    assert model_cfg["last_used_provider"] == "anthropic"
++    assert "base_url" not in model_cfg
++
++
++def test_auxiliary_main_model_falls_back_to_last_used(isolated_hermes_home):
++    write_config(
++        isolated_hermes_home,
++        {"model": {"default": "", "last_used_model": "anthropic/claude-sonnet-4"}},
++    )
++    import agent.auxiliary_client as auxiliary_client
++
++    assert auxiliary_client._read_main_model() == "anthropic/claude-sonnet-4"
+diff --git a/tui_gateway/server.py b/tui_gateway/server.py
+index 67e586447..f48686d10 100644
+--- a/tui_gateway/server.py
++++ b/tui_gateway/server.py
+@@ -786,7 +786,7 @@ def _resolve_model() -> str:
+         return env
+     m = _load_cfg().get("model", "")
+     if isinstance(m, dict):
+-        return str(m.get("default", "") or "").strip()
++        return str(m.get("last_used_model", "") or m.get("default", "") or "").strip()
+     if isinstance(m, str) and m:
+         return m.strip()
+     return "anthropic/claude-sonnet-4"
+@@ -802,13 +802,17 @@ def _resolve_startup_runtime() -> tuple[str, str | None]:
+         os.environ.get("HERMES_MODEL", "")
+         or os.environ.get("HERMES_INFERENCE_MODEL", "")
+     ).strip()
++    cfg = _load_cfg().get("model") or {}
+     if not explicit_model:
++        if isinstance(cfg, dict):
++            last_used_provider = str(cfg.get("last_used_provider") or "").strip()
++            if last_used_provider:
++                return model, last_used_provider
+         return model, None
+ 
+     try:
+         from hermes_cli.models import detect_static_provider_for_model
+ 
+-        cfg = _load_cfg().get("model") or {}
+         current_provider = (
+             (
+                 str(cfg.get("provider") or "").strip().lower()
+@@ -1090,7 +1094,7 @@ def _restart_slash_worker(session: dict):
+         session["slash_worker"] = None
+ 
+ 
+-def _persist_model_switch(result) -> None:
++def _persist_model_switch(result, persist_global: bool = False) -> None:
+     from hermes_cli.config import save_config
+ 
+     cfg = _load_cfg()
+@@ -1099,12 +1103,17 @@ def _persist_model_switch(result) -> None:
+         model_cfg = {}
+         cfg["model"] = model_cfg
+ 
+-    model_cfg["default"] = result.new_model
+-    model_cfg["provider"] = result.target_provider
+-    if result.base_url:
+-        model_cfg["base_url"] = result.base_url
+-    else:
+-        model_cfg.pop("base_url", None)
++    model_cfg["last_used_model"] = result.new_model
++    if result.target_provider:
++        model_cfg["last_used_provider"] = result.target_provider
++    if persist_global:
++        model_cfg["default"] = result.new_model
++        if result.target_provider:
++            model_cfg["provider"] = result.target_provider
++        if result.base_url:
++            model_cfg["base_url"] = result.base_url
++        else:
++            model_cfg.pop("base_url", None)
+     save_config(cfg)
+ 
+ 
+@@ -1191,8 +1200,7 @@ def _apply_model_switch(sid: str, session: dict, raw_input: str) -> dict:
+     if result.target_provider:
+         os.environ["HERMES_INFERENCE_PROVIDER"] = result.target_provider
+         os.environ["HERMES_TUI_PROVIDER"] = result.target_provider
+-    if persist_global:
+-        _persist_model_switch(result)
++    _persist_model_switch(result, persist_global=persist_global)
+     return {"value": result.new_model, "warning": result.warning_message or ""}
+ 
+ 
