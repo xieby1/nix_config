@@ -1,4 +1,5 @@
 { pkgs, ... }: let
+  # TODO: update to support untracked files
   git-wip = builtins.derivation {
     name = "git-wip";
     system = builtins.currentSystem;
