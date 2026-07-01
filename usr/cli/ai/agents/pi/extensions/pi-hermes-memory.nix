@@ -2,14 +2,17 @@
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.
   pkgspi = import (
-    pkgs.flake-compat {src = pkgs.npinsed.ai.llm-agents;}
+    pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;}
   ).outputs.inputs.nixpkgs {};
 in {
   home.file.".pi/agent/extensions/pi-hermes-memory" = {
     source = pkgspi.buildNpmPackage {
       name = "pi-hermes-memory";
       src = pkgs.npinsed.ai.pi.pi-hermes-memory;
-      npmDepsHash = "sha256-t5jQWrucm0Fm5V2PkC0btVWe7cwvrp1HuKqTwl38xA8=";
+      # npm lockfile v3 delegates to shrinkwrap → missing integrity; v2 fetcher handles this.
+      npmDepsFetcherVersion = 2;
+      npmDepsHash = "sha256-OeR+8j7Ayyx1jUSt6uBhQ7YsWGLR7POEnW+bLPu7UDQ=";
+      patches = [ ./pi-hermes-memory-lock-integrity.patch ];
       dontNpmBuild = true;
       nativeBuildInputs = with pkgspi; [
         node-gyp

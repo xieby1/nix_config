@@ -25,9 +25,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d4bdfa7950b2e27b553f8c1fd92f6f44b926f776",
-      "url": "https://github.com/numtide/llm-agents.nix/archive/d4bdfa7950b2e27b553f8c1fd92f6f44b926f776.tar.gz",
-      "hash": "sha256-jDXyzgRtViPSj38evX6dkqMXISulDrx8aTVLTxHQnYI="
+      "revision": "36bc6d09f3b7f9a4c9837bcf2092e3e7bb85f6a6",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/36bc6d09f3b7f9a4c9837bcf2092e3e7bb85f6a6.tar.gz",
+      "hash": "sha256-4OWJdeCsT1AbqYis6GyCjcO+tiJ0G5GTPP9rfl2mMuQ="
     },
     "mcp-adapter": {
       "type": "GitRelease",
@@ -54,9 +54,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "df6cc78988df596e96a4cb546d1cfedd57cae295",
-      "url": "https://github.com/chandra447/pi-hermes-memory/archive/df6cc78988df596e96a4cb546d1cfedd57cae295.tar.gz",
-      "hash": "sha256-1wbRCZTrDoSYdBBPh5JDXlKKhgGuEk+HxrgcggOObgA="
+      "revision": "fe7e7e3e87736465f203b358764c5167d2ccee47",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/fe7e7e3e87736465f203b358764c5167d2ccee47.tar.gz",
+      "hash": "sha256-r7EURg4oLOVxPjolPPUMTlTgZfnCMDmXmtB7LS7jcaY="
     },
     "rpiv-mono": {
       "type": "Git",
