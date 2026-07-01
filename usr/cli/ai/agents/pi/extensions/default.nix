@@ -4,6 +4,7 @@
     ./mcp
     ./acp.nix
     ./pi-hermes-memory.nix
+    ./ponytail.nix
     ./rpiv-todo.nix
   ];
   home.file = {

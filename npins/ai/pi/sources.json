@@ -58,6 +58,22 @@
       "url": "https://github.com/chandra447/pi-hermes-memory/archive/fe7e7e3e87736465f203b358764c5167d2ccee47.tar.gz",
       "hash": "sha256-r7EURg4oLOVxPjolPPUMTlTgZfnCMDmXmtB7LS7jcaY="
     },
+    "ponytail": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "DietrichGebert",
+        "repo": "ponytail"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v4.8.4",
+      "revision": "bc9ee949d5f439e8b9f3bb92c6d6d3d1e6ebd324",
+      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v4.8.4",
+      "hash": "sha256-1A9GkjCuiqwd6Wxl18CZUGYekxrbeTLVDapNUua8ihg="
+    },
     "rpiv-mono": {
       "type": "Git",
       "repository": {
