@@ -67,26 +67,7 @@ in {
         final_response_markdown = "render";
       };
       mcp_servers = {
-        ddgs = {
-          command = ''${
-            pkgs.pkgsu.python3Packages.ddgs.overridePythonAttrs (old: {
-              dependencies = old.dependencies
-                ++ old.optional-dependencies.mcp
-                ++ old.optional-dependencies.api;
-            })
-          }/bin/ddgs'';
-          args = ["mcp"];
-        };
-        github = {
-          command = ''${pkgs.github-mcp-server}/bin/github-mcp-server'';
-          args = ["stdio"];
-          env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile ~/Gist/Vault/AI/github-mcp-server-all-repos-daily.txt);};
-        };
-        github-guanchuan = {
-          command = ''${pkgs.github-mcp-server}/bin/github-mcp-server'';
-          args = ["stdio"];
-          env = { GITHUB_PERSONAL_ACCESS_TOKEN = lib.trim (builtins.readFile ~/Gist/Vault/AI/github-mcp-server-guanchuan-all-ro.txt);};
-        };
+        ddgs = { inherit (config.ai.mcp.ddgs) command args; };
       };
     };
   };

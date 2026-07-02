@@ -1,6 +1,9 @@
 { pkgs, lib, ... }: let
   catwalk-providers = import ./catwalk-providers pkgs;
 in {
+  imports = [
+    ./mcp.nix
+  ];
   # TODO: Precisely define the type
   options.ai = lib.mkOption { type = lib.types.attrs; };
   config.ai = {

@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
   home.file = {
     ".pi/agent/extensions/pi-mcp-adapter" = {
       source = pkgs.buildNpmPackage {
@@ -21,16 +21,7 @@
     generator = builtins.toJSON;
     expr = {
       mcpServers = {
-        ddgs = {
-          command = ''${
-            pkgs.pkgsu.python3Packages.ddgs.overridePythonAttrs (old: {
-              dependencies = old.dependencies
-                ++ old.optional-dependencies.mcp
-                ++ old.optional-dependencies.api;
-            })
-          }/bin/ddgs'';
-          args = ["mcp"];
-        };
+        ddgs = { inherit (config.ai.mcp.ddgs) command args; };
       };
     };
   };
