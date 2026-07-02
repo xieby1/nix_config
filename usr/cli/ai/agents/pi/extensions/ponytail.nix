@@ -7,4 +7,10 @@
     src = pkgs.npinsed.ai.pi.ponytail;
     patches = [ ./ponytail-status.patch ];
   };
+  yq-merge.".pi/agent/settings.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      skills = [ "~/.pi/agent/extensions/ponytail/skills" ];
+    };
+  };
 }
