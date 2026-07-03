@@ -141,12 +141,6 @@
       # Split and Create a new window
       map alt+s launch_window --location=hsplit
       map alt+v launch_window --location=vsplit
-
-      # Goto window
-      map alt+left neighboring_window left
-      map alt+right neighboring_window right
-      map alt+up neighboring_window up
-      map alt+down neighboring_window down
     '';
   };
 }
