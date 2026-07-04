@@ -40,10 +40,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2.10.0",
-      "revision": "a764c25609d8daf76e607bc99557621fc3ed8aa9",
-      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.10.0",
-      "hash": "sha256-MrorLzxbn3O81B47Nd0d0xnd0xhXgMdobnXgD0axldE="
+      "version": "v2.11.0",
+      "revision": "b702afe6451e007ff510ff53adcf6b2e5c354eba",
+      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.11.0",
+      "hash": "sha256-JjYS9tPSoVuubdmHTqTNNYfDJOc9CBPvVbIxvdJWi7M="
     },
     "pi-hermes-memory": {
       "type": "Git",

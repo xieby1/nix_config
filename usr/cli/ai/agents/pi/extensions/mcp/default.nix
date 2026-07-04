@@ -4,13 +4,13 @@
       source = pkgs.buildNpmPackage {
         name = "pi-mcp-adapter";
         src = pkgs.npinsed.ai.pi.mcp-adapter;
-        patches = [ ./status-color.patch ];
-        postPatch = ''
-          cp ${./package-lock.json} package-lock.json
-        '';
+        patches = [
+          ./status-color.patch
+          ./package-lock-integrity.patch
+        ];
         # npm lockfile v3 delegates to shrinkwrap → duplicate cache keys; writable cache is required.
         makeCacheWritable = true;
-        npmDepsHash = "sha256-96o9+G2axISRcKUOp2ZGX8KcaH77R8+iAi0keCgz8xg=";
+        npmDepsHash = "sha256-xIW2WTuVj6SeFGrJPEduzzVCT548i7tzlP5sq3ky/wI=";
         dontNpmBuild = true;
         npmRebuildFlags = [ "--ignore-scripts" ];
       } + /lib/node_modules/pi-mcp-adapter;
