@@ -16,7 +16,10 @@ in {
       # Add the can_reason field here.
       # TODO: Precisely define the type, so we can avoid the missing field.
       models = builtins.mapAttrs (
-        _: model: model // {can_reason = true;}
+        _: model: model // {
+          can_reason = true;
+          supports_attachments = true;
+        }
       ) catwalk-providers.minimax-china.models;
       default_small_model_id = let x="MiniMax-M2"; in assert models?${x}; x;
     };
@@ -49,7 +52,7 @@ in {
           cost_per_1m_in_cached = 0;
           cost_per_1m_out_cached = 0;
           default_max_tokens = 4000;
-        };
+        } // {supports_attachments = true;};
         "gpt-5.4" = {
           id = "gpt-5.4";
           name = "gpt-5.4";
@@ -62,7 +65,7 @@ in {
           cost_per_1m_in_cached = 0;
           cost_per_1m_out_cached = 0;
           default_max_tokens = 4000;
-        };
+        } // {supports_attachments = true;};
       };
     };
     jw-deepseek = catwalk-providers.deepseek // {

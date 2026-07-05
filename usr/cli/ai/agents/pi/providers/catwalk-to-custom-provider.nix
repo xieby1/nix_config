@@ -14,7 +14,7 @@ catwalk: {
             _: model: {
               inherit (model) id name;
               reasoning = model.can_reason;
-              input = ["text"];
+              input = ["text"] ++ (if model.supports_attachments then ["image"] else []);
               cost = {
                 input = model.cost_per_1m_in;
                 output = model.cost_per_1m_out;
