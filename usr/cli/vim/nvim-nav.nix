@@ -7,6 +7,9 @@
         require("nvim-navic").setup {
           lsp = {
             auto_attach = true,
+            -- vue_ls forwards TypeScript requests to vtsls, so .vue buffers attach both.
+            -- nvim-navic can use only one LSP per buffer; prefer vtsls to avoid warnings.
+            preference = { "vtsls", "vue_ls" },
           },
         }
       '';

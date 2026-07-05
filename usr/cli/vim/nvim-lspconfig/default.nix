@@ -28,6 +28,7 @@
     ./scala.nix
     ./typst.nix
     ./lua.nix
+    ./vue.nix
   ];
   programs.neovim = {
     plugins = [{
