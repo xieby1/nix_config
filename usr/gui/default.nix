@@ -77,6 +77,7 @@ config = lib.mkIf config.isGui {
     evince
     gnome-characters
     nautilus
+    loupe
     pkgsu.surfer
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex
