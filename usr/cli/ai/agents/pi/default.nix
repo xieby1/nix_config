@@ -17,7 +17,7 @@ in {
 
   yq-merge.".pi/agent/settings.json".expr.retry = {
     enabled = true;
-    maxRetries = 6;
+    maxRetries = 10;
     baseDelayMs = 1000;
     maxBackoffDelayMs = 10000;
   };
