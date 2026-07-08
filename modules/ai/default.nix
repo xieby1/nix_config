@@ -6,7 +6,7 @@ in {
   ];
   # TODO: Precisely define the type
   options.ai = lib.mkOption { type = lib.types.attrs; };
-  config.ai = {
+  config.ai = rec {
     deepseek = catwalk-providers.deepseek // {
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/deepseek_api_key_nvim.txt);
     };
@@ -67,6 +67,11 @@ in {
           default_max_tokens = 4000;
         } // {supports_attachments = true;};
       };
+    };
+    jw-codex-2 = jw-codex // {
+      id = "jw-codex-2";
+      name = "JW Codex 2";
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-codex-2.txt);
     };
     jw-deepseek = catwalk-providers.deepseek // {
       id = "jw-deepseek";

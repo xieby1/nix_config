@@ -1,6 +1,7 @@
 { config, ... }: {
   imports = [
     (import ./catwalk-to-custom-provider.nix config.ai.jw-codex)
+    (import ./catwalk-to-custom-provider.nix config.ai.jw-kimi)
 
     # jw-deepseek proxy rejects 'developer' role (only accepts system/user/assistant/tool).
     # Setting supportsDeveloperRole=false makes pi send the system prompt as 'system' instead.
