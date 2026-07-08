@@ -27,7 +27,9 @@ in {
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/kimi.txt);
     };
     tavily.api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/tavily.txt);
-    jw-claude = {
+    jw-claude = catwalk-providers.anthropic // {
+      id = "jw-claude";
+      name = "JW Claude";
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-claude.txt);
     };
@@ -78,6 +80,12 @@ in {
       name = "JW DeepSeek";
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt) + "/v1";
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-deepseek.txt);
+    };
+    jw-kimi = catwalk-providers.kimi // {
+      id = "jw-kimi";
+      name = "JW Kimi";
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-kimi.txt);
     };
   };
 }
