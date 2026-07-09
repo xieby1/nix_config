@@ -159,6 +159,10 @@ in
 
   programs.direnv.enable = true;
   programs.direnv.nix-direnv.enable = true;
+  # https://github.com/nix-community/nix-direnv/pull/677
+  # nix-direnv 3.1.1 support inNixShell.
+  # TODO: Remove this line after upgrade to nixos-26.05
+  programs.direnv.nix-direnv.package = pkgs.pkgsu.nix-direnv;
 
   programs.ripgrep = {
     enable = true;
