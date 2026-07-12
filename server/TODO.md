@@ -1,0 +1,86 @@
+# Caddy + Authelia TODO
+
+- [x] Decide prototype addresses.
+  - [x] Use local HTTPS first: `https://127.0.0.1:8443`.
+  - [x] Use high ports when running as a normal user: `8443` for browser-facing HTTPS.
+  - [x] Keep backend services on `127.0.0.1`, not public interfaces.
+
+- [x] Learn Caddy basics.
+  - [x] Read what a reverse proxy does.
+  - [x] Create a minimal `Caddyfile` that proxies `/app` to one local service.
+  - [x] Run Caddy manually with `caddy run --config server/Caddyfile --adapter caddyfile`.
+  - [x] Confirm `https://localhost:8443/app/` reaches the backend service.
+  - Commands used:
+    - `python3 -m http.server 3000 --bind 127.0.0.1`
+    - `caddy fmt --overwrite server/Caddyfile`
+    - `caddy run --config server/Caddyfile --adapter caddyfile`
+    - `curl -k -i https://localhost:8443/app/`
+
+- [x] Learn Authelia basics.
+  - [x] Create an Authelia config with browser-facing HTTPS URLs using `127.0.0.1`, not `localhost`.
+  - [x] Create a file-based user database.
+  - [x] Generate a password hash with `authelia crypto hash generate argon2`.
+  - [x] Start Authelia on `127.0.0.1:9091`.
+  - [x] Confirm the Authelia login page opens.
+  - Commands used:
+    - `nix shell nixpkgs#authelia -c authelia crypto hash generate argon2`
+    - `AUTHELIA_SESSION_SECRET=dev-session-secret-change-me-0123456789 AUTHELIA_STORAGE_ENCRYPTION_KEY=dev-storage-key-change-me-0123456789 AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET=dev-jwt-secret-change-me-0123456789 nix shell nixpkgs#authelia -c authelia config validate --config server/authelia/configuration.yml`
+    - `AUTHELIA_SESSION_SECRET=dev-session-secret-change-me-0123456789 AUTHELIA_STORAGE_ENCRYPTION_KEY=dev-storage-key-change-me-0123456789 AUTHELIA_IDENTITY_VALIDATION_RESET_PASSWORD_JWT_SECRET=dev-jwt-secret-change-me-0123456789 nix shell nixpkgs#authelia -c authelia --config server/authelia/configuration.yml`
+    - `curl -k -i https://127.0.0.1:8443/`
+
+- [x] Connect Caddy to Authelia.
+  - [x] Add Caddy `forward_auth` for the protected app path.
+  - [x] Configure Authelia access rules for the app.
+  - [x] Confirm unauthenticated requests redirect to login.
+  - [x] Confirm authenticated requests reach the backend service.
+  - [x] Confirm direct backend access is not exposed publicly.
+  - Notes:
+    - Use `route` inside the `/app/*` handler so `forward_auth` runs before `uri strip_prefix /app`.
+    - Without `route`, Caddy may reorder directives and Authelia can see `/` instead of `/app/`, causing `403 Forbidden`.
+  - Commands used:
+    - `caddy fmt --overwrite server/Caddyfile`
+    - `caddy reload --config server/Caddyfile --adapter caddyfile`
+    - `curl -k -i https://127.0.0.1:8443/app/`
+    - `ss -ltnp | rg ':3000|:9091|:8443'`
+
+- [ ] Move the prototype into Home Manager.
+  - [x] Add `pkgs.caddy` and `pkgs.authelia` to `home.packages`.
+  - [x] Add a user systemd service for Authelia.
+  - [x] Add a user systemd service for Caddy.
+  - [x] Keep secrets and user database outside the Nix store.
+  - [x] Verify `systemctl --user status authelia`.
+  - [x] Verify `systemctl --user status caddy-auth-proxy`.
+  - Notes:
+    - Home Manager module lives in `server/default.nix`.
+    - Real Authelia secrets are loaded from `~/.config/authelia/env`, not from the Nix store.
+    - `server/authelia/env.example` is only a template.
+    - Do not mix Authelia versions against the same SQLite DB. The manual `nix shell nixpkgs#authelia` binary created a newer schema than the Home Manager service Authelia, so `server/authelia/db.sqlite3` had to be moved aside and recreated.
+  - Commands used:
+    - `nix-instantiate --eval -E 'let pkgs = import <nixpkgs> {}; hm = import <home-manager/modules> { inherit pkgs; configuration = { ... }: { imports = [ ./usr ]; home.username = "xieby1"; home.homeDirectory = "/home/xieby1"; }; }; in hm.config.my.server.caddyAuthelia.enable'`
+    - `nix-instantiate --eval -E 'let pkgs = import <nixpkgs> {}; hm = import <home-manager/modules> { inherit pkgs; configuration = { ... }: { imports = [ ./usr ]; home.username = "xieby1"; home.homeDirectory = "/home/xieby1"; my.server.caddyAuthelia.enable = true; }; }; in builtins.attrNames hm.config.systemd.user.services' | rg 'authelia|caddy-auth-proxy'`
+    - `systemctl --user status authelia caddy-auth-proxy`
+    - `journalctl --user -u authelia -u caddy-auth-proxy --no-pager -n 120`
+    - `mv server/authelia/db.sqlite3 server/authelia/db.sqlite3.bak-$(date +%Y%m%d-%H%M%S)`
+    - `systemctl --user reset-failed authelia && systemctl --user restart authelia`
+    - `curl -k -i https://127.0.0.1:8443/`
+    - `curl -k -i https://127.0.0.1:8443/app/`
+
+- [ ] Prepare the VPS version.
+  - [ ] Pick a hostname, for example `your-ip-with-dashes.sslip.io`.
+  - [ ] Decide whether to use `https://hostname:8443` or ask root/admin to enable normal `:443`.
+  - [ ] Open only the proxy port publicly.
+  - [ ] Keep app ports bound to `127.0.0.1`.
+  - [ ] Change Authelia cookie URLs from local HTTPS names to VPS HTTPS names.
+
+- [ ] Enable HTTPS.
+  - [ ] Try Caddy automatic HTTPS if using normal `:443`.
+  - [ ] If using `:8443`, choose either Caddy internal certificates or DNS-01 challenge.
+  - [ ] Install/trust the internal CA on personal devices if using Caddy internal certificates.
+  - [ ] Confirm the browser shows HTTPS without unexpected warnings.
+
+- [ ] Harden the final setup.
+  - [ ] Use strong Authelia secrets.
+  - [ ] Enable two-factor authentication.
+  - [ ] Confirm backend services are unreachable without Caddy.
+  - [ ] Check logs after failed and successful login attempts.
+  - [ ] Document how to restart and update the services.
