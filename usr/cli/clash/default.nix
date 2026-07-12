@@ -1,15 +1,7 @@
-{ config, pkgs, lib, ... }:
-let
-  mihomo-tui = pkgs.callPackage ./tui.nix {};
-in
-{
-  imports = [{
+{ config, pkgs, lib, ... }: {
+  imports = [./tui {
     home.packages = [
       pkgs.mihomo
-      mihomo-tui
-    ];
-    cachix_packages = [
-      mihomo-tui
     ];
     systemd.user.services.clash = {
       Unit = {
