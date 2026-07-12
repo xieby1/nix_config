@@ -1,7 +1,7 @@
 { config, pkgs, stdenv, lib, ... }: {
   imports = [{
     home.packages = [
-      pkgs.clash-meta
+      pkgs.mihomo
     ];
     systemd.user.services.clash = {
       Unit = {
@@ -12,7 +12,7 @@
         WantedBy = ["default.target"];
       };
       Service = {
-        ExecStart = "${pkgs.clash-meta.outPath}/bin/clash-meta -d ${config.home.homeDirectory}/Gist/clash";
+        ExecStart = "${pkgs.mihomo}/bin/mihomo -d ${config.home.homeDirectory}/Gist/clash";
       };
     };
     programs.zsh.initContent = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
