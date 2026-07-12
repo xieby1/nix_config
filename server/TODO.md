@@ -8,12 +8,12 @@
 - [x] Learn Caddy basics.
   - [x] Read what a reverse proxy does.
   - [x] Create a minimal `Caddyfile` that proxies `/app` to one local service.
-  - [x] Run Caddy manually with `caddy run --config server/Caddyfile --adapter caddyfile`.
+  - [x] Run Caddy manually with `caddy run --config server/caddy/Caddyfile --adapter caddyfile`.
   - [x] Confirm `https://localhost:8443/app/` reaches the backend service.
   - Commands used:
     - `python3 -m http.server 3000 --bind 127.0.0.1`
-    - `caddy fmt --overwrite server/Caddyfile`
-    - `caddy run --config server/Caddyfile --adapter caddyfile`
+    - `caddy fmt --overwrite server/caddy/Caddyfile`
+    - `caddy run --config server/caddy/Caddyfile --adapter caddyfile`
     - `curl -k -i https://localhost:8443/app/`
 
 - [x] Learn Authelia basics.
@@ -38,8 +38,8 @@
     - Use `route` inside the `/app/*` handler so `forward_auth` runs before `uri strip_prefix /app`.
     - Without `route`, Caddy may reorder directives and Authelia can see `/` instead of `/app/`, causing `403 Forbidden`.
   - Commands used:
-    - `caddy fmt --overwrite server/Caddyfile`
-    - `caddy reload --config server/Caddyfile --adapter caddyfile`
+    - `caddy fmt --overwrite server/caddy/Caddyfile`
+    - `caddy reload --config server/caddy/Caddyfile --adapter caddyfile`
     - `curl -k -i https://127.0.0.1:8443/app/`
     - `ss -ltnp | rg ':3000|:9091|:8443'`
 
@@ -51,7 +51,7 @@
   - [x] Verify `systemctl --user status authelia`.
   - [x] Verify `systemctl --user status caddy-auth-proxy`.
   - Notes:
-    - Home Manager module lives in `server/default.nix`.
+    - Home Manager modules live in `server/default.nix`, `server/authelia/default.nix`, and `server/caddy/default.nix`.
     - Real Authelia secrets are loaded from `~/.config/authelia/env`, not from the Nix store.
     - `server/authelia/env.example` is only a template.
     - Do not mix Authelia versions against the same SQLite DB. The manual `nix shell nixpkgs#authelia` binary created a newer schema than the Home Manager service Authelia, so `server/authelia/db.sqlite3` had to be moved aside and recreated.
