@@ -1,7 +1,0 @@
-users:
-  xieby1:
-    displayname: xieby1
-    password: "$argon2id$v=19$m=65536,t=3,p=4$LadudawpEhFJrQK4+X769A$5FWJdi2UjHmxf7VYtG6E3c/H1xalJGtXqkUAWBskEIY"
-    email: xieby1@example.invalid
-    groups:
-      - admins
