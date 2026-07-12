@@ -12,7 +12,7 @@ in
     ./extra.nix
     ./vim
     ./tmux.nix
-    ./clash.nix
+    ./clash
     ./tailscale.nix
     ./gdb.nix
     ./ctags.nix
