@@ -4,6 +4,13 @@ in {
   home.packages = [
     pkgs.mihomo
     mihomo-tui
+    (pkgs.makeDesktopItem {
+      name = "mihomo-tui";
+      desktopName = "Mihomo TUI";
+      keywords = ["mihomo" "clash" "tui"];
+      exec = "kitty mihomo-tui";
+      icon = pkgs.mihomo.src + /Meta.png;
+    })
   ];
   cachix_packages = [
     mihomo-tui
