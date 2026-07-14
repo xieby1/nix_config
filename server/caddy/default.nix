@@ -2,14 +2,7 @@
 let
   cfg = config.my.server.caddyAuthelia;
   caddyfile = pkgs.writeText "Caddyfile" ''
-    {
-      auto_https disable_redirects
-      skip_install_trust
-    }
-
-    https://127.0.0.1:8443 {
-      tls internal
-
+    https://xieby1.cn {
       redir /app /app/
 
       handle /app/* {

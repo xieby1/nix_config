@@ -24,16 +24,16 @@ let
     access_control = {
       default_policy = "deny";
       rules = [{
-        domain = "127.0.0.1";
+        domain = "xieby1.cn";
         resources = [ "^/app/.*$" ];
         policy = "one_factor";
       }];
     };
 
     session.cookies = [{
-      domain = "127.0.0.1";
-      authelia_url = "https://127.0.0.1:8443";
-      default_redirection_url = "https://127.0.0.1:8443/app/";
+      domain = "xieby1.cn";
+      authelia_url = "https://xieby1.cn";
+      default_redirection_url = "https://xieby1.cn/app/";
       same_site = "lax";
       inactivity = "1h";
       expiration = "1d";
