@@ -2,8 +2,7 @@ if [[ ! -d ~/.config/npins || ~/.config/npins-timestamp -ot ~/.config/nixpkgs/np
   mkdir -p ~/.config/npins
   nix-store --add-root ~/.config/npins/nixpkgs      \
     --realise $(nix --extra-experimental-features nix-command eval --impure --expr '(import ~/.config/nixpkgs/npins).nixpkgs.outPath' | tr -d '"')
-  nix-store --add-root ~/.config/npins/home-manager \
-    --realise $(nix --extra-experimental-features nix-command eval --impure --expr '(import ~/.config/nixpkgs/npins).home-manager.outPath' | tr -d '"')
+  nix-build ~/.config/nixpkgs/scripts/bootstrap/home-manager.nix -o ~/.config/npins/home-manager
   if [[ $USER == "nix-on-droid" ]]; then
     nix-store --add-root ~/.config/npins/nix-on-droid \
       --realise $(nix --extra-experimental-features nix-command eval --impure --expr '(import ~/.config/nixpkgs/npins).nix-on-droid.outPath' | tr -d '"')
