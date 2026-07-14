@@ -19,6 +19,6 @@
   news.display = "silent";
 
   programs.zsh.initContent = ''
-    . ${toString ../scripts/nix-path.sh}
+    . ${toString ../scripts/bootstrap/main.sh}
   '';
 }
