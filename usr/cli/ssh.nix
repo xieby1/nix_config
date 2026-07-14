@@ -32,7 +32,7 @@
       proxyCommand = "nc -X connect -x 127.0.0.1:${toString config.proxyPort} %h %p";
     };
     "my-server" = {
-      hostname = lib.trim (builtins.readFile ~/Gist/Vault/my-server.txt);
+      hostname = lib.trim (builtins.readFile ~/Gist/Vault/server/ip.txt);
       user = "root";
       serverAliveInterval = 60;
     };
