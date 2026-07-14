@@ -7,7 +7,7 @@ let
     users.xieby1 = {
       displayname = "xieby1";
       password = "$argon2id$v=19$m=65536,t=3,p=4$LadudawpEhFJrQK4+X769A$5FWJdi2UjHmxf7VYtG6E3c/H1xalJGtXqkUAWBskEIY";
-      email = "xieby1@example.invalid";
+      email = "xieby1@outlook.com";
       groups = [ "admins" ];
     };
   };
@@ -25,7 +25,7 @@ let
       default_policy = "deny";
       rules = [{
         domain = "xieby1.cn";
-        resources = [ "^/app/.*$" ];
+        resources = [ "^/sixu/.*$" ];
         policy = "one_factor";
       }];
     };
@@ -33,7 +33,7 @@ let
     session.cookies = [{
       domain = "xieby1.cn";
       authelia_url = "https://xieby1.cn";
-      default_redirection_url = "https://xieby1.cn/app/";
+      default_redirection_url = "https://xieby1.cn/sixu/";
       same_site = "lax";
       inactivity = "1h";
       expiration = "1d";

@@ -3,16 +3,16 @@ let
   cfg = config.my.server.caddyAuthelia;
   caddyfile = pkgs.writeText "Caddyfile" ''
     https://xieby1.cn {
-      redir /app /app/
+      redir /sixu /sixu/
 
-      handle /app/* {
+      handle /sixu/* {
         route {
           forward_auth 127.0.0.1:9091 {
             uri /api/authz/forward-auth
             copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
           }
 
-          uri strip_prefix /app
+          uri strip_prefix /sixu
           reverse_proxy 127.0.0.1:3000
         }
       }
