@@ -31,5 +31,9 @@
     programs.zsh.initContent = ''
       . ${toString ../scripts/bootstrap/main.sh}
     '';
+
+    # TODO: deduplcate
+    services.syncthing.enable = true;
+
   };
 }

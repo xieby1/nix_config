@@ -25,7 +25,10 @@ let
       default_policy = "deny";
       rules = [{
         domain = "xieby1.cn";
-        resources = [ "^/sixu/.*$" ];
+        resources = [
+          "^/sixu/.*$"
+          "^/syncthing/.*$"
+        ];
         policy = "one_factor";
       }];
     };
