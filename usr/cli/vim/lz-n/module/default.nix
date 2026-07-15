@@ -20,10 +20,14 @@ in {
                                   keys = [ [ "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" ] ];
                                   keys = [ [ "<leader>ff" "<cmd>lua Snacks.picker.files()<cr>" { desc = "Find files"; } ] ];
                      - ft:      Lazy-load on filetype(s).
-                     - before:  Lua code to run before loading.
-                     - after:   Lua code to run after loading.
-                     - dep:     List of plugins this depends on. # TODO: dep does not exist in lz.n spec, remove this.
-                     - colorscheme: Set to true for colorscheme plugins.
+                     - before:  Lua function to run before loading.
+                                Must be a Lua function, not a plain string. Use:
+                                  before = lib.generators.mkLuaInline "function(self) ... end";
+                     - after:   Lua function to run after loading. Same as before.
+                                This is where plugin setup() calls belong:
+                                  after = lib.generators.mkLuaInline '''function(self) require("plugin").setup({}) end''';
+                     - colorscheme: Lazy-load on colorscheme(s).
+                                Set to the colorscheme name(s) (string or list of strings).
                    See https://github.com/nvim-neorocks/lz.n for full spec.
 
       Example:
