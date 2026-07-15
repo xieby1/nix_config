@@ -17,6 +17,8 @@
 
     # TODO: clean!
     ../usr/cli/vim
+
+    ../usr/cli/tailscale.nix
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";
