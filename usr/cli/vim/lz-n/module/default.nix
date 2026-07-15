@@ -22,7 +22,7 @@ in {
                      - ft:      Lazy-load on filetype(s).
                      - before:  Lua code to run before loading.
                      - after:   Lua code to run after loading.
-                     - dep:     List of plugins this depends on.
+                     - dep:     List of plugins this depends on. # TODO: dep does not exist in lz.n spec, remove this.
                      - colorscheme: Set to true for colorscheme plugins.
                    See https://github.com/nvim-neorocks/lz.n for full spec.
 
@@ -56,6 +56,8 @@ in {
           <pname>,
           ...
         }*/
+        # HACK: replaceString replaces ALL occurrences — corrupts output if any spec
+        # value contains the literal ["1"] =  (e.g. in a before/after inline Lua string).
         spec_lua_str = lib.replaceString ''["1"] = '' "" _1_spec_lua_str;
       in ''
         require("lz.n").load(${spec_lua_str})
