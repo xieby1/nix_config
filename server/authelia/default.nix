@@ -19,6 +19,8 @@ let
 
     log.level = "info";
 
+    totp.issuer = "xieby1.cn";
+
     authentication_backend.file.path = "${autheliaUsersFile}";
 
     access_control = {
@@ -29,7 +31,7 @@ let
           "^/sixu/.*$"
           "^/syncthing/.*$"
         ];
-        policy = "one_factor";
+        policy = "two_factor";
       }];
     };
 
@@ -38,13 +40,20 @@ let
       authelia_url = "https://xieby1.cn";
       default_redirection_url = "https://xieby1.cn/sixu/";
       same_site = "lax";
-      inactivity = "1h";
-      expiration = "1d";
-      remember_me = "1M";
+      # You can leave it idle during a workday without re-login.
+      inactivity = "1d";
+      # Even with activity, normal sessions must re-authenticate weekly.
+      expiration = "1M";
+      # It does not mean “remember my username”. It means “keep me authenticated longer”.
+      # The maximum session lifetime when the user checks “Remember me” at login.
+      remember_me = "6M";
     }];
 
     storage.local.path = "${config.xdg.configHome}/authelia/db.sqlite3";
 
+    # Authelia says it "sent" an identity-verification one-time code when
+    # registering a TOTP device. With the filesystem notifier, read it from
+    # ~/.config/authelia/notification.txt on this server.
     notifier.filesystem.filename = "${config.xdg.configHome}/authelia/notification.txt";
   };
 in {
