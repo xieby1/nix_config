@@ -7,7 +7,6 @@
 
   imports = [
     ./module
-    ./fugit2.nix
     ./trim.nix
   ];
   my.neovim.lz-n = [];
