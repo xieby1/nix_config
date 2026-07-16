@@ -4,6 +4,9 @@
     enableVteIntegration = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    # zsh startup split:
+    # - envExtra -> .zshenv: every zsh, including ssh 'cmd'; keep tiny, quiet, and reliable.
+    # - initContent -> .zshrc: interactive shells; keybindings, completion, aliases, prompts, and autostart.
     envExtra = ''
       # Avoid duplicate NixOS global zsh init (/etc/zshrc); Home Manager config is enough.
       setopt no_global_rcs

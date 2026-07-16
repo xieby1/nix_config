@@ -69,7 +69,7 @@ in {
   # Optional absolute path to a mill executable to use for running
   # `mill mill.contrib.bloop.Bloop/install`.
   # This mill needs JAVA_HOME.
-  programs.zsh.initContent = /*bash*/''
+  programs.zsh.envExtra = /*bash*/''
     # make .metals/mill happy.
     export JAVA_HOME=${jre-with-proxy};
   '';

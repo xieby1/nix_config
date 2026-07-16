@@ -17,7 +17,7 @@
       ExecStart = "${pkgs.mihomo}/bin/mihomo -d ${config.home.homeDirectory}/Gist/clash";
     };
   };
-  programs.zsh.initContent = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
+  programs.zsh.envExtra = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
     # proxy
     ## default
     HTTP_PROXY="http://127.0.0.1:${toString config.proxyPort}"
@@ -32,7 +32,9 @@
     export http_proxy="$HTTP_PROXY"
     export https_proxy="$HTTP_PROXY"
     export ftp_proxy="$HTTP_PROXY"
+  '');
 
+  programs.zsh.initContent = lib.mkBefore (lib.optionalString (!config.isNixOnDroid) ''
     unset_proxy() {
       unset HTTPS_PROXY
       unset HTTP_PROXY
