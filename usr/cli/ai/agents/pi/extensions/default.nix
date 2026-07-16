@@ -3,7 +3,7 @@
   imports = [
     ./mcp
     ./acp.nix
-    ./pi-hermes-memory.nix
+    ./pi-hermes-memory
     ./ponytail.nix
     ./rpiv-todo.nix
   ];

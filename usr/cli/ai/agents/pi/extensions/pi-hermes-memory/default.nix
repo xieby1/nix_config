@@ -12,7 +12,7 @@ in {
       # npm lockfile v3 delegates to shrinkwrap → missing integrity; v2 fetcher handles this.
       npmDepsFetcherVersion = 2;
       npmDepsHash = "sha256-OeR+8j7Ayyx1jUSt6uBhQ7YsWGLR7POEnW+bLPu7UDQ=";
-      patches = [ ./pi-hermes-memory-lock-integrity.patch ];
+      patches = [ ./lock-integrity.patch ];
       dontNpmBuild = true;
       # Pi uses the first path segment of pi.extensions entry as the banner
       # display name. Upstream uses "./src/index.ts" which shows as "src".
