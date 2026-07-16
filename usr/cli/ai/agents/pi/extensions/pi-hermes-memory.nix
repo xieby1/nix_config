@@ -14,6 +14,14 @@ in {
       npmDepsHash = "sha256-OeR+8j7Ayyx1jUSt6uBhQ7YsWGLR7POEnW+bLPu7UDQ=";
       patches = [ ./pi-hermes-memory-lock-integrity.patch ];
       dontNpmBuild = true;
+      # Pi uses the first path segment of pi.extensions entry as the banner
+      # display name. Upstream uses "./src/index.ts" which shows as "src".
+      # Move the entrypoint to "./index.ts" so it falls back to package name.
+      postInstall = ''
+        cd $out/lib/node_modules/pi-hermes-memory
+        sed -i 's|"./src/index.ts"|"./index.ts"|' package.json
+        echo 'export { default } from "./src/index.ts";' > index.ts
+      '';
       nativeBuildInputs = with pkgspi; [
         node-gyp
         python3
