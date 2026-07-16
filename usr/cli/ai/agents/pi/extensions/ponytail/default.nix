@@ -5,7 +5,7 @@
   home.file.".pi/agent/extensions/ponytail".source = pkgs.applyPatches {
     name = "ponytail";
     src = pkgs.npinsed.ai.pi.ponytail;
-    patches = [ ./ponytail-status.patch ];
+    patches = [ ./status.patch ];
   };
   yq-merge.".pi/agent/settings.json" = {
     generator = builtins.toJSON;
