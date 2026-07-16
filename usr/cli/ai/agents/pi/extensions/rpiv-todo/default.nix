@@ -18,7 +18,7 @@
             ${lib.getExe pkgs.jq} 'del(.peerDependencies, .devDependencies)' \
               "$p/package.json" > "$p/package.json.tmp" && mv "$p/package.json.tmp" "$p/package.json"
           done
-          cp ${./rpiv-todo-lockfile.json} package-lock.json
+          cp ${./lockfile.json} package-lock.json
         '';
       };
       npmDepsHash = "sha256-WM82ZnPyKsmm7Y/QpmqbjIhq8DRyQgWIlkMQOUF+Jac=";

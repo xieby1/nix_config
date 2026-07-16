@@ -5,7 +5,7 @@
     ./acp.nix
     ./pi-hermes-memory
     ./ponytail
-    ./rpiv-todo.nix
+    ./rpiv-todo
   ];
   home.file = {
     # tintinweb/pi-subagents (this) vs nicobailon/pi-subagents (previous)
