@@ -71,5 +71,6 @@ in {
   imports = [
     { home.packages = [pkgs.tailscale]; }
     (tailscale-wrapper {suffix="official";  httpPort="1056"; socks5Port="1066";})
+    ./devices.nix
   ];
 }
