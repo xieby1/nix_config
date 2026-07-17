@@ -18,7 +18,7 @@
     # TODO: clean!
     ../usr/cli/vim
 
-    ../usr/cli/tailscale.nix
+    ../usr/cli/tailscale
 
     # See ./home-manager-pi-ssh-stall.md
     ../usr/cli/ai/agents/pi

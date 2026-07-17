@@ -13,7 +13,7 @@ in
     ./vim
     ./tmux.nix
     ./clash
-    ./tailscale.nix
+    ./tailscale
     ./gdb.nix
     ./ctags.nix
     ./ssh.nix
