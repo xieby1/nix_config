@@ -4,6 +4,7 @@
 { ... }: {
   imports = [
     ./module
+    ./ssh.nix
   ];
 
   my.tailscale.instances.official = {
