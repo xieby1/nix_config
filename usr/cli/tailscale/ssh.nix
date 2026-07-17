@@ -1,10 +1,13 @@
 { config, lib, pkgs, ... }:
 let
-  # `tso.*` aliases normally go through tailscaled-official's userspace HTTP
-  # proxy, but proxying this node's own 100.x IP hangs before SSH sees a banner.
-  # Do the self check by comparing `%h` with `tailscale-official ip -4` at SSH
-  # runtime. Do not compare the `tso.<name>` key with `/etc/hostname`: the
-  # Tailscale alias can intentionally differ from the machine hostname.
+  # tailscaled-official runs in userspace networking mode. Its HTTP CONNECT
+  # proxy reaches remote tailnet peers, but CONNECT to this node's own 100.x IP
+  # hangs instead of hairpinning back to the host network stack where local sshd
+  # listens. Check the runtime Tailscale IPs and use 127.0.0.1 for self; keep
+  # HTTP CONNECT for real remote peers.
+  #
+  # Do not detect self by comparing `tso.<name>` with `/etc/hostname`: Tailscale
+  # aliases can intentionally differ from machine hostnames.
   tailscaleOfficialSshProxy = pkgs.writeShellScriptBin "tailscale-official-ssh-proxy" ''
     set -u
 
