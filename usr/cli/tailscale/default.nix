@@ -3,8 +3,7 @@
 # - UDP 40000: peer relay traffic (--relay-server-port set after startup).
 { ... }: {
   imports = [
-    ./module/instances.nix
-    ./devices.nix
+    ./module
   ];
 
   my.tailscale.instances.official = {
