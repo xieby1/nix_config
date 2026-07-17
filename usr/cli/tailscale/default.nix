@@ -1,7 +1,7 @@
 # VPS firewall/security-group ports for the official Tailscale instance:
 # - UDP 41641: normal Tailscale peer-to-peer/direct traffic (--port below).
 # - UDP 40000: peer relay traffic (--relay-server-port set after startup).
-{ config, pkgs, stdenv, lib, ... }:
+{ config, pkgs, lib, ... }:
 let
   tailscale-wrapper = {suffix, httpPort, socks5Port}: let
     tailscale-wrapped = pkgs.writeShellScriptBin "tailscale-${suffix}" ''
@@ -68,10 +68,8 @@ let
     '';
   };
 in {
-  imports = [{
-    home.packages = [pkgs.tailscale];
-  }
-    # (tailscale-wrapper {suffix="headscale"; httpPort="1055"; socks5Port="1065";})
+  imports = [
+    { home.packages = [pkgs.tailscale]; }
     (tailscale-wrapper {suffix="official";  httpPort="1056"; socks5Port="1066";})
   ];
 }
