@@ -31,12 +31,19 @@
       user = "git";
       proxyCommand = "nc -X connect -x 127.0.0.1:${toString config.proxyPort} %h %p";
     };
-    "my-server" = {
+    "aliyun" = {
       hostname = lib.trim (builtins.readFile ~/Gist/Vault/server/ip.txt);
       user = "root";
       serverAliveInterval = 60;
     };
-  };
+  } // (lib.mapAttrs' ( name: value: lib.nameValuePair
+    "tso.${name}" {
+      hostname = value.ip;
+      user = value.user;
+      proxyCommand = "nc -X connect -x 127.0.0.1:${toString config.my.tailscale.instances.official.httpPort} %h %p";
+      serverAliveInterval = 60;
+    }
+  ) config.my.tailscale.devices);
   programs.zsh.initContent = lib.optionalString config.isNixOnDroid ''
     # start sshd
     if [[ -z "$(pidof sshd-start)" ]]; then
