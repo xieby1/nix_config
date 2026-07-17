@@ -9,3 +9,12 @@
 - 2026.04.13: try nixvim, which has better nix-to-lua support
 - 2026.04.16: nvim: niri like window resize
   - niri: super+shift+{-/+}: -/+25% width
+- 2026.07.18: refactor tailscale wrapper to `my.tailscale.instances.official`
+  - [x] Add `usr/cli/tailscale/module/instances.nix` for `options.my.tailscale.instances` and its generated Home Manager config.
+  - [x] Define `my.tailscale.instances` as an attrsOf submodule with `httpPort`, `socks5Port`, and `relayServerPort` options.
+  - [x] Move the current `tailscale-wrapper` helper into `module/instances.nix`.
+  - [x] In `module/instances.nix`, generate `home.packages`, `systemd.user.services`, and `programs.zsh.initContent` from configured instances.
+  - [x] Import `./module/instances.nix` from `usr/cli/tailscale/default.nix`.
+  - [x] Set `my.tailscale.instances.official = { httpPort = 1056; socks5Port = 1066; relayServerPort = 40000; };` in `default.nix` to preserve current behavior.
+  - [x] Keep `my.tailscale.devices` in `devices.nix`; it is shared SSH data, not wrapper implementation.
+  - [x] Run `home-manager build` or the repo's usual Home Manager evaluation check after the refactor.
