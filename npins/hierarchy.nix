@@ -8,4 +8,5 @@ in (import ./.) // {
   # Desktop Environment
   de = import ./de npinsFun;
   nvim = import ./nvim npinsFun;
+  my = import ./my npinsFun;
 }

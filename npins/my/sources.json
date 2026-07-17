@@ -1,0 +1,17 @@
+{
+  "pins": {
+    "sixu": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://tso.aliyun/~/Repos/Sixu.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "56d6d02d30ee1cbc841149bbba7c846c1866499a",
+      "url": null,
+      "hash": "sha256-nirWnbdeWZB0i8/wfxcMR+FdjUxANHLkG/aTw/EaWl8="
+    }
+  },
+  "version": 7
+}
