@@ -5,8 +5,8 @@ in pkgs.lib.runTests {
   test-providers = pkgs.lib.testAllTrue [
     (providers?deepseek)
     (providers.deepseek?models)
-    (providers.deepseek.models?deepseek-flash)
-    (providers.minimax-china.models?"MiniMax-M2.7")
+    (providers.deepseek.models?deepseek-v4-flash)
+    (providers.minimax-china.models?"MiniMax-M3")
   ];
 }
 
