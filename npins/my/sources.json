@@ -4,7 +4,7 @@
       "type": "Git",
       "repository": {
         "type": "Git",
-        "url": "ssh://tso.aliyun/~/Repos/Sixu.git"
+        "url": "ssh://root@xieby1.cn/~/Repos/Sixu.git"
       },
       "branch": "main",
       "submodules": false,
