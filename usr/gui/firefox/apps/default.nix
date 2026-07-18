@@ -135,5 +135,9 @@
     desktopEntryExtras = {
       name = "网易云音乐";
     };
+  }{
+    name = "sixu";
+    url = "http://xieby1.cn/sixu/xby/";
+    icon = pkgs.npinsed.my.sixu + /src/app/ui/web/frontend/public/sixu-icon.svg;
   }];
 }
