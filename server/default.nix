@@ -23,6 +23,8 @@
 
     # See ./home-manager-pi-ssh-stall.md
     ../usr/cli/ai/agents/pi
+
+    ../usr/cli/ssh.nix
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";
