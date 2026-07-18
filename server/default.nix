@@ -3,6 +3,7 @@
   imports = [
     ./authelia
     ./caddy
+    ./sixu.nix
 
     # TODO: group ../usr/*
     ../usr/modules
