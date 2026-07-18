@@ -17,6 +17,9 @@ SUMMARY.md: .genSUMMARY.sh ${NIX_MDs} ${ALL_MDs}
 	./$< > $@
 
 TEST_NIXs = $(shell find . -name test.nix)
-test: $(addsuffix .run, ${TEST_NIXs})
+TEST_SHs = $(shell find . -name test.sh)
+test: $(addsuffix .run, ${TEST_NIXs} ${TEST_SHs})
 %.nix.run: %.nix
 	nix eval -f $< | tee /dev/tty | grep -q '\[ \]'
+%.sh.run: %.sh
+	bash $<
