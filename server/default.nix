@@ -9,9 +9,6 @@
     ../usr/cli/basic
 
     # TODO group following to ../usr/cli/sh
-    # TODO: clean!
-    ../usr/cli/vim
-
     # See ./home-manager-pi-ssh-stall.md
     ../usr/cli/ai/agents/pi
   ];

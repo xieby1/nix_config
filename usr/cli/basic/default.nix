@@ -6,5 +6,6 @@
     ./clash
     ./tailscale
     ./ssh.nix
+    ./nvim
   ];
 }

@@ -11,7 +11,6 @@ in
   imports = [
     ./basic
     ./extra.nix
-    ./vim
     ./tmux.nix
     ./gdb.nix
     ./ctags.nix
