@@ -5,11 +5,12 @@
     ./caddy
     ./sixu.nix
 
+    ../usr/cli/basic
+
     # TODO: group ../usr/*
     ../usr/modules
 
     # TODO group following to ../usr/cli/sh
-    ../usr/cli/starship.nix
     ../usr/cli/zsh
 
     ../usr/cli/git.nix

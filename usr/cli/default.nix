@@ -24,7 +24,6 @@ in
     ./ai
     ./zellij.nix
     ./zsh
-    ./starship.nix
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
