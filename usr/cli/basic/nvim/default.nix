@@ -12,7 +12,6 @@ in {
   #MC Plugins with customizations:
   imports = [
     ./fold.nix
-    ./nvim-lspconfig
     ./blink-cmp.nix
     ./vim-mark.nix
     ./nvim-treesitter.nix
