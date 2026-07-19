@@ -11,6 +11,7 @@
   programs.neovim = {
     extraPackages = [
       # for drawing math.tex as images
+      # TODO: Is math disabled?
       (pkgs.texlive.combine {
         inherit (pkgs.texlive)
         scheme-basic
