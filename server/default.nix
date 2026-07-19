@@ -5,27 +5,15 @@
     ./caddy
     ./sixu.nix
 
+    ../usr/modules
     ../usr/cli/basic
 
-    # TODO: group ../usr/*
-    ../usr/modules
-
     # TODO group following to ../usr/cli/sh
-    ../usr/cli/zsh
-
-    ../usr/cli/git.nix
-
-    ../usr/cli/clash
-
     # TODO: clean!
     ../usr/cli/vim
 
-    ../usr/cli/tailscale
-
     # See ./home-manager-pi-ssh-stall.md
     ../usr/cli/ai/agents/pi
-
-    ../usr/cli/ssh.nix
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";
