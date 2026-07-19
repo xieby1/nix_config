@@ -9,6 +9,7 @@ let
 in
 {
   imports = [
+    ./basic
     ./extra.nix
     ./vim
     ./tmux.nix
