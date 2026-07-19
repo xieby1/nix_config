@@ -33,7 +33,6 @@ in {
     # TODO: remove/replace vim-matchup, which make nvim very laggy when edit/view large markdown (1k sloc)
     # ./vim-matchup.nix
     ./nvim-nav.nix
-    ./markdown-preview-nvim.nix
     ./venn-nvim.nix
     ./snacks
     ./minuet-ai-nvim.nix
