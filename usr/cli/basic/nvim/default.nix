@@ -38,7 +38,6 @@ in {
     ./minuet-ai-nvim.nix
     ./auto-session.nix
     ./nvim-treesitter-context.nix
-    ./rustowl.nix
     ./treesitter-injections
     ./lz-n
     ./todo-comments.nix
