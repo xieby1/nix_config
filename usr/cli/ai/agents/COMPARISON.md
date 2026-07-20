@@ -49,6 +49,15 @@
     Fine!
   - 603k source lines of rust, a pile of xxxx.
 
+### Cannot switch arbitrary custom model IDs in the TUI
+
+- `/model` only lists visible catalog presets; there is no `/model <model_id>` or "Custom model..." entry.
+- Runtime already accepts arbitrary model strings via `AppEvent::UpdateModel(String)` -> `thread/settings/update` -> `Op::ThreadSettings`.
+- Limitation: this only changes the model string, not `model_provider`; cross-provider switching is a larger issue.
+- Workarounds: launch with `codex -m <model_name>`, `codex -p <profile>`, config `model` / `model_provider`, or startup-only `model_catalog_json`.
+- Minimal fix: support `/model <model_id>` by letting `SlashCommand::Model` accept inline args and dispatching `UpdateModel(model)` plus `PersistModelSelection { model, effort: None }`.
+- Upstream: `openai/codex#5841`, `#22160`, `#24659`, `#24612`.
+
 ## Code (Codex Fork)
 
 - Pros:
