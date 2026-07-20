@@ -16,22 +16,6 @@
       "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.45.1",
       "hash": "sha256-cikuLRyNDUL6Sd48P1jtqHnvI6ircDjUSOe6UBlHo3w="
     },
-    "hermes-agent": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "NousResearch",
-        "repo": "hermes-agent"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v2026.6.5",
-      "revision": "d6b9cfa3e1f460f5729553ef42b174da28b765c7",
-      "url": "https://api.github.com/repos/NousResearch/hermes-agent/tarball/refs/tags/v2026.6.5",
-      "hash": "sha256-ngpkopVczNrT0bfCXHm38QjgrZT96Bm/rO89NA/ls3Y="
-    },
     "llm-agents": {
       "type": "Git",
       "repository": {
