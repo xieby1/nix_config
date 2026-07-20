@@ -7,10 +7,6 @@
 
     ../usr/modules
     ../usr/cli/basic
-
-    # TODO group following to ../usr/cli/sh
-    # See ./home-manager-pi-ssh-stall.md
-    ../usr/cli/ai/agents/pi
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";

@@ -16,7 +16,6 @@ in
     ./ctags.nix
     ./fzf.nix
     ./tldr.nix
-    ./ai
     ./zellij.nix
     ./nvim-ext
   ] ++ [{ # functions & attrs
