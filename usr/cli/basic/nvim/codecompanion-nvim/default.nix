@@ -51,36 +51,6 @@
             end,
           },
           acp = {
-            ["goose-${config.ai.kimi.id}"] = function()
-              return require("codecompanion.adapters.acp").extend("goose", {
-                name = "goose-${config.ai.kimi.id}",
-                formatted_name = "Goose ${config.ai.kimi.name}",
-                opts = { verbose_output = true },
-                commands = { default = { "goose-${config.ai.kimi.id}", "acp", }, },
-              })
-            end,
-            ["goose-${config.ai.minimax-china.id}"] = function()
-              return require("codecompanion.adapters.acp").extend("goose", {
-                name = "goose-${config.ai.minimax-china.id}",
-                formatted_name = "Goose ${config.ai.minimax-china.name}",
-                opts = { verbose_output = true },
-                commands = { default = { "goose-${config.ai.minimax-china.id}", "acp", }, },
-              })
-            end,
-            ["goose-${config.ai.jw-codex.id}"] = function()
-              return require("codecompanion.adapters.acp").extend("goose", {
-                name = "goose-${config.ai.jw-codex.id}",
-                formatted_name = "Goose ${config.ai.jw-codex.name}",
-                -- TODO: add other agents' model_metadata
-                opts = {
-                  verbose_output = true,
-                  model_metadata = {
-                    ["gpt-5.5"] = { context_window = 256000, },
-                  },
-                },
-                commands = { default = { "goose-${config.ai.jw-codex.id}", "acp", }, },
-              })
-            end,
             pi = function()
               return require("codecompanion.adapters.acp").extend("opencode", {
                 name = "pi",

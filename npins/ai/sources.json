@@ -16,19 +16,6 @@
       "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.45.1",
       "hash": "sha256-cikuLRyNDUL6Sd48P1jtqHnvI6ircDjUSOe6UBlHo3w="
     },
-    "goose": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "aaif-goose",
-        "repo": "goose"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "9626b4c3c143ffc390cf40b4cbd314d2e318d3e2",
-      "url": "https://github.com/aaif-goose/goose/archive/9626b4c3c143ffc390cf40b4cbd314d2e318d3e2.tar.gz",
-      "hash": "sha256-/LANyRvbwXZRubpJTW+Bsa1MyRitJvyDkOtfK8AYpYk="
-    },
     "hermes-agent": {
       "type": "GitRelease",
       "repository": {
