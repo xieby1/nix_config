@@ -2,6 +2,5 @@
   imports = [
     ./pi
     ./hermes
-    ./zerostack
   ];
 }

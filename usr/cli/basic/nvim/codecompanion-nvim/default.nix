@@ -58,13 +58,6 @@
                 commands = { default = { "pi-acp", }, },
               })
             end,
-            zerostack = function()
-              return require("codecompanion.adapters.acp").extend("opencode", {
-                name = "zerostack",
-                formatted_name = "Zerostack",
-                commands = { default = { "/home/xieby1/Codes/zerostack/target/debug/zerostack", "--acp", }, },
-              })
-            end,
           },
         },
         display = {
