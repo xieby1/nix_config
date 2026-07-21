@@ -8,8 +8,17 @@
   ];
   services.sixu = {
     enable = true;
-    dataDir = "${config.home.homeDirectory}/Gist/Data/sixu/xby/";
-    host = "127.0.0.1";
-    port = 3000;
+    instances = {
+      xby = {
+        dataDir = "${config.home.homeDirectory}/Gist/Data/sixu/xby/";
+        host = "127.0.0.1";
+        port = 3000;
+      };
+      wxy = {
+        dataDir = "${config.home.homeDirectory}/Gist/Data/sixu/wxy/";
+        host = "127.0.0.1";
+        port = 3001;
+      };
+    };
   };
 }
