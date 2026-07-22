@@ -48,6 +48,9 @@ in {
         name = "xieby1";
       };
       protocol.file.allow = "always";
+      # Used when this account serves Git repos over SSH, e.g. Nix/npins
+      # fetching a pinned commit that is not advertised by any branch or tag.
+      uploadpack.allowAnySHA1InWant = true;
     };
     lfs.enable = true;
   };
