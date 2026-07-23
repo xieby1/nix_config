@@ -87,5 +87,16 @@ in {
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-kimi.txt);
     };
+    jw2-openai = catwalk-providers.openai // {
+      id = "jw2-openai";
+      name = "JW2 OpenAI";
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-openai.txt);
+      models = builtins.mapAttrs (
+        _: model: model // {
+          context_window = 353 * 1000;
+        }
+      ) catwalk-providers.openai.models;
+    };
   };
 }
