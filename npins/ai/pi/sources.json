@@ -25,9 +25,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "36bc6d09f3b7f9a4c9837bcf2092e3e7bb85f6a6",
-      "url": "https://github.com/numtide/llm-agents.nix/archive/36bc6d09f3b7f9a4c9837bcf2092e3e7bb85f6a6.tar.gz",
-      "hash": "sha256-4OWJdeCsT1AbqYis6GyCjcO+tiJ0G5GTPP9rfl2mMuQ="
+      "revision": "264604cc0580e87d34a10b82334cf52f8139053f",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/264604cc0580e87d34a10b82334cf52f8139053f.tar.gz",
+      "hash": "sha256-Hi41+61t2OmiB9MAq1sjeJ+HRw0T/isE3mL0um5Xmvc="
     },
     "mcp-adapter": {
       "type": "GitRelease",
