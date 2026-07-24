@@ -1,0 +1,34 @@
+{
+  "pins": {
+    "catwalk": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "charmbracelet",
+        "repo": "catwalk"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.50.3",
+      "revision": "8b82dcbe0e1311f94202dd19f63ad513399a2fc7",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.50.3",
+      "hash": "sha256-dMsI7FitF4C8L3z69+y35s1kmtuJobVmh2+dAVgkRkg="
+    },
+    "llm-agents": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "llm-agents.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "02775cea5240a05825a4ca454806d0a838289dec",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/02775cea5240a05825a4ca454806d0a838289dec.tar.gz",
+      "hash": "sha256-AmTzz9SOkEuBmBEhmppxmxJTRoc+AtAe3xI5SLGtXI8="
+    }
+  },
+  "version": 7
+}

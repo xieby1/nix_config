@@ -1,0 +1,188 @@
+{ config, pkgs, stdenv, lib, ... }:
+let
+  sysconfig = (
+    # <...> are expression search in NIX_PATH
+    if (builtins.tryEval <nixos-config>).success
+    then import <nixpkgs/nixos> {}
+    else import <nixpkgs/nixos> {configuration={};}
+  ).config;
+in
+{
+  imports = [
+    ./basic
+    ./extra.nix
+    ./tmux.nix
+    ./gdb.nix
+    ./ctags.nix
+    ./fzf.nix
+    ./tldr.nix
+    ./zellij.nix
+    ./nvim-ext
+  ] ++ [{ # functions & attrs
+    home.packages = [pkgs.nix-index];
+    home.file.nix_index_database = {
+      source = builtins.fetchurl "https://github.com/Mic92/nix-index-database/releases/latest/download/index-${builtins.currentSystem}";
+      target = ".cache/nix-index/files";
+    };
+  }{
+    #MC ## Syncthing
+    services.syncthing = {
+      enable = true;
+      #MC 让syncthing的端口外部可访问。
+      extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
+    };
+    #MC 启用代理，因为有些syncthing的服务器似乎是被墙了的。
+    systemd.user.services.syncthing.Service.Environment = [
+      # https://docs.syncthing.net/users/proxying.html
+      "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
+    ];
+    #MC 使用命令行浏览器browsh来实现syncthing-tui。
+    home.packages = lib.optional (!config.isMinimalConfig) (
+      pkgs.writeShellScriptBin "syncthing-tui" ''
+        ${pkgs.browsh}/bin/browsh --firefox.path ${pkgs.firefox}/bin/firefox http://127.0.0.1:8384
+      ''
+    );
+  }{
+    home.packages = with pkgs; [
+      cachix
+    ];
+    home.file.cachix_dhall = {
+      source = if (builtins.pathExists ~/Gist/Config/cachix.dhall)
+        then ~/Gist/Config/cachix.dhall
+        else builtins.toFile "empty-cachix.dhall" "";
+      target = ".config/cachix/cachix.dhall";
+    };
+  }];
+
+  home.packages = with pkgs; [
+    # tools
+    parallel
+    comma
+    xclip
+    python3Packages.qrcode
+    ## archive
+    unar
+    ## manage
+    # htop search in intuitive
+    btop
+    nix-tree
+    ## text
+    pandoc
+    poppler-utils # pdftotext
+    pdfgrep
+    yq-go
+    ## compile
+    gnumake
+    makefile2graph
+    remake
+    ## draw
+    graphviz
+    figlet
+    nyancat
+    d2
+    ## file system
+    file
+    # magika # detect file content types with deep learning
+    tree
+    ## network
+    wget
+    axel
+    bind.dnsutils # nslookup
+    netcat
+    nload
+    nmap
+    nethogs
+    nodePackages.browser-sync
+    ## x11
+    xdotool
+
+    # programming
+    inotify-tools
+    clang-tools
+    cmake
+    capstone
+    scc
+    ## https://stackoverflow.com/questions/40165650/how-to-list-all-files-tracked-by-git-excluding-submodules
+    (writeShellScriptBin "scc-git" "${scc}/bin/scc $(git grep --cached -l '')")
+    ## python
+    ( python3.withPackages ( p: with p; [
+      ipython
+      pydot
+      networkx
+    ]))
+    ## c
+    (lib.setPrio # make bintools less prior
+      (bintools-unwrapped.meta.priority + 1)
+      bintools-unwrapped
+    )
+    (if builtins.currentSystem == "x86_64-linux"
+      then gcc_multi
+      else gcc
+    )
+    ### docs
+    stdmanpages
+    man-pages
+    #gccStdenv
+    bear
+    ## xml
+    libxml2
+    ## bash
+    bc
+    ## nix
+    nixos-option
+    nix-output-monitor
+    ### allow non-nixos access `man configuration.nix`
+    # see: nixos/modules/misc/documentation.nix
+    #        nixos/doc/manual/default.nix
+    sysconfig.system.build.manual.nixos-configuration-reference-manpage
+    nurl
+    pkgsu.npins
+  ];
+
+  programs.eza.enable = true;
+  home.shellAliases.ls = "eza";
+
+  home.sessionVariables = {
+    NIXPKGS_ALLOW_INSECURE = "1";
+    # 解决tmux在nix-on-droid上不显示emoji和中文的问题
+    LANG = "C.UTF-8";
+  };
+
+  # bash
+  programs.bash.enable = true;
+
+  programs.direnv.enable = true;
+  programs.direnv.nix-direnv.enable = true;
+  # https://github.com/nix-community/nix-direnv/pull/677
+  # nix-direnv 3.1.1 support inNixShell.
+  # TODO: Remove this line after upgrade to nixos-26.05
+  programs.direnv.nix-direnv.package = pkgs.pkgsu.nix-direnv;
+
+  programs.ripgrep = {
+    enable = true;
+    arguments = [
+      "--no-ignore-vcs"
+    ];
+  };
+
+  programs.command-not-found = {
+    enable = true;
+    dbPath = "${pkgs.npinsed.nixpkgs.outPath}/programs.sqlite";
+  };
+
+  programs.bat.enable = true;
+  home.shellAliases.cat = "bat -pp";
+
+  # ~/.config/npins/nixpkgs, home-manager, and nix-on-droid are defined in bootstrap/main.sh,
+  # because <nixpkgs>, <home-manager>, and <nix-on-droid> are needed to bootstrap
+  # nixos-rebuild, home-manager, and nix-on-droid.
+  # However, pkgsu and nur are not needed during bootstrap, so they are defined here.
+  home.file.pkgsu = {
+    target = ".config/npins/pkgsu";
+    source = pkgs.npinsed.pkgsu;
+  };
+  home.file.nur = {
+    target = ".config/npins/nur";
+    source = pkgs.npinsed.nur;
+  };
+}
