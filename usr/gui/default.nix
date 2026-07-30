@@ -26,6 +26,7 @@ in
     ./dms
     ./evolution
     ./low-battery-notify.nix
+    ./dingtalk.nix
   ];
 
 config = lib.mkIf config.isGui {
@@ -65,7 +66,6 @@ config = lib.mkIf config.isGui {
       categories = ["AudioVideo"];
       mimeTypes = ["x-scheme-handler/wemeet"];
     })
-    nur.repos.yakkhini.dingtalk
     discord
   ] ++ [
     transmission_4-gtk
