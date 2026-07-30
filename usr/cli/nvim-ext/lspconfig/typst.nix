@@ -1,6 +1,7 @@
 { pkgs, ... }: {
   programs.neovim = {
     plugins = [{
+      # TODO: slow on huge pdf? Remove it, use TypstExportPdfOnSaveEnable?
       plugin = pkgs.vimPlugins.typst-preview-nvim;
       type = "lua";
       config = /*lua*/ ''
@@ -49,9 +50,16 @@
         vim.lsp.enable("tinymist", true)
       end, {})
     '';
-    extraPackages = [ pkgs.tinymist ];
+    extraPackages = [ pkgs.pkgsu.tinymist ];
   };
   home.packages = [
-    pkgs.typst
+    # TODO: use pkgs.typst, once stable nixpkgs reaches typst 0.15.0.
+    # NOTE: Why I need typst 0.15.0?
+    #  It adds a `path` type (the old `path()` drawing fn was renamed to `curve()`, freeing the name).
+    #  A path is resolved relative to the file where it's written, so it can be passed
+    #  to 3rd-party libs and still point at my document's files.
+    #  Without it, a lib receiving a relative path string would resolve it against the lib's
+    #  own location; the workaround is passing `read("./relative_path")`'s result instead.
+    pkgs.pkgsu.typst
   ];
 }
