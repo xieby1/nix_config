@@ -27,6 +27,7 @@
 in {
   imports = [
     (gh-user "xieby1")
+    (gh-user "nanhu")
   ];
   home.packages = [
     pkgs.gh
