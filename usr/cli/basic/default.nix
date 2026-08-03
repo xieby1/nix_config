@@ -2,7 +2,7 @@
   imports = [
     ./starship.nix
     ./zsh
-    ./git.nix
+    ./git
     ./clash
     ./tailscale
     ./ssh.nix
