@@ -14,7 +14,6 @@
   yq-merge.".pi/agent/auth.json" = {
     generator = builtins.toJSON;
     expr = {
-      minimax-cn = {type="api_key"; key=config.ai.minimax-china.api_key;};
       kimi-coding = {type="api_key"; key=config.ai.kimi.api_key;};
       deepseek = {type="api_key"; key=config.ai.deepseek.api_key;};
     };

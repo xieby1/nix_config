@@ -10,19 +10,6 @@ in {
     deepseek = catwalk-providers.deepseek // {
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/deepseek_api_key_nvim.txt);
     };
-    minimax-china = catwalk-providers.minimax-china // rec {
-      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/minimax.txt);
-      # The catwalk-providers.minimax-china.models.xxx does not contain can_reason field.
-      # Add the can_reason field here.
-      # TODO: Precisely define the type, so we can avoid the missing field.
-      models = builtins.mapAttrs (
-        _: model: model // {
-          can_reason = true;
-          supports_attachments = true;
-        }
-      ) catwalk-providers.minimax-china.models;
-      default_small_model_id = let x="MiniMax-M2"; in assert models?${x}; x;
-    };
     kimi = catwalk-providers.kimi // {
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/kimi.txt);
     };

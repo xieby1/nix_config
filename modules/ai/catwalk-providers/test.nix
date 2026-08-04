@@ -6,7 +6,6 @@ in pkgs.lib.runTests {
     (providers?deepseek)
     (providers.deepseek?models)
     (providers.deepseek.models?deepseek-v4-flash)
-    (providers.minimax-china.models?"MiniMax-M3")
   ];
 }
 
