@@ -45,7 +45,7 @@
     ".pi/agent/extensions/titlebar-spinner.ts" = {
       source = (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})
         .defaultNix.packages.x86_64-linux.pi
-        +"/lib/node_modules/@earendil-works/pi-coding-agent/examples/extensions/titlebar-spinner.ts";
+        +"/libexec/pi/examples/extensions/titlebar-spinner.ts";
     };
   };
 }
