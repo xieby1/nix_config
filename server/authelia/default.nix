@@ -27,10 +27,6 @@ let
       default_policy = "deny";
       rules = [{
         domain = "xieby1.cn";
-        resources = [
-          "^/sixu/.*$"
-          "^/syncthing/.*$"
-        ];
         policy = "two_factor";
       }];
     };
@@ -38,7 +34,7 @@ let
     session.cookies = [{
       domain = "xieby1.cn";
       authelia_url = "https://xieby1.cn";
-      default_redirection_url = "https://xieby1.cn/sixu/";
+      default_redirection_url = "https://xieby1.cn/sixu/xby/";
       same_site = "lax";
       # You can leave it idle during a workday without re-login.
       inactivity = "1d";
