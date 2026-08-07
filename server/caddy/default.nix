@@ -10,7 +10,6 @@ let
     }
 
     https://xieby1.cn {
-      redir / /sixu/xby/
       redir /sixu/xby /sixu/xby/
       redir /sixu/wxy /sixu/wxy/
       redir /syncthing /syncthing/
