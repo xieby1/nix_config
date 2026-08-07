@@ -39,6 +39,16 @@ let
         }
       }
 
+      redir /web /web/
+      handle /web/* {
+        route {
+          import auth
+          uri strip_prefix /web
+          root * ${config.home.homeDirectory}/Web
+          file_server
+        }
+      }
+
       reverse_proxy 127.0.0.1:9091
     }
   '';
