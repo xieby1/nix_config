@@ -9,6 +9,8 @@
             multiline = false,
             before = "",
             after = "",
+            -- using vim regex, the original is .*<(KEYWORDS)\s*:
+            pattern = [=[.*<(KEYWORDS)\s*[:：]]=],
             comments_only = false,
           },
         })
