@@ -30,7 +30,7 @@
     ./lua.nix
     ./vue.nix
     # zig
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('zls')\n";extraPackages=[pkgs.zls];};}
+    {programs.neovim={extraLuaConfig="vim.lsp.enable('zls')\n";extraPackages=[pkgs.zls pkgs.zig];};}
   ];
   programs.neovim = {
     plugins = [{
