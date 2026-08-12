@@ -8,7 +8,7 @@
     ./sidebery.nix
     ./darkreader.nix
     ./smartproxy.nix
-    ./smart-toc.nix
+    (import ./smart-toc.nix "xieby1")
     ./brotab.nix
     ./vimium.nix
     ./chrome-mask.nix

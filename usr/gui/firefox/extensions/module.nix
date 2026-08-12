@@ -14,6 +14,7 @@
               '';
             };
           };});
+          default = {};
         };
         extension-settings = lib.mkOption {
           type = lib.types.mkOptionType {

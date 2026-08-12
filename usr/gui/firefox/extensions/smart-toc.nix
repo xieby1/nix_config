@@ -1,3 +1,4 @@
+profile:
 { pkgs, lib, ... }: let
   smart-toc = pkgs.nur.repos.rycee.firefox-addons.buildFirefoxXpiAddon {
     pname = "smart-toc";
@@ -19,11 +20,11 @@
   };
 in {
   programs.firefox = {
-    profiles.xieby1 = {
+    profiles.${profile} = {
       extensions.packages = [ smart-toc ];
     };
   };
-  firefox-extensions.xieby1 = {
+  firefox-extensions.${profile} = {
     extension-settings = {
       commands = {
         toggle = {precedenceList = [{

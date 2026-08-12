@@ -1,6 +1,9 @@
 { pkgs, ... }: let
   name = "firefox-single-tab";
 in {
+  imports = [
+    (import ../extensions/smart-toc.nix name)
+  ];
   firefox-apps = [{
     inherit name;
     url = "";
