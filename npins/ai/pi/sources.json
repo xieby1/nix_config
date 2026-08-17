@@ -16,6 +16,19 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.31",
       "hash": "sha256-bM3V/3fxkY2Ib+OyfT82StIIRSLXGDuYUbt1CZKpTuo="
     },
+    "apply-patch": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "code-yeongyu",
+        "repo": "pi-apply-patch"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "8f0d8a6ec67599305c19c92de328178e97522e1e",
+      "url": "https://github.com/code-yeongyu/pi-apply-patch/archive/8f0d8a6ec67599305c19c92de328178e97522e1e.tar.gz",
+      "hash": "sha256-CEMWnqUYiwkvxvThbwW6j/uGvNZ4372+cb/zrxjqBPo="
+    },
     "llm-agents": {
       "type": "Git",
       "repository": {
