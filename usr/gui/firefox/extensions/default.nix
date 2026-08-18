@@ -24,6 +24,7 @@
         auto-tab-discard
         refined-github
         furiganaize
+        markdownload
       ];
       settings = {
         # Automatically enable extensions
