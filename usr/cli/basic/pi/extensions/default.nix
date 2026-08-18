@@ -3,7 +3,6 @@
   imports = [
     ./mcp
     ./acp.nix
-    ./apply-patch.nix
     ./pi-hermes-memory
     ./heuristic-notify.nix
     ./ponytail
