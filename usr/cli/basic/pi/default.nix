@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   pkgspi = (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})
     .defaultNix.packages.${pkgs.stdenv.system};
@@ -21,4 +21,6 @@ in {
     baseDelayMs = 1000;
     maxBackoffDelayMs = 10000;
   };
+
+  home.file.".pi/agent/sessions".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/sessions;
 }
