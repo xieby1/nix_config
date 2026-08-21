@@ -5,6 +5,9 @@
       type = "lua";
       config = /*lua*/''
         require("todo-comments").setup({
+          keywords = {
+            EUREKA = { icon = "🤓", },
+          },
           highlight = {
             multiline = false,
             before = "",
