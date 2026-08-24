@@ -12,8 +12,8 @@
             multiline = false,
             before = "",
             after = "",
-            -- using vim regex, the original is .*<(KEYWORDS)\s*:
-            pattern = [=[.*<(KEYWORDS)\s*[:：]]=],
+            -- Use non-greedy .{-} so the first keyword wins when a line contains multiple keywords.
+            pattern = [=[.{-}<(KEYWORDS)\s*[:：]]=],
             comments_only = false,
           },
         })
