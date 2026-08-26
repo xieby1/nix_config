@@ -7,6 +7,8 @@
         require("todo-comments").setup({
           keywords = {
             EUREKA = { icon = "🤓", },
+            TODO = { icon = "☐ ", color = "info" },
+            DONE = { icon = " " },
           },
           highlight = {
             multiline = false,
