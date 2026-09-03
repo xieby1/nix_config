@@ -68,11 +68,11 @@ in {
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt) + "/v1";
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-deepseek.txt);
     };
-    jw-kimi = catwalk-providers.kimi // {
-      id = "jw-kimi";
-      name = "JW Kimi";
-      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw-url.txt);
-      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/LLMs/jw-kimi.txt);
+    jw2-kimi = catwalk-providers.kimi // {
+      id = "jw2-kimi";
+      name = "JW2 Kimi";
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-kimi.txt);
     };
     jw2-openai = catwalk-providers.openai // {
       id = "jw2-openai";

@@ -3,7 +3,7 @@
     (import ./catwalk-to-custom-provider.nix config.ai.jw-codex)
     (import ./catwalk-to-custom-provider.nix config.ai.jw-codex-2)
     (import ./catwalk-to-custom-provider.nix config.ai.jw-claude)
-    (import ./catwalk-to-custom-provider.nix config.ai.jw-kimi)
+    (import ./catwalk-to-custom-provider.nix config.ai.jw2-kimi)
     (import ./catwalk-to-custom-provider.nix config.ai.jw2-openai)
 
     # jw-deepseek proxy rejects 'developer' role (only accepts system/user/assistant/tool).

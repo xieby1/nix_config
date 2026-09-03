@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.50.3",
-      "revision": "8b82dcbe0e1311f94202dd19f63ad513399a2fc7",
-      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.50.3",
-      "hash": "sha256-dMsI7FitF4C8L3z69+y35s1kmtuJobVmh2+dAVgkRkg="
+      "version": "v0.52.23",
+      "revision": "dbfcc8d4c880fbf4f2d11ac18720fb06a5fbf953",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.52.23",
+      "hash": "sha256-N8Mcpdb3YCu7saM59beLE2GHR87FZHYJD7i0JY6ksIU="
     },
     "llm-agents": {
       "type": "Git",
