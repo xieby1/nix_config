@@ -3,6 +3,7 @@
   imports = [
     ./authelia
     ./caddy
+    ./circle.nix
     ./sixu.nix
 
     ../usr/modules

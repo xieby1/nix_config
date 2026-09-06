@@ -12,6 +12,8 @@ let
     https://xieby1.cn {
       redir /sixu/xby /sixu/xby/
       redir /sixu/wxy /sixu/wxy/
+      redir /circle/xby /circle/xby/
+      redir /circle/wxy /circle/wxy/
       redir /syncthing /syncthing/
 
       handle /sixu/xby/* {
@@ -28,6 +30,21 @@ let
           reverse_proxy 127.0.0.1:3001
         }
       }
+      handle /circle/xby/* {
+        route {
+          import auth
+          uri strip_prefix /circle/xby
+          reverse_proxy 127.0.0.1:3002
+        }
+      }
+      handle /circle/wxy/* {
+        route {
+          import auth
+          uri strip_prefix /circle/wxy
+          reverse_proxy 127.0.0.1:3003
+        }
+      }
+
       handle /syncthing/* {
         route {
           import auth

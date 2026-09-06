@@ -1,5 +1,17 @@
 {
   "pins": {
+    "circle": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://root@xieby1.cn/~/Repos/Circle.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "350b221d7833bb37da6e62d6cc51258340d8c2fe",
+      "url": null,
+      "hash": "sha256-TMgTTfDBcfVgQYm/e+xJMwN0iiGLNCkcIpXLhwd5gPo="
+    },
     "sixu": {
       "type": "Git",
       "repository": {
