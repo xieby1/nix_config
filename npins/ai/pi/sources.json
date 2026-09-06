@@ -71,6 +71,19 @@
       "url": "https://github.com/xieby1/pi-heuristic-notify/archive/db40a0a36ad3eeaade4efd1f0525d97a6ec04896.tar.gz",
       "hash": "sha256-bE5qZSdGDTAB/vQJqkdyXfvb9ljooaovtnFncIm9A50="
     },
+    "pi-math": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "monotykamary",
+        "repo": "pi-math"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "423388a6e0d7536d4004c5f23088129ad554e114",
+      "url": "https://github.com/monotykamary/pi-math/archive/423388a6e0d7536d4004c5f23088129ad554e114.tar.gz",
+      "hash": "sha256-KwsfTvcX/YWeK/Ex+7ccKyQ1s+zcAzXNW6DLimoTFyQ="
+    },
     "pi-ping": {
       "type": "Git",
       "repository": {

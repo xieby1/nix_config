@@ -4,6 +4,7 @@
     ./mcp
     ./acp.nix
     ./pi-hermes-memory
+    ./pi-math
     ./heuristic-notify.nix
     ./ponytail
     ./rpiv-todo
