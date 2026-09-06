@@ -18,6 +18,7 @@ in
     ./tldr.nix
     ./zellij.nix
     ./nvim-ext
+    ./pi
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {

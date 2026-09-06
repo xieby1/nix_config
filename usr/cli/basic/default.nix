@@ -7,6 +7,5 @@
     ./tailscale
     ./ssh.nix
     ./nvim
-    ./pi
   ];
 }
