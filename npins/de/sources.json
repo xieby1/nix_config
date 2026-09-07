@@ -9,38 +9,22 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf",
-      "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/b6ed00fe037dec84cc4738e87eeec4fb9d4cfedf.tar.gz",
-      "hash": "sha256-30I7RZk5Wq4vJxL8753QnMG2rplw6b2iOR2vcSQmdw8="
+      "revision": "2958f72c9469c2cc2d8624036f348d4c1df4c0f2",
+      "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/2958f72c9469c2cc2d8624036f348d4c1df4c0f2.tar.gz",
+      "hash": "sha256-SYG5h0Wy34XgaGedgSwnzcU6XodOYVI6B4WO9YqzGcw="
     },
     "dms-unified-taskbar": {
-      "type": "GitRelease",
+      "type": "Git",
       "repository": {
         "type": "GitHub",
         "owner": "jslandau",
         "repo": "dms-unified-taskbar"
       },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "master",
       "submodules": false,
-      "version": "v1.0.0",
-      "revision": "ded024c024bd3690ecbd5704b808cf1669a847a7",
-      "url": "https://api.github.com/repos/jslandau/dms-unified-taskbar/tarball/refs/tags/v1.0.0",
-      "hash": "sha256-Fe3C/QbD7gVfWOLZsX+TszkkPv5fugqcVCDtXxOh8bE="
-    },
-    "niri": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "flowerysong",
-        "repo": "niri"
-      },
-      "branch": "release-keybinds",
-      "submodules": false,
-      "revision": "53447431c4adcfe1572fed5f39ebddc239ca381c",
-      "url": "https://github.com/flowerysong/niri/archive/53447431c4adcfe1572fed5f39ebddc239ca381c.tar.gz",
-      "hash": "sha256-onL4kGGpNHYNIaU11hN440RruSJKcTblSi7CwqMbYeM="
+      "revision": "eba5b385cfbbda85587fa0a4feefe293563617ff",
+      "url": "https://github.com/jslandau/dms-unified-taskbar/archive/eba5b385cfbbda85587fa0a4feefe293563617ff.tar.gz",
+      "hash": "sha256-gOLipzxMKrGqP0DZdWzEszGzgwtz2FJde+nHiU8CwZo="
     }
   },
   "version": 8

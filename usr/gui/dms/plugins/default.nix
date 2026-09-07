@@ -1,7 +1,7 @@
 { ... }: {
   imports = [
     ./bing-wallpaper.nix
-    ./unified-taskbar
+    ./unified-taskbar.nix
   ];
   yq-merge.".config/DankMaterialShell/plugin_settings.json" = {
     preOnChange = ''
