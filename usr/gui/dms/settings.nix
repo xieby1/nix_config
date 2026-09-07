@@ -27,6 +27,7 @@ in {
         openOnOverview = true;
         noBackground = true;
         spacing = 0;
+        widgetPadding = 0;
         leftWidgets = [
           { enabled = true; id = "privacyIndicator"; }
           { enabled = true; id = "notificationButton"; }
