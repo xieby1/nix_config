@@ -6,6 +6,7 @@
 let
   my-color-scheme = {
     plugin = pkgs.vimPlugins.sonokai;
+    type = "viml";
     config = ''
       set termguicolors
 

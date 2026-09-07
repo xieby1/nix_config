@@ -21,7 +21,7 @@
   - [x] Explicitly choose `programs.neovim.withRuby`.
   - [x] Explicitly choose `programs.neovim.withPython3`.
   - [x] Rename `programs.neovim.extraLuaConfig` to `programs.neovim.initLua`.
-  - [ ] Set `type = "viml"` for the `vim-easy-align` plugin config.
-  - [ ] Set `type = "viml"` for the `sonokai` plugin config.
-  - [ ] Set `type = "viml"` for the `vim-mark` plugin config.
+  - [x] Set `type = "viml"` for the `vim-easy-align` plugin config.
+  - [x] Set `type = "viml"` for the `sonokai` plugin config.
+  - [x] Set `type = "viml"` for the `vim-mark` plugin config.
   - [ ] Migrate `programs.ssh.matchBlocks` to `programs.ssh.settings`.

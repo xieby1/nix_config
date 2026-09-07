@@ -20,6 +20,7 @@ let
         hash = "sha256-h2uaZ8dCUopNJ7fpf3BEoZNRk+25zqFukcHa3LomPSk=";
       };
     };
+    type = "viml";
     config = ''
       " clear highlight created by vim-mark
       nnoremap <leader><F3> :MarkClear<CR>

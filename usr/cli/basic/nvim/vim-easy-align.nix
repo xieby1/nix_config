@@ -3,6 +3,7 @@
 let
   my-vim-easy-align = {
     plugin = pkgs.vimPlugins.vim-easy-align;
+    type = "viml";
     config = ''
       " Start interactive EasyAlign in visual mode (e.g. vipga)
       xmap ga <Plug>(EasyAlign)
