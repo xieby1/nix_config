@@ -6,6 +6,7 @@
   ];
   home.packages = [
     pkgs.dms-shell
+    pkgs.quickshell
     pkgs.dgop
 
     # App icons for many apps not showing in App Launcher.

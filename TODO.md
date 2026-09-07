@@ -18,3 +18,4 @@
   - [x] Set `my.tailscale.instances.official = { httpPort = 1056; socks5Port = 1066; relayServerPort = 40000; };` in `default.nix` to preserve current behavior.
   - [x] Keep `my.tailscale.devices` in `devices.nix`; it is shared SSH data, not wrapper implementation.
   - [x] Run `home-manager build` or the repo's usual Home Manager evaluation check after the refactor.
+- explore DMS 1.4 KDE connect and valent support
