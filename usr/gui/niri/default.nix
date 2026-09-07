@@ -5,14 +5,15 @@
 { pkgs, ... }: {
   imports = [
     ./config
+    ./win_align.nix
   ];
   nixpkgs.overlays = [
-    (final: prev: {
-      niri = prev.niri.overrideAttrs (final: prev: {
+    (pkgs-final: pkgs-prev: {
+      niri = pkgs-prev.niri.overrideAttrs (niri-final: niri-prev: {
         # # Implement release keybinds and modifier-only binds
         # # https://github.com/YaLTeR/niri/pull/2456/commits
         # src = pkgs.npinsed.de.niri;
-        patches = [
+        patches = niri-prev.patches ++ [
           # Fix dingtalk screen casting.
           # https://forum.archlinuxcn.org/t/topic/15526/3
           # [Support shm sharing #1791](https://github.com/YaLTeR/niri/pull/1791)
