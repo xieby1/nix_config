@@ -7,7 +7,7 @@
     nativeBuildInputs = [pkgs.makeWrapper];
   } ''
     mkdir -p $out
-    ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.jre} $out
+    ${pkgs.lndir}/bin/lndir -silent ${pkgs.jre} $out
     wrapProgram $out/bin/java --add-flag -Dhttp.proxyHost=127.0.0.1 \
                               --add-flag -Dhttp.proxyPort=${toString config.proxyPort} \
                               --add-flag -Dhttps.proxyHost=127.0.0.1 \

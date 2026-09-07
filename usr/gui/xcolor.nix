@@ -16,7 +16,7 @@
     in
     pkgs.runCommand name {} ''
       mkdir -p $out
-      ${pkgs.xorg.lndir}/bin/lndir -silent ${pkgs.xcolor} $out
+      ${pkgs.lndir}/bin/lndir -silent ${pkgs.xcolor} $out
       rm $out/share/applications/XColor.desktop
       sed 's,^Exec.*,Exec=${exec},' ${pkgs.xcolor}/share/applications/XColor.desktop > $out/share/applications/XColor.desktop
     ''

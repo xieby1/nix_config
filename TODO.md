@@ -25,3 +25,7 @@
   - [x] Set `type = "viml"` for the `sonokai` plugin config.
   - [x] Set `type = "viml"` for the `vim-mark` plugin config.
   - [x] Migrate `programs.ssh.matchBlocks` to `programs.ssh.settings`.
+- [ ] 2026.09.07: resolve warnings from `home-manager switch`
+  - [x] Replace `pkgs.xorg.lndir` with `pkgs.lndir` in `xcolor.nix` and `scala.nix`.
+  - [ ] Set `type = "viml"` for the `markdown-preview.nvim` plugin config.
+  - [ ] Explicitly choose `programs.firefox.configPath` after deciding whether to keep `~/.mozilla/firefox` or migrate it to the XDG path.
