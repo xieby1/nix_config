@@ -4,33 +4,33 @@
 # * does not work well with ironbar: autohide double-trigger bug
 { pkgs, ... }: let
   niri = pkgs.niri.overrideAttrs (final: prev: {
-    # Implement release keybinds and modifier-only binds
-    # https://github.com/YaLTeR/niri/pull/2456/commits
-    src = pkgs.npinsed.de.niri;
+    # # Implement release keybinds and modifier-only binds
+    # # https://github.com/YaLTeR/niri/pull/2456/commits
+    # src = pkgs.npinsed.de.niri;
     patches = [
       # Fix dingtalk screen casting.
       # https://forum.archlinuxcn.org/t/topic/15526/3
       # [Support shm sharing #1791](https://github.com/YaLTeR/niri/pull/1791)
       (pkgs.fetchurl {
         name = "shm-sharing";
-        url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_2~19..tag_support-shm-sharing_2.patch";
-        sha256 = "0rs0rb0f7hhk3847ay3rvhbhbpw4y2wkpg7dh9knj768qsqvm324";
+        url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_4~19..tag_support-shm-sharing_4.patch";
+        sha256 = "sha256-LLbzjrUmCXOCqboGKFc19Lw7hyE2tMHJdadWtltfn5U=";
       })
-      # [feat: add window alignment actions#1929](https://github.com/niri-wm/niri/pull/1929)
-      (pkgs.fetchurl {
-        name = "window-alignment";
-        url = "https://github.com/niri-wm/niri/compare/d7184a04b904e07113f4623610775ae78d32394c..78d10a28e8a7a046e52ef16ad78bee4cdeee3d81.patch";
-        sha256 = "18zjnp2hgh9wsiab0w5m90gvdx0i4ab8wvpgnf9y0qjza6shwi7d";
-      })
+      # # [feat: add window alignment actions#1929](https://github.com/niri-wm/niri/pull/1929)
+      # (pkgs.fetchurl {
+      #   name = "window-alignment";
+      #   url = "https://github.com/niri-wm/niri/compare/d7184a04b904e07113f4623610775ae78d32394c..78d10a28e8a7a046e52ef16ad78bee4cdeee3d81.patch";
+      #   sha256 = "18zjnp2hgh9wsiab0w5m90gvdx0i4ab8wvpgnf9y0qjza6shwi7d";
+      # })
     ];
-    # https://nixos.wiki/wiki/Rust#Using_overrideArgs_with_Rust_Packages
-    cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-      src = final.src;
-      hash = "sha256-bh3NrnlFz2m8aCCakgpblFrswh02ByJVPVgxBbTZ6ts=";
-    };
-    # Unnecessary due to cargoDeps having higher priority than cargoHash,
-    # but to make it explicitly that cargoHash is not used after overrideAttrs.
-    cargoHash = null;
+    # # https://nixos.wiki/wiki/Rust#Using_overrideArgs_with_Rust_Packages
+    # cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+    #   src = final.src;
+    #   hash = "sha256-bh3NrnlFz2m8aCCakgpblFrswh02ByJVPVgxBbTZ6ts=";
+    # };
+    # # Unnecessary due to cargoDeps having higher priority than cargoHash,
+    # # but to make it explicitly that cargoHash is not used after overrideAttrs.
+    # cargoHash = null;
   });
 in {
   imports = [
