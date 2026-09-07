@@ -22,7 +22,6 @@ in
     ./niri
     ./rofi.nix
     # ./plasma
-    # ./hyprland
     ./dms
     ./evolution
     ./low-battery-notify.nix
