@@ -21,7 +21,6 @@ in
     # TODO: remove
     ./niri
     ./rofi.nix
-    # ./plasma
     ./dms
     ./evolution
     ./low-battery-notify.nix
