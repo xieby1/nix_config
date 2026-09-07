@@ -10,7 +10,6 @@ in
     ./firefox
     ./warpd.nix
     ./rustdesk.nix
-    ./gnome
     ./kitty
     ./cheatsheet_edit.nix
     ./xcolor.nix

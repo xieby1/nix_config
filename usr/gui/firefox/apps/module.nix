@@ -112,6 +112,7 @@ in {
       }) firefox-apps-with-desktopEntry
     );
 
+    # TODO: support dms keybind
     dconf.settings = let
       firefox-apps-with-keybinding = (builtins.filter (firefox-app: firefox-app.keybinding!=null ) config.firefox-apps);
     in {

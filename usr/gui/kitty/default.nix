@@ -40,25 +40,6 @@
     ./kitty-scrollback-nvim.nix
   ];
 
-  # shortcuts
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = [
-    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty/"
-    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc/"
-    "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc-background/"
-  ];
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/kitty" = {
-    binding="<Primary><Alt>t";
-    command = "kitty";
-    name="terminal";
-  };
-  dconf.settings."org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/fzf-doc" = {
-    binding="<Super>f";
-    # bash alias needs interative bash (-i)
-    # https://askubuntu.com/questions/1109564/alias-not-working-inside-bash-shell-script
-    command="kitty bash -i fzf-doc";
-    name="fzf-doc";
-  };
-
   programs.kitty = {
     enable = true;
     environment = {
