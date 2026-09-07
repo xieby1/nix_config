@@ -20,11 +20,11 @@
         "owner": "nix-community",
         "repo": "home-manager"
       },
-      "branch": "release-25.11",
+      "branch": "release-26.05",
       "submodules": false,
-      "revision": "a0bb0d11514f92b639514220114ac8063c72d0a3",
-      "url": "https://github.com/nix-community/home-manager/archive/a0bb0d11514f92b639514220114ac8063c72d0a3.tar.gz",
-      "hash": "sha256-deix7yg3j6AhjMPnFDCmWB3f83LsajaaULP5HH2j34k="
+      "revision": "fd0956c99c41ae3c13a73a638f1f7e963aebc4ab",
+      "url": "https://github.com/nix-community/home-manager/archive/fd0956c99c41ae3c13a73a638f1f7e963aebc4ab.tar.gz",
+      "hash": "sha256-sPpQFVaFTDqO/4vvCAhuAhqTgqN/ygu+9eJcs5eB0js="
     },
     "nix-on-droid": {
       "type": "Git",
@@ -41,10 +41,10 @@
     },
     "nixpkgs": {
       "type": "Channel",
-      "name": "nixos-25.11",
+      "name": "nixos-26.05",
       "artifact": "nixexprs.tar.xz",
-      "url": "https://releases.nixos.org/nixos/25.11/nixos-25.11.8107.1073dad219cb/nixexprs.tar.xz",
-      "hash": "sha256-cUgsPWt0NJz21K4i/5191mWaizw4XtT20WFqyxzSuQI="
+      "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.9173.6713828a351e/nixexprs.tar.xz",
+      "hash": "sha256-ahDTmIBX7dGq9GgQWH0m1uEIoJhGInEpNvKVLc1j47U="
     },
     "nur": {
       "type": "Git",
