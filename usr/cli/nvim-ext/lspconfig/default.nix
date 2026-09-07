@@ -3,18 +3,18 @@
   imports = [
     ./c.nix
     # bash
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
+    {programs.neovim={initLua="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
     # html
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('html')\n";extraPackages=[pkgs.vscode-langservers-extracted];};}
+    {programs.neovim={initLua="vim.lsp.enable('html')\n";extraPackages=[pkgs.vscode-langservers-extracted];};}
     ./nix
     # python
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('pyright')\n";extraPackages=[pkgs.pyright];};}
+    {programs.neovim={initLua="vim.lsp.enable('pyright')\n";extraPackages=[pkgs.pyright];};}
     # typos
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('typos_lsp')\n";extraPackages=[pkgs.typos-lsp];};}
+    {programs.neovim={initLua="vim.lsp.enable('typos_lsp')\n";extraPackages=[pkgs.typos-lsp];};}
     # xml
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('lemminx')\n";extraPackages=[pkgs.lemminx];};}
+    {programs.neovim={initLua="vim.lsp.enable('lemminx')\n";extraPackages=[pkgs.lemminx];};}
     # markdown
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};
+    {programs.neovim={initLua="vim.lsp.enable('marksman')\n";extraPackages=[pkgs.marksman];};
       # index .mdx files
       # https://github.com/artempyanykh/marksman/issues/114
       xdg.configFile."marksman/config.toml".text = ''
@@ -23,14 +23,14 @@
       '';
     }
     # language checker
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
+    {programs.neovim={initLua="vim.lsp.enable('harper_ls')\n";extraPackages=[pkgs.harper];};}
     ./rust
     ./scala.nix
     ./typst.nix
     ./lua.nix
     ./vue.nix
     # zig
-    {programs.neovim={extraLuaConfig="vim.lsp.enable('zls')\n";extraPackages=[pkgs.zls pkgs.zig];};}
+    {programs.neovim={initLua="vim.lsp.enable('zls')\n";extraPackages=[pkgs.zls pkgs.zig];};}
   ];
   programs.neovim = {
     plugins = [{

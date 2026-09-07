@@ -1,5 +1,5 @@
 #MC # key bindings of closing windows
-{ ... }: { programs.neovim.extraLuaConfig = /*lua*/ ''
+{ ... }: { programs.neovim.initLua = /*lua*/ ''
   for Dir, cmd in pairs({Left="h", Down="j", Up="k", Right="l"}) do
     local f = function()
       local beg = vim.api.nvim_get_current_win()

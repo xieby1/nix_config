@@ -1,6 +1,6 @@
 { ... }: {
   programs.neovim = {
-    extraLuaConfig = /*lua*/ ''
+    initLua = /*lua*/ ''
       do
         function get_buffer_dir()
           local file = vim.api.nvim_buf_get_name(0)

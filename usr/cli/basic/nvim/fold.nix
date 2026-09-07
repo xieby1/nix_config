@@ -41,7 +41,7 @@
       """ files are always loaded with opened folds.
       set foldlevel=20
     '';
-    extraLuaConfig = /*lua*/''
+    initLua = /*lua*/''
       -- Decrease foldcolumn
       vim.keymap.set('n', 'z-', function()
         local value = tonumber(vim.o.foldcolumn) or 0

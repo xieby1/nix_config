@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   programs.neovim={
-    extraLuaConfig = /*lua*/ ''
+    initLua = /*lua*/ ''
       vim.lsp.config("rust_analyzer", {
         settings = {
           ["rust-analyzer"] = {

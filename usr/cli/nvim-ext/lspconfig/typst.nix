@@ -10,7 +10,7 @@
         })
       '';
     }];
-    extraLuaConfig = /*lua*/ ''
+    initLua = /*lua*/ ''
       -- https://www.reddit.com/r/neovim/comments/1iiqwb1/treesitter_injection_and_priority_issues/
       -- The `@lsp.type.comment.typst` can be obtained by hovering on the text, then `:Inspect`
       -- TLDR: I want to use typst injections.scm,

@@ -1,5 +1,5 @@
 { ... }: {
-  programs.neovim.extraLuaConfig = /*lua*/''
+  programs.neovim.initLua = /*lua*/''
     vim.keymap.set('n', '<leader>t', function()
       -- Get the current file's directory, falling back to cwd for unnamed buffers
       local dir

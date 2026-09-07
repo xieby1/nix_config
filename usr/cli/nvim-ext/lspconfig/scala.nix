@@ -19,7 +19,7 @@
   '';
 in {
   programs.neovim = {
-    extraLuaConfig = /*lua*/ ''
+    initLua = /*lua*/ ''
       vim.lsp.config("metals", {
         init_options = {
           statusBarProvider = "off",

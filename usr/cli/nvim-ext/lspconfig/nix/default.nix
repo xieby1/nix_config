@@ -5,7 +5,7 @@
   .defaultNix.packages.${pkgs.stdenv.system}.default;
 in {
   programs.neovim = {
-    extraLuaConfig = "vim.lsp.enable('nixd')\n";
+    initLua = "vim.lsp.enable('nixd')\n";
     extraPackages=[nixd];
   };
   cachix_packages = [nixd];

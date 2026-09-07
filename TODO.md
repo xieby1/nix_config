@@ -20,7 +20,7 @@
 - [ ] 2026.09.07: resolve Home Manager 26.05 warnings from `home-manager build -f server/tests/build/home.nix`
   - [x] Explicitly choose `programs.neovim.withRuby`.
   - [x] Explicitly choose `programs.neovim.withPython3`.
-  - [ ] Rename `programs.neovim.extraLuaConfig` to `programs.neovim.initLua`.
+  - [x] Rename `programs.neovim.extraLuaConfig` to `programs.neovim.initLua`.
   - [ ] Set `type = "viml"` for the `vim-easy-align` plugin config.
   - [ ] Set `type = "viml"` for the `sonokai` plugin config.
   - [ ] Set `type = "viml"` for the `vim-mark` plugin config.

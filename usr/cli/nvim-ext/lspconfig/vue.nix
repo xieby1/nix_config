@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   programs.neovim = {
-    extraLuaConfig = /*lua*/ ''
+    initLua = /*lua*/ ''
       local vue_language_server_path = '${pkgs.vue-language-server}/lib/language-tools/packages/language-server'
       vim.lsp.config('vtsls', {
         settings = {

@@ -33,7 +33,7 @@
     #MC 
     #MC No one try to fix the two-replies problem in ccls.
     #MC However, nimaipatel recommanded [clangd_extensions](https://github.com/p00f/clangd_extensions.nvim).
-    extraLuaConfig = ''
+    initLua = ''
       vim.lsp.config('clangd', {
         filetypes = { "c", "cc", "cpp", "c++", "objc", "objcpp", "cuda", "proto" }
       })

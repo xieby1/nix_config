@@ -32,7 +32,7 @@
       "" tags support, ';' means upward search, referring to http://vimdoc.sourceforge.net/htmldoc/editing.html#file-searching
       set tags=./tags;
     '';
-    extraLuaConfig = /*lua*/''
+    initLua = /*lua*/''
       vim.keymap.set("n", "g]", function()
         Snacks.picker.tags({
           search = vim.fn.expand("<cword>"),

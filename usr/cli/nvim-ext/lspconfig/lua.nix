@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   programs.neovim={
-    extraLuaConfig = /*lua*/''
+    initLua = /*lua*/''
       -- ~/.local/share/emmylua_ls/logs/ is huge, over 13GB now, so disable logs completely.
       vim.lsp.config('emmylua_ls', {
         cmd = { 'emmylua_ls', '--log-path', 'none' },

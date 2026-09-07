@@ -26,7 +26,7 @@
   end'';
 in {
   programs.neovim = {
-    extraLuaConfig = /*lua*/ ''
+    initLua = /*lua*/ ''
       vim.api.nvim_create_user_command('DoccomInjectionToggle', function()
         local fns = {
           rust = ${gen_c_style_toggle_fn "rust" "block_comment"},
