@@ -59,6 +59,7 @@
   #   _props = { repeat = false; release = true; };
   #   toggle-overview = {};
   # };
+  "Mod+O".toggle-overview = {};
 
   "Alt+F4" = {
     _props.repeat = false;
