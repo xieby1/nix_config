@@ -28,4 +28,19 @@
 - [ ] 2026.09.07: resolve warnings from `home-manager switch`
   - [x] Replace `pkgs.xorg.lndir` with `pkgs.lndir` in `xcolor.nix` and `scala.nix`.
   - [x] Set `type = "viml"` for the `markdown-preview.nvim` plugin config.
-  - [ ] Explicitly choose `programs.firefox.configPath` after deciding whether to keep `~/.mozilla/firefox` or migrate it to the XDG path.
+  - [x] Migrate Firefox profiles from `~/.mozilla/firefox` to `$XDG_CONFIG_HOME/mozilla/firefox`.
+    - [x] Close every Firefox window and confirm `pgrep -af firefox` produces no Firefox process.
+    - [x] Confirm `~/.config/mozilla/firefox` does not exist; record the source size and profile names from `profiles.ini`.
+    - [x] Create a fallback copy with `cp -a --reflink=auto ~/.mozilla/firefox ~/.mozilla/firefox.pre-xdg-backup`.
+    - [x] Set `programs.firefox.configPath = "${config.xdg.configHome}/mozilla/firefox"` in `usr/gui/firefox/default.nix`.
+    - [x] Run `home-manager build` and confirm the Firefox `configPath` warning is gone before moving data.
+    - [x] Create `~/.config/mozilla`, then move the complete profile tree to `~/.config/mozilla/firefox`.
+    - [x] Run `home-manager switch` to install the managed Firefox files at the XDG path.
+    - [x] Confirm `~/.mozilla/firefox` is absent, `~/.config/mozilla/firefox/profiles.ini` exists, and its profile list matches the recorded list.
+    - [x] Launch the `xieby1` and `firefox-single-tab` profiles headlessly by name from the XDG `profiles.ini`.
+    - [x] Confirm Firefox does not recreate `~/.mozilla/firefox`; investigate before deleting anything if it does.
+    - Rollback:
+      - Close Firefox, move `~/.config/mozilla/firefox` back to `~/.mozilla/firefox`, restore the legacy `configPath`, and run `home-manager switch`.
+      - Restore from `~/.mozilla/firefox.pre-xdg-backup` if the moved tree was damaged.
+  - [ ] Interactively verify Firefox history, extensions, and settings; confirm `about:profiles` reports XDG root directories.
+  - [ ] After using the migrated profiles successfully, remove `~/.mozilla/firefox.pre-xdg-backup`.

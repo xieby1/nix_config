@@ -20,6 +20,7 @@
 
   programs.firefox = {
     enable = true;
+    configPath = "${config.xdg.configHome}/mozilla/firefox";
     # If state version ≥ 19.09 then this should be a wrapped Firefox
     package = pkgs.firefox.overrideAttrs (old: {
       # MOZ_USE_XINPUT2=1 allow more smooth (pixel-level) scroll and zoom
