@@ -36,6 +36,7 @@
           cp ${mermaid_js} app/_static/mermaid.min.js
         '')];
       });
+      type = "viml";
       config = ''
         " allow LAN
         let g:mkdp_open_to_the_world = 1
