@@ -1,13 +1,11 @@
-- 2026.04.13: kitty new tab pwd
+- [ ] 2026.04.13: kitty new tab pwd
   - Current behavior: realpath of pwd
   - Expected: original pwd (retain the symlink)
   - Related discussions: https://github.com/kovidgoyal/kitty/issues/9335
     - https://github.com/kovidgoyal/kitty/issues/7950
   - Possible solution: write a kitten (python script)
     - Pros: I can learn how to script kitty, and learn how kitten works!
-- 2026.04.13: try zsh
-- 2026.04.13: try nixvim, which has better nix-to-lua support
-- 2026.04.16: nvim: niri like window resize
+- [ ] 2026.04.16: nvim: niri like window resize
   - niri: super+shift+{-/+}: -/+25% width
 - 2026.07.18: refactor tailscale wrapper to `my.tailscale.instances.official`
   - [x] Add `usr/cli/tailscale/module/instances.nix` for `options.my.tailscale.instances` and its generated Home Manager config.
@@ -18,4 +16,4 @@
   - [x] Set `my.tailscale.instances.official = { httpPort = 1056; socks5Port = 1066; relayServerPort = 40000; };` in `default.nix` to preserve current behavior.
   - [x] Keep `my.tailscale.devices` in `devices.nix`; it is shared SSH data, not wrapper implementation.
   - [x] Run `home-manager build` or the repo's usual Home Manager evaluation check after the refactor.
-- explore DMS 1.4 KDE connect and valent support
+- [ ] explore DMS 1.4 KDE connect and valent support
