@@ -72,10 +72,6 @@
   # Make sure legacy path is installed as well.
   environment.pathsToLink = [ "/share/gtk-doc" ];
 
-  #MC 启用ADB，安卓搞事情必备。
-  programs.adb.enable = true;
-  users.users.xieby1.extraGroups = ["adbusers"];
-
   nix.settings.trusted-users = ["root" "xieby1"];
 
   zramSwap.enable = true;
