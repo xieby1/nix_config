@@ -1,6 +1,6 @@
 let
   pkgs = import <nixpkgs> {};
-  dms-src = pkgs.npinsed.de.DankMaterialShell;
+  dms-src = pkgs.dms-shell.src;
   SPEC = pkgs.runCommand "SPEC" {} ''
     awk '/^var SPEC/,/^}/' ${dms-src}/quickshell/Common/settings/SettingsSpec.js > $out
   '';
