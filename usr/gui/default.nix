@@ -82,6 +82,9 @@ config = lib.mkIf config.isGui {
     gnome-characters
     nautilus
     loupe
+    gnome-calculator
+    # TODO: may be replaced by dankcalendar
+    gnome-calendar
     pkgsu.surfer
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex
