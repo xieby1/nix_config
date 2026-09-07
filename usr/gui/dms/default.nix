@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./avatar.nix
     ./settings.nix
     ./plugins
     ./clsettings.nix
