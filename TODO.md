@@ -17,3 +17,11 @@
   - [x] Keep `my.tailscale.devices` in `devices.nix`; it is shared SSH data, not wrapper implementation.
   - [x] Run `home-manager build` or the repo's usual Home Manager evaluation check after the refactor.
 - [ ] explore DMS 1.4 KDE connect and valent support
+- [ ] 2026.09.07: resolve Home Manager 26.05 warnings from `home-manager build -f server/tests/build/home.nix`
+  - [x] Explicitly choose `programs.neovim.withRuby`.
+  - [x] Explicitly choose `programs.neovim.withPython3`.
+  - [ ] Rename `programs.neovim.extraLuaConfig` to `programs.neovim.initLua`.
+  - [ ] Set `type = "viml"` for the `vim-easy-align` plugin config.
+  - [ ] Set `type = "viml"` for the `sonokai` plugin config.
+  - [ ] Set `type = "viml"` for the `vim-mark` plugin config.
+  - [ ] Migrate `programs.ssh.matchBlocks` to `programs.ssh.settings`.

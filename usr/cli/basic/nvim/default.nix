@@ -52,6 +52,8 @@ in {
 
   programs.neovim = {
     enable = true;
+    withPython3 = false;
+    withRuby = false;
     # Set environment variable EDITOR to nvim.
     # Per zshzle(1), when EDITOR or VISUAL contains "vi" at shell startup,
     # zsh links "main" to "viins" instead of "emacs".
