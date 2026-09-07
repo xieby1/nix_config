@@ -3,7 +3,7 @@
     generator = builtins.toJSON;
     expr = {
       # default clipboard entries is 100
-      maxHistory = 9999;
+      maxHistory = 999;
     };
   };
 }
