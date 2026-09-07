@@ -26,15 +26,14 @@
       type = "lua";
       config = /*lua*/''
         vim.filetype.add({ extension = { mdx = "markdown" } })
-        require 'nvim-treesitter.configs'.setup {
-          -- TODO: https://github.com/NixOS/nixpkgs/issues/189838
-          -- ensure_installed = {"c", "cpp", "python", "markdown"},
-          ensure_installed = {},
-          sync_install = false,
-          highlight = {
-            enable = true,
-          },
-        }
+        vim.api.nvim_create_autocmd('FileType', {
+          callback = function(ev)
+            local lang = vim.treesitter.language.get_lang(vim.bo[ev.buf].filetype)
+            if lang and vim.treesitter.language.add(lang) then
+              vim.treesitter.start(ev.buf, lang)
+            end
+          end,
+        })
       '';
     }];
   };
