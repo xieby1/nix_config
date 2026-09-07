@@ -28,12 +28,12 @@ in {
     tailscaleOfficialSshProxy
   ];
 
-  programs.ssh.matchBlocks = lib.mapAttrs' (name: value: lib.nameValuePair
+  programs.ssh.settings = lib.mapAttrs' (name: value: lib.nameValuePair
     "tso.${name}" {
-      hostname = value.ip;
-      user = value.user;
-      serverAliveInterval = 60;
-      proxyCommand = "${tailscaleOfficialSshProxy}/bin/tailscale-official-ssh-proxy %h %p";
+      HostName = value.ip;
+      User = value.user;
+      ServerAliveInterval = 60;
+      ProxyCommand = "${tailscaleOfficialSshProxy}/bin/tailscale-official-ssh-proxy %h %p";
     }
   ) config.my.tailscale.devices;
 }
