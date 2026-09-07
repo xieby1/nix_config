@@ -37,7 +37,7 @@ config = lib.mkIf (!config.isMinimalConfig) {
     ## c
     cling # c/cpp repl
     ## javascript
-    nodePackages.typescript
+    typescript
     ### node
     nodejs
     ## java
