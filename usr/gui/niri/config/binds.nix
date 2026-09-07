@@ -55,10 +55,10 @@
   # Open/close the Overview: a zoomed-out view of workspaces and windows.
   # You can also move the mouse into the top-left hot corner,
   # or do a four-finger swipe up on a touchpad.
-  "Mod" = {
-    _props = { repeat = false; release = true; };
-    toggle-overview = {};
-  };
+  # "Mod" = {
+  #   _props = { repeat = false; release = true; };
+  #   toggle-overview = {};
+  # };
 
   "Alt+F4" = {
     _props.repeat = false;
