@@ -139,5 +139,9 @@
     name = "sixu";
     url = "https://xieby1.cn/sixu/xby/";
     icon = pkgs.npinsed.my.sixu + /src/app/ui/web/frontend/public/sixu-icon.svg;
+  }{
+    name = "circle";
+    url = "https://xieby1.cn/circle/xby/";
+    icon = pkgs.npinsed.my.circle + /src/ui/web/render/public/icon.svg;
   }];
 }
