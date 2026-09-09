@@ -64,6 +64,7 @@ in
     ## archive
     unar
     ## manage
+    (import pkgs.npinsed.my.circle {inherit pkgs;})
     # htop search in intuitive
     btop
     nix-tree
