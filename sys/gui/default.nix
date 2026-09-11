@@ -98,4 +98,7 @@
 
   # for x11 gesture
   services.touchegg.enable = true;
+
+  # for DMS to persist user avatar via AccountsService
+  services.accounts-daemon.enable = true;
 }
