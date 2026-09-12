@@ -1,0 +1,77 @@
+{
+  "pins": {
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+      "url": "https://github.com/NixOS/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz",
+      "hash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "release-26.05",
+      "submodules": false,
+      "revision": "fd0956c99c41ae3c13a73a638f1f7e963aebc4ab",
+      "url": "https://github.com/nix-community/home-manager/archive/fd0956c99c41ae3c13a73a638f1f7e963aebc4ab.tar.gz",
+      "hash": "sha256-sPpQFVaFTDqO/4vvCAhuAhqTgqN/ygu+9eJcs5eB0js="
+    },
+    "nix-on-droid": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-on-droid"
+      },
+      "branch": "release-24.05",
+      "submodules": false,
+      "revision": "f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25",
+      "url": "https://github.com/nix-community/nix-on-droid/archive/f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25.tar.gz",
+      "hash": "sha256-UFzk/hZWO1VkciIO5UPaSpJN8s765wsngUSvtJM6d5Q="
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-26.05",
+      "artifact": "nixexprs.tar.xz",
+      "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.9173.6713828a351e/nixexprs.tar.xz",
+      "hash": "sha256-ahDTmIBX7dGq9GgQWH0m1uEIoJhGInEpNvKVLc1j47U="
+    },
+    "nur": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "NUR"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d133c9274d1c37d0e2e6104239a8d5c0181d2c39",
+      "url": "https://github.com/nix-community/NUR/archive/d133c9274d1c37d0e2e6104239a8d5c0181d2c39.tar.gz",
+      "hash": "sha256-c0B8tHUOElaB86IkPAAJwldLIyPpn3ck8Fa+g2fsbvo="
+    },
+    "pkgsu": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "7ed7ab3541c86a5c36a4d3c28e56e85c3529800b",
+      "url": "https://github.com/NixOS/nixpkgs/archive/7ed7ab3541c86a5c36a4d3c28e56e85c3529800b.tar.gz",
+      "hash": "sha256-l789Z8H3+kjO2ZMio3c1FIOgLmswrIDNs330NIMHj50="
+    }
+  },
+  "version": 8
+}

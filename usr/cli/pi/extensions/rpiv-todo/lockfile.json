@@ -1,0 +1,246 @@
+{
+  "name": "rpiv-mono",
+  "version": "0.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "rpiv-mono",
+      "version": "0.0.0",
+      "workspaces": [
+        "packages/rpiv-todo",
+        "packages/rpiv-config",
+        "packages/rpiv-i18n"
+      ],
+      "devDependencies": {},
+      "engines": {
+        "node": ">=22.0.0",
+        "npm": ">=11.0.0"
+      }
+    },
+    "node_modules/@juicesharp/rpiv-config": {
+      "resolved": "packages/rpiv-config",
+      "link": true
+    },
+    "node_modules/@juicesharp/rpiv-i18n": {
+      "resolved": "packages/rpiv-i18n",
+      "link": true
+    },
+    "node_modules/@juicesharp/rpiv-todo": {
+      "resolved": "packages/rpiv-todo",
+      "link": true
+    },
+    "packages/rpiv-advisor": {
+      "name": "@juicesharp/rpiv-advisor",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-ai": "*",
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*",
+        "typebox": "*"
+      }
+    },
+    "packages/rpiv-args": {
+      "name": "@juicesharp/rpiv-args",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*"
+      }
+    },
+    "packages/rpiv-ask-user-question": {
+      "name": "@juicesharp/rpiv-ask-user-question",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*",
+        "@juicesharp/rpiv-i18n": "*",
+        "typebox": "*"
+      },
+      "peerDependenciesMeta": {
+        "@juicesharp/rpiv-i18n": {
+          "optional": true
+        }
+      }
+    },
+    "packages/rpiv-btw": {
+      "name": "@juicesharp/rpiv-btw",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "peerDependencies": {
+        "@earendil-works/pi-ai": "*",
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*"
+      }
+    },
+    "packages/rpiv-config": {
+      "name": "@juicesharp/rpiv-config",
+      "version": "1.20.0",
+      "license": "MIT"
+    },
+    "packages/rpiv-i18n": {
+      "name": "@juicesharp/rpiv-i18n",
+      "version": "1.20.0",
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      }
+    },
+    "packages/rpiv-pi": {
+      "name": "@juicesharp/rpiv-pi",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*",
+        "@juicesharp/rpiv-advisor": "*",
+        "@juicesharp/rpiv-args": "*",
+        "@juicesharp/rpiv-ask-user-question": "*",
+        "@juicesharp/rpiv-i18n": "*",
+        "@juicesharp/rpiv-todo": "*",
+        "@juicesharp/rpiv-web-tools": "*",
+        "@juicesharp/rpiv-workflow": "*",
+        "@standard-schema/spec": "*",
+        "@tintinweb/pi-subagents": "*",
+        "jiti": "*",
+        "typebox": "*",
+        "yaml": "*"
+      }
+    },
+    "packages/rpiv-site": {
+      "name": "@juicesharp/rpiv-site",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@fontsource/jetbrains-mono": "^5.2.8"
+      },
+      "devDependencies": {
+        "@astrojs/rss": "^4.0.0",
+        "@astrojs/sitemap": "^3.2.0",
+        "astro": "^5.0.0",
+        "pagefind": "^1.5.2"
+      }
+    },
+    "packages/rpiv-telemetry": {
+      "name": "@juicesharp/rpiv-telemetry",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0",
+        "@mlflow/core": "~0.2.0"
+      },
+      "engines": {
+        "node": ">=20"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*",
+        "typebox": "*"
+      }
+    },
+    "packages/rpiv-todo": {
+      "name": "@juicesharp/rpiv-todo",
+      "version": "1.20.0",
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      },
+      "peerDependenciesMeta": {
+        "@juicesharp/rpiv-i18n": {
+          "optional": true
+        }
+      }
+    },
+    "packages/rpiv-voice": {
+      "name": "@juicesharp/rpiv-voice",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0",
+        "decibri": "^3.4.0",
+        "sherpa-onnx-node": "^1.13.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*",
+        "@juicesharp/rpiv-i18n": "*"
+      },
+      "peerDependenciesMeta": {
+        "@juicesharp/rpiv-i18n": {
+          "optional": true
+        }
+      }
+    },
+    "packages/rpiv-warp": {
+      "name": "@juicesharp/rpiv-warp",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*"
+      }
+    },
+    "packages/rpiv-web-tools": {
+      "name": "@juicesharp/rpiv-web-tools",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*",
+        "typebox": "*"
+      }
+    },
+    "packages/rpiv-workflow": {
+      "name": "@juicesharp/rpiv-workflow",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "dependencies": {
+        "@juicesharp/rpiv-config": "^1.20.0",
+        "jiti": "^2.7.0"
+      },
+      "peerDependencies": {
+        "@earendil-works/pi-coding-agent": "*",
+        "@standard-schema/spec": "*",
+        "typebox": "*"
+      }
+    },
+    "packages/test-utils": {
+      "name": "@juicesharp/rpiv-test-utils",
+      "version": "1.20.0",
+      "extraneous": true,
+      "license": "MIT",
+      "peerDependencies": {
+        "@earendil-works/pi-ai": "*",
+        "@earendil-works/pi-coding-agent": "*",
+        "@earendil-works/pi-tui": "*",
+        "typebox": "*",
+        "vitest": "*"
+      }
+    }
+  }
+}

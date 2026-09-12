@@ -1,0 +1,29 @@
+{
+  "pins": {
+    "circle": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://root@xieby1.cn/~/Repos/Circle.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "14aec1fa9f572aa823d618cecb59e257c9d5c104",
+      "url": null,
+      "hash": "sha256-KQqO6aVcHhCXqaZ00W39Kf7NIo+1gKCGbVwe8ZcIYDY="
+    },
+    "sixu": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://root@xieby1.cn/~/Repos/Sixu.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "557c5f0e5885ce8eec22126629100ddd6b29acfa",
+      "url": null,
+      "hash": "sha256-sl1kU0DUbj7YTQ5rT/MIvTKIxfQivyCJqzRxDgN6ZPk="
+    }
+  },
+  "version": 8
+}

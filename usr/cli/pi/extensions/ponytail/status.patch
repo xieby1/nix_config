@@ -1,0 +1,14 @@
+--- a/pi-extension/index.js
++++ b/pi-extension/index.js
+@@ -69,11 +69,9 @@
+       c.ui.setStatus("ponytail", "");
+       return;
+     }
+-    const levelIcons = { lite: "🌿", full: "⚡", ultra: "🔥" };
+-    const icon = levelIcons[currentMode] || "";
+     const label = currentMode.toUpperCase();
+-    const indicator = isActive ? theme.fg("accent", "●") : theme.fg("dim", "○");
+-    c.ui.setStatus("ponytail", indicator + " 🐴 " + theme.fg("muted", "ponytail: ") + theme.fg("text", icon + " " + label));
++    const indicator = isActive ? "● " : "○ ";
++    c.ui.setStatus("ponytail", theme.fg("dim", indicator + "ponytail: " + label));
+   }
