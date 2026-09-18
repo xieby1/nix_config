@@ -7,7 +7,7 @@
         enabled = true;
         compactMode = true;
         allMonitors = false;
-        iconPadding = 4;
+        iconPadding = 2;
         itemSpacing = 0;
         workspaceSpacing = 0;
       };
