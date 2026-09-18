@@ -35,7 +35,6 @@
   #     * scroll speed is too fast!
 
   imports = [
-    ./timer.nix
     ./search.nix
     ./kitty-scrollback-nvim.nix
   ];
