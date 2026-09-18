@@ -1,0 +1,68 @@
+diff --git a/dist/core/agent-session.js b/dist/core/agent-session.js
+index 3b8c7d4..f2b1c77 100644
+--- a/dist/core/agent-session.js
++++ b/dist/core/agent-session.js
+@@ -2013,7 +2013,10 @@ export class AgentSession {
+             this._retryAttempt--;
+             return false;
+         }
+-        const delayMs = settings.baseDelayMs * 2 ** (this._retryAttempt - 1);
++        const backoffDelayMs = settings.baseDelayMs * 2 ** (this._retryAttempt - 1);
++        const delayMs = settings.maxBackoffDelayMs !== undefined && settings.maxBackoffDelayMs > 0
++            ? Math.min(backoffDelayMs, settings.maxBackoffDelayMs)
++            : backoffDelayMs;
+         this._emit({
+             type: "auto_retry_start",
+             attempt: this._retryAttempt,
+diff --git a/dist/core/settings-manager.d.ts b/dist/core/settings-manager.d.ts
+index 123df1b..6fc0578 100644
+--- a/dist/core/settings-manager.d.ts
++++ b/dist/core/settings-manager.d.ts
+@@ -17,6 +17,7 @@ export interface RetrySettings {
+     enabled?: boolean;
+     maxRetries?: number;
+     baseDelayMs?: number;
++    maxBackoffDelayMs?: number;
+     provider?: ProviderRetrySettings;
+ }
+ export interface TerminalSettings {
+@@ -211,6 +212,7 @@ export declare class SettingsManager {
+         enabled: boolean;
+         maxRetries: number;
+         baseDelayMs: number;
++        maxBackoffDelayMs?: number;
+     };
+     getHttpIdleTimeoutMs(): number;
+     setHttpIdleTimeoutMs(timeoutMs: number): void;
+diff --git a/dist/core/settings-manager.js b/dist/core/settings-manager.js
+index 2016d21..8cc51f3 100644
+--- a/dist/core/settings-manager.js
++++ b/dist/core/settings-manager.js
+@@ -555,6 +555,7 @@ export class SettingsManager {
+             enabled: this.getRetryEnabled(),
+             maxRetries: this.settings.retry?.maxRetries ?? 3,
+             baseDelayMs: this.settings.retry?.baseDelayMs ?? 2000,
++            maxBackoffDelayMs: this.settings.retry?.maxBackoffDelayMs,
+         };
+     }
+     getHttpIdleTimeoutMs() {
+diff --git a/docs/settings.md b/docs/settings.md
+index e5e9558..f29ad8c 100644
+--- a/docs/settings.md
++++ b/docs/settings.md
+@@ -127,6 +127,7 @@ Set `PI_SKIP_VERSION_CHECK=1` to disable the Pi version update check. Use `--off
+ | `retry.enabled` | boolean | `true` | Enable automatic agent-level retry on transient errors |
+ | `retry.maxRetries` | number | `3` | Maximum agent-level retry attempts |
+ | `retry.baseDelayMs` | number | `2000` | Base delay for agent-level exponential backoff (2s, 4s, 8s) |
++| `retry.maxBackoffDelayMs` | number | - | Maximum agent-level exponential backoff delay. Set to `0` to disable the cap. |
+ | `retry.provider.timeoutMs` | number | SDK default | Provider/SDK request timeout in milliseconds |
+ | `retry.provider.maxRetries` | number | `0` | Provider/SDK retry attempts |
+ | `retry.provider.maxRetryDelayMs` | number | `60000` | Max server-requested delay before failing (60s) |
+@@ -139,6 +140,7 @@ Keep `retry.provider.maxRetries` at `0` unless provider-level retries are explic
+     "enabled": true,
+     "maxRetries": 3,
+     "baseDelayMs": 2000,
++    "maxBackoffDelayMs": 10000,
+     "provider": {
+       "timeoutMs": 3600000,
+       "maxRetries": 0,

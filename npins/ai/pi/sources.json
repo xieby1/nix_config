@@ -1,0 +1,132 @@
+{
+  "pins": {
+    "acp": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "svkozak",
+        "repo": "pi-acp"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.0.31",
+      "revision": "da0e84781ddeecf4bf81bddd764bc4651c9b9841",
+      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.31",
+      "hash": "sha256-bM3V/3fxkY2Ib+OyfT82StIIRSLXGDuYUbt1CZKpTuo="
+    },
+    "llm-agents": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "numtide",
+        "repo": "llm-agents.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "264604cc0580e87d34a10b82334cf52f8139053f",
+      "url": "https://github.com/numtide/llm-agents.nix/archive/264604cc0580e87d34a10b82334cf52f8139053f.tar.gz",
+      "hash": "sha256-Hi41+61t2OmiB9MAq1sjeJ+HRw0T/isE3mL0um5Xmvc="
+    },
+    "mcp-adapter": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-mcp-adapter"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.11.0",
+      "revision": "b702afe6451e007ff510ff53adcf6b2e5c354eba",
+      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.11.0",
+      "hash": "sha256-JjYS9tPSoVuubdmHTqTNNYfDJOc9CBPvVbIxvdJWi7M="
+    },
+    "pi-hermes-memory": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "chandra447",
+        "repo": "pi-hermes-memory"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "fe7e7e3e87736465f203b358764c5167d2ccee47",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/fe7e7e3e87736465f203b358764c5167d2ccee47.tar.gz",
+      "hash": "sha256-r7EURg4oLOVxPjolPPUMTlTgZfnCMDmXmtB7LS7jcaY="
+    },
+    "pi-heuristic-notify": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-heuristic-notify"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "db40a0a36ad3eeaade4efd1f0525d97a6ec04896",
+      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/db40a0a36ad3eeaade4efd1f0525d97a6ec04896.tar.gz",
+      "hash": "sha256-bE5qZSdGDTAB/vQJqkdyXfvb9ljooaovtnFncIm9A50="
+    },
+    "pi-math": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "monotykamary",
+        "repo": "pi-math"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "423388a6e0d7536d4004c5f23088129ad554e114",
+      "url": "https://github.com/monotykamary/pi-math/archive/423388a6e0d7536d4004c5f23088129ad554e114.tar.gz",
+      "hash": "sha256-KwsfTvcX/YWeK/Ex+7ccKyQ1s+zcAzXNW6DLimoTFyQ="
+    },
+    "pi-ping": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Bukutsu",
+        "repo": "pi-ping"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "0d3a2c04f6a1051332ded043ba4614e2ae2bcb0c",
+      "url": "https://github.com/Bukutsu/pi-ping/archive/0d3a2c04f6a1051332ded043ba4614e2ae2bcb0c.tar.gz",
+      "hash": "sha256-RBsFZWL+LyEkDk/qUGaqM0R0edcl08AfhoME1oSzSd8="
+    },
+    "ponytail": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "DietrichGebert",
+        "repo": "ponytail"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v4.8.4",
+      "revision": "bc9ee949d5f439e8b9f3bb92c6d6d3d1e6ebd324",
+      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v4.8.4",
+      "hash": "sha256-1A9GkjCuiqwd6Wxl18CZUGYekxrbeTLVDapNUua8ihg="
+    },
+    "rpiv-mono": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "juicesharp",
+        "repo": "rpiv-mono"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "060373d9292aeb46aeedc23a6d818a997200a6e5",
+      "url": "https://github.com/juicesharp/rpiv-mono/archive/060373d9292aeb46aeedc23a6d818a997200a6e5.tar.gz",
+      "hash": "sha256-t2WVwhyT7x5D049iot4UDUWp+oM+XDudHbq/nBL/b84=",
+      "frozen": true
+    }
+  },
+  "version": 8
+}
