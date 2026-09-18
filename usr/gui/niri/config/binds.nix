@@ -172,7 +172,7 @@
   "Ctrl+Alt+Delete".quit = {};
 } // (let
   # Inspired by: https://github.com/niri-wm/niri/discussions/2769
-  move-column-to-new-workspace-ARG = arg: pkgs.writeShellScript "move-column-to-new-workspace-up" ''
+  move-column-to-new-workspace-ARG = arg: pkgs.writeShellScript "move-column-to-new-workspace" ''
     idx=$(niri msg --json workspaces \
       | ${pkgs.yq-go}/bin/yq '.[] | select (.is_focused) | .idx')
     niri msg action move-column-to-workspace 1
