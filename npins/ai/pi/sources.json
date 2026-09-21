@@ -82,10 +82,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v4.8.4",
-      "revision": "bc9ee949d5f439e8b9f3bb92c6d6d3d1e6ebd324",
-      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v4.8.4",
-      "hash": "sha256-1A9GkjCuiqwd6Wxl18CZUGYekxrbeTLVDapNUua8ihg="
+      "version": "v4.10.0",
+      "revision": "1d95ff7d39de12d87014ea40d4e22201bddc501b",
+      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v4.10.0",
+      "hash": "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ="
     },
     "rpiv-mono": {
       "type": "Git",
