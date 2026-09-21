@@ -14,7 +14,7 @@ in {
   home.file.".pi/agent/extensions/pi-math".source = pkgs.buildNpmPackage {
     name = "pi-math";
     src = slimSrc;
-    npmDepsHash = "sha256-ehclK8Mt2uECoqFMgh0yqLswtCWqEeWcuWe6ws9RfnU=";
+    npmDepsHash = "sha256-gC8Y468G8f3AOVnggrWQYm3uO1IgVujviPJzfSjX/iE=";
     dontNpmBuild = true;
     postInstall = ''
       cd "$out/lib/node_modules/@monotykamary/pi-math"

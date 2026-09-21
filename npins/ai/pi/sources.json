@@ -67,9 +67,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "423388a6e0d7536d4004c5f23088129ad554e114",
-      "url": "https://github.com/monotykamary/pi-math/archive/423388a6e0d7536d4004c5f23088129ad554e114.tar.gz",
-      "hash": "sha256-KwsfTvcX/YWeK/Ex+7ccKyQ1s+zcAzXNW6DLimoTFyQ="
+      "revision": "cbd5583e8a7439cb784c8730c507522deaf12d63",
+      "url": "https://github.com/monotykamary/pi-math/archive/cbd5583e8a7439cb784c8730c507522deaf12d63.tar.gz",
+      "hash": "sha256-0cQd3AxGHYP60E4jsGUR+B3ynEmD4074y/KzHBmZF/s="
     },
     "ponytail": {
       "type": "GitRelease",
