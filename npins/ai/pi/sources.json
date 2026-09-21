@@ -41,9 +41,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "fe7e7e3e87736465f203b358764c5167d2ccee47",
-      "url": "https://github.com/chandra447/pi-hermes-memory/archive/fe7e7e3e87736465f203b358764c5167d2ccee47.tar.gz",
-      "hash": "sha256-r7EURg4oLOVxPjolPPUMTlTgZfnCMDmXmtB7LS7jcaY="
+      "revision": "71ce9f0cf2985a52219b4fba0d3ebdd7c2f598df",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/71ce9f0cf2985a52219b4fba0d3ebdd7c2f598df.tar.gz",
+      "hash": "sha256-8PQgeKz2zuSA7827FUHV++60FV/a6dJGcQb3cCw4dS4="
     },
     "pi-heuristic-notify": {
       "type": "Git",

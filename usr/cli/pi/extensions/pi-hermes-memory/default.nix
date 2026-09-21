@@ -9,7 +9,7 @@ in {
       src = pkgs.npinsed.ai.pi.pi-hermes-memory;
       # npm lockfile v3 delegates to shrinkwrap → missing integrity; v2 fetcher handles this.
       npmDepsFetcherVersion = 2;
-      npmDepsHash = "sha256-OeR+8j7Ayyx1jUSt6uBhQ7YsWGLR7POEnW+bLPu7UDQ=";
+      npmDepsHash = "sha256-6Fmd0caJ+XpTQBT/zP3JdsChxusps6WGmZVBzu+G0gA=";
       patches = [ ./lock-integrity.patch ];
       dontNpmBuild = true;
       # Pi uses the first path segment of pi.extensions entry as the banner
