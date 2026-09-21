@@ -82,6 +82,21 @@
 
   # The following are mkDefault when desktopManager.gnome.enable is true
   networking.networkmanager.enable = true;
+
+  #MC 允许本机活跃用户（wheel组）免密修改NetworkManager连接配置。
+  #MC 否则连接新WiFi或修改密码时会写入system连接，触发polkit的
+  #MC `settings.modify.system` 认证（dms自带polkit agent，会弹出密码框；
+  #MC 忽略则连接不会被持久化）。
+  #MC 仅放宽 `settings.modify.*`，且限定 `active && local`（本机活跃会话）
+  #MC + `wheel`，与NM默认对扫描/连接给出的 `allow_active=yes` 信任级别一致。
+  security.polkit.extraConfig = ''
+    polkit.addRule(function(action, subject) {
+      if (subject.active && subject.local && subject.isInGroup("wheel") &&
+          action.id.indexOf("org.freedesktop.NetworkManager.settings.modify.") === 0) {
+        return polkit.Result.YES;
+      }
+    });
+  '';
   # Podman user Quadlets wait for the system network-online.target via
   # podman-user-wait-network-online.service; pull it in at boot so the user
   # wait service does not time out while polling an inactive passive target.
