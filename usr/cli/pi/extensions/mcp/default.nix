@@ -10,7 +10,7 @@ let
       ./status-color.patch
     ];
     postPatch = ''
-      jq 'del(.dependencies["@earendil-works/pi-ai","@earendil-works/pi-tui","typebox"]) | del(.devDependencies) | del(.scripts.prepare)' \
+      jq 'del(.dependencies["@earendil-works/pi-ai","@earendil-works/pi-tui","typebox"], .devDependencies, .scripts)' \
         package.json > package.json.tmp && mv package.json.tmp package.json
       cp ${./package-lock.json} package-lock.json
     '';
@@ -22,7 +22,7 @@ in
       source = pkgs.buildNpmPackage {
         name = "pi-mcp-adapter";
         src = slimSrc;
-        npmDepsHash = "sha256-c/VdxR9f7HljsLNu4kVa0JxvvphEQ7wmAxaz2Iq/Eio=";
+        npmDepsHash = "sha256-PKFDH856VKlT1DrspN22gxJJp8Gx1zADVDrMtRr1sfM=";
         dontNpmBuild = true;
         npmRebuildFlags = [ "--ignore-scripts" ];
       } + /lib/node_modules/pi-mcp-adapter;
