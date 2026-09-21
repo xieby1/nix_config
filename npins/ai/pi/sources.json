@@ -96,10 +96,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "060373d9292aeb46aeedc23a6d818a997200a6e5",
-      "url": "https://github.com/juicesharp/rpiv-mono/archive/060373d9292aeb46aeedc23a6d818a997200a6e5.tar.gz",
-      "hash": "sha256-t2WVwhyT7x5D049iot4UDUWp+oM+XDudHbq/nBL/b84=",
-      "frozen": true
+      "revision": "0fdf4f813980d380e826b84d1280a4960e5d088e",
+      "url": "https://github.com/juicesharp/rpiv-mono/archive/0fdf4f813980d380e826b84d1280a4960e5d088e.tar.gz",
+      "hash": "sha256-v467Ryszw6ix75DsuQBHIXr6D+eSjxQCAOUWh+OJ5c4="
     }
   },
   "version": 8

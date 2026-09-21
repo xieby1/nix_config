@@ -12,7 +12,7 @@
           ${lib.getExe pkgs.jq} '
             .workspaces = ["packages/rpiv-todo", "packages/rpiv-config", "packages/rpiv-i18n"]
             | .devDependencies = {}
-            | del(.scripts.prepare)
+            | .scripts = {}
           ' package.json > package.json.tmp && mv package.json.tmp package.json
           for p in packages/rpiv-{todo,config,i18n}; do
             ${lib.getExe pkgs.jq} 'del(.peerDependencies, .devDependencies)' \
@@ -21,7 +21,7 @@
           cp ${./lockfile.json} package-lock.json
         '';
       };
-      npmDepsHash = "sha256-WM82ZnPyKsmm7Y/QpmqbjIhq8DRyQgWIlkMQOUF+Jac=";
+      npmDepsHash = "sha256-QmawBpJVX4jyQ4vLZOyIlo1iCUzEYNrBlOqgOMCHG5Q=";
       forceEmptyCache = true;
       dontNpmBuild = true;
     } + /lib/node_modules/rpiv-mono/packages/rpiv-todo;
