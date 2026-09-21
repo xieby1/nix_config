@@ -3,8 +3,7 @@
     plugins = [{
       plugin = pkgs.vimUtils.buildVimPlugin {
         name = "kitty-scrollback.nvim";
-        # TODO: use the kitty-scrollback.nvim from nixpkgs when it reachs 8.0.0
-        src = pkgs.npinsed.nvim.kitty-scrollback-nvim;
+        src = pkgs.vimPlugins.kitty-scrollback-nvim;
         postPatch = ''
           # Move status icons from top-right to bottom-left.
           substituteInPlace lua/kitty-scrollback/windows.lua \
@@ -28,7 +27,7 @@
   };
   programs.kitty.extraConfig = ''
     # kitty-scrollback.nvim Kitten alias
-    action_alias kitty_scrollback_nvim kitten '${pkgs.npinsed.nvim.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py'
+    action_alias kitty_scrollback_nvim kitten '${pkgs.vimPlugins.kitty-scrollback-nvim}/python/kitty_scrollback_nvim.py'
     # Browse scrollback buffer in nvim
     map kitty_mod+h kitty_scrollback_nvim
     # Browse output of the last shell command in nvim
