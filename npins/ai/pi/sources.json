@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.0.31",
-      "revision": "da0e84781ddeecf4bf81bddd764bc4651c9b9841",
-      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.31",
-      "hash": "sha256-bM3V/3fxkY2Ib+OyfT82StIIRSLXGDuYUbt1CZKpTuo="
+      "version": "v0.0.33",
+      "revision": "e8b01c3275ec444dc79e1860445852b1acdebe7d",
+      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.33",
+      "hash": "sha256-fENOOdooi4XbIDjcr02q8qzUCzdo2IW/Bca43SawZ44="
     },
     "mcp-adapter": {
       "type": "GitRelease",
