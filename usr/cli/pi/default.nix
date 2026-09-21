@@ -1,8 +1,6 @@
 { config, pkgs, ... }:
 let
-  pkgspi = (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})
-    .defaultNix.packages.${pkgs.stdenv.system};
-  pi = pkgspi.pi.overrideAttrs (old: {
+  pi = pkgs.pkgsu.pi-coding-agent.overrideAttrs (old: {
     patches = (old.patches or []) ++ [ ./retry-max-backoff-delay.patch ];
   });
 in {
@@ -11,7 +9,6 @@ in {
     ./providers
   ];
   home.packages = [
-    # TODO: using pi in pkgsu?
     pi
   ];
 

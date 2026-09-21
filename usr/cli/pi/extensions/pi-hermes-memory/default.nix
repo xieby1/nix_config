@@ -1,9 +1,7 @@
 { config, pkgs, lib, ... }: let
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.
-  pkgspi = import (
-    pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;}
-  ).outputs.inputs.nixpkgs {};
+  pkgspi = pkgs.pkgsu;
 in {
   home.file.".pi/agent/extensions/pi-hermes-memory" = {
     source = pkgspi.buildNpmPackage {

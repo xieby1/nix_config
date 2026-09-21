@@ -16,19 +16,6 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.31",
       "hash": "sha256-bM3V/3fxkY2Ib+OyfT82StIIRSLXGDuYUbt1CZKpTuo="
     },
-    "llm-agents": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "numtide",
-        "repo": "llm-agents.nix"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "264604cc0580e87d34a10b82334cf52f8139053f",
-      "url": "https://github.com/numtide/llm-agents.nix/archive/264604cc0580e87d34a10b82334cf52f8139053f.tar.gz",
-      "hash": "sha256-Hi41+61t2OmiB9MAq1sjeJ+HRw0T/isE3mL0um5Xmvc="
-    },
     "mcp-adapter": {
       "type": "GitRelease",
       "repository": {
@@ -83,19 +70,6 @@
       "revision": "423388a6e0d7536d4004c5f23088129ad554e114",
       "url": "https://github.com/monotykamary/pi-math/archive/423388a6e0d7536d4004c5f23088129ad554e114.tar.gz",
       "hash": "sha256-KwsfTvcX/YWeK/Ex+7ccKyQ1s+zcAzXNW6DLimoTFyQ="
-    },
-    "pi-ping": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "Bukutsu",
-        "repo": "pi-ping"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "0d3a2c04f6a1051332ded043ba4614e2ae2bcb0c",
-      "url": "https://github.com/Bukutsu/pi-ping/archive/0d3a2c04f6a1051332ded043ba4614e2ae2bcb0c.tar.gz",
-      "hash": "sha256-RBsFZWL+LyEkDk/qUGaqM0R0edcl08AfhoME1oSzSd8="
     },
     "ponytail": {
       "type": "GitRelease",

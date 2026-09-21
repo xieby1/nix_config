@@ -45,9 +45,8 @@
     # - builtin plan-mode also has `/todos`, which is the same name as rpiv-todo
 
     ".pi/agent/extensions/titlebar-spinner.ts" = {
-      source = (pkgs.flake-compat {src = pkgs.npinsed.ai.pi.llm-agents;})
-        .defaultNix.packages.x86_64-linux.pi
-        +"/libexec/pi/examples/extensions/titlebar-spinner.ts";
+      source = pkgs.pkgsu.pi-coding-agent.src
+        + "/packages/coding-agent/examples/extensions/titlebar-spinner.ts";
     };
   };
 }
