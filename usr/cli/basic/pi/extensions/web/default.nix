@@ -1,6 +1,6 @@
 { ... }: {
   imports = [
     ./jmfederico
-    # ./xing-shuyin
+    ./xing-shuyin
   ];
 }

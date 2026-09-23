@@ -115,6 +115,22 @@
       "revision": "be910b30556808a711b212d03afeacb6cd2feab6",
       "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202609.0",
       "hash": "sha256-rmJDHCdcIoMyhTuJfAJOut/rwd4KoKQ8Qt3/HKGxfLM="
+    },
+    "pi-web-ui-xing-shuyin": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xing-shuyin",
+        "repo": "pi-web-ui"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.94.1",
+      "revision": "9fa8905825f179b96feb9d67259edbea58658d5a",
+      "url": "https://api.github.com/repos/xing-shuyin/pi-web-ui/tarball/refs/tags/v0.94.1",
+      "hash": "sha256-HMsaFAuATIdiQLB/xr/EWPa7yeYInHjhesgRaEtWMNk="
     }
   },
   "version": 8
