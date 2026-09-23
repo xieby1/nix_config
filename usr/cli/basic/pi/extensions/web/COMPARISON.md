@@ -24,7 +24,7 @@ Versions/stars as of 2026-09-23. pi-coding-agent latest = `0.87.1`; **our instal
 | Works on our pi `0.86.1` | **no — bump pi to ≥0.87.0 first** | **yes — bundled resolves to `0.86.1`, same as ours** | yes (bundles `0.87.0`, ignores ours) |
 | Multi-machine fleet | **yes** | no | no |
 | Built-in auth | none (proxy only) | token (`PI_WEB_TOKEN`) | password + throttle |
-| Subpath / prefix deploy | **documented, relative URLs** | nginx recipe, but **absolute `/assets`** | no documented basePath |
+| Subpath / prefix deploy | **fully portable** — relative URLs, one build works at `/` or any prefix, no config | **not prefix-safe** — root-absolute `/assets`,`/favicon.svg`,`/ws`,`/api/file`; needs extra root-path proxy routes | no documented basePath |
 | Mobile / PWA | PWA, mobile nav still open | **best**: PWA + SW OS notif + offline | PWA, iOS 16.2 blank page, poll battery |
 | Nix packaging | `ogglord/pi-web-nix` (pkg + NixOS module) | `Sion10032/pi-web-ui-nix` (**home-manager module**) | **none** |
 
@@ -56,8 +56,13 @@ Config reuse is **not** blocked by bundling — all three read `~/.pi/agent` (or
     `pi-web-sessiond` + `pi-web` services — maps onto root systemd user services.
   - **Blocker today**: requires pi `>=0.87.0`; our pin is `0.86.1`. Bump pi first.
   - **Fleet**: one gateway can proxy projects/sessions/terminals/git from other machines.
-  - Subpath/prefix deploy documented (relative browser + PWA URLs) → fits
-    `handle /pi/* { import auth; uri strip_prefix /pi; reverse_proxy 127.0.0.1:8504 }`.
+  - **Fully prefix-portable (verified in the built client).** `index.html` uses `./assets/*`,
+    and the client resolves every API/WS/PWA URL through `resolveAppUrl`/`resolveAppWebSocketUrl`
+    (`import.meta.env.BASE_URL` resolved against `document.baseURI`; even a leading `/` is
+    rewritten to the *application* root, not the origin root). Docs: "one build works at `/`
+    and at canonical trailing-slash prefixes such as `/ai/`" — no rebuild, no config, no
+    root-path routes. A prefix deploy is just
+    `handle_path /pi/* { import auth; reverse_proxy 127.0.0.1:8504 }`.
   - Authelia covers its missing built-in auth.
 - Cons:
   - **No built-in auth at all** (README/FAQ: do not expose to the internet; VPN/tunnel/
@@ -83,9 +88,17 @@ Config reuse is **not** blocked by bundling — all three read `~/.pi/agent` (or
     not control; drifts when pkgsu bumps pi (see above).
   - **In-process runtime**: a server restart loses the in-flight turn (it only reports
     "last run was interrupted" afterward).
-  - Subpath hosting fights the **absolute `/assets/`, `/api/health`, `/favicon.svg`**
-    requests + strict Origin≡Host (hostname **and** port) → needs extra Caddy blocks and
-    likely `PI_WEB_ALLOW_ORIGINS`.
+  - **Subpath hosting is a first-class weakness (root-absolute paths).** The built
+    `web/dist` keeps root-absolute refs the app cannot re-base: `index.html` → `/assets/*`,
+    `/favicon.svg`; KaTeX CSS → `url(/assets/…)`; JS → `/icons/icon-192.png`. Upstream's own
+    `deploy/nginx-subpath.conf` therefore proxies `/pi/` **plus** root `/assets/`,
+    `/favicon.svg`, `/api/file`, `/api/health`, `/ws` — it works *only* if pi-web-ui owns
+    those origin-root paths. There is **no configurable base path** (`subpath`, `basePath`,
+    `BASE_URL`, `proxy_pass`, `strip_prefix` all return 0 hits across upstream issues+PRs;
+    the README documents the nginx recipe instead of tracking it as a bug). Consequence: on a
+    shared host the root `/api/*` route collides with anything else owning it (e.g. Authelia)
+    → use a dedicated hostname. Also needs `Host` forwarded as the full authority incl. port
+    (strict Origin≡Host, from #3) or WS upgrades 403.
   - Newest (2026-08); one merge/release owner (code contributions are multi-person).
     Its **0 open issues is a triage artifact**, not stability: 137 filed in 7 weeks, median
     4.1 h to close (see Stability).
