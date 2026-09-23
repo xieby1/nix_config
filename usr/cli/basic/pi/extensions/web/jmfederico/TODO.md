@@ -4,54 +4,34 @@ Upstream: <https://github.com/jmfederico/pi-web> · docs <https://pi-web.dev/>
 Three binaries: `pi-web-sessiond` (owns session runtimes), `pi-web-server` (HTTP/WS),
 `pi-web` (CLI). The daemon split is the point: **web restarts do not kill in-flight work.**
 
-## Version
+## Status
 
-Pin **`v1.202609.0`** — the last release whose peer range (`>=0.84.0 <0.85.0 || >=0.85.1`)
-still accepts our pi `0.86.1`. `v1.202609.1` moved to `>=0.87.0`; do not bump until pi is
-bumped in pkgsu/npins.
+Packaging done and verified on the local host (built, ran on `127.0.0.1:8504`).
+Pinned **`v1.202609.0`** — the last release whose peer range
+(`>=0.84.0 <0.85.0 || >=0.85.1`) accepts our pi `0.86.1`; `v1.202609.1` needs `>=0.87.0`.
 
-## Packaging
+Two non-obvious fixes, both in `./default.nix`:
+- `lock-integrity.patch` — upstream's lock omits `integrity` for 5 nested
+  `@earendil-works/*` deps → `prefetch-npm-deps` panics.
+- `npmDepsFetcherVersion = 2` — fixes `ENOTCACHED` for those nested peer tarballs.
 
-- [ ] npins pin in `npins/ai/pi/sources.json` → `GitRelease` `v1.202609.0` (`jmfederico/pi-web`).
-- [ ] `./default.nix` — `buildNpmPackage` (source has `package-lock.json`):
-  - [ ] `npmFlags = [ "--legacy-peer-deps" ]` — **critical**: do not vendor the
-        `@earendil-works/*` peers; pi must come from `PATH` (`pkgs.pkgsu.pi-coding-agent`).
-  - [ ] `npmDepsHash`; `nativeBuildInputs = [ makeWrapper ]`; `buildPhase = "npm run build"`.
-  - [ ] Wrap the 3 bins from `dist/`; copy `dist` + `node_modules`; drop dangling workspace symlinks.
-- [ ] Home Manager — **two** `systemd.user.services` (mirror `ogglord/pi-web-nix`):
-  - [ ] `pi-web-sessiond`: `PATH` includes `pkgs.pkgsu.pi-coding-agent`;
-        `PI_WEB_DATA_DIR=~/.local/state/pi-web` (**not `~/.pi-web`** — that is xing-shuyin's
-        default and jmfederico's too; two daemons cannot share one data dir).
-  - [ ] `pi-web-web`: `PI_WEB_PORT=8504`, `after/requires = pi-web-sessiond`.
-  - [ ] No hard `ProtectHome`/`ProtectSystem` — sessions need `~/.pi/agent`, git, ssh.
-- [ ] Caddy (`server/caddy/default.nix`): `redir /pi /pi/` +
-      `handle /pi/* { route { import auth; uri strip_prefix /pi; reverse_proxy 127.0.0.1:8504 } }`
-      (WebSocket included). `PI_WEB_ALLOWED_HOSTS=xieby1.cn`.
-- [ ] Wire the module into the extensions import list.
+Resolved facts:
+- The server **imports** the pi SDK, so npm's in-range `0.85.1` is bundled; `pkgsu` `pi`
+  (`0.86.1`) only goes on `PATH`. `--legacy-peer-deps` gives a mixed 0.85.1/0.86.1 SDK — wrong.
+- `extensions/pi-web.ts` is only the pi-CLI `/web` shim; plugins build into `dist/pi-web-plugins`.
+- The `@jmfederico/pi-relay` auto-install is disabled by the seeded dismissal file.
 
-## Testing
+## Remaining
 
-- [ ] `nix build`; `pi-web doctor`.
-- [ ] Foreground on `127.0.0.1:8504`; `GET /api/health`.
-- [ ] HM service up: `systemctl --user status pi-web-sessiond pi-web-web`; `pi-web status` / `pi-web logs`.
-- [ ] **Persistence (the deciding feature)**: start a turn, restart `pi-web-web`, confirm it keeps
-      running and reconnects; then restart the host and note the loss.
-- [ ] Resume an existing `~/.pi/agent/sessions` transcript.
-- [ ] Our 7 extensions load; `pi-heuristic-notify.ts` / `titlebar-spinner.ts` no-op, don't break startup.
-- [ ] `ddgs` MCP via our `pi-mcp-adapter` reaches the agent.
-- [ ] Confirm yq-merge did not lose `settings.json` / `models.json` to the UI's Settings panel.
-- [ ] Caddy + Authelia: `/pi/` on desktop, then phone + tablet.
+- [ ] Testing: persistence (restart `pi-web-web` mid-turn), resume a CLI session, our 7
+      extensions load (`titlebar-spinner.ts` / `pi-heuristic-notify.ts` no-op), `ddgs` MCP via
+      `pi-mcp-adapter`, and confirm yq-merge still owns `settings.json` / `models.json`.
+- [ ] Server phase: Caddy `redir /pi /pi/` +
+      `handle /pi/* { route { import auth; uri strip_prefix /pi; reverse_proxy 127.0.0.1:8504 } }`;
+      `PI_WEB_ALLOWED_HOSTS=xieby1.cn` (add to the unit if the proxy needs it).
 - [ ] Trial, then keep or remove (drop units + Caddy block + pin, `switch`, GC).
 
-## Open questions
+## Not taken
 
-- Pin name under `npins/ai/pi/` — propose `pi-web-jmfederico`.
-- Where to wire the import: `extensions/default.nix` currently lists pi **extensions**; these are
-  Home Manager services. Decide the import site.
-- **Does the runtime resolve pi from `PATH`, or `import` the SDK from `node_modules`?** With
-  `--legacy-peer-deps` the SDK is absent from `node_modules`, so this must be verified early —
-  it decides whether the whole "use our Nix pi" premise holds.
-- Does `extensions/pi-web.ts` need to be copied into `$out`? The npm `files` list includes it, but
-  the reference `ogglord` installPhase does not copy `extensions/`.
-- `plugins/` may not exist at this tag (the reference guards with `if [ -d plugins ]`).
-- `~/.local/state/pi-web`: create via systemd `StateDirectory` or `home.file`?
+Dropping the bundled `dist/pi-packages` would remove the Relays plugin and let the
+dismissal seed go away — take it only if Relays turns out unneeded.

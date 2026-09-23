@@ -99,6 +99,22 @@
       "revision": "0fdf4f813980d380e826b84d1280a4960e5d088e",
       "url": "https://github.com/juicesharp/rpiv-mono/archive/0fdf4f813980d380e826b84d1280a4960e5d088e.tar.gz",
       "hash": "sha256-v467Ryszw6ix75DsuQBHIXr6D+eSjxQCAOUWh+OJ5c4="
+    },
+    "pi-web-jmfederico": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "jmfederico",
+        "repo": "pi-web"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.202609.0",
+      "revision": "be910b30556808a711b212d03afeacb6cd2feab6",
+      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202609.0",
+      "hash": "sha256-rmJDHCdcIoMyhTuJfAJOut/rwd4KoKQ8Qt3/HKGxfLM="
     }
   },
   "version": 8
