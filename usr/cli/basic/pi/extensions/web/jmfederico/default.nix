@@ -4,10 +4,6 @@ let
 
   nodejs = pkgs.nodejs_22;
 
-  # The pi CLI: PATH-only. jmfederico imports the *SDK* from node_modules (npm's
-  # in-range 0.85.1), but shells out to `pi` for CLI/package operations.
-  piPackage = pkgs.pkgsu.pi-coding-agent;
-
   # NOT ~/.pi-web: that is xing-shuyin's default and upstream's default too.
   dataDir = "${homeDirectory}/.local/state/pi-web";
   port = 8504;
@@ -42,7 +38,6 @@ let
     '';
   };
 
-  pathEnv = lib.makeBinPath [ piPackage nodejs pkgs.git ];
 in
 {
   home.packages = [ pi-web ];
@@ -65,8 +60,9 @@ in
       ExecStart = "${pi-web}/bin/pi-web-sessiond";
       Environment = [
         "PI_WEB_DATA_DIR=${dataDir}"
-        "PATH=${pathEnv}"
       ];
+      # No PATH override: inherit the manager PATH (50-systemd-path.conf) so the
+      # embedded terminal gets ~/.nix-profile/bin (pi, node, git, coreutils...).
       Restart = "on-failure";
       RestartSec = 5;
     };
@@ -84,7 +80,6 @@ in
       Environment = [
         "PI_WEB_PORT=${toString port}"
         "PI_WEB_DATA_DIR=${dataDir}"
-        "PATH=${pathEnv}"
       ];
       Restart = "on-failure";
       RestartSec = 5;

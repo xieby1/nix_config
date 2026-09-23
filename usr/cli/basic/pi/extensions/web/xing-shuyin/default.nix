@@ -2,7 +2,6 @@
 let
   inherit (config.home) homeDirectory;
 
-  piPackage = pkgs.pkgsu.pi-coding-agent;
   dataDir = "${homeDirectory}/.pi-web";
   port = 8787;
 
@@ -49,9 +48,9 @@ in
     Service = {
       ExecStart = "${pi-web-ui}/bin/pi-web-ui --port ${toString port} --host 127.0.0.1 --agent-dir ${homeDirectory}/.pi/agent --data-dir ${dataDir} --no-browser";
       WorkingDirectory = homeDirectory;
-      Environment = [
-        "PATH=${lib.makeBinPath [ piPackage pkgs.nodejs_22 pkgs.git ]}"
-      ];
+      # No PATH override: inherit the systemd user manager's PATH (50-systemd-path.conf),
+      # which already has ~/.nix-profile/bin (pi, node, git). Overriding it stripped
+      # coreutils/eza from the embedded terminal, breaking ~/.zshrc at startup.
       Restart = "on-failure";
       RestartSec = 5;
     };
