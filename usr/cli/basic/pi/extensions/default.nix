@@ -8,7 +8,6 @@
     ./heuristic-notify.nix
     ./ponytail
     ./rpiv-todo
-    ./web
   ];
   home.file = {
     # tintinweb/pi-subagents (this) vs nicobailon/pi-subagents (previous)
