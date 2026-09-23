@@ -41,6 +41,22 @@
       "revision": "563d9b1bea72102c74e45eb37869f3eb8f1a1bd1",
       "url": "https://github.com/nix-community/nixd/archive/563d9b1bea72102c74e45eb37869f3eb8f1a1bd1.tar.gz",
       "hash": "sha256-GEyLKvGiJPMDDwft00SeVVpR2F0Z5aCWtAQhda+d0wk="
+    },
+    "tree-sitter-d2": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ravsii",
+        "repo": "tree-sitter-d2"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.7.2",
+      "revision": "330542c395dd694df1e119d3bd3b506ac240ba78",
+      "url": "https://api.github.com/repos/ravsii/tree-sitter-d2/tarball/refs/tags/v0.7.2",
+      "hash": "sha256-zx6ud3uh+0Z+cYdP2KkFA27Kb6fW/CSGpC1C4YmCIo0="
     }
   },
   "version": 8

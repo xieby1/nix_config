@@ -11,16 +11,10 @@
         #MC When edit a large d2 file using d2-vim, the cursor movement becomes lag.
         #MC However, tree-sitter-d2 works fluently.
         #MC So I replace the d2-vim with tree-sitter-d2.
-        (pkgs.tree-sitter.buildGrammar rec {
+        (pkgs.tree-sitter.buildGrammar {
           language = "d2";
-          # tree-sitter language version 14
-          version = "0.5.1";
-          src = pkgs.fetchFromGitHub {
-            owner = "ravsii";
-            repo = "tree-sitter-d2";
-            rev = "v${version}";
-            hash = "sha256-Ru+EAtnBl+Td4HxHPXLwcXOiFB/NbYPE5AhMNFyP2Kg=";
-          };
+          version = pkgs.lib.removePrefix "v" pkgs.npinsed.nvim.tree-sitter-d2.version;
+          src = pkgs.npinsed.nvim.tree-sitter-d2;
         })
       ]);
       type = "lua";

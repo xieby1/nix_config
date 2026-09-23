@@ -80,7 +80,7 @@ in
     graphviz
     figlet
     nyancat
-    d2
+    pkgsu.d2
     ## file system
     file
     # magika # detect file content types with deep learning
