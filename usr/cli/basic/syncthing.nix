@@ -1,5 +1,9 @@
 { config, ... }: {
   services.syncthing.enable = true;
+  # TODO: configure devices and folders
+  services.syncthing.overrideDevices = false;
+  # 通过 tailscale 访问 GUI，禁用 localhost host check。
+  services.syncthing.settings.gui.insecureSkipHostcheck = true;
   # 启用代理，因为有些syncthing的服务器似乎是被墙了的。
   systemd.user.services.syncthing.Service.Environment = [
     # https://docs.syncthing.net/users/proxying.html
