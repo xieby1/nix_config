@@ -97,11 +97,4 @@
     # entertainment
     antimicrox
   ];
-
-  # deskflow vs input-leap
-  # deskflow not support metakeys: window, alt-tab, alt-f4, ...
-  home.file.autostart_input_leap = {
-    source = "${pkgs.input-leap}/share/applications/io.github.input_leap.input-leap.desktop";
-    target = ".config/autostart/input-leap.desktop";
-  };
 }
