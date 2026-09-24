@@ -1,8 +1,4 @@
-{ pkgs, ... }:
-let
-  xelfviewer = pkgs.callPackage ./xelfviewer.nix {};
-in
-{
+{ pkgs, ... }: {
   imports = [
     ./mime.nix
     ./kdeconnect.nix
@@ -87,7 +83,6 @@ in
     pkgsu.surfer
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex
-    xelfviewer
   ] ++ [
     vlc
     obsidian
