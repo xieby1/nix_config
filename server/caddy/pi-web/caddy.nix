@@ -9,7 +9,7 @@ in ''
     route {
       import auth
       uri strip_prefix /pi/dell
-      reverse_proxy 127.0.0.1:${toString consts.bridgePort}
+      reverse_proxy 127.0.0.1:${toString consts.dellBridgePort}
     }
   }
 ''

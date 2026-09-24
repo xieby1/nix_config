@@ -20,7 +20,7 @@ in {
       };
       Install.WantedBy = [ "default.target" ];
       Service = {
-        ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:${toString consts.bridgePort},bind=127.0.0.1,fork,reuseaddr SOCKS5-CONNECT:127.0.0.1:${toString tailscaleSocksPort}:${dellIp}:${toString consts.dellPort}";
+        ExecStart = "${pkgs.socat}/bin/socat TCP-LISTEN:${toString consts.dellBridgePort},bind=127.0.0.1,fork,reuseaddr SOCKS5-CONNECT:127.0.0.1:${toString tailscaleSocksPort}:${dellIp}:${toString consts.piWebPort}";
         Restart = "on-failure";
         RestartSec = 3;
       };

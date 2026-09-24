@@ -3,10 +3,10 @@
 # port. Keeping them here stops the reverse_proxy upstream and the socat
 # listener from drifting apart.
 {
-  # Loopback port the socat bridge listens on; Caddy reverse_proxy targets it.
-  bridgePort = 9008;
+  # pi-web's own listening port; identical on every device.
+  piWebPort = 8504;
 
-  # pi-web's own loopback port on dell; the socat bridge connects to it through
-  # the tailnet SOCKS5 proxy.
-  dellPort = 8504;
+  # aliyun-side loopback bridge -> dell:piWebPort, over the userspace-tailscale
+  # SOCKS5 proxy. Caddy reverse_proxy targets this port.
+  dellBridgePort = 9008;
 }
