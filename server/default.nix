@@ -24,9 +24,5 @@
     # Without lingering, the last root SSH logout stops user@0.service, which
     # stops Caddy/Authelia and browsers may report PR_END_OF_FILE_ERROR.
     my.server.caddyAuthelia.enable = true;
-
-    # TODO: deduplcate
-    services.syncthing.enable = true;
-
   };
 }

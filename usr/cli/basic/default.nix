@@ -8,6 +8,7 @@
     ./ssh.nix
     ./nvim
     ./pi
+    ./syncthing.nix
   ];
   home.stateVersion = "25.05";
 
