@@ -1,4 +1,4 @@
-{ config, pkgs, stdenv, lib, ... }:
+{ pkgs, ... }:
 let
   xelfviewer = pkgs.callPackage ./xelfviewer.nix {};
 in
@@ -26,7 +26,6 @@ in
     ./dingtalk.nix
   ];
 
-config = lib.mkIf config.isGui {
   xdg.mimeApps = {
     enable = true;
     defaultApplications = {
@@ -110,4 +109,4 @@ config = lib.mkIf config.isGui {
     source = "${pkgs.input-leap}/share/applications/io.github.input_leap.input-leap.desktop";
     target = ".config/autostart/input-leap.desktop";
   };
-};}
+}

@@ -14,10 +14,6 @@
       default = 8889;
       description = "代理端口号，诸多网络程序需要用，比如clash和tailscale";
     };
-    isGui = lib.mkOption {
-      type = lib.types.bool;
-      default = (builtins.getEnv "DISPLAY")!="";
-    };
     isNixOnDroid = lib.mkOption {
       type = lib.types.bool;
       default = (builtins.getEnv "USER")=="nix-on-droid";
