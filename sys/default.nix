@@ -87,6 +87,10 @@
     hashedPassword = "$6$Y4KJxhdaJTT$RSolbCpaUKK2UW1cdnuH.8n1Ky9p0Lnx0MP36BxGX9Q2AeVMjCp.bZOsZ11w689je/785TFRQoVgicMiOfA9B.";
     #MC 给用户`xieby1`启用sudo。
     extraGroups = [ "wheel" ];
+    #MC 启用linger，让systemd用户管理器（user@1000.service）随开机启动，
+    #MC 无需登录即可拉起用户级systemd服务（syncthing、clash、tailscale等）。
+    #MC 等价于手动执行`loginctl enable-linger xieby1`。
+    linger = true;
     #MC ssh授权的公钥。这样设置后，我的所有的NixOS都相当于“自动授权”了。
     #MC 我的`/home/xieby1/Gist/`文件夹存放着一些不方便放入Git仓库的文件，比如二进制文件，或是隐私文件。
     #MC 该文件由[syncthing](https://github.com/syncthing/syncthing)进行多设备同步。
@@ -105,13 +109,10 @@
     );
   };
 
-  #MC 让TTY自动登录我的账户，这样就可以自动启动用户级（user）的systemd服务了。
-  #MC 这样就可以在<span style="color:teal">**非NixOS**</span>中（比如Ubuntu服务器、WSL2、Debian树莓派等）
-  #MC 自动拉起systemd<span style="color:teal">**用户**</span>服务（比如syncthing、clash、tailscale等）。
-  services.getty = {
-    autologinUser = "xieby1";
-    autologinOnce = true;
-  };
+  #MC 用户级systemd服务随开机启动由`users.users.xieby1.linger = true`保证，
+  #MC 不再需要此前的`services.getty.autologinOnce` hack（用TTY自动登录触发PAM会话）。
+  #MC 非NixOS（Ubuntu服务器、WSL2、Debian树莓派等）没有该NixOS选项，
+  #MC 需手动执行`loginctl enable-linger <user>`，见[../server/default.nix](../server/default.nix)。
   #MC 有关systemd用户服务的配置，详细可见参考：
   #MC
   #MC * home-manager配置的manpage的services词条，
