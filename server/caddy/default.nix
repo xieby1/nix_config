@@ -27,7 +27,7 @@ let
         route {
           import auth
           uri strip_prefix /web
-          root * ${config.home.homeDirectory}/Web
+          root * ${config.home.homeDirectory}/web
           file_server
         }
       }
