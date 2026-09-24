@@ -1,0 +1,13 @@
+diff --git a/init.ts b/init.ts
+index 1d0d631..d790248 100644
+--- a/init.ts
++++ b/init.ts
+@@ -657,7 +657,7 @@ export function updateStatusBar(state: McpExtensionState): void {
+   }
+   const theme = ui.theme;
+   const styledStatus = typeof theme?.fg === "function"
+-    ? theme.fg("accent", formattedStatus)
++    ? theme.fg("dim", formattedStatus)
+     : formattedStatus;
+   ui.setStatus("mcp", styledStatus);
+ }

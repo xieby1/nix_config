@@ -1,0 +1,137 @@
+{
+  "pins": {
+    "acp": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "svkozak",
+        "repo": "pi-acp"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.0.33",
+      "revision": "e8b01c3275ec444dc79e1860445852b1acdebe7d",
+      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.33",
+      "hash": "sha256-fENOOdooi4XbIDjcr02q8qzUCzdo2IW/Bca43SawZ44="
+    },
+    "mcp-adapter": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-mcp-adapter"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v2.35.0",
+      "revision": "429b919659df08df017a9e070f1e577455840474",
+      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.35.0",
+      "hash": "sha256-Nd+TNav29lRJ1CSUIRXrBQNq7pudUxvzAk8hWzCkJKA="
+    },
+    "pi-hermes-memory": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "chandra447",
+        "repo": "pi-hermes-memory"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "71ce9f0cf2985a52219b4fba0d3ebdd7c2f598df",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/71ce9f0cf2985a52219b4fba0d3ebdd7c2f598df.tar.gz",
+      "hash": "sha256-8PQgeKz2zuSA7827FUHV++60FV/a6dJGcQb3cCw4dS4="
+    },
+    "pi-heuristic-notify": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-heuristic-notify"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "db40a0a36ad3eeaade4efd1f0525d97a6ec04896",
+      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/db40a0a36ad3eeaade4efd1f0525d97a6ec04896.tar.gz",
+      "hash": "sha256-bE5qZSdGDTAB/vQJqkdyXfvb9ljooaovtnFncIm9A50="
+    },
+    "pi-math": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "monotykamary",
+        "repo": "pi-math"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "cbd5583e8a7439cb784c8730c507522deaf12d63",
+      "url": "https://github.com/monotykamary/pi-math/archive/cbd5583e8a7439cb784c8730c507522deaf12d63.tar.gz",
+      "hash": "sha256-0cQd3AxGHYP60E4jsGUR+B3ynEmD4074y/KzHBmZF/s="
+    },
+    "ponytail": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "DietrichGebert",
+        "repo": "ponytail"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v4.10.0",
+      "revision": "1d95ff7d39de12d87014ea40d4e22201bddc501b",
+      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v4.10.0",
+      "hash": "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ="
+    },
+    "rpiv-mono": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "juicesharp",
+        "repo": "rpiv-mono"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "0fdf4f813980d380e826b84d1280a4960e5d088e",
+      "url": "https://github.com/juicesharp/rpiv-mono/archive/0fdf4f813980d380e826b84d1280a4960e5d088e.tar.gz",
+      "hash": "sha256-v467Ryszw6ix75DsuQBHIXr6D+eSjxQCAOUWh+OJ5c4="
+    },
+    "pi-web-jmfederico": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "jmfederico",
+        "repo": "pi-web"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.202609.0",
+      "revision": "be910b30556808a711b212d03afeacb6cd2feab6",
+      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202609.0",
+      "hash": "sha256-rmJDHCdcIoMyhTuJfAJOut/rwd4KoKQ8Qt3/HKGxfLM="
+    },
+    "pi-web-ui-xing-shuyin": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xing-shuyin",
+        "repo": "pi-web-ui"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.94.1",
+      "revision": "9fa8905825f179b96feb9d67259edbea58658d5a",
+      "url": "https://api.github.com/repos/xing-shuyin/pi-web-ui/tarball/refs/tags/v0.94.1",
+      "hash": "sha256-HMsaFAuATIdiQLB/xr/EWPa7yeYInHjhesgRaEtWMNk="
+    }
+  },
+  "version": 8
+}
