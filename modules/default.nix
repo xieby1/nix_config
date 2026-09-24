@@ -5,10 +5,6 @@
   ];
 
   options = {
-    isMinimalConfig = lib.mkOption {
-      type = lib.types.bool;
-      default = false;
-    };
     proxyPort = lib.mkOption {
       type = lib.types.number;
       default = 8889;

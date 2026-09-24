@@ -28,7 +28,6 @@
     ];
   }];
 
-config = lib.mkIf (!config.isMinimalConfig) {
   home.packages = with pkgs; [
     # tools
     imagemagick
@@ -50,5 +49,4 @@ config = lib.mkIf (!config.isMinimalConfig) {
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
 
   services.podman.enable = true;
-};
 }
