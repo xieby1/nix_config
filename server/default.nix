@@ -25,18 +25,6 @@
     # stops Caddy/Authelia and browsers may report PR_END_OF_FILE_ERROR.
     my.server.caddyAuthelia.enable = true;
 
-    # TODO: deduplcate, as this snippet is also in user/default.nix
-    programs.zsh.initContent = ''
-      . ${toString ../scripts/bootstrap/main.sh}
-    '';
-    # envExtra gives non-interactive zsh, such as ssh 'cmd', the existing pin paths.
-    # initContent runs the heavier bootstrap repair only for interactive shells.
-    programs.zsh.envExtra = /*bash*/ ''
-      if [[ -e "$HOME/.config/npins/nixpkgs" && -e "$HOME/.config/npins/home-manager" ]]; then
-        export NIX_PATH="nixpkgs=$HOME/.config/npins/nixpkgs:home-manager=$HOME/.config/npins/home-manager:nixos-config=/etc/nixos/configuration.nix"
-      fi
-    '';
-
     # TODO: deduplcate
     services.syncthing.enable = true;
 
