@@ -35,12 +35,6 @@ in
       # https://docs.syncthing.net/users/proxying.html
       "http_proxy=http://127.0.0.1:${toString config.proxyPort}"
     ];
-    #MC 使用命令行浏览器browsh来实现syncthing-tui。
-    home.packages = lib.optional (!config.isMinimalConfig) (
-      pkgs.writeShellScriptBin "syncthing-tui" ''
-        ${pkgs.browsh}/bin/browsh --firefox.path ${pkgs.firefox}/bin/firefox http://127.0.0.1:8384
-      ''
-    );
   }{
     home.packages = with pkgs; [
       cachix
