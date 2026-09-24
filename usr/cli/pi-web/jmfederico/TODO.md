@@ -23,13 +23,17 @@ Resolved facts:
 
 ## Remaining
 
-- [ ] Testing: persistence (restart `pi-web-web` mid-turn), resume a CLI session, our 7
-      extensions load (`titlebar-spinner.ts` / `pi-heuristic-notify.ts` no-op), `ddgs` MCP via
-      `pi-mcp-adapter`, and confirm yq-merge still owns `settings.json` / `models.json`.
-- [ ] Server phase: Caddy `redir /pi /pi/` +
-      `handle /pi/* { route { import auth; uri strip_prefix /pi; reverse_proxy 127.0.0.1:8504 } }`;
-      `PI_WEB_ALLOWED_HOSTS=xieby1.cn` (add to the unit if the proxy needs it).
 - [ ] Trial, then keep or remove (drop units + Caddy block + pin, `switch`, GC).
+
+## Done
+
+- Testing: persistence (restart `pi-web-web` mid-turn), resume a CLI session, our 7
+  extensions load (`titlebar-spinner.ts` / `pi-heuristic-notify.ts` no-op), `ddgs` MCP via
+  `pi-mcp-adapter`, yq-merge still owns `settings.json` / `models.json` — all work.
+- Server phase (Caddy): not the draft's `/pi` + `127.0.0.1:8504` route.
+  `server/caddy/pi-web/` routes `/pi/dell/` → `import auth` → `uri strip_prefix /pi/dell`
+  → `reverse_proxy 127.0.0.1:9008` (socat bridge) → dell:8504 over userspace tailscale.
+  No `PI_WEB_ALLOWED_HOSTS` needed (jmfederico has no host allow-list).
 
 ## Not taken
 
