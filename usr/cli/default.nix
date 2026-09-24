@@ -29,8 +29,6 @@ in
     #MC ## Syncthing
     services.syncthing = {
       enable = true;
-      #MC 让syncthing的端口外部可访问。
-      extraOptions = lib.optional config.isCli "--gui-address=0.0.0.0:8384";
     };
     #MC 启用代理，因为有些syncthing的服务器似乎是被墙了的。
     systemd.user.services.syncthing.Service.Environment = [
