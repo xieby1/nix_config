@@ -56,6 +56,12 @@ in {
               prefixLength = 10;
             };
             profileName = "tailscale";
+          } {
+            condition = {
+              conditionType = "HostWildcardCondition";
+              pattern = "*.tailff7a5.ts.net";
+            };
+            profileName = "tailscale";
           }];
         };
       };
