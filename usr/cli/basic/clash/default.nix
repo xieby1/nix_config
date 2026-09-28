@@ -5,6 +5,9 @@
   home.packages = [
     pkgs.mihomo
   ];
+  # mihomo rewrites this bbolt DB at runtime (selected proxies, fake-ip mappings, provider etags);
+  # syncing a live, locked DB across devices corrupts it.
+  my.syncthing.Gist-stignore = [ "/clash/cache.db" ];
   systemd.user.services.clash = {
     Unit = {
       Description = "Auto start clash";
