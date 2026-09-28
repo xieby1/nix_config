@@ -122,7 +122,7 @@
   }{
     name = "syncthing";
     url = "http://127.0.0.1:8384";
-    icon = "${pkgs.syncthingtray-minimal}/share/icons/hicolor/scalable/apps/syncthingtray.svg";
+    icon = "${pkgs.syncthing}/share/icons/hicolor/scalable/apps/syncthing.svg";
   }{
     name = "emojidb";
     url = "https://emojidb.org";
