@@ -49,6 +49,7 @@ in
     (import pkgs.npinsed.my.circle {inherit pkgs;})
     # htop search in intuitive
     btop
+    witr
     nix-tree
     ## text
     pandoc
