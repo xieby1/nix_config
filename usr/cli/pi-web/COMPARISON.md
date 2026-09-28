@@ -1,3 +1,5 @@
+TLDR: In terms of Subpath / prefix deploy, jmfederico/pi-web is better, so I chose it.
+
 # Pi Web UI Comparison
 
 Web/browser UIs for the pi coding agent. Evaluated for *my* setup:
