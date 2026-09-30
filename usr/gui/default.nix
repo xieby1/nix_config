@@ -1,0 +1,100 @@
+{ pkgs, ... }: {
+  imports = [
+    ./mime.nix
+    ./kdeconnect.nix
+    ./xdot.nix
+    ./firefox
+    ./warpd.nix
+    ./rustdesk.nix
+    ./kitty
+    ./cheatsheet_edit.nix
+    ./xcolor.nix
+    ./wsl.nix
+    ./drawio.nix
+    ./flameshot.nix
+    ./fcitx5
+    # TODO: remove
+    ./niri
+    ./rofi.nix
+    ./dms
+    ./evolution
+    ./low-battery-notify.nix
+    ./dingtalk.nix
+  ];
+
+  xdg.mimeApps = {
+    enable = true;
+    defaultApplications = {
+      "application/pdf" = [ "org.gnome.Evince.desktop" ];
+      "image/jpeg" = [ "org.gnome.Loupe.desktop" ];
+      "image/png" = [ "org.gnome.Loupe.desktop" ];
+      "image/gif" = [ "org.gnome.Loupe.desktop" ];
+      "image/webp" = [ "org.gnome.Loupe.desktop" ];
+      "image/tiff" = [ "org.gnome.Loupe.desktop" ];
+      "image/bmp" = [ "org.gnome.Loupe.desktop" ];
+      "image/svg+xml" = [ "org.gnome.Loupe.desktop" ];
+    };
+  };
+
+  home.packages = with pkgs; [
+    (pkgs.writeShellScriptBin "o" ''nohup xdg-open "$@" &> /dev/null &'')
+    libnotify
+    # browser
+    # dont ask me for keyring chromium-like browsers!
+    (chromium.override {commandLineArgs="--password-store=basic";})
+  ] ++ [
+    # network
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    feishu
+    wechat
+    wemeet
+    (pkgs.makeDesktopItem {
+      name = "WemeetApp-XWayland";
+      desktopName = "WemeetApp-XWayland";
+      exec = "wemeet-xwayland %u";
+      icon = "wemeet";
+      type = "Application";
+      terminal = false;
+      categories = ["AudioVideo"];
+      mimeTypes = ["x-scheme-handler/wemeet"];
+    })
+    discord
+  ] ++ [
+    transmission_4-gtk
+    # text
+    #wpsoffice
+    libreoffice
+    meld
+    # TODO: use this after switching to wayland
+    #wl-clipboard
+    textsnatcher
+    # draw
+    #aseprite-unfree
+    inkscape
+    gimp
+    # viewer
+    evince
+    gnome-characters
+    nautilus
+    loupe
+    gnome-calculator
+    # TODO: may be replaced by dankcalendar
+    gnome-calendar
+    pkgsu.surfer
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    imhex
+  ] ++ [
+    vlc
+    obsidian
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    ghidra
+  ] ++ [
+    # management
+  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
+    zotero
+  ] ++ [
+    keepassxc
+    # entertainment
+    antimicrox
+  ];
+}
