@@ -14,7 +14,7 @@ let
 
     # Last release whose peer range (>=0.84.0 <0.85.0 || >=0.85.1) accepts pi 0.86.1.
     # v1.202609.1 tightened to >=0.87.0.
-    src = pkgs.npinsed.ai.pi.pi-web-jmfederico;
+    src = pkgs.npinsed.ai.pi.pi-web;
 
     # Upstream's lock omits `integrity` for the 5 nested @earendil-works/* deps of
     # pi-coding-agent; prefetch-npm-deps panics on that. Add the fields.
