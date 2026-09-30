@@ -158,6 +158,14 @@ in {
       nnoremap <C-W><C-Right> <C-W><Right>
       nnoremap <C-W><C-Up>    <C-W><Up>
       nnoremap <C-W><C-Down>  <C-W><Down>
+
+      " Browsers reserve Ctrl-W (closes the tab) in web terminals/SSH-in-browser,
+      " so window commands are unreachable there. Add a parallel prefix whose keys
+      " the browser does not grab; it expands to <C-w>.
+      " MUST be `nmap` (recursive), not `nnoremap`: with noremap the key typed after
+      " the expansion skips mapping lookup, so it reaches only built-in <C-w>v/s but
+      " NOT plugin/user <C-w>x maps (nvim-window-picker <C-w>j, winshift <C-W>m).
+      nmap <leader>w <C-w>
     '';
   };
 
