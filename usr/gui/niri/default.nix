@@ -37,9 +37,7 @@
   cachix_packages = [ pkgs.niri ];
   home.packages = [
     pkgs.niri
-    # Use latest xwayland-satellite for wechat popup
-    # https://github.com/Supreeeme/xwayland-satellite/pull/281
-    pkgs.pkgsu.xwayland-satellite
+    pkgs.xwayland-satellite
   ];
   services.gnome-keyring.enable = true;
   xdg.portal = {
