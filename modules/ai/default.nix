@@ -36,6 +36,10 @@ in {
       name = "JW2 DeepSeek";
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt) + "/v1";
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-deepseek.txt);
+      models.deepseek-flash = catwalk-providers.deepseek.models.deepseek-v4-flash // {
+        id = "deepseek-flash";
+        name = "DeepSeek-Flash";
+      };
     };
   };
 }
