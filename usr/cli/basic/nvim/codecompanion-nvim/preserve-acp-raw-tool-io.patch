@@ -1,0 +1,70 @@
+diff --git a/lua/codecompanion/interactions/chat/acp/formatters.lua b/lua/codecompanion/interactions/chat/acp/formatters.lua
+index 92ed255..94ea8ae 100644
+--- a/lua/codecompanion/interactions/chat/acp/formatters.lua
++++ b/lua/codecompanion/interactions/chat/acp/formatters.lua
+@@ -228,6 +228,37 @@ local function clean_for_buffer(text)
+   return text
+ end
+ 
++---Encode raw ACP tool data for inline display
++---@param value any
++---@return string|nil
++local function format_raw_tool_data(value)
++  if value == nil or value == vim.NIL then
++    return nil
++  end
++
++  if type(value) == "string" then
++    return value
++  end
++
++  local ok, encoded = pcall(vim.json.encode, value)
++  if ok and encoded and encoded ~= "" then
++    return encoded
++  end
++
++  return vim.inspect(value)
++end
++
++---Build the raw ACP input suffix for verbose tool display
++---@param tool_call table
++---@return string|nil
++local function raw_tool_summary(tool_call)
++  local raw_input = format_raw_tool_data(tool_call.rawInput)
++  if raw_input and raw_input ~= "" then
++    return "input: " .. raw_input
++  end
++  return nil
++end
++
+ ---Fill in defaults for missing tool call fields
+ ---@param tool_call table
+ ---@return table
+@@ -240,6 +271,7 @@ local function normalize(tool_call)
+       status = "failed",
+       title = "Invalid tool call",
+       toolCallId = "unknown",
++      rawInput = nil,
+     }
+   end
+ 
+@@ -250,6 +282,7 @@ local function normalize(tool_call)
+     status = tool_call.status or "pending",
+     title = tool_call.title or "Tool call",
+     toolCallId = tool_call.toolCallId or "unknown",
++    rawInput = tool_call.rawInput or tool_call.raw_input,
+   }
+ end
+ 
+@@ -272,6 +305,11 @@ function M.tool_message(tool_call, adapter)
+     return clean_for_buffer(diff)
+   end
+ 
++  local raw_summary = raw_tool_summary(call)
++  if raw_summary then
++    return clean_for_buffer(label .. " — " .. raw_summary)
++  end
++
+   local summary = content_summary(call)
+   if summary and summary ~= "" then
+     return clean_for_buffer(label .. " — " .. summary)
