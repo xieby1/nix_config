@@ -98,11 +98,8 @@ in {
     target = ".local/share/fcitx5/punctuation/punc.mb.zh_CN";
   };
 
-  dconf.settings = {
-    # Disable ibus input method shortcuts
-    "org/gnome/desktop/wm/keybindings" = {
-      switch-input-source=[];
-      switch-input-source-backward=[];
-    };
+  my.config-fcitx5.".config/fcitx5/conf/pinyin.conf".expr.globalSection = {
+    # Disable pre edit, as the pre edit cause feishu online sheet/doc in firefox pre-edit text duplications which is annoying.
+    PreeditMode="Do not show";
   };
 }
