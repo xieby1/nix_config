@@ -6,9 +6,6 @@ let
     name = "pi-mcp-adapter-slim";
     src = pkgs.npinsed.ai.pi.mcp-adapter;
     nativeBuildInputs = [ pkgs.jq ];
-    patches = [
-      ./status-color.patch
-    ];
     postPatch = ''
       jq 'del(.dependencies["@earendil-works/pi-ai","@earendil-works/pi-tui","typebox"], .peerDependencies["@earendil-works/pi-ai","@earendil-works/pi-tui","typebox"], .devDependencies, .scripts)' \
         package.json > package.json.tmp && mv package.json.tmp package.json
@@ -35,6 +32,16 @@ in
       mcpServers = {
         ddgs = { inherit (config.ai.mcp.ddgs) command args; };
       };
+    };
+  };
+
+  # The adapter ignores `settings` in Pi's mcp.json, so its settings live in
+  # mcp-adapter.json. `mcpFooterStatus = "off"` hides the MCP status bar (other
+  # than auth), replacing the old status-color patch.
+  yq-merge.".pi/agent/mcp-adapter.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      settings.mcpFooterStatus = "off";
     };
   };
 
