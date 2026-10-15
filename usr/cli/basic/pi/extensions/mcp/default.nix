@@ -37,4 +37,9 @@ in
       };
     };
   };
+
+  # pi-mcp-adapter registers `/mcp` and replaces Pi's built-in MCP extension; the
+  # loader warns about the replaced built-in unless it is disabled. Disable it
+  # (`-builtin:mcp`); the adapter still imports the mcp.json above.
+  yq-merge.".pi/agent/settings.json".expr.extensions = [ "-builtin:mcp" ];
 }
