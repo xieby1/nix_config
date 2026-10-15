@@ -6,7 +6,6 @@
   home.file.".pi/agent/extensions/ponytail".source = pkgs.applyPatches {
     name = "ponytail";
     src = pkgs.npinsed.ai.pi.ponytail;
-    patches = [ ./status.patch ];
     postPatch = ''
       substituteInPlace package.json \
         --replace-fail '"./pi-extension/index.js"' '"./index.js"'
@@ -17,6 +16,15 @@
     generator = builtins.toJSON;
     expr = {
       skills = [ "~/.pi/agent/extensions/ponytail/skills" ];
+    };
+  };
+
+  # ponytail has no config for the status-line style, only to hide it. Written
+  # writable via yq-merge so `/ponytail <mode>` can still persist defaultMode.
+  yq-merge.".config/ponytail/config.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      hideStatus = true;
     };
   };
 }
