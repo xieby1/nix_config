@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.0.33",
-      "revision": "e8b01c3275ec444dc79e1860445852b1acdebe7d",
-      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.33",
-      "hash": "sha256-fENOOdooi4XbIDjcr02q8qzUCzdo2IW/Bca43SawZ44="
+      "version": "v0.0.34",
+      "revision": "4eade93d5eb1b294695a7ac8f8f44982063bbbef",
+      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.34",
+      "hash": "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo="
     },
     "mcp-adapter": {
       "type": "GitRelease",
@@ -27,10 +27,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v2.35.0",
-      "revision": "429b919659df08df017a9e070f1e577455840474",
-      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v2.35.0",
-      "hash": "sha256-Nd+TNav29lRJ1CSUIRXrBQNq7pudUxvzAk8hWzCkJKA="
+      "version": "v5.3.0",
+      "revision": "2b221c1582498b578e75e6e9b0a25aeff2d5898b",
+      "url": "https://api.github.com/repos/nicobailon/pi-mcp-adapter/tarball/refs/tags/v5.3.0",
+      "hash": "sha256-B2PFwkuRF4MPUc7x7HtrRHZP2NZgDEcNugaTZXwIJJk="
     },
     "pi-hermes-memory": {
       "type": "Git",
@@ -41,9 +41,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "71ce9f0cf2985a52219b4fba0d3ebdd7c2f598df",
-      "url": "https://github.com/chandra447/pi-hermes-memory/archive/71ce9f0cf2985a52219b4fba0d3ebdd7c2f598df.tar.gz",
-      "hash": "sha256-8PQgeKz2zuSA7827FUHV++60FV/a6dJGcQb3cCw4dS4="
+      "revision": "24fcd8ad26fc27badb8d7dbaf8034645de07b893",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/24fcd8ad26fc27badb8d7dbaf8034645de07b893.tar.gz",
+      "hash": "sha256-3Tbzkyp4efVQzrkfQyXFRkAU8VT6/dIDX80eWu6IzS0="
     },
     "pi-heuristic-notify": {
       "type": "Git",
@@ -67,38 +67,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "cbd5583e8a7439cb784c8730c507522deaf12d63",
-      "url": "https://github.com/monotykamary/pi-math/archive/cbd5583e8a7439cb784c8730c507522deaf12d63.tar.gz",
-      "hash": "sha256-0cQd3AxGHYP60E4jsGUR+B3ynEmD4074y/KzHBmZF/s="
-    },
-    "ponytail": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "DietrichGebert",
-        "repo": "ponytail"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v4.10.0",
-      "revision": "1d95ff7d39de12d87014ea40d4e22201bddc501b",
-      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v4.10.0",
-      "hash": "sha256-PES5XrSYx0VBXWVHEDRykGy0SAmJfV/luzy8Gfg0aAQ="
-    },
-    "rpiv-mono": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "juicesharp",
-        "repo": "rpiv-mono"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "0fdf4f813980d380e826b84d1280a4960e5d088e",
-      "url": "https://github.com/juicesharp/rpiv-mono/archive/0fdf4f813980d380e826b84d1280a4960e5d088e.tar.gz",
-      "hash": "sha256-v467Ryszw6ix75DsuQBHIXr6D+eSjxQCAOUWh+OJ5c4="
+      "revision": "415a0b28fa6620e3aa26762077eccb14744b6e20",
+      "url": "https://github.com/monotykamary/pi-math/archive/415a0b28fa6620e3aa26762077eccb14744b6e20.tar.gz",
+      "hash": "sha256-MXyIWARMcy30yXvkmMFsCrYsO5IdOykWAgfX6xugKmc="
     },
     "pi-web": {
       "type": "GitRelease",
@@ -115,6 +86,35 @@
       "revision": "be910b30556808a711b212d03afeacb6cd2feab6",
       "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202609.0",
       "hash": "sha256-rmJDHCdcIoMyhTuJfAJOut/rwd4KoKQ8Qt3/HKGxfLM="
+    },
+    "ponytail": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "DietrichGebert",
+        "repo": "ponytail"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v5.2.0",
+      "revision": "2961b52fc1fe6a5a87c7a959a79512e5c2f3ffe5",
+      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v5.2.0",
+      "hash": "sha256-3GopEvTySUvo0ghGz4CF6xbN7x3kbB/IHEY7Dwr4dls="
+    },
+    "rpiv-mono": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "juicesharp",
+        "repo": "rpiv-mono"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "1ffa165c224b5489fb5774a6652ef2e1c3bc6b2a",
+      "url": "https://github.com/juicesharp/rpiv-mono/archive/1ffa165c224b5489fb5774a6652ef2e1c3bc6b2a.tar.gz",
+      "hash": "sha256-4ChC1fc92eeCs8w55UO1QuXE+ZDepePevPwWE9leg18="
     }
   },
   "version": 8

@@ -1,6 +1,6 @@
 --- a/pi-extension/index.js
 +++ b/pi-extension/index.js
-@@ -83,7 +83,5 @@ export default function ponytailExtension(pi) {
+@@ -93,7 +93,5 @@ export default function ponytailExtension(pi) {
      }
 -    const levelIcons = { lite: "🌿", full: "⚡", ultra: "🔥" };
 -    const icon = levelIcons[currentMode] || "";
