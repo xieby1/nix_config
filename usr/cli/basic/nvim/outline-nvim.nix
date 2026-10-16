@@ -33,12 +33,7 @@
     }(
       pkgs.vimUtils.buildVimPlugin {
         name = "outline-treesitter-provider.nvim";
-        src = pkgs.fetchFromGitHub {
-          owner = "epheien";
-          repo = "outline-treesitter-provider.nvim";
-          rev = "22dda7329cf608368cbf725effd43daf98c27f32";
-          hash = "sha256-PFRiaQPxh+PPFGF1+yMIJIM/tGDOH7CO0xyoayDn78I=";
-        };
+        src = pkgs.npinsed.nvim.outline-treesitter-provider;
         doCheck = false;
       }
     )];
