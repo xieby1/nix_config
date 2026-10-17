@@ -6,5 +6,7 @@
   Options to fix: an Authelia app password/token, basic-auth support, or an
   unauthenticated clone endpoint.
 
-- [ ] didn't test at runtime (no server access) - PATH_INFO/SCRIPT_NAME mapping is
-  the bit most likely to need a tweak.
+- [x] runtime browsing verified. PATH_INFO/SCRIPT_NAME mapping is fine.
+  Note: cgit's config reader keeps spaces in the key name (`scan-path ` != `scan-path`),
+  so the generated cgitrc must use `key=value` with no space around '='. With spaces,
+  every option is silently ignored and cgit shows "No repositories found".
