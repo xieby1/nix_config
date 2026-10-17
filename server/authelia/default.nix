@@ -56,6 +56,13 @@ let
 
     authentication_backend.file.path = autheliaUsersFile;
 
+    # No outgoing email exists on this host; the notifier is the filesystem and
+    # the code lands in ~/.config/authelia/notification.txt, which a guest can
+    # never read. So the "Forgot password?" flow could only ever produce a dead
+    # end: the prompt says it mailed a one-time code, nothing arrives, and the
+    # guest is stuck. Passwords are managed here instead (users.nix, step 1).
+    authentication_backend.password_reset.disable = true;
+
     access_control = {
       default_policy = "deny";
       rules = accessRules;
