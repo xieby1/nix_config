@@ -33,6 +33,14 @@ git -C "$tmp/work" push -q "$tmp/repos/BTeam/team.git" HEAD:refs/heads/main
 # silently turn every check below into a 404.
 prefix=$(nix-instantiate --eval --strict --raw \
   -E "import $root/server/caddy/cgit/consts.nix" -A prefix)
+# Same for the stylesheet name, which the fragment and the head-include share.
+theme_file=$(nix-instantiate --eval --strict --raw \
+  -E "import $root/server/caddy/cgit/consts.nix" -A themeFile)
+
+mkdir -p "$tmp/theme$(dirname "$theme_file")"
+echo 'body{}' > "$tmp/theme$theme_file"
+# Decoy next to the stylesheet: the theme route must not reach it.
+echo 'root-title=leak' > "$tmp/theme/cgitrc"
 
 printf 'virtual-root=%s/\ncache-root=%s/cache\nscan-path=%s/repos\n' \
   "$prefix" "$tmp" "$tmp" > "$tmp/cgitrc"
@@ -41,6 +49,7 @@ fragment=$(nix-instantiate --eval --strict --raw -E "
   (import $root/server/caddy/cgit/caddy.nix {
     inherit (import <nixpkgs> {}) cgit git;
     cgitrc = \"$tmp/cgitrc\";
+    themeRoot = \"$tmp/theme\";
     reposPath = \"$tmp/repos\";
   })" | sed -e "s/9007/$port_cgi/g" -e '/^ *import auth$/d')
 
@@ -59,6 +68,7 @@ check() { # name expected actual
   if [[ "$3" == "$2" ]]; then echo "ok   $1"; else echo "FAIL $1: expected '$2', got '$3'"; fail=1; fi
 }
 get() { curl -s --noproxy '*' -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port_http$1"; }
+ctype() { curl -s --noproxy '*' -o /dev/null -w '%{content_type}' "http://127.0.0.1:$port_http$1"; }
 
 check "browse a team repo" 200 "$(get "$prefix/BTeam/team.git/")"
 check "browse a team repo: right repo" yes "$(grep -q 'BTeam/team.git' "$tmp/body" && echo yes || echo no)"
@@ -70,5 +80,10 @@ check "clone: git answers, not cgit" 001e "$(head -c 4 "$tmp/body")"
 check "?url=<other repo> refused" 403 "$(get "$prefix/BTeam/team.git/?url=/owner.git")"
 check "?url= refused (encoded key)" 403 "$(get "$prefix/BTeam/team.git/?%75rl=/owner.git")"
 check "plain view of info/refs still served" 200 "$(get "$prefix/BTeam/team.git/plain/info/refs")"
+
+check "theme stylesheet served" 200 "$(get "$prefix$theme_file")"
+check "theme served from the theme root" yes "$(grep -q 'body{}' "$tmp/body" && echo yes || echo no)"
+check "theme served as CSS" text/css "$(ctype "$prefix$theme_file" | cut -d';' -f1)"
+check "rest of the theme tarball stays unreachable" 404 "$(get "$prefix/cgitrc")"
 
 exit "$fail"

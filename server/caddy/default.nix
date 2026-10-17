@@ -8,6 +8,34 @@ let
   cgitReposPath = "${config.home.homeDirectory}/Repos";
   cgitCacheRoot = "${config.xdg.cacheHome}/${consts.cacheDir}";
 
+  # GitHub look, dark mode and a mobile layout, layered over cgit's own
+  # stylesheet: https://www.hackitu.de/cgithub/ (AGPL-3.0). Pinned as a whole
+  # tarball, so the theme can be swapped by bumping one hash; Caddy only ever
+  # serves themeFile out of it. To bump: `nix store prefetch-file --unpack
+  # --json <url>` (needs --extra-experimental-features nix-command; plain
+  # nix-prefetch-url --unpack prints a base32 hash that Nix rejects as "invalid
+  # SRI hash").
+  cgitTheme = pkgs.fetchzip {
+    name = "cgit-theme";
+    url = "https://www.hackitu.de/cgithub/cgithub.tar.gz";
+    hash = "sha256-bt7eZX7hFZ7vZfsBWGxN0Wdxkt6kFPbs//SxS5Gp8YM=";
+  };
+
+  # The served directory is built here so that a theme bump which renames the
+  # stylesheet fails the switch instead of serving a 404 — browsers cache that
+  # 404 for an hour (the cache header below), hiding the fix.
+  cgitThemeRoot = pkgs.runCommandLocal "cgit-theme-root" { } ''
+    cp -r ${cgitTheme}/. $out
+    test -f $out${consts.themeFile}
+  '';
+
+  # The viewport tag is the load-bearing part: without it phones lay the page out
+  # at 980px wide and the theme's media queries never fire.
+  cgitHeadInclude = pkgs.writeText "cgit-head-include.html" ''
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" type="text/css" href="${consts.prefix}${consts.themeFile}"/>
+  '';
+
   # No spaces around '=': cgit's config reader keeps them in the key name
   # ("scan-path " != "scan-path"), silently ignoring the option.
   cgitrc = pkgs.writeText "cgitrc" ''
@@ -17,6 +45,7 @@ let
 
     # Static assets are served by Caddy from the cgit package; see ./cgit/caddy.nix.
     css=${consts.prefix}/cgit.css
+    head-include=${cgitHeadInclude}
     favicon=${consts.prefix}/favicon.ico
     logo=${consts.prefix}/cgit.png
     js=${consts.prefix}/cgit.js
@@ -40,6 +69,9 @@ let
     }
 
     https://xieby1.cn {
+      # Nothing here pre-compresses; the stylesheet and cgit's HTML are plain text.
+      encode zstd gzip
+
       # sixu routes; see ./sixu/.
       ${import ./sixu/caddy.nix}
 
@@ -56,6 +88,7 @@ let
       ${import ./cgit/caddy.nix {
         inherit (pkgs) cgit git;
         inherit cgitrc;
+        themeRoot = cgitThemeRoot;
         reposPath = cgitReposPath;
       }}
 

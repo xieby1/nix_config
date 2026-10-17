@@ -8,13 +8,28 @@
 # Access control lives entirely in Authelia (see ../../authelia/default.nix):
 # guests of a team are allowed only <prefix>/<team>/…, which is why the repo
 # name must come from the path alone — hence the ?url= refusal below.
-{ cgit, git, cgitrc, reposPath }:
+{ cgit, git, cgitrc, themeRoot, reposPath }:
 let
   consts = import ./consts.nix;
   prefix = consts.prefix;
   upstream = "127.0.0.1:${toString consts.fcgiwrapPort}";
 in ''
   redir ${prefix} ${prefix}/
+
+  # theme.css is the only file of the theme tarball any request can reach: this
+  # handler matches one exact path, so the rest of the unpacked tarball (its
+  # Dockerfile, filters) stays unreachable. The theme URL is stable while its
+  # content only changes on `home-manager switch`, so let browsers keep it for
+  # an hour instead of re-fetching 40KB on every page view.
+  @cgit_theme path ${prefix}${consts.themeFile}
+  handle @cgit_theme {
+    route {
+      header Cache-Control "public, max-age=3600"
+      uri strip_prefix ${prefix}
+      root * ${themeRoot}
+      file_server
+    }
+  }
 
   # cgit's static assets; the URLs come from css=/favicon=/… in cgitrc. No auth
   # here: they are plain files from the cgit package.
