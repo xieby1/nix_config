@@ -41,7 +41,10 @@ let
   cgitrc = pkgs.writeText "cgitrc" ''
     # Served by Caddy at https://xieby1.cn${consts.prefix}/ ; see ./cgit/.
     virtual-root=${consts.prefix}/
-    clone-prefix=https://xieby1.cn${consts.prefix}
+    # HTTPS clone needs git-compatible auth in front of it, so advertise the
+    # SSH URL people actually clone with (same form as npins/my/sources.json).
+    # $CGIT_REPO_URL is the repo path relative to scan-path.
+    clone-url=ssh://root@xieby1.cn/~/Repos/$CGIT_REPO_URL
 
     # Static assets are served by Caddy from the cgit package; see ./cgit/caddy.nix.
     css=${consts.prefix}/cgit.css
