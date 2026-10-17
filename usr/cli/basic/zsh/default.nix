@@ -10,6 +10,11 @@
     envExtra = ''
       # Avoid duplicate NixOS global zsh init (/etc/zshrc); Home Manager config is enough.
       setopt no_global_rcs
+
+      # SSH forwards TERM but not COLORTERM/KITTY_WINDOW_ID, so truecolor-aware
+      # tools (pi, nvim, ls, ...) fall back to 256-color on remote hosts. Re-derive
+      # COLORTERM from TERM, which does survive the SSH hop (kitty is always truecolor).
+      [[ $TERM == *kitty* ]] && export COLORTERM=truecolor
     '';
     completionInit = ''
       # Load the zsh/complist module, which provides colored completion listings,
