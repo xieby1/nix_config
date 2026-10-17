@@ -76,6 +76,7 @@ in {
   imports = [
     ./pi-web/config.nix
     ./cgit/config.nix
+    ./cgit/ssh
   ];
 
   config = lib.mkIf cfg.enable {
