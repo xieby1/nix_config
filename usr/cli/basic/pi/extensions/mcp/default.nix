@@ -1,0 +1,52 @@
+{ pkgs, lib, config, ... }:
+let
+  # Pi's extension loader injects its own copies of pi-ai, pi-tui, and typebox
+  # via jiti aliases, so the extension doesn't need its own copies (~130 MiB saved).
+  slimSrc = pkgs.applyPatches {
+    name = "pi-mcp-adapter-slim";
+    src = pkgs.npinsed.ai.pi.mcp-adapter;
+    nativeBuildInputs = [ pkgs.jq ];
+    postPatch = ''
+      jq 'del(.dependencies["@earendil-works/pi-ai","@earendil-works/pi-tui","typebox"], .peerDependencies["@earendil-works/pi-ai","@earendil-works/pi-tui","typebox"], .devDependencies, .scripts)' \
+        package.json > package.json.tmp && mv package.json.tmp package.json
+      cp ${./package-lock.json} package-lock.json
+    '';
+  };
+in
+{
+  home.file = {
+    ".pi/agent/extensions/pi-mcp-adapter" = {
+      source = pkgs.buildNpmPackage {
+        name = "pi-mcp-adapter";
+        src = slimSrc;
+        npmDepsHash = "sha256-QKKjQ5Cwni+BpCphdd0zraFV/A2bEHr2bwTQ7kGuJss=";
+        dontNpmBuild = true;
+        npmRebuildFlags = [ "--ignore-scripts" ];
+      } + /lib/node_modules/pi-mcp-adapter;
+    };
+  };
+
+  yq-merge.".pi/agent/mcp.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      mcpServers = {
+        ddgs = { inherit (config.ai.mcp.ddgs) command args; };
+      };
+    };
+  };
+
+  # The adapter ignores `settings` in Pi's mcp.json, so its settings live in
+  # mcp-adapter.json. `mcpFooterStatus = "off"` hides the MCP status bar (other
+  # than auth), replacing the old status-color patch.
+  yq-merge.".pi/agent/mcp-adapter.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      settings.mcpFooterStatus = "off";
+    };
+  };
+
+  # pi-mcp-adapter registers `/mcp` and replaces Pi's built-in MCP extension; the
+  # loader warns about the replaced built-in unless it is disabled. Disable it
+  # (`-builtin:mcp`); the adapter still imports the mcp.json above.
+  yq-merge.".pi/agent/settings.json".expr.extensions = [ "-builtin:mcp" ];
+}
