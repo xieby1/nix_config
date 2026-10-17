@@ -87,7 +87,7 @@
 # Guest teams (BTeam)
 
 - [x] Web side: one Authelia rule per team, `^/repos/<team>(/.*)?$`, `two_factor`,
-      `subject = [ group:admins group:repo-<team> ]`. Owner rules carry
+      `subject = [ group:admins group:<team> ]`. Owner rules carry
       `subject = [ group:admins ]`, so an authenticated guest cannot reach
       `/sixu`, `/web`, the portal settings, … (anything else is default deny).
 - [x] SSH side: guest keys get `command="restricted-git-ssh <root>"` with root
@@ -123,6 +123,6 @@
   matcher stops being anchored on `.git`.
 - Add a guest:
   - `~/.nix-profile/bin/authelia crypto hash generate argon2`, append the user to
-    the vault users file with `groups: [ "repo-BTeam" ]`.
+    the vault users file with `groups: [ "BTeam" ]`.
   - Put their key in `sshKeys` of the `BTeam` entry, then `home-manager switch`.
   - They enroll TOTP at `https://xieby1.cn/`; bookmark the repo URL.

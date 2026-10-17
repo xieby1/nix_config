@@ -19,10 +19,12 @@ let
   # match, so a guest falls through to the default deny for anything outside
   # their team. Owner rules keep `subject = group:admins`, otherwise an
   # authenticated guest could reach /sixu, /web, the portal settings, …
+  # A guest's group is the team name itself; guest-groups.nix asserts no team
+  # is called "admins", which would otherwise match the owner rules below.
   accessRules = map (g: {
     domain = "xieby1.cn";
     resources = [ "^/repos/${g.name}(/.*)?$" ];
-    subject = [ "group:admins" "group:repo-${g.name}" ];
+    subject = [ "group:admins" "group:${g.name}" ];
     policy = "two_factor";
   }) guestGroups ++ [
     {
