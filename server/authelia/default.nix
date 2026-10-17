@@ -3,17 +3,20 @@ let
   cfg = config.my.server.caddyAuthelia;
   yaml = pkgs.formats.yaml { };
   guestGroups = import ../guest-groups.nix { inherit lib; };
+  registry = import ~/Gist/Vault/server/users.nix;
 
-  # Users (owner + guests) live in the vault, not in the Nix store: argon2
-  # hashes in /nix/store are world-readable and crackable offline. Same file the
-  # guest teams/ssh keys are derived from, see ../guest-groups.nix.
-  #
-  # The path must be a plain string: interpolating a path value (`"${~/…}"`)
-  # copies the whole directory into /nix/store, hashes included. `toString`
-  # keeps it a string. Same spelling as in ../guest-groups.nix, so both read the
-  # same file even when home.homeDirectory differs from $HOME (tests/build).
+  # The user database is generated from the vault registry, so its argon2 hashes
+  # do land in /nix/store, which is world-readable. That trade-off and the
+  # reasoning behind it are at the top of that file; do not add other secrets
+  # there. authelia.env (session, storage-encryption, reset secrets) stays out,
+  # as a string path: interpolating a path value (`"${~/…}"`) would copy the
+  # whole directory into the store.
   vaultDir = toString ~/Gist/Vault/server;
-  autheliaUsersFile = "${vaultDir}/users.jsonc";
+  autheliaUsersFile = yaml.generate "authelia-users.yml" {
+    # sshKeys is registry data for the ssh side; Authelia ignores unknown keys,
+    # but the generated database should be the schema Authelia actually uses.
+    users = builtins.mapAttrs (_: u: builtins.removeAttrs u [ "sshKeys" ]) registry;
+  };
 
   # One rule per guest team, then the owner's rules. Authelia takes the first
   # matching rule, and a rule whose `subject` the user is not in does not
@@ -28,7 +31,7 @@ let
     resources = [ "^/repos/${g.name}(/.*)?$" ];
     subject = [ "group:admins" "group:${g.name}" ];
     policy = "two_factor";
-  }) guestGroups ++ [
+  }) guestGroups.teams ++ [
     {
       domain = "xieby1.cn";
       resources = [ "^/repos(/.*)?$" ];

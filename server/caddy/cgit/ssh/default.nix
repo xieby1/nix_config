@@ -1,13 +1,15 @@
 # Root's SSH access for this server.
 #
-# - The owner key gets a normal login shell (also usable for git).
-# - Keys in guestKeys are forced through restricted-git-ssh: read-only git
+# - The "admins" keys get a normal login shell (also usable for git).
+# - Every other key is forced through restricted-git-ssh: read-only git
 #   plumbing only, limited to repos under reposDir. No shell, no push, no
 #   port/agent/X11 forwarding.
+# Both lists come from ~/Gist/Vault/server/users.nix via guest-groups.nix, so
+# ssh access has exactly one source.
 { config, pkgs, lib, ... }:
 let
   reposDir = "${config.home.homeDirectory}/Repos";
-  guestGroups = import ../../../guest-groups.nix { inherit lib; };
+  registry = import ../../../guest-groups.nix { inherit lib; };
 
   # Forced command for guest keys. Parses the command line safely (shlex),
   # resolves the repo path (realpath), requires it under the root given as
@@ -51,19 +53,17 @@ let
   guestLine = root: k:
     ''command="${config.home.homeDirectory}/.nix-profile/bin/restricted-git-ssh ${root}",${guestRestrictions} ${k}'';
 
-  # The owner's key: full login shell plus git. Kept in the vault so there is
-  # one source of truth (same pattern as sys/default.nix).
-  ownerKeys = [ (lib.trim (builtins.readFile ~/Gist/Vault/id_rsa.pub)) ];
+  # The admins' keys: full login shell plus git.
+  ownerKeys = registry.adminKeys;
 
-  # Guest keys are `sshKeys` in ~/Gist/Vault/server/users.jsonc, one entry per
-  # user, scoped to that user's team folders by ../../../guest-groups.nix. There
-  # is no second list here: ssh access comes from the registry alone.
+  # Guest keys are `sshKeys` in ~/Gist/Vault/server/users.nix, one entry per
+  # user, scoped to that user's team folders by ../../../guest-groups.nix.
 
   authorizedKeys = pkgs.writeText "authorized_keys" (
     lib.concatMapStrings (k: "${k}\n") ownerKeys
     + lib.concatMapStrings (g:
       lib.concatMapStrings (k: "${guestLine "${reposDir}/${g.name}" k}\n") g.sshKeys)
-      guestGroups
+      registry.teams
   );
 in {
   home.packages = [ restrictedGitSsh ];

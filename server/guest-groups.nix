@@ -1,39 +1,29 @@
-# Guest teams, derived from the server's single user registry:
-#   ~/Gist/Vault/server/users.jsonc
+# Everything derived from the server's user registry:
+#   ~/Gist/Vault/server/users.nix
 #
-# That one file is both Authelia's user database (path set in
-# ../authelia/default.nix) and the source of everything here, so adding a guest
-# is one entry there and nothing in this repo. Guests of a team get, and only
-# get:
-#   - https://xieby1.cn/repos/<name>/…   (Authelia group "<name>"; the path rule
-#     in ../authelia/default.nix is the whole web-side boundary)
-#   - read-only git over ssh for repos under ~/Repos/<name> (sshKeys below,
-#     enforced by ../caddy/cgit/ssh/default.nix)
+# That one file is the only list of people, so adding a guest is one entry there
+# and nothing in this repo. It is interpreted here once, for both consumers:
+#   - teams: each non-"admins" group. Its members get, and only get
+#       https://xieby1.cn/repos/<name>/…   (Authelia group "<name>"; the path
+#       rule in ../authelia/default.nix is the whole web-side boundary)
+#       read-only git for ~/Repos/<name> (enforced by ../caddy/cgit/ssh/default.nix)
+#   - adminKeys: the ssh keys of the "admins" users, for a normal login shell
+#     ../authelia/default.nix generates Authelia's user database from the same
+#     file (with the ssh keys stripped).
 #
-# A missing or malformed vault file fails evaluation of the whole home-manager
+# A missing or malformed registry fails evaluation of the whole home-manager
 # configuration; that is deliberate, the alternatives are silent empty rules.
 {
   lib,
   # Overridable so ../tests/guest-groups can run against a fixture.
-  usersFile ? ~/Gist/Vault/server/users.jsonc,
+  usersFile ? ~/Gist/Vault/server/users.nix,
   reposDir ? ~/Repos,
 }:
 let
-  # Read at eval time from outside the store: only non-secret fields are used
-  # here, and the same file reaches authelia as a path string, so the argon2
-  # hashes never end up in /nix/store.
-  lines = builtins.filter builtins.isString (builtins.split "\n" (builtins.readFile usersFile));
-  # JSON has no comments, so whole-line `#` ones are dropped before parsing.
-  # Trailing comments are not supported on purpose: `#` also occurs inside
-  # ssh-key strings, so cutting at the first `#` would corrupt data.
-  body = builtins.concatStringsSep "\n"
-    (builtins.filter (l: builtins.match "[[:space:]]*#.*" l == null) lines);
-
-  # Passwords go away immediately, so nothing downstream can interpolate a hash.
-  users = builtins.mapAttrs (_: u: builtins.removeAttrs u [ "password" ])
-    (builtins.fromJSON body).users;
-
+  users = import usersFile;
   everyone = builtins.attrValues users;
+  keyed = u: u.sshKeys or [ ];
+  hasGroup = name: u: builtins.elem name (u.groups or [ ]);
 
   # "admins" is the owner group, granted /sixu and /web by the rules in
   # ../authelia/default.nix; it is never a team.
@@ -50,10 +40,12 @@ assert builtins.all (n: builtins.match "[A-Za-z0-9_-]+" n != null) teams;
 assert builtins.all (n: builtins.pathExists (reposDir + "/${n}")) teams;
 # Every access rule for the owner needs this group; without it nobody can reach
 # the portal, /sixu or /web, and only a shell on the box can fix it.
-assert builtins.any (u: builtins.elem "admins" (u.groups or [ ])) everyone;
-map (name: {
-  inherit name;
-  # Keys of every user in the group, so one key can cover several teams.
-  sshKeys = lib.concatMap (u: u.sshKeys or [ ])
-    (builtins.filter (u: builtins.elem name (u.groups or [ ])) everyone);
-}) teams
+assert builtins.any (hasGroup "admins") everyone;
+{
+  adminKeys = lib.concatMap keyed (builtins.filter (hasGroup "admins") everyone);
+  teams = map (name: {
+    inherit name;
+    # Keys of every user in the group, so one key can cover several teams.
+    sshKeys = lib.concatMap keyed (builtins.filter (hasGroup name) everyone);
+  }) teams;
+}
