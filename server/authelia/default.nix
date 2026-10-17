@@ -3,7 +3,7 @@ let
   cfg = config.my.server.caddyAuthelia;
   yaml = pkgs.formats.yaml { };
   guestGroups = import ../guest-groups.nix { inherit lib; };
-  registry = import ~/Gist/Vault/server/users.nix;
+  registry = import ~/Gist/Vault/server/users.nix { inherit lib; };
 
   # The user database is generated from the vault registry, so its argon2 hashes
   # do land in /nix/store, which is world-readable. That trade-off and the

@@ -20,7 +20,7 @@
   reposDir ? ~/Repos,
 }:
 let
-  users = import usersFile;
+  users = import usersFile { inherit lib; };
   everyone = builtins.attrValues users;
   keyed = u: u.sshKeys or [ ];
   hasGroup = name: u: builtins.elem name (u.groups or [ ]);
@@ -35,9 +35,19 @@ in
 # segment: a "." would match any character (team A.B also matching /repos/AXB/)
 # and a space would split the ssh command's argument list. Keep names plain.
 assert builtins.all (n: builtins.match "[A-Za-z0-9_-]+" n != null) teams;
-# A team is a folder under ~/Repos. Catching a typo here beats a guest who logs
-# in and silently sees nothing.
-assert builtins.all (n: builtins.pathExists (reposDir + "/${n}")) teams;
+# A team is a folder under ~/Repos. A typo would mean a guest who logs in and
+# silently sees nothing; a stray *file* with a team's name would build too and
+# grant nothing, so ask for a directory specifically.
+assert builtins.all (n: ((builtins.readDir reposDir).${n} or "") == "directory") teams;
+# A misspelled or extra field is otherwise silent: `sshKey` would drop a key
+# without an error, and a secret pasted into the wrong field would be written
+# into the generated user database in /nix/store.
+assert builtins.all (u:
+  builtins.all (k: builtins.elem k [ "displayname" "password" "email" "groups" "sshKeys" ])
+    (builtins.attrNames u)) everyone;
+# Keys are only emitted for admins and for team members, so a user with no group
+# would silently get none.
+assert builtins.all (u: (u.groups or [ ]) != [ ]) everyone;
 # Every access rule for the owner needs this group; without it nobody can reach
 # the portal, /sixu or /web, and only a shell on the box can fix it.
 assert builtins.any (hasGroup "admins") everyone;

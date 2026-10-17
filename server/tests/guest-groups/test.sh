@@ -26,7 +26,7 @@ fails() { # $1 = registry file, $2 = repos dir, $3 = what should fail
 }
 
 cat >"$tmp/ok.nix" <<'EOF'
-{
+{ lib }: {
   owner = {
     password = "SECRET-OWNER";
     groups = [ "admins" ];
@@ -68,5 +68,18 @@ fails "$tmp/no-folder.nix" "$tmp/Repos" "a team without a folder under ~/Repos"
 
 sed 's/\[ "admins" \]/[ ]/' "$tmp/ok.nix" >"$tmp/no-admin.nix"
 fails "$tmp/no-admin.nix" "$tmp/Repos" "a registry with no admins group"
+
+# a file named like a team is not a team folder
+touch "$tmp/Repos/ATeamFile"
+sed 's/"ATeam"/"ATeamFile"/' "$tmp/ok.nix" >"$tmp/not-a-dir.nix"
+fails "$tmp/not-a-dir.nix" "$tmp/Repos" "a team that is a plain file"
+
+# a misspelled field would silently drop a key
+sed 's/sshKeys = \[ "ssh-ed25519 AAAA alice" \]/sshKey = [ "ssh-ed25519 AAAA alice" ]/' "$tmp/ok.nix" >"$tmp/bad-field.nix"
+fails "$tmp/bad-field.nix" "$tmp/Repos" "a misspelled field name"
+
+# a user with no group would silently lose every key
+sed 's/groups = \[ "BTeam" \]/groups = [ ]/' "$tmp/ok.nix" >"$tmp/no-group.nix"
+fails "$tmp/no-group.nix" "$tmp/Repos" "a user with no group"
 
 echo "ok: guest-groups"
