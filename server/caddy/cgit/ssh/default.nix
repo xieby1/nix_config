@@ -7,18 +7,24 @@
 { config, pkgs, lib, ... }:
 let
   reposDir = "${config.home.homeDirectory}/Repos";
+  guestGroups = import ../../../guest-groups.nix;
 
   # Forced command for guest keys. Parses the command line safely (shlex),
-  # resolves the repo path (realpath), requires it under reposDir, then execs
-  # git-upload-pack/git-upload-archive directly. Python is used because doing
-  # this correctly in shell means fighting git's argument quoting.
+  # resolves the repo path (realpath), requires it under the root given as
+  # argv[1] (set per key below), then execs git-upload-pack/git-upload-archive
+  # directly. Python is used because doing this correctly in shell means
+  # fighting git's argument quoting.
   restrictedGitSsh = pkgs.writeScriptBin "restricted-git-ssh" ''
     #!${pkgs.python3}/bin/python3
     import os
     import shlex
     import sys
 
-    REPOS = os.path.realpath("${reposDir}")
+    # argv[1] is mandatory: a missing root must fail, not default to all of
+    # ~/Repos (every generated authorized_keys line passes one).
+    if len(sys.argv) < 2:
+        sys.exit("restricted-git-ssh: no repo root given by authorized_keys")
+    REPOS = os.path.realpath(sys.argv[1])
     ALLOWED = {
         "git-upload-pack": "${pkgs.git}/bin/git-upload-pack",
         "git-upload-archive": "${pkgs.git}/bin/git-upload-archive",
@@ -29,28 +35,38 @@ let
         sys.exit("read-only git access only")
 
     # Join against $HOME so both `ssh://host/root/Repos/x.git` (absolute) and
-    # `host:Repos/x.git` (relative to home) forms land in the same place.
-    repo = os.path.realpath(os.path.join("${config.home.homeDirectory}", args[1]))
+    # `host:Repos/x.git` / `ssh://host/~/Repos/x.git` forms land in one place.
+    path = args[1][2:] if args[1].startswith("~/") else args[1]
+    repo = os.path.realpath(os.path.join("${config.home.homeDirectory}", path))
     if repo != REPOS and not repo.startswith(REPOS + os.sep):
         sys.exit("access limited to " + REPOS)
 
     os.execv(ALLOWED[args[0]], [args[0], repo])
   '';
 
+  # Restriction applied to every guest key: read-only git, no shell, no
+  # port/agent/X11 forwarding, no pty.
+  guestRestrictions =
+    "no-port-forwarding,no-agent-forwarding,no-pty,no-X11-forwarding";
+  guestLine = root: k:
+    ''command="${config.home.homeDirectory}/.nix-profile/bin/restricted-git-ssh ${root}",${guestRestrictions} ${k}'';
+
   # The owner's key: full login shell plus git. Kept in the vault so there is
   # one source of truth (same pattern as sys/default.nix).
   ownerKeys = [ (lib.trim (builtins.readFile ~/Gist/Vault/id_rsa.pub)) ];
 
-  # Guest keys: clone only, restricted to reposDir. One key per element, e.g.
+  # Guest keys limited to all of reposDir, one key per element, e.g.
   #   "ssh-ed25519 AAAA... alice@laptop"
+  # Team-scoped keys live with their team in ../../../guest-groups.nix.
   guestKeys = [
   ];
 
   authorizedKeys = pkgs.writeText "authorized_keys" (
     lib.concatMapStrings (k: "${k}\n") ownerKeys
-    + lib.concatMapStrings
-      (k: ''command="${config.home.homeDirectory}/.nix-profile/bin/restricted-git-ssh",no-port-forwarding,no-agent-forwarding,no-pty,no-X11-forwarding ${k}'' + "\n")
-      guestKeys
+    + lib.concatMapStrings (k: "${guestLine reposDir k}\n") guestKeys
+    + lib.concatMapStrings (g:
+      lib.concatMapStrings (k: "${guestLine "${reposDir}/${g.name}" k}\n") g.sshKeys)
+      guestGroups
   );
 in {
   home.packages = [ restrictedGitSsh ];

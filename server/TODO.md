@@ -83,3 +83,46 @@
   - [ ] Confirm backend services are unreachable without Caddy.
   - [ ] Check logs after failed and successful login attempts.
   - [ ] Document how to restart and update the services.
+
+# Guest teams (BTeam)
+
+- [x] Web side: one Authelia rule per team, `^/repos/<team>(/.*)?$`, `two_factor`,
+      `subject = [ group:admins group:repo-<team> ]`. Owner rules carry
+      `subject = [ group:admins ]`, so an authenticated guest cannot reach
+      `/sixu`, `/web`, the portal settings, … (anything else is default deny).
+- [x] SSH side: guest keys get `command="restricted-git-ssh <root>"` with root
+      `~/Repos/<team>`; `restricted-git-ssh` takes that root from argv[1] and
+      also accepts the `~/Repos/…` URL form.
+- [x] The repo must be named by the PATH only: cgit prefers `?url=` over
+      PATH_INFO, so with a shared cgitrc `https://host/repos/BTeam/x.git/?url=/Circle.git`
+      renders Circle.git while Authelia sees a BTeam path. The cgit route now
+      refuses `?url=` (403). No page cgit emits uses it, virtual-root links are
+      path-based.
+- [x] Clones of nested repos (`BTeam/x.git`) needed a regexp clone matcher:
+      `path /repos/*/info/refs` does not match across `/`.
+- [x] Authelia users file moved to `~/Gist/Vault/server/authelia-users.yml`, and
+      its path (like the `AUTHELIA_*` env file) is a *string*, not a `~/…` Nix
+      path: interpolating a path copies it into world-readable `/nix/store`.
+- Bonus: `/repos/<team>/` is cgit's *section* page (a subdirectory of
+  `scan-path` is a section), so guests get a team index listing only that team's
+  repos — no separate cgit instance needed.
+- Constraints that are easy to forget:
+  - Team names must match `[A-Za-z0-9_-]+` (asserted in `guest-groups.nix`). The
+    name becomes an Authelia regex and an sshd command argument, so a `.` would
+    let team `A.B` also match `/repos/AXB/`, and a space would split the ssh
+    command line.
+  - Cloning over HTTPS cannot work: guests are on `two_factor`, and Authelia
+    answers 401 to Basic auth under that policy (only a browser session works).
+    Guests clone over SSH.
+  - `~/Gist/Vault/server/authelia-users.yml` must exist before a switch; it is a
+    runtime dependency now, so a missing file stops Authelia and the whole site.
+  - `fcgiwrap-cgit -c 4`: one clone holds a CGI slot for the whole transfer;
+    `-c 1` queued everyone's browsing behind it.
+- `make test` now runs `server/tests/cgit-guard/test.sh`, which drives the real
+  route fragment and fails if the `?url=` refusal is removed or the clone
+  matcher stops being anchored on `.git`.
+- Add a guest:
+  - `~/.nix-profile/bin/authelia crypto hash generate argon2`, append the user to
+    the vault users file with `groups: [ "repo-BTeam" ]`.
+  - Put their key in `sshKeys` of the `BTeam` entry, then `home-manager switch`.
+  - They enroll TOTP at `https://xieby1.cn/`; bookmark the repo URL.

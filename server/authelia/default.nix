@@ -2,15 +2,41 @@
 let
   cfg = config.my.server.caddyAuthelia;
   yaml = pkgs.formats.yaml { };
+  guestGroups = import ../guest-groups.nix;
 
-  autheliaUsersFile = yaml.generate "authelia-users.yml" {
-    users.xieby1 = {
-      displayname = "xieby1";
-      password = "$argon2id$v=19$m=65536,t=3,p=4$LadudawpEhFJrQK4+X769A$5FWJdi2UjHmxf7VYtG6E3c/H1xalJGtXqkUAWBskEIY";
-      email = "xieby1@outlook.com";
-      groups = [ "admins" ];
-    };
-  };
+  # Users (owner + guests) live in the vault, not in the Nix store: argon2
+  # hashes in /nix/store are world-readable and crackable offline. Add a guest
+  # with: authelia crypto hash generate argon2   (use the installed binary, a
+  # different version than the service's has bitten the storage DB before.)
+  #
+  # The path is built as a string on purpose: interpolating the `~/…` path would
+  # copy the file into /nix/store, defeating the point.
+  vaultDir = "${config.home.homeDirectory}/Gist/Vault/server";
+  autheliaUsersFile = "${vaultDir}/authelia-users.yml";
+
+  # One rule per guest team, then the owner's rules. Authelia takes the first
+  # matching rule, and a rule whose `subject` the user is not in does not
+  # match, so a guest falls through to the default deny for anything outside
+  # their team. Owner rules keep `subject = group:admins`, otherwise an
+  # authenticated guest could reach /sixu, /web, the portal settings, …
+  accessRules = map (g: {
+    domain = "xieby1.cn";
+    resources = [ "^/repos/${g.name}(/.*)?$" ];
+    subject = [ "group:admins" "group:repo-${g.name}" ];
+    policy = "two_factor";
+  }) guestGroups ++ [
+    {
+      domain = "xieby1.cn";
+      resources = [ "^/repos(/.*)?$" ];
+      subject = [ "group:admins" ];
+      policy = "two_factor";
+    }
+    {
+      domain = "xieby1.cn";
+      subject = [ "group:admins" ];
+      policy = "two_factor";
+    }
+  ];
 
   autheliaConfig = yaml.generate "authelia-configuration.yml" {
     theme = "auto";
@@ -21,14 +47,11 @@ let
 
     totp.issuer = "xieby1.cn";
 
-    authentication_backend.file.path = "${autheliaUsersFile}";
+    authentication_backend.file.path = autheliaUsersFile;
 
     access_control = {
       default_policy = "deny";
-      rules = [{
-        domain = "xieby1.cn";
-        policy = "two_factor";
-      }];
+      rules = accessRules;
     };
 
     session.cookies = [{
@@ -63,7 +86,8 @@ in {
       };
       Install.WantedBy = [ "default.target" ];
       Service = {
-        EnvironmentFile = ~/Gist/Vault/server/authelia.env;
+        # Same string-not-path reason as autheliaUsersFile above.
+        EnvironmentFile = "${vaultDir}/authelia.env";
         ExecStart = "${pkgs.authelia}/bin/authelia --config ${autheliaConfig}";
         Restart = "on-failure";
       };

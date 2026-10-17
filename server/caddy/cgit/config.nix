@@ -17,11 +17,13 @@ in {
     # cgit.cgi is plain CGI, which Caddy cannot run. fcgiwrap is the
     # FastCGI->CGI bridge: it stays up, accepts FastCGI from Caddy over
     # loopback and forks cgit.cgi (or git-http-backend) per request.
+    # -c 4: one clone holds its slot for the whole transfer, and -c 1 would
+    # queue everyone's browsing behind it.
     systemd.user.services.fcgiwrap-cgit = {
       Unit.Description = "fcgiwrap CGI bridge for cgit";
       Install.WantedBy = [ "default.target" ];
       Service = {
-        ExecStart = "${pkgs.fcgiwrap}/bin/fcgiwrap -c 1 -s tcp:127.0.0.1:${toString consts.fcgiwrapPort}";
+        ExecStart = "${pkgs.fcgiwrap}/bin/fcgiwrap -c 4 -s tcp:127.0.0.1:${toString consts.fcgiwrapPort}";
         Restart = "on-failure";
         RestartSec = 3;
       };
