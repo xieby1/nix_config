@@ -7,7 +7,7 @@
 { config, pkgs, lib, ... }:
 let
   reposDir = "${config.home.homeDirectory}/Repos";
-  guestGroups = import ../../../guest-groups.nix;
+  guestGroups = import ../../../guest-groups.nix { inherit lib; };
 
   # Forced command for guest keys. Parses the command line safely (shlex),
   # resolves the repo path (realpath), requires it under the root given as
@@ -55,15 +55,12 @@ let
   # one source of truth (same pattern as sys/default.nix).
   ownerKeys = [ (lib.trim (builtins.readFile ~/Gist/Vault/id_rsa.pub)) ];
 
-  # Guest keys limited to all of reposDir, one key per element, e.g.
-  #   "ssh-ed25519 AAAA... alice@laptop"
-  # Team-scoped keys live with their team in ../../../guest-groups.nix.
-  guestKeys = [
-  ];
+  # Guest keys are `sshKeys` in ~/Gist/Vault/server/users.jsonc, one entry per
+  # user, scoped to that user's team folders by ../../../guest-groups.nix. There
+  # is no second list here: ssh access comes from the registry alone.
 
   authorizedKeys = pkgs.writeText "authorized_keys" (
     lib.concatMapStrings (k: "${k}\n") ownerKeys
-    + lib.concatMapStrings (k: "${guestLine reposDir k}\n") guestKeys
     + lib.concatMapStrings (g:
       lib.concatMapStrings (k: "${guestLine "${reposDir}/${g.name}" k}\n") g.sshKeys)
       guestGroups

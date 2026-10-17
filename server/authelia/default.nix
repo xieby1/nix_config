@@ -2,25 +2,27 @@
 let
   cfg = config.my.server.caddyAuthelia;
   yaml = pkgs.formats.yaml { };
-  guestGroups = import ../guest-groups.nix;
+  guestGroups = import ../guest-groups.nix { inherit lib; };
 
   # Users (owner + guests) live in the vault, not in the Nix store: argon2
-  # hashes in /nix/store are world-readable and crackable offline. Add a guest
-  # with: authelia crypto hash generate argon2   (use the installed binary, a
-  # different version than the service's has bitten the storage DB before.)
+  # hashes in /nix/store are world-readable and crackable offline. Same file the
+  # guest teams/ssh keys are derived from, see ../guest-groups.nix.
   #
-  # The path is built as a string on purpose: interpolating the `~/…` path would
-  # copy the file into /nix/store, defeating the point.
-  vaultDir = "${config.home.homeDirectory}/Gist/Vault/server";
-  autheliaUsersFile = "${vaultDir}/authelia-users.yml";
+  # The path must be a plain string: interpolating a path value (`"${~/…}"`)
+  # copies the whole directory into /nix/store, hashes included. `toString`
+  # keeps it a string. Same spelling as in ../guest-groups.nix, so both read the
+  # same file even when home.homeDirectory differs from $HOME (tests/build).
+  vaultDir = toString ~/Gist/Vault/server;
+  autheliaUsersFile = "${vaultDir}/users.jsonc";
 
   # One rule per guest team, then the owner's rules. Authelia takes the first
   # matching rule, and a rule whose `subject` the user is not in does not
   # match, so a guest falls through to the default deny for anything outside
   # their team. Owner rules keep `subject = group:admins`, otherwise an
   # authenticated guest could reach /sixu, /web, the portal settings, …
-  # A guest's group is the team name itself; guest-groups.nix asserts no team
-  # is called "admins", which would otherwise match the owner rules below.
+  # A guest's group is the team name itself, derived from the user registry;
+  # guest-groups.nix drops "admins" from that list, which would otherwise match
+  # the owner rules below.
   accessRules = map (g: {
     domain = "xieby1.cn";
     resources = [ "^/repos/${g.name}(/.*)?$" ];
