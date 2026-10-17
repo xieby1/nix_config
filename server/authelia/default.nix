@@ -3,6 +3,8 @@ let
   cfg = config.my.server.caddyAuthelia;
   yaml = pkgs.formats.yaml { };
   guestGroups = import ../guest-groups.nix { inherit lib; };
+  # Same prefix Caddy serves cgit under; Authelia's regexes are case-sensitive.
+  cgitConsts = import ../caddy/cgit/consts.nix;
   registry = import ~/Gist/Vault/server/users.nix { inherit lib; };
 
   # The user database is generated from the vault registry, so its argon2 hashes
@@ -28,13 +30,13 @@ let
   # the owner rules below.
   accessRules = map (g: {
     domain = "xieby1.cn";
-    resources = [ "^/repos/${g.name}(/.*)?$" ];
+    resources = [ "^${cgitConsts.prefix}/${g.name}(/.*)?$" ];
     subject = [ "group:admins" "group:${g.name}" ];
     policy = "two_factor";
   }) guestGroups.teams ++ [
     {
       domain = "xieby1.cn";
-      resources = [ "^/repos(/.*)?$" ];
+      resources = [ "^${cgitConsts.prefix}(/.*)?$" ];
       subject = [ "group:admins" ];
       policy = "two_factor";
     }

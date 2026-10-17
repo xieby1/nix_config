@@ -4,7 +4,7 @@
 # That one file is the only list of people, so adding a guest is one entry there
 # and nothing in this repo. It is interpreted here once, for both consumers:
 #   - teams: each non-"admins" group. Its members get, and only get
-#       https://xieby1.cn/repos/<name>/…   (Authelia group "<name>"; the path
+#       https://xieby1.cn/Repos/<name>/…   (Authelia group "<name>"; the path
 #       rule in ../authelia/default.nix is the whole web-side boundary)
 #       read-only git for ~/Repos/<name> (enforced by ../caddy/cgit/ssh/default.nix)
 #   - adminKeys: the ssh keys of the "admins" users, for a normal login shell
@@ -30,9 +30,9 @@ let
   teams = builtins.filter (n: n != "admins")
     (lib.unique (lib.concatMap (u: u.groups or [ ]) everyone));
 in
-# The name ends up in an Authelia regex (^/repos/<name>(/.*)?$) and on the
+# The name ends up in an Authelia regex (^/Repos/<name>(/.*)?$) and on the
 # forced-command line in authorized_keys, both of which read more than a path
-# segment: a "." would match any character (team A.B also matching /repos/AXB/)
+# segment: a "." would match any character (team A.B also matching /Repos/AXB/)
 # and a space would split the ssh command's argument list. Keep names plain.
 assert builtins.all (n: builtins.match "[A-Za-z0-9_-]+" n != null) teams;
 # A team is a folder under ~/Repos. A typo would mean a guest who logs in and

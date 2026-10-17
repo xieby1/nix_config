@@ -7,7 +7,9 @@
   fcgiwrapPort = 9007;
 
   # URL prefix Caddy serves and strips before handing the request to cgit.
-  prefix = "/repos";
+  # Capitalised to match ~/Repos; it ends up in Authelia regexes verbatim (they
+  # are case-sensitive), so change it here only.
+  prefix = "/Repos";
 
   # cgit's page cache lives at $XDG_CACHE_HOME/<cacheDir>.
   cacheDir = "cgit";

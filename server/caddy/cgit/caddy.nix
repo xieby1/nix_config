@@ -32,7 +32,7 @@ in ''
       import auth
 
       # cgit takes the repo from ?url= in preference to PATH_INFO, so any
-      # allowed path could render any repo (/repos/BTeam/x/?url=/Other.git).
+      # allowed path could render any repo (/Repos/BTeam/x/?url=/Other.git).
       # Authelia only sees the path, so refuse the parameter here. Applies to the
       # owner too; cgit emits no such links when virtual-root is set.
       # shortcut: blocklist of one parameter; re-check on cgit upgrades.

@@ -29,8 +29,13 @@ git -C "$tmp/work" add -A
 git -C "$tmp/work" -c user.email=t@t -c user.name=t commit -qm x
 git -C "$tmp/work" push -q "$tmp/repos/BTeam/team.git" HEAD:refs/heads/main
 
-printf 'virtual-root=/repos/\ncache-root=%s/cache\nscan-path=%s/repos\n' \
-  "$tmp" "$tmp" > "$tmp/cgitrc"
+# Same prefix the fragment serves under, so a rename of consts.prefix does not
+# silently turn every check below into a 404.
+prefix=$(nix-instantiate --eval --strict --raw \
+  -E "import $root/server/caddy/cgit/consts.nix" -A prefix)
+
+printf 'virtual-root=%s/\ncache-root=%s/cache\nscan-path=%s/repos\n' \
+  "$prefix" "$tmp" "$tmp" > "$tmp/cgitrc"
 
 fragment=$(nix-instantiate --eval --strict --raw -E "
   (import $root/server/caddy/cgit/caddy.nix {
@@ -55,15 +60,15 @@ check() { # name expected actual
 }
 get() { curl -s --noproxy '*' -o "$tmp/body" -w '%{http_code}' "http://127.0.0.1:$port_http$1"; }
 
-check "browse a team repo" 200 "$(get "/repos/BTeam/team.git/")"
+check "browse a team repo" 200 "$(get "$prefix/BTeam/team.git/")"
 check "browse a team repo: right repo" yes "$(grep -q 'BTeam/team.git' "$tmp/body" && echo yes || echo no)"
-check "browse the owner's repo" 200 "$(get "/repos/owner.git/")"
+check "browse the owner's repo" 200 "$(get "$prefix/owner.git/")"
 
-check "clone a nested repo (info/refs)" 200 "$(get "/repos/BTeam/team.git/info/refs?service=git-upload-pack")"
+check "clone a nested repo (info/refs)" 200 "$(get "$prefix/BTeam/team.git/info/refs?service=git-upload-pack")"
 check "clone: git answers, not cgit" 001e "$(head -c 4 "$tmp/body")"
 
-check "?url=<other repo> refused" 403 "$(get "/repos/BTeam/team.git/?url=/owner.git")"
-check "?url= refused (encoded key)" 403 "$(get "/repos/BTeam/team.git/?%75rl=/owner.git")"
-check "plain view of info/refs still served" 200 "$(get "/repos/BTeam/team.git/plain/info/refs")"
+check "?url=<other repo> refused" 403 "$(get "$prefix/BTeam/team.git/?url=/owner.git")"
+check "?url= refused (encoded key)" 403 "$(get "$prefix/BTeam/team.git/?%75rl=/owner.git")"
+check "plain view of info/refs still served" 200 "$(get "$prefix/BTeam/team.git/plain/info/refs")"
 
 exit "$fail"
