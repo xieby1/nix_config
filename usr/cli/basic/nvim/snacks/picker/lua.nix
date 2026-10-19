@@ -41,6 +41,14 @@
       select = {
         layout = { preset = "select" },
       },
+      -- Snacks' LSP sources opt in to jump.reuse_win = true, which moves focus to
+      -- a window that already shows the target file instead of replacing the
+      -- current buffer. Keep jumps in the current window.
+      lsp_definitions = { jump = { reuse_win = false } },
+      lsp_declarations = { jump = { reuse_win = false } },
+      lsp_type_definitions = { jump = { reuse_win = false } },
+      lsp_implementations = { jump = { reuse_win = false } },
+      lsp_references = { jump = { reuse_win = false } },
     },
   },
 ''
