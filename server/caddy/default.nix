@@ -60,6 +60,11 @@ let
     # cgit creates files directly under cache-root, so it must already exist;
     # ./cgit/config.nix creates it.
     cache-root=${cgitCacheRoot}
+    # cgit hardcodes the footer timestamp to UTC (+0000); local-time makes it use
+    # the server timezone (Asia/Shanghai here).
+    # shortcut: local-time is global, so commit/tag/atom dates also render as
+    # +0800 instead of the author's tz; patch cgit's footer if per-view tz matters.
+    local-time=1
     scan-path=${cgitReposPath}
   '';
 
