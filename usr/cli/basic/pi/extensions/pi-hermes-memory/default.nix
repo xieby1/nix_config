@@ -36,6 +36,13 @@ in {
       ];
     } + /lib/node_modules/pi-hermes-memory;
   };
+  # Bound the session-search DB: prune indexed sessions untouched for 90 days on
+  # startup. Rows only -- the JSONL transcripts on disk are never deleted.
+  yq-merge.".pi/agent/hermes-memory-config.json" = {
+    generator = builtins.toJSON;
+    expr.sessionRetentionDays = 90;
+  };
+
   home.file.".pi/agent/projects-memory".source = config.lib.file.mkOutOfStoreSymlink ~/Gist/Data/pi/projects-memory;
 
   # pi-hermes-memory writes MEMORY.md/USER.md via temp-file + rename, which would
