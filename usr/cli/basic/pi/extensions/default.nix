@@ -6,6 +6,7 @@
     ./pi-hermes-memory
     ./pi-math
     ./heuristic-notify.nix
+    ./pi-web-access
     ./ponytail
     ./rpiv-todo
   ];

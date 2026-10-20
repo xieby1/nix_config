@@ -87,6 +87,22 @@
       "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202609.0",
       "hash": "sha256-rmJDHCdcIoMyhTuJfAJOut/rwd4KoKQ8Qt3/HKGxfLM="
     },
+    "pi-web-access": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-web-access"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.43.0",
+      "revision": "175ddc208875ef508a6d354a3f60512550a86c2c",
+      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.43.0",
+      "hash": "sha256-RRK2lyffu+nq+QP4yZzSEoHNMZ847Knpdywi7yGbylE="
+    },
     "ponytail": {
       "type": "GitRelease",
       "repository": {
