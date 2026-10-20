@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 let
   # Pi injects @earendil-works/* and typebox at runtime, so drop its dev/peer
   # deps and their transitive graph from the install.
@@ -13,6 +13,17 @@ let
     '';
   };
 in {
+  # Search-provider keys live in Pi's agent dir, not in Nix. Written by yq-merge
+  # (a real file, not a store symlink) so the extension's `/websearch` edits keep
+  # working; the keys still end up in the store, same as auth.json.
+  yq-merge.".pi/agent/web-search.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      tavilyApiKey = config.ai.tavily.api_key;
+      deepseekApiKey = config.ai.deepseek.api_key;
+    };
+  };
+
   home.file.".pi/agent/extensions/pi-web-access".source = pkgs.buildNpmPackage {
     name = "pi-web-access";
     src = slimSrc;
