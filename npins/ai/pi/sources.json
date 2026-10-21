@@ -56,20 +56,17 @@
       "hash": "sha256-MXyIWARMcy30yXvkmMFsCrYsO5IdOykWAgfX6xugKmc="
     },
     "pi-skill-usage": {
-      "type": "GitRelease",
+      "type": "Git",
       "repository": {
         "type": "GitHub",
         "owner": "xieby1",
         "repo": "pi-skill-usage"
       },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "main",
       "submodules": false,
-      "version": "v0.1.0",
-      "revision": "495d6724fedd624e01d9b3b7e33cdd6aebabdfa9",
-      "url": "https://api.github.com/repos/xieby1/pi-skill-usage/tarball/refs/tags/v0.1.0",
-      "hash": "sha256-bClsDEgEb/JVFmg8HTHT5NWd5VUrZfOBf6plKTj0h0M="
+      "revision": "4206381c11d23fcda42e4bf6ad07804dc84f4a1b",
+      "url": "https://github.com/xieby1/pi-skill-usage/archive/4206381c11d23fcda42e4bf6ad07804dc84f4a1b.tar.gz",
+      "hash": "sha256-LZ6XL3wc+jnHnsv9vkmLn9+IiiOqqND07NsGF3i/0K8="
     },
     "pi-web": {
       "type": "GitRelease",
