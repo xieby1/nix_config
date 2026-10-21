@@ -55,6 +55,19 @@
       "url": "https://github.com/monotykamary/pi-math/archive/415a0b28fa6620e3aa26762077eccb14744b6e20.tar.gz",
       "hash": "sha256-MXyIWARMcy30yXvkmMFsCrYsO5IdOykWAgfX6xugKmc="
     },
+    "pi-tool-stats": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "t2o2",
+        "repo": "pi-tool-stats"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e460d87b9d909f067632d3b1b3f4b130554f53a9",
+      "url": "https://github.com/t2o2/pi-tool-stats/archive/e460d87b9d909f067632d3b1b3f4b130554f53a9.tar.gz",
+      "hash": "sha256-gCMNJkuN2QbxSsf5Sr1IBplH1WUiOhZV3GcDzMBk7QQ="
+    },
     "pi-web": {
       "type": "GitRelease",
       "repository": {
