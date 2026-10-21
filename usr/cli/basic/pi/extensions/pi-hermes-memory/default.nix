@@ -51,5 +51,9 @@ in {
   my.syncthing.Gist-stignore = lib.mkAfter [
     "/Data/pi/pi-hermes-memory/sessions.db"
     "/Data/pi/pi-hermes-memory/sessions.db-*"
+    # A SQLite inter-process lock DB, created next to the memory directory and
+    # only meaningful on the machine holding it. Syncing it produced a pile of
+    # .sync-conflict copies and no useful data.
+    "/Data/pi/.pi-hermes-locks.*"
   ];
 }

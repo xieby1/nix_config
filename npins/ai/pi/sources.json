@@ -64,9 +64,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "4206381c11d23fcda42e4bf6ad07804dc84f4a1b",
-      "url": "https://github.com/xieby1/pi-skill-usage/archive/4206381c11d23fcda42e4bf6ad07804dc84f4a1b.tar.gz",
-      "hash": "sha256-LZ6XL3wc+jnHnsv9vkmLn9+IiiOqqND07NsGF3i/0K8="
+      "revision": "9a9c8855b0730db9907829d42182e4a9b817d554",
+      "url": "https://github.com/xieby1/pi-skill-usage/archive/9a9c8855b0730db9907829d42182e4a9b817d554.tar.gz",
+      "hash": "sha256-WdBEBm1vIfLo7EGNPeiAR9SkWCL1y1kJmcclVtmNFKc="
     },
     "pi-web": {
       "type": "GitRelease",
