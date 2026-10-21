@@ -55,6 +55,22 @@
       "url": "https://github.com/monotykamary/pi-math/archive/415a0b28fa6620e3aa26762077eccb14744b6e20.tar.gz",
       "hash": "sha256-MXyIWARMcy30yXvkmMFsCrYsO5IdOykWAgfX6xugKmc="
     },
+    "pi-skill-usage": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-skill-usage"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.1.0",
+      "revision": "495d6724fedd624e01d9b3b7e33cdd6aebabdfa9",
+      "url": "https://api.github.com/repos/xieby1/pi-skill-usage/tarball/refs/tags/v0.1.0",
+      "hash": "sha256-bClsDEgEb/JVFmg8HTHT5NWd5VUrZfOBf6plKTj0h0M="
+    },
     "pi-web": {
       "type": "GitRelease",
       "repository": {
