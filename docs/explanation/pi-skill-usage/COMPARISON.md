@@ -89,12 +89,15 @@ later. Any tracker that re-scans the disk instead will be wrong about this machi
 
 ## Verdict
 
-No package satisfies R1–R4 simultaneously, so the plan is a small local extension:
+No package satisfies R1–R4 simultaneously, so the plan is a small local extension
+(`pi-skill-usage`, developed in `~/Codes/MyRepos/pi-skill-usage`):
 
-- installed set from `pi.getCommands()`
+- installed set from `before_agent_start`'s `systemPromptOptions.skills`, with
+  `pi.getCommands()` as the cold-start fallback (it lists only command-registered
+  skills, so it is marked partial rather than reported as the whole set)
 - counting from `tool_call` (a `read` of a known `SKILL.md`) and `input` (`/skill:`)
 - one **global** `~/.pi/agent/skill-usage.json`, aggregate counts per skill name
 - `/skill-usage unused` sorted by measured prompt-token cost
 - atomic temp+rename write, re-read and sum before writing
 
-About 120 lines, no dependencies, no pin, nothing to rebase.
+About 180 lines of extension plus 90 of tests, no dependencies, nothing to rebase.
