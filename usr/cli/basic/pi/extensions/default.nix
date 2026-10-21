@@ -4,7 +4,6 @@
     ./acp.nix
     ./pi-hermes-memory
     ./pi-math
-    ./pify-skills.nix
     ./heuristic-notify.nix
     ./pi-web-access
     ./ponytail
