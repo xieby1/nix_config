@@ -19,7 +19,7 @@
     ./dms
     ./evolution
     ./low-battery-notify.nix
-    ./dingtalk.nix
+    ./dingtalk
   ];
 
   xdg.mimeApps = {
