@@ -4,11 +4,18 @@ let
   consts = import ./consts.nix;
 
   cacheRoot = "${config.xdg.cacheHome}/${consts.cacheDir}";
+
+  # The same patched cgit the web route serves, so running cgit.cgi by hand
+  # shows the same numbers as the page.
+  cgit = import ./package.nix { inherit pkgs; };
 in {
   config = lib.mkIf cfg.enable {
-    # package.nix: the same patched cgit the web route serves, so running
-    # cgit.cgi by hand shows the same numbers as the page.
-    home.packages = [ (import ./package.nix { inherit pkgs; }) pkgs.fcgiwrap ];
+    home.packages = [ cgit pkgs.fcgiwrap ];
+
+    # No binary cache has the patched build, so the server would compile it
+    # itself: push it from a machine that already has it, then this entry keeps
+    # re-pushing whenever a cgit bump changes the build. See ../../modules/cachix.nix.
+    cachix_packages = [ cgit ];
 
     # cgit writes its page-cache files directly into cache-root but never
     # creates that directory, so it must exist before the first request.
