@@ -31,6 +31,8 @@
     ./vue.nix
     # zig
     {programs.neovim={initLua="vim.lsp.enable('zls')\n";extraPackages=[pkgs.zls pkgs.zig];};}
+    # veryl
+    {programs.neovim={initLua="vim.lsp.enable('veryl_ls')\n";extraPackages=[pkgs.veryl];};}
   ];
   programs.neovim = {
     plugins = [{

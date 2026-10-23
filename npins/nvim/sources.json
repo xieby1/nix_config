@@ -70,6 +70,19 @@
       "revision": "330542c395dd694df1e119d3bd3b506ac240ba78",
       "url": "https://api.github.com/repos/ravsii/tree-sitter-d2/tarball/refs/tags/v0.7.2",
       "hash": "sha256-zx6ud3uh+0Z+cYdP2KkFA27Kb6fW/CSGpC1C4YmCIo0="
+    },
+    "tree-sitter-veryl": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "veryl-lang",
+        "repo": "tree-sitter-veryl"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "f38156e6fa97e7386cdfbcbcc537dc970a13c3ce",
+      "url": "https://github.com/veryl-lang/tree-sitter-veryl/archive/f38156e6fa97e7386cdfbcbcc537dc970a13c3ce.tar.gz",
+      "hash": "sha256-EoxR2W3Kc+U/kw7TQLPZOu8KvYZX5KcuFUfwSsP+5n0="
     }
   },
   "version": 8

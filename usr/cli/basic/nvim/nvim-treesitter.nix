@@ -16,10 +16,16 @@
           version = pkgs.lib.removePrefix "v" pkgs.npinsed.nvim.tree-sitter-d2.version;
           src = pkgs.npinsed.nvim.tree-sitter-d2;
         })
+        (pkgs.tree-sitter.buildGrammar {
+          language = "veryl";
+          # Only checked against tree-sitter.json metadata, no functional impact
+          version = "0.1.0";
+          src = pkgs.npinsed.nvim.tree-sitter-veryl;
+        })
       ]);
       type = "lua";
       config = /*lua*/''
-        vim.filetype.add({ extension = { mdx = "markdown" } })
+        vim.filetype.add({ extension = { mdx = "markdown", veryl = "veryl" } })
         vim.api.nvim_create_autocmd('FileType', {
           callback = function(ev)
             local lang = vim.treesitter.language.get_lang(vim.bo[ev.buf].filetype)
