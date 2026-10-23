@@ -7,6 +7,8 @@
 #   - cloning it reaches git-http-backend, not cgit
 #   - ?url=<other repo> is refused, so an allowed path cannot render another repo
 #   - a cgit file view ending in info/refs is not hijacked by the clone route
+#   - the repolist Idle column follows HEAD, not packed-refs (the local patch in
+#     server/caddy/cgit/cgit-idle-follow-head.patch)
 set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
 root=$(cd "$here/../../.." && pwd)
@@ -19,6 +21,9 @@ trap cleanup EXIT
 
 cgi=$(nix-build --no-out-link -E 'with import <nixpkgs> {}; fcgiwrap')
 serve=$(nix-build --no-out-link -E 'with import <nixpkgs> {}; caddy')
+# The cgit this tree actually serves (see server/caddy/cgit/package.nix). The
+# fragment only interpolates the path, so the store path is passed as a string.
+cgit=$(nix-build --no-out-link -E "import $root/server/caddy/cgit/package.nix { pkgs = import <nixpkgs> {}; }")
 
 mkdir -p "$tmp/repos/BTeam" "$tmp/cache" "$tmp/work/info"
 git init -q --bare "$tmp/repos/BTeam/team.git"
@@ -47,14 +52,15 @@ printf 'virtual-root=%s/\ncache-root=%s/cache\nscan-path=%s/repos\n' \
 
 fragment=$(nix-instantiate --eval --strict --raw -E "
   (import $root/server/caddy/cgit/caddy.nix {
-    inherit (import <nixpkgs> {}) cgit git;
+    cgit = \"$cgit\";
+    inherit (import <nixpkgs> {}) git;
     cgitrc = \"$tmp/cgitrc\";
     themeRoot = \"$tmp/theme\";
     reposPath = \"$tmp/repos\";
   })" | sed -e "s/9007/$port_cgi/g" -e '/^ *import auth$/d')
 
 printf '{\n\tadmin off\n\tauto_https off\n}\n:%s {\n%s\n}\n' "$port_http" "$fragment" > "$tmp/Caddyfile"
-caddy adapt --config "$tmp/Caddyfile" --adapter caddyfile > /dev/null 2>&1
+"$serve/bin/caddy" adapt --config "$tmp/Caddyfile" --adapter caddyfile > /dev/null 2>&1
 
 "$cgi/bin/fcgiwrap" -c 4 -s "tcp:127.0.0.1:$port_cgi" > "$tmp/cgi.log" 2>&1 &
 "$serve/bin/caddy" run --config "$tmp/Caddyfile" --adapter caddyfile > "$tmp/caddy.log" 2>&1 &
@@ -85,5 +91,21 @@ check "theme stylesheet served" 200 "$(get "$prefix$theme_file")"
 check "theme served from the theme root" yes "$(grep -q 'body{}' "$tmp/body" && echo yes || echo no)"
 check "theme served as CSS" text/css "$(ctype "$prefix$theme_file" | cut -d';' -f1)"
 check "rest of the theme tarball stays unreachable" 404 "$(get "$prefix/cgitrc")"
+
+# Idle must follow HEAD, not packed-refs: pack the ref, make packed-refs look 4
+# weeks old, then push again. Only the loose ref knows about that push.
+team=$tmp/repos/BTeam/team.git
+git -C "$team" pack-refs --all
+touch -d '4 weeks ago' "$team/packed-refs"
+echo more >> "$tmp/work/info/refs"
+git -C "$tmp/work" commit -qam y
+git -C "$tmp/work" push -q "$team" HEAD:refs/heads/main
+
+get "$prefix/?q=team.git" > /dev/null
+ut=$(grep -o "data-ut='[0-9]*'" "$tmp/body" | grep -o '[0-9]\+' | head -1)
+fresh() { [ -n "$ut" ] && [ $(($(date +%s) - ut)) -lt 300 ]; }
+aged() { [ $(($(date +%s) - $(stat -c %Y "$team/packed-refs"))) -gt 1209600 ]; }
+check "Idle follows HEAD, not an aged packed-refs" yes \
+  "$(fresh && aged && echo yes || echo no)"
 
 exit "$fail"

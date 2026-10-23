@@ -29,6 +29,8 @@ let
     test -f $out${consts.themeFile}
   '';
 
+  cgit = import ./cgit/package.nix { inherit pkgs; };
+
   # The viewport tag is the load-bearing part: without it phones lay the page out
   # at 980px wide and the theme's media queries never fire.
   cgitHeadInclude = pkgs.writeText "cgit-head-include.html" ''
@@ -94,7 +96,8 @@ let
 
       # cgit routes; see ./cgit/.
       ${import ./cgit/caddy.nix {
-        inherit (pkgs) cgit git;
+        inherit cgit;
+        inherit (pkgs) git;
         inherit cgitrc;
         themeRoot = cgitThemeRoot;
         reposPath = cgitReposPath;

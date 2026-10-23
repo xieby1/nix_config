@@ -6,7 +6,9 @@ let
   cacheRoot = "${config.xdg.cacheHome}/${consts.cacheDir}";
 in {
   config = lib.mkIf cfg.enable {
-    home.packages = [ pkgs.cgit pkgs.fcgiwrap ];
+    # package.nix: the same patched cgit the web route serves, so running
+    # cgit.cgi by hand shows the same numbers as the page.
+    home.packages = [ (import ./package.nix { inherit pkgs; }) pkgs.fcgiwrap ];
 
     # cgit writes its page-cache files directly into cache-root but never
     # creates that directory, so it must exist before the first request.
