@@ -16,6 +16,22 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.34",
       "hash": "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo="
     },
+    "pi-context-view": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "dimk90",
+        "repo": "pi-context-view"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.7.1",
+      "revision": "cc988b63d45cf82a6397a81c79739c3684f6a9c7",
+      "url": "https://api.github.com/repos/dimk90/pi-context-view/tarball/refs/tags/v0.7.1",
+      "hash": "sha256-BYj7B+msJfNRvRuOR3MYZUgvyCPKP4ZQt+mX1eERQkM="
+    },
     "pi-hermes-memory": {
       "type": "Git",
       "repository": {
