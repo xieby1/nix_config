@@ -116,22 +116,6 @@
       "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.43.0",
       "hash": "sha256-RRK2lyffu+nq+QP4yZzSEoHNMZ847Knpdywi7yGbylE="
     },
-    "ponytail": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "DietrichGebert",
-        "repo": "ponytail"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v5.2.0",
-      "revision": "2961b52fc1fe6a5a87c7a959a79512e5c2f3ffe5",
-      "url": "https://api.github.com/repos/DietrichGebert/ponytail/tarball/refs/tags/v5.2.0",
-      "hash": "sha256-3GopEvTySUvo0ghGz4CF6xbN7x3kbB/IHEY7Dwr4dls="
-    },
     "rpiv-mono": {
       "type": "Git",
       "repository": {
