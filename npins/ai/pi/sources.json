@@ -32,19 +32,6 @@
       "url": "https://api.github.com/repos/dimk90/pi-context-view/tarball/refs/tags/v0.7.1",
       "hash": "sha256-BYj7B+msJfNRvRuOR3MYZUgvyCPKP4ZQt+mX1eERQkM="
     },
-    "pi-default-model-switcher": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "Faikuu",
-        "repo": "pi-default-model-switcher"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "ded87d0d1886a502e4548b99e2a74678990a957e",
-      "url": "https://github.com/Faikuu/pi-default-model-switcher/archive/ded87d0d1886a502e4548b99e2a74678990a957e.tar.gz",
-      "hash": "sha256-OmI+bsfcpt43oS6FgULMPcDUf4QVriQBYCuOGzPRefQ="
-    },
     "pi-hermes-memory": {
       "type": "Git",
       "repository": {

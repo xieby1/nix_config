@@ -5,7 +5,7 @@
     ./pi-hermes-memory
     ./pi-math
     ./pi-context-view
-    ./pi-default-model-switcher.nix
+    ./pi-model-project
     ./pi-skill-usage.nix
     ./heuristic-notify.nix
     ./pi-web-access
