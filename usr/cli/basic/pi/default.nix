@@ -5,7 +5,10 @@
     ./providers
   ];
   home.packages = [
-    pkgs.pipkgs.pi-coding-agent
+    # Include session-file size (S5.5M) in Pi's built-in footer stats line.
+    (pkgs.pipkgs.pi-coding-agent.overrideAttrs (old: {
+      patches = (old.patches or [ ]) ++ [ ./footer-session-size.patch ];
+    }))
   ];
 
   yq-merge.".pi/agent/settings.json" = {

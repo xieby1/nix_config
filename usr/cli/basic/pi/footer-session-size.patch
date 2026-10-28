@@ -1,0 +1,71 @@
+# Why pi-powerline-footer is not ideal here
+
+`pi-powerline-footer` is well maintained and already provides useful model, Git, context, token, and cost information. The problem is fit, not popularity.
+
+| What we want | What the extension requires |
+| --- | --- |
+| A status line without changing Pi's input editor | It replaces the editor, including its prompt, borders, bash integration, and rendering paths. `padding = 0` fixed only the status line; removing the editor's leading space needed a source patch. The `> ` prompt needed yet another change. |
+| One space between segments | With `separator = "none"`, upstream joins a one-space glyph with a space on each side, producing three spaces. This required a local patch to the join and width calculation. |
+| A small, focused footer | The package also supplies a welcome screen, bash mode, a prompt queue, stash and shortcuts, and working vibes. We do not need those features to display a footer. |
+| Arbitrary user-defined segments | `customItems` displays values published through `ctx.ui.setStatus(key, value)`, with a prefix and color. More involved calculations or rendering still need a companion extension; there is no footer-level custom render callback. |
+
+The default left-segment list also had to be repeated just to put `path` first: `layout.left` replaces that group rather than moving one entry. The pinned source and editor-spacing patch would need rechecking on each update.
+
+**Decision:** use Pi's native editor and footer. To show the session file size inline with Pi's own stats, `usr/cli/basic/pi/footer-session-size.patch` adds a single `S…` field without replacing the footer. `ctx.ui.setStatus()` puts values on a separate line; a footer-only extension would need to reimplement the native stats. Reconsider a custom footer only if multiple new rendered segments justify that maintenance.
+
+--- a/packages/coding-agent/src/modes/interactive/components/footer.ts
++++ b/packages/coding-agent/src/modes/interactive/components/footer.ts
+@@ -0,0 +1 @@
++import { statSync } from "node:fs";
+@@ -55,0 +57 @@
++	sessionFileSize: number | undefined;
+@@ -140,0 +143,12 @@
++		// Read the session file size here rather than in render(), which runs on every frame.
++		// The cache above invalidates whenever an entry is appended, which is also when the file grows.
++		const sessionFile = sessionManager.getSessionFile();
++		let sessionFileSize: number | undefined;
++		if (sessionFile) {
++			try {
++				sessionFileSize = statSync(sessionFile).size;
++			} catch {
++				// A deleted or not-yet-created file shows no size.
++			}
++		}
++
+@@ -152,0 +167 @@
++			sessionFileSize,
+@@ -159 +174 @@
+-		const { usageTotals, latestCacheHitRate, contextUsage } = this.getSessionStats();
++		const { usageTotals, latestCacheHitRate, contextUsage, sessionFileSize } = this.getSessionStats();
+@@ -195,0 +211,4 @@
++		}
++
++		if (sessionFileSize !== undefined) {
++			statsParts.push(`S${formatTokens(sessionFileSize)}`);
+--- a/packages/coding-agent/test/footer-width.test.ts
++++ b/packages/coding-agent/test/footer-width.test.ts
+@@ -0,0 +1,3 @@
++import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
++import { tmpdir } from "node:os";
++import { join } from "node:path";
+@@ -18,0 +22 @@
++	sessionFile?: string;
+@@ -83,0 +88 @@
++		getSessionFile: () => options.sessionFile,
+@@ -280,0 +286,16 @@
++	});
++	it("shows the session file size and refreshes after a persisted entry", () => {
++		const dir = mkdtempSync(join(tmpdir(), "pi-footer-"));
++		try {
++			const sessionFile = join(dir, "session.jsonl");
++			writeFileSync(sessionFile, Buffer.alloc(1_500));
++			const session = createSession({ sessionName: "", sessionFile });
++			const footer = new FooterComponent(session, createFooterData(1));
++			expect(stripAnsi(footer.render(120)[1])).toContain("S1.5k");
++
++			writeFileSync(sessionFile, Buffer.alloc(2_500));
++			session.sessionManager.getEntries().push({ type: "message", message: { role: "user" } } as never);
++			expect(stripAnsi(footer.render(120)[1])).toContain("S2.5k");
++		} finally {
++			rmSync(dir, { recursive: true, force: true });
++		}

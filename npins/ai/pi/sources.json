@@ -84,22 +84,6 @@
       "url": "https://github.com/monotykamary/pi-math/archive/53d293f8020f6c6d8722d4ac2c84a60ca8229cfc.tar.gz",
       "hash": "sha256-yL3HFjAmjXUnbA62vVB1L4nruO3KrPD9PcKtcfPGxOI="
     },
-    "pi-powerline-footer": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nicobailon",
-        "repo": "pi-powerline-footer"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.21.0",
-      "revision": "721c882e7dcd655680338c085be0bc6b8bff1acc",
-      "url": "https://api.github.com/repos/nicobailon/pi-powerline-footer/tarball/refs/tags/v0.21.0",
-      "hash": "sha256-o6eMkUSV/WFCsICrPJbKSpgeLMRKQpaCu925GebrwSw="
-    },
     "pi-skill-usage": {
       "type": "Git",
       "repository": {
