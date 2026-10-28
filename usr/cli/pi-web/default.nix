@@ -10,17 +10,12 @@ let
 
   pi-web = pkgs.buildNpmPackage {
     pname = "pi-web";
-    version = "1.202609.0";
+    version = "1.202610.8";
 
-    # Last release whose peer range (>=0.84.0 <0.85.0 || >=0.85.1) accepts pi 0.86.1.
-    # v1.202609.1 tightened to >=0.87.0.
     src = pkgs.npinsed.ai.pi.pi-web;
 
-    # Upstream's lock omits `integrity` for the 5 nested @earendil-works/* deps of
-    # pi-coding-agent; prefetch-npm-deps panics on that. Add the fields.
-    patches = [ ./lock-integrity.patch ];
     npmDepsFetcherVersion = 2;
-    npmDepsHash = "sha256-pMp+KK0yf3ua0q6Fzn5x8LD/x++0wECL8YWes3aMKrQ=";
+    npmDepsHash = "sha256-G5+9zWy5yE3ETPIGg5ADoLWJ/Zc1jTRVTo6crqGH0mM=";
 
     inherit nodejs;
     nativeBuildInputs = [ pkgs.makeWrapper ];
@@ -42,12 +37,14 @@ in
 {
   home.packages = [ pi-web ];
 
-  # Keep the daemon from mutating the (yq-merge-managed) ~/.pi/agent/settings.json:
-  # at startup it auto-installs its shipped `@jmfederico/pi-relay` Pi package into the
-  # active profile, writing a Nix-store path there. A dismissal entry disables that
-  # for this profile; the package can still be installed by hand from Settings.
-  home.file.".local/state/pi-web/pi-package-dismissals.json".text =
-    ''{"dismissals":[{"profileDir":"${homeDirectory}/.pi/agent","packageId":"@jmfederico/pi-relay","dismissedAt":"1970-01-01T00:00:00.000Z"}]}'';
+  # Prevent pi-web from auto-installing packages into the managed Pi settings.
+  home.file.".local/state/pi-web/pi-package-dismissals.json".text = builtins.toJSON {
+    dismissals = map (packageId: {
+      profileDir = "${homeDirectory}/.pi/agent";
+      inherit packageId;
+      dismissedAt = "1970-01-01T00:00:00.000Z";
+    }) [ "@jmfederico/pi-relay" "@jmfederico/pi-web-workflows" ];
+  };
 
   # Web/API restarts do not interrupt in-flight work; the daemon owns the runtimes.
   systemd.user.services.pi-web-sessiond = {

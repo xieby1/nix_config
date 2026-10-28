@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.52.84",
-      "revision": "6919d74a9dcad45abacc2ccbe2887e38d0dc2e56",
-      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.52.84",
-      "hash": "sha256-3mFc+saxBr3F0EYXTBc09L9W+A4a/6yZ0ZXy3L5C0/Y="
+      "version": "v0.52.85",
+      "revision": "f2ee458376f0045bab08946583ac4a28cb5fef10",
+      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v0.52.85",
+      "hash": "sha256-0LjmEJdFYnj5qhKgq5QJnxGR55HvKKz1YPtM351YVW4="
     }
   },
   "version": 8
