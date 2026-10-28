@@ -49,7 +49,7 @@
     # - builtin plan-mode also has `/todos`, which is the same name as rpiv-todo
 
     ".pi/agent/extensions/titlebar-spinner.ts" = {
-      source = pkgs.pkgsu.pi-coding-agent.src
+      source = pkgs.pipkgs.pi-coding-agent.src
         + "/packages/coding-agent/examples/extensions/titlebar-spinner.ts";
     };
   };

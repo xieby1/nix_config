@@ -5,7 +5,7 @@
     ./providers
   ];
   home.packages = [
-    pkgs.pkgsu.pi-coding-agent
+    pkgs.pipkgs.pi-coding-agent
   ];
 
   yq-merge.".pi/agent/settings.json" = {

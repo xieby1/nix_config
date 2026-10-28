@@ -1,7 +1,7 @@
 { config, pkgs, lib, ... }: let
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.
-  pkgspi = pkgs.pkgsu;
+  pkgspi = pkgs.pipkgs;
   # Pi supplies @earendil-works/* at runtime; dropping devDependencies and
   # peerDependencies also removes the nested lock entries whose missing
   # integrity used to require lock-integrity.patch.

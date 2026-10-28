@@ -16,6 +16,19 @@
       "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.34",
       "hash": "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo="
     },
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "049b3c588db0def0eb41acae8c9839e5a81f7d84",
+      "url": "https://github.com/NixOS/nixpkgs/archive/049b3c588db0def0eb41acae8c9839e5a81f7d84.tar.gz",
+      "hash": "sha256-ZW9yMcNYlSgaasLLxlK1XYDpKa3KX6WF4mv2PB2murc="
+    },
     "pi-context-view": {
       "type": "GitRelease",
       "repository": {
