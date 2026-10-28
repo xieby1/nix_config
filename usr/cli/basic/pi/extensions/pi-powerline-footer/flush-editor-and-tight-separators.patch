@@ -1,0 +1,38 @@
+--- a/index.ts
++++ b/index.ts
+@@ -1059 +1059 @@
+-  const innerWidth = Math.max(1, width - 3);
++  const innerWidth = Math.max(1, width - 2);
+@@ -1067,2 +1067,2 @@
+-    const text = marker === "─" ? "─".repeat(width - 2) : `${marker}${"─".repeat(Math.max(0, width - 3))}`;
+-    return ` ${colorEditorBorder(editor, text)}`;
++    const text = marker === "─" ? "─".repeat(width) : `${marker}${"─".repeat(Math.max(0, width - 1))}`;
++    return colorEditorBorder(editor, text);
+@@ -1072,2 +1072,2 @@
+-  const promptPrefix = ` ${prompt} `;
+-  const contPrefix = "   ";
++  const promptPrefix = `${prompt} `;
++  const contPrefix = "  ";
+@@ -1113 +1113,3 @@
+-  return padding + parts.join(` ${sepAnsi}${sep}${ansi.reset} `) + ansi.reset + padding;
++  // A blank separator ("none") would otherwise join as three spaces.
++  const joiner = sep.trim() === "" ? " " : ` ${sepAnsi}${sep}${ansi.reset} `;
++  return padding + parts.join(joiner) + ansi.reset + padding;
+@@ -1132 +1134 @@
+-  const sepWidth = visibleWidth(separatorDef.left) + 2; // separator + spaces around it
++  const sepWidth = separatorDef.left.trim() === "" ? 1 : visibleWidth(separatorDef.left) + 2; // separator + spaces around it
+@@ -3496,3 +3498,3 @@
+-          const promptPrefix = ` ${prompt} `;
+-          const contPrefix = "   ";
+-          const contentWidth = Math.max(1, width - 3);
++          const promptPrefix = `${prompt} `;
++          const contPrefix = "  ";
++          const contentWidth = Math.max(1, width - 2);
+@@ -3518,2 +3520,2 @@
+-          const embeddedTopBorder = editor.renderEmbeddedTopBorder(width - 2);
+-          result.push(" " + (embeddedTopBorder ?? colorEditorBorder(editor, "─".repeat(width - 2))));
++          const embeddedTopBorder = editor.renderEmbeddedTopBorder(width);
++          result.push(embeddedTopBorder ?? colorEditorBorder(editor, "─".repeat(width)));
+@@ -3530 +3532 @@
+-          result.push(" " + colorEditorBorder(editor, "─".repeat(width - 2)));
++          result.push(colorEditorBorder(editor, "─".repeat(width)));
