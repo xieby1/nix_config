@@ -10,6 +10,7 @@
     ./heuristic-notify.nix
     ./pi-web-access
     ./ponytail
+    ./rpiv-ask-user-question.nix
     ./rpiv-todo
   ];
   home.file = {
