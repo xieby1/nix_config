@@ -1,0 +1,35 @@
+diff --git a/packages/ai/src/utils/retry.ts b/packages/ai/src/utils/retry.ts
+index a1e9840..c1a55d9 100644
+--- a/packages/ai/src/utils/retry.ts
++++ b/packages/ai/src/utils/retry.ts
+@@ -59,6 +59,8 @@ const RETRYABLE_PROVIDER_ERROR_PATTERN = buildProviderErrorPattern([
+ 	"upstream_stream_read_error",
+ 	"stream was interrupted",
+ 	"http/?2 stream failed",
++	// The gateway rejects a tool transport correction before dispatching the tool.
++	"basispoints tool transport correction changed an operation; no tool was executed",
+ 
+ 	// Network, proxy, and fetch transport failures. This includes OpenAI Codex
+ 	// raw-fetch failures such as "upstream connect", "connection refused", and
+diff --git a/packages/ai/test/retry.test.ts b/packages/ai/test/retry.test.ts
+index e943767..6b9af0b 100644
+--- a/packages/ai/test/retry.test.ts
++++ b/packages/ai/test/retry.test.ts
+@@ -97,6 +97,17 @@ describe("provider retry classification", () => {
+ 		expect(isRetryableAssistantError(fauxAssistantMessage("", { stopReason: "error", errorMessage }))).toBe(true);
+ 	});
+ 
++	it("retries only basispoints tool transport correction failures", () => {
++		const errorMessage =
++			"basispoints_protocol_error: basispoints tool transport correction changed an operation; no tool was executed";
++		expect(isRetryableAssistantError(fauxAssistantMessage("", { stopReason: "error", errorMessage }))).toBe(true);
++		expect(
++			isRetryableAssistantError(
++				fauxAssistantMessage("", { stopReason: "error", errorMessage: "basispoints_protocol_error: invalid tool schema" }),
++			),
++		).toBe(false);
++	});
++
+ 	it("matches OpenAI Responses streams that end before terminal events", () => {
+ 		expect(
+ 			isRetryableAssistantError(

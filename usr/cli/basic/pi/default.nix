@@ -6,8 +6,9 @@
   ];
   home.packages = [
     # Include session-file size (S5.5M) in Pi's built-in footer stats line.
+    # Retry rejected basispoints tool transport corrections with Pi's native retry policy.
     (pkgs.pipkgs.pi-coding-agent.overrideAttrs (old: {
-      patches = (old.patches or [ ]) ++ [ ./footer-session-size.patch ];
+      patches = (old.patches or [ ]) ++ [ ./footer-session-size.patch ./basispoints-retry.patch ];
     }))
   ];
 
