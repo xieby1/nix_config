@@ -6,6 +6,7 @@
     ./pi-math
     ./pi-context-view
     ./pi-model-project
+    ./pi-powerline-footer.nix
     ./pi-skill-usage.nix
     ./heuristic-notify.nix
     ./pi-web-access
