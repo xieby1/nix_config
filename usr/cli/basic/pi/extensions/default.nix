@@ -5,6 +5,7 @@
     ./pi-hermes-memory
     ./pi-math
     ./pi-context-view
+    ./pi-fzf
     ./pi-model-project
     ./pi-skill-usage.nix
     ./heuristic-notify.nix
