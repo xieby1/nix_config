@@ -58,19 +58,6 @@
       "url": "https://github.com/bacnh85/pi-extensions/archive/85233b0ea14aa62104593140f9788bcb083e10e4.tar.gz",
       "hash": "sha256-ZWBavlbjWEounxhCs3YVuhWHvDFYwB2ZZ0wbvzN70RE="
     },
-    "pi-fzf": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "kaofelix",
-        "repo": "pi-fzf"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "dd0ef2eed8725ed10aa45a5e87114a8719f69540",
-      "url": "https://github.com/kaofelix/pi-fzf/archive/dd0ef2eed8725ed10aa45a5e87114a8719f69540.tar.gz",
-      "hash": "sha256-vjOr37jLnBci2l18LUPqoh31kzn4m5odTQh+2Zh+R3Q="
-    },
     "pi-hermes-memory": {
       "type": "Git",
       "repository": {
