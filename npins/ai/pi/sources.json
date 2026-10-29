@@ -45,6 +45,19 @@
       "url": "https://api.github.com/repos/dimk90/pi-context-view/tarball/refs/tags/v0.8.1",
       "hash": "sha256-J8Qsyn/6eA2ZfSzT3r+OxGHOAmJhWVj7J8x8TQk4WL8="
     },
+    "pi-extensions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bacnh85",
+        "repo": "pi-extensions"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "85233b0ea14aa62104593140f9788bcb083e10e4",
+      "url": "https://github.com/bacnh85/pi-extensions/archive/85233b0ea14aa62104593140f9788bcb083e10e4.tar.gz",
+      "hash": "sha256-ZWBavlbjWEounxhCs3YVuhWHvDFYwB2ZZ0wbvzN70RE="
+    },
     "pi-fzf": {
       "type": "Git",
       "repository": {

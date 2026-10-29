@@ -65,8 +65,8 @@
     #wpsoffice
     libreoffice
     meld
-    # TODO: use this after switching to wayland
-    #wl-clipboard
+    # pi-attachments reads copied files via wl-paste on Wayland
+    wl-clipboard
     textsnatcher
     # draw
     #aseprite-unfree
