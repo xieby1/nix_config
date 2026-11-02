@@ -1,6 +1,6 @@
 # Use `wev` to find out key name
 { pkgs }: {
-  "Ctrl+Alt+T".spawn = "kitty";
+  "Ctrl+Alt+T".spawn = "ghostty";
   "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
   "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
   "Mod+Alt+L".spawn-sh = "dms ipc lock lock";
@@ -8,7 +8,7 @@
   "Mod+X".spawn-sh = "dms ipc powermenu toggle";
   "Mod+V".spawn-sh = "dms ipc clipboard toggle";
   "Mod+H".spawn-sh = "dms ipc bar toggleAutoHide name 'Main Bar'";
-  "Mod+F".spawn-sh = "kitty bash -i fzf-doc";
+  "Mod+F".spawn-sh = "ghostty -e bash -i fzf-doc";
   "Mod+S".spawn-sh = "${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click -o mode_floating.source=detect";
 
   XF86AudioRaiseVolume = {
