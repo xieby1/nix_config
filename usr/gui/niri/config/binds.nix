@@ -180,13 +180,51 @@
   '';
   move-column-to-new-workspace-up = move-column-to-new-workspace-ARG "";
   move-column-to-new-workspace-down = move-column-to-new-workspace-ARG "+1";
+  new-empty-workspace = delta: pkgs.writeShellScript "new-empty-workspace" ''
+    set -euo pipefail
+    exec {lock}>"$XDG_RUNTIME_DIR/niri-empty-workspace.lock"
+    ${pkgs.util-linux}/bin/flock "$lock"
+    ws=$(niri msg -j workspaces)
+    idx=$(printf '%s\n' "$ws" | ${pkgs.yq-go}/bin/yq -r '.[] | select(.is_focused) | .idx')
+    output=$(printf '%s\n' "$ws" | ${pkgs.yq-go}/bin/yq -r '.[] | select(.is_focused) | .output')
+    last=$(printf '%s\n' "$ws" | ${pkgs.yq-go}/bin/yq -r \
+      '(.[] | select(.is_focused) | .output) as $monitor | .[] | select(.output == $monitor) | .idx' \
+      | sort -n | tail -1)
+    [[ "$idx" =~ ^[0-9]+$ && "$last" =~ ^[0-9]+$ && -n "$output" ]]
+    name="__niri-empty-$$"
+    niri msg action set-workspace-name "$name" --workspace "$last"
+    prior_name=""
+    cleanup() {
+      if [[ -n "$prior_name" && "$prior_name" != null ]]; then
+        niri msg action set-workspace-name "$prior_name" --workspace "$name"
+      else
+        niri msg action unset-workspace-name "$name"
+      fi
+    }
+    trap cleanup EXIT
+    named=$(niri msg -j workspaces)
+    named_output=$(printf '%s\n' "$named" | NIRI_WS_NAME="$name" ${pkgs.yq-go}/bin/yq -r '.[] | select(.name == strenv(NIRI_WS_NAME)) | .output')
+    named_id=$(printf '%s\n' "$named" | NIRI_WS_NAME="$name" ${pkgs.yq-go}/bin/yq -r '.[] | select(.name == strenv(NIRI_WS_NAME)) | .id')
+    [[ "$named_id" =~ ^[0-9]+$ ]]
+    prior_name=$(printf '%s\n' "$ws" | NIRI_WS_ID="$named_id" ${pkgs.yq-go}/bin/yq -r '.[] | select(.id == env(NIRI_WS_ID)) | .name')
+    [[ "$named_output" == "$output" ]]
+    occupied=$(niri msg -j windows | ${pkgs.yq-go}/bin/yq -r ".[] | select(.workspace_id == $named_id) | .id")
+    [[ -z "$occupied" ]]
+    niri msg action move-workspace-to-index "$((idx + ${toString delta}))" --reference "$name"
+    niri msg action focus-workspace "$name"
+    cleanup
+    trap - EXIT
+  '';
 in {
   "Ctrl+Shift+Mod+Up".spawn = toString move-column-to-new-workspace-up;
   "Ctrl+Shift+Mod+Down".spawn = toString move-column-to-new-workspace-down;
 
-  # The focus-workspace, move-workspace-to-index trick not work,
-  # so create a dummy window first, then move-column-to-new-workspace, finally kill the dummy window.
-  # Luckily, this can be down by simply use a terminal to exec move-column-to-new-workspace
-  "Ctrl+Shift+Alt+Up".spawn-sh = "kitty ${move-column-to-new-workspace-up}";
-  "Ctrl+Shift+Alt+Down".spawn-sh = "kitty ${move-column-to-new-workspace-down}";
+  "Ctrl+Shift+Alt+Up" = {
+    _props.repeat = false;
+    spawn = toString (new-empty-workspace 0);
+  };
+  "Ctrl+Shift+Alt+Down" = {
+    _props.repeat = false;
+    spawn = toString (new-empty-workspace 1);
+  };
 })
