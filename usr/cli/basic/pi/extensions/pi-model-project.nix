@@ -3,8 +3,8 @@
   home.file.".pi/agent/extensions/pi-model-project".source =
     pkgs.runCommand "pi-model-project" { nativeBuildInputs = [ pkgs.nodejs ]; } ''
       mkdir -p extension/node_modules/@earendil-works
-      cp ${./index.ts} extension/index.ts
-      cp ${./test.mjs} extension/test.mjs
+      cp ${pkgs.npinsed.ai.pi.pi-model-project}/index.ts extension/index.ts
+      cp ${pkgs.npinsed.ai.pi.pi-model-project}/test.mjs extension/test.mjs
       ln -s ${pkgs.pipkgs.pi-coding-agent}/lib/node_modules/pi-monorepo \
         extension/node_modules/@earendil-works/pi-coding-agent
       node --test extension/test.mjs

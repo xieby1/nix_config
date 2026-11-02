@@ -6,7 +6,7 @@
     ./pi-attachments.nix
     ./pi-math
     ./pi-context-view
-    ./pi-model-project
+    ./pi-model-project.nix
     ./pi-skill-usage.nix
     ./heuristic-notify.nix
     ./pi-web-access
