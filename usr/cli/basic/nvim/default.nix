@@ -100,6 +100,8 @@ in {
 
       """ mouse support " select by pressing shift key!
       set mouse=a
+      "" Ghostty scales wheel events, so Neovim's default ver:3 scrolls too fast.
+      set mousescroll=ver:1,hor:6
       "" Preview
       nnoremap <leader>[ :pc<CR>
       "" highlight unwanted whitespace
