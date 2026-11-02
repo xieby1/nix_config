@@ -80,9 +80,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "3ab8b5abb62aa091901c794da2d75df72d452991",
-      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/3ab8b5abb62aa091901c794da2d75df72d452991.tar.gz",
-      "hash": "sha256-b9Bpt/x3XW4xM7eEVQ2bBY/5woWPSUVanx+tk3NZF6Y="
+      "revision": "d1c85761bba61dc1bce0620374d268d5453a43dc",
+      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/d1c85761bba61dc1bce0620374d268d5453a43dc.tar.gz",
+      "hash": "sha256-RhJ1S5rP9LKTPjI9iL0WyuNrYDEoRnAl3WNmD8x/lK8="
     },
     "pi-math": {
       "type": "Git",
@@ -106,9 +106,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "3bc69bedf595e1fce25de075ccee809f585a5b43",
-      "url": "https://github.com/xieby1/pi-model-project/archive/3bc69bedf595e1fce25de075ccee809f585a5b43.tar.gz",
-      "hash": "sha256-Q5lwXDXOMBdZcxEqvcejpnna1n0pB/OTwPsJ0WV4fgI="
+      "revision": "e2cbb7e7405bbc663f0b6deb861afcb991b3acda",
+      "url": "https://github.com/xieby1/pi-model-project/archive/e2cbb7e7405bbc663f0b6deb861afcb991b3acda.tar.gz",
+      "hash": "sha256-UX+BYCV2xEpi0RkA9jGPA6g8x+ofZ6U4kqdhn6TX2Jo="
     },
     "pi-skill-usage": {
       "type": "Git",
