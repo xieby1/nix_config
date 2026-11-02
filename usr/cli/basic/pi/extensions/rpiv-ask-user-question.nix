@@ -3,7 +3,7 @@
   # (@juicesharp/rpiv-config), so drop it into node_modules by hand. Pi aliases
   # typebox / pi-tui / pi-coding-agent itself, and rpiv-i18n is an optional peer.
   home.file.".pi/agent/extensions/rpiv-ask-user-question" = {
-    source = pkgs.runCommand "rpiv-ask-user-question" { } ''
+    source = pkgs.runCommand "rpiv-ask-user-question" { nativeBuildInputs = [ pkgs.patch ]; } ''
       mkdir -p $out/node_modules/@juicesharp
       cp -r ${pkgs.npinsed.ai.pi.rpiv-mono}/packages/rpiv-ask-user-question/. $out/
       cp -r ${pkgs.npinsed.ai.pi.rpiv-mono}/packages/rpiv-config \
@@ -12,6 +12,7 @@
       # rpiv-test-utils) are not installed either.
       # cp keeps the store's read-only modes.
       chmod -R u+w $out
+      patch -s -p1 -d "$out" < ${./rpiv-ask-user-question-ready.patch}
       rm -rf $out/docs
       find $out -name '*.test.ts' -delete
       rm -f $out/test-fixtures.ts

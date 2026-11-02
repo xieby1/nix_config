@@ -1,0 +1,84 @@
+--- a/events.ts
++++ b/events.ts
+@@ -37,6 +37,13 @@
+  */
+ export const ASK_USER_BLOCKED_EVENT = "rpiv:ask-user:blocked" as const;
+ 
++/** Emitted after the TUI questionnaire component is mounted and can accept input. */
++export const ASK_USER_READY_EVENT = "rpiv:ask-user:ready" as const;
++
++export interface AskUserReadyEventPayload {
++	toolCallId: string;
++}
++
+ export interface AskUserBlockedEventPayload {
+ 	/** True while input is awaited; false when the wait ends (answer, cancel, or error). */
+ 	active: boolean;
+--- a/index.ts
++++ b/index.ts
+@@ -44,6 +44,7 @@
+ 	ASK_USER_ANSWER_RESULT_EVENT,
+ 	ASK_USER_BLOCKED_EVENT,
+ 	ASK_USER_PROMPT_EVENT,
++	ASK_USER_READY_EVENT,
+ 	type AskUserAnswerEntry,
+ 	type AskUserAnswerEventPayload,
+ 	type AskUserAnswerRejectCode,
+@@ -52,6 +53,7 @@
+ 	type AskUserPromptEventPayload,
+ 	type AskUserPromptOption,
+ 	type AskUserPromptQuestion,
++	type AskUserReadyEventPayload,
+ } from "./events.ts";
+ 
+ export default function (pi: ExtensionAPI) {
+--- a/ask-user-question.ts
++++ b/ask-user-question.ts
+@@ -12,6 +12,7 @@
+ import {
+ 	ASK_USER_BLOCKED_EVENT,
+ 	ASK_USER_PROMPT_EVENT,
++	ASK_USER_READY_EVENT,
+ 	type AskUserBlockedEventPayload,
+ 	type AskUserPromptEventPayload,
+ } from "./events.ts";
+@@ -197,6 +198,7 @@
+  * they must stay lazy per-invocation.
+  */
+ function makeSessionFactory(config: {
++	pi: ExtensionAPI;
+ 	ctx: ExtensionContext;
+ 	typed: QuestionParams;
+ 	itemsByTab: WrappingSelectItem[][];
+@@ -209,6 +211,7 @@
+ 	Session: SessionModule["QuestionnaireSession"];
+ }) {
+ 	const {
++		pi,
+ 		ctx,
+ 		typed,
+ 		itemsByTab,
+@@ -270,6 +273,7 @@
+ 			rowBudget: rowBudgetForHost(tui.terminal, presentation.rowBudget),
+ 		});
+ 		sessionRef.current = session;
++		pi.events.emit(ASK_USER_READY_EVENT, { toolCallId: open.toolCallId });
+ 		return session.component;
+ 	};
+ }
+@@ -289,6 +293,7 @@
+  * collapsed, so it needs no listener.
+  */
+ async function mountQuestionnaire(config: {
++	pi: ExtensionAPI;
+ 	ctx: ExtensionContext;
+ 	typed: QuestionParams;
+ 	itemsByTab: WrappingSelectItem[][];
+@@ -378,6 +383,7 @@
+ 		const mount = (p: Presentation) =>
+ 			Promise.race([
+ 				mountQuestionnaire({
++					pi,
+ 					ctx,
+ 					typed,
+ 					itemsByTab,
