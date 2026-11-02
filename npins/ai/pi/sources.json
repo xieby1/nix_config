@@ -80,9 +80,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d1c85761bba61dc1bce0620374d268d5453a43dc",
-      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/d1c85761bba61dc1bce0620374d268d5453a43dc.tar.gz",
-      "hash": "sha256-RhJ1S5rP9LKTPjI9iL0WyuNrYDEoRnAl3WNmD8x/lK8="
+      "revision": "26bde7771fa6ab974fd921c59d9fd7e3776a4adf",
+      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/26bde7771fa6ab974fd921c59d9fd7e3776a4adf.tar.gz",
+      "hash": "sha256-8P0kBW6XHhrupAArF6+4QaSEwz87i+cdnTFTKAYn6ZY="
     },
     "pi-math": {
       "type": "Git",
