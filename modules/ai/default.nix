@@ -29,5 +29,11 @@ in {
         name = "DeepSeek-Flash";
       };
     };
+    acc-gpt = catwalk-providers.openai // {
+      id = "acc-openai";
+      name = "ACC OpenAI";
+      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/url.txt);
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/gpt.txt);
+    };
   };
 }
