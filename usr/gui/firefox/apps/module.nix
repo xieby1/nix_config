@@ -1,25 +1,10 @@
 #MC # firefox module
 { config, pkgs, lib, ... }: let
-  singleton = pkgs.writeShellScript "singleton.sh" ''
-    if [[ $# -lt 2 || $1 == "-h" ]]
-    then
-      echo "Usage: ''${0##*/} <wmclass> <command and its args>"
-      echo "  Only start a app once, if the app is running"
-      echo "  then bring it to foreground"
-      exit 0
-    fi
-
-    WID=$(${pkgs.xdotool}/bin/xdotool search --class "$1")
-    if [[ -z $WID ]]; then
-      eval "''${@:2}"
-    else
-      for WIN in $WID; do
-        CURDESK=$(${pkgs.xdotool}/bin/xdotool get_desktop)
-        ${pkgs.xdotool}/bin/xdotool set_desktop_for_window $WIN $CURDESK
-        ${pkgs.xdotool}/bin/xdotool windowactivate $WIN
-      done
-    fi
-  '';
+  singleton = pkgs.writeShellApplication {
+    name = "singleton.sh";
+    runtimeInputs = with pkgs; [ jq niri ];
+    text = builtins.readFile ./singleton.sh;
+  };
 in {
   options = {
     firefox-apps = lib.mkOption {
@@ -45,9 +30,6 @@ in {
             type = lib.types.attrs;
             default = {};
             description = "extra settings for desktopEntry, see xdg.desktopEntries.<xxx>";
-          };
-          keybinding = lib.mkOption {
-            default = null;
           };
         };
       });
@@ -98,8 +80,7 @@ in {
           name = firefox-app.name;
           genericName = firefox-app.name;
           exec = assert firefox-app.url!=null;
-            # https://superuser.com/questions/1770285/custom-firefox-profiles-with-different-wm-class-and-icons
-            "firefox -P ${firefox-app.name} --name ${firefox-app.name} ${firefox-app.url}";
+            "${singleton}/bin/singleton.sh ${firefox-app.name} firefox -P ${firefox-app.name} --name ${firefox-app.name} ${firefox-app.url}";
           icon = if firefox-app.icon != null then firefox-app.icon
           else builtins.fetchurl {
             url = "http://www.google.com/s2/favicons?domain=${firefox-app.url}&sz=128";
@@ -111,23 +92,5 @@ in {
         } // firefox-app.desktopEntryExtras;
       }) firefox-apps-with-desktopEntry
     );
-
-    # TODO: support dms keybind
-    dconf.settings = let
-      firefox-apps-with-keybinding = (builtins.filter (firefox-app: firefox-app.keybinding!=null ) config.firefox-apps);
-    in {
-      "org/gnome/settings-daemon/plugins/media-keys".custom-keybindings = map (
-        firefox-app: "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${firefox-app.name}/"
-      ) firefox-apps-with-keybinding;
-    } // (builtins.listToAttrs (
-      map (firefox-app: {
-        name = "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/${firefox-app.name}";
-        value = {
-          binding = firefox-app.keybinding;
-          command = "${singleton} ${firefox-app.name} gtk-launch ${firefox-app.name}.desktop";
-          name = firefox-app.name;
-        };
-      }) firefox-apps-with-keybinding
-    ));
   };
 }

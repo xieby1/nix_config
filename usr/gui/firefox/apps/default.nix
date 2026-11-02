@@ -31,15 +31,13 @@
     desktopEntryExtras = {
       name = "Microsoft To Do";
     };
-    keybinding = "<Super>t";
   }{
-    name = "ms-calendar"; # avoid singleton xdotool conflicts with system calendar
+    name = "ms-calendar";
     url = "https://outlook.live.com/calendar";
     desktopEntryExtras = {
       name = "Microsoft Calendar";
       genericName = "outlook calendar mail";
     };
-    keybinding = "<Super>c";
   }{
     name = "webweixin";
     url = "https://wx.qq.com";
@@ -51,7 +49,6 @@
     # TODO: move to cheatsheet.nix
     name = "my_cheatsheet_html";
     url = "${config.home.homeDirectory}/Docs/Tech/my_cheatsheet/index.html";
-    keybinding = "<Super>space";
     desktopEntryExtras = {
       name = "Cheatsheet HTML";
       genericName = "cheatsheet";
@@ -68,7 +65,6 @@
   }{
     name = "bing_dict";
     url = "https://cn.bing.com/dict";
-    keybinding = "<Super>b";
     desktopEntryExtras = {
       name = "Bing Dict";
       genericName = "dictionary";
@@ -76,7 +72,6 @@
   }{
     name = "riyucidian";
     url = "https://www.mojidict.com";
-    keybinding = "<Super>j";
     desktopEntryExtras = {
       name = "日语词典";
     };
@@ -103,7 +98,6 @@
   }{
     name = "deepseek";
     url = "https://chat.deepseek.com";
-    keybinding = "<Super>a";
     desktopEntryExtras = {
       name = "DeepSeek";
     };
