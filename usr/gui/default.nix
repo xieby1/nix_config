@@ -36,7 +36,9 @@
     };
   };
 
+  fonts.fontconfig.enable = true;
   home.packages = with pkgs; [
+    (noto-fonts.override { variants = [ "NotoSansSymbols2" ]; })
     (pkgs.writeShellScriptBin "o" ''nohup xdg-open "$@" &> /dev/null &'')
     libnotify
     # browser
