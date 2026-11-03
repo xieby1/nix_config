@@ -8,7 +8,7 @@ in {
       name = "mihomo-tui";
       desktopName = "Mihomo TUI";
       keywords = ["mihomo" "clash" "tui"];
-      exec = "kitty mihomo-tui";
+      exec = "ghostty -e mihomo-tui";
       icon = pkgs.mihomo.src + /Meta.png;
     })
   ];

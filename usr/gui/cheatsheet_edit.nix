@@ -1,9 +1,10 @@
 { pkgs, config, ... }: let
-  app-id = "cheatsheet_edit";
+  # Ghostty requires a dotted GTK application ID; match StartupWMClass for the desktop icon.
+  class = "cn.xieby1.CheatsheetEdit";
   open_my_cheatsheet_md_sh = pkgs.writeShellScript "open_my_cheatsheet_md" ''
     cd ${config.home.homeDirectory}/Docs/Tech/my_cheatsheet
     # Open Outline and focus on code
-    kitty --app-id ${app-id} nvim index.mkd -c Outline!
+    ghostty --class=${class} -e nvim index.mkd -c Outline!
     make
   '';
 in {
@@ -24,7 +25,7 @@ in {
         </svg>
       '';
       settings = {
-        StartupWMClass = app-id;
+        StartupWMClass = class;
       };
     };
   };

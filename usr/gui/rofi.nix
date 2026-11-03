@@ -18,7 +18,7 @@
           ssh
           /* file-browser-extended */
         ];
-        terminal: "kitty";
+        terminal: "ghostty";
         dpi: 1;
         show-icons: true;
       }

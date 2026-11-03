@@ -6,8 +6,6 @@
       "Noto Color Emoji"
       "Noto Emoji"
     ];
-    # Kitty you `fc-match monospace` to search fallback fonts
-    # More details see: https://github.com/kovidgoyal/kitty/discussions/4007
     monospace = [
       "DejaVu Sans Mono"
       "Noto Sans Mono CJK SC"
