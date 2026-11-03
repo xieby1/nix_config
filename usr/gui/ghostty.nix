@@ -57,6 +57,8 @@
       keybind = [
         "ctrl+shift+,=move_tab:-1"
         "ctrl+shift+.=move_tab:1"
+        "ctrl+shift+[=goto_split:previous"
+        "ctrl+shift+]=goto_split:next"
       ];
     };
   };
