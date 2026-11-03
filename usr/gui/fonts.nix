@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   fonts.fontconfig.enable = true;
+  # list font names: `fc-list -f '%{family[0]}\n' | sort -u`
   fonts.fontconfig.defaultFonts = {
     emoji = [
       "Noto Color Emoji"
