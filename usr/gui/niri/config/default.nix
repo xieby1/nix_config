@@ -8,6 +8,16 @@
       // include "./dms/layout.kdl"
       include "./dms/outputs.kdl"
       include "./dms/binds.kdl"
+      // Ghostty's OSC 777 notification action selects the right Pi tab, but
+      // niri 26.04 rejects the window activation under its default serial check.
+      // Trade-off: apps can steal focus with invalid-serial tokens. This niri
+      // debug option is not covered by its config stability policy.
+      // Remove when clicking a Pi notification from another workspace and tab
+      // works without this flag, or replace it with a Ghostty-only
+      // on-xdg-activate rule once our niri supports that rule (26.04 does not).
+      debug {
+        honor-xdg-activation-with-invalid-serial
+      }
       // TODO: move to evolution
       window-rule {
         match app-id="evolution-alarm-notify"
