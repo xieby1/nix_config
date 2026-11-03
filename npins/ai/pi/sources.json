@@ -110,6 +110,19 @@
       "url": "https://github.com/xieby1/pi-model-project/archive/e2cbb7e7405bbc663f0b6deb861afcb991b3acda.tar.gz",
       "hash": "sha256-UX+BYCV2xEpi0RkA9jGPA6g8x+ofZ6U4kqdhn6TX2Jo="
     },
+    "pi-retry": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "monotykamary",
+        "repo": "pi-retry"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "373c1c6b082a42edec6086f05a1fd3f162c39693",
+      "url": "https://github.com/monotykamary/pi-retry/archive/373c1c6b082a42edec6086f05a1fd3f162c39693.tar.gz",
+      "hash": "sha256-8s1HZV9/uWWhyF4HfJnghfaq5BlbowHxyd8EcxHY+qY="
+    },
     "pi-skill-usage": {
       "type": "Git",
       "repository": {
