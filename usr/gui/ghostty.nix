@@ -60,4 +60,9 @@
       ];
     };
   };
+
+  programs.neovim.initLua = /*lua*/''
+    -- [Linux tmux: scrolling distance with the mouse wheel #8875](https://github.com/ghostty-org/ghostty/discussions/8875)
+    vim.opt.mousescroll = "ver:1,hor:1"
+  '';
 }
