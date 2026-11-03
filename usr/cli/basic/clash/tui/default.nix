@@ -4,12 +4,15 @@ in {
   home.packages = [
     pkgs.mihomo
     mihomo-tui
-    (pkgs.makeDesktopItem {
+    (let
+      class = "cn.xieby1.mihomo-tui";
+    in pkgs.makeDesktopItem {
       name = "mihomo-tui";
       desktopName = "Mihomo TUI";
       keywords = ["mihomo" "clash" "tui"];
-      exec = "ghostty -e mihomo-tui";
+      exec = "ghostty --class=${class} -e mihomo-tui";
       icon = pkgs.mihomo.src + /Meta.png;
+      startupWMClass = class;
     })
   ];
   cachix_packages = [
