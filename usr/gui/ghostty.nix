@@ -29,9 +29,10 @@
 # * hyper
 #   * Cons
 #     * scroll speed is too fast!
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   programs.ghostty = {
     enable = true;
+    package = pkgs.pkgsu.ghostty;
     enableZshIntegration = true;
     settings = {
       # Exposes --ghostty-fg and --ghostty-bg for the GTK tab CSS below.
