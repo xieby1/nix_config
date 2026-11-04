@@ -30,3 +30,10 @@
 * hyper
   * Cons
     * scroll speed is too fast!
+* ghostty
+  * Cons
+    * Tab title stays on Neovim's filename after exiting Neovim opened from LazyGit;
+      Kitty restores LazyGit's title.
+      Ghostty parses but does not implement title push/pop (CSI 22/23):
+      [ghostty#2668](https://github.com/ghostty-org/ghostty/issues/2668) is still open;
+      last updated 2024-11-16 (nearly two years ago as of 2026-11-04).
