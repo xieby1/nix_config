@@ -23,10 +23,9 @@
       In clipboard, alacritty may be stucked.
     * emoji display poorly.
 * kitty
-  * Pros
-    * Esay configurable
   * Cons
     * do not support search
+      - https://github.com/kovidgoyal/kitty/issues/718
 * hyper
   * Cons
     * scroll speed is too fast!
