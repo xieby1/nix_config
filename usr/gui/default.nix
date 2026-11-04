@@ -6,8 +6,7 @@
     ./firefox
     ./warpd.nix
     ./rustdesk.nix
-    ./kitty
-    ./ghostty.nix
+    ./terminal
     ./fonts.nix
     ./cheatsheet_edit.nix
     ./xcolor.nix
