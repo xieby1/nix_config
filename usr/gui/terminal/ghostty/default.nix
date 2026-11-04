@@ -1,7 +1,14 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, ... }:
+let
+  ghostty = pkgs.pkgsu.ghostty.overrideAttrs (old: {
+    patches = (old.patches or []) ++ [ ./title-stack.patch ];
+  });
+in {
+  cachix_packages = [ ghostty ];
+
   programs.ghostty = {
     enable = true;
-    package = pkgs.pkgsu.ghostty;
+    package = ghostty;
     enableZshIntegration = true;
     settings = {
       # Exposes --ghostty-fg and --ghostty-bg for the GTK tab CSS below.
