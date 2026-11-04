@@ -55,9 +55,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1b1a345dad534e4dd5d47fb762052e1cb2493962",
-      "url": "https://github.com/nix-community/NUR/archive/1b1a345dad534e4dd5d47fb762052e1cb2493962.tar.gz",
-      "hash": "sha256-9dCOhAi7leFeATmHyjefFfUfSlKhMx9ER/Q/9JpuvJ0="
+      "revision": "fd547b54266ff8f055e5f6add96379be5d2eb7c8",
+      "url": "https://github.com/nix-community/NUR/archive/fd547b54266ff8f055e5f6add96379be5d2eb7c8.tar.gz",
+      "hash": "sha256-ecRtbJqKy3GfR04pBZXze8DHS5d6F40FgqoiVCHDGhE="
     },
     "pkgsu": {
       "type": "Git",
@@ -68,9 +68,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "049b3c588db0def0eb41acae8c9839e5a81f7d84",
-      "url": "https://github.com/NixOS/nixpkgs/archive/049b3c588db0def0eb41acae8c9839e5a81f7d84.tar.gz",
-      "hash": "sha256-ZW9yMcNYlSgaasLLxlK1XYDpKa3KX6WF4mv2PB2murc="
+      "revision": "dd45a11b56a938aafacf2befce175900f8a064da",
+      "url": "https://github.com/NixOS/nixpkgs/archive/dd45a11b56a938aafacf2befce175900f8a064da.tar.gz",
+      "hash": "sha256-ju/rZUi7rtM957COEKhdpYsrKNbRwJ8Gq1fPlLfBtok="
     }
   },
   "version": 8
