@@ -1,0 +1,19 @@
+diff --git a/src/apprt/gtk/class/surface.zig b/src/apprt/gtk/class/surface.zig
+--- a/src/apprt/gtk/class/surface.zig
++++ b/src/apprt/gtk/class/surface.zig
+@@ -3142,9 +3142,12 @@
+         const priv: *Private = self.private();
+         const surface = priv.core_surface orelse return 0;
+ 
+-        // Multiply precision scrolls by 10 to get a better response from
+-        // touchpad scrolling
+-        const multiplier: f64 = if (priv.precision_scroll) 10.0 else 1.0;
++        // Amplify touchpad scrolling for the viewport, not mouse-reporting
++        // apps that already choose their own distance per wheel report.
++        const multiplier: f64 = if (priv.precision_scroll and !surface.mouseReportingActive())
++            10.0
++        else
++            1.0;
+         const scroll_mods: input.ScrollMods = .{
+             .precision = priv.precision_scroll,
+         };
