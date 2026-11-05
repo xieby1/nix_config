@@ -42,7 +42,7 @@ in lib.runTests {
     unsupported = import <home-manager/modules> {
       pkgs = import <nixpkgs> { system = "riscv64-linux"; };
       configuration = {
-        imports = [ ./. ];
+        imports = [ ./. ../../../modules/yq-merge ];
         home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
       };
     };
@@ -52,6 +52,63 @@ in lib.runTests {
       daemon = unsupported.config.systemd.user.services ? vinput-daemon;
     };
     expected = { addons = []; daemon = false; };
+  };
+  test-managed-model = {
+    expr = let
+      model = cfg.xdg.dataFile."vinput/models/sherpa-onnx/sense-voice-zh-en-ja-ko-yue-int8".source or null;
+    in model != null && (let
+      manifest = builtins.fromJSON (builtins.readFile (model + "/vinput-model.json"));
+    in manifest.model.sense_voice.language == "auto"
+      && builtins.pathExists (model + "/model.int8.onnx")
+      && builtins.pathExists (model + "/tokens.txt"));
+    expected = true;
+  };
+  test-selected-provider = {
+    expr = cfg.yq-merge.".config/vinput/config.json".expr.asr.active_provider or null;
+    expected = "sherpa-onnx";
+  };
+  test-model-selection-triggers-activation = {
+    expr = lib.hasInfix "model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8"
+      (cfg.home.file.".config/vinput/config.json".text or "");
+    expected = true;
+  };
+  test-config-merge = {
+    expr = if !(cfg.home.file ? ".config/vinput/config.json") then false else let
+      file = cfg.home.file.".config/vinput/config.json";
+      result = pkgs.runCommand "test-vinput-config-merge" { nativeBuildInputs = [ pkgs.jq ]; } ''
+        export HOME=$TMPDIR/home
+        mkdir -p "$HOME/.config/vinput"
+        cd "$HOME"
+        cp ${pkgs.writeText "vinput-settings.json" file.text} ${file.target}
+        run() { "$@"; }
+        apply() {
+          ${file.onChange}
+        }
+        apply
+        test -w .config/vinput/config.json
+        jq -e '.asr.active_provider == "sherpa-onnx" and
+          .asr.providers[0].model == "model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8" and
+          .scenes.active_scene == "__raw__"' .config/vinput/config.json
+        for providers in \
+          '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}}]' \
+          '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}},{"id":"sherpa-onnx","type":"local","timeout_ms":27000,"model":"old"}]'; do
+          jq -n --argjson providers "$providers" \
+            '{global:{capture_device:"keep-mic"},asr:{active_provider:"cloud",providers:$providers}}' \
+            > .config/vinput/config.json
+          apply
+          apply
+          jq -e '.global.capture_device == "keep-mic" and
+            .asr.active_provider == "sherpa-onnx" and
+            ([.asr.providers[] | select(.id == "cloud")][0].env.TOKEN == "keep") and
+            ([.asr.providers[] | select(.id == "sherpa-onnx")] | length == 1) and
+            ([.asr.providers[] | select(.id == "sherpa-onnx")][0].model ==
+              "model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8")' .config/vinput/config.json
+        done
+        jq -e '[.asr.providers[] | select(.id == "sherpa-onnx")][0].timeout_ms == 27000' .config/vinput/config.json
+        echo ok > $out
+      '';
+    in builtins.readFile result == "ok\n";
+    expected = true;
   };
   test-existing-addons = {
     expr = lib.all (p: builtins.elem p cfg.i18n.inputMethod.fcitx5.addons) [
