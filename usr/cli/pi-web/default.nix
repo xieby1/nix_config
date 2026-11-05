@@ -10,12 +10,12 @@ let
 
   pi-web = pkgs.buildNpmPackage {
     pname = "pi-web";
-    version = "1.202610.8";
+    version = "1.202611.0";
 
     src = pkgs.npinsed.ai.pi.pi-web;
 
     npmDepsFetcherVersion = 2;
-    npmDepsHash = "sha256-G5+9zWy5yE3ETPIGg5ADoLWJ/Zc1jTRVTo6crqGH0mM=";
+    npmDepsHash = "sha256-f9qrp/YD7RAPYE7aAllxehO/BBPaL8p1LqWOOBUb1hw=";
 
     inherit nodejs;
     nativeBuildInputs = [ pkgs.makeWrapper ];

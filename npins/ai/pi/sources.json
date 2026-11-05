@@ -25,9 +25,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "afc1ab09865db6487ac744b96a2aeff67011241f",
-      "url": "https://github.com/NixOS/nixpkgs/archive/afc1ab09865db6487ac744b96a2aeff67011241f.tar.gz",
-      "hash": "sha256-4N3fVQTIsPKiy5gFDCxVFdS3t4B2ao8dXtbAKcbCl6M="
+      "revision": "2a124a09da733d3218564b01c401c0bc0f9be2a1",
+      "url": "https://github.com/NixOS/nixpkgs/archive/2a124a09da733d3218564b01c401c0bc0f9be2a1.tar.gz",
+      "hash": "sha256-ZBuSCqylTFwU/YK960X/C8VrMSkefhzfM/aEyg5w2B4="
     },
     "pi-context-view": {
       "type": "GitRelease",
@@ -40,10 +40,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.8.1",
-      "revision": "35fadaf350cd6dfb2cb1c019c250649f31062060",
-      "url": "https://api.github.com/repos/dimk90/pi-context-view/tarball/refs/tags/v0.8.1",
-      "hash": "sha256-J8Qsyn/6eA2ZfSzT3r+OxGHOAmJhWVj7J8x8TQk4WL8="
+      "version": "v0.8.3",
+      "revision": "60bfde29e199220bb864ce13360cf6b5dcd80695",
+      "url": "https://api.github.com/repos/dimk90/pi-context-view/tarball/refs/tags/v0.8.3",
+      "hash": "sha256-fFjZkc85kM7i1Yt79JbUBE9rRa+zgI+fdWtn/iafQFE="
     },
     "pi-extensions": {
       "type": "Git",
@@ -54,9 +54,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "85233b0ea14aa62104593140f9788bcb083e10e4",
-      "url": "https://github.com/bacnh85/pi-extensions/archive/85233b0ea14aa62104593140f9788bcb083e10e4.tar.gz",
-      "hash": "sha256-ZWBavlbjWEounxhCs3YVuhWHvDFYwB2ZZ0wbvzN70RE="
+      "revision": "5e58c9c4a7ec24d2043c800dbc0e71337bcdcd9a",
+      "url": "https://github.com/bacnh85/pi-extensions/archive/5e58c9c4a7ec24d2043c800dbc0e71337bcdcd9a.tar.gz",
+      "hash": "sha256-wI4f6S2/0SMUiyFhIp35CnpS5tBK2LQQC+F0LRiJlLs="
     },
     "pi-hermes-memory": {
       "type": "Git",
@@ -67,9 +67,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "bb58c12e853a52a4b92b10ff43c0394bca3f17ff",
-      "url": "https://github.com/chandra447/pi-hermes-memory/archive/bb58c12e853a52a4b92b10ff43c0394bca3f17ff.tar.gz",
-      "hash": "sha256-O2w2mHk3yfzwKlWKJYJk1DNI9aF6uE9aZXbmb1t21H4="
+      "revision": "e0c82c4687770d7a4b2673b96b591172e96b2395",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/e0c82c4687770d7a4b2673b96b591172e96b2395.tar.gz",
+      "hash": "sha256-sG20RudU4GD1NrGQgXv9o8pRYN8xye+XpM1FsGAo8pU="
     },
     "pi-heuristic-notify": {
       "type": "Git",
@@ -106,9 +106,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "53d293f8020f6c6d8722d4ac2c84a60ca8229cfc",
-      "url": "https://github.com/monotykamary/pi-math/archive/53d293f8020f6c6d8722d4ac2c84a60ca8229cfc.tar.gz",
-      "hash": "sha256-yL3HFjAmjXUnbA62vVB1L4nruO3KrPD9PcKtcfPGxOI="
+      "revision": "6ff3ce524f234d009423b6b488c80fb5eb0a016a",
+      "url": "https://github.com/monotykamary/pi-math/archive/6ff3ce524f234d009423b6b488c80fb5eb0a016a.tar.gz",
+      "hash": "sha256-QNs9kVa6tufVgwEMJ4VrvynakE8IueVPAvvQ3LZlTKw="
     },
     "pi-model-project": {
       "type": "Git",
@@ -160,10 +160,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.202610.8",
-      "revision": "5ebda4decf14d759f4ee099e0ce03ddd8d64d85c",
-      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202610.8",
-      "hash": "sha256-UuULxPfMl6zq5paeJB2lJ2loXe4bldfygXS+nF4izZY="
+      "version": "v1.202611.0",
+      "revision": "8d67077b1cbff309cab88117b3b19a1cb94f05ee",
+      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202611.0",
+      "hash": "sha256-Oxe65tMMT8GLiuVIheAqLfvrS+WeNOsVCh+Hubegujg="
     },
     "pi-web-access": {
       "type": "GitRelease",
@@ -176,10 +176,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.45.0",
-      "revision": "759b4fcb99663facbdde2babfba995c40fa99f2c",
-      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.45.0",
-      "hash": "sha256-0ddDs0lkH1AuMWIBcoIu7QAv13ZU6SnymRyOeJgg6ao="
+      "version": "v0.47.0",
+      "revision": "65f805ae7b2c9d73ac6b550393b8b310cf35340f",
+      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.47.0",
+      "hash": "sha256-QfwEKSqOTc/VhPonFySNsgDAOkx9ROf+PnEF9v/iCow="
     },
     "rpiv-mono": {
       "type": "Git",
