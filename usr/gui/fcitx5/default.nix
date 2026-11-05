@@ -29,7 +29,7 @@ in {
     };
   };
 
-  imports = [ ./module ./quick-phrase-fzf ];
+  imports = [ ./module ./quick-phrase-fzf ./vinput ];
   my.config-fcitx5.".config/fcitx5/config" = {
     expr.sections = {
       # Disable default super+space, shift+super+space
