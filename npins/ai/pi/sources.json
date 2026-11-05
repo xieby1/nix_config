@@ -84,6 +84,19 @@
       "url": "https://github.com/xieby1/pi-heuristic-notify/archive/28779d5f8a9853a49ce57841b3ea0a864f691c43.tar.gz",
       "hash": "sha256-qnVG2YWCOB0SkroBQQ3lNZhErwpH5tYEVs41ChiwPgQ="
     },
+    "pi-language-tutor": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "mackt",
+        "repo": "pi-language-tutor"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e37716ef8590edf1ded03287aa854acf816d5dc6",
+      "url": "https://github.com/mackt/pi-language-tutor/archive/e37716ef8590edf1ded03287aa854acf816d5dc6.tar.gz",
+      "hash": "sha256-/XQEJYxioYdyZVMW6o9oAxV1Ur3LWteOmdjZA4DqV40="
+    },
     "pi-math": {
       "type": "Git",
       "repository": {

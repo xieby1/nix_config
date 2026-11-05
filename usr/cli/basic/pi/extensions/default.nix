@@ -5,6 +5,7 @@
     ./pi-hermes-memory
     ./pi-attachments.nix
     ./pi-math
+    ./pi-language-tutor
     ./pi-retry.nix
     ./pi-context-view
     ./pi-model-project.nix
