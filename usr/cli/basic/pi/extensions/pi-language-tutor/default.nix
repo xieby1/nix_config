@@ -18,4 +18,13 @@ in {
     dontNpmBuild = true;
     npmRebuildFlags = [ "--ignore-scripts" ];
   } + /lib/node_modules/pi-language-tutor;
+
+  yq-merge.".pi/agent/language-learn.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      learning = "en";
+      native = "en";
+      model = "jw2-deepseek/deepseek-flash";
+    };
+  };
 }
