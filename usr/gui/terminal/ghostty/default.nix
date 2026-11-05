@@ -17,6 +17,7 @@ in {
       # Exposes --ghostty-fg and --ghostty-bg for the GTK tab CSS below.
       window-theme = "ghostty";
       gtk-wide-tabs = false;
+      gtk-single-instance = false;
       font-size = (import ~/Gist/Config/terminal-font-size.nix).${lib.trim (builtins.readFile /etc/hostname)} or 14;
       font-family = config.fonts.fontconfig.defaultFonts.monospace;
       gtk-custom-css = "${builtins.toFile "ghostty.css" ''
