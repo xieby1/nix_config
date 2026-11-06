@@ -19,6 +19,7 @@
     ./dms
     ./evolution
     ./low-battery-notify.nix
+    ./xingyao-audio
     ./dingtalk
   ];
 
