@@ -7,6 +7,7 @@
   }).defaultNix.packages.${system}.default;
 in lib.mkIf (builtins.elem system [ "x86_64-linux" "aarch64-linux" ]) {
   home.packages = [ vinput ];
+  cachix_packages = [ vinput ];
   i18n.inputMethod.fcitx5.addons = [ vinput ];
 
   xdg.dataFile."vinput/models/sherpa-onnx/${modelName}".source = model;
