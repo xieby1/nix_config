@@ -4,7 +4,7 @@ let
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = {
-      imports = [ ../. ../../../modules/yq-merge ];
+      imports = [ ../. ../../../modules/yq-merge ../../../../modules/cachix.nix ];
       home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
     };
   };
@@ -42,7 +42,7 @@ in lib.runTests {
     unsupported = import <home-manager/modules> {
       pkgs = import <nixpkgs> { system = "riscv64-linux"; };
       configuration = {
-        imports = [ ./. ../../../modules/yq-merge ];
+        imports = [ ./. ../../../modules/yq-merge ../../../../modules/cachix.nix ];
         home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
       };
     };
@@ -55,20 +55,29 @@ in lib.runTests {
   };
   test-managed-model = {
     expr = let
-      model = cfg.xdg.dataFile."vinput/models/sherpa-onnx/sense-voice-zh-en-ja-ko-yue-int8".source or null;
+      model = cfg.xdg.dataFile."vinput/models/sherpa-onnx/x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8".source or null;
     in model != null && (let
       manifest = builtins.fromJSON (builtins.readFile (model + "/vinput-model.json"));
-    in manifest.model.sense_voice.language == "auto"
-      && builtins.pathExists (model + "/model.int8.onnx")
-      && builtins.pathExists (model + "/tokens.txt"));
+    in manifest.backend == "sherpa-streaming"
+      && manifest.runtime == "online"
+      && manifest.language == "zh_en"
+      && !(manifest.model ? sense_voice)
+      && lib.all (file: builtins.pathExists (model + "/${file}")) [
+        manifest.model.tokens manifest.model.bpe_vocab
+        manifest.model.transducer.encoder manifest.model.transducer.decoder manifest.model.transducer.joiner
+      ]);
     expected = true;
+  };
+  test-sensevoice-no-longer-managed = {
+    expr = cfg.xdg.dataFile ? "vinput/models/sherpa-onnx/sense-voice-zh-en-ja-ko-yue-int8";
+    expected = false;
   };
   test-selected-provider = {
     expr = cfg.yq-merge.".config/vinput/config.json".expr.asr.active_provider or null;
     expected = "sherpa-onnx";
   };
   test-model-selection-triggers-activation = {
-    expr = lib.hasInfix "model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8"
+    expr = lib.hasInfix "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8"
       (cfg.home.file.".config/vinput/config.json".text or "");
     expected = true;
   };
@@ -87,11 +96,11 @@ in lib.runTests {
         apply
         test -w .config/vinput/config.json
         jq -e '.asr.active_provider == "sherpa-onnx" and
-          .asr.providers[0].model == "model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8" and
+          .asr.providers[0].model == "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8" and
           .scenes.active_scene == "__raw__"' .config/vinput/config.json
         for providers in \
           '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}}]' \
-          '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}},{"id":"sherpa-onnx","type":"local","timeout_ms":27000,"model":"old"}]'; do
+          '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}},{"id":"sherpa-onnx","type":"local","timeout_ms":27000,"model":"model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8"}]'; do
           jq -n --argjson providers "$providers" \
             '{global:{capture_device:"keep-mic"},asr:{active_provider:"cloud",providers:$providers}}' \
             > .config/vinput/config.json
@@ -102,7 +111,7 @@ in lib.runTests {
             ([.asr.providers[] | select(.id == "cloud")][0].env.TOKEN == "keep") and
             ([.asr.providers[] | select(.id == "sherpa-onnx")] | length == 1) and
             ([.asr.providers[] | select(.id == "sherpa-onnx")][0].model ==
-              "model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8")' .config/vinput/config.json
+              "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8")' .config/vinput/config.json
         done
         jq -e '[.asr.providers[] | select(.id == "sherpa-onnx")][0].timeout_ms == 27000' .config/vinput/config.json
         echo ok > $out
