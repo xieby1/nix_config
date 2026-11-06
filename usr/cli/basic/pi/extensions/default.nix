@@ -3,7 +3,6 @@
   imports = [
     ./acp.nix
     ./pi-hermes-memory
-    ./pi-attachments.nix
     ./pi-co-authored-by.nix
     ./pi-math
     ./pi-language-tutor
