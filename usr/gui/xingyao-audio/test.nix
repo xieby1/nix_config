@@ -20,6 +20,18 @@ in pkgs.lib.runTests (pkgs.lib.optionalAttrs
       actions.update-props."api.alsa.use-acp" = false;
     };
   };
+  test-speaker-stereo-rule = {
+    expr = if file == null then [] else builtins.filter
+      (rule: rule.matches == [{ "node.name" = "alsa_output.pci-0000_c1_00.6.playback.0.0"; }])
+      (builtins.fromJSON file.text)."monitor.alsa.rules";
+    expected = [{
+      matches = [{ "node.name" = "alsa_output.pci-0000_c1_00.6.playback.0.0"; }];
+      actions.update-props = {
+        "audio.channels" = 2;
+        "audio.position" = [ "FL" "FR" ];
+      };
+    }];
+  };
   test-restart-with-wireplumber = {
     expr = {
       after = service.Unit.After or [];

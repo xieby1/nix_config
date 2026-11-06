@@ -1,0 +1,61 @@
+# Xingyao P916F-STX, ALC256 1d05:e004; based on linux-xanmod 6.18.49.
+# Register pin 0x1b with the parser so normal codec initialization/resume owns it.
+# Route it to DAC 0x02 with pin 0x14 rather than unused surround channels.
+# Reference: https://www.cnblogs.com/gokoruri/p/23071181
+# Similar routing fix: https://lore.kernel.org/linux-sound/20260927210455.13938-1-mfthesun@vivaldi.net/
+
+--- a/sound/hda/codecs/realtek/alc269.c
++++ b/sound/hda/codecs/realtek/alc269.c
+@@ -2537,6 +2537,25 @@
+ 		static const hda_nid_t conn[] = { 0x02 };
+ 		snd_hda_override_conn_list(codec, 0x17, ARRAY_SIZE(conn), conn);
+ 	}
++}
++
++/* The BIOS hides the second speaker; both pairs must share stereo DAC 0x02. */
++static void alc256_fixup_xingyao_speakers(struct hda_codec *codec,
++					const struct hda_fixup *fix, int action)
++{
++	static const struct hda_pintbl pins[] = {
++		{ 0x1b, 0x90170121 },
++		{ }
++	};
++	static const hda_nid_t conn[] = { 0x02 };
++
++	if (action != HDA_FIXUP_ACT_PRE_PROBE ||
++	    codec->core.vendor_id != 0x10ec0256 ||
++	    codec->core.subsystem_id != 0x1d05e004)
++		return;
++
++	snd_hda_apply_pincfgs(codec, pins);
++	snd_hda_override_conn_list(codec, 0x1b, ARRAY_SIZE(conn), conn);
+ }
+ 
+ /* disable DAC3 (0x06) selection on NID 0x15 - share Speaker/Bass Speaker DAC 0x03 */
+@@ -3995,6 +4014,7 @@
+ 	ALC269_FIXUP_POSITIVO_P15X_HEADSET_MIC,
+ 	ALC289_FIXUP_ASUS_ZEPHYRUS_DUAL_SPK,
+ 	ALC256_FIXUP_VAIO_RPL_MIC_NO_PRESENCE,
++	ALC256_FIXUP_XINGYAO_SPEAKERS,
+ };
+ 
+ /* A special fixup for Lenovo C940 and Yoga Duet 7;
+@@ -4032,6 +4052,10 @@
+ }
+ 
+ static const struct hda_fixup alc269_fixups[] = {
++	[ALC256_FIXUP_XINGYAO_SPEAKERS] = {
++		.type = HDA_FIXUP_FUNC,
++		.v.func = alc256_fixup_xingyao_speakers,
++	},
+ 	[ALC269_FIXUP_GPIO2] = {
+ 		.type = HDA_FIXUP_FUNC,
+ 		.v.func = alc_fixup_gpio2,
+@@ -7563,6 +7587,7 @@
+ 	SND_PCI_QUIRK(0x1d05, 0x3031, "TongFang X6AR55xU", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3033, "TongFang X6SP45xU", ALC2XX_FIXUP_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d05, 0x3034, "TongFang X6KK45xU", ALC2XX_FIXUP_HEADSET_MIC),
++	SND_PCI_QUIRK(0x1d05, 0xe004, "MECHREVO Xingyao 14", ALC256_FIXUP_XINGYAO_SPEAKERS),
+ 	SND_PCI_QUIRK(0x1d17, 0x3288, "Haier Boyue G42", ALC269VC_FIXUP_ACER_VCOPPERBOX_PINS),
+ 	SND_PCI_QUIRK(0x1d72, 0x1602, "RedmiBook", ALC255_FIXUP_XIAOMI_HEADSET_MIC),
+ 	SND_PCI_QUIRK(0x1d72, 0x1701, "XiaomiNotebook Pro", ALC298_FIXUP_DELL1_MIC_NO_PRESENCE),

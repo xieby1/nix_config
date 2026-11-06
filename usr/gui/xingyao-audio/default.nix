@@ -17,6 +17,13 @@ in lib.mkIf (lib.trim (builtins.readFile /etc/hostname) == "techrevo") {
     "monitor.alsa.rules" = [{
       matches = [{ "device.name" = "alsa_card.pci-0000_c1_00.6"; }];
       actions.update-props."api.alsa.use-acp" = false;
+    } {
+      matches = [{ "node.name" = "alsa_output.pci-0000_c1_00.6.playback.0.0"; }];
+      # Raw four-channel playback leaves the shared speaker DAC on silent channels 3/4.
+      actions.update-props = {
+        "audio.channels" = 2;
+        "audio.position" = [ "FL" "FR" ];
+      };
     }];
   };
 
