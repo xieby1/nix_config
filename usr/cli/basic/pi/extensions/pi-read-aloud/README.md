@@ -17,7 +17,7 @@ Basic Markdown formatting is removed; inline names remain speakable.
 Sentences are generated one at a time in chunks of at most 400 UTF-16 code units, without splitting surrogate pairs.
 Pause during synthesis holds the completed audio until resume and prevents further synthesis while paused.
 
-The footer displays `TTS reading` or `TTS paused`; failures use Pi notifications, never direct terminal output.
+Playback does not display a footer status; failures use Pi notifications, never direct terminal output.
 Session shutdown/reload/switch closes both processes; tree navigation stops the current read.
 Nothing starts at extension load or agent completion: there is no automatic narration, dictation, model browser, HTTP server or settings framework.
 Fcitx5 vinput is unaffected.

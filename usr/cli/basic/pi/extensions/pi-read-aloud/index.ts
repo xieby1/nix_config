@@ -20,9 +20,7 @@ export default function (pi: ExtensionAPI) {
   const reader = new Reader({
     backend,
     createPlayer: options => new Player(options),
-    onState: state => {
-      if (context?.hasUI) context.ui.setStatus('read-aloud', state === 'idle' ? undefined : `TTS ${state} · Alt+R`);
-    },
+    onState: () => {},
     onError: error => notify(`Read aloud: ${error.message}`, 'error'),
   });
   const stop = (ctx: ExtensionContext) => { version++; context = ctx; return reader.stop(); };
