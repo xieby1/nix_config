@@ -149,6 +149,22 @@
       "url": "https://github.com/xieby1/pi-skill-usage/archive/202c94ef94756842510f84bf02543b2225b1aa25.tar.gz",
       "hash": "sha256-iecPmadP9DdesnLfGFw3ha+g3Yiw7D5WqJ8Yga/UVOE="
     },
+    "pi-voicekit": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "CyFeng16",
+        "repo": "pi-voicekit"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.6.7",
+      "revision": "3b66d5e62462202295408c5a20fe699bed4a43bb",
+      "url": "https://api.github.com/repos/CyFeng16/pi-voicekit/tarball/refs/tags/v0.6.7",
+      "hash": "sha256-4EMUbys6gJPmONzZJO6QUAqR11XDUR7hrDsfvtgsEUM="
+    },
     "pi-web": {
       "type": "GitRelease",
       "repository": {

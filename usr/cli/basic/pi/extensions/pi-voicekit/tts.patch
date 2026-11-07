@@ -1,0 +1,126 @@
+--- a/extensions/voice.ts
++++ b/extensions/voice.ts
+@@ -1927,6 +1927,12 @@
+ 			}
+ 		}
+ 
++		// TTS-only installations keep their existing input method and need no STT setup.
++		if (!config.enabled) {
++			updateVoiceStatus();
++			return;
++		}
++
+ 		// Migration / setup runs on EVERY session_start, regardless of reason.
+ 		// Only the first-run notification is gated on isStartup.
+ 		if (config.onboarding.completed) {
+@@ -3013,13 +3019,31 @@
+ 	}
+ 
+ 	pi.registerCommand("voice-speak", {
+-		description: "Speak the given text (text-to-speech)",
++		description: "Speak text, or read the latest assistant reply when no text is given",
+ 		handler: async (args, cmdCtx) => {
+ 			ctx = cmdCtx;
+-			const text = (args || "").trim();
++			let text = (args || "").trim();
+ 			if (!text) {
+-				cmdCtx.ui.notify("Usage: /voice-speak <text>", "warning");
+-				return;
++				await cmdCtx.waitForIdle();
++				for (const entry of [...cmdCtx.sessionManager.getBranch()].reverse()) {
++					if (entry.type !== "message" || entry.message.role !== "assistant") continue;
++					text = entry.message.content
++						.filter((part) => part.type === "text")
++						.map((part) => part.text)
++						.join("\n");
++					if (text.trim()) break;
++				}
++				if (!text.trim()) {
++					cmdCtx.ui.notify("No assistant reply to read.", "warning");
++					return;
++				}
++				const { prepareForSpeech } = await import("./voice/tts-text-filter");
++				const prepared = prepareForSpeech(text, { maxChars: Infinity });
++				if (prepared.skipped) {
++					cmdCtx.ui.notify("The latest reply has no readable text.", "warning");
++					return;
++				}
++				text = prepared.text;
+ 			}
+ 			await runSpeak(cmdCtx, text);
+ 		},
+--- a/extensions/voice/tts-engine.ts
++++ b/extensions/voice/tts-engine.ts
+@@ -491,7 +491,8 @@
+ function buildTtsConfig(model: TtsLocalModelInfo, modelDir: string): any {
+ 	const dataDir = path.join(modelDir, "espeak-ng-data");
+ 	const tokens = path.join(modelDir, "tokens.txt");
+-	const numThreads = getTtsThreads(model.sherpaSlot);
++	const auditionedKokoro = model.id === "kokoro-multi-lang-v1_1";
++	const numThreads = auditionedKokoro ? 4 : getTtsThreads(model.sherpaSlot);
+ 
+ 	switch (model.sherpaSlot) {
+ 		case "kitten": {
+@@ -536,8 +537,14 @@
+ 			// Filename varies between releases — int8 quantization (kokoro v1.0
+ 			// multilingual: `model.int8.onnx`) vs fp32 (`model.onnx`). Find
+ 			// whichever ships in this model dir.
+-			const lexicon = findKokoroLexicons(modelDir);
++			// Keep the audition's American-English pronunciation and Chinese normalization.
++			const lexicon = auditionedKokoro
++				? ["lexicon-us-en.txt", "lexicon-zh.txt"].map((name) => path.join(modelDir, name)).join(",")
++				: findKokoroLexicons(modelDir);
+ 			return {
++				...(auditionedKokoro ? {
++					ruleFsts: ["number-zh.fst", "date-zh.fst", "phone-zh.fst"].map((name) => path.join(modelDir, name)).join(","),
++				} : {}),
+ 				model: {
+ 					kokoro: {
+ 						model: findFirstOnnx(modelDir, ["model.int8.onnx", "model.onnx", "model.fp16.onnx"]),
+@@ -547,9 +554,9 @@
+ 						lengthScale: 1.0,
+ 						...(lexicon ? { lexicon } : {}),
+ 					},
++					numThreads,
++					provider: "cpu",
+ 				},
+-				numThreads,
+-				provider: "cpu",
+ 			};
+ 		}
+ 	}
+--- a/extensions/voice/tts-local-models.ts
++++ b/extensions/voice/tts-local-models.ts
+@@ -128,6 +128,32 @@
+  * grouped in the settings panel by sherpa slot.
+  */
+ export const TTS_LOCAL_MODELS: TtsLocalModelInfo[] = [
++	{
++		id: "kokoro-multi-lang-v1_1",
++		name: "Kokoro Chinese/English v1.1 (fp32)",
++		size: "348 MB",
++		sizeBytes: 364855331,
++		runtimeRamMB: 1400,
++		notes: "Auditioned CPU model; af_maple reads Chinese, English and mixed text.",
++		languages: ["zh", "en"],
++		tier: "heavy",
++		preferred: false,
++		accuracy: 5,
++		speed: 3,
++		license: "Apache-2.0",
++		sherpaSlot: "kokoro",
++		voices: [
++			{ sid: 0, name: "af_maple (en-US, female)", gender: "female" },
++			{ sid: 1, name: "af_sol (en-US, female)", gender: "female" },
++			{ sid: 2, name: "bf_vale (en-GB, female)", gender: "female" },
++			{ sid: 3, name: "zf_001 (zh, female)", gender: "female" },
++			{ sid: 58, name: "zm_009 (zh, male)", gender: "male" },
++		],
++		defaultSid: 0,
++		archiveUrl: `${TTS_RELEASE}/kokoro-multi-lang-v1_1.tar.bz2`,
++		archiveSha256: "b78e1ac42b852e839cceaafbe88f66806bf5860992d1d7b9a3f2ad1198427aed",
++		sampleRate: 24000,
++	},
+ 	// ═══════════════════════════════════════════════════════════════════════
+ 	// TIER 0 — Default first-run (English-only, smallest)
+ 	// ═══════════════════════════════════════════════════════════════════════
