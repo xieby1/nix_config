@@ -4,6 +4,25 @@ TTS-only integration for the selected Kokoro v1.1 FP32 model: `af_maple` (speake
 The original model, English/Chinese lexicons and Chinese normalization FSTs are preserved.
 No native pronunciation patches or runtime downloads are used.
 
+## Controls
+
+- **Alt+R:** idle → read the latest completed, speakable assistant reply; reading → pause the current reply, even if a newer reply exists; paused → resume the same reply, or replace it if a newer reply exists.
+- **`/voice-speak`:** wait for the agent to settle, then read its latest reply.
+- **`/voice-speak text`:** read supplied text immediately.
+- **`/voice-speak-stop`:** stop playback and cancel any read command still waiting for the agent.
+
+Reply identity is the session entry ID, not text equality.
+Only persisted assistant text from the current branch is selected; thinking, tool output, failed/aborted messages and code blocks are excluded.
+Basic Markdown formatting is removed; inline names remain speakable.
+Sentences are generated one at a time in chunks of at most 400 UTF-16 code units, without splitting surrogate pairs.
+Pause during synthesis holds the completed audio until resume and prevents further synthesis while paused.
+
+The footer displays `TTS reading` or `TTS paused`; failures use Pi notifications, never direct terminal output.
+Session shutdown/reload/switch closes both processes; tree navigation stops the current read.
+Nothing starts at extension load or agent completion: there is no automatic narration, dictation, model browser, HTTP server or settings framework.
+Fcitx5 vinput is unaffected.
+The model remains at `~/.pi/models/tts/kokoro-multi-lang-v1_1`; native diagnostics go to `<Pi agent directory>/read-aloud.log` (normally `~/.pi/agent/read-aloud.log`).
+
 ## Synthesis
 
 `backend.mjs` exposes `Kokoro({ modelDir, logPath })`, `synthesize(text, { signal })` and `close()`.
@@ -39,3 +58,5 @@ nix-build usr/cli/basic/pi/extensions/pi-read-aloud/check.nix --no-out-link
 The check builds the native npm dependency with Nix ELF fixups and runs under a disposable HOME.
 It exercises actual Chinese, English and mixed-language synthesis, checks finite audible samples, proves native diagnostics stay out of the parent terminal and native libraries stay out of the parent process, verifies model reuse, and tests cancellation, shutdown, worker crashes and recovery.
 Playback tests use actual mpv with `--ao=null`: its real playback clock must freeze/resume, a paused write must apply backpressure, EOF must finish cleanly, and cancellation must reap the process without uncaught socket errors.
+Control tests cover newer replies (including identical text with different IDs), pause during synthesis, rapid controls, cleanup and failures.
+The installed Pi loader also runs the registered commands/shortcut through actual native synthesis and mpv, checking empty startup, cancelled idle waits, branch changes, explicit speech, stop and shutdown with clean parent output.

@@ -4,6 +4,7 @@ let
   model = import ./model.nix { inherit pkgs; };
 in pkgs.runCommand "pi-read-aloud-check" {
   nativeBuildInputs = [ pkgs.nodejs ];
+  PI_ROOT = "${pkgs.pipkgs.pi-coding-agent}/lib/node_modules/pi-monorepo";
   READ_ALOUD_PACKAGE = "${package}/lib/node_modules/pi-read-aloud";
   READ_ALOUD_MODEL = model;
   READ_ALOUD_MPV = pkgs.writeShellScript "mpv-null" ''
@@ -16,4 +17,17 @@ in pkgs.runCommand "pi-read-aloud-check" {
   cat $out/backend.log
   node --test ${./player.test.mjs} > $out/player.log 2>&1 || { cat $out/player.log; exit 1; }
   cat $out/player.log
+  node --test ${./text.test.mjs} ${./reader.test.mjs} > $out/controls.log 2>&1 || { cat $out/controls.log; exit 1; }
+  cat $out/controls.log
+  export READ_ALOUD_TEST_HOME=$HOME
+  mkdir -p test-bin
+  ln -s $READ_ALOUD_MPV test-bin/mpv
+  export PATH=$PWD/test-bin:$PATH
+  if ! node --test ${./index.test.mjs} > $out/index.log 2> $out/index-stderr.log; then
+    cat $out/index.log $out/index-stderr.log
+    exit 1
+  fi
+  cat $out/index.log
+  test ! -s $out/index-stderr.log
+  ! grep -E 'Unknown token:|Skip unknown phonemes' $out/index.log
 ''

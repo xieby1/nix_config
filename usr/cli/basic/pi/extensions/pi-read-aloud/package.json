@@ -3,7 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "type": "module",
-  "files": ["backend.mjs", "worker.mjs", "player.mjs"],
+  "files": ["index.ts", "backend.mjs", "worker.mjs", "player.mjs", "reader.mjs", "text.mjs"],
+  "pi": {"extensions": ["./index.ts"]},
   "dependencies": {"sherpa-onnx-node": "1.13.0"},
   "overrides": {
     "sherpa-onnx-win-x64": "1.13.0",
