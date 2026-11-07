@@ -29,5 +29,11 @@ in pkgs.runCommand "pi-read-aloud-check" {
   fi
   cat $out/index.log
   test ! -s $out/index-stderr.log
-  ! grep -E 'Unknown token:|Skip unknown phonemes' $out/index.log
+  if grep -E 'Unknown token:|Skip unknown phonemes' $out/index.log; then exit 1; fi
+  if ! node --test ${./rpc.test.mjs} > $out/rpc.log 2> $out/rpc-stderr.log; then
+    cat $out/rpc.log $out/rpc-stderr.log
+    exit 1
+  fi
+  cat $out/rpc.log
+  test ! -s $out/rpc-stderr.log
 ''
