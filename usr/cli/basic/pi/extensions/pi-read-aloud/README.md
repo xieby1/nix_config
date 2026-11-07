@@ -20,6 +20,16 @@ Cancellation terminates the private worker and discards the current chunk; the n
 `close()` rejects active work and waits for children to exit; a worker also exits when its parent disconnects.
 Synthesis failures and unexpected worker exits reject normally instead of crashing Pi.
 
+## Playback
+
+`player.mjs` owns one mpv process per reply.
+Mono float PCM arrives through stdin; JSON commands and acknowledgements use inherited fd 3, with no public socket.
+`write()` applies backpressure, `setPaused()` waits for mpv's acknowledgement, and `end()` waits until the last audio finishes.
+`stop()` rejects pending work and reaps the process.
+A player can start paused, so a pause during synthesis never leaks the first audio.
+mpv configuration files and terminal input are disabled; read-ahead is capped at 256 KiB.
+Player diagnostics are captured and bounded, not printed into Pi.
+
 ## Verification
 
 ```sh
@@ -28,3 +38,4 @@ nix-build usr/cli/basic/pi/extensions/pi-read-aloud/check.nix --no-out-link
 
 The check builds the native npm dependency with Nix ELF fixups and runs under a disposable HOME.
 It exercises actual Chinese, English and mixed-language synthesis, checks finite audible samples, proves native diagnostics stay out of the parent terminal and native libraries stay out of the parent process, verifies model reuse, and tests cancellation, shutdown, worker crashes and recovery.
+Playback tests use actual mpv with `--ao=null`: its real playback clock must freeze/resume, a paused write must apply backpressure, EOF must finish cleanly, and cancellation must reap the process without uncaught socket errors.
