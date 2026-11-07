@@ -8,7 +8,6 @@
     ./pi-language-tutor
     ./pi-retry.nix
     ./pi-context-view
-    ./pi-read-aloud
     ./pi-model-project.nix
     ./pi-skill-usage.nix
     ./heuristic-notify.nix
