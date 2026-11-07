@@ -24,6 +24,10 @@ let
       runHook preInstall
       mkdir -p $out/lib/node_modules/pi-web $out/bin
       cp -r dist node_modules package.json $out/lib/node_modules/pi-web/
+      # A root entrypoint makes Pi's compact banner show session-naming, not extensions.
+      naming=$out/lib/node_modules/pi-web/dist/pi-packages/session-naming
+      substituteInPlace "$naming/package.json" --replace-fail '"./extensions"' '"./index.js"'
+      echo 'export { default } from "./extensions/index.js";' > "$naming/index.js"
       # npm workspace symlinks point into the relocated build tree; drop dangling ones.
       find $out/lib/node_modules/pi-web/node_modules -type l ! -exec test -e {} \; -delete 2>/dev/null || true
       makeWrapper ${nodejs}/bin/node $out/bin/pi-web          --add-flags "$out/lib/node_modules/pi-web/dist/cli.js"
