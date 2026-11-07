@@ -1,0 +1,17 @@
+--- a/lua/codecompanion/providers/completion/blink/init.lua	2026-06-18 11:48:18.102221074 +0800
++++ b/lua/codecompanion/providers/completion/blink/init.lua	2026-06-18 11:48:18.124194683 +0800
+@@ -27,6 +27,14 @@
+ function M:get_completions(ctx, callback)
+   local trigger_char = ctx.trigger.character or ctx.line:sub(ctx.bounds.start_col - 1, ctx.bounds.start_col - 1)
+ 
++  if trigger_char == triggers.mappings.slash_commands then
++    local trigger_col = ctx.bounds.start_col - 1
++    local previous_char = trigger_col > 1 and ctx.line:sub(trigger_col - 1, trigger_col - 1) or ""
++    if previous_char ~= "" and not previous_char:match("%s") then
++      return callback()
++    end
++  end
++
+   --- @type lsp.Range
+   local edit_range = {
+     start = {

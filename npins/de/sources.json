@@ -1,0 +1,44 @@
+{
+  "pins": {
+    "DankPluginBingWallpaper": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "max72bra",
+        "repo": "DankPluginBingWallpaper"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2958f72c9469c2cc2d8624036f348d4c1df4c0f2",
+      "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/2958f72c9469c2cc2d8624036f348d4c1df4c0f2.tar.gz",
+      "hash": "sha256-SYG5h0Wy34XgaGedgSwnzcU6XodOYVI6B4WO9YqzGcw="
+    },
+    "dms-unified-taskbar": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "jslandau",
+        "repo": "dms-unified-taskbar"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "eba5b385cfbbda85587fa0a4feefe293563617ff",
+      "url": "https://github.com/jslandau/dms-unified-taskbar/archive/eba5b385cfbbda85587fa0a4feefe293563617ff.tar.gz",
+      "hash": "sha256-gOLipzxMKrGqP0DZdWzEszGzgwtz2FJde+nHiU8CwZo="
+    },
+    "fcitx5-vinput": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xifan2333",
+        "repo": "fcitx5-vinput"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "c9edd9ef77cd66865e2e41b76efe7731031cf669",
+      "url": "https://github.com/xifan2333/fcitx5-vinput/archive/c9edd9ef77cd66865e2e41b76efe7731031cf669.tar.gz",
+      "hash": "sha256-99uvzUnKUHtRfJz9+lG0pmyu704whbyG+KmFTxk5lpA="
+    }
+  },
+  "version": 8
+}

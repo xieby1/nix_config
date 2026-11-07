@@ -1,0 +1,17 @@
+{
+  "name": "pi-read-aloud",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "files": ["index.ts", "backend.mjs", "worker.mjs", "player.mjs", "reader.mjs", "text.mjs"],
+  "pi": {"extensions": ["./index.ts"]},
+  "dependencies": {"sherpa-onnx-node": "1.13.0"},
+  "overrides": {
+    "sherpa-onnx-win-x64": "1.13.0",
+    "sherpa-onnx-win-ia32": "1.13.0",
+    "sherpa-onnx-linux-x64": "1.13.0",
+    "sherpa-onnx-darwin-x64": "1.13.0",
+    "sherpa-onnx-linux-arm64": "1.13.0",
+    "sherpa-onnx-darwin-arm64": "1.13.0"
+  }
+}
