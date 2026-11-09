@@ -1,10 +1,7 @@
+{ src }: # local-args
 { config, ... }: {
   imports = [
-    # Why not using pkgs.npinsed here? Because: pkgs cannot be used in imports, or it will cause infinite recursion.
-    (let
-      npinsed = import ../npins/hierarchy.nix;
-      sixu-src = npinsed.my.sixu;
-    in sixu-src + /nix/home-manager/sixu.nix)
+    (src + /nix/home-manager/sixu.nix)
   ];
   services.sixu = {
     enable = true;

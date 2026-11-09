@@ -1,13 +1,15 @@
 { lib, ... }:
 let
-  # XingYao's imports need its source before config._module.args can be resolved.
+  # Service imports need their sources before config._module.args can be resolved.
   global-args = import ../global-args {inherit lib;};
 in {
   imports = [
     ./authelia
     ./caddy
     ./circle.nix
-    ./sixu.nix
+    (lib.modules.importApply ./sixu {
+      src = (global-args.npinsFun {input=./sixu/sources.json;}).sixu;
+    })
     (lib.modules.importApply ./xingyao {
       src = (global-args.npinsFun {input=./xingyao/sources.json;}).xingyao;
     })
