@@ -1,10 +1,12 @@
 let
   pkgs = import <nixpkgs> {};
   inherit (pkgs) lib;
+  sharedArgs = import ../../../../global-args { inherit lib; };
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = {
       imports = [ ../. ../../../yq-merge ../../../cachix-push.nix ];
+      _module.args = sharedArgs;
       home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
     };
   };
@@ -43,6 +45,7 @@ in lib.runTests {
       pkgs = import <nixpkgs> { system = "riscv64-linux"; };
       configuration = {
         imports = [ ./. ../../../yq-merge ../../../cachix-push.nix ];
+        _module.args = sharedArgs;
         home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
       };
     };
