@@ -4,7 +4,7 @@
   imports = [
     (lib.modules.importApply ./extensions {inherit enableExtendedCLI;})
     ./providers
-  ];
+  ] ++ lib.optional enableExtendedCLI ./pi-web;
   home.packages = [
     # Include session-file size (S5.5M) in Pi's built-in footer stats line.
     (pkgs.pipkgs.pi-coding-agent.overrideAttrs (old: {

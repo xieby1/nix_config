@@ -17,7 +17,6 @@ in
     ./fzf.nix
     ./tldr.nix
     ./zellij.nix
-    ./pi-ext
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
     home.file.nix_index_database = {
