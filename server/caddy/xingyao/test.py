@@ -84,6 +84,7 @@ def main():
         assert '"XINGYAO_BASE_PATH=/BTeam/XingYao/"' in unit['Service']['Environment']
         assert f'"XINGYAO_DATA_ROOT={root}/.local/share/xingyao-main"' in unit['Service']['Environment']
         binary, = unit['Service']['ExecStart']
+        pre_start = unit['Service']['ExecStartPre']
         configuration = yaml.safe_load(Path(metadata['autheliaConfig']).read_text())
         rules = configuration['access_control']['rules']
         rule = next(rule for rule in rules if '^/BTeam/XingYao(/.*)?$' in rule.get('resources', []))
@@ -115,7 +116,10 @@ def main():
         git_env = dict(env, GIT_CONFIG_NOSYSTEM='1', GIT_CONFIG_GLOBAL='/dev/null',
                        GIT_CONFIG_COUNT='2', GIT_CONFIG_KEY_0='user.name', GIT_CONFIG_VALUE_0='Fixture',
                        GIT_CONFIG_KEY_1='user.email', GIT_CONFIG_VALUE_1='fixture@example.invalid')
-        run(binary, 'init', str(data), env=git_env)
+        run(pre_start, env=dict(git_env, XINGYAO_DATA_ROOT=str(data)))
+        initial = run('git', '-C', str(data), 'rev-parse', 'HEAD')
+        run(pre_start, env=dict(git_env, XINGYAO_DATA_ROOT=str(data)))
+        assert run('git', '-C', str(data), 'rev-parse', 'HEAD') == initial
         route = metadata['route'].replace('127.0.0.1:9091', f'127.0.0.1:{auth_port}').replace('127.0.0.1:3004', f'127.0.0.1:{api_port}')
         caddy_path = root / 'Caddyfile'
         caddy_path.write_text(f'''{{
@@ -198,7 +202,7 @@ def main():
             assert author == 'editor Name <editor@example.invalid>|XingYao <server@xingyao.invalid>', author
             assert request(proxy_port, PREFIX + '/api/unknown', headers)[0] == 404
             assert not run('git', '-C', str(data), 'status', '--porcelain')
-            print('PASS: generated Home Manager/Caddy/Authelia config; BTeam/admins 2FA; outsider/1FA/spoof denial; prefixed assets; CSRF; attributed creation')
+            print('PASS: Home Manager sample initialization and repeat-start preservation; Caddy/Authelia BTeam/admins 2FA; outsider/1FA/spoof denial; prefixed assets; CSRF; attributed creation')
         except BaseException:
             for _, log in processes:
                 log.seek(0)

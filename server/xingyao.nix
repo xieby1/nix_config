@@ -10,6 +10,7 @@
       dataDir = "${config.xdg.dataHome}/xingyao-main";
       port = 3004;
       basePath = "/BTeam/XingYao/";
+      initializeWithSamples = true;
     };
   };
 }
