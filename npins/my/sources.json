@@ -23,6 +23,18 @@
       "revision": "a4ecd12b321beb850fdddb5335f0f7598c56b7f1",
       "url": null,
       "hash": "sha256-9mN6bWguKmNkUPhM/4K9y3ZZR3j+ol1kLBrgTeMPZg4="
+    },
+    "xingyao": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://git@github.com/OpenXiangShan-Nanhu/XingYao"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "eef017025ff9a7490b7e2895340228cab61bbff3",
+      "url": null,
+      "hash": "sha256-HYJ+fsjmXjfVmFAgQ7T71JEOKRAq+Bs+q9JW9HfJ/aI="
     }
   },
   "version": 8

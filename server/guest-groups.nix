@@ -3,11 +3,13 @@
 #
 # That one file is the only list of people, so adding a guest is one entry there
 # and nothing in this repo. It is interpreted here once, for both consumers:
-#   - teams: each non-"admins" group. Its members get, and only get
+#   - teams: each non-"admins" group. Its repository access is limited to
 #       https://xieby1.cn/Repos/<name>/…   (Authelia group "<name>"; the path
 #       rule in ../authelia/default.nix is the whole web-side boundary)
 #       read-only git for ~/Repos/<name> (enforced by ../caddy/cgit/ssh/default.nix)
 #   - adminKeys: the ssh keys of the "admins" users, for a normal login shell
+#     ../authelia/default.nix also grants BTeam/admins the shared XingYao app;
+#     that web permission does not broaden SSH or repository access.
 #     ../authelia/default.nix generates Authelia's user database from the same
 #     file (with the ssh keys stripped).
 #

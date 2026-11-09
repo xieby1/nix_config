@@ -88,6 +88,9 @@ let
       # circle routes; see ./circle/.
       ${import ./circle/caddy.nix}
 
+      # XingYao authenticates before stripping its public prefix.
+      ${import ./xingyao/caddy.nix}
+
       # syncthing routes; see ./syncthing/.
       ${import ./syncthing/caddy.nix}
 

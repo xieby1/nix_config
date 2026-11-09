@@ -5,6 +5,7 @@
     ./caddy
     ./circle.nix
     ./sixu.nix
+    ./xingyao.nix
 
     ../usr/modules
     ../usr/cli/basic

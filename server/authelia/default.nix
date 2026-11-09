@@ -36,6 +36,12 @@ let
   }) guestGroups.teams ++ [
     {
       domain = "xieby1.cn";
+      resources = [ "^/BTeam/XingYao(/.*)?$" ];
+      subject = [ "group:BTeam" "group:admins" ];
+      policy = "two_factor";
+    }
+    {
+      domain = "xieby1.cn";
       resources = [ "^${cgitConsts.prefix}(/.*)?$" ];
       subject = [ "group:admins" ];
       policy = "two_factor";
