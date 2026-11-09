@@ -2,7 +2,7 @@
   # Enable optional CLI tooling omitted from the server profile.
   enableExtendedCLI ? true
 }: # local args
-{ config, lib, ... }: {
+{ lib, isNixOnDroid, ... }: {
   imports = [
     ./starship.nix
     ./zsh
@@ -26,7 +26,7 @@
   programs.zsh.envExtra = /*bash*/ ''
     if [[ -e "$HOME/.config/npins/nixpkgs" && -e "$HOME/.config/npins/home-manager" ]]; then
       export NIX_PATH="nixpkgs=$HOME/.config/npins/nixpkgs:home-manager=$HOME/.config/npins/home-manager${
-        if config.isNixOnDroid
+        if isNixOnDroid
         then ":nix-on-droid=$HOME/.config/npins/nix-on-droid"
         else ":nixos-config=/etc/nixos/configuration.nix"
       }"

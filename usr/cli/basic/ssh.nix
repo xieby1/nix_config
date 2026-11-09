@@ -1,4 +1,4 @@
-{ config, lib, pkgs, ... }: {
+{ config, lib, pkgs, isNixOnDroid, ... }: {
   home.packages = [
     pkgs.sshfs
   ];
@@ -7,7 +7,7 @@
     builtins.pathExists ~/Gist/Config/ssh.conf
     # SSH need ssh.conf are only writable for current user, while nix-on-droid cannot change the system folder's permissions.
     # So I disable inluding ssh.conf in nix-on-droid
-    && !config.isNixOnDroid
+    && !isNixOnDroid
   ) "~/Gist/Config/ssh.conf";
   # For compatibility
   programs.ssh.enableDefaultConfig = false;
@@ -37,7 +37,7 @@
       ServerAliveInterval = 60;
     };
   };
-  programs.zsh.initContent = lib.optionalString config.isNixOnDroid ''
+  programs.zsh.initContent = lib.optionalString isNixOnDroid ''
     # start sshd
     if [[ -z "$(pidof sshd-start)" ]]; then
         tmux new -d -s sshd-start sshd-start

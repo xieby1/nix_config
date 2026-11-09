@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, isNixOnDroid, ... }:
 let
   cfg = config.my.tailscale.instances;
 
@@ -60,7 +60,7 @@ let
       };
       zshInit = ''
         compdef _tailscale tailscale-${suffix}
-      '' + lib.optionalString config.isNixOnDroid ''
+      '' + lib.optionalString isNixOnDroid ''
         # start tailscale-${suffix}
         if [[ -z "$(pidof tailscaled-${suffix})" ]]; then
             tmux new -d -s tailscaled-${suffix} tailscaled-${suffix}
