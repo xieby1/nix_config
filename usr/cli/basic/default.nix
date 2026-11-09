@@ -1,4 +1,8 @@
-{ config, ... }: {
+{
+  # Enable optional CLI tooling omitted from the server profile.
+  enableExtendedCLI ? true
+}: # local args
+{ config, lib, ... }: {
   imports = [
     ./starship.nix
     ./zsh
@@ -6,7 +10,7 @@
     ./clash
     ./tailscale
     ./ssh.nix
-    ./nvim
+    (lib.modules.importApply ./nvim {inherit enableExtendedCLI;})
     ./pi
     ./syncthing.nix
   ];

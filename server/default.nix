@@ -8,7 +8,7 @@
     ./xingyao.nix
 
     ../usr/modules
-    ../usr/cli/basic
+    (lib.modules.importApply ../usr/cli/basic {enableExtendedCLI = false;})
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";

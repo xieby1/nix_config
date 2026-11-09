@@ -9,7 +9,7 @@ let
 in
 {
   imports = [
-    ./basic
+    (lib.modules.importApply ./basic {})
     ./extra.nix
     ./tmux.nix
     ./gdb.nix

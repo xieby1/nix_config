@@ -1,5 +1,6 @@
+{ enableExtendedCLI }: # local args
 # TODO: niri like buffer width/height adjust
-{ pkgs, config, ... }:let
+{ pkgs, config, lib, ... }:let
   my-neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (old: {
     patches = old.patches ++ [
       # [:terminal - enable folding #5682](https://github.com/neovim/neovim/issues/5682)
@@ -43,7 +44,7 @@ in {
     ./todo-comments.nix
     ./lualine.nix
     ./conform.nix
-  ];
+  ] ++ lib.optional enableExtendedCLI ./markdown-preview.nix;
 
   home.shellAliases.view = "nvim -R";
   #MC Set nvim as manpager.
