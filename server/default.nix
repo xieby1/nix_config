@@ -9,6 +9,8 @@
 
     # TODO: no more `modules`, which is a dummy name. Move modules/* to a reasonable namespace.
     ../usr/modules
+    # TODO: reuse ../usr as much as possible
+    ../usr/cachix-push.nix
     (lib.modules.importApply ../usr/cli/basic {enableExtendedCLI = false;})
   ];
 

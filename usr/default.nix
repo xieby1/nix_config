@@ -10,6 +10,7 @@
 
 { ... }: {
   imports = [
+    ./cachix-push.nix
     ./modules
     ./cli
     ./gui

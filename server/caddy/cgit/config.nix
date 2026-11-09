@@ -11,10 +11,6 @@ let
 in {
   config = lib.mkIf cfg.enable {
     home.packages = [ cgit pkgs.fcgiwrap ];
-
-    # No binary cache has the patched build, so the server would compile it
-    # itself: push it from a machine that already has it, then this entry keeps
-    # re-pushing whenever a cgit bump changes the build. See ../../modules/cachix.nix.
     cachix_packages = [ cgit ];
 
     # cgit writes its page-cache files directly into cache-root but never

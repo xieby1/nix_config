@@ -11,18 +11,6 @@ Although there are several existing ways to achieve this:
 However, the granularity of these methods is coarse; they push all packages to cachix.
 Is there a way to allow users to control which packages are pushed?
 
-## Conclusion First
-
-Use **hooks** to push the selected packages to cachix:
-
-| Scenario      | Hook                       | Example                                                                                                            |
-|---------------|----------------------------|--------------------------------------------------------------------------------------------------------------------|
-| home-manager  | `home.activation`          | [modules/cachix.nix](../../../modules/cachix.nix.md), [usr/modules/cachix.nix](../../../usr/modules/cachix.nix.md) |
-| nixos-rebuild | `system.activationScripts` | [modules/cachix.nix](../../../modules/cachix.nix.md), [sys/modules/cachix.nix](../../../sys/modules/cachix.nix.md) |
-| nix-shell     | `shellHook`                | [openc910/shell.nix](https://github.com/xieby1/openc910/blob/main/shell.nix)                                       |
-
----
-
 ## My Explorations
 
 **Possible solutions**:
