@@ -7,6 +7,7 @@ let
       imports = [
         ../../../modules
         ../../../yq-merge
+        ../../../syncthing-gist-ignore.nix
         (lib.modules.importApply ./. {inherit enableExtendedCLI;})
       ];
       home.username = "test";

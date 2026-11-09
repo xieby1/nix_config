@@ -12,6 +12,7 @@
     # TODO: reuse ../usr as much as possible
     ../usr/cachix-push.nix
     ../usr/yq-merge
+    ../usr/syncthing-gist-ignore.nix
     (lib.modules.importApply ../usr/cli/basic {enableExtendedCLI = false;})
   ];
 

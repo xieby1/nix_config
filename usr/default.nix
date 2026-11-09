@@ -12,6 +12,7 @@
   imports = [
     ./cachix-push.nix
     ./yq-merge
+    ./syncthing-gist-ignore.nix
     ./modules
     ./cli
     ./gui

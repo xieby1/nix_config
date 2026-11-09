@@ -4,6 +4,5 @@
 
   imports = [
     ../../modules
-    ./syncthing-gist-ignore.nix
   ];
 }
