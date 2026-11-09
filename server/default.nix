@@ -7,8 +7,6 @@
     ./sixu.nix
     ./xingyao.nix
 
-    # TODO: no more `modules`, which is a dummy name. Move modules/* to a reasonable namespace.
-    ../usr/modules
     # TODO: reuse ../usr as much as possible
     ../usr/cachix-push.nix
     ../usr/yq-merge
@@ -19,6 +17,9 @@
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";
 
   config = {
+    # TODO: reuse ../usr as much as possible
+    _module.args = import ../global-args {inherit lib;};
+
     targets.genericLinux.enable = true;
     targets.genericLinux.gpu.enable = false;
 

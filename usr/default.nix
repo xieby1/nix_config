@@ -8,12 +8,13 @@
 #MC 因为部分系统不需要GUI程序，比如安卓手机nix-on-droid或是树莓派等。
 #MC 我利用环境变量`DISPLAY`用于判断是否导入GUI程序的配置。
 
-{ ... }: {
+{ lib, ... }: {
+  _module.args = import ../global-args {inherit lib;};
+
   imports = [
     ./cachix-push.nix
     ./yq-merge
     ./syncthing-gist-ignore.nix
-    ./modules
     ./cli
     ./gui
   ];
