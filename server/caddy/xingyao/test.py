@@ -76,7 +76,7 @@ def main():
         (vault / 'users.nix').write_text('{ lib }: {\n' + '\n'.join(
             f'{name} = {{ displayname = "{name} Name"; password = {json.dumps(digest)}; email = "{name}@example.invalid"; groups = [ "{group}" ]; sshKeys = []; }};'
             for name, group in users.items()) + '\n}\n')
-        metadata_path = run('nix-build', str(HERE / 'test.nix'), '--no-out-link', env=env)
+        metadata_path = run('nix-build', str(HERE / 'fixture.nix'), '--no-out-link', env=env)
         metadata = json.loads(Path(metadata_path).read_text())
         unit = metadata['xingyao']
         assert unit['Install']['WantedBy'] == ['default.target']
