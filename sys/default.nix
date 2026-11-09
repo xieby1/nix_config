@@ -31,7 +31,6 @@
   #MC 详细内容见文档[./cli](./cli/default.nix.md)和[./gui](./gui/default.nix.md)。
   imports = [
     ./cachix-push.nix
-    ./modules
     ./cli
     ./gui
   ];
