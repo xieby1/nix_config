@@ -47,6 +47,7 @@ in {
   ] ++ lib.optionals enableExtendedCLI [
     ./markdown-preview.nix
     ./lspconfig
+    ./rustowl.nix
   ];
 
   home.shellAliases.view = "nvim -R";

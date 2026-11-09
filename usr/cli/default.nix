@@ -17,7 +17,6 @@ in
     ./fzf.nix
     ./tldr.nix
     ./zellij.nix
-    ./nvim-ext
     ./pi-ext
   ] ++ [{ # functions & attrs
     home.packages = [pkgs.nix-index];
