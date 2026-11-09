@@ -1,3 +1,4 @@
+{ src }: # localArgs
 { config, pkgs, ... }:
 let
   retry = config.yq-merge.".pi/agent/settings.json".expr.retry;
@@ -8,7 +9,7 @@ in
 {
   home.file.".pi/agent/extensions/pi-retry" = {
     enable = retry.enabled;
-    source = pkgs.npinsed.ai.pi.pi-retry.outPath;
+    source = src.outPath;
   };
 
   yq-merge.".pi/agent/settings.json".expr.piRetry = {

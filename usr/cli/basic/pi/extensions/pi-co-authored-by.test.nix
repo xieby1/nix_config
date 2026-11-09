@@ -1,10 +1,11 @@
 let
   pkgs = import <nixpkgs> {};
-  module = import ./pi-co-authored-by.nix { inherit pkgs; };
+  sources = (import ../../../../../npins) {input=../sources.json;};
+  module = import ./pi-co-authored-by.nix {src = sources.shelken-pi-extensions;} { inherit pkgs; };
   root = module.home.file.".pi/agent/extensions/pi-co-authored-by".source;
   manifest = builtins.fromJSON (builtins.readFile "${root}/package.json");
   original = builtins.fromJSON (builtins.readFile
-    "${pkgs.npinsed.ai.pi.shelken-pi-extensions}/extensions/pi-co-authored-by/package.json");
+    "${sources.shelken-pi-extensions}/extensions/pi-co-authored-by/package.json");
 in pkgs.lib.runTests {
   test-coauthor-manifest = {
     expr = manifest;

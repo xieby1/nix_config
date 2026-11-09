@@ -1,10 +1,11 @@
+{ src }: # localArgs
 { config, pkgs, ... }:
 let
   # Pi injects @earendil-works/* and typebox at runtime, so drop its dev/peer
   # deps and their transitive graph from the install.
   slimSrc = pkgs.applyPatches {
     name = "pi-web-access-slim";
-    src = pkgs.npinsed.ai.pi.pi-web-access;
+    inherit src;
     nativeBuildInputs = [ pkgs.jq ];
     postPatch = ''
       jq 'del(.devDependencies, .peerDependencies, .peerDependenciesMeta, .scripts)' package.json > package.json.tmp

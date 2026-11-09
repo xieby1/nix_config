@@ -1,5 +1,6 @@
 let
   pkgs = import <nixpkgs> {};
+  sources = (import ../../../../../../npins) {input=../../sources.json;};
   inherit (pkgs) lib;
   evaluate = packages: (lib.evalModules {
     specialArgs.pkgs = packages;
@@ -29,5 +30,5 @@ in lib.runTests {
   test-unsupported-platform-stays-disabled = { expr = unsupported.home.file; expected = {}; };
   test-new-import = { expr = lib.hasInfix "./pi-read-aloud" imports; expected = true; };
   test-no-old-import = { expr = lib.hasInfix "./pi-voicekit" imports; expected = false; };
-  test-no-old-upstream-pin = { expr = pkgs.npinsed.ai.pi ? pi-voicekit; expected = false; };
+  test-no-old-upstream-pin = { expr = sources ? pi-voicekit; expected = false; };
 }

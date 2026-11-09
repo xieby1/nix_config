@@ -1,10 +1,12 @@
 { pkgs ? import <nixpkgs> {} }:
 let
+  sources = (import ../../../../../../npins) {input=../../sources.json;};
+  pipkgs = import ../../pkgs.nix {src = sources.nixpkgs;};
   package = import ./package.nix { inherit pkgs; };
   model = import ./model.nix { inherit pkgs; };
 in pkgs.runCommand "pi-read-aloud-check" {
   nativeBuildInputs = [ pkgs.nodejs ];
-  PI_ROOT = "${pkgs.pipkgs.pi-coding-agent}/lib/node_modules/pi-monorepo";
+  PI_ROOT = "${pipkgs.pi-coding-agent}/lib/node_modules/pi-monorepo";
   READ_ALOUD_PACKAGE = "${package}/lib/node_modules/pi-read-aloud";
   READ_ALOUD_MODEL = model;
   READ_ALOUD_MPV = pkgs.writeShellScript "mpv-null" ''

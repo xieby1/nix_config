@@ -1,13 +1,26 @@
 { enableExtendedCLI }:
-{ config, pkgs, lib, ... }:
-{
+{ config, lib, npinsFun, ... }:
+let
+  npinsed = npinsFun {input=./sources.json;};
+  pipkgs = import ./pkgs.nix {src = npinsed.nixpkgs;};
+in {
   imports = [
-    (lib.modules.importApply ./extensions {inherit enableExtendedCLI;})
+    (lib.modules.importApply ./extensions {
+      inherit enableExtendedCLI pipkgs;
+      sources = {
+        inherit (npinsed)
+          acp pi-hermes-memory shelken-pi-extensions pi-math
+          pi-language-tutor pi-retry pi-context-view pi-model-project
+          pi-skill-usage pi-heuristic-notify pi-web-access rpiv-mono;
+      };
+    })
     ./providers
-  ] ++ lib.optional enableExtendedCLI ./pi-web;
+  ] ++ lib.optionals enableExtendedCLI [
+    (lib.modules.importApply ./pi-web {src = npinsed.pi-web;})
+  ];
   home.packages = [
     # Include session-file size (S5.5M) in Pi's built-in footer stats line.
-    (pkgs.pipkgs.pi-coding-agent.overrideAttrs (old: {
+    (pipkgs.pi-coding-agent.overrideAttrs (old: {
       patches = (old.patches or [ ]) ++ [ ./footer-session-size.patch ];
     }))
   ];

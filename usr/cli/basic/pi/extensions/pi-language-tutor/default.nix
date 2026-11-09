@@ -1,8 +1,9 @@
+{ src }: # localArgs
 { config, pkgs, lib, ... }:
 let
   slimSrc = pkgs.applyPatches {
     name = "pi-language-tutor-slim";
-    src = pkgs.npinsed.ai.pi.pi-language-tutor;
+    inherit src;
     nativeBuildInputs = [ pkgs.jq ];
     postPatch = ''
       substituteInPlace src/config.ts src/flashcards.ts src/flashcard-settings.ts \

@@ -1,8 +1,9 @@
+{ src }: # localArgs
 { pkgs, ... }:
 let
   slimSrc = pkgs.applyPatches {
     name = "pi-math-slim";
-    src = pkgs.npinsed.ai.pi.pi-math;
+    inherit src;
     nativeBuildInputs = [ pkgs.jq ];
     postPatch = ''
       jq 'del(.peerDependencies, .devDependencies, .scripts)' package.json > package.json.tmp

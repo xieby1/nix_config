@@ -1,10 +1,11 @@
+{ src }: # localArgs
 { pkgs, lib, ... }: {
   home.file.".pi/agent/extensions/rpiv-todo" = {
     source = pkgs.buildNpmPackage {
       name = "rpiv-todo";
       src = pkgs.applyPatches {
         name = "rpiv-mono-slim";
-        src = pkgs.npinsed.ai.pi.rpiv-mono;
+        inherit src;
         # Trim monorepo to only rpiv-todo's workspace deps so npm fetches less.
         # Strip devDeps from root and peerDeps from workspace packages — Pi
         # provides @earendil-works/* at runtime.

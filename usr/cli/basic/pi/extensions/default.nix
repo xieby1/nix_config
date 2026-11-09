@@ -1,21 +1,24 @@
-{ enableExtendedCLI }:
+{ enableExtendedCLI, sources, pipkgs }: # localArgs
 # My feeling: configure javascript/typescript plugins is awful.
 { pkgs, lib, ... }: {
   imports = [
-    ./acp.nix
-    ./pi-hermes-memory
-    ./pi-co-authored-by.nix
-    ./pi-math
-    ./pi-language-tutor
-    ./pi-retry.nix
-    ./pi-context-view
-    ./pi-model-project.nix
-    ./pi-skill-usage.nix
-    ./heuristic-notify.nix
-    ./pi-web-access
+    (lib.modules.importApply ./acp.nix {src = sources.acp;})
+    (lib.modules.importApply ./pi-hermes-memory {src = sources.pi-hermes-memory; inherit pipkgs;})
+    (lib.modules.importApply ./pi-co-authored-by.nix {src = sources.shelken-pi-extensions;})
+    (lib.modules.importApply ./pi-math {src = sources.pi-math;})
+    (lib.modules.importApply ./pi-language-tutor {src = sources.pi-language-tutor;})
+    (lib.modules.importApply ./pi-retry.nix {src = sources.pi-retry;})
+    (lib.modules.importApply ./pi-context-view {src = sources.pi-context-view;})
+    (lib.modules.importApply ./pi-model-project.nix {
+      src = sources.pi-model-project;
+      piPackage = pipkgs.pi-coding-agent;
+    })
+    (lib.modules.importApply ./pi-skill-usage.nix {src = sources.pi-skill-usage;})
+    (lib.modules.importApply ./heuristic-notify.nix {src = sources.pi-heuristic-notify;})
+    (lib.modules.importApply ./pi-web-access {src = sources.pi-web-access;})
     ./ponytail
-    ./rpiv-ask-user-question.nix
-    ./rpiv-todo
+    (lib.modules.importApply ./rpiv-ask-user-question.nix {src = sources.rpiv-mono;})
+    (lib.modules.importApply ./rpiv-todo {src = sources.rpiv-mono;})
   ] ++ lib.optionals enableExtendedCLI [
     ./pi-read-aloud
   ];
@@ -55,7 +58,7 @@
     # - builtin plan-mode also has `/todos`, which is the same name as rpiv-todo
 
     ".pi/agent/extensions/titlebar-spinner.ts" = {
-      source = pkgs.pipkgs.pi-coding-agent.src
+      source = pipkgs.pi-coding-agent.src
         + "/packages/coding-agent/examples/extensions/titlebar-spinner.ts";
     };
   };

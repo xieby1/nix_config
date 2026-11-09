@@ -1,6 +1,7 @@
 let
   pkgs = import <nixpkgs> {};
-  module = import ./default.nix {
+  sources = (import ../../../../../npins) {input=../sources.json;};
+  module = import ./default.nix {src = sources.pi-web;} {
     inherit pkgs;
     inherit (pkgs) lib;
     config.home.homeDirectory = "/home/test";

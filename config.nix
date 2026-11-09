@@ -19,23 +19,11 @@
     # 添加非稳定版的nixpkgs到nixpkgs里，
     # 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
     pkgsu = import npinsed.pkgsu {};
-    #MC pi 更新频繁，用独立的nixpkgs pin，避免为 pi 升级而升级整个pkgsu。
-    pipkgs = import npinsed.ai.pi.nixpkgs {
-      overlays = [ (_: prev: {
-        pi-coding-agent = prev.pi-coding-agent.overrideAttrs (old: {
-          # Pi 1.5.0's nixpkgs install omits this runtime workspace dependency.
-          # Upstream fix: https://github.com/NixOS/nixpkgs/pull/582756
-          postInstall = old.postInstall + ''
-            cp -r packages/schema "$out/lib/node_modules/pi-monorepo/node_modules/@earendil-works/pi-schema"
-          '';
-        });
-      }) ];
-    };
     #MC 添加flake-compat，用于在nix expression中使用flake的包
     #MC 让flake-compat默认使用pkgs.stdenv.system，使得defaultNix.default为pkgs.stdenv.system的包
     flake-compat = { src, system ? pkgs.stdenv.system }: import npinsed.flake-compat {inherit src system;};
   in {
-    inherit npinsed pkgsu pipkgs flake-compat;
+    inherit npinsed pkgsu flake-compat;
     #MC 添加nix user repository (NUR)到nixpkgs里。
     nur = import npinsed.nur { pkgs = pkgsu; };
   };

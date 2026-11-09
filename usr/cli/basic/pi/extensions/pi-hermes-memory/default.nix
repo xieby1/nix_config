@@ -1,13 +1,14 @@
+{ src, pipkgs }: # localArgs
 { config, pkgs, lib, ... }: let
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.
-  pkgspi = pkgs.pipkgs;
+  pkgspi = pipkgs;
   # Pi supplies @earendil-works/* at runtime; dropping devDependencies and
   # peerDependencies also removes the nested lock entries whose missing
   # integrity used to require lock-integrity.patch.
   slimSrc = pkgs.applyPatches {
     name = "pi-hermes-memory-slim";
-    src = pkgs.npinsed.ai.pi.pi-hermes-memory;
+    inherit src;
     nativeBuildInputs = [ pkgs.jq ];
     postPatch = ''
       jq 'del(.devDependencies, .peerDependencies, .scripts)' package.json > package.json.tmp && mv package.json.tmp package.json
