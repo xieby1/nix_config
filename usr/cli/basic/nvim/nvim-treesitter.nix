@@ -1,3 +1,4 @@
+{ d2-src, veryl-src }: # localArgs
 #MC # nvim-treesitter: languages parsing
 { pkgs, ... }: {
   programs.neovim = {
@@ -13,14 +14,14 @@
         #MC So I replace the d2-vim with tree-sitter-d2.
         (pkgs.tree-sitter.buildGrammar {
           language = "d2";
-          version = pkgs.lib.removePrefix "v" pkgs.npinsed.nvim.tree-sitter-d2.version;
-          src = pkgs.npinsed.nvim.tree-sitter-d2;
+          version = pkgs.lib.removePrefix "v" d2-src.version;
+          src = d2-src;
         })
         (pkgs.tree-sitter.buildGrammar {
           language = "veryl";
           # Only checked against tree-sitter.json metadata, no functional impact
           version = "0.1.0";
-          src = pkgs.npinsed.nvim.tree-sitter-veryl;
+          src = veryl-src;
         })
       ]);
       type = "lua";

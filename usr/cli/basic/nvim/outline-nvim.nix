@@ -1,3 +1,4 @@
+{src}: # localArgs
 { pkgs, ... }: {
   programs.neovim = {
     plugins = [{
@@ -33,7 +34,7 @@
     }(
       pkgs.vimUtils.buildVimPlugin {
         name = "outline-treesitter-provider.nvim";
-        src = pkgs.npinsed.nvim.outline-treesitter-provider;
+        inherit src;
         doCheck = false;
       }
     )];

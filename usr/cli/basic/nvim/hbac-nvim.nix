@@ -1,10 +1,11 @@
+{src}: # localArgs
 #MC # hbac-nvim: auto close buffer
 { pkgs, ... }: {
   programs.neovim = {
     plugins = [{
       plugin = pkgs.vimUtils.buildVimPlugin {
         name = "hbac.nvim";
-        src = pkgs.npinsed.nvim.hbac;
+        inherit src;
         doCheck = false;
       };
       type = "lua";

@@ -1,10 +1,11 @@
+{ src }: # localArgs
 # TODO: Let blink.cmp fetch words from codecompanion buffer
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
   programs.neovim.plugins = [{
     plugin = pkgs.vimUtils.buildVimPlugin {
       name = "codecompanion";
-      src = pkgs.npinsed.nvim.codecompanion;
+      inherit src;
       patches = [
         # For codecompanion ACP tools calls: display tool call input and output
         ./preserve-acp-raw-tool-io.patch

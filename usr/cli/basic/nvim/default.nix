@@ -1,6 +1,7 @@
 { enableExtendedCLI }: # local args
 # TODO: niri like buffer width/height adjust
-{ pkgs, config, lib, ... }:let
+{ pkgs, config, lib, npinsFun, ... }:let
+  npinsed = npinsFun {input=./sources.json;};
   my-neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (old: {
     patches = old.patches ++ [
       # [:terminal - enable folding #5682](https://github.com/neovim/neovim/issues/5682)
@@ -15,20 +16,23 @@ in {
     ./fold.nix
     ./blink-cmp.nix
     ./vim-mark.nix
-    ./nvim-treesitter.nix
+    (lib.modules.importApply ./nvim-treesitter.nix {
+      d2-src = npinsed.tree-sitter-d2;
+      veryl-src = npinsed.tree-sitter-veryl;
+    })
     ./nvim-config-local.nix
     ./leap-nvim.nix
     ./git-wip.nix
     ./terminal.nix
-    ./outline-nvim.nix
+    (lib.modules.importApply ./outline-nvim.nix {src = npinsed.outline-treesitter-provider;})
     ./gitsigns-nvim.nix
     ./color-scheme.nix
-    ./hbac-nvim.nix
+    (lib.modules.importApply ./hbac-nvim.nix {src = npinsed.hbac;})
     ./winshift-nvim.nix
     ./smartyank-nvim.nix
     ./mini-nvim.nix
     ./vim-easy-align.nix
-    ./codecompanion-nvim
+    (lib.modules.importApply ./codecompanion-nvim {src = npinsed.codecompanion;})
     ./close-windows.nix
     ./nvim-window-picker.nix
     # TODO: remove/replace vim-matchup, which make nvim very laggy when edit/view large markdown (1k sloc)
@@ -46,7 +50,7 @@ in {
     ./conform.nix
   ] ++ lib.optionals enableExtendedCLI [
     ./markdown-preview.nix
-    ./lspconfig
+    (lib.modules.importApply ./lspconfig {nixdSrc = npinsed.nixd;})
     ./rustowl.nix
   ];
 

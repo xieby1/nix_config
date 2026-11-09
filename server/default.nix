@@ -7,6 +7,7 @@
     ./sixu.nix
     ./xingyao.nix
 
+    # TODO: no more `modules`, which is a dummy name. Move modules/* to a reasonable namespace.
     ../usr/modules
     (lib.modules.importApply ../usr/cli/basic {enableExtendedCLI = false;})
   ];
