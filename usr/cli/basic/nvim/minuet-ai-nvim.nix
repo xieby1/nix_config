@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{ config, pkgs, lib, ai, ... }: {
   # mkAfter makes sure statusline setting is after nvim-nav.nix
   programs.neovim.plugins = lib.mkAfter [pkgs.vimPlugins.plenary-nvim {
     plugin = pkgs.vimPlugins.minuet-ai-nvim;
@@ -12,7 +12,7 @@
         provider = 'openai_fim_compatible',
         provider_options = {
           openai_fim_compatible = {
-            api_key = function() return '${config.ai.deepseek.api_key}' end,
+            api_key = function() return '${ai.deepseek.api_key}' end,
             api_key = 'DEEPSEEK_API_KEY',
             name = 'deepseek',
             optional = {

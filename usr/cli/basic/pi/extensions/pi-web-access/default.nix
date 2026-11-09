@@ -1,5 +1,5 @@
 { src }: # local-args
-{ config, pkgs, ... }:
+{ pkgs, ai, ... }:
 let
   # Pi injects @earendil-works/* and typebox at runtime, so drop its dev/peer
   # deps and their transitive graph from the install.
@@ -20,8 +20,8 @@ in {
   yq-merge.".pi/agent/web-search.json" = {
     generator = builtins.toJSON;
     expr = {
-      tavilyApiKey = config.ai.tavily.api_key;
-      deepseekApiKey = config.ai.deepseek.api_key;
+      tavilyApiKey = ai.tavily.api_key;
+      deepseekApiKey = ai.deepseek.api_key;
     };
   };
 

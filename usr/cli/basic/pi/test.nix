@@ -17,7 +17,7 @@ let
   piPackage = cfg: lib.findFirst (p: lib.getName p == "pi-coding-agent")
     (throw "Pi package missing") cfg.home.packages;
 in lib.runTests {
-  test-no-global-pi-pins = { expr = pkgs.npinsed.ai ? pi; expected = false; };
+  test-no-global-pi-pins = { expr = pkgs.npinsed ? ai.pi; expected = false; };
   test-no-global-pi-package-set = { expr = pkgs ? pipkgs; expected = false; };
   test-core-package-shared-between-profiles = {
     expr = (piPackage basic).drvPath;

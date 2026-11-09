@@ -1,8 +1,4 @@
 { lib, ... }: {
-  imports = [
-    ./ai
-  ];
-
   options = {
     proxyPort = lib.mkOption {
       type = lib.types.number;
