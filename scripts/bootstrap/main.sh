@@ -16,4 +16,5 @@ if [[ $USER == "nix-on-droid" ]]; then
 else
   NIX_PATH=$NIX_PATH:nixos-config=/etc/nixos/configuration.nix
 fi
+NIX_PATH=$NIX_PATH:npins=$(realpath ~/.config/nixpkgs/npins)
 export NIX_PATH
