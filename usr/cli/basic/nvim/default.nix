@@ -44,7 +44,10 @@ in {
     ./todo-comments.nix
     ./lualine.nix
     ./conform.nix
-  ] ++ lib.optional enableExtendedCLI ./markdown-preview.nix;
+  ] ++ lib.optionals enableExtendedCLI [
+    ./markdown-preview.nix
+    ./lspconfig
+  ];
 
   home.shellAliases.view = "nvim -R";
   #MC Set nvim as manpager.

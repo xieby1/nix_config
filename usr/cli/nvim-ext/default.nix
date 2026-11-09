@@ -1,6 +1,5 @@
 { ... }: {
   imports = [
-    ./lspconfig
     ./rustowl.nix
   ];
 }
