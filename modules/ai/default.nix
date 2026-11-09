@@ -34,6 +34,11 @@ in {
       name = "ACC OpenAI";
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/gpt.txt);
+      models = builtins.mapAttrs (
+        _: model: model // {
+          context_window = 353 * 1000;
+        }
+      ) catwalk-providers.openai.models;
     };
   };
 }
