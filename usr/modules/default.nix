@@ -4,7 +4,6 @@
 
   imports = [
     ../../modules
-    ./yq-merge
     ./syncthing-gist-ignore.nix
   ];
 }

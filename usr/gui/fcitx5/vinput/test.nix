@@ -4,7 +4,7 @@ let
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = {
-      imports = [ ../. ../../../modules/yq-merge ../../../cachix-push.nix ];
+      imports = [ ../. ../../../yq-merge ../../../cachix-push.nix ];
       home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
     };
   };
@@ -42,7 +42,7 @@ in lib.runTests {
     unsupported = import <home-manager/modules> {
       pkgs = import <nixpkgs> { system = "riscv64-linux"; };
       configuration = {
-        imports = [ ./. ../../../modules/yq-merge ../../../cachix-push.nix ];
+        imports = [ ./. ../../../yq-merge ../../../cachix-push.nix ];
         home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
       };
     };

@@ -11,6 +11,7 @@
     ../usr/modules
     # TODO: reuse ../usr as much as possible
     ../usr/cachix-push.nix
+    ../usr/yq-merge
     (lib.modules.importApply ../usr/cli/basic {enableExtendedCLI = false;})
   ];
 

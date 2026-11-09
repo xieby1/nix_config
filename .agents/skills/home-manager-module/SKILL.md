@@ -132,7 +132,7 @@ Where `content` is the output of the function, often obtained via `builtins.read
 - Use `pkgs.lib.hasInfix` to check if a string contains a substring
 - Use `builtins.tryEval` to test code that should fail (e.g., assertion failures)
 - Declare variables in the narrowest scope needed — avoid top-level declarations when only used in one test
-- Reference example module at `~/.config/nixpkgs/usr/modules/yq-merge/`
+- Reference example module at `~/.config/nixpkgs/usr/yq-merge/`
 
 ## References
 

@@ -4,7 +4,11 @@ let
   evaluate = enableExtendedCLI: (import <home-manager/modules> {
     inherit pkgs;
     configuration = {
-      imports = [ ../../../modules (lib.modules.importApply ./. {inherit enableExtendedCLI;}) ];
+      imports = [
+        ../../../modules
+        ../../../yq-merge
+        (lib.modules.importApply ./. {inherit enableExtendedCLI;})
+      ];
       home.username = "test";
       home.homeDirectory = "/home/test";
       home.stateVersion = "25.05";

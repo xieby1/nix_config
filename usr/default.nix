@@ -11,6 +11,7 @@
 { ... }: {
   imports = [
     ./cachix-push.nix
+    ./yq-merge
     ./modules
     ./cli
     ./gui

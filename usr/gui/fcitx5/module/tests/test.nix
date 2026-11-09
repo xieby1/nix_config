@@ -5,7 +5,7 @@ let
     configuration = {
       imports = [
         ../.
-        ../../../../modules/yq-merge
+        ../../../../yq-merge
       ];
       home = { stateVersion = "25.11"; username = "dummy"; homeDirectory = "/dummy"; };
       my.config-fcitx5.".config/fcitx5/conf/chttrans.conf" = {
