@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 # TODO: Let blink.cmp fetch words from codecompanion buffer
 #MC # Code Companion: AI
 { pkgs, config, ... }: {

@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { config, pkgs, ... }:
 let
   retry = config.yq-merge.".pi/agent/settings.json".expr.retry;

@@ -1,6 +1,6 @@
 ---
 name: home-manager-module
-description: Write home-manager modules with options, config, and tests. Use when creating or modifying NixOS/home-manager modules, defining custom options, generating test.nix files, or applying this repo's localArgs/globalArgs, importApply, and colocated npins conventions.
+description: Write home-manager modules with options, config, and tests. Use when creating or modifying NixOS/home-manager modules, defining custom options, generating test.nix files, or applying this repo's local-args/global-args, importApply, and colocated npins conventions.
 ---
 
 # Writing Home-Manager Modules
@@ -15,18 +15,18 @@ module-name/
 ├── test.nix      # Tests using pkgs.lib.runTests
 ```
 
-## localArgs and globalArgs (Repository Convention)
+## local-args and global-args (Repository Convention)
 
 Separate explicit parent-to-child dependencies from the shared module-evaluation environment.
-This uses Nixpkgs' existing `lib.modules.importApply` pattern for lexical dependency injection; `localArgs` and `globalArgs` are repository terminology, not Nix keywords.
+This uses Nixpkgs' existing `lib.modules.importApply` pattern for lexical dependency injection; `local-args` and `global-args` are repository terminology, not Nix keywords.
 
-- **localArgs**: the first argument, supplied explicitly by the importing parent. Use it for child-specific dependencies and composition choices such as `src`, `nixdSrc`, and `enableExtendedCLI`.
-- **globalArgs**: the argument supplied by the module evaluator to the returned module function. It includes normal module arguments such as `lib`, `pkgs`, and `config`, plus custom arguments from `specialArgs` or `_module.args`, such as `npinsFun`. Request `_module.args` entries by name in the parameter pattern; `...` alone does not collect them.
+- **local-args**: the first argument, supplied explicitly by the importing parent. Use it for child-specific dependencies and composition choices such as `src`, `nixdSrc`, and `enableExtendedCLI`.
+- **global-args**: the argument supplied by the module evaluator to the returned module function. It includes normal module arguments such as `lib`, `pkgs`, and `config`, plus custom arguments from `specialArgs` or `_module.args`, such as `npinsFun`. Request `_module.args` entries by name in the parameter pattern; `...` alone does not collect them.
 
 ```nix
 # child.nix
-{ src }: # localArgs
-{ lib, pkgs, config, ... }: # globalArgs
+{ src }: # local-args
+{ lib, pkgs, config, ... }: # global-args
 {
   home.file.".config/example".source = src.outPath;
 }

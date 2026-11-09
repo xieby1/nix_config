@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { pkgs, ... }: {
   # No npm build needed: the only runtime dep is its sibling workspace package
   # (@juicesharp/rpiv-config), so drop it into node_modules by hand. Pi aliases

@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { config, pkgs, ... }:
 let
   # Pi injects @earendil-works/* and typebox at runtime, so drop its dev/peer

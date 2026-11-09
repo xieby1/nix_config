@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { pkgs, ... }: let
   # Build from the pinned nixd source: nixpkgs 26.05 ships nixd 2.9.1, which
   # predates the `~/` tilde-path fix (nix-community/nixd#824, 2026-05-20) needed

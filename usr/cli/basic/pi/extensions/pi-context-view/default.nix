@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { pkgs, ... }:
 let
   # Pi labels a local (non npm:/git:) extension in the startup banner after the

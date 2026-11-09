@@ -1,4 +1,4 @@
-{src}: # localArgs
+{src}: # local-args
 #MC # hbac-nvim: auto close buffer
 { pkgs, ... }: {
   programs.neovim = {

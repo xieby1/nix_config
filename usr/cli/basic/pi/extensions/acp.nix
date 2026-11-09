@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { pkgs, ... }: {
   home.packages = [(
     pkgs.buildNpmPackage (finalAttrs: {

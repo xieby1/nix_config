@@ -1,4 +1,4 @@
-{ nixdSrc }: # localArgs
+{ nixdSrc }: # local-args
 #MC # nvim-lspconfig
 { pkgs, lib, ... }: {
   imports = [

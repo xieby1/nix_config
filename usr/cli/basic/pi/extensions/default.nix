@@ -1,4 +1,4 @@
-{ enableExtendedCLI, sources, pipkgs }: # localArgs
+{ enableExtendedCLI, sources, pipkgs }: # local-args
 # My feeling: configure javascript/typescript plugins is awful.
 { pkgs, lib, ... }: {
   imports = [

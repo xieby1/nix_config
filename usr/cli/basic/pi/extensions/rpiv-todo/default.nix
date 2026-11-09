@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { pkgs, lib, ... }: {
   home.file.".pi/agent/extensions/rpiv-todo" = {
     source = pkgs.buildNpmPackage {

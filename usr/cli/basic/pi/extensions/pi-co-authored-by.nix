@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { pkgs, ... }: {
   home.file.".pi/agent/extensions/pi-co-authored-by".source = pkgs.applyPatches {
     name = "pi-co-authored-by";

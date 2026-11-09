@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { config, lib, pkgs, ... }: {
   # No runtime deps, and the entry lives at the repo root, so the pinned source
   # can be linked directly: pi labels the extension after the directory holding

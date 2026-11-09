@@ -1,4 +1,4 @@
-{ d2-src, veryl-src }: # localArgs
+{ d2-src, veryl-src }: # local-args
 #MC # nvim-treesitter: languages parsing
 { pkgs, ... }: {
   programs.neovim = {

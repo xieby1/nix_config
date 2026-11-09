@@ -1,4 +1,4 @@
-{ src, piPackage }: # localArgs
+{ src, piPackage }: # local-args
 { pkgs, ... }:
 {
   home.file.".pi/agent/extensions/pi-model-project".source =

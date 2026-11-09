@@ -1,4 +1,4 @@
-{ src, pipkgs }: # localArgs
+{ src, pipkgs }: # local-args
 { config, pkgs, lib, ... }: let
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.

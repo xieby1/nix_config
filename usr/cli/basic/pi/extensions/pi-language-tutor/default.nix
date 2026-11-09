@@ -1,4 +1,4 @@
-{ src }: # localArgs
+{ src }: # local-args
 { config, pkgs, lib, ... }:
 let
   slimSrc = pkgs.applyPatches {
