@@ -1,4 +1,4 @@
-{ config, pkgs, lib, npinsFun, ... }:
+{ config, pkgs, lib, ... }:
 let
   cfg = config.my.server.caddyAuthelia;
   consts = import ./cgit/consts.nix;
@@ -9,7 +9,7 @@ let
   cgitCacheRoot = "${config.xdg.cacheHome}/${consts.cacheDir}";
 
   # Mobile-friendly cgit stylesheet, pinned to a Git revision.
-  cgitTheme = ((npinsFun {input=./cgit/sources.json;}).responsive-cgit-css {inherit pkgs;}).outPath;
+  cgitTheme = ((import <npins> {input=./cgit/sources.json;}).responsive-cgit-css {inherit pkgs;}).outPath;
 
   # Fail the build if the pinned theme no longer provides its stylesheet.
   cgitThemeRoot = pkgs.runCommandLocal "cgit-theme-root" { } ''

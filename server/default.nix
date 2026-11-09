@@ -7,13 +7,13 @@ in {
     ./authelia
     ./caddy
     (lib.modules.importApply ./circle {
-      src = (global-args.npinsFun {input=./circle/sources.json;}).circle;
+      src = (import <npins> {input=./circle/sources.json;}).circle;
     })
     (lib.modules.importApply ./sixu {
-      src = (global-args.npinsFun {input=./sixu/sources.json;}).sixu;
+      src = (import <npins> {input=./sixu/sources.json;}).sixu;
     })
     (lib.modules.importApply ./xingyao {
-      src = (global-args.npinsFun {input=./xingyao/sources.json;}).xingyao;
+      src = (import <npins> {input=./xingyao/sources.json;}).xingyao;
     })
 
     # TODO: reuse ../usr as much as possible

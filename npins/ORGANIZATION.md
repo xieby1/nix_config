@@ -1,8 +1,8 @@
 # Organization of npinsed sources {date="2026.04.16"}
 
 The current layout keeps the generated loader and bootstrap/shared infrastructure pins in this directory.
-Feature pins live beside their owning Nix code in `sources.json`, loaded through the shared `npinsFun`.
-Sources needed by `imports` are passed as lexical local-args; ordinary modules request `npinsFun` through global-args.
+Feature pins live beside their owning Nix code in `sources.json`, loaded with `(import <npins> { input = ./sources.json; }).pin`.
+Sources needed by `imports` are passed as lexical local-args; every evaluation requires `<npins>` in `NIX_PATH`.
 The alternatives below are historical design notes.
 
 ## 1. Flat Structure: All Sources in `<project_root>/npins/sources.json`

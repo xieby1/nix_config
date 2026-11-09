@@ -1,7 +1,7 @@
 { enableExtendedCLI }: # local args
 # TODO: niri like buffer width/height adjust
-{ pkgs, config, lib, npinsFun, ... }:let
-  npinsed = npinsFun {input=./sources.json;};
+{ pkgs, config, lib, ... }:let
+  npinsed = import <npins> {input=./sources.json;};
   my-neovim-unwrapped = pkgs.neovim-unwrapped.overrideAttrs (old: {
     patches = old.patches ++ [
       # [:terminal - enable folding #5682](https://github.com/neovim/neovim/issues/5682)

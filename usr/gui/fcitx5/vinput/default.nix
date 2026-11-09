@@ -1,9 +1,9 @@
-{ pkgs, lib, npinsFun, ... }: let
+{ pkgs, lib, ... }: let
   system = pkgs.stdenv.hostPlatform.system;
   model = import ./model.nix { inherit pkgs; };
   modelName = lib.removePrefix "model.sherpa-onnx." model.modelId;
   vinput = (pkgs.flake-compat {
-    src = (npinsFun {input=./sources.json;}).fcitx5-vinput;
+    src = (import <npins> {input=./sources.json;}).fcitx5-vinput;
   }).defaultNix.packages.${system}.default;
 in lib.mkIf (builtins.elem system [ "x86_64-linux" "aarch64-linux" ]) {
   home.packages = [ vinput ];

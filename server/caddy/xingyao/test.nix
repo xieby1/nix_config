@@ -1,8 +1,7 @@
 # Evaluate real deployment modules with a disposable HOME/registry, never activate.
 { pkgs ? import <nixpkgs> { config = {}; overlays = []; } }:
 let
-  npinsFun = (import ../../../global-args { inherit (pkgs) lib; }).npinsFun;
-  src = (npinsFun {input=../../xingyao/sources.json;}).xingyao;
+  src = (import <npins> {input=../../xingyao/sources.json;}).xingyao;
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = { lib, ... }: {

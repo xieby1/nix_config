@@ -1,7 +1,7 @@
-{ lib, npinsFun }: let
+{ lib }: let
   catwalk-providers = import ./catwalk-providers {
     inherit lib;
-    inherit (npinsFun {input = ./sources.json;}) catwalk;
+    inherit (import <npins> {input = ./sources.json;}) catwalk;
   };
 in {
   deepseek = catwalk-providers.deepseek // {

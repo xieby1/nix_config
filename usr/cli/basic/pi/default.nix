@@ -1,7 +1,7 @@
 { enableExtendedCLI }:
-{ config, lib, npinsFun, ... }:
+{ config, lib, ... }:
 let
-  npinsed = npinsFun {input=./sources.json;};
+  npinsed = import <npins> {input=./sources.json;};
   pipkgs = import ./pkgs.nix {src = npinsed.nixpkgs;};
 in {
   imports = [
