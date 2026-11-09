@@ -6,7 +6,9 @@ in {
   imports = [
     ./authelia
     ./caddy
-    ./circle.nix
+    (lib.modules.importApply ./circle {
+      src = (global-args.npinsFun {input=./circle/sources.json;}).circle;
+    })
     (lib.modules.importApply ./sixu {
       src = (global-args.npinsFun {input=./sixu/sources.json;}).sixu;
     })

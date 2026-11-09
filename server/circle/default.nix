@@ -1,10 +1,8 @@
+{ src }: # local-args
 { config, ... }:
 {
   imports = [
-    (let
-      npinsed = import ../npins/hierarchy.nix;
-      circle-src = npinsed.my.circle;
-    in circle-src + /nix/home-manager/circle.nix)
+    (src + /nix/home-manager/circle.nix)
   ];
 
   services.circle = {

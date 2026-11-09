@@ -1,10 +1,15 @@
 # Organization of npinsed sources {date="2026.04.16"}
 
+The current layout keeps the generated loader and bootstrap/shared infrastructure pins in this directory.
+Feature pins live beside their owning Nix code in `sources.json`, loaded through the shared `npinsFun`.
+Sources needed by `imports` are passed as lexical local-args; ordinary modules request `npinsFun` through global-args.
+The alternatives below are historical design notes.
+
 ## 1. Flat Structure: All Sources in `<project_root>/npins/sources.json`
 
 - **Cons**: Difficult to manage logically grouped sources (e.g., updating all AI-related sources requires touching a single large file).
 
-## ✅2. Hierarchical Structure within `<project_root>/npins/` and nest `pkgs.npinsed`:
+## 2. Hierarchical Structure within `<project_root>/npins/` and nest `pkgs.npinsed`:
 
 - Example:
   - ```

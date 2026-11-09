@@ -136,6 +136,6 @@
   }{
     name = "circle";
     url = "https://xieby1.cn/circle/xby/";
-    icon = pkgs.npinsed.my.circle + /src/ui/web/render/public/icon.svg;
+    icon = (npinsFun {input=../../../../server/circle/sources.json;}).circle + /src/ui/web/render/public/icon.svg;
   }];
 }

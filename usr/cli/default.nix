@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, npinsFun, ... }:
 let
   sysconfig = (
     # <...> are expression search in NIX_PATH
@@ -44,7 +44,7 @@ in
     ## archive
     unar
     ## manage
-    (import pkgs.npinsed.my.circle {inherit pkgs;})
+    (import (npinsFun {input=../../server/circle/sources.json;}).circle {inherit pkgs;})
     # htop search in intuitive
     btop
     witr
