@@ -7,7 +7,7 @@
   services.xingyao = {
     enable = true;
     instances.main = {
-      dataDir = "${config.xdg.dataHome}/xingyao-main";
+      dataDir = "${config.home.homeDirectory}/Repos/BTeam/XingYaoData";
       port = 3004;
       basePath = "/BTeam/XingYao/";
       initializeWithSamples = true;
