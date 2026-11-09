@@ -1,11 +1,16 @@
 { lib, ... }:
-{
+let
+  # XingYao's imports need its source before config._module.args can be resolved.
+  global-args = import ../global-args {inherit lib;};
+in {
   imports = [
     ./authelia
     ./caddy
     ./circle.nix
     ./sixu.nix
-    ./xingyao.nix
+    (lib.modules.importApply ./xingyao {
+      src = (global-args.npinsFun {input=./xingyao/sources.json;}).xingyao;
+    })
 
     # TODO: reuse ../usr as much as possible
     ../usr/cachix-push.nix
@@ -18,7 +23,7 @@
 
   config = {
     # TODO: reuse ../usr as much as possible
-    _module.args = import ../global-args {inherit lib;};
+    _module.args = global-args;
 
     targets.genericLinux.enable = true;
     targets.genericLinux.gpu.enable = false;

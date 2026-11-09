@@ -1,7 +1,8 @@
+{ src }: # local-args
 { config, ... }:
 {
   imports = [
-    ((import ../npins/hierarchy.nix).my.xingyao + /nix/home-manager/xingyao.nix)
+    (src + /nix/home-manager/xingyao.nix)
   ];
 
   services.xingyao = {

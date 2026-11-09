@@ -1,10 +1,15 @@
 # Evaluate real deployment modules with a disposable HOME/registry, never activate.
 { pkgs ? import <nixpkgs> { config = {}; overlays = []; } }:
 let
+  npinsFun = (import ../../../global-args { inherit (pkgs) lib; }).npinsFun;
+  src = (npinsFun {input=../../xingyao/sources.json;}).xingyao;
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = { lib, ... }: {
-      imports = [ ../../authelia ../../xingyao.nix ];
+      imports = [
+        ../../authelia
+        (lib.modules.importApply ../../xingyao {inherit src;})
+      ];
       options.my.server.caddyAuthelia.enable = lib.mkEnableOption "test proxy";
       config = {
         home.username = "test";

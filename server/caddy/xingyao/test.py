@@ -82,7 +82,7 @@ def main():
         assert unit['Install']['WantedBy'] == ['default.target']
         assert '"XINGYAO_PORT=3004"' in unit['Service']['Environment']
         assert '"XINGYAO_BASE_PATH=/BTeam/XingYao/"' in unit['Service']['Environment']
-        assert f'"XINGYAO_DATA_ROOT={root}/.local/share/xingyao-main"' in unit['Service']['Environment']
+        assert f'"XINGYAO_DATA_ROOT={root}/Repos/BTeam/XingYaoData"' in unit['Service']['Environment']
         binary, = unit['Service']['ExecStart']
         pre_start = unit['Service']['ExecStartPre']
         configuration = yaml.safe_load(Path(metadata['autheliaConfig']).read_text())
