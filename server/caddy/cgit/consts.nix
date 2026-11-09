@@ -11,9 +11,9 @@
   # are case-sensitive), so change it here only.
   prefix = "/Repos";
 
-  # Theme stylesheet inside the pinned theme tarball. Referenced by the
-  # head-include (../default.nix) and the Caddy route (./caddy.nix), which are
-  # generated separately, so the name lives here to keep them in step.
+  # Served stylesheet path in the generated theme root. Referenced by the
+  # cgitrc (../default.nix) and the Caddy route (./caddy.nix), so the name
+  # lives here to keep them in step.
   themeFile = "/theme.css";
 
   # cgit's page cache lives at $XDG_CACHE_HOME/<cacheDir>.

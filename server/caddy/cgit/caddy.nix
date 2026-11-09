@@ -16,11 +16,9 @@ let
 in ''
   redir ${prefix} ${prefix}/
 
-  # theme.css is the only file of the theme tarball any request can reach: this
-  # handler matches one exact path, so the rest of the unpacked tarball (its
-  # Dockerfile, filters) stays unreachable. The theme URL is stable while its
-  # content only changes on `home-manager switch`, so let browsers keep it for
-  # an hour instead of re-fetching 40KB on every page view.
+  # Only the pinned stylesheet is copied into the served theme directory,
+  # and this handler matches its exact path. A browser can cache it for an
+  # hour; deployment changes its content only when the pinned source changes.
   @cgit_theme path ${prefix}${consts.themeFile}
   handle @cgit_theme {
     route {
