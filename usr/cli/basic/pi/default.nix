@@ -1,7 +1,8 @@
-{ config, pkgs, ... }:
+{ enableExtendedCLI }:
+{ config, pkgs, lib, ... }:
 {
   imports = [
-    ./extensions
+    (lib.modules.importApply ./extensions {inherit enableExtendedCLI;})
     ./providers
   ];
   home.packages = [

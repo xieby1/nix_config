@@ -1,5 +1,6 @@
+{ enableExtendedCLI }:
 # My feeling: configure javascript/typescript plugins is awful.
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
   imports = [
     ./acp.nix
     ./pi-hermes-memory
@@ -15,6 +16,8 @@
     ./ponytail
     ./rpiv-ask-user-question.nix
     ./rpiv-todo
+  ] ++ lib.optionals enableExtendedCLI [
+    ./pi-read-aloud
   ];
   home.file = {
     # tintinweb/pi-subagents (this) vs nicobailon/pi-subagents (previous)

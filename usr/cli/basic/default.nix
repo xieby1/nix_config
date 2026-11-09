@@ -11,7 +11,7 @@
     ./tailscale
     ./ssh.nix
     (lib.modules.importApply ./nvim {inherit enableExtendedCLI;})
-    ./pi
+    (lib.modules.importApply ./pi {inherit enableExtendedCLI;})
     ./syncthing.nix
   ];
   home.stateVersion = "25.05";
