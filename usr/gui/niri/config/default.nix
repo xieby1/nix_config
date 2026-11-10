@@ -31,7 +31,6 @@
 
       animations.window-focus = {
         on-focus = {};
-        effect = "shrink";
         scale = 0.9;
         duration-ms = 300;
         curve = "ease-out-cubic";
