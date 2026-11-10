@@ -60,7 +60,7 @@
   #   toggle-overview = {};
   # };
   "Mod+O".toggle-overview = {};
-  "Mod+Z".flash-window = {};
+  "Mod+Z".animate-window = {};
 
   "Alt+F4" = {
     _props.repeat = false;

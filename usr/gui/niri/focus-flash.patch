@@ -1,15 +1,17 @@
 diff --git a/docs/wiki/Configuration:-Animations.md b/docs/wiki/Configuration:-Animations.md
-index 6441d33..8658b4a 100644
+index 6441d33..05ffc28 100644
 --- a/docs/wiki/Configuration:-Animations.md
 +++ b/docs/wiki/Configuration:-Animations.md
-@@ -25,6 +25,14 @@ animations {
+@@ -25,6 +25,16 @@ animations {
          curve "ease-out-expo"
      }
  
-+    window-focus-flash {
-+        // Enable automatic flashing when a window gains keyboard focus.
++    window-focus {
++        // Enable automatic animation when a window gains keyboard focus.
 +        // on-focus
++        effect "flash"
 +        color "#ffffff26"
++        scale 0.98
 +        duration-ms 180
 +        curve "ease-out-cubic"
 +    }
@@ -17,43 +19,58 @@ index 6441d33..8658b4a 100644
      window-close {
          duration-ms 150
          curve "ease-out-quad"
-@@ -222,6 +230,34 @@ animations {
+@@ -222,6 +232,49 @@ animations {
  }
  ```
  
-+#### `window-focus-flash`
++#### `window-focus`
 +
-+A brief tint inside the focused window, fading to transparent.
-+Automatic flashing is disabled by default; enable it with `on-focus`.
-+The `color` alpha sets the highlight strength, and the usual animation timing settings apply.
-+The highlight follows the window geometry and rounded corners, and stays below its popups.
-+It also works with the focus ring disabled and with fullscreen windows.
++A transient indicator on the focused window.
++Automatic animation is disabled by default; enable it with `on-focus`.
++The `effect` can be `"flash"` (the default) or `"shrink"`.
++Both work with the focus ring disabled, and with floating and fullscreen windows.
++
++With `effect "flash"`, a tint inside the window fades to transparent.
++The `color` alpha sets the highlight strength.
++The tint follows the window geometry and rounded corners, and stays below its popups.
++
++With `effect "shrink"`, the rendered tile starts smaller around its center and returns to normal size.
++The `scale` sets the starting size and must be greater than 0 and at most 1 (default: 0.98).
++Decorations and popups scale with the window.
++The application size, layout allocation, and pointer hit-testing bounds do not change.
++The scale is clamped between the configured value and 1, including with spring or overshooting curves.
 +
 +```kdl
 +animations {
-+    window-focus-flash {
++    window-focus {
 +        on-focus
-+        color "#ffffff26"
++        effect "shrink"
++        scale 0.98
 +        duration-ms 180
 +        curve "ease-out-cubic"
 +    }
 +}
 +binds {
-+    Mod+Z { flash-window; }
++    Mod+Z { animate-window; }
 +}
 +```
 +
-+The `flash-window` action (also `niri msg action flash-window`) works independently of `on-focus`.
-+Repeating it restarts the fade; losing keyboard focus cancels the highlight.
++The `animate-window` action (also `niri msg action animate-window`) works independently of `on-focus`.
++Repeating it restarts the effect; losing keyboard focus cancels it.
 +Returning from a launcher or overview counts as gaining focus.
-+Both `animations { off; }` and `window-focus-flash { off; }` disable manual and automatic flashes.
-+Use `on-focus false` to disable only automatic flashes, including when overriding an included configuration.
++Both `animations { off; }` and `window-focus { off; }` disable manual and automatic effects.
++Use `on-focus false` to disable only automatic effects.
++Changing this animation's settings cancels any in-progress effect.
++
++`window-focus-flash` and `flash-window` remain compatibility aliases for the configuration block and action.
++The legacy action also plays the selected effect, including shrink.
++If both configuration names occur in the same `animations` block, `window-focus` takes precedence.
 +
  #### `window-close`
  
  <sup>Since: 0.1.5</sup>
 diff --git a/niri-config/src/animations.rs b/niri-config/src/animations.rs
-index 346b625..4d62dd7 100644
+index 346b625..784e6ad 100644
 --- a/niri-config/src/animations.rs
 +++ b/niri-config/src/animations.rs
 @@ -2,7 +2,7 @@ use knuffel::errors::DecodeError;
@@ -69,7 +86,7 @@ index 346b625..4d62dd7 100644
      pub slowdown: f64,
      pub workspace_switch: WorkspaceSwitchAnim,
      pub window_open: WindowOpenAnim,
-+    pub window_focus_flash: WindowFocusFlashAnim,
++    pub window_focus: WindowFocusAnim,
      pub window_close: WindowCloseAnim,
      pub horizontal_view_movement: HorizontalViewMovementAnim,
      pub window_movement: WindowMovementAnim,
@@ -77,40 +94,53 @@ index 346b625..4d62dd7 100644
              horizontal_view_movement: Default::default(),
              window_movement: Default::default(),
              window_open: Default::default(),
-+            window_focus_flash: Default::default(),
++            window_focus: Default::default(),
              window_close: Default::default(),
              window_resize: Default::default(),
              config_notification_open_close: Default::default(),
-@@ -54,6 +56,8 @@ pub struct AnimationsPart {
+@@ -54,6 +56,10 @@ pub struct AnimationsPart {
      #[knuffel(child)]
      pub window_open: Option<WindowOpenAnim>,
      #[knuffel(child)]
-+    pub window_focus_flash: Option<WindowFocusFlashAnim>,
++    pub window_focus: Option<WindowFocusAnim>,
++    #[knuffel(child)]
++    pub window_focus_flash: Option<WindowFocusAnim>,
 +    #[knuffel(child)]
      pub window_close: Option<WindowCloseAnim>,
      #[knuffel(child)]
      pub horizontal_view_movement: Option<HorizontalViewMovementAnim>,
-@@ -88,6 +92,7 @@ impl MergeWith<AnimationsPart> for Animations {
-             (self, part),
-             workspace_switch,
-             window_open,
-+            window_focus_flash,
-             window_close,
-             horizontal_view_movement,
-             window_movement,
-@@ -172,6 +177,48 @@ impl Default for WindowOpenAnim {
+@@ -98,6 +104,10 @@ impl MergeWith<AnimationsPart> for Animations {
+             overview_open_close,
+             recent_windows_close,
+         );
++        // The canonical name takes precedence over its alias within one block.
++        if let Some(focus) = part.window_focus.or(part.window_focus_flash) {
++            self.window_focus = focus;
++        }
      }
  }
  
-+/// A transient content highlight, also available through the `flash-window` action.
-+#[derive(Debug, Clone, Copy, PartialEq)]
-+pub struct WindowFocusFlashAnim {
-+    pub anim: Animation,
-+    pub on_focus: bool,
-+    pub color: Color,
+@@ -172,6 +182,69 @@ impl Default for WindowOpenAnim {
+     }
+ }
+ 
++#[derive(knuffel::DecodeScalar, Debug, Clone, Copy, PartialEq, Eq)]
++pub enum FocusEffect {
++    Flash,
++    Shrink,
 +}
 +
-+impl Default for WindowFocusFlashAnim {
++/// A transient focus indicator, also available through `animate-window`.
++#[derive(Debug, Clone, Copy, PartialEq)]
++pub struct WindowFocusAnim {
++    pub anim: Animation,
++    pub on_focus: bool,
++    pub effect: FocusEffect,
++    pub color: Color,
++    pub scale: f64,
++}
++
++impl Default for WindowFocusAnim {
 +    fn default() -> Self {
 +        Self {
 +            anim: Animation {
@@ -121,12 +151,14 @@ index 346b625..4d62dd7 100644
 +                }),
 +            },
 +            on_focus: false,
++            effect: FocusEffect::Flash,
 +            color: Color::from_rgba8_unpremul(255, 255, 255, 38),
++            scale: 0.98,
 +        }
 +    }
 +}
 +
-+impl<S: knuffel::traits::ErrorSpan> knuffel::Decode<S> for WindowFocusFlashAnim {
++impl<S: knuffel::traits::ErrorSpan> knuffel::Decode<S> for WindowFocusAnim {
 +    fn decode_node(
 +        node: &knuffel::ast::SpannedNode<S>,
 +        ctx: &mut knuffel::decode::Context<S>,
@@ -135,7 +167,18 @@ index 346b625..4d62dd7 100644
 +        rv.anim = Animation::decode_node(node, ctx, rv.anim, |child, ctx| {
 +            match &**child.node_name {
 +                "on-focus" => rv.on_focus = crate::utils::Flag::decode_node(child, ctx)?.0,
++                "effect" => rv.effect = parse_arg_node("effect", child, ctx)?,
 +                "color" => rv.color = Color::decode_node(child, ctx)?,
++                "scale" => {
++                    let scale: FloatOrInt<0, 1> = parse_arg_node("scale", child, ctx)?;
++                    if scale.0 <= 0. {
++                        ctx.emit_error(DecodeError::conversion(
++                            child,
++                            "scale must be greater than 0 and at most 1",
++                        ));
++                    }
++                    rv.scale = scale.0;
++                }
 +                _ => return Ok(false),
 +            }
 +            Ok(true)
@@ -148,33 +191,78 @@ index 346b625..4d62dd7 100644
  pub struct WindowCloseAnim {
      pub anim: Animation,
 diff --git a/niri-config/src/binds.rs b/niri-config/src/binds.rs
-index 3b5430a..30f7e7e 100644
+index 3b5430a..43f32d4 100644
 --- a/niri-config/src/binds.rs
 +++ b/niri-config/src/binds.rs
-@@ -158,6 +158,7 @@ pub enum Action {
+@@ -158,6 +158,8 @@ pub enum Action {
      FocusWindow(u64),
      FocusWindowInColumn(#[knuffel(argument)] u8),
      FocusWindowPrevious,
++    AnimateWindow,
 +    FlashWindow,
      FocusColumnLeft,
      #[knuffel(skip)]
      FocusColumnLeftUnderMouse,
-@@ -444,6 +445,7 @@ impl From<niri_ipc::Action> for Action {
+@@ -444,6 +446,8 @@ impl From<niri_ipc::Action> for Action {
              niri_ipc::Action::FocusWindow { id } => Self::FocusWindow(id),
              niri_ipc::Action::FocusWindowInColumn { index } => Self::FocusWindowInColumn(index),
              niri_ipc::Action::FocusWindowPrevious {} => Self::FocusWindowPrevious,
++            niri_ipc::Action::AnimateWindow {} => Self::AnimateWindow,
 +            niri_ipc::Action::FlashWindow {} => Self::FlashWindow,
              niri_ipc::Action::FocusColumnLeft {} => Self::FocusColumnLeft,
              niri_ipc::Action::FocusColumnRight {} => Self::FocusColumnRight,
              niri_ipc::Action::FocusColumnFirst {} => Self::FocusColumnFirst,
 diff --git a/niri-config/src/lib.rs b/niri-config/src/lib.rs
-index 329b766..cc38c6f 100644
+index 329b766..bfda891 100644
 --- a/niri-config/src/lib.rs
 +++ b/niri-config/src/lib.rs
-@@ -641,6 +641,54 @@ mod tests {
+@@ -641,6 +641,97 @@ mod tests {
          let _ = Config::load_default();
      }
  
++    #[test]
++    fn focus_shrink_config_and_action_parse() {
++        let config = do_parse(
++            r#"
++            animations { window-focus {
++                on-focus
++                effect "shrink"
++                scale 0.98
++                duration-ms 180
++                curve "ease-out-cubic"
++            }; }
++            binds { Mod+Z { animate-window; }; }
++        "#,
++        );
++        assert_eq!(
++            config.animations.window_focus.effect,
++            animations::FocusEffect::Shrink
++        );
++        assert_eq!(config.animations.window_focus.scale, 0.98);
++        assert_eq!(config.binds.0[0].action, Action::AnimateWindow);
++    }
++
++    #[test]
++    fn focus_shrink_rejects_invalid_effect_and_scale() {
++        for value in ["0", "-0.1", "1.01", "inf", "-inf", "nan", "\"0.98\""] {
++            assert!(
++                Config::parse_mem(&format!(
++                    "animations {{ window-focus {{ scale {value}; }}; }}"
++                ))
++                .is_err(),
++                "{value}"
++            );
++        }
++        assert!(Config::parse_mem("animations { window-focus { effect \"invalid\"; }; }").is_err());
++        let canonical = do_parse(
++            "animations { window-focus { effect \"shrink\"; }; window-focus-flash { on-focus; }; }",
++        );
++        assert_eq!(
++            canonical.animations.window_focus.effect,
++            animations::FocusEffect::Shrink
++        );
++    }
++
 +    #[test]
 +    fn focus_flash_config_and_bind_parse() {
 +        let config = do_parse(
@@ -190,7 +278,7 @@ index 329b766..cc38c6f 100644
 +            binds { Mod+Z { flash-window; }; }
 +            "##,
 +        );
-+        let flash = config.animations.window_focus_flash;
++        let flash = config.animations.window_focus;
 +        assert!(flash.on_focus);
 +        assert_eq!(flash.color, Color::from_rgba8_unpremul(255, 255, 255, 38));
 +        assert_eq!(
@@ -201,11 +289,11 @@ index 329b766..cc38c6f 100644
 +            })
 +        );
 +        assert_eq!(config.binds.0[0].action, Action::FlashWindow);
-+        assert!(!Config::default().animations.window_focus_flash.on_focus);
++        assert!(!Config::default().animations.window_focus.on_focus);
 +        assert!(
 +            !do_parse("animations { window-focus-flash { on-focus false; }; }")
 +                .animations
-+                .window_focus_flash
++                .window_focus
 +                .on_focus
 +        );
 +    }
@@ -226,11 +314,11 @@ index 329b766..cc38c6f 100644
      #[test]
      fn default_repeat_params() {
          let config = Config::parse_mem("").unwrap();
-@@ -1523,6 +1571,24 @@ mod tests {
+@@ -1523,6 +1614,26 @@ mod tests {
                      },
                      custom_shader: None,
                  },
-+                window_focus_flash: WindowFocusFlashAnim {
++                window_focus: WindowFocusAnim {
 +                    anim: Animation {
 +                        off: false,
 +                        kind: Easing(
@@ -241,31 +329,35 @@ index 329b766..cc38c6f 100644
 +                        ),
 +                    },
 +                    on_focus: false,
++                    effect: Flash,
 +                    color: Color {
 +                        r: 1.0,
 +                        g: 1.0,
 +                        b: 1.0,
 +                        a: 0.14901961,
 +                    },
++                    scale: 0.98,
 +                },
                  window_close: WindowCloseAnim {
                      anim: Animation {
                          off: false,
 diff --git a/niri-ipc/src/lib.rs b/niri-ipc/src/lib.rs
-index ab84660..6053f2c 100644
+index ab84660..ebb1913 100644
 --- a/niri-ipc/src/lib.rs
 +++ b/niri-ipc/src/lib.rs
-@@ -334,6 +334,8 @@ pub enum Action {
+@@ -334,6 +334,10 @@ pub enum Action {
      },
      /// Focus the previously focused window.
      FocusWindowPrevious {},
-+    /// Briefly highlight the focused window's content.
++    /// Play the configured focus effect on the focused window.
++    AnimateWindow {},
++    /// Alias for animate-window.
 +    FlashWindow {},
      /// Focus the column to the left.
      FocusColumnLeft {},
      /// Focus the column to the right.
 diff --git a/src/input/mod.rs b/src/input/mod.rs
-index 8001d3f..00e9805 100644
+index 8001d3f..6cd1811 100644
 --- a/src/input/mod.rs
 +++ b/src/input/mod.rs
 @@ -49,7 +49,7 @@ use self::spatial_movement_grab::SpatialMovementGrab;
@@ -281,7 +373,7 @@ index 8001d3f..00e9805 100644
                      self.niri.queue_redraw_all();
                  }
              }
-+            Action::FlashWindow => {
++            Action::AnimateWindow | Action::FlashWindow => {
 +                if let KeyboardFocus::Layout {
 +                    surface: Some(surface),
 +                } = &self.niri.keyboard_focus
@@ -291,7 +383,7 @@ index 8001d3f..00e9805 100644
 +                        .layout
 +                        .find_window_and_output(surface)
 +                        .map(|(mapped, _)| mapped.window.clone());
-+                    self.niri.layout.flash_window(window.as_ref());
++                    self.niri.layout.animate_window(window.as_ref());
 +                    self.niri.queue_redraw_all();
 +                }
 +            }
@@ -299,23 +391,23 @@ index 8001d3f..00e9805 100644
                  let window = self.niri.layout.windows().find(|(_, m)| m.id().get() == id);
                  let window = window.map(|(_, m)| m.window.clone());
 diff --git a/src/layout/mod.rs b/src/layout/mod.rs
-index 2941585..6ad33ab 100644
+index 2941585..765edcb 100644
 --- a/src/layout/mod.rs
 +++ b/src/layout/mod.rs
 @@ -4657,6 +4657,20 @@ impl<W: LayoutElement> Layout<W> {
          self.toggle_overview();
      }
  
-+    /// Highlight one window and cancel any previous highlight; `None` cancels all.
-+    pub fn flash_window(&mut self, window: Option<&W::Id>) {
++    /// Animate one window and cancel any previous focus effect; `None` cancels all.
++    pub fn animate_window(&mut self, window: Option<&W::Id>) {
 +        if let Some(InteractiveMoveState::Moving(move_)) = &mut self.interactive_move {
-+            let flash = window == Some(move_.tile.window().id());
-+            move_.tile.set_focus_flash(flash);
++            let animate = window == Some(move_.tile.window().id());
++            move_.tile.set_focus_animation(animate);
 +        }
 +        for ws in self.workspaces_mut() {
 +            for tile in ws.tiles_mut() {
-+                let flash = window == Some(tile.window().id());
-+                tile.set_focus_flash(flash);
++                let animate = window == Some(tile.window().id());
++                tile.set_focus_animation(animate);
 +            }
 +        }
 +    }
@@ -324,42 +416,77 @@ index 2941585..6ad33ab 100644
          if let Some(InteractiveMoveState::Moving(move_)) = &self.interactive_move {
              if move_.tile.window().id() == window {
 diff --git a/src/layout/tile.rs b/src/layout/tile.rs
-index 86c7eba..7c63cc9 100644
+index 86c7eba..89f91b5 100644
 --- a/src/layout/tile.rs
 +++ b/src/layout/tile.rs
-@@ -93,6 +93,11 @@ pub struct Tile<W: LayoutElement> {
+@@ -1,9 +1,11 @@
+ use core::f64;
+ use std::rc::Rc;
+ 
++use niri_config::animations::FocusEffect;
+ use niri_config::utils::MergeWith as _;
+ use niri_config::{Color, CornerRadius, GradientInterpolation};
+ use niri_ipc::WindowLayout;
++use smithay::backend::renderer::element::utils::RescaleRenderElement;
+ use smithay::backend::renderer::element::{Element, Kind};
+ use smithay::backend::renderer::gles::GlesRenderer;
+ use smithay::utils::{Logical, Point, Rectangle, Scale, Size};
+@@ -93,6 +95,11 @@ pub struct Tile<W: LayoutElement> {
      /// The animation of a tile visually moving vertically.
      move_y_animation: Option<MoveAnimation>,
  
-+    /// Transient content highlight, independent of geometry and opacity transitions.
-+    focus_flash: Option<Animation>,
++    /// Transient focus effect, independent of geometry and opacity transitions.
++    focus_animation: Option<FocusAnimation>,
 +    focus_flash_buffer: SolidColorBuffer,
 +    focus_flash_border: BorderRenderElement,
 +
      /// The animation of the tile's opacity.
      pub(super) alpha_animation: Option<AlphaAnimation>,
  
-@@ -204,6 +209,9 @@ impl<W: LayoutElement> Tile<W> {
+@@ -131,6 +138,7 @@ niri_render_elements! {
+         Shadow = ShadowRenderElement,
+         ClippedSurface = ClippedSurfaceRenderElement<R>,
+         Offscreen = OffscreenRenderElement,
++        Focus = RescaleRenderElement<OffscreenRenderElement>,
+         ExtraDamage = ExtraDamage,
+         BackgroundEffect = BackgroundEffectElement,
+     }
+@@ -139,6 +147,12 @@ niri_render_elements! {
+ pub type TileRenderSnapshot =
+     RenderSnapshot<TileRenderElement<GlesRenderer>, TileRenderElement<GlesRenderer>>;
+ 
++#[derive(Debug)]
++struct FocusAnimation {
++    anim: Animation,
++    offscreen: OffscreenBuffer,
++}
++
+ #[derive(Debug)]
+ struct ResizeAnimation {
+     anim: Animation,
+@@ -204,6 +218,9 @@ impl<W: LayoutElement> Tile<W> {
              resize_animation: None,
              move_x_animation: None,
              move_y_animation: None,
-+            focus_flash: None,
++            focus_animation: None,
 +            focus_flash_buffer: Default::default(),
 +            focus_flash_border: Default::default(),
              alpha_animation: None,
              interactive_move_offset: Point::from((0., 0.)),
              unmap_snapshot: None,
-@@ -232,6 +240,9 @@ impl<W: LayoutElement> Tile<W> {
+@@ -231,6 +248,11 @@ impl<W: LayoutElement> Tile<W> {
+ 
          self.view_size = view_size;
          self.scale = scale;
-         self.options = options;
-+        if self.options.animations.off || self.options.animations.window_focus_flash.anim.off {
-+            self.focus_flash = None;
++        if options.animations.off
++            || self.options.animations.window_focus != options.animations.window_focus
++        {
++            self.focus_animation = None;
 +        }
+         self.options = options;
  
          let round_max1 = |logical| round_logical_in_physical_max1(self.scale, logical);
- 
-@@ -258,6 +269,7 @@ impl<W: LayoutElement> Tile<W> {
+@@ -258,6 +280,7 @@ impl<W: LayoutElement> Tile<W> {
      pub fn update_shaders(&mut self) {
          self.border.update_shaders();
          self.focus_ring.update_shaders();
@@ -367,35 +494,43 @@ index 86c7eba..7c63cc9 100644
          self.shadow.update_shaders();
      }
  
-@@ -411,6 +423,10 @@ impl<W: LayoutElement> Tile<W> {
+@@ -411,6 +434,14 @@ impl<W: LayoutElement> Tile<W> {
      }
  
      pub fn advance_animations(&mut self) {
-+        if self.focus_flash.as_ref().is_some_and(Animation::is_done) {
-+            self.focus_flash = None;
++        if self
++            .focus_animation
++            .as_ref()
++            .is_some_and(|focus| focus.anim.is_done())
++        {
++            self.focus_animation = None;
 +        }
 +
          if let Some(open) = &mut self.open_animation {
              if open.is_done() {
                  self.open_animation = None;
-@@ -442,7 +458,9 @@ impl<W: LayoutElement> Tile<W> {
+@@ -442,7 +473,9 @@ impl<W: LayoutElement> Tile<W> {
      }
  
      pub fn are_animations_ongoing(&self) -> bool {
 -        self.are_transitions_ongoing() || self.window.rules().baba_is_float == Some(true)
 +        self.are_transitions_ongoing()
-+            || self.focus_flash.is_some()
++            || self.focus_animation.is_some()
 +            || self.window.rules().baba_is_float == Some(true)
      }
  
      pub fn are_transitions_ongoing(&self) -> bool {
-@@ -536,6 +554,31 @@ impl<W: LayoutElement> Tile<W> {
+@@ -536,6 +569,35 @@ impl<W: LayoutElement> Tile<W> {
              1. - expanded_progress as f32,
          );
  
-+        if let Some(flash) = &self.focus_flash {
++        if let Some(focus) = self
++            .focus_animation
++            .as_ref()
++            .filter(|_| self.options.animations.window_focus.effect == FocusEffect::Flash)
++        {
 +            let size = self.animated_window_size();
-+            let color = self.options.animations.window_focus_flash.color;
++            let color = self.options.animations.window_focus.color;
 +            let radius = self
 +                .window
 +                .geometry_corner_radius()
@@ -414,29 +549,32 @@ index 86c7eba..7c63cc9 100644
 +                0.,
 +                radius,
 +                self.scale as f32,
-+                flash.clamped_value().clamp(0., 1.) as f32,
++                focus.anim.clamped_value().clamp(0., 1.) as f32,
 +            );
 +        }
 +
          self.fullscreen_backdrop.resize(animated_tile_size);
      }
  
-@@ -558,6 +601,22 @@ impl<W: LayoutElement> Tile<W> {
+@@ -558,6 +620,25 @@ impl<W: LayoutElement> Tile<W> {
          offset
      }
  
-+    pub fn set_focus_flash(&mut self, flash: bool) {
-+        self.focus_flash = None;
-+        if flash && !self.options.animations.off {
++    pub fn set_focus_animation(&mut self, animate: bool) {
++        self.focus_animation = None;
++        if animate && !self.options.animations.off {
 +            let anim = Animation::new(
 +                self.clock.clone(),
 +                1.,
 +                0.,
 +                0.,
-+                self.options.animations.window_focus_flash.anim,
++                self.options.animations.window_focus.anim,
 +            );
 +            if !anim.is_done() {
-+                self.focus_flash = Some(anim);
++                self.focus_animation = Some(FocusAnimation {
++                    anim,
++                    offscreen: OffscreenBuffer::default(),
++                });
 +            }
 +        }
 +    }
@@ -444,12 +582,16 @@ index 86c7eba..7c63cc9 100644
      pub fn start_open_animation(&mut self) {
          self.open_animation = Some(OpenAnimation::new(Animation::new(
              self.clock.clone(),
-@@ -1084,6 +1143,28 @@ impl<W: LayoutElement> Tile<W> {
+@@ -1084,6 +1165,32 @@ impl<W: LayoutElement> Tile<W> {
              &mut |elem| push(elem.into()),
          );
  
 +        // Keep popups above the highlight, and include it in opening/opacity composites.
-+        if let Some(flash) = &self.focus_flash {
++        if let Some(focus) = self
++            .focus_animation
++            .as_ref()
++            .filter(|_| self.options.animations.window_focus.effect == FocusEffect::Flash)
++        {
 +            if BorderRenderElement::has_shader(ctx.renderer) {
 +                push(
 +                    self.focus_flash_border
@@ -462,7 +604,7 @@ index 86c7eba..7c63cc9 100644
 +                    SolidColorRenderElement::from_buffer(
 +                        &self.focus_flash_buffer,
 +                        window_render_loc,
-+                        flash.clamped_value().clamp(0., 1.) as f32,
++                        focus.anim.clamped_value().clamp(0., 1.) as f32,
 +                        Kind::Unspecified,
 +                    )
 +                    .into(),
@@ -473,22 +615,70 @@ index 86c7eba..7c63cc9 100644
          // If we're resizing, try to render a shader, or a fallback.
          let mut pushed_resize = false;
          if let Some(resize) = &self.resize_animation {
+@@ -1321,6 +1428,54 @@ impl<W: LayoutElement> Tile<W> {
+         xray_pos: XrayPos,
+         focus_ring: bool,
+         push: &mut dyn FnMut(TileRenderElement<R>),
++    ) {
++        if let Some(focus) = self
++            .focus_animation
++            .as_ref()
++            .filter(|_| self.options.animations.window_focus.effect == FocusEffect::Shrink)
++        {
++            let mut ctx = ctx.as_gles();
++            let scale = Scale::from(self.scale);
++            let mut elements = Vec::new();
++            self.render_unscaled(
++                ctx.r(),
++                Point::new(0., 0.),
++                xray_pos,
++                focus_ring,
++                &mut |elem| elements.push(elem),
++            );
++            match focus.offscreen.render(ctx.renderer, scale, &elements) {
++                Ok((elem, _sync, data)) => {
++                    let offset = elem.offset();
++                    let elem = elem.with_offset(location + offset);
++                    let center = location + self.animated_tile_size().to_point().downscale(2.);
++                    let factor = 1.
++                        - (1. - self.options.animations.window_focus.scale)
++                            * focus.anim.clamped_value().clamp(0., 1.);
++                    self.window().set_offscreen_data(Some(data));
++                    push(
++                        RescaleRenderElement::from_element(
++                            elem,
++                            center.to_physical_precise_round(scale),
++                            factor,
++                        )
++                        .into(),
++                    );
++                    return;
++                }
++                Err(err) => warn!("error rendering focus animation: {err:?}"),
++            }
++        }
++        self.render_unscaled(ctx, location, xray_pos, focus_ring, push);
++    }
++
++    fn render_unscaled<R: NiriRenderer>(
++        &self,
++        mut ctx: RenderCtx<R>,
++        location: Point<f64, Logical>,
++        xray_pos: XrayPos,
++        focus_ring: bool,
++        push: &mut dyn FnMut(TileRenderElement<R>),
+     ) {
+         let _span = tracy_client::span!("Tile::render");
+ 
 diff --git a/src/niri.rs b/src/niri.rs
-index ec40e01..055284a 100644
+index ec40e01..f860c9e 100644
 --- a/src/niri.rs
 +++ b/src/niri.rs
-@@ -1305,6 +1305,29 @@ impl State {
+@@ -1305,6 +1305,22 @@ impl State {
                  }
              }
  
-+            let flash_window = if self
-+                .niri
-+                .config
-+                .borrow()
-+                .animations
-+                .window_focus_flash
-+                .on_focus
-+            {
++            let focus_window = if self.niri.config.borrow().animations.window_focus.on_focus {
 +                match &focus {
 +                    KeyboardFocus::Layout {
 +                        surface: Some(surface),
@@ -502,16 +692,16 @@ index ec40e01..055284a 100644
 +            } else {
 +                None
 +            };
-+            self.niri.layout.flash_window(flash_window.as_ref());
++            self.niri.layout.animate_window(focus_window.as_ref());
 +
              if let Some(grab) = self.niri.popup_grab.as_mut() {
                  if grab.has_keyboard_grab && Some(&grab.root) != focus.surface() {
                      trace!(
 diff --git a/src/tests/animations.rs b/src/tests/animations.rs
-index 51c57f7..732211d 100644
+index 51c57f7..efd51a2 100644
 --- a/src/tests/animations.rs
 +++ b/src/tests/animations.rs
-@@ -117,6 +117,293 @@ fn set_up_two_in_column() -> (Fixture, ClientId, WlSurface, WlSurface) {
+@@ -117,6 +117,481 @@ fn set_up_two_in_column() -> (Fixture, ClientId, WlSurface, WlSurface) {
      (f, id, surface1, surface2)
  }
  
@@ -802,14 +992,268 @@ index 51c57f7..732211d 100644
 +    }
 +}
 +
++#[test]
++fn egl_focus_shrink_scales_content_without_tint_or_client_resize() {
++    for mode in ["", "open-floating true;", "open-fullscreen true;"] {
++        for scale in [1., 1.5, 2.] {
++            let config = format!(
++                r#"
++                animations {{ window-focus {{ effect "shrink"; scale 0.9; duration-ms 180; curve "linear"; }}; }}
++                window-rule {{ geometry-corner-radius 24; clip-to-geometry true; {mode} }}
++            "#
++            );
++            let (mut f, client, _, surface) = focus_flash_fixture(&config);
++            let window = f.client(client).window(&surface);
++            window.attach_solid_color_buffer([u32::MAX / 4, u32::MAX / 2, u32::MAX, u32::MAX]);
++            window.commit();
++            f.double_roundtrip(client);
++            let output = f.niri_output(1);
++            output.change_current_state(
++                None,
++                None,
++                Some(smithay::output::Scale::Fractional(scale)),
++                None,
++            );
++            f.niri().layout.update_output_size(&output);
++            f.double_roundtrip(client);
++            f.niri_complete_animations();
++            set_time(f.niri(), Duration::ZERO);
++            f.niri_state().backend.headless().add_renderer().unwrap();
++            let geometry = format_tiles(f.niri());
++            let before = render_focus_flash_tile(&mut f);
++            let _ = f
++                .client(client)
++                .window(&surface)
++                .recent_configures()
++                .count();
++            let action: niri_ipc::Action = serde_json::from_str(r#"{"AnimateWindow":{}}"#).unwrap();
++            f.niri_state().do_action(action.into(), false);
++            let peak = render_focus_flash_tile(&mut f);
++            let width = (200. * scale) as usize;
++            let center = ((width / 2) * width + width / 2) * 4;
++            let edge = ((width / 2) * width + (6. * scale) as usize) * 4;
++            assert_eq!(
++                &peak[center..center + 4],
++                &before[center..center + 4],
++                "no tint: {mode}, {scale}"
++            );
++            assert!(peak[edge + 2] < before[edge + 2], "inset: {mode}, {scale}");
++            set_time(f.niri(), Duration::from_millis(100));
++            f.niri().advance_animations();
++            let middle = render_focus_flash_tile(&mut f);
++            assert!(
++                middle[edge + 2] > peak[edge + 2],
++                "recover: {mode}, {scale}"
++            );
++            assert_eq!(format_tiles(f.niri()), geometry);
++            f.double_roundtrip(client);
++            assert_eq!(
++                f.client(client)
++                    .window(&surface)
++                    .recent_configures()
++                    .count(),
++                0
++            );
++            set_time(f.niri(), Duration::from_millis(181));
++            f.niri().advance_animations();
++            assert_eq!(render_focus_flash_tile(&mut f), before);
++            assert!(f.niri().layout.focus().unwrap().offscreen_data().is_none());
++        }
++    }
++}
++
++#[test]
++fn focus_shrink_restart_cancel_and_pointer_bounds() {
++    let (mut f, client, _, _) =
++        focus_flash_fixture(r#"animations { window-focus { on-focus; effect "shrink"; }; }"#);
++    let output = f.niri_output(1);
++    let point = {
++        let (tile, pos, _) = f
++            .niri()
++            .layout
++            .active_workspace()
++            .unwrap()
++            .tiles_with_render_positions()
++            .find(|(tile, _, _)| tile.window().is_focused())
++            .unwrap();
++        pos + tile.window_loc() + Point::from((1., tile.window_size().h / 2.))
++    };
++    let hit = |niri: &Niri| {
++        niri.layout
++            .window_under(&output, point)
++            .map(|(w, _)| w.id())
++    };
++    let before_hit = hit(f.niri());
++    assert_eq!(before_hit, f.niri().layout.focus().map(|w| w.id()));
++    flash_window(&mut f); // Legacy action triggers the selected effect too.
++    assert_eq!(flashing_windows(f.niri()).len(), 1);
++    assert_eq!(hit(f.niri()), before_hit);
++    set_time(f.niri(), Duration::from_millis(100));
++    flash_window(&mut f);
++    set_time(f.niri(), Duration::from_millis(200));
++    f.niri().advance_animations();
++    assert_eq!(flashing_windows(f.niri()).len(), 1);
++    f.niri_state()
++        .do_action(niri_config::Action::ToggleOverview, false);
++    f.double_roundtrip(client);
++    assert!(flashing_windows(f.niri()).is_empty());
++}
++
++#[test]
++fn egl_focus_shrink_composes_with_open_resize_and_opacity() {
++    for resize in [false, true] {
++        let (mut f, client, _, surface) = focus_flash_fixture(
++            r#"
++            animations {
++                window-focus { effect "shrink"; scale 0.9; }
++                window-open { duration-ms 1000; curve "linear"; }
++                window-resize { duration-ms 1000; curve "linear"; }
++            }
++        "#,
++        );
++        f.niri_state().backend.headless().add_renderer().unwrap();
++        f.client(client).attach_shm_buffer(&surface, 0xff0000ff);
++        f.client(client).window(&surface).commit();
++        f.double_roundtrip(client);
++        f.niri_complete_animations();
++        set_time(f.niri(), Duration::ZERO);
++        if resize {
++            f.niri()
++                .layout
++                .set_window_width(None, SizeChange::AdjustFixed(100));
++            f.double_roundtrip(client);
++            let window = f.client(client).window(&surface);
++            window.set_size(300, 200);
++            window.ack_last_and_commit();
++            f.double_roundtrip(client);
++        } else {
++            let tile = f
++                .niri()
++                .layout
++                .active_workspace_mut()
++                .unwrap()
++                .tiles_mut()
++                .find(|tile| tile.window().is_focused())
++                .unwrap();
++            tile.start_open_animation();
++            tile.animate_alpha(
++                1.,
++                0.5,
++                niri_config::Animation {
++                    off: false,
++                    kind: Kind::Easing(EasingParams {
++                        duration_ms: 1000,
++                        curve: Curve::Linear,
++                    }),
++                },
++            );
++        }
++        set_time(f.niri(), Duration::from_millis(100));
++        f.niri().advance_animations();
++        let geometry = format_tiles(f.niri());
++        let before = render_focus_flash_tile(&mut f);
++        let window = f.niri().layout.focus().unwrap().window.clone();
++        f.niri().layout.animate_window(Some(&window));
++        let shrunk = render_focus_flash_tile(&mut f);
++        let blue = |pixels: &[u8]| pixels.chunks_exact(4).map(|p| u64::from(p[2])).sum::<u64>();
++        assert!(
++            blue(&before) > 0,
++            "resize={resize}, geometry={geometry}, center={:?}",
++            &before[(100 * 200 + 100) * 4..(100 * 200 + 100) * 4 + 4]
++        );
++        assert!(blue(&shrunk) < blue(&before), "resize={resize}");
++        assert_eq!(format_tiles(f.niri()), geometry);
++        f.niri().layout.animate_window(None);
++        assert_eq!(render_focus_flash_tile(&mut f), before);
++    }
++}
++
++#[test]
++fn focus_shrink_reload_cancels_and_can_switch_to_flash() {
++    let (mut f, _, _, _) =
++        focus_flash_fixture(r#"animations { window-focus { effect "shrink"; }; }"#);
++    flash_window(&mut f);
++    assert_eq!(flashing_windows(f.niri()).len(), 1);
++    f.niri_state().reload_config(Ok(Config::default()));
++    assert!(flashing_windows(f.niri()).is_empty());
++    flash_window(&mut f);
++    assert_eq!(flashing_windows(f.niri()).len(), 1);
++}
++
  #[test]
  fn egl_height_resize_animates_next_y() {
      let (mut f, id, surface1, surface2) = set_up_two_in_column();
 diff --git a/src/tests/client.rs b/src/tests/client.rs
-index 7776b6a..e714485 100644
+index 7776b6a..f738df7 100644
 --- a/src/tests/client.rs
 +++ b/src/tests/client.rs
-@@ -349,6 +349,11 @@ impl Window {
+@@ -2,6 +2,8 @@ use std::cmp::min;
+ use std::collections::HashMap;
+ use std::fmt;
+ use std::fmt::Write as _;
++use std::io::Write as _;
++use std::os::fd::AsFd as _;
+ use std::os::unix::net::UnixStream;
+ use std::sync::atomic::{AtomicBool, Ordering};
+ use std::sync::Arc;
+@@ -10,6 +12,7 @@ use std::time::Duration;
+ use calloop::EventLoop;
+ use calloop_wayland_source::WaylandSource;
+ use single_pixel_buffer::v1::client::wp_single_pixel_buffer_manager_v1::WpSinglePixelBufferManagerV1;
++use smithay::reexports::rustix;
+ use smithay::reexports::wayland_protocols::wp::single_pixel_buffer;
+ use smithay::reexports::wayland_protocols::wp::viewporter::client::wp_viewport::WpViewport;
+ use smithay::reexports::wayland_protocols::wp::viewporter::client::wp_viewporter::WpViewporter;
+@@ -30,6 +33,8 @@ use wayland_client::protocol::wl_compositor::WlCompositor;
+ use wayland_client::protocol::wl_display::WlDisplay;
+ use wayland_client::protocol::wl_output::{self, WlOutput};
+ use wayland_client::protocol::wl_registry::{self, WlRegistry};
++use wayland_client::protocol::wl_shm::{self, WlShm};
++use wayland_client::protocol::wl_shm_pool::WlShmPool;
+ use wayland_client::protocol::wl_surface::{self, WlSurface};
+ use wayland_client::{Connection, Dispatch, Proxy as _, QueueHandle};
+ 
+@@ -51,6 +56,7 @@ pub struct State {
+     pub outputs: HashMap<WlOutput, String>,
+ 
+     pub compositor: Option<WlCompositor>,
++    pub shm: Option<WlShm>,
+     pub xdg_wm_base: Option<XdgWmBase>,
+     pub layer_shell: Option<ZwlrLayerShellV1>,
+     pub spbm: Option<WpSinglePixelBufferManagerV1>,
+@@ -177,6 +183,7 @@ impl Client {
+             globals: Vec::new(),
+             outputs: HashMap::new(),
+             compositor: None,
++            shm: None,
+             xdg_wm_base: None,
+             layer_shell: None,
+             spbm: None,
+@@ -216,6 +223,23 @@ impl Client {
+         self.state.create_window()
+     }
+ 
++    // Resize snapshots need an imported texture, unlike single-pixel protocol buffers.
++    pub fn attach_shm_buffer(&self, surface: &WlSurface, argb: u32) {
++        let mut file = std::fs::File::from(
++            rustix::fs::memfd_create(c"niri-focus-test", rustix::fs::MemfdFlags::CLOEXEC).unwrap(),
++        );
++        file.write_all(&argb.to_ne_bytes()).unwrap();
++        let pool = self
++            .state
++            .shm
++            .as_ref()
++            .unwrap()
++            .create_pool(file.as_fd(), 4, &self.qh, ());
++        let buffer = pool.create_buffer(0, 1, 1, 4, wl_shm::Format::Argb8888, &self.qh, ());
++        surface.attach(Some(&buffer), 0, 0);
++        pool.destroy();
++    }
++
+     pub fn window(&mut self, surface: &WlSurface) -> &mut Window {
+         self.state.window(surface)
+     }
+@@ -349,6 +373,11 @@ impl Window {
          self.viewport.set_destination(i32::from(w), i32::from(h));
      }
  
@@ -821,3 +1265,22 @@ index 7776b6a..e714485 100644
      pub fn set_fullscreen(&self, output: Option<&WlOutput>) {
          self.xdg_toplevel.set_fullscreen(output);
      }
+@@ -506,6 +535,8 @@ impl Dispatch<WlRegistry, ()> for State {
+                 if interface == WlCompositor::interface().name {
+                     let version = min(version, WlCompositor::interface().version);
+                     state.compositor = Some(registry.bind(name, version, qh, ()));
++                } else if interface == WlShm::interface().name {
++                    state.shm = Some(registry.bind(name, 1, qh, ()));
+                 } else if interface == XdgWmBase::interface().name {
+                     let version = min(version, XdgWmBase::interface().version);
+                     state.xdg_wm_base = Some(registry.bind(name, version, qh, ()));
+@@ -537,6 +568,9 @@ impl Dispatch<WlRegistry, ()> for State {
+     }
+ }
+ 
++wayland_client::delegate_noop!(State: ignore WlShm);
++wayland_client::delegate_noop!(State: ignore WlShmPool);
++
+ impl Dispatch<WlOutput, ()> for State {
+     fn event(
+         state: &mut Self,
