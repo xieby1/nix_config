@@ -20,6 +20,7 @@ in {
   yq-merge.".pi/agent/web-search.json" = {
     generator = builtins.toJSON;
     expr = {
+      webSearch.allowedProviders = [ "exa" "tavily" "deepseek" ];
       tavilyApiKey = ai.tavily.api_key;
       deepseekApiKey = ai.deepseek.api_key;
     };
