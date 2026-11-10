@@ -29,6 +29,7 @@
       # on-xdg-activate rule once our niri supports that rule (26.04 does not).
       debug.honor-xdg-activation-with-invalid-serial = {};
 
+      animations.window-focus-flash.on-focus = {};
       prefer-no-csd = {};
       output = {
         _args = ["eDP-1"];

@@ -15,6 +15,8 @@
             url = "https://github.com/wrvsrx/niri/compare/tag_support-shm-sharing_4~19..tag_support-shm-sharing_4.patch";
             sha256 = "sha256-LLbzjrUmCXOCqboGKFc19Lw7hyE2tMHJdadWtltfn5U=";
           })
+          # https://github.com/niri-wm/niri/discussions/1380
+          ./focus-flash.patch
         ];
       });
     })
