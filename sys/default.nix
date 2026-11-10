@@ -79,9 +79,17 @@
   #MC 因此直接在 NixOS 系统配置中设置 zsh 为登录 shell。
   #MC 同时需要 programs.zsh.enable = true 确保 zsh 被安装并出现在 /etc/shells 中。
   programs.zsh.enable = true;
+  # Nushell（已验证 0.116.1）会将环境变量名按大小写不敏感的方式合并，
+  # 无法同时保留 Unix 程序可能分别使用的 HTTP_PROXY/http_proxy；
+  # Nix devShell 经 direnv 导入的 shell 也可能覆盖 SHELL。
+  # 默认命令 shell 需要保留这些变量的区别，因此 nushell 不适合作为默认的 shell。
+  # 修改补全的 case_sensitive 设置不能解决环境变量合并问题。
+  # 上游讨论：
+  # - https://github.com/nushell/nushell/issues/17778
+  #   - https://github.com/nushell/nushell/issues/14551
   environment.shells = [ pkgs.pkgsu.nushell ];
   users.users.xieby1 = {
-    shell = pkgs.pkgsu.nushell;
+    shell = pkgs.zsh;
     isNormalUser = true;
     createHome = true;
     #MC 同上，给`xieby1`用户设置hash过的密码。
