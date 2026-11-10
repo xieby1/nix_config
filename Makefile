@@ -16,9 +16,9 @@ ALL_MDs = $(shell find . -name "*.md" -not -name "SUMMARY.md")
 SUMMARY.md: .genSUMMARY.sh ${NIX_MDs} ${ALL_MDs}
 	./$< > $@
 
-TEST_NIXs = $(shell find . -name test.nix)
-TEST_SHs = $(shell find . -name test.sh)
-test: $(addsuffix .run, ${TEST_NIXs} ${TEST_SHs})
+test: all.test.nix.run all.test.sh.run all.test.py.run
+all.test.nix.run: $(addsuffix .run, $(shell find . -name test.nix))
+all.test.sh.run: $(addsuffix .run, $(shell find . -name test.sh))
 %.nix.run: %.nix
 	nix eval -f $<
 %.sh.run: %.sh
