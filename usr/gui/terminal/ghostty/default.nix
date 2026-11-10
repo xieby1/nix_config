@@ -12,7 +12,6 @@ in {
   programs.ghostty = {
     enable = true;
     package = ghostty;
-    enableZshIntegration = true;
     settings = {
       # Exposes --ghostty-fg and --ghostty-bg for the GTK tab CSS below.
       window-theme = "ghostty";

@@ -45,13 +45,12 @@ in {
     go-there
     fzf-doc
   ];
+  # * hstr: not handle `~` correctly, always expand
+  # * atuin: often not record my command, do know why
+  #   * besides, the network sync is redundant for me
+  # * mcfly: the fuzzy ranking algorithm is not as good/intuitive as fzf
   programs.fzf = {
     enable = true;
-    # * hstr: not handle `~` correctly, always expand
-    # * atuin: often not record my command, do know why
-    #   * besides, the network sync is redundant for me
-    # * mcfly: the fuzzy ranking algorithm is not as good/intuitive as fzf
-    enableZshIntegration = true;
     defaultOptions = [
       "--reverse"
     ];
