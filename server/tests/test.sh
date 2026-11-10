@@ -8,20 +8,21 @@ set -euo pipefail
 here=$(cd "$(dirname "$0")" && pwd)
 home-manager -f "$here/home.nix" build >/dev/null
 gen=$(readlink -f result)
+unit="$gen/home-files/.config/systemd/user/authelia.service"
 fail() {
   echo "FAIL: $1"
   exit 1
 }
 
-cfg=$(grep -RhoIE '/nix/store/[a-z0-9]+-authelia-configuration\.yml' "$gen" | head -1)
+cfg=$(grep -oEm1 '/nix/store/[a-z0-9]+-authelia-configuration\.yml' "$unit")
 [ -n "$cfg" ] || fail "no generated authelia config under $gen"
 
-db=$(grep -oE 'path: /nix/store/[a-z0-9]+-authelia-users\.yml' "$cfg" | head -1 | cut -d' ' -f2)
+db=$(grep -oEm1 'path: /nix/store/[a-z0-9]+-authelia-users\.yml' "$cfg" | cut -d' ' -f2)
 [ -n "$db" ] || fail "the user database is not generated into the store"
 grep -q 'xieby1' "$db" || fail "the owner is missing from the generated user database"
 grep -q 'sshKeys' "$db" && fail "sshKeys leaked into the generated user database"
 
-env=$(sed -n 's/^EnvironmentFile=//p' "$gen/home-files/.config/systemd/user/authelia.service")
+env=$(sed -n 's/^EnvironmentFile=//p' "$unit")
 [ -n "$env" ] || fail "the authelia unit has no EnvironmentFile"
 case "$env" in
 /nix/store/*) fail "authelia.env is in the store: $env" ;;
