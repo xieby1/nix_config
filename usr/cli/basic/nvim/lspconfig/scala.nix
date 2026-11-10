@@ -73,9 +73,6 @@ in {
     # make .metals/mill happy.
     export JAVA_HOME=${jre-with-proxy};
   '';
-  programs.nushell.environmentVariables = {
-    JAVA_HOME = jre-with-proxy;
-  };
 
   # nvim-metals proxy for bloop
   home.file.jvmopts = {

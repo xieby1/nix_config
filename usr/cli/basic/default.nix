@@ -6,7 +6,6 @@
   imports = [
     ./starship.nix
     ./zsh
-    ./nushell.nix
     ./git
     ./clash
     ./tailscale
@@ -21,8 +20,5 @@
 
   programs.zsh.envExtra = /*bash*/ ''
     . ${toString ../../../scripts/bootstrap/main.sh}
-  '';
-  programs.nushell.extraEnv = ''
-    source ${toString ../../../scripts/bootstrap/main.nu}
   '';
 }

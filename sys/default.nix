@@ -87,7 +87,6 @@
   # 上游讨论：
   # - https://github.com/nushell/nushell/issues/17778
   #   - https://github.com/nushell/nushell/issues/14551
-  environment.shells = [ pkgs.pkgsu.nushell ];
   users.users.xieby1 = {
     shell = pkgs.zsh;
     isNormalUser = true;
