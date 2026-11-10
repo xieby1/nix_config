@@ -149,6 +149,19 @@
       "url": "https://github.com/xieby1/pi-skill-usage/archive/202c94ef94756842510f84bf02543b2225b1aa25.tar.gz",
       "hash": "sha256-iecPmadP9DdesnLfGFw3ha+g3Yiw7D5WqJ8Yga/UVOE="
     },
+    "pi-title": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "brettinternet",
+        "repo": "pi-extensions"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "76962bff6021ddc3f8a27dd779ed9210ca23b3b9",
+      "url": "https://github.com/brettinternet/pi-extensions/archive/76962bff6021ddc3f8a27dd779ed9210ca23b3b9.tar.gz",
+      "hash": "sha256-rFbPl3PzBjLHqi6ksFMs1X5u1ouJDmnqbBywKcrgzNY="
+    },
     "pi-web": {
       "type": "GitRelease",
       "repository": {

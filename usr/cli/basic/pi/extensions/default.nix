@@ -16,6 +16,7 @@
     (lib.modules.importApply ./pi-skill-usage.nix {src = sources.pi-skill-usage;})
     (lib.modules.importApply ./heuristic-notify.nix {src = sources.pi-heuristic-notify;})
     (lib.modules.importApply ./pi-web-access {src = sources.pi-web-access;})
+    (lib.modules.importApply ./pi-title {src = sources.pi-title + "/extensions/title";})
     ./ponytail
     (lib.modules.importApply ./rpiv-ask-user-question.nix {src = sources.rpiv-mono;})
     (lib.modules.importApply ./rpiv-todo {src = sources.rpiv-mono;})

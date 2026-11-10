@@ -1,5 +1,5 @@
 { src }: # local-args
-{ config, pkgs, lib, ai, ... }:
+{ config, pkgs, lib, ... }:
 let
   inherit (config.home) homeDirectory;
 
@@ -25,10 +25,6 @@ let
       runHook preInstall
       mkdir -p $out/lib/node_modules/pi-web $out/bin
       cp -r dist node_modules package.json $out/lib/node_modules/pi-web/
-      # A root entrypoint makes Pi's compact banner show session-naming, not extensions.
-      naming=$out/lib/node_modules/pi-web/dist/pi-packages/session-naming
-      substituteInPlace "$naming/package.json" --replace-fail '"./extensions"' '"./index.js"'
-      echo 'export { default } from "./extensions/index.js";' > "$naming/index.js"
       # npm workspace symlinks point into the relocated build tree; drop dangling ones.
       find $out/lib/node_modules/pi-web/node_modules -type l ! -exec test -e {} \; -delete 2>/dev/null || true
       makeWrapper ${nodejs}/bin/node $out/bin/pi-web          --add-flags "$out/lib/node_modules/pi-web/dist/cli.js"
@@ -48,18 +44,19 @@ in
       profileDir = "${homeDirectory}/.pi/agent";
       inherit packageId;
       dismissedAt = "1970-01-01T00:00:00.000Z";
-    }) [ "@jmfederico/pi-relay" "@jmfederico/pi-web-workflows" ];
+    }) [ "@jmfederico/pi-session-naming" "@jmfederico/pi-relay" "@jmfederico/pi-web-workflows" ];
   };
 
-  yq-merge.".pi/agent/session-naming/config.json" = {
-    generator = builtins.toJSON;
-    expr = {
-      model = "${ai.default_small.provider}/${ai.default_small.model.id}";
-      # maxTokens = 24;
-      thinkingLevel = lib.head ai.default_small.model.reasoning_levels;
-      # timeoutMs = 10000;
-    };
-  };
+  # A dismissal prevents reinstalling; remove references installed before it existed.
+  home.activation.disablePiWebSessionNaming = lib.hm.dag.entryAfter [ "onFilesChange" ] ''
+    if [[ -f "${homeDirectory}/.pi/agent/settings.json" ]]; then
+      run ${lib.getExe pkgs.yq-go} -i '
+        .packages = ((.packages // []) | map(select(
+          ((.source // .) | test("(^npm:@jmfederico/pi-session-naming(@.*)?$|^@jmfederico/pi-session-naming(@.*)?$|/pi-web/dist/pi-packages/session-naming/?$)")) | not
+        )))
+      ' "${homeDirectory}/.pi/agent/settings.json"
+    fi
+  '';
 
   # Web/API restarts do not interrupt in-flight work; the daemon owns the runtimes.
   systemd.user.services.pi-web-sessiond = {
