@@ -7,12 +7,7 @@ in {
   imports = [
     (lib.modules.importApply ./extensions {
       inherit enableExtendedCLI pipkgs;
-      sources = {
-        inherit (npinsed)
-          acp pi-hermes-memory shelken-pi-extensions pi-math
-          pi-language-tutor pi-retry pi-context-view pi-model-project
-          pi-skill-usage pi-heuristic-notify pi-web-access pi-title rpiv-mono;
-      };
+      sources = npinsed;
     })
     ./providers
   ] ++ lib.optionals enableExtendedCLI [

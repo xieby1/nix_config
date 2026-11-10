@@ -38,7 +38,7 @@ Plain modules without local dependencies do not need an extra function header.
 
 ### Rules
 
-- Pass only what a child needs. A dispatcher may receive a selected source set; leaf modules normally receive individual sources or packages rather than the entire application's pins or package set.
+- Pass a coherent dependency collection to a dispatcher that assembles its consumers; it may receive the application's source or package set without enumerating a subset. Pass specific sources or packages to leaf modules. Prefer an explicit subset when a module needs a stable public interface or a deliberately restricted dependency surface.
 - Forward local arguments explicitly at each required import edge; there is no automatic parent-to-child inheritance.
 - Set policy defaults once at the entry point. Children require the arguments forwarded to them rather than silently supplying another default.
 - Keep application pins in a colocated `sources.json`, load them at their owning module, and keep only generic facilities such as `npinsFun` shared. Provide shared arguments from a module imported by every relevant device profile.
