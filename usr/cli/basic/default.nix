@@ -6,6 +6,7 @@
   imports = [
     ./starship.nix
     ./zsh
+    ./nushell.nix
     ./git
     ./clash
     ./tailscale

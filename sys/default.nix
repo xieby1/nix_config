@@ -79,8 +79,9 @@
   #MC 因此直接在 NixOS 系统配置中设置 zsh 为登录 shell。
   #MC 同时需要 programs.zsh.enable = true 确保 zsh 被安装并出现在 /etc/shells 中。
   programs.zsh.enable = true;
+  environment.shells = [ pkgs.pkgsu.nushell ];
   users.users.xieby1 = {
-    shell = pkgs.zsh;
+    shell = pkgs.pkgsu.nushell;
     isNormalUser = true;
     createHome = true;
     #MC 同上，给`xieby1`用户设置hash过的密码。
