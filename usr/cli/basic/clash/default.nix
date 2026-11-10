@@ -43,6 +43,16 @@
       export https_proxy="$HTTP_PROXY"
       export ftp_proxy="$HTTP_PROXY"
     '');
+    programs.nushell.environmentVariables = let
+      HTTP_PROXY = "http://127.0.0.1:${toString config.proxyPort}";
+    in lib.optionalAttrs (!isNixOnDroid) {
+      HTTPS_PROXY = HTTP_PROXY;
+      HTTP_PROXY  = HTTP_PROXY;
+      FTP_PROXY   = HTTP_PROXY;
+      http_proxy  = HTTP_PROXY;
+      https_proxy = HTTP_PROXY;
+      ftp_proxy   = HTTP_PROXY;
+    };
 
     programs.zsh.initContent = lib.mkBefore (lib.optionalString (!isNixOnDroid) ''
       unset_proxy() {
@@ -66,5 +76,27 @@
         unset rsync_proxy
       }
     '');
+    programs.nushell.extraConfig = lib.optionalString (!isNixOnDroid) ''
+      def --env unset_proxy [] {
+        hide-env HTTPS_PROXY
+        hide-env HTTP_PROXY
+        hide-env FTP_PROXY
+        hide-env https_proxy
+        hide-env http_proxy
+        hide-env ftp_proxy
+        hide-env HTTPS_PORT
+        hide-env HTTP_PORT
+        hide-env FTP_PORT
+        hide-env https_port
+        hide-env http_port
+        hide-env ftp_port
+        hide-env ALL_PROXY
+        hide-env all_proxy
+        hide-env NO_PROXY
+        hide-env no_proxy
+        hide-env RSYNC_PROXY
+        hide-env rsync_proxy
+     }
+    '';
   };
 }
