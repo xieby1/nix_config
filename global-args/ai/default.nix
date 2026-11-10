@@ -3,7 +3,12 @@
     inherit lib;
     inherit (import <npins> {input = ./sources.json;}) catwalk;
   };
-in {
+in rec {
+  default_small = {
+    provider = "jw2-deepseek";
+    model = jw2-deepseek.models.deepseek-flash;
+  };
+  # default_large_model = jw2-openai.models."gpt-6.1-sol";
   deepseek = catwalk-providers.deepseek // {
     api_key = lib.trim (builtins.readFile ~/Gist/Vault/deepseek_api_key_nvim.txt);
   };

@@ -1,5 +1,5 @@
 { src }: # local-args
-{ config, pkgs, lib, ... }:
+{ config, pkgs, lib, ai, ... }:
 let
   inherit (config.home) homeDirectory;
 
@@ -49,6 +49,16 @@ in
       inherit packageId;
       dismissedAt = "1970-01-01T00:00:00.000Z";
     }) [ "@jmfederico/pi-relay" "@jmfederico/pi-web-workflows" ];
+  };
+
+  yq-merge.".pi/agent/session-naming/config.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      model = "${ai.default_small.provider}/${ai.default_small.model.id}";
+      # maxTokens = 24;
+      thinkingLevel = lib.head ai.default_small.model.reasoning_levels;
+      # timeoutMs = 10000;
+    };
   };
 
   # Web/API restarts do not interrupt in-flight work; the daemon owns the runtimes.
