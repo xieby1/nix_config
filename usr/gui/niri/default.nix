@@ -1,7 +1,3 @@
-# Cons:
-# * does not support viewport query and control (only support hard-coded touch gesture move view)!
-# * does not support window movement (This is a common problem for wayland, in X11 there is wmctrl)
-# * does not work well with ironbar: autohide double-trigger bug
 { pkgs, ... }: {
   imports = [
     ./config
@@ -20,14 +16,6 @@
             sha256 = "sha256-LLbzjrUmCXOCqboGKFc19Lw7hyE2tMHJdadWtltfn5U=";
           })
         ];
-        # # https://nixos.wiki/wiki/Rust#Using_overrideArgs_with_Rust_Packages
-        # cargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-        #   src = final.src;
-        #   hash = "sha256-bh3NrnlFz2m8aCCakgpblFrswh02ByJVPVgxBbTZ6ts=";
-        # };
-        # # Unnecessary due to cargoDeps having higher priority than cargoHash,
-        # # but to make it explicitly that cargoHash is not used after overrideAttrs.
-        # cargoHash = null;
       });
     })
   ];
