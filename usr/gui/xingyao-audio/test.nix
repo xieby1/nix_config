@@ -10,7 +10,7 @@ let
   cfg = hm.config;
   file = cfg.xdg.configFile."wireplumber/wireplumber.conf.d/51-xingyao-audio.conf" or null;
   service = cfg.systemd.user.services.xingyao-audio or {};
-in pkgs.lib.runTests (pkgs.lib.optionalAttrs
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests (pkgs.lib.optionalAttrs
   (pkgs.lib.trim (builtins.readFile /etc/hostname) == "techrevo") {
   test-card-rule = {
     expr = if file == null then null else
@@ -46,4 +46,4 @@ in pkgs.lib.runTests (pkgs.lib.optionalAttrs
       remain = true;
     };
   };
-})
+}); }

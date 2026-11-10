@@ -14,7 +14,7 @@ let
       c.powerManagement.resumeCommands;
     patch = builtins.any (p: p.name == "alc256-xingyao-speakers") c.boot.kernelPatches;
   };
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   test-driver-by-default = {
     expr = audioState cfg;
     expected = { workaround = false; resumeWorkaround = false; patch = true; };
@@ -49,4 +49,4 @@ in pkgs.lib.runTests {
       canRestore = true;
     };
   };
-}
+}; }

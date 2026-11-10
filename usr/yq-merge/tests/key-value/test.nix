@@ -13,7 +13,7 @@ let
       };
     };
   };
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   test-target = {
     expr = hm.config.home.file.".config/env".target;
     expected = ".config/yq-merge.env";
@@ -42,4 +42,4 @@ in pkgs.lib.runTests {
       wang=wang~
     '';
   };
-}
+}; }

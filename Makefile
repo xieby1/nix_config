@@ -20,6 +20,6 @@ TEST_NIXs = $(shell find . -name test.nix)
 TEST_SHs = $(shell find . -name test.sh)
 test: $(addsuffix .run, ${TEST_NIXs} ${TEST_SHs})
 %.nix.run: %.nix
-	nix eval -f $< | tee /dev/tty | grep -q '\[ \]'
+	nix eval -f $<
 %.sh.run: %.sh
 	bash $<

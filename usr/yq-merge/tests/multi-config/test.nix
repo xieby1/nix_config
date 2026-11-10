@@ -29,7 +29,7 @@ let
       home = {stateVersion="25.11"; username="dummy"; homeDirectory="/dummy";};
     };
   };
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   # The `generator` type must not be `lib.types.functionTo lib.types.lines`.
   # If it were, home-manager would merge the generated text from multiple configs.
   # This test verifies that the generator outputs are not merged.
@@ -37,4 +37,4 @@ in pkgs.lib.runTests {
     expr = hm.config.home.file.".config/miao.json".text;
     expected = "{\"miao\":\"miao miao!\",\"wang\":\"wang wang!\"}";
   };
-}
+}; }

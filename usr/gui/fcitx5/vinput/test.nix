@@ -13,7 +13,7 @@ let
   cfg = hm.config;
   vinput = builtins.filter (p: lib.getName p == "fcitx5-vinput") cfg.i18n.inputMethod.fcitx5.addons;
   daemon = cfg.systemd.user.services.vinput-daemon or {};
-in lib.runTests {
+in lib.debug.throwTestFailures { failures = lib.runTests {
   test-addon = {
     expr = builtins.length vinput;
     expected = 1;
@@ -129,4 +129,4 @@ in lib.runTests {
     ];
     expected = true;
   };
-}
+}; }

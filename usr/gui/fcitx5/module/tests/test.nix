@@ -20,7 +20,7 @@ let
       };
     };
   };
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   test-onChange = let
     # TODO: modularize the test-onChange, e.g. create a standalone dummy-home generation function
     dummy-home = pkgs.runCommand "test-onChange" {} ''
@@ -42,4 +42,4 @@ in pkgs.lib.runTests {
       0=Alt+F
     '';
   };
-}
+}; }

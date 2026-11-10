@@ -16,7 +16,7 @@ let
   cfg = evaluate pkgs;
   unsupported = evaluate (pkgs // { stdenv = pkgs.stdenv // { hostPlatform.system = "x86_64-darwin"; }; });
   imports = builtins.readFile ../default.nix;
-in lib.runTests {
+in lib.debug.throwTestFailures { failures = lib.runTests {
   test-installed-files = {
     expr = builtins.attrNames cfg.home.file;
     expected = [ ".pi/agent/extensions/pi-read-aloud" ".pi/models/tts/kokoro-multi-lang-v1_1" ];
@@ -31,4 +31,4 @@ in lib.runTests {
   test-new-import = { expr = lib.hasInfix "./pi-read-aloud" imports; expected = true; };
   test-no-old-import = { expr = lib.hasInfix "./pi-voicekit" imports; expected = false; };
   test-no-old-upstream-pin = { expr = sources ? pi-voicekit; expected = false; };
-}
+}; }

@@ -9,7 +9,7 @@ let
   package = builtins.head module.home.packages;
   root = "${package}/lib/node_modules/pi-web/dist/pi-packages/session-naming";
   manifest = builtins.fromJSON (builtins.readFile "${root}/package.json");
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   test-session-naming-entrypoint = {
     expr = manifest.pi.extensions;
     expected = [ "./index.js" ];
@@ -19,4 +19,4 @@ in pkgs.lib.runTests {
       then builtins.readFile "${root}/index.js" else null;
     expected = "export { default } from \"./extensions/index.js\";\n";
   };
-}
+}; }

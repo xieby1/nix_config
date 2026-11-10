@@ -17,7 +17,7 @@ let
   };
   basic = evaluate {};
   overridden = evaluate { proxyPort = 19090; };
-in lib.runTests {
+in lib.debug.throwTestFailures { failures = lib.runTests {
   test-default-port = {
     expr = basic.config.proxyPort;
     expected = 8889;
@@ -34,4 +34,4 @@ in lib.runTests {
     expr = lib.hasInfix ''HTTP_PROXY="http://127.0.0.1:19090"'' overridden.config.programs.zsh.envExtra;
     expected = true;
   };
-}
+}; }

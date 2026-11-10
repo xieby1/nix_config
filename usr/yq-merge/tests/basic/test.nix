@@ -18,7 +18,7 @@ let
       };
     };
   };
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   test-target = {
     expr = hm.config.home.file.".config/miao.json".target;
     expected = ".config/yq-merge.miao.json";
@@ -39,4 +39,4 @@ in pkgs.lib.runTests {
     expr = pkgs.lib.hasInfix "echo zhi" hm.config.home.file.".config/miao.json".onChange;
     expected = true;
   };
-}
+}; }

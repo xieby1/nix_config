@@ -15,7 +15,7 @@ let
     };
   };
   pluginEntry = builtins.elemAt (builtins.filter (p: p ? optional && p.optional) hm.config.programs.neovim.plugins) 0;
-in pkgs.lib.runTests {
+in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
   test-plugin = {
     expr = pluginEntry.plugin.pname;
     expected = "copilot.lua";
@@ -48,4 +48,4 @@ in pkgs.lib.runTests {
     expr = pkgs.lib.hasInfix ''require("copilot").setup()'' pluginEntry.config;
     expected = true;
   };
-}
+}; }
