@@ -1,4 +1,7 @@
-{ pkgs, ... }: {
+{ ... }: {
+  imports = [
+    ./binds.nix
+  ];
   configKdl = {
     _children = [
       { include = "./dms/colors.kdl"; }
@@ -62,7 +65,6 @@
     # };
     spawn-at-startup = ["dms" "run"];
     screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
-    binds = import ./binds.nix {inherit pkgs;};
     gestures.hot-corners.off = {};
     overview.zoom = 0.4;
     switch-events = {
