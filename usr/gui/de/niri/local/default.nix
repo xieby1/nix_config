@@ -2,6 +2,9 @@
 { pkgs }: # local args
 { lib, config, ... }: # global args
 {
+  imports = [
+    ./win_align.nix
+  ];
   options = {
     lib = lib.mkOption {
       type = lib.types.attrs;

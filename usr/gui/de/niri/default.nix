@@ -5,7 +5,6 @@
 in {
   imports = [
     ./config
-    ./win_align.nix
   ];
   nixpkgs.overlays = [
     (pkgs-final: pkgs-prev: {
