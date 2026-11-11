@@ -1,9 +1,10 @@
 { lib, ... }: {
-  yq-merge.".config/noctalia/settings.toml" = {
-    generator = lib.generators.toINI {
+  # Noctalia loads every TOML file here alphabetically, so yq-merge's
+  # staging file would override the intended settings.toml.
+  home.file.".config/noctalia/settings.toml".text =
+    lib.generators.toINI {
       mkKeyValue = key: value: "${key} = ${builtins.toJSON value}";
-    };
-    expr = {
+    } {
       "bar.default" = {
         smart_auto_hide = true;
         auto_hide_reserve_space = true;
@@ -49,5 +50,4 @@
         visualization = "none";
       };
     };
-  };
 }
