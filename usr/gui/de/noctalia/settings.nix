@@ -9,7 +9,7 @@
         smart_auto_hide = true;
         auto_hide_reserve_space = true;
         margin_ends = 0;
-        start = [ "notifications" "wallpaper" "media" "workspaces" "active_window" ];
+        start = [ "notifications" "wallpaper" "media" "stack" "active_window" ];
         center = [ "clock" "weather" ];
         end = [ "tray" "cpu" "ram" "ram_pct" "swap_pct" "network_tx" "network_rx" "battery" "control-center" ];
       };
@@ -21,6 +21,16 @@
         match_content = ".*";
         override_duration = 0;
       };
+
+      plugins = {
+        enabled = [ "johnnyp0t/niri-workspace-stack" ];
+      };
+      "widget.stack" = {
+        type = "johnnyp0t/niri-workspace-stack:stack";
+        displayMode = "numbered_rail";
+        show_numbers = false;
+      };
+
       "widget.media" = {
         hide_when_no_media = true;
         show_progress = true;
