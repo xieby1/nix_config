@@ -9,7 +9,7 @@
         smart_auto_hide = true;
         auto_hide_reserve_space = true;
         margin_ends = 0;
-        start = [ "notifications" "daily-wallpaper" "media" "stack" "active_window" ];
+        start = [ "notifications" "daily-wallpaper" "media" "niri-workspace-stack" "active_window" ];
         center = [ "clock" "weather" ];
         end = [ "tray" "cpu" "ram" "ram_pct" "swap_pct" "network_tx" "network_rx" "battery" "control-center" ];
       };
@@ -31,7 +31,7 @@
       "widget.daily-wallpaper" = {
         type = "nzlov/daily-wallpaper:widget";
       };
-      "widget.stack" = {
+      "widget.niri-workspace-stack" = {
         type = "johnnyp0t/niri-workspace-stack:stack";
         displayMode = "numbered_rail";
         show_numbers = false;
