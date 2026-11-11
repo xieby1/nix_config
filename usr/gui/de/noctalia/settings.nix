@@ -29,6 +29,7 @@
       };
       "widget.daily-wallpaper" = {
         type = "nzlov/daily-wallpaper:widget";
+        show_text = false;
       };
       "widget.taskbar" = {
         group_by_workspace = true;
