@@ -6,5 +6,6 @@ in {
   imports = [
     (lib.modules.importApply ./niri { inherit depkgs; })
     ./dms
+    (lib.modules.importApply ./noctalia.nix { inherit depkgs; })
   ];
 }

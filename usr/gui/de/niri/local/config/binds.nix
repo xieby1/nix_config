@@ -3,13 +3,15 @@
   configKdl = {
     binds = {
       "Ctrl+Alt+T".spawn = "ghostty";
-      "Mod+D".spawn-sh = "dms ipc call spotlight toggle";
-      "Mod+W".spawn-sh = "rofi -show window -window-format '{c} {t}'";
+      "Mod+D".spawn-sh = "noctalia msg panel-toggle launcher";
+      "Mod+W".spawn-sh = "noctalia msg panel-open launcher '/win '";
       "Mod+Alt+L".spawn-sh = "dms ipc lock lock";
       "Mod+N".spawn-sh = "dms ipc notifications toggle";
       "Mod+X".spawn-sh = "dms ipc powermenu toggle";
-      "Mod+V".spawn-sh = "dms ipc clipboard toggle";
-      "Mod+H".spawn-sh = "dms ipc bar toggleAutoHide name 'Main Bar'";
+      "Mod+V".spawn-sh = "noctalia msg panel-toggle clipboard";
+      # TODO: noctalia master support auto_hide_reserve_space
+      "Mod+H".spawn-sh = "noctalia msg bar-toggle; noctalia msg bar-reserve-toggle";
+      "Mod+Shift+H".spawn-sh = "noctalia msg bar-toggle";
       "Mod+F".spawn-sh = "ghostty -e bash -i fzf-doc";
       "Mod+S".spawn-sh = "${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click -o mode_floating.source=detect";
 

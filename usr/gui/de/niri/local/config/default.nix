@@ -29,6 +29,8 @@
     # Remove when clicking a Pi notification from another workspace and tab
     # works without this flag, or replace it with a Ghostty-only
     # on-xdg-activate rule once our niri supports that rule (26.04 does not).
+    #
+    # noctalia also need this: Allows notification actions and window activation from Noctalia.
     debug.honor-xdg-activation-with-invalid-serial = {};
 
     prefer-no-csd = {};
@@ -57,7 +59,7 @@
     #   # geometry-corner-radius._args= [12 36 36 12];
     #   geometry-corner-radius = 64;
     # };
-    spawn-at-startup = ["dms" "run"];
+    spawn-at-startup = ["noctalia"];
     screenshot-path = "~/Pictures/Screenshots/niri.%Y%m%d.%H%M%S.png";
     gestures.hot-corners.off = {};
     overview.zoom = 0.4;
