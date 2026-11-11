@@ -14,9 +14,8 @@
     ./flameshot.nix
     ./fcitx5
     # TODO: remove
-    ./niri
     ./rofi.nix
-    ./dms
+    ./de
     ./evolution
     ./low-battery-notify.nix
     ./xingyao-audio
