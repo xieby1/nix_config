@@ -58,7 +58,7 @@
     #   geometry-corner-radius = 64;
     # };
     spawn-at-startup = ["dms" "run"];
-    screenshot-path = "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png";
+    screenshot-path = "~/Pictures/Screenshots/niri.%Y%m%d.%H%M%S.png";
     gestures.hot-corners.off = {};
     overview.zoom = 0.4;
     switch-events = {
