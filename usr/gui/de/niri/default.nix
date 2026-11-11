@@ -1,4 +1,8 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: let
+  local = lib.modules.evalModules {
+    modules = [(lib.modules.importApply ./local {inherit pkgs;})];
+  };
+in {
   imports = [
     ./config
     ./win_align.nix
@@ -21,15 +25,15 @@
       });
     })
   ];
-  cachix_packages = [ pkgs.niri ];
+  cachix_packages = [ local.config.finalPackage ];
   home.packages = [
-    pkgs.niri
+    local.config.finalPackage
     pkgs.xwayland-satellite
   ];
   services.gnome-keyring.enable = true;
   xdg.portal = {
     enable = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    configPackages = [ pkgs.niri ];
+    configPackages = [ local.config.finalPackage ];
   };
 }
