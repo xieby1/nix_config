@@ -13,8 +13,6 @@
     ./drawio.nix
     ./flameshot.nix
     ./fcitx5
-    # TODO: remove
-    ./rofi.nix
     ./de
     ./evolution
     ./low-battery-notify.nix
