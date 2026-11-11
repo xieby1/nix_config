@@ -9,7 +9,7 @@
         smart_auto_hide = true;
         auto_hide_reserve_space = true;
         margin_ends = 0;
-        start = [ "notifications" "daily-wallpaper" "media" "niri-workspace-stack" "active_window" ];
+        start = [ "notifications" "daily-wallpaper" "media" "taskbar" "active_window" ];
         center = [ "clock" "weather" ];
         end = [ "tray" "cpu" "ram" "ram_pct" "swap_pct" "network_tx" "network_rx" "battery" "control-center" ];
       };
@@ -24,17 +24,16 @@
 
       plugins = {
         enabled = [
-          "johnnyp0t/niri-workspace-stack"
           "nzlov/daily-wallpaper"
         ];
       };
       "widget.daily-wallpaper" = {
         type = "nzlov/daily-wallpaper:widget";
       };
-      "widget.niri-workspace-stack" = {
-        type = "johnnyp0t/niri-workspace-stack:stack";
-        displayMode = "numbered_rail";
-        show_numbers = false;
+      "widget.taskbar" = {
+        group_by_workspace = true;
+        hide_empty_workspaces = true;
+        show_workspace_label = false;
       };
 
       "widget.media" = {
