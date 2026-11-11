@@ -17,6 +17,7 @@
     (lib.modules.importApply ./heuristic-notify.nix {src = sources.pi-heuristic-notify;})
     (lib.modules.importApply ./pi-web-access {src = sources.pi-web-access;})
     (lib.modules.importApply ./pi-title {src = sources.pi-title + "/extensions/title";})
+    (lib.modules.importApply ./pi-subagents {src = sources.pi-subagents;})
     ./ponytail
     (lib.modules.importApply ./rpiv-ask-user-question.nix {src = sources.rpiv-mono;})
     (lib.modules.importApply ./rpiv-todo {src = sources.rpiv-mono;})
@@ -24,19 +25,6 @@
     ./pi-read-aloud
   ];
   home.file = {
-    # tintinweb/pi-subagents (this) vs nicobailon/pi-subagents (previous)
-    # - previous:
-    #   - non-intuitive: need explicitly specify the subagents call
-    # pi-subagents = {
-    #   target = ".pi/agent/extensions/pi-subagents";
-    #   source = pkgs.buildNpmPackage (finalAttrs: {
-    #     name = "pi-subagents";
-    #     src = pkgs.npinsed.ai.pi-subagents;
-    #     npmDepsHash = "sha256-zau3eaJoa8pE3A5COXwyTLSesoePgYqrnRCg3SMSaAA=";
-    #     dontNpmBuild = true;
-    #   }) + /lib/node_modules/pi-subagents;
-    # };
-
     # - Plan Extensions Comparison:
     #   - qmx/pi-plan-mode: fully read-only thus does not write md.
     #   - backnotprop/plannotator: I don't need the web annotation UI.
