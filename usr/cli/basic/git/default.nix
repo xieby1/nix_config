@@ -96,6 +96,7 @@ in {
       promptToReturnFromSubprocess = false;
       git = {
         autoFetch = false;
+        ignoreWhitespaceInDiffView = true;
       };
     };
   };
