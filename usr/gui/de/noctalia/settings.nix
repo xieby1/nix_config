@@ -13,6 +13,13 @@
         end = [ "tray" "cpu" "ram" "swap" "network_tx" "network_rx" "battery" "control-center" ];
       };
       location.address = "shenzhen";
+      # Noctalia 5.4.1 has no config-only setting for the server default timeout.
+      # An unspecified timeout (-1) becomes a hardcoded 6,000 ms before filtering,
+      # so this catch-all filter also overrides sender-requested timeouts.
+      "notification.filter.persistent" = {
+        match_content = ".*";
+        override_duration = 0;
+      };
       "widget.media" = {
         hide_when_no_media = true;
         show_progress = true;
