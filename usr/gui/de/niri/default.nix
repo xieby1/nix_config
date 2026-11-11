@@ -1,6 +1,7 @@
+{ depkgs }: # local args
 { pkgs, lib, ... }: let
   local = lib.modules.evalModules {
-    modules = [(lib.modules.importApply ./local {inherit pkgs; depkgs=pkgs;})];
+    modules = [(lib.modules.importApply ./local {inherit pkgs depkgs;})];
   };
 in {
   cachix_packages = [ local.config.finalPackage ];
