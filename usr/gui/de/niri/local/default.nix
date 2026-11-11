@@ -31,7 +31,24 @@
     };
 
     configKdl = lib.mkOption {
-      type = lib.types.attrs;
+      # Copy from unstable home-manager's niri settings. Why type is necessary? Because, it define how merge is conducted.
+      type =
+        with lib.types;
+        let
+          valueType =
+            nullOr (oneOf [
+              bool
+              int
+              float
+              str
+              (attrsOf valueType)
+              (listOf valueType)
+            ])
+            // {
+              description = "KDL value";
+            };
+        in
+        attrsOf valueType;
       default = {};
     };
     finalConfigKdlText = lib.mkOption {
