@@ -11,7 +11,7 @@
         margin_ends = 0;
         start = [ "notifications" "wallpaper" "media" "workspaces" "active_window" ];
         center = [ "clock" "weather" ];
-        end = [ "tray" "cpu" "ram" "swap" "network_tx" "network_rx" "battery" "control-center" ];
+        end = [ "tray" "cpu" "ram" "ram_pct" "swap_pct" "network_tx" "network_rx" "battery" "control-center" ];
       };
       location.address = "shenzhen";
       # Noctalia 5.4.1 has no config-only setting for the server default timeout.
@@ -33,7 +33,13 @@
         visualization = "none";
         show_glyph = false;
       };
-      "widget.swap" = {
+      "widget.ram_pct" = {
+        type = "sysmon";
+        stat = "ram_pct";
+        visualization = "none";
+        show_glyph = false;
+      };
+      "widget.swap_pct" = {
         type = "sysmon";
         stat = "swap_pct";
         visualization = "none";
