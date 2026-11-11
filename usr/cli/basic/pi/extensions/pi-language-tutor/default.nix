@@ -16,6 +16,10 @@ let
       jq 'del(.peerDependencies, .devDependencies, .scripts)' package.json > package.json.tmp
       mv package.json.tmp package.json
       cp ${./package-lock.json} package-lock.json
+      substituteInPlace src/learn.ts \
+        --replace-fail "window.on('message', handleMessage)" \
+        "window.on('message', handleMessage)
+          window.on('error', (error: Error) => ctx.ui.notify(error.message, 'error'))"
     '';
   };
 in {
@@ -25,6 +29,9 @@ in {
     npmDepsHash = "sha256-B/zm5R+69hvwMYLkfUGMn0oVcXkO7lVKW/wAA+YZEdQ=";
     dontNpmBuild = true;
     npmRebuildFlags = [ "--ignore-scripts" ];
+    postInstall = ''
+      patch -p1 -d "$out/lib/node_modules/pi-language-tutor/node_modules/glimpseui" < ${./glimpse-stderr.patch}
+    '';
   } + /lib/node_modules/pi-language-tutor;
 
   # Atomic writes replace file symlinks; link the writable directory instead.
