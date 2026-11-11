@@ -122,8 +122,8 @@ in
     pkgsu.npins
   ];
 
-  # programs.eza.enable = true;
-  # home.shellAliases.ls = "eza";
+  programs.eza.enable = true;
+  home.shellAliases.ls = "eza";
 
   home.sessionVariables = {
     NIXPKGS_ALLOW_INSECURE = "1";
