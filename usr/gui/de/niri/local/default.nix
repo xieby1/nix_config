@@ -5,6 +5,7 @@
   imports = [
     ./config
     ./win_align.nix
+    ./focus-shrink
   ];
   options = {
     lib = lib.mkOption {
