@@ -4,6 +4,7 @@
 /*lua*/''
   image = {
     enabled = true,
+    cache = vim.fn.stdpath("cache") .. "/snacks/image-chromium",
     convert = {
       ---@type table<string,snacks.image.args>
       magick = (function() -- start of a local scope
