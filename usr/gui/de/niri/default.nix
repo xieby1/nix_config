@@ -1,11 +1,8 @@
 { pkgs, lib, ... }: let
   local = lib.modules.evalModules {
-    modules = [(lib.modules.importApply ./local {inherit pkgs;})];
+    modules = [(lib.modules.importApply ./local {inherit pkgs; depkgs=pkgs;})];
   };
 in {
-  imports = [
-    ./config
-  ];
   nixpkgs.overlays = [
     (pkgs-final: pkgs-prev: {
       niri = pkgs-prev.niri.overrideAttrs (niri-final: niri-prev: {
@@ -25,6 +22,11 @@ in {
     })
   ];
   cachix_packages = [ local.config.finalPackage ];
+  home.file.niri_config = {
+    text = local.config.finalConfigKdlText;
+    target = ".config/niri/config.kdl";
+  };
+
   home.packages = [
     local.config.finalPackage
     pkgs.xwayland-satellite

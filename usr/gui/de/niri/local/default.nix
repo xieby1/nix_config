@@ -1,8 +1,9 @@
 # TODO: is local/ a dummy name? What is the appropriate name?
-{ pkgs }: # local args
+{ pkgs, depkgs }: # local args
 { lib, config, ... }: # global args
 {
   imports = [
+    ./config
     ./win_align.nix
   ];
   options = {
@@ -17,7 +18,7 @@
       '';
     };
 
-    package = lib.mkPackageOption pkgs "niri" {};
+    package = lib.mkPackageOption depkgs "niri" {};
     patches = lib.mkOption {
       type = lib.types.listOf lib.types.anything;
       default = [];
@@ -29,17 +30,17 @@
       });
     };
 
-    config = lib.mkOption {
+    configKdl = lib.mkOption {
       type = lib.types.attrs;
       default = {};
     };
-    finalConfig = lib.mkOption {
+    finalConfigKdlText = lib.mkOption {
       type = lib.types.str;
       readOnly = true;
-      default = config.lib.generators.toKDL {} config.config;
+      default = config.lib.generators.toKDL {} config.configKdl;
     };
   };
   config = {
-    _module.args = { inherit pkgs; };
+    _module.args = { inherit pkgs depkgs; };
   };
 }
