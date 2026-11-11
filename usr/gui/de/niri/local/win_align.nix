@@ -12,4 +12,10 @@
       sha256 = "sha256-Fx3x2hhBxW2UmYbJVL96ZgxaPWK1oSE2Uzm6qywFFqE=";
     })
   ];
+  configKdl = {
+    binds = {
+      "Mod+Semicolon".align-column-left = {};
+      "Mod+Apostrophe".align-column-right = {};
+    };
+  };
 }
