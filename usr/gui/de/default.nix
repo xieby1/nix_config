@@ -5,7 +5,7 @@ let
 in {
   imports = [
     (lib.modules.importApply ./niri { inherit depkgs; })
-    ./dms
+    # ./dms
     (lib.modules.importApply ./noctalia { inherit depkgs; })
   ];
 }

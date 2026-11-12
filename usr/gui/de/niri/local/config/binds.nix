@@ -5,9 +5,9 @@
       "Ctrl+Alt+T".spawn = "ghostty";
       "Mod+D".spawn-sh = "noctalia msg panel-toggle launcher";
       "Mod+W".spawn-sh = "noctalia msg panel-open launcher '/win '";
-      "Mod+Alt+L".spawn-sh = "dms ipc lock lock";
-      "Mod+N".spawn-sh = "dms ipc notifications toggle";
-      "Mod+X".spawn-sh = "dms ipc powermenu toggle";
+      "Mod+Alt+L".spawn-sh = "noctalia msg session lock";
+      "Mod+N".spawn-sh = "noctalia msg panel-toggle control-center notifications";
+      "Mod+X".spawn-sh = "noctalia msg panel-toggle session";
       "Mod+V".spawn-sh = "noctalia msg panel-toggle clipboard";
       # Until Noctalia can toggle Smart/Off and reserve space conditionally:
       # https://github.com/noctalia-dev/noctalia/issues/3761
