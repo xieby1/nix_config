@@ -1,6 +1,6 @@
 diff -ruN a/src/shell/control_center/tabs/calendar_tab.cpp b/src/shell/control_center/tabs/calendar_tab.cpp
 --- a/src/shell/control_center/tabs/calendar_tab.cpp	2026-11-12 14:35:05.304272270 +0800
-+++ b/src/shell/control_center/tabs/calendar_tab.cpp	2026-11-12 15:30:58.744049875 +0800
++++ b/src/shell/control_center/tabs/calendar_tab.cpp	2026-11-12 16:09:14.302715385 +0800
 @@ -167,11 +167,20 @@
  
    calendarCard->addChild(std::move(header));
@@ -99,7 +99,15 @@ diff -ruN a/src/shell/control_center/tabs/calendar_tab.cpp b/src/shell/control_c
                .gap = kCalendarGridGap * scale,
                .dotDiameter = dotDiameter,
                .dotGap = dotGap,
-@@ -592,7 +608,7 @@
+@@ -571,6 +587,7 @@
+               .weekDividerWidth = weekDividerWidth,
+               .weekDaysGap = m_showWeekNumbers ? kCalendarGridGap * scale : 0.0F,
+           },
++      .timeFormat = m_config != nullptr ? std::string_view{m_config->config().calendar.eventTimeFormat} : "%H:%M",
+       .onDateSelected =
+           [this](calendar_view::Date date, int monthShift) {
+             m_selectedYear = date.year;
+@@ -592,7 +609,7 @@
    });
  
    if (m_gridViewport != nullptr) {
@@ -130,7 +138,7 @@ diff -ruN a/src/shell/control_center/tabs/calendar_tab.h b/src/shell/control_cen
    Flex* m_eventsCard = nullptr;
 diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cpp
 --- a/src/ui/controls/calendar_view.cpp	2026-11-12 14:35:05.295910915 +0800
-+++ b/src/ui/controls/calendar_view.cpp	2026-11-12 15:30:51.652093333 +0800
++++ b/src/ui/controls/calendar_view.cpp	2026-11-12 16:09:24.910777189 +0800
 @@ -6,6 +6,7 @@
  #include "i18n/i18n.h"
  #include "net/url_open.h"
@@ -237,7 +245,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
  
        auto button = ui::button({
            .text = std::to_string(date.day),
-@@ -335,35 +375,76 @@
+@@ -335,35 +375,84 @@
        if (options.onDateRightClicked) {
          button->setOnRightClick([callback = options.onDateRightClicked, date] { callback(date); });
        }
@@ -270,6 +278,13 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +          for (std::size_t i = 0; i < events.size(); ++i) {
 +            const CalendarEvent* event = events[i];
 +            const std::string title = event->title.empty() ? i18n::tr("control-center.calendar.events") : event->title;
++            const std::string time = event->allDay
++                ? i18n::tr("control-center.calendar.all-day")
++                : formatLocalUnixTime(
++                      static_cast<std::int64_t>(std::chrono::system_clock::to_time_t(event->start)),
++                      options.timeFormat
++                  );
++            const std::string tooltip = time + "\n" + title;
 +            const float alpha = eventPassed(*event, now) ? kPassedEventAlpha : 1.0F;
 +            auto eventRow = ui::row(
 +                {.align = FlexAlign::Center, .gap = markerGap},
@@ -287,8 +302,9 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +                    .maxWidth = titleWidth,
 +                    .maxLines = 0,
 +                    .baselineMode = LabelBaselineMode::TextFixedHeight,
-+                    .configure = [title, selectDate](Label& label) {
-+                      label.setTooltip(title);
++                    .configure = [tooltip, selectDate](Label& label) {
++                      // TODO: Show the event description here once CalendarEvent stores it.
++                      label.setTooltip(tooltip);
 +                      label.setOnClick([selectDate](const InputArea::PointerData&) { selectDate(); });
 +                    },
 +                })
@@ -338,7 +354,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
      auto days = ui::column({.gap = layout.gap});
      days->setSize(dayGridWidth, gridHeight);
      days->addChild(std::move(weekdayRow));
-@@ -392,12 +473,14 @@
+@@ -392,12 +481,14 @@
          );
          auto weekCell = ui::column({
              .align = FlexAlign::Center,
@@ -358,7 +374,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
        weekColumn->setSize(layout.weekColumnWidth, gridHeight);
 diff -ruN a/src/ui/controls/calendar_view.h b/src/ui/controls/calendar_view.h
 --- a/src/ui/controls/calendar_view.h	2026-11-12 14:35:05.291560047 +0800
-+++ b/src/ui/controls/calendar_view.h	2026-11-12 15:30:34.684195459 +0800
++++ b/src/ui/controls/calendar_view.h	2026-11-12 16:08:55.698606158 +0800
 @@ -9,6 +9,7 @@
  class Flex;
  class InputArea;
@@ -375,7 +391,7 @@ diff -ruN a/src/ui/controls/calendar_view.h b/src/ui/controls/calendar_view.h
      float gap = 0.0F;
      float dotDiameter = 0.0F;
      float dotGap = 0.0F;
-@@ -53,6 +55,8 @@
+@@ -53,9 +55,12 @@
      Date selected;
      int monthOffset = 0;
      bool showWeekNumbers = false;
@@ -384,11 +400,16 @@ diff -ruN a/src/ui/controls/calendar_view.h b/src/ui/controls/calendar_view.h
      float scale = 1.0F;
      MonthLayout layout;
      std::string fontFamily;
++    std::string_view timeFormat = "%H:%M";
+     std::function<void(Date date, int monthShift)> onDateSelected;
+     std::function<void(Date date)> onDateRightClicked;
+   };
 diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_passed_event_test.cpp
 --- a/tests/calendar_view_passed_event_test.cpp	2026-11-12 14:49:21.578451979 +0800
-+++ b/tests/calendar_view_passed_event_test.cpp	2026-11-12 15:31:13.963955109 +0800
-@@ -1,9 +1,21 @@
++++ b/tests/calendar_view_passed_event_test.cpp	2026-11-12 16:09:49.666920119 +0800
+@@ -1,9 +1,23 @@
  #include "calendar/calendar_types.h"
++#include "i18n/i18n.h"
 +#include "render/core/renderer.h"
 +#include "render/core/texture_manager.h"
 +#include "time/time_format.h"
@@ -405,11 +426,12 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
  #include <ctime>
  #include <print>
 +#include <string_view>
++#include <variant>
 +#include <vector>
  
  namespace {
  
-@@ -40,6 +52,28 @@
+@@ -40,6 +54,28 @@
      return CalendarEvent{.start = start, .end = end, .allDay = true};
    }
  
@@ -438,7 +460,7 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
  } // namespace
  
  int main() {
-@@ -130,5 +164,85 @@
+@@ -130,5 +166,106 @@
      ok = expect(countHiddenPastEvents(snapshot, other, now, true, 0) == 0, "hidden count on another day") && ok;
    }
  
@@ -454,8 +476,11 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
 +          .start = start, .end = start + minutes{5}
 +      });
 +    }
-+    const auto nextWeek = localMidnight(year, month + 1, 9) + hours{9};
-+    snapshot.events.push_back(CalendarEvent{.title = "next week", .start = nextWeek, .end = nextWeek + hours{1}});
++    snapshot.events[4].location = "Do not include location";
++    const auto nextWeek = localMidnight(year, month + 1, 9);
++    snapshot.events.push_back(CalendarEvent{
++        .title = "next week", .start = nextWeek, .end = localMidnight(year, month + 1, 10), .allDay = true
++    });
 +
 +    StubRenderer renderer;
 +    ScrollView scroll;
@@ -480,6 +505,7 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
 +            .dotDiameter = 5.0F, .dotGap = 2.0F, .weekColumnWidth = 26.0F,
 +            .weekLaneInset = 8.0F, .weekDividerWidth = 1.0F, .weekDaysGap = 8.0F,
 +        },
++        .timeFormat = "%H:%M",
 +    });
 +    grid->layout(renderer);
 +    auto viewport = std::make_unique<Flex>();
@@ -508,6 +534,23 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
 +    const auto* lastTitle = dynamic_cast<const Label*>(lastEventRow->children().back().get());
 +    ok = expect(lastTitle != nullptr && lastTitle->text() == "A rather long meeting title", "title lost text") && ok;
 +    ok = expect(lastTitle != nullptr && lastTitle->height() > 2.0F * Style::fontSizeCaption, "title did not wrap") && ok;
++    const TooltipContent timedTooltip = lastTitle->tooltipContent();
++    const auto* timedText = std::get_if<std::string>(&timedTooltip);
++    const std::string expectedTime = formatLocalUnixTime(
++        static_cast<std::int64_t>(system_clock::to_time_t(snapshot.events[4].start)), "%H:%M"
++    );
++    ok = expect(
++             timedText != nullptr && *timedText == expectedTime + "\nA rather long meeting title",
++             "timed tooltip must show only time and title"
++         ) && ok;
++    const auto* allDayEventRow = dynamic_cast<const Flex*>(dayGrid->children()[first + 7]->children().back().get());
++    const auto* allDayTitle = dynamic_cast<const Label*>(allDayEventRow->children().back().get());
++    const TooltipContent allDayTooltip = allDayTitle->tooltipContent();
++    const auto* allDayText = std::get_if<std::string>(&allDayTooltip);
++    ok = expect(
++             allDayText != nullptr && *allDayText == i18n::tr("control-center.calendar.all-day") + "\nnext week",
++             "all-day tooltip must show only all-day and title"
++         ) && ok;
 +    ok = expect(lastEventRow->y() + lastEventRow->height() <= busyHeight + 0.01F, "wrapped title is clipped") && ok;
 +    for (int i = 0; i < 7; ++i) {
 +      ok = expect(
