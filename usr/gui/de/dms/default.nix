@@ -23,7 +23,5 @@ in
 
     # App icons for many apps not showing in App Launcher.
     # https://github.com/AvengeMedia/DankMaterialShell/issues/1132
-    pkgs.papirus-icon-theme
-    pkgs.adwaita-icon-theme
   ];
 }
