@@ -41,20 +41,17 @@
       bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
     '';
     initContent = ''
-      # https://unix.stackexchange.com/questions/58870/ctrl-left-right-arrow-keys-issue
-      bindkey -M viins  "^[[1;5C" forward-word
-      bindkey -M viins  "^[[1;5D" backward-word
-      bindkey -M visual "^[[1;5C" forward-word
-      bindkey -M visual "^[[1;5D" backward-word
-      bindkey -M vicmd  "^[[1;5C" forward-word
-      bindkey -M vicmd  "^[[1;5D" backward-word
-      bindkey -M viopp  "^[[1;5C" forward-word
-      bindkey -M viopp  "^[[1;5D" backward-word
+      # Ctrl+arrows use vi small-word motions, stopping at punctuation.
+      bindkey -M viins  "^[[1;5C" vi-forward-word
+      bindkey -M viins  "^[[1;5D" vi-backward-word
+      bindkey -M visual "^[[1;5C" vi-forward-word
+      bindkey -M visual "^[[1;5D" vi-backward-word
+      bindkey -M vicmd  "^[[1;5C" vi-forward-word
+      bindkey -M vicmd  "^[[1;5D" vi-backward-word
+      bindkey -M viopp  "^[[1;5C" vi-forward-word
+      bindkey -M viopp  "^[[1;5D" vi-backward-word
 
-      # Match Neovim's default 'iskeyword' word model for ctrl+left/right:
-      # letters, digits, and `_` are words; punctuation such as `/`, `.`, and
-      # `-` are boundaries. This makes URL/path movement in zsh line up with
-      # Neovim's small-word motions (`w`/`b`/`e`).
+      # Other ZLE word widgets still use WORDCHARS; vi motions do not.
       WORDCHARS=_
 
       # source my zshrc
