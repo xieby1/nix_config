@@ -20,6 +20,7 @@
   # services.displayManager.cosmic-greeter.enable = true;
   # services.desktopManager.gnome.enable = true;
   # services.displayManager.gdm.enable = true;
+  security.pam.services.greetd.enableGnomeKeyring = true;
   services.greetd = {
     enable = true;
     settings = {

@@ -13,6 +13,7 @@ in {
   home.packages = [
     local.config.finalPackage
     pkgs.xwayland-satellite
+    pkgs.gcr # Provides org.gnome.keyring.SystemPrompter for unlocking the keyring.
   ];
   services.gnome-keyring.enable = true;
   xdg.portal = {
