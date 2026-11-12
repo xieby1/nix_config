@@ -53,12 +53,12 @@
       };
       empty-workspace-above-first = {};
     };
-    # window-rule = {
-    #   match._props.is-focused = false;
-    #   clip-to-geometry = true ;
-    #   # geometry-corner-radius._args= [12 36 36 12];
-    #   geometry-corner-radius = 64;
-    # };
+    window-rule = {
+      match._props.is-focused = false;
+      clip-to-geometry = true ;
+      # geometry-corner-radius._args= [12 36 36 12];
+      geometry-corner-radius = 64;
+    };
     spawn-at-startup = ["noctalia"];
     screenshot-path = "~/Pictures/Screenshots/niri.%Y%m%d.%H%M%S.png";
     gestures.hot-corners.off = {};
