@@ -1,6 +1,6 @@
 diff -ruN a/src/shell/control_center/tabs/calendar_tab.cpp b/src/shell/control_center/tabs/calendar_tab.cpp
 --- a/src/shell/control_center/tabs/calendar_tab.cpp	2026-11-12 14:35:05.304272270 +0800
-+++ b/src/shell/control_center/tabs/calendar_tab.cpp	2026-11-12 16:09:14.302715385 +0800
++++ b/src/shell/control_center/tabs/calendar_tab.cpp	2026-11-12 16:34:58.150621684 +0800
 @@ -167,11 +167,20 @@
  
    calendarCard->addChild(std::move(header));
@@ -81,12 +81,11 @@ diff -ruN a/src/shell/control_center/tabs/calendar_tab.cpp b/src/shell/control_c
  
    if (m_header != nullptr) {
      m_header->setSize(innerWidth, kCalendarHeaderHeight * scale);
-@@ -556,13 +569,16 @@
+@@ -556,13 +569,15 @@
        .selected = {.year = m_selectedYear, .month = m_selectedMonth, .day = m_selectedDay},
        .monthOffset = m_monthOffset,
        .showWeekNumbers = m_showWeekNumbers,
 +      .showEventTitles = true,
-+      .renderer = &renderer,
        .scale = scale,
        .layout =
            {
@@ -99,7 +98,7 @@ diff -ruN a/src/shell/control_center/tabs/calendar_tab.cpp b/src/shell/control_c
                .gap = kCalendarGridGap * scale,
                .dotDiameter = dotDiameter,
                .dotGap = dotGap,
-@@ -571,6 +587,7 @@
+@@ -571,6 +586,7 @@
                .weekDividerWidth = weekDividerWidth,
                .weekDaysGap = m_showWeekNumbers ? kCalendarGridGap * scale : 0.0F,
            },
@@ -107,7 +106,7 @@ diff -ruN a/src/shell/control_center/tabs/calendar_tab.cpp b/src/shell/control_c
        .onDateSelected =
            [this](calendar_view::Date date, int monthShift) {
              m_selectedYear = date.year;
-@@ -592,7 +609,7 @@
+@@ -592,7 +608,7 @@
    });
  
    if (m_gridViewport != nullptr) {
@@ -138,16 +137,8 @@ diff -ruN a/src/shell/control_center/tabs/calendar_tab.h b/src/shell/control_cen
    Flex* m_eventsCard = nullptr;
 diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cpp
 --- a/src/ui/controls/calendar_view.cpp	2026-11-12 14:35:05.295910915 +0800
-+++ b/src/ui/controls/calendar_view.cpp	2026-11-12 16:09:24.910777189 +0800
-@@ -6,6 +6,7 @@
- #include "i18n/i18n.h"
- #include "net/url_open.h"
- #include "render/core/color.h"
-+#include "render/core/renderer.h"
- #include "render/scene/input_area.h"
- #include "render/scene/node.h"
- #include "time/time_format.h"
-@@ -24,6 +25,7 @@
++++ b/src/ui/controls/calendar_view.cpp	2026-11-12 16:35:09.934555148 +0800
+@@ -24,6 +24,7 @@
  #include <algorithm>
  #include <array>
  #include <chrono>
@@ -155,7 +146,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
  #include <cstddef>
  #include <ctime>
  #include <format>
-@@ -237,33 +239,68 @@
+@@ -237,33 +238,52 @@
      const int nextMonth = month == 11 ? 0 : month + 1;
      const int nextYear = month == 11 ? year + 1 : year;
  
@@ -188,32 +179,16 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +    const float markerWidth = std::round(3.0F * options.scale);
 +    const float markerGap = std::round(2.0F * options.scale);
 +    const float titleWidth = std::max(1.0F, dayColumnWidth - markerWidth - markerGap);
-+    std::array<std::vector<float>, 32> eventHeights;
 +    std::array<float, 6> weekHeights;
 +    weekHeights.fill(layout.dayCellHeight);
 +    if (options.showEventTitles) {
 +      for (int day = 1; day <= monthDays; ++day) {
-+        const auto& events = eventsByDay[static_cast<std::size_t>(day)];
-+        auto& heights = eventHeights[static_cast<std::size_t>(day)];
-+        float dayHeight = layout.dayButtonSize;
-+        for (const CalendarEvent* event : events) {
-+          float height = layout.eventLineHeight;
-+          if (options.renderer != nullptr) {
-+            const std::string title = event->title.empty() ? i18n::tr("control-center.calendar.events") : event->title;
-+            const TextMetrics metrics = options.renderer->measureText(
-+                title, Style::fontSizeCaption * options.scale, TextFont{.family = options.fontFamily}, titleWidth, 0
-+            );
-+            height = std::max(
-+                height, std::ceil(std::max(metrics.bottom - metrics.top, metrics.inkBottom - metrics.inkTop))
-+                    + Style::spaceXs * options.scale
-+            );
-+          }
-+          heights.push_back(height);
-+          dayHeight += height + layout.dotGap;
-+        }
 +        const int week = (firstWeekdayOffset + day - 1) / 7;
-+        weekHeights[static_cast<std::size_t>(week)] =
-+            std::max(weekHeights[static_cast<std::size_t>(week)], dayHeight);
++        const auto count = eventsByDay[static_cast<std::size_t>(day)].size();
++        weekHeights[static_cast<std::size_t>(week)] = std::max(
++            weekHeights[static_cast<std::size_t>(week)],
++            layout.dayButtonSize + static_cast<float>(count) * (layout.eventLineHeight + layout.dotGap)
++        );
 +      }
 +    }
 +    float dayRowsHeight = 5.0F * layout.gap;
@@ -232,7 +207,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
      dayGrid->setMinCellHeight(layout.dayCellHeight);
  
      int inMonthDay = 1;
-@@ -290,8 +327,11 @@
+@@ -290,8 +310,11 @@
        auto tile = std::make_unique<GridTile>();
        tile->setDirection(FlexDirection::Vertical);
        tile->setAlign(FlexAlign::Center);
@@ -245,7 +220,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
  
        auto button = ui::button({
            .text = std::to_string(date.day),
-@@ -335,35 +375,84 @@
+@@ -335,35 +358,83 @@
        if (options.onDateRightClicked) {
          button->setOnRightClick([callback = options.onDateRightClicked, date] { callback(date); });
        }
@@ -275,8 +250,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +
 +        if (inMonth) {
 +          const auto& events = eventsByDay[static_cast<std::size_t>(date.day)];
-+          for (std::size_t i = 0; i < events.size(); ++i) {
-+            const CalendarEvent* event = events[i];
++          for (const CalendarEvent* event : events) {
 +            const std::string title = event->title.empty() ? i18n::tr("control-center.calendar.events") : event->title;
 +            const std::string time = event->allDay
 +                ? i18n::tr("control-center.calendar.all-day")
@@ -300,7 +274,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +                    .fontFamily = options.fontFamily,
 +                    .color = colorSpecFromRole(ColorRole::OnSurfaceVariant, alpha),
 +                    .maxWidth = titleWidth,
-+                    .maxLines = 0,
++                    .maxLines = 1,
 +                    .baselineMode = LabelBaselineMode::TextFixedHeight,
 +                    .configure = [tooltip, selectDate](Label& label) {
 +                      // TODO: Show the event description here once CalendarEvent stores it.
@@ -309,10 +283,10 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +                    },
 +                })
 +            );
-+            eventRow->setSize(dayColumnWidth, eventHeights[static_cast<std::size_t>(date.day)][i]);
++            eventRow->setSize(dayColumnWidth, layout.eventLineHeight);
 +            tile->addChild(std::move(eventRow));
 +          }
-+        }
+         }
 +      } else {
 +        tile->addChild(std::move(button));
 +        auto dots = ui::row({
@@ -334,7 +308,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
 +                })
 +            );
 +          }
-         }
++        }
 +        auto dotArea = ui::inputArea({});
 +        dotArea->setSize(layout.dayButtonSize, layout.dotDiameter);
 +        dotArea->setOnClick([selectDate](const InputArea::PointerData&) { selectDate(); });
@@ -354,7 +328,7 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
      auto days = ui::column({.gap = layout.gap});
      days->setSize(dayGridWidth, gridHeight);
      days->addChild(std::move(weekdayRow));
-@@ -392,12 +481,14 @@
+@@ -392,12 +463,14 @@
          );
          auto weekCell = ui::column({
              .align = FlexAlign::Center,
@@ -374,16 +348,8 @@ diff -ruN a/src/ui/controls/calendar_view.cpp b/src/ui/controls/calendar_view.cp
        weekColumn->setSize(layout.weekColumnWidth, gridHeight);
 diff -ruN a/src/ui/controls/calendar_view.h b/src/ui/controls/calendar_view.h
 --- a/src/ui/controls/calendar_view.h	2026-11-12 14:35:05.291560047 +0800
-+++ b/src/ui/controls/calendar_view.h	2026-11-12 16:08:55.698606158 +0800
-@@ -9,6 +9,7 @@
- class Flex;
- class InputArea;
- class Label;
-+class Renderer;
- class ScrollView;
- struct CalendarEvent;
- struct CalendarSnapshot;
-@@ -37,6 +38,7 @@
++++ b/src/ui/controls/calendar_view.h	2026-11-12 16:34:46.854686062 +0800
+@@ -37,6 +37,7 @@
      float weekdayHeight = 0.0F;
      float dayCellHeight = 0.0F;
      float dayButtonSize = 0.0F;
@@ -391,12 +357,11 @@ diff -ruN a/src/ui/controls/calendar_view.h b/src/ui/controls/calendar_view.h
      float gap = 0.0F;
      float dotDiameter = 0.0F;
      float dotGap = 0.0F;
-@@ -53,9 +55,12 @@
+@@ -53,9 +54,11 @@
      Date selected;
      int monthOffset = 0;
      bool showWeekNumbers = false;
 +    bool showEventTitles = false;
-+    Renderer* renderer = nullptr;
      float scale = 1.0F;
      MonthLayout layout;
      std::string fontFamily;
@@ -406,7 +371,7 @@ diff -ruN a/src/ui/controls/calendar_view.h b/src/ui/controls/calendar_view.h
    };
 diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_passed_event_test.cpp
 --- a/tests/calendar_view_passed_event_test.cpp	2026-11-12 14:49:21.578451979 +0800
-+++ b/tests/calendar_view_passed_event_test.cpp	2026-11-12 16:09:49.666920119 +0800
++++ b/tests/calendar_view_passed_event_test.cpp	2026-11-12 16:35:29.778444505 +0800
 @@ -1,9 +1,23 @@
  #include "calendar/calendar_types.h"
 +#include "i18n/i18n.h"
@@ -460,7 +425,7 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
  } // namespace
  
  int main() {
-@@ -130,5 +166,106 @@
+@@ -130,5 +166,110 @@
      ok = expect(countHiddenPastEvents(snapshot, other, now, true, 0) == 0, "hidden count on another day") && ok;
    }
  
@@ -498,7 +463,6 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
 +        .snapshot = &snapshot,
 +        .showWeekNumbers = true,
 +        .showEventTitles = true,
-+        .renderer = &renderer,
 +        .layout = {
 +            .width = calendarWidth, .weekdayHeight = 20.0F, .dayCellHeight = 48.0F,
 +            .dayButtonSize = 32.0F, .eventLineHeight = 20.0F, .gap = 8.0F,
@@ -533,7 +497,12 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
 +    const auto* lastEventRow = dynamic_cast<const Flex*>(dayGrid->children()[first]->children().back().get());
 +    const auto* lastTitle = dynamic_cast<const Label*>(lastEventRow->children().back().get());
 +    ok = expect(lastTitle != nullptr && lastTitle->text() == "A rather long meeting title", "title lost text") && ok;
-+    ok = expect(lastTitle != nullptr && lastTitle->height() > 2.0F * Style::fontSizeCaption, "title did not wrap") && ok;
++    ok = expect(
++             lastTitle != nullptr && lastTitle->height() <= 20.0F
++                 && lastTitle->ellipsize() == TextEllipsize::End,
++             "grid title must stay on one ellipsized line"
++         ) && ok;
++    ok = expect(std::abs(lastEventRow->height() - 20.0F) < 0.01F, "event must occupy one row") && ok;
 +    const TooltipContent timedTooltip = lastTitle->tooltipContent();
 +    const auto* timedText = std::get_if<std::string>(&timedTooltip);
 +    const std::string expectedTime = formatLocalUnixTime(
@@ -551,7 +520,7 @@ diff -ruN a/tests/calendar_view_passed_event_test.cpp b/tests/calendar_view_pass
 +             allDayText != nullptr && *allDayText == i18n::tr("control-center.calendar.all-day") + "\nnext week",
 +             "all-day tooltip must show only all-day and title"
 +         ) && ok;
-+    ok = expect(lastEventRow->y() + lastEventRow->height() <= busyHeight + 0.01F, "wrapped title is clipped") && ok;
++    ok = expect(lastEventRow->y() + lastEventRow->height() <= busyHeight + 0.01F, "event row is clipped") && ok;
 +    for (int i = 0; i < 7; ++i) {
 +      ok = expect(
 +               std::abs(dayGrid->children()[week * 7 + i]->height() - busyHeight) < 0.01F,
