@@ -9,8 +9,22 @@
       "Mod+N".spawn-sh = "dms ipc notifications toggle";
       "Mod+X".spawn-sh = "dms ipc powermenu toggle";
       "Mod+V".spawn-sh = "noctalia msg panel-toggle clipboard";
-      # TODO: noctalia master support auto_hide_reserve_space
-      "Mod+H".spawn-sh = "noctalia msg bar-toggle; noctalia msg bar-reserve-toggle";
+      # Until Noctalia can toggle Smart/Off and reserve space conditionally:
+      # https://github.com/noctalia-dev/noctalia/issues/3761
+      # https://github.com/noctalia-dev/noctalia/issues/3780
+      "Mod+H".spawn-sh = ''
+        case "$(noctalia msg config-get bar.default.smart_auto_hide)" in
+          true)
+            noctalia msg config-set bar.default.smart_auto_hide false
+            noctalia msg config-set bar.default.reserve_space true
+          ;;
+          false)
+            noctalia msg config-set bar.default.reserve_space false
+            noctalia msg config-set bar.default.smart_auto_hide true
+          ;;
+          *) echo "Could not read Noctalia smart auto-hide setting" >&2; exit 1 ;;
+        esac
+      '';
       "Mod+Shift+H".spawn-sh = "noctalia msg bar-toggle";
       "Mod+F".spawn-sh = "ghostty -e bash -i fzf-doc";
       "Mod+S".spawn-sh = "${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click -o mode_floating.source=detect";
