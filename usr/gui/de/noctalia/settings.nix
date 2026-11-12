@@ -1,7 +1,7 @@
 { lib, ... }: {
   # Noctalia loads every TOML file here alphabetically, so yq-merge's
   # staging file would override the intended settings.toml.
-  home.file.".config/noctalia/settings.toml".text =
+  home.file.".config/noctalia/settings.toml".text = (
     lib.generators.toINI {
       mkKeyValue = key: value: "${key} = ${builtins.toJSON value}";
     } {
@@ -79,9 +79,9 @@
       "widget.media" = {
         hide_when_no_media = true;
         show_progress = true;
-        # max_length = 160;
+        max_length = 160;
         # min_length = 160;
-        # title_scroll = "on_hover";
+        title_scroll = "on_hover";
       };
       "widget.cpu" = {
         show_glyph = false;
@@ -116,22 +116,27 @@
         show_glyph = false;
       };
       "widget.network_tx" = {
-        label_min_width = 40;
+        label_min_width = 32;
         network_speed_compact = true;
         network_speed_unit = "mb";
         visualization = "none";
+        show_glyph = false;
       };
       "widget.network_rx" = {
-        label_min_width = 40;
+        label_min_width = 32;
         network_speed_compact = true;
         network_speed_unit = "mb";
         visualization = "none";
+        show_glyph = false;
       };
       "widget.network" = {
         show_label = false;
       };
       "widget.output_volume" = {
         show_label = false;
+      };
+      "widget.battery" = {
+        display_mode = "graphic";
       };
 
       shell = {
@@ -198,5 +203,18 @@
       control_center = {
         width = 1200;
       };
-    };
+    }
+  ) + /*ini*/ ''
+    [[control_center.shortcuts]]
+    type = "wifi"
+
+    [[control_center.shortcuts]]
+    type = "bluetooth"
+
+    [[control_center.shortcuts]]
+    type = "dark_mode"
+
+    [[control_center.shortcuts]]
+    type = "session"
+  '';
 }
