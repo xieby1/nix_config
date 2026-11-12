@@ -5,7 +5,8 @@
   ];
   configKdl = {
     animations.window-focus = {
-      on-focus = {};
+      on-keyboard = {};
+      on-mouse = false;
       window-switch-only = {};
       scale = 0.9;
       duration-ms = 300;

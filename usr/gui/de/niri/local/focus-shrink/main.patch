@@ -1,5 +1,5 @@
 diff --git a/docs/wiki/Configuration:-Animations.md b/docs/wiki/Configuration:-Animations.md
-index 6441d33..0834e3d 100644
+index 6441d33..dc70014 100644
 --- a/docs/wiki/Configuration:-Animations.md
 +++ b/docs/wiki/Configuration:-Animations.md
 @@ -25,6 +25,14 @@ animations {
@@ -17,14 +17,16 @@ index 6441d33..0834e3d 100644
      window-close {
          duration-ms 150
          curve "ease-out-quad"
-@@ -222,6 +230,43 @@ animations {
+@@ -222,6 +230,50 @@ animations {
  }
  ```
  
 +#### `window-focus`
 +
 +A centered shrink animation on the focused window.
-+Automatic animation is disabled by default; enable it with `on-focus`.
++Automatic animation is disabled by default.
++Enable `on-focus` for all focus causes, or select `on-keyboard` and/or `on-mouse` independently.
++`on-focus` also enables IPC and application activation, regardless of the two input flags.
 +It works with the focus ring disabled, and with floating and fullscreen windows.
 +
 +The rendered tile starts smaller around its center and returns to normal size.
@@ -36,7 +38,8 @@ index 6441d33..0834e3d 100644
 +```kdl
 +animations {
 +    window-focus {
-+        on-focus
++        on-keyboard
++        // on-mouse
 +        window-switch-only
 +        scale 0.98
 +        duration-ms 180
@@ -48,21 +51,25 @@ index 6441d33..0834e3d 100644
 +}
 +```
 +
-+The `animate-window` action (also `niri msg action animate-window`) works independently of `on-focus`.
-+Repeating it restarts the effect; losing keyboard focus cancels it.
++The `animate-window` action (also `niri msg action animate-window`) works independently of the automatic trigger flags.
++Keyboard triggers include compositor key bindings and key repeat.
++Mouse triggers include clicking a window, focus-follows-mouse, mouse/trackpad scroll bindings, and trackpad gestures.
++Touchscreen, tablet, IPC, and application activation require `on-focus`; a keyboard shortcut that spawns an IPC command still counts as IPC.
++Input causes are scoped to the current input event, so unrelated later activation does not inherit the last input device.
++Repeating `animate-window` restarts the effect; losing keyboard focus cancels it.
 +With `window-switch-only`, automatic shrink happens only when keyboard focus switches directly between two existing windows.
 +Returning from a launcher or overview, or focusing the first window, does not animate.
 +Without this flag, returning from a launcher or overview counts as gaining focus.
 +The flag does not affect the manual `animate-window` action.
 +Both `animations { off; }` and `window-focus { off; }` disable manual and automatic effects.
-+Use `on-focus false` to disable only automatic effects.
++Use `on-focus false`, `on-keyboard false`, and `on-mouse false` to disable all automatic effects.
 +Changing this animation's settings cancels any in-progress effect.
 +
  #### `window-close`
  
  <sup>Since: 0.1.5</sup>
 diff --git a/niri-config/src/animations.rs b/niri-config/src/animations.rs
-index 346b625..07c71df 100644
+index 346b625..97ebde4 100644
 --- a/niri-config/src/animations.rs
 +++ b/niri-config/src/animations.rs
 @@ -10,6 +10,7 @@ pub struct Animations {
@@ -98,7 +105,7 @@ index 346b625..07c71df 100644
              window_close,
              horizontal_view_movement,
              window_movement,
-@@ -172,6 +177,62 @@ impl Default for WindowOpenAnim {
+@@ -172,6 +177,68 @@ impl Default for WindowOpenAnim {
      }
  }
  
@@ -107,6 +114,8 @@ index 346b625..07c71df 100644
 +pub struct WindowFocusAnim {
 +    pub anim: Animation,
 +    pub on_focus: bool,
++    pub on_keyboard: bool,
++    pub on_mouse: bool,
 +    pub window_switch_only: bool,
 +    pub scale: f64,
 +}
@@ -122,6 +131,8 @@ index 346b625..07c71df 100644
 +                }),
 +            },
 +            on_focus: false,
++            on_keyboard: false,
++            on_mouse: false,
 +            window_switch_only: false,
 +            scale: 0.98,
 +        }
@@ -137,6 +148,8 @@ index 346b625..07c71df 100644
 +        rv.anim = Animation::decode_node(node, ctx, rv.anim, |child, ctx| {
 +            match &**child.node_name {
 +                "on-focus" => rv.on_focus = crate::utils::Flag::decode_node(child, ctx)?.0,
++                "on-keyboard" => rv.on_keyboard = crate::utils::Flag::decode_node(child, ctx)?.0,
++                "on-mouse" => rv.on_mouse = crate::utils::Flag::decode_node(child, ctx)?.0,
 +                "window-switch-only" => {
 +                    rv.window_switch_only = crate::utils::Flag::decode_node(child, ctx)?.0
 +                }
@@ -182,10 +195,10 @@ index 3b5430a..917dfad 100644
              niri_ipc::Action::FocusColumnRight {} => Self::FocusColumnRight,
              niri_ipc::Action::FocusColumnFirst {} => Self::FocusColumnFirst,
 diff --git a/niri-config/src/lib.rs b/niri-config/src/lib.rs
-index 329b766..d0c7ca3 100644
+index 329b766..8dc5940 100644
 --- a/niri-config/src/lib.rs
 +++ b/niri-config/src/lib.rs
-@@ -641,6 +641,87 @@ mod tests {
+@@ -641,6 +641,99 @@ mod tests {
          let _ = Config::load_default();
      }
  
@@ -208,6 +221,8 @@ index 329b766..d0c7ca3 100644
 +            r#"
 +            animations { window-focus {
 +                on-focus
++                on-keyboard
++                on-mouse
 +                window-switch-only
 +                scale 0.98
 +                duration-ms 180
@@ -218,6 +233,8 @@ index 329b766..d0c7ca3 100644
 +        );
 +        let focus = config.animations.window_focus;
 +        assert!(focus.on_focus);
++        assert!(focus.on_keyboard);
++        assert!(focus.on_mouse);
 +        assert!(focus.window_switch_only);
 +        assert_eq!(focus.scale, 0.98);
 +        assert_eq!(
@@ -229,6 +246,12 @@ index 329b766..d0c7ca3 100644
 +        );
 +        assert_eq!(config.binds.0[0].action, Action::AnimateWindow);
 +        assert!(!Config::default().animations.window_focus.on_focus);
++        assert!(!Config::default().animations.window_focus.on_keyboard);
++        assert!(!Config::default().animations.window_focus.on_mouse);
++        let disabled =
++            do_parse("animations { window-focus { on-keyboard false; on-mouse false; }; }");
++        assert!(!disabled.animations.window_focus.on_keyboard);
++        assert!(!disabled.animations.window_focus.on_mouse);
 +        assert!(!Config::default().animations.window_focus.window_switch_only);
 +        assert!(
 +            !do_parse("animations { window-focus { window-switch-only false; }; }")
@@ -262,6 +285,8 @@ index 329b766..d0c7ca3 100644
 +        for child in [
 +            "duration-ms -1",
 +            "on-focus 5",
++            "on-keyboard 5",
++            "on-mouse 5",
 +            "window-switch-only 5",
 +            "unknown",
 +        ] {
@@ -273,7 +298,7 @@ index 329b766..d0c7ca3 100644
      #[test]
      fn default_repeat_params() {
          let config = Config::parse_mem("").unwrap();
-@@ -1523,6 +1604,20 @@ mod tests {
+@@ -1523,6 +1616,22 @@ mod tests {
                      },
                      custom_shader: None,
                  },
@@ -288,6 +313,8 @@ index 329b766..d0c7ca3 100644
 +                        ),
 +                    },
 +                    on_focus: false,
++                    on_keyboard: false,
++                    on_mouse: false,
 +                    window_switch_only: false,
 +                    scale: 0.98,
 +                },
@@ -308,7 +335,7 @@ index ab84660..a776fcd 100644
      FocusColumnLeft {},
      /// Focus the column to the right.
 diff --git a/src/input/mod.rs b/src/input/mod.rs
-index 8001d3f..0a90f51 100644
+index 8001d3f..e03b5cb 100644
 --- a/src/input/mod.rs
 +++ b/src/input/mod.rs
 @@ -49,7 +49,7 @@ use self::spatial_movement_grab::SpatialMovementGrab;
@@ -316,11 +343,55 @@ index 8001d3f..0a90f51 100644
  use crate::layout::scrolling::ScrollDirection;
  use crate::layout::{ActivateWindow, LayoutElement as _};
 -use crate::niri::{CastTarget, PointerVisibility, State};
-+use crate::niri::{CastTarget, KeyboardFocus, PointerVisibility, State};
++use crate::niri::{CastTarget, FocusCause, KeyboardFocus, PointerVisibility, State};
  use crate::ui::mru::{WindowMru, WindowMruUi};
  use crate::ui::screenshot_ui::ScreenshotUi;
  use crate::utils::spawning::{spawn, spawn_sh};
-@@ -843,6 +843,20 @@ impl State {
+@@ -150,6 +150,24 @@ impl State {
+ 
+         let mut consumed_by_a11y = false;
+         use InputEvent::*;
++        let focus_cause = match &event {
++            Keyboard { .. } => FocusCause::Keyboard,
++            PointerMotion { .. }
++            | PointerMotionAbsolute { .. }
++            | PointerButton { .. }
++            | PointerAxis { .. }
++            | GestureSwipeBegin { .. }
++            | GestureSwipeUpdate { .. }
++            | GestureSwipeEnd { .. }
++            | GesturePinchBegin { .. }
++            | GesturePinchUpdate { .. }
++            | GesturePinchEnd { .. }
++            | GestureHoldBegin { .. }
++            | GestureHoldEnd { .. } => FocusCause::Mouse,
++            _ => FocusCause::Other,
++        };
++        // Settle earlier changes before attributing this event's focus change.
++        self.update_keyboard_focus();
+         match event {
+             DeviceAdded { device } => self.on_device_added(device),
+             DeviceRemoved { device } => self.on_device_removed(device),
+@@ -179,6 +197,8 @@ impl State {
+             Special(_) => (),
+         }
+ 
++        self.update_keyboard_focus_with_cause(focus_cause);
++
+         // Don't hide overlays if consumed by a11y, so that you can use the screen reader
+         // navigation keys.
+         if consumed_by_a11y {
+@@ -584,7 +604,9 @@ impl State {
+             .niri
+             .event_loop
+             .insert_source(repeat_timer, move |_, _, state| {
++                state.update_keyboard_focus();
+                 state.handle_bind(bind.clone());
++                state.update_keyboard_focus_with_cause(FocusCause::Keyboard);
+                 TimeoutAction::ToDuration(repeat_duration)
+             })
+             .unwrap();
+@@ -843,6 +865,20 @@ impl State {
                      self.niri.queue_redraw_all();
                  }
              }
@@ -533,15 +604,45 @@ index 86c7eba..d60bb20 100644
          let _span = tracy_client::span!("Tile::render");
  
 diff --git a/src/niri.rs b/src/niri.rs
-index ec40e01..755f41a 100644
+index ec40e01..a6db208 100644
 --- a/src/niri.rs
 +++ b/src/niri.rs
-@@ -1305,6 +1305,31 @@ impl State {
+@@ -522,6 +522,13 @@ pub enum KeyboardFocus {
+     Mru,
+ }
+ 
++#[derive(Debug, Clone, Copy)]
++pub(crate) enum FocusCause {
++    Keyboard,
++    Mouse,
++    Other,
++}
++
+ #[derive(Default, Clone, PartialEq)]
+ pub struct PointContents {
+     // Output under point.
+@@ -1111,6 +1118,10 @@ impl State {
+     }
+ 
+     pub fn update_keyboard_focus(&mut self) {
++        self.update_keyboard_focus_with_cause(FocusCause::Other);
++    }
++
++    pub(crate) fn update_keyboard_focus_with_cause(&mut self, cause: FocusCause) {
+         // Clean up on-demand layer surface focus if necessary.
+         if let Some(surface) = &self.niri.layer_shell_on_demand_focus {
+             // Still alive and has on-demand interactivity.
+@@ -1305,6 +1316,36 @@ impl State {
                  }
              }
  
 +            let focus_options = self.niri.config.borrow().animations.window_focus;
-+            let focus_window = if focus_options.on_focus
++            let on_input = match cause {
++                FocusCause::Keyboard => focus_options.on_keyboard,
++                FocusCause::Mouse => focus_options.on_mouse,
++                FocusCause::Other => false,
++            };
++            let focus_window = if (focus_options.on_focus || on_input)
 +                && (!focus_options.window_switch_only
 +                    || matches!(
 +                        (&self.niri.keyboard_focus, &focus),
@@ -569,27 +670,29 @@ index ec40e01..755f41a 100644
                  if grab.has_keyboard_grab && Some(&grab.root) != focus.surface() {
                      trace!(
 diff --git a/src/tests/animations.rs b/src/tests/animations.rs
-index 51c57f7..6bce3ea 100644
+index 51c57f7..cb327ac 100644
 --- a/src/tests/animations.rs
 +++ b/src/tests/animations.rs
-@@ -5,12 +5,14 @@ use insta::assert_snapshot;
+@@ -5,12 +5,15 @@ use insta::assert_snapshot;
  use niri_config::animations::{Curve, EasingParams, Kind};
  use niri_config::Config;
  use niri_ipc::SizeChange;
 +use smithay::reexports::wayland_protocols_wlr::layer_shell::v1::client::zwlr_layer_shell_v1::Layer;
 +use smithay::reexports::wayland_protocols_wlr::layer_shell::v1::client::zwlr_layer_surface_v1::KeyboardInteractivity;
++use smithay::reexports::wayland_protocols_wlr::virtual_pointer::v1::client::zwlr_virtual_pointer_manager_v1::ZwlrVirtualPointerManagerV1;
  use smithay::utils::{Point, Size};
- use wayland_client::protocol::wl_surface::WlSurface;
+-use wayland_client::protocol::wl_surface::WlSurface;
++use wayland_client::protocol::{wl_pointer, wl_surface::WlSurface};
  
 -use super::client::ClientId;
 +use super::client::{ClientId, LayerConfigureProps};
  use super::*;
 -use crate::niri::Niri;
-+use crate::niri::{KeyboardFocus, Niri};
++use crate::niri::{FocusCause, KeyboardFocus, Niri};
  
  fn format_tiles(niri: &Niri) -> String {
      let mut buf = String::new();
-@@ -117,6 +119,502 @@ fn set_up_two_in_column() -> (Fixture, ClientId, WlSurface, WlSurface) {
+@@ -117,6 +120,614 @@ fn set_up_two_in_column() -> (Fixture, ClientId, WlSurface, WlSurface) {
      (f, id, surface1, surface2)
  }
  
@@ -804,6 +907,118 @@ index 51c57f7..6bce3ea 100644
 +    ));
 +    assert!(animating_windows(f.niri()).is_empty());
 +
++    animate_window(&mut f);
++    assert_eq!(animating_windows(f.niri()).len(), 1);
++}
++
++#[test]
++fn focus_shrink_filters_keyboard_mouse_and_other_causes() {
++    for (flags, expected) in [
++        ("on-keyboard;", [true, false, false]),
++        ("on-mouse;", [false, true, false]),
++        ("on-keyboard; on-mouse;", [true, true, false]),
++        ("on-focus;", [true, true, true]),
++        ("", [false, false, false]),
++    ] {
++        let config = format!("animations {{ window-focus {{ {flags} window-switch-only; }}; }}");
++        let (mut f, client, _, _) = focus_shrink_fixture(&config);
++        let mut ids: Vec<_> = f
++            .niri()
++            .layout
++            .windows()
++            .map(|(_, w)| w.id().get())
++            .collect();
++        ids.sort_unstable();
++        for (i, cause) in [FocusCause::Keyboard, FocusCause::Mouse, FocusCause::Other]
++            .into_iter()
++            .enumerate()
++        {
++            let target = ids[i % 2];
++            f.niri_state()
++                .do_action(niri_config::Action::FocusWindow(target), false);
++            f.niri_state().update_keyboard_focus_with_cause(cause);
++            f.double_roundtrip(client);
++            let animated = if expected[i] { vec![target] } else { vec![] };
++            assert_eq!(animating_windows(f.niri()), animated, "{flags} {cause:?}");
++            f.niri_complete_animations();
++        }
++    }
++}
++
++#[test]
++fn focus_shrink_mouse_click_uses_mouse_setting() {
++    for (flags, expected) in [("on-keyboard;", false), ("on-mouse;", true)] {
++        let config = format!("animations {{ window-focus {{ {flags} window-switch-only; }}; }}");
++        let (mut f, client, _, _) = focus_shrink_fixture(&config);
++        let (target, center) = f
++            .niri()
++            .layout
++            .active_workspace()
++            .unwrap()
++            .tiles_with_render_positions()
++            .map(|(tile, pos, _)| {
++                (
++                    tile.window().id().get(),
++                    pos + tile.animated_tile_size().to_point().downscale(2.),
++                )
++            })
++            .min_by_key(|(id, _)| *id)
++            .unwrap();
++        let c = f.client(client);
++        let global = c
++            .state
++            .globals
++            .iter()
++            .find(|g| g.interface == "zwlr_virtual_pointer_manager_v1")
++            .unwrap();
++        let registry = c.display.get_registry(&c.qh, ());
++        let manager: ZwlrVirtualPointerManagerV1 = registry.bind(global.name, 2, &c.qh, ());
++        let pointer = manager.create_virtual_pointer(None, &c.qh, ());
++        pointer.motion_absolute(0, center.x as u32, center.y as u32, 1920, 1080);
++        pointer.button(1, 0x110, wl_pointer::ButtonState::Pressed);
++        pointer.button(2, 0x110, wl_pointer::ButtonState::Released);
++        pointer.frame();
++        f.double_roundtrip(client);
++        assert_eq!(f.niri().layout.focus().unwrap().id().get(), target);
++        let animated = if expected { vec![target] } else { vec![] };
++        assert_eq!(animating_windows(f.niri()), animated, "{flags}");
++    }
++}
++
++#[test]
++fn focus_shrink_keyboard_cause_does_not_leak_to_other_changes() {
++    let (mut f, client, _, _) =
++        focus_shrink_fixture("animations { window-focus { on-keyboard; window-switch-only; }; }");
++    f.niri_state()
++        .do_action(niri_config::Action::FocusColumnLeft, false);
++    f.niri_state()
++        .update_keyboard_focus_with_cause(FocusCause::Keyboard);
++    f.double_roundtrip(client);
++    assert_eq!(animating_windows(f.niri()).len(), 1);
++    f.niri_complete_animations();
++
++    f.niri_state()
++        .do_action(niri_config::Action::FocusColumnRight, false);
++    // Pending IPC/application changes are settled before the next input event.
++    f.niri_state().update_keyboard_focus();
++    f.niri_state()
++        .update_keyboard_focus_with_cause(FocusCause::Keyboard);
++    f.double_roundtrip(client);
++    assert!(animating_windows(f.niri()).is_empty());
++
++    f.niri_state()
++        .do_action(niri_config::Action::FocusColumnLeft, false);
++    f.double_roundtrip(client);
++    assert!(animating_windows(f.niri()).is_empty());
++
++    for _ in 0..2 {
++        f.niri_state()
++            .do_action(niri_config::Action::ToggleOverview, false);
++        f.niri_state()
++            .update_keyboard_focus_with_cause(FocusCause::Keyboard);
++        f.double_roundtrip(client);
++        assert!(animating_windows(f.niri()).is_empty());
++    }
 +    animate_window(&mut f);
 +    assert_eq!(animating_windows(f.niri()).len(), 1);
 +}
@@ -1093,7 +1308,7 @@ index 51c57f7..6bce3ea 100644
  fn egl_height_resize_animates_next_y() {
      let (mut f, id, surface1, surface2) = set_up_two_in_column();
 diff --git a/src/tests/client.rs b/src/tests/client.rs
-index 7776b6a..f738df7 100644
+index 7776b6a..204fd35 100644
 --- a/src/tests/client.rs
 +++ b/src/tests/client.rs
 @@ -2,6 +2,8 @@ use std::cmp::min;
@@ -1113,7 +1328,18 @@ index 7776b6a..f738df7 100644
  use smithay::reexports::wayland_protocols::wp::single_pixel_buffer;
  use smithay::reexports::wayland_protocols::wp::viewporter::client::wp_viewport::WpViewport;
  use smithay::reexports::wayland_protocols::wp::viewporter::client::wp_viewporter::WpViewporter;
-@@ -30,6 +33,8 @@ use wayland_client::protocol::wl_compositor::WlCompositor;
+@@ -22,6 +25,10 @@ use smithay::reexports::wayland_protocols_wlr::layer_shell::v1::client::zwlr_lay
+ use smithay::reexports::wayland_protocols_wlr::layer_shell::v1::client::zwlr_layer_surface_v1::{
+     self, ZwlrLayerSurfaceV1,
+ };
++use smithay::reexports::wayland_protocols_wlr::virtual_pointer::v1::client::{
++    zwlr_virtual_pointer_manager_v1::ZwlrVirtualPointerManagerV1,
++    zwlr_virtual_pointer_v1::ZwlrVirtualPointerV1,
++};
+ use wayland_backend::client::Backend;
+ use wayland_client::globals::Global;
+ use wayland_client::protocol::wl_buffer::{self, WlBuffer};
+@@ -30,6 +37,8 @@ use wayland_client::protocol::wl_compositor::WlCompositor;
  use wayland_client::protocol::wl_display::WlDisplay;
  use wayland_client::protocol::wl_output::{self, WlOutput};
  use wayland_client::protocol::wl_registry::{self, WlRegistry};
@@ -1122,7 +1348,7 @@ index 7776b6a..f738df7 100644
  use wayland_client::protocol::wl_surface::{self, WlSurface};
  use wayland_client::{Connection, Dispatch, Proxy as _, QueueHandle};
  
-@@ -51,6 +56,7 @@ pub struct State {
+@@ -51,6 +60,7 @@ pub struct State {
      pub outputs: HashMap<WlOutput, String>,
  
      pub compositor: Option<WlCompositor>,
@@ -1130,7 +1356,7 @@ index 7776b6a..f738df7 100644
      pub xdg_wm_base: Option<XdgWmBase>,
      pub layer_shell: Option<ZwlrLayerShellV1>,
      pub spbm: Option<WpSinglePixelBufferManagerV1>,
-@@ -177,6 +183,7 @@ impl Client {
+@@ -177,6 +187,7 @@ impl Client {
              globals: Vec::new(),
              outputs: HashMap::new(),
              compositor: None,
@@ -1138,7 +1364,7 @@ index 7776b6a..f738df7 100644
              xdg_wm_base: None,
              layer_shell: None,
              spbm: None,
-@@ -216,6 +223,23 @@ impl Client {
+@@ -216,6 +227,23 @@ impl Client {
          self.state.create_window()
      }
  
@@ -1162,7 +1388,7 @@ index 7776b6a..f738df7 100644
      pub fn window(&mut self, surface: &WlSurface) -> &mut Window {
          self.state.window(surface)
      }
-@@ -349,6 +373,11 @@ impl Window {
+@@ -349,6 +377,11 @@ impl Window {
          self.viewport.set_destination(i32::from(w), i32::from(h));
      }
  
@@ -1174,7 +1400,7 @@ index 7776b6a..f738df7 100644
      pub fn set_fullscreen(&self, output: Option<&WlOutput>) {
          self.xdg_toplevel.set_fullscreen(output);
      }
-@@ -506,6 +535,8 @@ impl Dispatch<WlRegistry, ()> for State {
+@@ -506,6 +539,8 @@ impl Dispatch<WlRegistry, ()> for State {
                  if interface == WlCompositor::interface().name {
                      let version = min(version, WlCompositor::interface().version);
                      state.compositor = Some(registry.bind(name, version, qh, ()));
@@ -1183,11 +1409,13 @@ index 7776b6a..f738df7 100644
                  } else if interface == XdgWmBase::interface().name {
                      let version = min(version, XdgWmBase::interface().version);
                      state.xdg_wm_base = Some(registry.bind(name, version, qh, ()));
-@@ -537,6 +568,9 @@ impl Dispatch<WlRegistry, ()> for State {
+@@ -537,6 +572,11 @@ impl Dispatch<WlRegistry, ()> for State {
      }
  }
  
 +wayland_client::delegate_noop!(State: ignore WlShm);
++wayland_client::delegate_noop!(State: ignore ZwlrVirtualPointerManagerV1);
++wayland_client::delegate_noop!(State: ignore ZwlrVirtualPointerV1);
 +wayland_client::delegate_noop!(State: ignore WlShmPool);
 +
  impl Dispatch<WlOutput, ()> for State {
