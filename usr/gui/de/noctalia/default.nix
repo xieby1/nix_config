@@ -2,6 +2,8 @@
 { ... }: {
   imports = [ ./settings.nix ];
   home.packages = [
-    depkgs.noctalia
+    (depkgs.noctalia.overrideAttrs (old: {
+      patches = (old.patches or []) ++ [ ./calendar-event-titles.patch ];
+    }))
   ];
 }
