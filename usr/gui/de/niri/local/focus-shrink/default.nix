@@ -6,6 +6,7 @@
   configKdl = {
     animations.window-focus = {
       on-focus = {};
+      window-switch-only = {};
       scale = 0.9;
       duration-ms = 300;
       curve = "ease-out-cubic";

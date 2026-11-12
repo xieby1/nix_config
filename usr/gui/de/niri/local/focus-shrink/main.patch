@@ -1,5 +1,5 @@
 diff --git a/docs/wiki/Configuration:-Animations.md b/docs/wiki/Configuration:-Animations.md
-index 6441d33..2fd43be 100644
+index 6441d33..0834e3d 100644
 --- a/docs/wiki/Configuration:-Animations.md
 +++ b/docs/wiki/Configuration:-Animations.md
 @@ -25,6 +25,14 @@ animations {
@@ -17,7 +17,7 @@ index 6441d33..2fd43be 100644
      window-close {
          duration-ms 150
          curve "ease-out-quad"
-@@ -222,6 +230,39 @@ animations {
+@@ -222,6 +230,43 @@ animations {
  }
  ```
  
@@ -37,6 +37,7 @@ index 6441d33..2fd43be 100644
 +animations {
 +    window-focus {
 +        on-focus
++        window-switch-only
 +        scale 0.98
 +        duration-ms 180
 +        curve "ease-out-cubic"
@@ -49,7 +50,10 @@ index 6441d33..2fd43be 100644
 +
 +The `animate-window` action (also `niri msg action animate-window`) works independently of `on-focus`.
 +Repeating it restarts the effect; losing keyboard focus cancels it.
-+Returning from a launcher or overview counts as gaining focus.
++With `window-switch-only`, automatic shrink happens only when keyboard focus switches directly between two existing windows.
++Returning from a launcher or overview, or focusing the first window, does not animate.
++Without this flag, returning from a launcher or overview counts as gaining focus.
++The flag does not affect the manual `animate-window` action.
 +Both `animations { off; }` and `window-focus { off; }` disable manual and automatic effects.
 +Use `on-focus false` to disable only automatic effects.
 +Changing this animation's settings cancels any in-progress effect.
@@ -58,7 +62,7 @@ index 6441d33..2fd43be 100644
  
  <sup>Since: 0.1.5</sup>
 diff --git a/niri-config/src/animations.rs b/niri-config/src/animations.rs
-index 346b625..8f320d5 100644
+index 346b625..07c71df 100644
 --- a/niri-config/src/animations.rs
 +++ b/niri-config/src/animations.rs
 @@ -10,6 +10,7 @@ pub struct Animations {
@@ -94,7 +98,7 @@ index 346b625..8f320d5 100644
              window_close,
              horizontal_view_movement,
              window_movement,
-@@ -172,6 +177,57 @@ impl Default for WindowOpenAnim {
+@@ -172,6 +177,62 @@ impl Default for WindowOpenAnim {
      }
  }
  
@@ -103,6 +107,7 @@ index 346b625..8f320d5 100644
 +pub struct WindowFocusAnim {
 +    pub anim: Animation,
 +    pub on_focus: bool,
++    pub window_switch_only: bool,
 +    pub scale: f64,
 +}
 +
@@ -117,6 +122,7 @@ index 346b625..8f320d5 100644
 +                }),
 +            },
 +            on_focus: false,
++            window_switch_only: false,
 +            scale: 0.98,
 +        }
 +    }
@@ -131,6 +137,9 @@ index 346b625..8f320d5 100644
 +        rv.anim = Animation::decode_node(node, ctx, rv.anim, |child, ctx| {
 +            match &**child.node_name {
 +                "on-focus" => rv.on_focus = crate::utils::Flag::decode_node(child, ctx)?.0,
++                "window-switch-only" => {
++                    rv.window_switch_only = crate::utils::Flag::decode_node(child, ctx)?.0
++                }
 +                "scale" => {
 +                    let scale: FloatOrInt<0, 1> = parse_arg_node("scale", child, ctx)?;
 +                    if scale.0 <= 0. {
@@ -173,10 +182,10 @@ index 3b5430a..917dfad 100644
              niri_ipc::Action::FocusColumnRight {} => Self::FocusColumnRight,
              niri_ipc::Action::FocusColumnFirst {} => Self::FocusColumnFirst,
 diff --git a/niri-config/src/lib.rs b/niri-config/src/lib.rs
-index 329b766..d99bf0c 100644
+index 329b766..d0c7ca3 100644
 --- a/niri-config/src/lib.rs
 +++ b/niri-config/src/lib.rs
-@@ -641,6 +641,73 @@ mod tests {
+@@ -641,6 +641,87 @@ mod tests {
          let _ = Config::load_default();
      }
  
@@ -199,6 +208,7 @@ index 329b766..d99bf0c 100644
 +            r#"
 +            animations { window-focus {
 +                on-focus
++                window-switch-only
 +                scale 0.98
 +                duration-ms 180
 +                curve "ease-out-cubic"
@@ -208,6 +218,7 @@ index 329b766..d99bf0c 100644
 +        );
 +        let focus = config.animations.window_focus;
 +        assert!(focus.on_focus);
++        assert!(focus.window_switch_only);
 +        assert_eq!(focus.scale, 0.98);
 +        assert_eq!(
 +            focus.anim.kind,
@@ -218,6 +229,13 @@ index 329b766..d99bf0c 100644
 +        );
 +        assert_eq!(config.binds.0[0].action, Action::AnimateWindow);
 +        assert!(!Config::default().animations.window_focus.on_focus);
++        assert!(!Config::default().animations.window_focus.window_switch_only);
++        assert!(
++            !do_parse("animations { window-focus { window-switch-only false; }; }")
++                .animations
++                .window_focus
++                .window_switch_only
++        );
 +        assert!(
 +            !do_parse("animations { window-focus { on-focus false; }; }")
 +                .animations
@@ -241,7 +259,12 @@ index 329b766..d99bf0c 100644
 +
 +    #[test]
 +    fn focus_shrink_rejects_invalid_config() {
-+        for child in ["duration-ms -1", "on-focus 5", "unknown"] {
++        for child in [
++            "duration-ms -1",
++            "on-focus 5",
++            "window-switch-only 5",
++            "unknown",
++        ] {
 +            let text = format!("animations {{ window-focus {{ {child}; }}; }}");
 +            assert!(Config::parse_mem(&text).is_err(), "{text}");
 +        }
@@ -250,7 +273,7 @@ index 329b766..d99bf0c 100644
      #[test]
      fn default_repeat_params() {
          let config = Config::parse_mem("").unwrap();
-@@ -1523,6 +1590,19 @@ mod tests {
+@@ -1523,6 +1604,20 @@ mod tests {
                      },
                      custom_shader: None,
                  },
@@ -265,6 +288,7 @@ index 329b766..d99bf0c 100644
 +                        ),
 +                    },
 +                    on_focus: false,
++                    window_switch_only: false,
 +                    scale: 0.98,
 +                },
                  window_close: WindowCloseAnim {
@@ -509,14 +533,23 @@ index 86c7eba..d60bb20 100644
          let _span = tracy_client::span!("Tile::render");
  
 diff --git a/src/niri.rs b/src/niri.rs
-index ec40e01..f860c9e 100644
+index ec40e01..755f41a 100644
 --- a/src/niri.rs
 +++ b/src/niri.rs
-@@ -1305,6 +1305,22 @@ impl State {
+@@ -1305,6 +1305,31 @@ impl State {
                  }
              }
  
-+            let focus_window = if self.niri.config.borrow().animations.window_focus.on_focus {
++            let focus_options = self.niri.config.borrow().animations.window_focus;
++            let focus_window = if focus_options.on_focus
++                && (!focus_options.window_switch_only
++                    || matches!(
++                        (&self.niri.keyboard_focus, &focus),
++                        (
++                            KeyboardFocus::Layout { surface: Some(previous) },
++                            KeyboardFocus::Layout { surface: Some(_) }
++                        ) if self.niri.layout.find_window_and_output(previous).is_some()
++                    )) {
 +                match &focus {
 +                    KeyboardFocus::Layout {
 +                        surface: Some(surface),
@@ -536,10 +569,27 @@ index ec40e01..f860c9e 100644
                  if grab.has_keyboard_grab && Some(&grab.root) != focus.surface() {
                      trace!(
 diff --git a/src/tests/animations.rs b/src/tests/animations.rs
-index 51c57f7..bc335aa 100644
+index 51c57f7..6bce3ea 100644
 --- a/src/tests/animations.rs
 +++ b/src/tests/animations.rs
-@@ -117,6 +117,425 @@ fn set_up_two_in_column() -> (Fixture, ClientId, WlSurface, WlSurface) {
+@@ -5,12 +5,14 @@ use insta::assert_snapshot;
+ use niri_config::animations::{Curve, EasingParams, Kind};
+ use niri_config::Config;
+ use niri_ipc::SizeChange;
++use smithay::reexports::wayland_protocols_wlr::layer_shell::v1::client::zwlr_layer_shell_v1::Layer;
++use smithay::reexports::wayland_protocols_wlr::layer_shell::v1::client::zwlr_layer_surface_v1::KeyboardInteractivity;
+ use smithay::utils::{Point, Size};
+ use wayland_client::protocol::wl_surface::WlSurface;
+ 
+-use super::client::ClientId;
++use super::client::{ClientId, LayerConfigureProps};
+ use super::*;
+-use crate::niri::Niri;
++use crate::niri::{KeyboardFocus, Niri};
+ 
+ fn format_tiles(niri: &Niri) -> String {
+     let mut buf = String::new();
+@@ -117,6 +119,502 @@ fn set_up_two_in_column() -> (Fixture, ClientId, WlSurface, WlSurface) {
      (f, id, surface1, surface2)
  }
  
@@ -678,6 +728,83 @@ index 51c57f7..bc335aa 100644
 +    f.niri_state()
 +        .do_action(niri_config::Action::ToggleOverview, false);
 +    f.double_roundtrip(client);
++    assert_eq!(animating_windows(f.niri()).len(), 1);
++}
++
++#[test]
++fn focus_shrink_window_switch_only_skips_overview_return() {
++    let (mut f, client, _, _) =
++        focus_shrink_fixture("animations { window-focus { on-focus; window-switch-only; }; }");
++    let mut ids: Vec<_> = f
++        .niri()
++        .layout
++        .windows()
++        .map(|(_, w)| w.id().get())
++        .collect();
++    ids.sort_unstable();
++
++    f.niri_state()
++        .do_action(niri_config::Action::FocusWindow(ids[1]), false);
++    f.double_roundtrip(client);
++    assert!(animating_windows(f.niri()).is_empty());
++
++    f.niri_state()
++        .do_action(niri_config::Action::FocusWindow(ids[0]), false);
++    f.double_roundtrip(client);
++    assert_eq!(animating_windows(f.niri()), vec![ids[0]]);
++
++    f.niri_state()
++        .do_action(niri_config::Action::ToggleOverview, false);
++    f.double_roundtrip(client);
++    assert!(animating_windows(f.niri()).is_empty());
++    f.niri_state()
++        .do_action(niri_config::Action::ToggleOverview, false);
++    f.double_roundtrip(client);
++    assert!(animating_windows(f.niri()).is_empty());
++
++    f.niri_state()
++        .do_action(niri_config::Action::FocusWindow(ids[1]), false);
++    f.double_roundtrip(client);
++    assert_eq!(animating_windows(f.niri()), vec![ids[1]]);
++}
++
++#[test]
++fn focus_shrink_window_switch_only_skips_layer_shell_return() {
++    let (mut f, client, _, _) =
++        focus_shrink_fixture("animations { window-focus { on-focus; window-switch-only; }; }");
++    let layer = f
++        .client(client)
++        .create_layer(None, Layer::Overlay, "launcher");
++    let surface = layer.surface.clone();
++    layer.set_configure_props(LayerConfigureProps {
++        size: Some((100, 100)),
++        kb_interactivity: Some(KeyboardInteractivity::Exclusive),
++        ..Default::default()
++    });
++    layer.commit();
++    f.double_roundtrip(client);
++    let layer = f.client(client).layer(&surface);
++    layer.attach_new_buffer();
++    layer.set_size(100, 100);
++    layer.ack_last_and_commit();
++    f.double_roundtrip(client);
++    assert!(matches!(
++        &f.niri().keyboard_focus,
++        KeyboardFocus::LayerShell { .. }
++    ));
++    assert!(animating_windows(f.niri()).is_empty());
++
++    let layer = f.client(client).layer(&surface);
++    layer.attach_null();
++    layer.commit();
++    f.double_roundtrip(client);
++    assert!(matches!(
++        &f.niri().keyboard_focus,
++        KeyboardFocus::Layout { surface: Some(_) }
++    ));
++    assert!(animating_windows(f.niri()).is_empty());
++
++    animate_window(&mut f);
 +    assert_eq!(animating_windows(f.niri()).len(), 1);
 +}
 +
