@@ -4,7 +4,7 @@
   home.file.".config/noctalia/settings.toml".text = (
     lib.generators.toINI {
       mkKeyValue = key: value: "${key} = ${builtins.toJSON value}";
-    } {
+    } ((import ./pi-noctalia/settings.nix) {
       "bar.default" = {
         radius = 0;
         smart_auto_hide = true;
@@ -203,7 +203,7 @@
       control_center = {
         width = 1200;
       };
-    }
+    })
   ) + /*ini*/ ''
     [[control_center.shortcuts]]
     type = "wifi"

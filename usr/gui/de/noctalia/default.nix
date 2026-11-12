@@ -4,7 +4,7 @@
     patches = (old.patches or []) ++ [ ./calendar-event-titles.patch ];
   });
 in {
-  imports = [ ./settings.nix ];
+  imports = [ ./settings.nix ./pi-noctalia ];
   home.packages = [
     noctalia
   ];
