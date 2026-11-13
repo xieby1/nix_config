@@ -16,7 +16,7 @@
           "taskbar"
         ];
         center = [
-          "active_window"
+          # "active_window"
           "clock_sep_left"
           "clock"
           "clock_sep_right"
