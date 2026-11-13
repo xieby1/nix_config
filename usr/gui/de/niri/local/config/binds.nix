@@ -9,6 +9,7 @@
       "Mod+N".spawn-sh = "noctalia msg panel-toggle control-center notifications";
       "Mod+X".spawn-sh = "noctalia msg panel-toggle session";
       "Mod+V".spawn-sh = "noctalia msg panel-toggle clipboard";
+      "Mod+A".spawn-sh = "noctalia msg panel-open local/pi-noctalia:sessions";
       # Until Noctalia can toggle Smart/Off and reserve space conditionally:
       # https://github.com/noctalia-dev/noctalia/issues/3761
       # https://github.com/noctalia-dev/noctalia/issues/3780
