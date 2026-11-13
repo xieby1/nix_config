@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "7910b99fdd8f369ed4d4f24676cc4763ab5832ce",
-      "url": "https://github.com/xieby1/pi-noctalia/archive/7910b99fdd8f369ed4d4f24676cc4763ab5832ce.tar.gz",
-      "hash": "sha256-BVSYJmqd123yH5KK++Q4A5iT+pYcumvMJEfe+QbZQEw="
+      "revision": "10d896ec979e71ed216232dfd8583a831b0f2eaa",
+      "url": "https://github.com/xieby1/pi-noctalia/archive/10d896ec979e71ed216232dfd8583a831b0f2eaa.tar.gz",
+      "hash": "sha256-BlwuPyynoHv4S1OVDXlFnUW/gdqAw6MkQLjjlV9R8lY="
     }
   },
   "version": 8
