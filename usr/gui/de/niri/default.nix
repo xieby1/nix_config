@@ -1,14 +1,11 @@
 { depkgs }: # local args
-{ pkgs, lib, ... }: let
-  local = lib.modules.evalModules {
-    modules = [(lib.modules.importApply ./local {inherit pkgs depkgs;})];
-  };
-in {
-  wayland.windowManager.niri = {
-    enable = true;
-    package = local.config.finalPackage;
-    extraConfig = local.config.finalConfigKdlText;
-  };
-  cachix_packages = [ local.config.finalPackage ];
+{ config, ... }: {
+  imports = [
+    ./config
+    ./win_align.nix
+    ./focus-shrink
+  ];
+  wayland.windowManager.niri.enable = true;
+  cachix_packages = [ config.wayland.windowManager.niri.package ];
   services.gnome-keyring.enable = true;
 }

@@ -2,7 +2,7 @@
   imports = [
     ./binds.nix
   ];
-  configKdl = {
+  wayland.windowManager.niri.settings = {
     _children = [
       {
         # TODO: move to evolution

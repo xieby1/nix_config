@@ -1,6 +1,6 @@
 # Use `wev` to find out key name
 { pkgs, ... }: {
-  configKdl = {
+  wayland.windowManager.niri.settings = {
     binds = {
       "Ctrl+Alt+T".spawn = "ghostty";
       "Mod+D".spawn-sh = "noctalia msg panel-toggle launcher";
