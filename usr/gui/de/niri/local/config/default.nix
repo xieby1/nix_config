@@ -4,13 +4,6 @@
   ];
   configKdl = {
     _children = [
-      { include = "./dms/colors.kdl"; }
-      { include = "./dms/cursor.kdl"; }
-      { include = "./dms/alttab.kdl"; }
-      { include = "./dms/wpblur.kdl"; }
-      # { include = "./dms/layout.kdl"; }
-      { include = "./dms/outputs.kdl"; }
-      { include = "./dms/binds.kdl"; }
       {
         # TODO: move to evolution
         window-rule = {

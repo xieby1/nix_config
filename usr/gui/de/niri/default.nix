@@ -4,20 +4,11 @@
     modules = [(lib.modules.importApply ./local {inherit pkgs depkgs;})];
   };
 in {
-  cachix_packages = [ local.config.finalPackage ];
-  home.file.niri_config = {
-    text = local.config.finalConfigKdlText;
-    target = ".config/niri/config.kdl";
-  };
-
-  home.packages = [
-    local.config.finalPackage
-    pkgs.xwayland-satellite
-  ];
-  services.gnome-keyring.enable = true;
-  xdg.portal = {
+  wayland.windowManager.niri = {
     enable = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
-    configPackages = [ local.config.finalPackage ];
+    package = local.config.finalPackage;
+    extraConfig = local.config.finalConfigKdlText;
   };
+  cachix_packages = [ local.config.finalPackage ];
+  services.gnome-keyring.enable = true;
 }
