@@ -32,8 +32,13 @@
     ./vue.nix
     # zig
     {programs.neovim={initLua="vim.lsp.enable('zls')\n";extraPackages=[pkgs.zls pkgs.zig];};}
-    # veryl
-    {programs.neovim={initLua="vim.lsp.enable('veryl_ls')\n";extraPackages=[pkgs.veryl];};}
+    # veryl: the pinned package lacks system libraries required by Rust's setup hook.
+    # Remove this override once npins nixpkgs includes NixOS/nixpkgs#586901.
+    {programs.neovim={initLua="vim.lsp.enable('veryl_ls')\n";extraPackages=[
+      (pkgs.veryl.overrideAttrs (old: {
+        buildInputs = (old.buildInputs or []) ++ [ pkgs.zstd pkgs.aws-lc ];
+      }))
+    ];};}
   ];
   programs.neovim = {
     plugins = [{
