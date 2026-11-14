@@ -25,6 +25,6 @@
   in {
     inherit npinsed pkgsu flake-compat;
     #MC 添加nix user repository (NUR)到nixpkgs里。
-    nur = import npinsed.nur { pkgs = pkgsu; };
+    nur = import npinsed.nur {};
   };
 }
