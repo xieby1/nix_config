@@ -1,0 +1,66 @@
+{ ... }: {
+  imports = [
+    ./binds.nix
+  ];
+  wayland.windowManager.niri.settings = {
+    _children = [
+      {
+        # TODO: move to evolution
+        window-rule = {
+          match._props.app-id="evolution-alarm-notify";
+          open-floating = true;
+          default-window-height = { proportion = 0.3; };
+          default-column-width = { proportion = 0.3; };
+        };
+      }
+    ];
+
+    # Ghostty's OSC 777 notification action selects the right Pi tab, but
+    # niri 26.04 rejects the window activation under its default serial check.
+    # Trade-off: apps can steal focus with invalid-serial tokens. This niri
+    # debug option is not covered by its config stability policy.
+    # Remove when clicking a Pi notification from another workspace and tab
+    # works without this flag, or replace it with a Ghostty-only
+    # on-xdg-activate rule once our niri supports that rule (26.04 does not).
+    #
+    # noctalia also need this: Allows notification actions and window activation from Noctalia.
+    debug.honor-xdg-activation-with-invalid-serial = {};
+
+    prefer-no-csd = {};
+    output = {
+      _args = ["eDP-1"];
+      scale = 2.0;
+    };
+    input = {
+      touchpad = {
+        tap = {};
+      };
+    };
+    layout = {
+      gaps = 0;
+      focus-ring.off = {};
+      shadow = {
+        on = {};
+        spread = 2;
+        offset._props = {x=2; y=2;};
+      };
+      empty-workspace-above-first = {};
+    };
+    window-rule = {
+      match._props.is-focused = false;
+      clip-to-geometry = true ;
+      # geometry-corner-radius._args= [12 36 36 12];
+      geometry-corner-radius = 64;
+    };
+    spawn-at-startup = ["noctalia"];
+    screenshot-path = "~/Pictures/Screenshots/niri.%Y%m%d.%H%M%S.png";
+    gestures.hot-corners.off = {};
+    overview.zoom = 0.4;
+    switch-events = {
+      lid-close.spawn = ["dms" "ipc" "lock" "lock"];
+    };
+    cursor = {
+      hide-when-typing = {};
+    };
+  };
+}

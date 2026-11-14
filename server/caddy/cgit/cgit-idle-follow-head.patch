@@ -1,0 +1,32 @@
+diff --git a/ui-repolist.c b/ui-repolist.c
+index 1b224cf..b08208c 100644
+--- a/ui-repolist.c
++++ b/ui-repolist.c
+@@ -51,9 +51,25 @@ static int get_repo_modtime(const struct cgit_repo *repo, time_t *mtime)
+ 		}
+ 	}
+ 
++	/* Repos found by scan-path get no defbranch, so the hardcoded "master"
++	 * below would miss every repo whose HEAD is another branch: an updated
++	 * loose ref leaves packed-refs untouched, so the fallback further down
++	 * would report the last gc instead of the last push. Follow HEAD. */
+ 	strbuf_reset(&path);
+-	strbuf_addf(&path, "%s/refs/heads/%s", repo->path,
+-		    repo->defbranch ? repo->defbranch : "master");
++	if (repo->defbranch) {
++		strbuf_addf(&path, "%s/refs/heads/%s", repo->path, repo->defbranch);
++	} else {
++		char *head = NULL;
++		size_t size;
++		const char *ref = "refs/heads/master";
++
++		strbuf_addf(&path, "%s/HEAD", repo->path);
++		if (!read_first_line(path.buf, &head, &size))
++			skip_prefix(head, "ref: ", &ref);
++		strbuf_reset(&path);
++		strbuf_addf(&path, "%s/%s", repo->path, ref);
++		free(head);
++	}
+ 	if (stat(path.buf, &s) == 0) {
+ 		*mtime = s.st_mtime;
+ 		r->mtime = *mtime;

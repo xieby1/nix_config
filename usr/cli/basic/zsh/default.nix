@@ -1,0 +1,74 @@
+{ pkgs, ... }: {
+  home.shell.enableZshIntegration = true;
+  programs.zsh = {
+    enable = true;
+    enableVteIntegration = true;
+    autosuggestion.enable = true;
+    syntaxHighlighting.enable = true;
+    # zsh startup split:
+    # - envExtra -> .zshenv: every zsh, including ssh 'cmd'; keep tiny, quiet, and reliable.
+    # - initContent -> .zshrc: interactive shells; keybindings, completion, aliases, prompts, and autostart.
+    envExtra = ''
+      # Avoid duplicate NixOS global zsh init (/etc/zshrc); Home Manager config is enough.
+      setopt no_global_rcs
+
+      # SSH forwards TERM but not COLORTERM/KITTY_WINDOW_ID, so truecolor-aware
+      # tools (pi, nvim, ls, ...) fall back to 256-color on remote hosts. Re-derive
+      # COLORTERM from TERM, which does survive the SSH hop (kitty is always truecolor).
+      [[ $TERM == *kitty* ]] && export COLORTERM=truecolor
+    '';
+    completionInit = ''
+      # Load the zsh/complist module, which provides colored completion listings,
+      # scrolling through long lists, and an alternative menu selection style.
+      # According to zshall(1), this should be done before compinit so that the
+      # menu-select widget is properly re-defined by the completion system.
+      zmodload zsh/complist
+
+      # Initialize the programmable completion system (compinit).
+      # This re-defines all completion widgets to use the smart, context-aware system.
+      autoload -U compinit && compinit
+
+      # Configure completion colors via the list-colors style.
+      # When using compinit, ZLS_COLORS should not be set directly because the
+      # completion system controls colors itself. Instead, we use zstyle with the
+      # same colon-separated format as GNU ls. The (s.:.) flag splits LS_COLORS
+      # by colons so each name=value pair is passed as a separate argument.
+      zstyle ':completion:*:default' list-colors ''${(s.:.)LS_COLORS}
+
+      # Show normal listings and enter interactive menu selection
+      zstyle ':completion:*' menu select=1
+      # Shift-Tab for reverse cycling
+      bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
+    '';
+    initContent = ''
+      # Ctrl+arrows use vi small-word motions, stopping at punctuation.
+      bindkey -M viins  "^[[1;5C" vi-forward-word
+      bindkey -M viins  "^[[1;5D" vi-backward-word
+      bindkey -M visual "^[[1;5C" vi-forward-word
+      bindkey -M visual "^[[1;5D" vi-backward-word
+      bindkey -M vicmd  "^[[1;5C" vi-forward-word
+      bindkey -M vicmd  "^[[1;5D" vi-backward-word
+      bindkey -M viopp  "^[[1;5C" vi-forward-word
+      bindkey -M viopp  "^[[1;5D" vi-backward-word
+
+      # Other ZLE word widgets still use WORDCHARS; vi motions do not.
+      WORDCHARS=_
+
+      # source my zshrc
+      if [[ -f ~/Gist/Config/zshrc ]]; then
+        source ~/Gist/Config/zshrc
+      fi
+    '';
+    plugins = [{
+      name = "vi-mode";
+      src = pkgs.applyPatches {
+        src = pkgs.zsh-vi-mode;
+        postPatch = ''
+          # Delete history bindkey CTRL+[RSPN]
+          sed -i '/\^[RSPN]/d' share/zsh-vi-mode/zsh-vi-mode.zsh
+        '';
+      };
+      file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
+    }];
+  };
+}

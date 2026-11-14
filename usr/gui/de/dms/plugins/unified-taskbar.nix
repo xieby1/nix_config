@@ -1,0 +1,16 @@
+{ ... }: {
+  home.file.".config/DankMaterialShell/plugins/dms-unified-taskbar".source = (import <npins> {input=./sources.json;}).dms-unified-taskbar;
+  yq-merge.".config/DankMaterialShell/plugin_settings.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      unifiedTaskbar = {
+        enabled = true;
+        compactMode = true;
+        allMonitors = false;
+        iconPadding = 2;
+        itemSpacing = 0;
+        workspaceSpacing = 0;
+      };
+    };
+  };
+}

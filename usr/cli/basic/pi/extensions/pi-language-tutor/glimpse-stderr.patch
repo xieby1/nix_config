@@ -1,0 +1,52 @@
+diff --git a/src/glimpse.mjs b/src/glimpse.mjs
+--- a/src/glimpse.mjs
++++ b/src/glimpse.mjs
+@@ -79,6 +79,10 @@ class GlimpseWindow extends EventEmitter {
+     this.#pendingHTML = initialHTML;
+ 
+     proc.stdin.on('error', () => {}); // Swallow EPIPE if native exits first
++    let diagnostics = '';
++    proc.stderr.on('data', (data) => {
++      diagnostics = (diagnostics + data.toString()).slice(-4096);
++    });
+ 
+     const rl = createInterface({ input: proc.stdout, crlfDelay: Infinity });
+ 
+@@ -124,9 +128,17 @@ class GlimpseWindow extends EventEmitter {
+       }
+     });
+ 
+-    proc.on('error', (err) => this.emit('error', err));
++    let spawnFailed = false;
++    proc.on('error', (err) => {
++      spawnFailed = true;
++      this.emit('error', err);
++    });
+ 
+-    proc.on('exit', () => {
++    proc.on('close', (code, signal) => {
++      if (!spawnFailed && (code !== 0 || !this.#info)) {
++        const reason = signal ? `signal ${signal}` : `exit code ${code}`;
++        this.emit('error', new Error(`Glimpse host exited with ${reason}${diagnostics ? `:\n${diagnostics.trim()}` : ''}`));
++      }
+       if (!this.#closed) {
+         this.#closed = true;
+         this.emit('closed');
+@@ -246,7 +258,7 @@ export function open(html, options = {}) {
+ 
+   const spawnArgs = [...(host.extraArgs || []), ...args];
+   const proc = spawn(host.path, spawnArgs, {
+-    stdio: ['pipe', 'pipe', 'inherit'],
++    stdio: ['pipe', 'pipe', 'pipe'],
+     windowsHide: process.platform === 'win32',
+   });
+   return new GlimpseWindow(proc, html);
+@@ -275,7 +287,7 @@ export function statusItem(html, options = {}) {
+   if (options.title != null)  args.push('--title',  options.title);
+ 
+   const spawnArgs = [...(host.extraArgs || []), ...args];
+-  const proc = spawn(host.path, spawnArgs, { stdio: ['pipe', 'pipe', 'inherit'] });
++  const proc = spawn(host.path, spawnArgs, { stdio: ['pipe', 'pipe', 'pipe'] });
+   return new GlimpseStatusItem(proc, html);
+ }
+ 

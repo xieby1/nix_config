@@ -1,0 +1,7 @@
+{ ... }: {
+  imports = [
+    ./niri
+    # ./dms
+    ./noctalia
+  ];
+}
