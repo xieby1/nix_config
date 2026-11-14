@@ -1,7 +1,7 @@
 { config, ... }: {
   imports = [
     ./settings.nix
-    ./pi-noctalia
+    ./plugins
     ./calendar-event-titles
   ];
   programs.noctalia = {
