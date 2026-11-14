@@ -9,7 +9,6 @@
     ./darkreader.nix
     ./zeroomega.nix
     (import ./smart-toc.nix "xieby1")
-    ./brotab.nix
     ./vimium.nix
     ./chrome-mask.nix
   ];
