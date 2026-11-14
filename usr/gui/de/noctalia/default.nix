@@ -1,12 +1,12 @@
 { depkgs }: # local args
-{ ... }: let
-  noctalia = depkgs.noctalia.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [ ./calendar-event-titles.patch ];
-  });
-in {
-  imports = [ ./settings.nix ./pi-noctalia ];
-  home.packages = [
-    noctalia
+{ config, ... }: {
+  imports = [
+    ./settings.nix
+    ./pi-noctalia
+    ./calendar-event-titles
   ];
-  cachix_packages = [ noctalia ];
+  programs.noctalia = {
+    enable = true;
+  };
+  cachix_packages = [ config.programs.noctalia.package ];
 }
