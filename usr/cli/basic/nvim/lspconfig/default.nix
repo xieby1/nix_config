@@ -1,13 +1,12 @@
-{ nixdSrc }: # local-args
 #MC # nvim-lspconfig
-{ pkgs, lib, ... }: {
+{ pkgs, ... }: {
   imports = [
     ./c.nix
     # bash
     {programs.neovim={initLua="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
     # html
     {programs.neovim={initLua="vim.lsp.enable('html')\n";extraPackages=[pkgs.vscode-langservers-extracted];};}
-    (lib.modules.importApply ./nix {src = nixdSrc;})
+    {programs.neovim={initLua = "vim.lsp.enable('nixd')\n"; extraPackages=[pkgs.nixd];};}
     # python
     {programs.neovim={initLua="vim.lsp.enable('pyright')\n";extraPackages=[pkgs.pyright];};}
     # typos

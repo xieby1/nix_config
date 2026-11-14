@@ -50,7 +50,7 @@ in {
     ./conform.nix
   ] ++ lib.optionals enableExtendedCLI [
     ./markdown-preview.nix
-    (lib.modules.importApply ./lspconfig {nixdSrc = npinsed.nixd;})
+    ./lspconfig
     ./rustowl.nix
   ];
 

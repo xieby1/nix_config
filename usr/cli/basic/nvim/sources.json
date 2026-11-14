@@ -29,19 +29,6 @@
       "url": "https://github.com/axkirillov/hbac.nvim/archive/2c85485ea28e5e3754650829e0bca612960e1b73.tar.gz",
       "hash": "sha256-A+C9N7xorS7DV0w8N5TjyD7OvWdxUQ4PJaKW3kwkQS0="
     },
-    "nixd": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nix-community",
-        "repo": "nixd"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "563d9b1bea72102c74e45eb37869f3eb8f1a1bd1",
-      "url": "https://github.com/nix-community/nixd/archive/563d9b1bea72102c74e45eb37869f3eb8f1a1bd1.tar.gz",
-      "hash": "sha256-GEyLKvGiJPMDDwft00SeVVpR2F0Z5aCWtAQhda+d0wk="
-    },
     "outline-treesitter-provider": {
       "type": "Git",
       "repository": {
