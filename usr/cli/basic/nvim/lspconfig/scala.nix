@@ -5,6 +5,11 @@
 { config, pkgs, ... }: let
   jre-with-proxy = pkgs.runCommand "jre-with-proxy" {
     nativeBuildInputs = [pkgs.makeWrapper];
+    meta.platforms = pkgs.jre.meta.platforms;
+    passthru = {
+      inherit (pkgs.jre) version;
+      home = "${jre-with-proxy}";
+    };
   } ''
     mkdir -p $out
     ${pkgs.lndir}/bin/lndir -silent ${pkgs.jre} $out
@@ -28,11 +33,11 @@ in {
       vim.lsp.enable("metals")
     '';
     extraPackages = [
-      ((pkgs.metals.override {
-        jre=jre-with-proxy;
-      }).overrideAttrs (old: {
+      (pkgs.metals.override {
+        jre = jre-with-proxy;
         extraJavaOpts = toString [
-          old.extraJavaOpts
+          # Preserve the defaults in the pinned Nixpkgs Metals package.
+          "-XX:+UseG1GC -XX:+UseStringDeduplication -Xss4m -Xms100m"
           /*
             User configuration options can optionally be provided via server properties using the -Dmetals. prefix.
             For more user configuration, see: https://scalameta.org/metals/docs/integrations/new-editor/#metals-user-configuration
@@ -57,7 +62,7 @@ in {
           # NOTED: If using mill-bsp, make sure run `mill -i mill.bsp.BSP/install` before using.
           "-Dmetals.defaultBspToBuildTool=true"
         ];
-      }))
+      })
       (pkgs.coursier.override { jre = jre-with-proxy; })
     ];
     # extraWrapperArgs = [
