@@ -62,7 +62,7 @@ in
     graphviz
     figlet
     nyancat
-    pkgsu.d2
+    d2
     ## file system
     file
     # magika # detect file content types with deep learning
@@ -119,7 +119,7 @@ in
     #        nixos/doc/manual/default.nix
     sysconfig.system.build.manual.nixos-configuration-reference-manpage
     nurl
-    pkgsu.npins
+    npins
   ];
 
   programs.eza.enable = true;
@@ -159,11 +159,7 @@ in
   # ~/.config/npins/nixpkgs, home-manager, and nix-on-droid are defined in bootstrap/main.sh,
   # because <nixpkgs>, <home-manager>, and <nix-on-droid> are needed to bootstrap
   # nixos-rebuild, home-manager, and nix-on-droid.
-  # However, pkgsu and nur are not needed during bootstrap, so they are defined here.
-  home.file.pkgsu = {
-    target = ".config/npins/pkgsu";
-    source = pkgs.npinsed.pkgsu;
-  };
+  # However,nur are not needed during bootstrap, so they are defined here.
   home.file.nur = {
     target = ".config/npins/nur";
     source = pkgs.npinsed.nur;

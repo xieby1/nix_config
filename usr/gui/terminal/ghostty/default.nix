@@ -1,6 +1,6 @@
 { config, lib, pkgs, ... }:
 let
-  ghostty = pkgs.pkgsu.ghostty.overrideAttrs (old: {
+  ghostty = pkgs.ghostty.overrideAttrs (old: {
     patches = (old.patches or []) ++ [
       ./title-stack.patch
       ./scroll-mouse-report.patch

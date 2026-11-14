@@ -58,19 +58,6 @@
       "revision": "b11a0259d3db3308524336b8d880c6af2518ed75",
       "url": "https://github.com/nix-community/NUR/archive/b11a0259d3db3308524336b8d880c6af2518ed75.tar.gz",
       "hash": "sha256-09pfsA9TqUDL1HtmegZCC0vNdSy+l2gGrJu/olb98Dk="
-    },
-    "pkgsu": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "NixOS",
-        "repo": "nixpkgs"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "dd45a11b56a938aafacf2befce175900f8a064da",
-      "url": "https://github.com/NixOS/nixpkgs/archive/dd45a11b56a938aafacf2befce175900f8a064da.tar.gz",
-      "hash": "sha256-ju/rZUi7rtM957COEKhdpYsrKNbRwJ8Gq1fPlLfBtok="
     }
   },
   "version": 8

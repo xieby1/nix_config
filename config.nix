@@ -16,14 +16,11 @@
   packageOverrides = pkgs: let
     # packages pinned by npins
     npinsed = import ./npins;
-    # 添加非稳定版的nixpkgs到nixpkgs里，
-    # 比如非稳定版的hello可以通过`pkgs.pkgsu.hello`来访问。
-    pkgsu = import npinsed.pkgsu {};
     #MC 添加flake-compat，用于在nix expression中使用flake的包
     #MC 让flake-compat默认使用pkgs.stdenv.system，使得defaultNix.default为pkgs.stdenv.system的包
     flake-compat = { src, system ? pkgs.stdenv.system }: import npinsed.flake-compat {inherit src system;};
   in {
-    inherit npinsed pkgsu flake-compat;
+    inherit npinsed flake-compat;
     #MC 添加nix user repository (NUR)到nixpkgs里。
     nur = import npinsed.nur {};
   };

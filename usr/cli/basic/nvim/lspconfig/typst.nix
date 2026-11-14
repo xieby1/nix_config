@@ -50,7 +50,7 @@
         vim.lsp.enable("tinymist", true)
       end, {})
     '';
-    extraPackages = [ pkgs.pkgsu.tinymist ];
+    extraPackages = [ pkgs.tinymist ];
   };
   home.packages = [
     # TODO: use pkgs.typst, once stable nixpkgs reaches typst 0.15.0.
@@ -60,6 +60,6 @@
     #  to 3rd-party libs and still point at my document's files.
     #  Without it, a lib receiving a relative path string would resolve it against the lib's
     #  own location; the workaround is passing `read("./relative_path")`'s result instead.
-    pkgs.pkgsu.typst
+    pkgs.typst
   ];
 }
