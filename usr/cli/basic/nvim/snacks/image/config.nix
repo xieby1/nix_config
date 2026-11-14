@@ -28,15 +28,13 @@ in {
       pkgs.imagemagick
       # for drawing math.tex as images
       # TODO: Is math disabled?
-      (pkgs.texlive.combine {
-        inherit (pkgs.texlive)
-        scheme-basic
-        standalone
-        varwidth
-        preview
-        mathtools
-        xcolor
-      ;})
+      (pkgs.texliveBasic.withPackages (p: [
+        p.standalone
+        p.varwidth
+        p.preview
+        p.mathtools
+        p.xcolor
+      ]))
       pkgs.ghostscript
     ];
   };

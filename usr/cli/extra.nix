@@ -43,7 +43,7 @@
     openjdk
 
     ### pdfcrop
-    (texlive.combine {inherit (pkgs.texlive) scheme-minimal pdfcrop;})
+    (texliveMinimal.withPackages (p: [p.pdfcrop]))
     # runXonY
     qemu
   ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
