@@ -1,4 +1,3 @@
-{ depkgs }: # local args
 { config, ... }: {
   imports = [
     ./settings.nix
