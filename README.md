@@ -57,7 +57,8 @@ Nix/NixOS采用了“包（Package）”的理念，将Linux内核、驱动、�
 
 这个仓库[Github: xieby1/nix_config](https://github.com/xieby1/nix_config)里存放着我的Nix/NixOS配置和文档。
 该仓库使用nix expression，而非nix flakes；
-使用NixOS稳定源（目前版本26.05），而非非稳定源（unstable）。
+通过npins固定nixpkgs-unstable、home-manager master和NUR main，
+以便使用最新功能。
 该仓库的配置在多个平台都可以正常使用：
 
 * NixOS: QEMU✅，NixOS单系统✅，NixOS+Windows双系统✅
@@ -128,10 +129,9 @@ vim /etc/nixos/configuration.nix
 
 * 注一：nix-channel难以确定性地配置控制NIX_PATH的nixpkgs, home-manager的源，
   所以nix-channel已被我弃用。
-* 注二：NIX_PATH的nixpkgs和home-manager的源来自于./npins/。
-  为什么用https://nixos.org/channels/nixos-26.05，
-  而非https://github.com/NixOS/nixpkgs/archive/release-26.05.tar.gz？
-  前者包含额外内容，比如programs.command-not-found.dbPath，详细见`man configuration.nix`。
+* 注二：NIX_PATH的nixpkgs和home-manager源来自于./npins/。
+  nixpkgs使用nixpkgs-unstable频道归档（nixexprs.tar.xz），
+  home-manager使用master分支；具体版本由./npins/sources.json固定。
 
 最后部署配置
 
