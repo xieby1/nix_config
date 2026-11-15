@@ -1,4 +1,6 @@
-{ ... }: {
+{ config, ... }: {
+  imports = [ ./co-author ];
+  cachix_packages = [ config.programs.lazygit.package ];
   programs.lazygit = {
     enable = true;
     settings = {
