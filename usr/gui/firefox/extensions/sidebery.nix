@@ -12,6 +12,15 @@
 #   3.1. If you are opening multiple browser windows with their sidebar, you'll see multiple entries in the list.
 #   3.2. /sidebar/sidebar.html items are sorted by the order they are initialized. If you hope to inspect the sidebar in the first browser window, you should choose first /sidebar/sidebar.html item in the list.
 # 4. Choose the Inspector tab.
+#
+# To find CSS selectors for Firefox's own UI (e.g. the Tabs header, not Sidebery):
+# 1. Press F12, then F1; enable "Enable browser chrome and add-on debugging toolboxes"
+#    and "Enable remote debugging" in DevTools settings.
+# 2. Press Ctrl+Alt+Shift+I and accept the Browser Toolbox connection.
+# 3. In its Inspector, select the sidebar frame if needed, then use the element
+#    picker on the UI you want to style.
+# 4. Read the element's id/class (e.g. id="sidebar-panel-header" gives
+#    #sidebar-panel-header) and test your rule in the Styles pane.
 
 { pkgs, ... }: let
   sidebery = pkgs.nur.repos.rycee.firefox-addons.sidebery;
