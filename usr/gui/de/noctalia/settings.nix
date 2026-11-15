@@ -6,7 +6,7 @@
       auto_hide_reserve_space = true;
       margin_ends = 0;
       start = [
-        "notifications" "daily-wallpaper"
+        "notifications"
         "media"
         "taskbar"
       ];
@@ -37,15 +37,6 @@
       override_duration = 0;
     };
 
-    plugins = {
-      enabled = [
-        "nzlov/daily-wallpaper"
-      ];
-    };
-    widget.daily-wallpaper = {
-      type = "nzlov/daily-wallpaper:widget";
-      show_text = false;
-    };
     widget.taskbar = {
       group_by_workspace = true;
       hide_empty_workspaces = true;
