@@ -70,12 +70,14 @@ in {
       settings = {
         "sidebar.position_start" = false; # sidebar on the right
       };
-      userChrome = ''
+      userChrome = /*css*/ ''
         /* Completely Remove Firefox Tab Bar */
         /* https://bricep.net/completely-remove-firefox-tab-bar/ */
         #TabsToolbar { visibility: collapse !important; }
 
-        #sidebar-header { display: none; }
+        /* Show hide this part of sidebar #2169: https://github.com/mbnuqw/sidebery/discussions/2169 */
+        #sidebar-panel-header { display: none; }
+
         #sidebar-splitter { display: none; }
         #sidebar-box {
           width: 13vw !important;
