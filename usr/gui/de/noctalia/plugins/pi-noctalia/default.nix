@@ -15,4 +15,9 @@ in {
       max_visible = 3;
     };
   };
+  wayland.windowManager.niri.settings = {
+    binds = {
+      "Mod+A".spawn-sh = "noctalia msg panel-toggle local/pi-noctalia:sessions";
+    };
+  };
 }
