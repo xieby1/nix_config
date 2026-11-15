@@ -17,7 +17,10 @@
     generator = builtins.toJSON;
     expr = {
       refreshTurns = 5;
-      model = "${ai.default_small.provider}/${ai.default_small.model.id}:${(lib.head ai.default_small.model.reasoning.effort_levels).value}";
+      model = let
+        effort = lib.findFirst (option: option.type == "effort")
+          (throw "pi-title model has no reasoning effort levels") ai.default_small.model.reasoning_options;
+      in "${ai.default_small.provider}/${ai.default_small.model.id}:${lib.head effort.values}";
     };
   };
 }

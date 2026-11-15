@@ -6,7 +6,7 @@ let
     inherit (pkgs) lib;
     ai.default_small = {
       provider = "test-provider";
-      model = { id = "test-model"; reasoning.effort_levels = [{ value = "low"; display = "Low"; }]; };
+      model = { id = "test-model"; reasoning_options = [{ type = "toggle"; } { type = "effort"; values = [ "low" "high" ]; }]; };
     };
   };
   root = module.home.file.".pi/agent/extensions/pi-title".source;

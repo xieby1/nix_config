@@ -1,20 +1,17 @@
 {
   "pins": {
-    "catwalk": {
-      "type": "GitRelease",
+    "models-dev": {
+      "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "charmbracelet",
-        "repo": "catwalk"
+        "owner": "anomalyco",
+        "repo": "models.dev"
       },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
+      "branch": "dev",
       "submodules": false,
-      "version": "v3.2.10",
-      "revision": "042290f972e099d610c2955a8e13d36aca801149",
-      "url": "https://api.github.com/repos/charmbracelet/catwalk/tarball/refs/tags/v3.2.10",
-      "hash": "sha256-5VvuB3j6+CAL79SCf3zhOsMOHfcjofR9oIYxbFRxyBE="
+      "revision": "888c250133b38839c2018d66fe687cb03c03a8f2",
+      "url": "https://github.com/anomalyco/models.dev/archive/888c250133b38839c2018d66fe687cb03c03a8f2.tar.gz",
+      "hash": "sha256-XMGKBBWYEBDsPVP+/ZU0nTXWMllsDHR5u/H20LhzQuE="
     }
   },
   "version": 8
