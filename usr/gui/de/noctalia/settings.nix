@@ -188,18 +188,12 @@
 
     control_center = {
       width = 1200;
+      shortcuts = [
+        {type = "wifi";}
+        {type = "bluetooth";}
+        {type = "dark_mode";}
+        {type = "session";}
+      ];
     };
   };
-    # TODO:
-    # [[control_center.shortcuts]]
-    # type = "wifi"
-
-    # [[control_center.shortcuts]]
-    # type = "bluetooth"
-
-    # [[control_center.shortcuts]]
-    # type = "dark_mode"
-
-    # [[control_center.shortcuts]]
-    # type = "session"
 }
