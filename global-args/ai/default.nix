@@ -36,6 +36,13 @@ in rec {
       name = "DeepSeek-Flash";
     };
   };
+  jw2-kimi = models-dev-providers.kimi-code-plan-cn // {
+    id = "jw2-kimi";
+    name = "JW2 Kimi";
+    api = "openai-responses";
+    api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
+    api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-kimi.txt);
+  };
   acc-gpt = models-dev-providers.openai // {
     id = "acc-openai";
     name = "ACC OpenAI";

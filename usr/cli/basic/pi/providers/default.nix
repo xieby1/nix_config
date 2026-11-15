@@ -1,6 +1,7 @@
 { ai, ... }: {
   imports = [
     (import ./models-dev-to-custom-provider ai.jw2-openai)
+    (import ./models-dev-to-custom-provider ai.jw2-kimi)
     # allrouter.cc rejects Pi's session_id header (HTTP 400); keep x-client-request-id.
     {yq-merge.".pi/agent/models.json".expr.providers.acc-openai.compat.sessionAffinityFormat = "openai-nosession";}
     (import ./models-dev-to-custom-provider ai.acc-gpt)
