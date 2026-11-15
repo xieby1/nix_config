@@ -5,21 +5,21 @@ catwalk: {
       providers = {
         ${catwalk.id} = {
           baseUrl = catwalk.api_endpoint;
-          api =  if catwalk.type == "anthropic" then "anthropic-messages"
-            else if catwalk.type == "openai" then "openai-responses"
-            else if catwalk.type == "openai-compat" then "openai-completions"
+          api =  if catwalk.type == "messages" then "anthropic-messages"
+            else if catwalk.type == "responses" then "openai-responses"
+            else if catwalk.type == "completions" then "openai-completions"
             else throw "Unknown api from catwalk.type ${catwalk.type}";
           apiKey = catwalk.api_key;
           models = builtins.attrValues (builtins.mapAttrs (
             _: model: {
               inherit (model) id name;
-              reasoning = model.can_reason;
-              input = ["text"] ++ (if model.supports_attachments then ["image"] else []);
+              reasoning = builtins.elem model.reasoning.thinking [ "always" "toggleable" ];
+              input = ["text"] ++ (if model.capabilities.vision then ["image"] else []);
               cost = {
-                input = model.cost_per_1m_in;
-                output = model.cost_per_1m_out;
-                cacheRead = model.cost_per_1m_in_cached;
-                cacheWrite = model.cost_per_1m_out_cached;
+                input = model.pricing.input;
+                output = model.pricing.output;
+                cacheRead = model.pricing.cache_hit or 0;
+                cacheWrite = model.pricing.cache_create or 0;
               };
               contextWindow = model.context_window;
               maxTokens = model.default_max_tokens;

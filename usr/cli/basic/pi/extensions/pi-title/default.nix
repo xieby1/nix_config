@@ -17,7 +17,7 @@
     generator = builtins.toJSON;
     expr = {
       refreshTurns = 5;
-      model = "${ai.default_small.provider}/${ai.default_small.model.id}:${lib.head ai.default_small.model.reasoning_levels}";
+      model = "${ai.default_small.provider}/${ai.default_small.model.id}:${(lib.head ai.default_small.model.reasoning.effort_levels).value}";
     };
   };
 }
