@@ -123,6 +123,18 @@ in {
           value = { shortcut = "Alt+Shift+Delete"; };
           enabled = true;
         }];};
+        rm_tabs_above_in_panel.precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value.shortcut = "Alt+Shift+Comma";
+          enabled = true;
+        }];
+        rm_tabs_below_in_panel.precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value.shortcut = "Alt+Shift+Period";
+          enabled = true;
+        }];
         switch_to_next_tab = { precedenceList = [{
           id = sidebery.addonId;
           installDate = 0;
@@ -135,6 +147,18 @@ in {
           value = { shortcut = "Alt+Shift+Up"; };
           enabled = true;
         }];};
+        switch_to_tab_0.precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value.shortcut = "Alt+Shift+PageUp";
+          enabled = true;
+        }];
+        switch_to_last_tab.precedenceList = [{
+          id = sidebery.addonId;
+          installDate = 0;
+          value.shortcut = "Alt+Shift+PageDown";
+          enabled = true;
+        }];
       };
     };
   };
