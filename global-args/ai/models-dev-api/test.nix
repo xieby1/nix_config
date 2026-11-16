@@ -1,8 +1,7 @@
 let
   pkgs = import <nixpkgs> {};
   inherit (pkgs) lib;
-  src = (import <npins> { input = ../sources.json; }).models-dev;
-  providers = import ./. { inherit pkgs src; };
+  providers = builtins.fromJSON (builtins.readFile (pkgs.callPackage ./. {}));
 in lib.debug.throwTestFailures { failures = lib.runTests {
   test-openai = {
     expr = providers.openai.models."gpt-6.1-sol".limit.context;
