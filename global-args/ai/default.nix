@@ -16,7 +16,7 @@ in {
   _module.args.ai = rec {
     inherit models-dev-providers;
     default_small = {
-      provider = "jw2-deepseek";
+      provider = jw2-deepseek;
       model = jw2-deepseek.models.deepseek-flash;
     };
     # default_large_model = jw2-openai.models."gpt-6.1-sol";

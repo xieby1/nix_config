@@ -20,7 +20,7 @@
       model = let
         effort = lib.findFirst (option: option.type == "effort")
           (throw "pi-title model has no reasoning effort levels") ai.default_small.model.reasoning_options;
-      in "${ai.default_small.provider}/${ai.default_small.model.id}:${lib.head effort.values}";
+      in "${ai.default_small.provider.id}/${ai.default_small.model.id}:${lib.head effort.values}";
     };
   };
 }
