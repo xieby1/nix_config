@@ -19,6 +19,8 @@ in {
       gtk-single-instance = false;
       font-size = (import ~/Gist/Config/terminal-font-size.nix).${lib.trim (builtins.readFile /etc/hostname)} or 14;
       font-family = config.fonts.fontconfig.defaultFonts.monospace;
+      # Make bar cursors easier to see in zsh and Neovim insert modes.
+      adjust-cursor-thickness = 4;
       gtk-custom-css = "${builtins.toFile "ghostty.css" ''
         headerbar {
           min-height: 10px;
