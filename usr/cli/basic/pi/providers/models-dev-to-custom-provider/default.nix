@@ -13,7 +13,7 @@ provider: {
           cacheRead = model.cost.cache_read or 0;
           cacheWrite = model.cost.cache_write or 0;
         };
-        contextWindow = model.limit.context;
+        contextWindow = model.workingContext;
         maxTokens = model.limit.output;
       }) (builtins.filter (model: (model.type or "chat") == "chat") (builtins.attrValues provider.models));
     };

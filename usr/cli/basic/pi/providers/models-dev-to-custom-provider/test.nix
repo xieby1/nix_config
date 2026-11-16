@@ -7,6 +7,7 @@ let
     modalities = { input = [ "text" "image" "video" ]; output = [ "text" ]; };
     cost = { input = 1; output = 2; cache_read = 0.1; cache_write = 0.2; };
     limit = { context = 100000; output = 10000; };
+    workingContext = 33333;
   };
   convert = api: models: (import ./. {
     id = "test-provider";
@@ -27,7 +28,7 @@ in lib.debug.throwTestFailures { failures = lib.runTests {
       reasoning = true;
       input = [ "text" "image" ];
       cost = { input = 1; output = 2; cacheRead = 0.1; cacheWrite = 0.2; };
-      contextWindow = 100000;
+      contextWindow = 33333;
       maxTokens = 10000;
     }];
   };
