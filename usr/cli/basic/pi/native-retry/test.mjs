@@ -69,9 +69,9 @@ function assertCleanRetries(h) {
   }
 }
 
-test("classification is narrow and policy blocks override generic 429 matching", () => {
+test("classification is narrow and prompt policy errors use generic 429 matching", () => {
   assert.equal(isRetryableAssistantError(failure()), true);
-  assert.equal(isRetryableAssistantError(failure(policyBlock)), false);
+  assert.equal(isRetryableAssistantError(failure(policyBlock)), true);
   for (const error of [
     "basispoints_protocol_error: invalid operation",
     "another_protocol_error: no tool was executed",
@@ -87,25 +87,20 @@ test("classification is narrow and policy blocks override generic 429 matching",
     [1000, 2000, 4000, 8000, 10000, 10000, 10000, 10000, 10000, 10000]);
 });
 
-test("consecutive basispoints failures grow backoff and stop at ten retries", { timeout: 10000 }, async t => {
-  const h = await harness(t, Array.from({ length: 12 }, () => failure()));
-  await h.session.prompt("Do the task");
-  assert.equal(h.faux.state.callCount, 11);
-  assert.deepEqual(h.scheduled.map(e => e.attempt), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  assert.deepEqual(h.scheduled.map(e => e.delayMs), [10, 20, 40, 80, 100, 100, 100, 100, 100, 100]);
-  h.scheduled.forEach((e, i) => assert.ok(h.requests[i + 1].at - e.at >= e.delayMs - 2));
-  assert.equal(h.finished.at(-1).success, false);
-  assert.equal(h.finished.at(-1).attempt, 10);
-  assertCleanRetries(h);
-});
-
-test("prompt repetition blocks make only one request and retain the error", { timeout: 10000 }, async t => {
-  const h = await harness(t, [failure(policyBlock), fauxAssistantMessage("must not be requested")]);
-  await h.session.prompt("Do the task");
-  assert.equal(h.faux.state.callCount, 1);
-  assert.equal(h.scheduled.length, 0);
-  assert.equal(h.session.messages.at(-1).errorMessage, policyBlock);
-});
+for (const [name, errorMessage] of [["basispoints", basispoints], ["prompt repetition policy", policyBlock]]) {
+  test(`consecutive ${name} failures grow backoff and stop at ten retries`, { timeout: 10000 }, async t => {
+    const h = await harness(t, Array.from({ length: 12 }, () => failure(errorMessage)));
+    await h.session.prompt("Do the task");
+    assert.equal(h.faux.state.callCount, 11);
+    assert.deepEqual(h.scheduled.map(e => e.attempt), [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
+    assert.deepEqual(h.scheduled.map(e => e.delayMs), [10, 20, 40, 80, 100, 100, 100, 100, 100, 100]);
+    h.scheduled.forEach((e, i) => assert.ok(h.requests[i + 1].at - e.at >= e.delayMs - 2));
+    assert.equal(h.finished.at(-1).success, false);
+    assert.equal(h.finished.at(-1).attempt, 10);
+    assert.equal(h.session.messages.at(-1).errorMessage, errorMessage);
+    assertCleanRetries(h);
+  });
+}
 
 test("cancelling backoff prevents the next request", { timeout: 10000 }, async t => {
   const h = await harness(t, [failure(), fauxAssistantMessage("must not be requested")], { baseDelayMs: 1000, maxAgentDelayMs: 1000 });

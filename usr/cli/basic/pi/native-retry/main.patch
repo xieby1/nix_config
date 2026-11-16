@@ -1,18 +1,8 @@
 diff --git a/packages/ai/src/utils/retry.ts b/packages/ai/src/utils/retry.ts
-index eabf6c7..d70095f 100644
+index eabf6c7..22e1ac9 100644
 --- a/packages/ai/src/utils/retry.ts
 +++ b/packages/ai/src/utils/retry.ts
-@@ -5,6 +5,9 @@ function buildProviderErrorPattern(patterns: readonly string[]): RegExp {
- }
- 
- const NON_RETRYABLE_PROVIDER_LIMIT_ERROR_PATTERN = buildProviderErrorPattern([
-+	// Gateway policy blocks last minutes, not seconds; generic 429 matching must not retry them.
-+	"\\bprompt_repetition_policy\\b",
-+
- 	// OpenCode Go/free-tier limits returned as 429 JSON error types by OpenCode's
- 	// Zen API. These are subscription/account limits, not transient throttles.
- 	"GoUsageLimitError",
-@@ -35,6 +38,9 @@ const NON_RETRYABLE_PROVIDER_LIMIT_ERROR_PATTERN = buildProviderErrorPattern([
+@@ -35,6 +35,9 @@ const NON_RETRYABLE_PROVIDER_LIMIT_ERROR_PATTERN = buildProviderErrorPattern([
  ]);
  
  const RETRYABLE_PROVIDER_ERROR_PATTERN = buildProviderErrorPattern([
