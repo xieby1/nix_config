@@ -7,7 +7,7 @@
       margin_ends = 0;
       start = [
         "notifications"
-        "media"
+        # "media"
         "taskbar"
       ];
       center = [
