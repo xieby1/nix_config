@@ -1,15 +1,20 @@
-{ pkgs, src }: let
+{ fetchurl,
+  runCommand,
+  bun,
+  jq,
+}: let
   # Only the generator's runtime dependencies, pinned from upstream bun.lock.
-  remeda = pkgs.fetchurl {
+  remeda = fetchurl {
     url = "https://registry.npmjs.org/remeda/-/remeda-2.33.7.tgz";
     hash = "sha512-cXlyjevWx5AcslOUEETG4o8XYi9UkoCXcJmj7XhPFVbla+ITuOBxv6ijBrmbeg+ZhzmDThkNdO+iXKUfrJep1w==";
   };
-  zod = pkgs.fetchurl {
+  zod = fetchurl {
     url = "https://registry.npmjs.org/zod/-/zod-3.24.2.tgz";
     hash = "sha512-lY7CDW43ECgW9u1TcT3IoXHflywfVqDYze4waEz812jR/bZ8FHDsl7pFQoSZTz5N+2NqRXs8GBwnAwo3ZNxqhQ==";
   };
-in pkgs.runCommand "models-dev-api.json" {
-  nativeBuildInputs = [ pkgs.bun pkgs.jq ];
+  src = (import <npins> { input = ./sources.json; }).models-dev;
+in runCommand "models-dev-api.json" {
+  nativeBuildInputs = [ bun jq ];
 } ''
   cp -r ${src} source
   chmod u+w source
