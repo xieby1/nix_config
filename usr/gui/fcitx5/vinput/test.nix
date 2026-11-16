@@ -1,7 +1,16 @@
 let
   pkgs = import <nixpkgs> {};
   inherit (pkgs) lib;
-  sharedArgs = import ../../../../global-args { inherit lib; };
+  sharedArgs = (import ../../../../global-args { inherit lib; }) // {
+    ai.default_small = {
+      provider = {
+        id = "jw2-deepseek";
+        api_endpoint = "https://example.test/v1";
+        api_key = "test-key";
+      };
+      model.id = "deepseek-flash";
+    };
+  };
   hm = import <home-manager/modules> {
     inherit pkgs;
     configuration = {
@@ -79,6 +88,34 @@ in lib.debug.throwTestFailures { failures = lib.runTests {
     expr = cfg.yq-merge.".config/vinput/config.json".expr.asr.active_provider or null;
     expected = "sherpa-onnx";
   };
+  test-llm-provider = {
+    expr = cfg.yq-merge.".config/vinput/config.json".expr.llm.providers or null;
+    expected = [{
+      id = "jw2-deepseek";
+      base_url = "https://example.test/v1";
+      api_key = "test-key";
+    }];
+  };
+  test-correction-scene = let
+    scenes = cfg.yq-merge.".config/vinput/config.json".expr.scenes;
+    scene = builtins.head scenes.definitions;
+  in {
+    expr = {
+      active = scenes.active_scene;
+      inherit (scene) id provider_id model context_lines count timeout_ms;
+      hasPrompt = scene.prompt != "";
+    };
+    expected = {
+      active = "correct";
+      id = "correct";
+      provider_id = "jw2-deepseek";
+      model = "deepseek-flash";
+      context_lines = 0;
+      count = 1;
+      timeout_ms = 8000;
+      hasPrompt = true;
+    };
+  };
   test-model-selection-triggers-activation = {
     expr = lib.hasInfix "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8"
       (cfg.home.file.".config/vinput/config.json".text or "");
@@ -100,12 +137,13 @@ in lib.debug.throwTestFailures { failures = lib.runTests {
         test -w .config/vinput/config.json
         jq -e '.asr.active_provider == "sherpa-onnx" and
           .asr.providers[0].model == "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8" and
-          .scenes.active_scene == "__raw__"' .config/vinput/config.json
+          .scenes.active_scene == "correct" and
+          .scenes.definitions[0].model == "deepseek-flash"' .config/vinput/config.json
         for providers in \
           '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}}]' \
           '[{"id":"cloud","type":"command","env":{"TOKEN":"keep"}},{"id":"sherpa-onnx","type":"local","timeout_ms":27000,"model":"model.sherpa-onnx.sense-voice-zh-en-ja-ko-yue-int8"}]'; do
           jq -n --argjson providers "$providers" \
-            '{global:{capture_device:"keep-mic"},asr:{active_provider:"cloud",providers:$providers}}' \
+            '{global:{capture_device:"keep-mic"},asr:{active_provider:"cloud",providers:$providers},llm:{providers:[{id:"custom-llm",base_url:"https://custom.test",api_key:"keep-llm"}]},scenes:{active_scene:"custom",definitions:[{id:"custom",prompt:"keep",provider_id:"cloud",model:"custom-model"},{id:"__raw__",count:0}]}}' \
             > .config/vinput/config.json
           apply
           apply
@@ -114,7 +152,13 @@ in lib.debug.throwTestFailures { failures = lib.runTests {
             ([.asr.providers[] | select(.id == "cloud")][0].env.TOKEN == "keep") and
             ([.asr.providers[] | select(.id == "sherpa-onnx")] | length == 1) and
             ([.asr.providers[] | select(.id == "sherpa-onnx")][0].model ==
-              "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8")' .config/vinput/config.json
+              "model.sherpa-onnx.x-asr-960ms-streaming-zipformer-transducer-zh-en-punct-int8") and
+            ([.llm.providers[] | select(.id == "custom-llm")][0].api_key == "keep-llm") and
+            ([.llm.providers[] | select(.id == "jw2-deepseek")] | length == 1) and
+            .scenes.active_scene == "correct" and
+            ([.scenes.definitions[] | select(.id == "custom")][0].prompt == "keep") and
+            ([.scenes.definitions[] | select(.id == "__raw__")] | length == 1) and
+            ([.scenes.definitions[] | select(.id == "correct")] | length == 1)' .config/vinput/config.json
         done
         jq -e '[.asr.providers[] | select(.id == "sherpa-onnx")][0].timeout_ms == 27000' .config/vinput/config.json
         echo ok > $out
