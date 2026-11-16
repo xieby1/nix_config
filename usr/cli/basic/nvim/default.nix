@@ -24,6 +24,7 @@ in {
     ./leap-nvim.nix
     ./git-wip.nix
     ./terminal.nix
+    ./rich-paste.nix
     (lib.modules.importApply ./outline-nvim.nix {src = npinsed.outline-treesitter-provider;})
     ./gitsigns-nvim.nix
     ./color-scheme.nix
