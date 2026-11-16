@@ -1,4 +1,5 @@
-if [[ ! -d ~/.config/npins || ~/.config/npins-timestamp -ot ~/.config/nixpkgs/npins/sources.json ]]; then
+# Bash treats a missing timestamp as older than sources.json; zsh's -ot requires it to exist.
+if [[ ! -d ~/.config/npins || ! -e ~/.config/npins-timestamp || ~/.config/npins-timestamp -ot ~/.config/nixpkgs/npins/sources.json ]]; then
   mkdir -p ~/.config/npins
   nix-store --add-root ~/.config/npins/nixpkgs      \
     --realise $(nix --extra-experimental-features nix-command eval --impure --expr '(import ~/.config/nixpkgs/npins).nixpkgs.outPath' | tr -d '"')
