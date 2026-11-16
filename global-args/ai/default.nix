@@ -6,6 +6,7 @@
   };
 in {
   _module.args.ai = rec {
+    inherit models-dev-providers;
     default_small = {
       provider = "jw2-deepseek";
       model = jw2-deepseek.models.deepseek-flash;
