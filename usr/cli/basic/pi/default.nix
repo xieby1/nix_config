@@ -1,5 +1,5 @@
 { enableExtendedCLI }:
-{ config, lib, ... }:
+{ config, lib, pkgs, ... }:
 let
   npinsed = import <npins> {input=./sources.json;};
   pipkgs = import ./pkgs.nix {src = npinsed.nixpkgs;};
@@ -22,7 +22,12 @@ in {
 
   yq-merge.".pi/agent/settings.json" = {
     generator = builtins.toJSON;
+    # The settings merge retains removed keys; drop the retired extension's namespace on activation.
+    postOnChange = ''
+      run ${pkgs.yq-go}/bin/yq -i 'del(.piRetry)' "$HOME/.pi/agent/settings.json"
+    '';
     expr = {
+      # Native retry uses one lifecycle-owned scheduler; gateway classifications are patched in pkgs.nix.
       retry = {
         enabled = true;
         maxRetries = 10;

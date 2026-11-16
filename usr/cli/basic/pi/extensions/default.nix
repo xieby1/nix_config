@@ -7,7 +7,8 @@
     (lib.modules.importApply ./pi-co-authored-by.nix {src = sources.shelken-pi-extensions;})
     (lib.modules.importApply ./pi-math {src = sources.pi-math;})
     (lib.modules.importApply ./pi-language-tutor {src = sources.pi-language-tutor;})
-    (lib.modules.importApply ./pi-retry.nix {src = sources.pi-retry;})
+    # No pi-retry: its detached loop can check before the retry starts, resetting backoff and bypassing limits.
+    # Pi's native retry owns the lifecycle; we don't need the extension's continuation or nudge features.
     (lib.modules.importApply ./pi-context-view {src = sources.pi-context-view;})
     (lib.modules.importApply ./pi-model-project.nix {
       src = sources.pi-model-project;
