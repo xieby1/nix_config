@@ -26,10 +26,6 @@ in {
 
   yq-merge.".pi/agent/settings.json" = {
     generator = builtins.toJSON;
-    # The settings merge retains removed keys; drop the retired extension's namespace on activation.
-    postOnChange = ''
-      run ${pkgs.yq-go}/bin/yq -i 'del(.piRetry)' "$HOME/.pi/agent/settings.json"
-    '';
     expr = {
       # Native retry uses one lifecycle-owned scheduler; gateway classifications are patched in pkgs.nix.
       retry = {
@@ -41,6 +37,17 @@ in {
       # pi >=1.0 defaults to "fullscreen", where Pi redraws the transcript viewport on
       # every scroll; "regular" lets terminal scroll its own (fast) scrollback buffer.
       tuiMode = "regular";
+    };
+  };
+
+  yq-merge.".pi/agent/keybindings.json" = {
+    generator = builtins.toJSON;
+    expr = {
+      "tui.altScreen.previousPrompt" = "alt+shift+up";
+      "tui.altScreen.nextPrompt" = "alt+shift+down";
+      "tui.altScreen.search" = "alt+shift+f";
+      "tui.altScreen.top" = "alt+shift+pageUp";
+      "tui.altScreen.bottom" = "alt+shift+pageDown";
     };
   };
 
