@@ -12,9 +12,9 @@
       ];
       center = [
         # "active_window"
-        "clock_sep_left"
-        "clock"
-        "clock_sep_right"
+        "clock_date"
+        "clock_time"
+        "clock_weekday"
         "weather"
       ];
       end = [
@@ -44,19 +44,19 @@
       workspace_group_inactive_border_color = "shadow";
     };
 
-    widget.clock_sep_left = {
-      type = "text";
-      color = "primary";
-      text = "|";
+    widget.clock_date = {
+      type = "clock";
+      format = "{:%Y.%m.%d}";
     };
-    widget.clock = {
-      format = "{:%Y.%m.%d %a %H:%M}";
+    widget.clock_time = {
+      type = "clock";
+      format = "{:%H:%M}";
       anchor = true;
+      font_weight = 700;
     };
-    widget.clock_sep_right = {
-      type = "text";
-      color = "primary";
-      text = "|";
+    widget.clock_weekday = {
+      type = "clock";
+      format = "{:%a}";
     };
     widget.weather = {
       show_condition = false;
