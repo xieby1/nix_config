@@ -34,9 +34,8 @@ in {
         baseDelayMs = 1000;
         maxAgentDelayMs = 10000;
       };
-      # pi >=1.0 defaults to "fullscreen", where Pi redraws the transcript viewport on
-      # every scroll; "regular" lets terminal scroll its own (fast) scrollback buffer.
-      tuiMode = "regular";
+      # Only fullscreen provides prompt navigation.
+      tuiMode = "fullscreen";
       fullscreenWheelScrollLines = 1;
     };
   };
