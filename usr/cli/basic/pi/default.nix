@@ -27,13 +27,6 @@ in {
   yq-merge.".pi/agent/settings.json" = {
     generator = builtins.toJSON;
     expr = {
-      # Native retry uses one lifecycle-owned scheduler; gateway classifications are patched in pkgs.nix.
-      retry = {
-        enabled = true;
-        maxRetries = 10;
-        baseDelayMs = 1000;
-        maxAgentDelayMs = 10000;
-      };
       # Only fullscreen provides prompt navigation.
       tuiMode = "fullscreen";
       fullscreenWheelScrollLines = 1;
