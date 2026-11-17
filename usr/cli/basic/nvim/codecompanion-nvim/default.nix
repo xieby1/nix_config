@@ -1,25 +1,13 @@
-{ src }: # local-args
 # TODO: Let blink.cmp fetch words from codecompanion buffer
 #MC # Code Companion: AI
 { pkgs, config, ... }: {
   programs.neovim.plugins = [{
-    plugin = pkgs.vimUtils.buildVimPlugin {
-      name = "codecompanion";
-      inherit src;
-      patches = [
-        # For codecompanion ACP tools calls: display tool call input and output
-        ./preserve-acp-raw-tool-io.patch
+    plugin = pkgs.vimPlugins.codecompanion-nvim.overrideAttrs (old: {
+      patches = (old.patches or []) ++ [
         # Keep CodeCompanion slash completions from outranking normal path completion.
         ./blink-completion-path-friendly.patch
       ];
-      # For codecompanion native tools calls: display with longer truncation
-      postPatch = ''
-        substituteInPlace lua/codecompanion/interactions/chat/acp/formatters.lua \
-          --replace-fail 'local MAX_TITLE = 60' 'local MAX_TITLE = 999' \
-          --replace-fail 'local MAX_TEXT = 100' 'local MAX_TEXT = 999'
-      '';
-      doCheck = false;
-    };
+    });
     type = "lua";
     # https://codecompanion.olimorris.dev/configuration/adapters.html
     config = /*lua*/ ''
@@ -45,14 +33,14 @@
                 winfixwidth = true,
               },
             },
-            diff = { enabled = true },
             fold_reasoning = false,
             -- Adapter can't be changed when `display.chat.show_settings = true`
             -- Fine!
             -- show_settings = true,
           },
+          diff = { enabled = true },
         },
-        strategies = {
+        interactions = {
           chat = { adapter = "pi", },
           inline = { adapter = "pi", },
         },
