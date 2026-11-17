@@ -110,6 +110,22 @@
       "url": "https://github.com/monotykamary/pi-math/archive/c78d685f9e7a16d27e77b38e3b224cd7b1bcb575.tar.gz",
       "hash": "sha256-8qbERQwMGP9q5LcqItXkVqesSlhZmfIEzKNsVEfjFPM="
     },
+    "pi-model-fallback": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "eiei114",
+        "repo": "pi-model-fallback"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.6.2",
+      "revision": "8b14810dcd74649f6a81235565aebb6dfbacb891",
+      "url": "https://api.github.com/repos/eiei114/pi-model-fallback/tarball/refs/tags/v0.6.2",
+      "hash": "sha256-E3b3jIGn1fLA5ghErWWTsqLgm77d32xuK/IYM3RaJ6k="
+    },
     "pi-model-project": {
       "type": "Git",
       "repository": {
