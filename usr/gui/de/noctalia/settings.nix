@@ -158,6 +158,7 @@
     };
     calendar.reminders = {
       default_lead_minutes = 3; # min
+      all_day_digest_time = "08:00";
     };
     calendar.account.outlook = {
       type = "ics";
