@@ -1,10 +1,7 @@
 { config, lib, pkgs, ... }:
 let
   ghostty = pkgs.ghostty.overrideAttrs (old: {
-    patches = (old.patches or []) ++ [
-      ./title-stack.patch
-      ./scroll-mouse-report.patch
-    ];
+    patches = (old.patches or []) ++ [ ./title-stack.patch ];
   });
 in {
   cachix_packages = [ ghostty ];
@@ -57,4 +54,9 @@ in {
       ];
     };
   };
+
+  programs.neovim.initLua = /*lua*/''
+    -- [Linux tmux: scrolling distance with the mouse wheel #8875](https://github.com/ghostty-org/ghostty/discussions/8875)
+    vim.opt.mousescroll = "ver:1,hor:1"
+  '';
 }
