@@ -16,7 +16,11 @@ in {
   home.packages = [
     # Include session-file size (S5.5M) in Pi's built-in footer stats line.
     (pipkgs.pi-coding-agent.overrideAttrs (old: {
-      patches = (old.patches or [ ]) ++ [ ./footer-session-size.patch ];
+      patches = (old.patches or [ ]) ++ [
+        ./footer-session-size.patch
+        # Let extension widgets scroll with the fullscreen transcript instead of pinning them to the input dock.
+        ./fullscreen-scrollable-widgets.patch
+      ];
     }))
   ];
 
