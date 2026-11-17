@@ -156,6 +156,9 @@
       enabled = true;
       event_date_format = "%B %e %A";
     };
+    calendar.reminders = {
+      default_lead_minutes = 3; # min
+    };
     calendar.account.outlook = {
       type = "ics";
       name = "xieby1 Outlook";
