@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ ... }: {
   home.shell.enableZshIntegration = true;
   programs.zsh = {
     enable = true;
@@ -59,16 +59,5 @@
         source ~/Gist/Config/zshrc
       fi
     '';
-    plugins = [{
-      name = "vi-mode";
-      src = pkgs.applyPatches {
-        src = pkgs.zsh-vi-mode;
-        postPatch = ''
-          # Delete history bindkey CTRL+[RSPN]
-          sed -i '/\^[RSPN]/d' share/zsh-vi-mode/zsh-vi-mode.zsh
-        '';
-      };
-      file = "share/zsh-vi-mode/zsh-vi-mode.plugin.zsh";
-    }];
   };
 }
