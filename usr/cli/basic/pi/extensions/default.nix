@@ -52,9 +52,5 @@
       source = pipkgs.pi-coding-agent.src
         + "/packages/coding-agent/examples/extensions/titlebar-spinner.ts";
     };
-    ".pi/agent/extensions/jw2-sub2api-pi-codex".source =
-      if builtins.pathExists ~/Gist/Vault/AI/jw2/sub2api-pi-codex then
-        ~/Gist/Vault/AI/jw2/sub2api-pi-codex
-      else null;
   };
 }
