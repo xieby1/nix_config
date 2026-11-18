@@ -21,6 +21,8 @@ in {
         # Let extension widgets scroll with the fullscreen transcript instead of pinning them to the input dock.
         ./fullscreen-scrollable-widgets.patch
         # Let extensions observe fullscreen terminal focus reports without forwarding them to components.
+        # Analogous upstream listener-order bug: https://github.com/earendil-works/pi/issues/10405.
+        # Closed as not planned without a rationale, hence this local focus-propagation patch.
         ./fullscreen-focus-propagation.patch
       ];
     }))
