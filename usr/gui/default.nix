@@ -14,7 +14,6 @@
     ./flameshot.nix
     ./fcitx5
     ./de
-    ./evolution
     ./low-battery-notify.nix
     ./xingyao-audio
     ./dingtalk
@@ -76,8 +75,6 @@
     nautilus
     loupe
     gnome-calculator
-    # TODO: may be replaced by dankcalendar
-    gnome-calendar
     surfer
   ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
     imhex

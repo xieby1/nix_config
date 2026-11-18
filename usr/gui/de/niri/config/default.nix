@@ -3,18 +3,6 @@
     ./binds.nix
   ];
   wayland.windowManager.niri.settings = {
-    _children = [
-      {
-        # TODO: move to evolution
-        window-rule = {
-          match._props.app-id="evolution-alarm-notify";
-          open-floating = true;
-          default-window-height = { proportion = 0.3; };
-          default-column-width = { proportion = 0.3; };
-        };
-      }
-    ];
-
     # Ghostty's OSC 777 notification action selects the right Pi tab, but
     # niri 26.04 rejects the window activation under its default serial check.
     # Trade-off: apps can steal focus with invalid-serial tokens. This niri
