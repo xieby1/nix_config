@@ -31,6 +31,12 @@ in {
       api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-openai.txt);
     };
+    jw2-sub2api-pi-codex = models-dev-providers.openai // {
+      id = "jw2-sub2api-pi-codex";
+      name = "JW2 sub2api-pi-codex";
+      # TODO: remove api field from module.args.ai, use models-dev-providers.xxx.npm instead?
+      api = "openai-responses";
+    };
     jw2-deepseek = models-dev-providers.deepseek // {
       id = "jw2-deepseek";
       name = "JW2 DeepSeek";
