@@ -43,8 +43,8 @@ in {
       "tui.altScreen.previousPrompt" = "alt+shift+up";
       "tui.altScreen.nextPrompt" = "alt+shift+down";
       "tui.altScreen.search" = "alt+shift+f";
-      "tui.altScreen.top" = "alt+shift+pageUp";
-      "tui.altScreen.bottom" = "alt+shift+pageDown";
+      "tui.altScreen.top" = "alt+shift+left";
+      "tui.altScreen.bottom" = "alt+shift+right";
     };
   };
 
