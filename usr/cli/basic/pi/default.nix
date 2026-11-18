@@ -20,6 +20,8 @@ in {
         ./footer-session-size.patch
         # Let extension widgets scroll with the fullscreen transcript instead of pinning them to the input dock.
         ./fullscreen-scrollable-widgets.patch
+        # Let extensions observe fullscreen terminal focus reports without forwarding them to components.
+        ./fullscreen-focus-propagation.patch
       ];
     }))
   ];
