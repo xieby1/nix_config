@@ -2,7 +2,6 @@
   imports = [
     ./settings.nix
     ./plugins
-    ./calendar-event-titles
   ];
   programs.noctalia = {
     enable = true;

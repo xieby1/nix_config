@@ -1,4 +1,7 @@
 { lib, ... }: {
+  imports = [
+    ./event-titles
+  ];
   programs.noctalia.settings = {
     calendar = {
       enabled = true;
