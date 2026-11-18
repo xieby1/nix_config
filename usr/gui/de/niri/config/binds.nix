@@ -28,6 +28,7 @@
       "Mod+Shift+H".spawn-sh = "noctalia msg bar-toggle";
       "Mod+F".spawn-sh = "ghostty -e bash -i fzf-doc";
       "Mod+S".spawn-sh = "${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click -o mode_floating.source=detect";
+      "Mod+Shift+S".spawn-sh = "${pkgs.wl-kbptr}/bin/wl-kbptr -o modes=floating,click -o mode_floating.source=detect -o mode_click.button=right";
 
       XF86AudioRaiseVolume = {
         _props.allow-when-locked = true;
