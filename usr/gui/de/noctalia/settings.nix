@@ -10,7 +10,6 @@
       margin_ends = 0;
       start = [
         "notifications"
-        # "media"
         "taskbar"
       ];
       center = [
@@ -21,6 +20,7 @@
         "weather"
       ];
       end = [
+        "media"
         "tray"
         "cpu" "ram" "ram_pct" "swap_pct" "disk_used" "disk_used_pct"
         "network_tx" "network_rx"
@@ -66,11 +66,10 @@
     };
 
     widget.media = {
+      album_art_only = true;
+      rotate_album_art = true;
       hide_when_no_media = true;
-      show_progress = true;
-      max_length = 160;
-      # min_length = 160;
-      title_scroll = "on_hover";
+      actions.left = "media toggle";
     };
     widget.cpu = {
       show_glyph = false;
