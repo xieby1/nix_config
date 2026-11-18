@@ -69,7 +69,10 @@
       album_art_only = true;
       rotate_album_art = true;
       hide_when_no_media = true;
-      actions.left = "media toggle";
+      actions = {
+        left = "media toggle";
+        right = "panel-toggle control-center media";
+      };
     };
     widget.cpu = {
       show_glyph = false;
