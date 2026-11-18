@@ -41,6 +41,12 @@
       bindkey -M menuselect "$terminfo[kcbt]" reverse-menu-complete
     '';
     initContent = ''
+      # Ghostty sends CSI Home/End in normal keypad mode; terminfo supplies SS3 forms.
+      bindkey -M viins "$terminfo[khome]" beginning-of-line
+      bindkey -M viins "$terminfo[kend]" end-of-line
+      bindkey -M viins "^[[H" beginning-of-line
+      bindkey -M viins "^[[F" end-of-line
+
       # Ctrl+arrows use vi small-word motions, stopping at punctuation.
       bindkey -M viins  "^[[1;5C" vi-forward-word
       bindkey -M viins  "^[[1;5D" vi-backward-word
