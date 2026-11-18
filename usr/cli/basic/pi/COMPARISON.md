@@ -159,6 +159,14 @@
   - ~~Use plenary.nvim, the same to Avante.nvim.~~: Use ACP agent!
   - ~~Codecompanion-history does not support ACP session restore.~~: If ACP client supports, we can use `/resume`!
   - tool calls display are trunct to 60 chars, and no way to configure it.
+  - Removed because native Pi is the primary interface and CodeCompanion + pi-acp provides only a reduced Pi experience.
+    This is not an intrinsic ACP limitation: ACP v1 supports custom `_meta` data, custom `_`-prefixed methods, and capability negotiation, while v2 adds structured elicitation.
+    However, arbitrary Pi extension functionality is not automatic; it requires Pi-specific protocol extensions and corresponding client UI work.
+  - The actual chain loses functionality at three layers:
+    - pi-acp launches Pi in RPC mode, which cannot reproduce `ctx.ui.custom()`, component widgets, raw terminal input, custom editor components, or terminal shortcuts.
+    - pi-acp v0.0.34 filters extension commands from ACP discovery, maps only select/confirm/notify partially, cancels input/editor requests, and does not generally bridge widgets, status lines, or titles.
+    - CodeCompanion's ACP v1 client dispatches standard methods but has no generic Pi-extension UI bridge; it also lacks agent-plan and terminal support.
+  - Background hooks and ordinary model tools still run inside Pi, but extension commands, custom views, rendering, questionnaires, and shortcuts are absent or degraded.
 
 ### Agentic.nvim
 

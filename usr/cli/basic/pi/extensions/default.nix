@@ -2,7 +2,6 @@
 # My feeling: configure javascript/typescript plugins is awful.
 { pkgs, lib, ... }: {
   imports = [
-    (lib.modules.importApply ./acp.nix {src = sources.acp;})
     (lib.modules.importApply ./pi-hermes-memory {src = sources.pi-hermes-memory; inherit pipkgs;})
     (lib.modules.importApply ./pi-co-authored-by.nix {src = sources.shelken-pi-extensions;})
     (lib.modules.importApply ./pi-math {src = sources.pi-math;})

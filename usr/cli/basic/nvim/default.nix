@@ -33,7 +33,6 @@ in {
     ./smartyank-nvim.nix
     ./mini-nvim.nix
     ./vim-easy-align.nix
-    ./codecompanion-nvim
     ./close-windows.nix
     ./nvim-window-picker.nix
     # TODO: remove/replace vim-matchup, which make nvim very laggy when edit/view large markdown (1k sloc)

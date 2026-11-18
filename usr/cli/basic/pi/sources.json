@@ -1,21 +1,5 @@
 {
   "pins": {
-    "acp": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "svkozak",
-        "repo": "pi-acp"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v0.0.34",
-      "revision": "4eade93d5eb1b294695a7ac8f8f44982063bbbef",
-      "url": "https://api.github.com/repos/svkozak/pi-acp/tarball/refs/tags/v0.0.34",
-      "hash": "sha256-QRwxOtTZOY+Np3PkAoy2o2PrUzEqjItM/372sCPlSMo="
-    },
     "nixpkgs": {
       "type": "Git",
       "repository": {

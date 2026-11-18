@@ -26,50 +26,6 @@
         local sections = vim.tbl_extend('force', inactive_sections, {
           lualine_c = {
             function() return require('nvim-navic').get_location() end,
-            { -- TODO: move it to codecompanion nix script
-              function()
-                local chat_metadata = _G.codecompanion_chat_metadata[vim.api.nvim_get_current_buf()]
-                if not chat_metadata then
-                  return ""
-                end
-
-                local adapter = chat_metadata.adapter or {}
-                local parts = { adapter.name or "CodeCompanion" }
-                if adapter.model then
-                  table.insert(parts, adapter.model)
-                end
-
-                local chat = require("codecompanion").buf_get_chat(0)
-                local adapter_opts = chat and chat.adapter and chat.adapter.opts or {}
-                local model_metadata = adapter.model and adapter_opts.model_metadata and adapter_opts.model_metadata[adapter.model]
-                local context_window = (model_metadata and model_metadata.context_window) or adapter_opts.context_window
-                local function abbr(num)
-                  if num >= 1000000 then
-                    return string.format("%.1fm", num / 1000000):gsub("%.0m$", "m")
-                  elseif num >= 1000 then
-                    return string.format("%.1fk", num / 1000):gsub("%.0k$", "k")
-                  end
-                  return tostring(num)
-                end
-                token_info = ""
-                if chat_metadata.tokens and chat_metadata.tokens then
-                  token_info = token_info .. abbr(chat_metadata.tokens)
-                end
-                if context_window then
-                  token_info = token_info .. "/" .. abbr(context_window)
-                end
-                table.insert(parts, token_info)
-
-                if chat_metadata.tools and chat_metadata.tools ~= 0 then
-                  table.insert(parts, tostring(chat_metadata.tools) .. " tools")
-                end
-
-                return "󰚩 " .. table.concat(parts, " · ")
-              end,
-              cond = function()
-                return vim.bo.filetype == "codecompanion" and _G.codecompanion_chat_metadata ~= nil
-              end,
-            },
           },
         })
 
