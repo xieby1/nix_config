@@ -29,24 +29,11 @@
   }];
 
   home.packages = with pkgs; [
-    # tools
-    imagemagick
-
-    # programming
-    ## c
-    cling # c/cpp repl
-    ## javascript
-    typescript
-    ### node
-    nodejs
-    ## java
-    openjdk
-
     ### pdfcrop
     (texliveMinimal.withPackages (p: [p.pdfcrop]))
     # runXonY
     qemu
-  ] ++ lib.optional (builtins.currentSystem == "x86_64-linux") quickemu;
+  ];
 
   services.podman.enable = true;
 }

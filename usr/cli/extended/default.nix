@@ -39,7 +39,6 @@ in
     # tools
     parallel
     comma
-    xclip
     python3Packages.qrcode
     ## archive
     unar
