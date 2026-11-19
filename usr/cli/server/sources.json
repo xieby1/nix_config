@@ -1,0 +1,41 @@
+{
+  "pins": {
+    "circle": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://root@xieby1.cn/~/Repos/Circle.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "14aec1fa9f572aa823d618cecb59e257c9d5c104",
+      "url": null,
+      "hash": "sha256-KQqO6aVcHhCXqaZ00W39Kf7NIo+1gKCGbVwe8ZcIYDY="
+    },
+    "sixu": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://root@xieby1.cn/~/Repos/Sixu.git"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "a4ecd12b321beb850fdddb5335f0f7598c56b7f1",
+      "url": null,
+      "hash": "sha256-9mN6bWguKmNkUPhM/4K9y3ZZR3j+ol1kLBrgTeMPZg4="
+    },
+    "xingyao": {
+      "type": "Git",
+      "repository": {
+        "type": "Git",
+        "url": "ssh://git@github.com/OpenXiangShan-Nanhu/XingYao"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "089cdc405bcc4af82928f433f87c7d6eb1d8f8ff",
+      "url": null,
+      "hash": "sha256-lNR97uj4+gewYkwtxWfzdJfd5EVxJNxaxsaJzAi5CYI="
+    }
+  },
+  "version": 8
+}

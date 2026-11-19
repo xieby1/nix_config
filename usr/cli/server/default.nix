@@ -1,16 +1,13 @@
-{ lib, ... }: {
+{ lib, ... }:
+let
+  sources = import <npins> {input = ./sources.json;};
+in {
   imports = [
     ./authelia
     ./caddy
-    (lib.modules.importApply ./circle {
-      src = (import <npins> {input=./circle/sources.json;}).circle;
-    })
-    (lib.modules.importApply ./sixu {
-      src = (import <npins> {input=./sixu/sources.json;}).sixu;
-    })
-    (lib.modules.importApply ./xingyao {
-      src = (import <npins> {input=./xingyao/sources.json;}).xingyao;
-    })
+    (lib.modules.importApply ./circle { src = sources.circle; })
+    (lib.modules.importApply ./sixu { src = sources.sixu; })
+    (lib.modules.importApply ./xingyao { src = sources.xingyao; })
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";
