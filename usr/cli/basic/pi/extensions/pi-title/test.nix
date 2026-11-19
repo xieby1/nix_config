@@ -5,7 +5,7 @@ let
     inherit pkgs;
     inherit (pkgs) lib;
     ai.default_small = {
-      provider = "test-provider";
+      provider = { id = "test-provider"; };
       model = { id = "test-model"; reasoning_options = [{ type = "toggle"; } { type = "effort"; values = [ "low" "high" ]; }]; };
     };
   };
