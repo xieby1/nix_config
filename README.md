@@ -142,7 +142,7 @@ sudo nixos-rebuild switch
 nix-shell '<home-manager>' -A install
 # 在home-manager配置中添加usr/的路径
 vim ~/.config/home-manager/home.nix
-## 例如  imports = [ /home/xieby1/.config/nixpkgs/usr ];
+## 例如  imports = [ (lib.modules.importApply ~/.config/nixpkgs/usr {} ];
 # 用nix expression而不使用nix flakes
 rm ~/.config/home-manager/flake.nix
 home-manager switch

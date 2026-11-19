@@ -7,16 +7,16 @@
 #MC
 #MC 因为部分系统不需要GUI程序，比如安卓手机nix-on-droid或是树莓派等。
 #MC 我利用环境变量`DISPLAY`用于判断是否导入GUI程序的配置。
-
-{ ... }: {
+{ enableGraphics ? true }: # local args
+{ lib, ... }: {
   imports = [
     ./ai
     ./cachix-push.nix
     ./yq-merge
     ./syncthing-gist-ignore.nix
     ./cli
-    ./gui
-  ];
+  ]
+  ++ lib.optional enableGraphics ./gui;
   _module.args = {
     isNixOnDroid = (builtins.getEnv "USER") == "nix-on-droid";
   };
