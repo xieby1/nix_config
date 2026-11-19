@@ -17,4 +17,7 @@
     ./cli
     ./gui
   ];
+  _module.args = {
+    isNixOnDroid = (builtins.getEnv "USER") == "nix-on-droid";
+  };
 }
