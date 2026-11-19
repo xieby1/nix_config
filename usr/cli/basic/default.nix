@@ -1,6 +1,5 @@
 {
-  # Enable optional CLI tooling omitted from the server profile.
-  enableExtendedCLI ? true
+  enableExtendedCLI
 }: # local args
 { lib, ... }: {
   imports = [
