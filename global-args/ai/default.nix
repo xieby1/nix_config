@@ -23,6 +23,9 @@ in {
     deepseek = models-dev-providers.deepseek // {
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/deepseek_api_key_nvim.txt);
     };
+    moonshot-cn = models-dev-providers.moonshotai-cn // {
+      api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/moonshot-cn.txt);
+    };
     tavily.api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/tavily.txt);
     jw2-openai = models-dev-providers.openai // {
       id = "jw2-openai";

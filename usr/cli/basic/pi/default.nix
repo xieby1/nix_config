@@ -40,6 +40,8 @@ in {
   yq-merge.".pi/agent/keybindings.json" = {
     generator = builtins.toJSON;
     expr = {
+      "tui.altScreen.lineUp" = "shift+up";
+      "tui.altScreen.lineDown" = "shift+down";
       "tui.altScreen.previousPrompt" = "alt+shift+up";
       "tui.altScreen.nextPrompt" = "alt+shift+down";
       "tui.altScreen.search" = "alt+shift+f";
