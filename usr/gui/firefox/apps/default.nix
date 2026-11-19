@@ -132,10 +132,10 @@
   }{
     name = "sixu";
     url = "https://xieby1.cn/sixu/xby/";
-    icon = (import <npins> {input=../../../../server/sixu/sources.json;}).sixu + /src/app/ui/web/frontend/public/sixu-icon.svg;
+    icon = (import <npins> {input=../../../cli/server/sources.json;}).sixu + /src/app/ui/web/frontend/public/sixu-icon.svg;
   }{
     name = "circle";
     url = "https://xieby1.cn/circle/xby/";
-    icon = (import <npins> {input=../../../../server/circle/sources.json;}).circle + /src/ui/web/render/public/icon.svg;
+    icon = (import <npins> {input=../../../cli/server/sources.json;}).circle + /src/ui/web/render/public/icon.svg;
   }];
 }

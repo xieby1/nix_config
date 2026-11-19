@@ -44,7 +44,7 @@ in
     ## archive
     unar
     ## manage
-    (import (import <npins> {input=../../../server/circle/sources.json;}).circle {inherit pkgs;})
+    (import (import <npins> {input=../server/sources.json;}).circle {inherit pkgs;})
     # htop search in intuitive
     btop
     witr
