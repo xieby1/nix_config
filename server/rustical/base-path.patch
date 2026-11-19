@@ -1,0 +1,1428 @@
+diff --git a/crates/caldav/src/calendar/methods/post.rs b/crates/caldav/src/calendar/methods/post.rs
+index abac0ed..68786a0 100644
+--- a/crates/caldav/src/calendar/methods/post.rs
++++ b/crates/caldav/src/calendar/methods/post.rs
+@@ -18,6 +18,7 @@ pub async fn route_post<C: CalendarStore, DP: DavPushStore>(
+     Path((principal, cal_id)): Path<(String, String)>,
+     user: Principal,
+     State(resource_service): State<CalendarResourceService<C, DP>>,
++    axum::Extension(base_path): axum::Extension<rustical_dav::BasePath>,
+     body: String,
+ ) -> Result<Response, Error> {
+     if !user.is_principal(&principal) {
+@@ -82,7 +83,7 @@ pub async fn route_post<C: CalendarStore, DP: DavPushStore>(
+         .await?;
+ 
+     // TODO: make nicer
+-    let location = format!("/push_subscription/{sub_id}");
++    let location = base_path.url(&format!("/push_subscription/{sub_id}"));
+     Ok((
+         StatusCode::CREATED,
+         HeaderMap::from_iter([
+diff --git a/crates/caldav/src/lib.rs b/crates/caldav/src/lib.rs
+index 4006ac5..5d9f220 100644
+--- a/crates/caldav/src/lib.rs
++++ b/crates/caldav/src/lib.rs
+@@ -21,7 +21,7 @@ pub mod principal;
+ pub use error::Error;
+ 
+ #[derive(Debug, Clone, Constructor)]
+-pub struct CalDavPrincipalUri(&'static str);
++pub struct CalDavPrincipalUri(String);
+ 
+ impl PrincipalUri for CalDavPrincipalUri {
+     fn principal_collection(&self) -> Uri {
+@@ -40,7 +40,8 @@ impl PrincipalUri for CalDavPrincipalUri {
+ }
+ 
+ pub fn caldav_router<AP: AuthenticationProvider, C: CalendarStore, DP: DavPushStore>(
+-    prefix: &'static str,
++    prefix: &str,
++    base_path: &rustical_dav::BasePath,
+     auth_provider: Arc<AP>,
+     store: Arc<C>,
+     dav_push_store: Arc<DP>,
+@@ -58,7 +59,7 @@ pub fn caldav_router<AP: AuthenticationProvider, C: CalendarStore, DP: DavPushSt
+         })
+         .axum_router()
+         .layer(AuthenticationLayer::new(auth_provider))
+-        .layer(Extension(CalDavPrincipalUri(prefix))),
++        .layer(Extension(CalDavPrincipalUri(base_path.url(prefix)))),
+     )
+ }
+ 
+@@ -90,7 +91,7 @@ mod tests {
+     #[case("asd@asd.de", "/caldav/principal/asd%40asd.de/")]
+     fn test_principal_uri_encoding(#[case] principal: &str, #[case] output: &str) {
+         assert_eq!(
+-            CalDavPrincipalUri("/caldav").principal_uri(principal),
++            CalDavPrincipalUri("/caldav".to_owned()).principal_uri(principal),
+             output
+         );
+     }
+diff --git a/crates/carddav/src/addressbook/methods/post.rs b/crates/carddav/src/addressbook/methods/post.rs
+index 087a12e..d4af06f 100644
+--- a/crates/carddav/src/addressbook/methods/post.rs
++++ b/crates/carddav/src/addressbook/methods/post.rs
+@@ -18,6 +18,7 @@ pub async fn route_post<AS: AddressbookStore, DP: DavPushStore>(
+     Path((principal, addr_id)): Path<(String, String)>,
+     user: Principal,
+     State(resource_service): State<AddressbookResourceService<AS, DP>>,
++    axum::Extension(base_path): axum::Extension<rustical_dav::BasePath>,
+     body: String,
+ ) -> Result<Response, Error> {
+     if !user.is_principal(&principal) {
+@@ -80,7 +81,7 @@ pub async fn route_post<AS: AddressbookStore, DP: DavPushStore>(
+         .await?;
+ 
+     // TODO: make nicer
+-    let location = format!("/push_subscription/{sub_id}");
++    let location = base_path.url(&format!("/push_subscription/{sub_id}"));
+     Ok((
+         StatusCode::CREATED,
+         HeaderMap::from_iter([
+diff --git a/crates/carddav/src/lib.rs b/crates/carddav/src/lib.rs
+index db3baf2..630f18c 100644
+--- a/crates/carddav/src/lib.rs
++++ b/crates/carddav/src/lib.rs
+@@ -24,7 +24,7 @@ pub mod error;
+ pub mod principal;
+ 
+ #[derive(Debug, Clone, Constructor)]
+-pub struct CardDavPrincipalUri(&'static str);
++pub struct CardDavPrincipalUri(String);
+ 
+ impl PrincipalUri for CardDavPrincipalUri {
+     fn principal_collection(&self) -> Uri {
+@@ -43,24 +43,26 @@ impl PrincipalUri for CardDavPrincipalUri {
+ }
+ 
+ pub fn carddav_router<AP: AuthenticationProvider, A: AddressbookStore, DP: DavPushStore>(
+-    prefix: &'static str,
++    prefix: &str,
++    base_path: &rustical_dav::BasePath,
+     auth_provider: Arc<AP>,
+     store: Arc<A>,
+     dav_push_store: Arc<DP>,
+ ) -> Router {
+     let principal_service =
+         PrincipalResourceService::new(store, auth_provider.clone(), dav_push_store);
++    let public_prefix = base_path.url(prefix);
+     Router::new()
+         .nest(
+             prefix,
+             RootResourceService::<_, Principal, CardDavPrincipalUri>::new(principal_service)
+                 .axum_router()
+                 .layer(AuthenticationLayer::new(auth_provider))
+-                .layer(Extension(CardDavPrincipalUri(prefix))),
++                .layer(Extension(CardDavPrincipalUri(public_prefix.clone()))),
+         )
+         .route(
+             "/.well-known/carddav",
+-            any(async || Redirect::permanent(prefix)),
++            any(async move || Redirect::permanent(&public_prefix)),
+         )
+ }
+ 
+@@ -75,7 +77,7 @@ mod tests {
+     #[case("asd@asd.de", "/carddav/principal/asd%40asd.de/")]
+     fn test_principal_uri_encoding(#[case] principal: &str, #[case] output: &str) {
+         assert_eq!(
+-            CardDavPrincipalUri("/carddav").principal_uri(principal),
++            CardDavPrincipalUri("/carddav".to_owned()).principal_uri(principal),
+             output
+         );
+     }
+diff --git a/crates/dav/src/base_path.rs b/crates/dav/src/base_path.rs
+new file mode 100644
+index 0000000..fcb6844
+--- /dev/null
++++ b/crates/dav/src/base_path.rs
+@@ -0,0 +1,39 @@
++use serde::{Deserialize, Serialize};
++
++/// A normalized, literal URL path at which the application is mounted.
++#[derive(Clone, Debug, Default, Deserialize, Serialize)]
++#[serde(try_from = "String")]
++pub struct BasePath(String);
++
++impl TryFrom<String> for BasePath {
++    type Error = &'static str;
++
++    fn try_from(value: String) -> Result<Self, Self::Error> {
++        if value.is_empty() || value == "/" {
++            return Ok(Self::default());
++        }
++        if let Some(path) = value.strip_prefix('/')
++            && path.split('/').all(|segment| {
++                !matches!(segment, "" | "." | "..")
++                    && segment
++                        .bytes()
++                        .all(|b| b.is_ascii_alphanumeric() || b"-._~".contains(&b))
++            })
++        {
++            return Ok(Self(value));
++        }
++        Err("base_path must be an absolute path of literal URL segments without a trailing slash")
++    }
++}
++
++impl BasePath {
++    #[must_use]
++    pub fn as_str(&self) -> &str {
++        &self.0
++    }
++
++    #[must_use]
++    pub fn url(&self, path: &str) -> String {
++        format!("{}{path}", self.0)
++    }
++}
+diff --git a/crates/dav/src/lib.rs b/crates/dav/src/lib.rs
+index 823e99a..b0bdd54 100644
+--- a/crates/dav/src/lib.rs
++++ b/crates/dav/src/lib.rs
+@@ -1,5 +1,7 @@
+ #![warn(clippy::all, clippy::pedantic, clippy::nursery)]
+ #![allow(clippy::missing_errors_doc)]
++mod base_path;
++pub use base_path::BasePath;
+ pub mod error;
+ pub mod extensions;
+ pub mod header;
+diff --git a/crates/frontend/js-components/lib/create-addressbook-form.ts b/crates/frontend/js-components/lib/create-addressbook-form.ts
+index 0c3e2c7..a90ca72 100644
+--- a/crates/frontend/js-components/lib/create-addressbook-form.ts
++++ b/crates/frontend/js-components/lib/create-addressbook-form.ts
+@@ -1,7 +1,7 @@
+ import { html, LitElement } from "lit";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+-import { escapeXml } from ".";
++import { appUrl, escapeXml } from ".";
+ 
+ @customElement("create-addressbook-form")
+ export class CreateAddressbookForm extends LitElement {
+@@ -75,7 +75,7 @@ export class CreateAddressbookForm extends LitElement {
+       alert("Empty displayname")
+       return
+     }
+-    let response = await fetch(`/carddav/principal/${this.principal || this.user}/${this.addr_id}`, {
++    let response = await fetch(appUrl(`/carddav/principal/${this.principal || this.user}/${this.addr_id}`), {
+       method: 'MKCOL',
+       headers: {
+         'Content-Type': 'application/xml'
+diff --git a/crates/frontend/js-components/lib/create-birthday-calendar-form.ts b/crates/frontend/js-components/lib/create-birthday-calendar-form.ts
+index c1cea44..611295e 100644
+--- a/crates/frontend/js-components/lib/create-birthday-calendar-form.ts
++++ b/crates/frontend/js-components/lib/create-birthday-calendar-form.ts
+@@ -1,7 +1,7 @@
+ import { html, LitElement } from "lit";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+-import { escapeXml } from ".";
++import { appUrl, escapeXml } from ".";
+ import { getTimezones } from "./timezones.ts";
+ 
+ @customElement("create-birthday-calendar-form")
+@@ -69,7 +69,7 @@ export class CreateBirthdayCalendarForm extends LitElement {
+     // Would probably be nice in the future to have some drag-and-drop functionality for ordering or at least some fields
+     const order = Math.floor(Math.random() * 5000)
+ 
+-    let response = await fetch(`/caldav/principal/${this.principal}/_birthdays_${this.addr_id}`, {
++    let response = await fetch(appUrl(`/caldav/principal/${this.principal}/_birthdays_${this.addr_id}`), {
+       method: 'MKCOL',
+       headers: {
+         'Content-Type': 'application/xml'
+diff --git a/crates/frontend/js-components/lib/create-calendar-form.ts b/crates/frontend/js-components/lib/create-calendar-form.ts
+index 82c32c7..9a3c5e2 100644
+--- a/crates/frontend/js-components/lib/create-calendar-form.ts
++++ b/crates/frontend/js-components/lib/create-calendar-form.ts
+@@ -1,7 +1,7 @@
+ import { html, LitElement } from "lit";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+-import { escapeXml, SVG_ICON_CALENDAR, SVG_ICON_INTERNET } from ".";
++import { appUrl, escapeXml, SVG_ICON_CALENDAR, SVG_ICON_INTERNET } from ".";
+ import { getTimezones } from "./timezones.ts";
+ 
+ @customElement("create-calendar-form")
+@@ -161,7 +161,7 @@ export class CreateCalendarForm extends LitElement {
+     // Would probably be nice in the future to have some drag-and-drop functionality for ordering or at least some fields
+     const order = Math.floor(Math.random() * 5000)
+ 
+-    let response = await fetch(`/caldav/principal/${this.principal || this.user}/${this.cal_id}`, {
++    let response = await fetch(appUrl(`/caldav/principal/${this.principal || this.user}/${this.cal_id}`), {
+       method: 'MKCOL',
+       headers: {
+         'Content-Type': 'application/xml'
+diff --git a/crates/frontend/js-components/lib/edit-addressbook-form.ts b/crates/frontend/js-components/lib/edit-addressbook-form.ts
+index 7cb9ca0..75e204c 100644
+--- a/crates/frontend/js-components/lib/edit-addressbook-form.ts
++++ b/crates/frontend/js-components/lib/edit-addressbook-form.ts
+@@ -1,7 +1,7 @@
+ import { html, LitElement } from "lit";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+-import { escapeXml } from ".";
++import { appUrl, escapeXml } from ".";
+ 
+ @customElement("edit-addressbook-form")
+ export class EditAddressbookForm extends LitElement {
+@@ -63,7 +63,7 @@ export class EditAddressbookForm extends LitElement {
+       alert("Empty displayname")
+       return
+     }
+-    let response = await fetch(`/carddav/principal/${this.principal}/${this.addr_id}`, {
++    let response = await fetch(appUrl(`/carddav/principal/${this.principal}/${this.addr_id}`), {
+       method: 'PROPPATCH',
+       headers: {
+         'Content-Type': 'application/xml'
+diff --git a/crates/frontend/js-components/lib/edit-calendar-form.ts b/crates/frontend/js-components/lib/edit-calendar-form.ts
+index 9e3250d..90947c6 100644
+--- a/crates/frontend/js-components/lib/edit-calendar-form.ts
++++ b/crates/frontend/js-components/lib/edit-calendar-form.ts
+@@ -1,7 +1,7 @@
+ import { html, LitElement } from "lit";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+-import { escapeXml } from ".";
++import { appUrl, escapeXml } from ".";
+ import { getTimezones } from "./timezones.ts";
+ 
+ @customElement("edit-calendar-form")
+@@ -106,7 +106,7 @@ export class EditCalendarForm extends LitElement {
+       alert("No calendar components selected")
+       return
+     }
+-    let response = await fetch(`/caldav/principal/${this.principal}/${this.cal_id}`, {
++    let response = await fetch(appUrl(`/caldav/principal/${this.principal}/${this.cal_id}`), {
+       method: 'PROPPATCH',
+       headers: {
+         'Content-Type': 'application/xml'
+diff --git a/crates/frontend/js-components/lib/generate-app-token-form.ts b/crates/frontend/js-components/lib/generate-app-token-form.ts
+index 918804b..b064abc 100644
+--- a/crates/frontend/js-components/lib/generate-app-token-form.ts
++++ b/crates/frontend/js-components/lib/generate-app-token-form.ts
+@@ -1,4 +1,5 @@
+ import { html, LitElement } from "lit";
++import { appUrl } from ".";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+ 
+@@ -47,7 +48,7 @@ export class GenerateAppTokenForm extends LitElement {
+ 
+   override render() {
+     return html`
+-      <form method="POST" action=${`/frontend/user/${this.user}/app_token`} @submit=${this.onSubmit} ${ref(this.form)}>
++      <form method="POST" action=${appUrl(`/frontend/user/${this.user}/app_token`)} @submit=${this.onSubmit} ${ref(this.form)}>
+         <input type="text" name="name" placeholder="App name" required />
+         <div class="generate-actions">
+           <button type="submit" class="primary">Generate</button>
+diff --git a/crates/frontend/js-components/lib/import-addressbook-form.ts b/crates/frontend/js-components/lib/import-addressbook-form.ts
+index d5aaebe..4de5d96 100644
+--- a/crates/frontend/js-components/lib/import-addressbook-form.ts
++++ b/crates/frontend/js-components/lib/import-addressbook-form.ts
+@@ -1,4 +1,5 @@
+ import { html, LitElement } from "lit";
++import { appUrl } from ".";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+ 
+@@ -67,7 +68,7 @@ export class ImportAddressbookForm extends LitElement {
+       alert("Empty id")
+       return
+     }
+-    let response = await fetch(`/carddav/principal/${this.principal}/${this.addressbook_id}`, {
++    let response = await fetch(appUrl(`/carddav/principal/${this.principal}/${this.addressbook_id}`), {
+       method: 'IMPORT',
+       headers: {
+         'Content-Type': 'text/vcard'
+diff --git a/crates/frontend/js-components/lib/import-calendar-form.ts b/crates/frontend/js-components/lib/import-calendar-form.ts
+index 722244a..66bb6a2 100644
+--- a/crates/frontend/js-components/lib/import-calendar-form.ts
++++ b/crates/frontend/js-components/lib/import-calendar-form.ts
+@@ -1,4 +1,5 @@
+ import { html, LitElement } from "lit";
++import { appUrl } from ".";
+ import { customElement, property } from "lit/decorators.js";
+ import { Ref, createRef, ref } from 'lit/directives/ref.js';
+ 
+@@ -67,7 +68,7 @@ export class ImportCalendarForm extends LitElement {
+       alert("Empty id")
+       return
+     }
+-    let response = await fetch(`/caldav/principal/${this.principal}/${this.cal_id}`, {
++    let response = await fetch(appUrl(`/caldav/principal/${this.principal}/${this.cal_id}`), {
+       method: 'IMPORT',
+       headers: {
+         'Content-Type': 'text/calendar'
+diff --git a/crates/frontend/js-components/lib/index.ts b/crates/frontend/js-components/lib/index.ts
+index e934d9d..8720550 100644
+--- a/crates/frontend/js-components/lib/index.ts
++++ b/crates/frontend/js-components/lib/index.ts
+@@ -1,5 +1,10 @@
+ import {svg} from 'lit'
+ 
++export function appUrl(path: string): string {
++  const base = document.querySelector<HTMLMetaElement>('meta[name="rustical-base-path"]')?.content ?? '';
++  return base + path;
++}
++
+ export function escapeXml(unsafe: string): string {
+   return unsafe.replace(/&/g, '&amp;')
+     .replace(/</g, '&lt;')
+diff --git a/crates/frontend/js-components/lib/timezones.ts b/crates/frontend/js-components/lib/timezones.ts
+index 41850e8..acfdc1a 100644
+--- a/crates/frontend/js-components/lib/timezones.ts
++++ b/crates/frontend/js-components/lib/timezones.ts
+@@ -1,8 +1,10 @@
+ let timezonesPromise = null
++import { appUrl } from '.';
++
+ export async function getTimezones() {
+   timezonesPromise ||= new Promise(async (resolve, reject) => {
+     try {
+-      let response = await fetch('/frontend/_timezones.json')
++      let response = await fetch(appUrl('/frontend/_timezones.json'))
+       resolve(await response.json())
+     } catch (e) {
+       reject(e)
+diff --git a/crates/frontend/public/assets/js/bundle.mjs b/crates/frontend/public/assets/js/bundle.mjs
+index 1a4bb6c..2bd6268 100644
+--- a/crates/frontend/public/assets/js/bundle.mjs
++++ b/crates/frontend/public/assets/js/bundle.mjs
+@@ -795,6 +795,9 @@ var n = e$1(class extends f {
+ });
+ //#endregion
+ //#region lib/index.ts
++function appUrl(path) {
++	return (document.querySelector("meta[name=\"rustical-base-path\"]")?.content ?? "") + path;
++}
+ function escapeXml(unsafe) {
+ 	return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&apos;");
+ }
+@@ -890,7 +893,7 @@ var CreateAddressbookForm = class CreateAddressbookForm extends i$2 {
+ 			alert("Empty displayname");
+ 			return;
+ 		}
+-		let response = await fetch(`/carddav/principal/${this.principal || this.user}/${this.addr_id}`, {
++		let response = await fetch(appUrl(`/carddav/principal/${this.principal || this.user}/${this.addr_id}`), {
+ 			method: "MKCOL",
+ 			headers: { "Content-Type": "application/xml" },
+ 			body: `
+@@ -976,7 +979,7 @@ var CreateBirthdayCalendarForm = class CreateBirthdayCalendarForm extends i$2 {
+ 			return;
+ 		}
+ 		const order = Math.floor(Math.random() * 5e3);
+-		let response = await fetch(`/caldav/principal/${this.principal}/_birthdays_${this.addr_id}`, {
++		let response = await fetch(appUrl(`/caldav/principal/${this.principal}/_birthdays_${this.addr_id}`), {
+ 			method: "MKCOL",
+ 			headers: { "Content-Type": "application/xml" },
+ 			body: `
+@@ -1016,7 +1019,7 @@ var timezonesPromise = null;
+ async function getTimezones() {
+ 	timezonesPromise ||= new Promise(async (resolve, reject) => {
+ 		try {
+-			resolve(await (await fetch("/frontend/_timezones.json")).json());
++			resolve(await (await fetch(appUrl("/frontend/_timezones.json"))).json());
+ 		} catch (e) {
+ 			reject(e);
+ 		}
+@@ -1156,7 +1159,7 @@ var CreateCalendarForm = class CreateCalendarForm extends i$2 {
+ 			return;
+ 		}
+ 		const order = Math.floor(Math.random() * 5e3);
+-		let response = await fetch(`/caldav/principal/${this.principal || this.user}/${this.cal_id}`, {
++		let response = await fetch(appUrl(`/caldav/principal/${this.principal || this.user}/${this.cal_id}`), {
+ 			method: "MKCOL",
+ 			headers: { "Content-Type": "application/xml" },
+ 			body: `
+@@ -1283,7 +1286,7 @@ var EditAddressbookForm = class EditAddressbookForm extends i$2 {
+ 			alert("Empty displayname");
+ 			return;
+ 		}
+-		let response = await fetch(`/carddav/principal/${this.principal}/${this.addr_id}`, {
++		let response = await fetch(appUrl(`/carddav/principal/${this.principal}/${this.addr_id}`), {
+ 			method: "PROPPATCH",
+ 			headers: { "Content-Type": "application/xml" },
+ 			body: `
+@@ -1404,7 +1407,7 @@ var EditCalendarForm = class EditCalendarForm extends i$2 {
+ 			alert("No calendar components selected");
+ 			return;
+ 		}
+-		let response = await fetch(`/caldav/principal/${this.principal}/${this.cal_id}`, {
++		let response = await fetch(appUrl(`/caldav/principal/${this.principal}/${this.cal_id}`), {
+ 			method: "PROPPATCH",
+ 			headers: { "Content-Type": "application/xml" },
+ 			body: `
+@@ -1509,7 +1512,7 @@ var ImportAddressbookForm = class ImportAddressbookForm extends i$2 {
+ 			alert("Empty id");
+ 			return;
+ 		}
+-		let response = await fetch(`/carddav/principal/${this.principal}/${this.addressbook_id}`, {
++		let response = await fetch(appUrl(`/carddav/principal/${this.principal}/${this.addressbook_id}`), {
+ 			method: "IMPORT",
+ 			headers: { "Content-Type": "text/vcard" },
+ 			body: this.file
+@@ -1585,7 +1588,7 @@ var ImportCalendarForm = class ImportCalendarForm extends i$2 {
+ 			alert("Empty id");
+ 			return;
+ 		}
+-		let response = await fetch(`/caldav/principal/${this.principal}/${this.cal_id}`, {
++		let response = await fetch(appUrl(`/caldav/principal/${this.principal}/${this.cal_id}`), {
+ 			method: "IMPORT",
+ 			headers: { "Content-Type": "text/calendar" },
+ 			body: this.file
+@@ -1638,7 +1641,7 @@ var GenerateAppTokenForm = class GenerateAppTokenForm extends i$2 {
+ 	}
+ 	render() {
+ 		return b`
+-      <form method="POST" action=${`/frontend/user/${this.user}/app_token`} @submit=${this.onSubmit} ${n(this.form)}>
++      <form method="POST" action=${appUrl(`/frontend/user/${this.user}/app_token`)} @submit=${this.onSubmit} ${n(this.form)}>
+         <input type="text" name="name" placeholder="App name" required />
+         <div class="generate-actions">
+           <button type="submit" class="primary">Generate</button>
+diff --git a/crates/frontend/public/templates/apple_configuration/template.xml b/crates/frontend/public/templates/apple_configuration/template.xml
+index 539f133..309404b 100644
+--- a/crates/frontend/public/templates/apple_configuration/template.xml
++++ b/crates/frontend/public/templates/apple_configuration/template.xml
+@@ -12,7 +12,7 @@
+       <string>{{ hostname }}</string>
+ 
+       <key>CalDAVPrincipalURL</key>
+-      <string>https://{{ hostname }}/caldav-compat/principal/{{ user }}</string>
++      <string>https://{{ hostname }}{{ base_path.as_str() }}/caldav-compat/principal/{{ user }}</string>
+ 
+       <key>CalDAVUseSSL</key>
+       <true/>
+@@ -54,7 +54,7 @@
+       <string>{{ hostname }}</string>
+ 
+       <key>CalDAVPrincipalURL</key>
+-      <string>https://{{ hostname }}/caldav-compat/principal/{{ membership }}</string>
++      <string>https://{{ hostname }}{{ base_path.as_str() }}/caldav-compat/principal/{{ membership }}</string>
+ 
+       <key>CalDAVUseSSL</key>
+       <true/>
+@@ -96,7 +96,7 @@
+       <string>{{ hostname }}</string>
+ 
+       <key>CardDAVPrincipalURL</key>
+-      <string>https://{{ hostname }}/carddav/principal/{{ user }}</string>
++      <string>https://{{ hostname }}{{ base_path.as_str() }}/carddav/principal/{{ user }}</string>
+ 
+       <key>CardDAVUseSSL</key>
+       <true/>
+diff --git a/crates/frontend/public/templates/components/sections/addressbooks_section.html b/crates/frontend/public/templates/components/sections/addressbooks_section.html
+index 5891a28..011e5f3 100644
+--- a/crates/frontend/public/templates/components/sections/addressbooks_section.html
++++ b/crates/frontend/public/templates/components/sections/addressbooks_section.html
+@@ -2,7 +2,7 @@
+ <ul class="collection-list">
+   {% for (meta, birthday_cal, addressbook) in addressbooks %}
+   <li class="collection-list-item">
+-    <a href="/frontend/user/{{ addressbook.principal }}/addressbook/{{ addressbook.id}}"></a>
++    <a href="{{ base_path.as_str() }}/frontend/user/{{ addressbook.principal }}/addressbook/{{ addressbook.id}}"></a>
+     <div class="inner">
+       <span class="title">
+         {%- if addressbook.principal != user.id -%}{{ addressbook.principal }}/{%- endif -%}
+@@ -12,7 +12,7 @@
+         {% if let Some(description) = addressbook.description %}{{ description }}{% endif %}
+       </span>
+       <div class="actions">
+-        <form action="/carddav/principal/{{ addressbook.principal }}/{{ addressbook.id }}" target="_blank"
++        <form action="{{ base_path.as_str() }}/carddav/principal/{{ addressbook.principal }}/{{ addressbook.id }}" target="_blank"
+           method="GET">
+           <button type="submit">Download</button>
+         </form>
+@@ -23,7 +23,7 @@
+           description="{{ addressbook.description.as_deref().unwrap_or_default() }}"
+         ></edit-addressbook-form>
+         <delete-button trash
+-          href="/carddav/principal/{{ addressbook.principal }}/{{ addressbook.id }}"></delete-button>
++          href="{{ base_path.as_str() }}/carddav/principal/{{ addressbook.principal }}/{{ addressbook.id }}"></delete-button>
+         {% if !birthday_cal.is_some() %}
+         <create-birthday-calendar-form
+           principal="{{ addressbook.principal }}"
+@@ -46,7 +46,7 @@
+ <ul class="collection-list">
+   {% for (meta, birthday_cal, addressbook) in deleted_addressbooks %}
+   <li class="collection-list-item">
+-    <a href="/frontend/user/{{ addressbook.principal }}/addressbook/{{ addressbook.id}}"></a>
++    <a href="{{ base_path.as_str() }}/frontend/user/{{ addressbook.principal }}/addressbook/{{ addressbook.id}}"></a>
+     <div class="inner">
+       <span class="title">
+         {%- if addressbook.principal != user.id -%}{{ addressbook.principal }}/{%- endif -%}
+@@ -56,11 +56,11 @@
+         {% if let Some(description) = addressbook.description %}{{ description }}{% endif %}
+       </span>
+       <div class="actions">
+-        <form action="/frontend/user/{{ addressbook.principal }}/addressbook/{{ addressbook.id}}/restore"
++        <form action="{{ base_path.as_str() }}/frontend/user/{{ addressbook.principal }}/addressbook/{{ addressbook.id}}/restore"
+           method="POST" class="restore-form">
+           <button type="submit">Restore</button>
+         </form>
+-        <delete-button href="/carddav/principal/{{ addressbook.principal }}/{{ addressbook.id }}"></delete-button>
++        <delete-button href="{{ base_path.as_str() }}/carddav/principal/{{ addressbook.principal }}/{{ addressbook.id }}"></delete-button>
+       </div>
+       <div class="metadata">
+         {{ meta.len }} ({{ meta.size | filesizeformat }}) objects, {{ meta.deleted_len }} ({{ meta.deleted_size | filesizeformat }}) deleted objects
+diff --git a/crates/frontend/public/templates/components/sections/calendars_section.html b/crates/frontend/public/templates/components/sections/calendars_section.html
+index c91ef4c..a16e608 100644
+--- a/crates/frontend/public/templates/components/sections/calendars_section.html
++++ b/crates/frontend/public/templates/components/sections/calendars_section.html
+@@ -3,7 +3,7 @@
+   {% for (meta, calendar) in calendars %}
+   {% let color = calendar.meta.color.to_owned().unwrap_or("transparent".to_owned()) %}
+   <li class="collection-list-item" style="--color: {{ color }}">
+-    <a href="/frontend/user/{{ calendar.principal }}/calendar/{{ calendar.id }}"></a>
++    <a href="{{ base_path.as_str() }}/frontend/user/{{ calendar.principal }}/calendar/{{ calendar.id }}"></a>
+     <div class="inner">
+       <span class="title">
+         {%- if calendar.principal != user.id -%}{{ calendar.principal }}/{%- endif -%}
+@@ -19,7 +19,7 @@
+       <span class="subscription-url">{{ subscription_url }}</span>
+       {% endif %}
+       <div class="actions">
+-        <form action="/caldav/principal/{{ calendar.principal }}/{{ calendar.id }}" target="_blank" method="GET">
++        <form action="{{ base_path.as_str() }}/caldav/principal/{{ calendar.principal }}/{{ calendar.id }}" target="_blank" method="GET">
+           <button type="submit">Download</button>
+         </form>
+         <edit-calendar-form
+@@ -31,7 +31,7 @@
+           color="{{ calendar.meta.color.as_deref().unwrap_or_default() }}"
+           components="{{ calendar.components | json }}"
+         ></edit-calendar-form>
+-        <delete-button trash href="/caldav/principal/{{ calendar.principal }}/{{ calendar.id }}"></delete-button>
++        <delete-button trash href="{{ base_path.as_str() }}/caldav/principal/{{ calendar.principal }}/{{ calendar.id }}"></delete-button>
+       </div>
+       <div class="metadata">
+         {{ meta.len }} ({{ meta.size | filesizeformat }}) objects, {{ meta.deleted_len }} ({{ meta.deleted_size | filesizeformat }}) deleted objects
+@@ -49,7 +49,7 @@
+   {% for (meta, calendar) in deleted_calendars %}
+   {% let color = calendar.meta.color.to_owned().unwrap_or("transparent".to_owned()) %}
+   <li class="collection-list-item" style="--color: {{ color }}">
+-    <a href="/frontend/user/{{ calendar.principal }}/calendar/{{ calendar.id}}"></a>
++    <a href="{{ base_path.as_str() }}/frontend/user/{{ calendar.principal }}/calendar/{{ calendar.id}}"></a>
+     <div class="inner">
+       <span class="title">
+         {%- if calendar.principal != user.id -%}{{ calendar.principal }}/{%- endif -%}
+@@ -62,11 +62,11 @@
+         {% if let Some(description) = calendar.meta.description %}{{ description }}{% endif %}
+       </span>
+       <div class="actions">
+-        <form action="/frontend/user/{{ calendar.principal }}/calendar/{{ calendar.id}}/restore" method="POST"
++        <form action="{{ base_path.as_str() }}/frontend/user/{{ calendar.principal }}/calendar/{{ calendar.id}}/restore" method="POST"
+           class="restore-form">
+           <button type="submit">Restore</button>
+         </form>
+-        <delete-button href="/caldav/principal/{{ calendar.principal }}/{{ calendar.id }}"></delete-button>
++        <delete-button href="{{ base_path.as_str() }}/caldav/principal/{{ calendar.principal }}/{{ calendar.id }}"></delete-button>
+       </div>
+       <div class="metadata">
+         {{ meta.len }} ({{ meta.size | filesizeformat }}) objects, {{ meta.deleted_len }} ({{ meta.deleted_size | filesizeformat }}) deleted objects
+diff --git a/crates/frontend/public/templates/components/sections/profile_section.html b/crates/frontend/public/templates/components/sections/profile_section.html
+index ae70098..4cb076e 100644
+--- a/crates/frontend/public/templates/components/sections/profile_section.html
++++ b/crates/frontend/public/templates/components/sections/profile_section.html
+@@ -29,7 +29,7 @@
+         {% endif %}
+       </td>
+       <td>
+-        <form action="/frontend/user/{{ user.id }}/app_token/{{ app_token.id }}/delete" method="POST">
++        <form action="{{ base_path.as_str() }}/frontend/user/{{ user.id }}/app_token/{{ app_token.id }}/delete" method="POST">
+           <button type="submit" class="delete">Delete</button>
+         </form>
+       </td>
+@@ -41,5 +41,5 @@
+ <generate-app-token-form user="{{ user.id }}" />
+ 
+ {% if let Some(hostname) = davx5_hostname %}
+-<a href="intent://{{ hostname | urlencode }}#Intent;action=android.intent.action.VIEW;component=at.bitfire.davdroid.ui.setup.LoginActivity;scheme=davx5;package=at.bitfire.davdroid;S.loginFlow=1;end">Configure in DAVx5</a>
++<a href="intent://{{ hostname | urlencode }}{{ base_path.as_str() }}#Intent;action=android.intent.action.VIEW;component=at.bitfire.davdroid.ui.setup.LoginActivity;scheme=davx5;package=at.bitfire.davdroid;S.loginFlow=1;end">Configure in DAVx5</a>
+ {% endif %}
+diff --git a/crates/frontend/public/templates/layouts/default.html b/crates/frontend/public/templates/layouts/default.html
+index 237521a..e8ccd7c 100644
+--- a/crates/frontend/public/templates/layouts/default.html
++++ b/crates/frontend/public/templates/layouts/default.html
+@@ -6,17 +6,18 @@
+   <meta name="viewport" content="width=device-width, initial-scale=1">
+   <meta name="color-scheme" content="light dark">
+   <title>{% block title %}RustiCal{% endblock %}</title>
+-  <link rel="stylesheet" href="/frontend/assets/style.css" />
++  <meta name="rustical-base-path" content="{{ base_path.as_str() }}" />
++  <link rel="stylesheet" href="{{ base_path.as_str() }}/frontend/assets/style.css" />
+   {% block imports %}{% endblock %}
+ </head>
+ 
+ <body>
+   {% block header %}
+   <header>
+-      <a class="logo" href="/frontend/user">RustiCal</a>
++      <a class="logo" href="{{ base_path.as_str() }}/frontend/user">RustiCal</a>
+       {% block header_center %}{% endblock %}
+       {% if self.get_user().is_some() %}
+-        <form method="POST" action="/frontend/logout" class="logout_form">
++        <form method="POST" action="{{ base_path.as_str() }}/frontend/logout" class="logout_form">
+           <button type="submit">Log out</button>
+         </form>
+       {% endif %}
+@@ -28,7 +29,7 @@
+     </main>
+     <footer>
+         <a href="{{ env!("CARGO_PKG_REPOSITORY") }}" target="_blank">RustiCal {{ env!("CARGO_PKG_VERSION") }}</a>
+-        <a href="/frontend/assets/licenses.html" target="_blank">Open Source Licenses</a>
++        <a href="{{ base_path.as_str() }}/frontend/assets/licenses.html" target="_blank">Open Source Licenses</a>
+     </footer>
+   </div>
+ </body>
+diff --git a/crates/frontend/public/templates/pages/user.html b/crates/frontend/public/templates/pages/user.html
+index 333af8f..b47554d 100644
+--- a/crates/frontend/public/templates/pages/user.html
++++ b/crates/frontend/public/templates/pages/user.html
+@@ -5,13 +5,13 @@
+ <script>
+ window.rusticalUser = JSON.parse(document.querySelector('#data-rustical-user').innerHTML)
+ </script>
+-<script type="module" src="/frontend/assets/js/bundle.mjs" async></script>
++<script type="module" src="{{ base_path.as_str() }}/frontend/assets/js/bundle.mjs" async></script>
+ {% endblock %}
+ {% block header_center %}
+ <nav class="header-center">
+-  <a href="/frontend/user/{{ user.id }}" {% if S::name() == "profile" %}class="active"{% endif %}>{% include "icons/user.svg" %}Profile</a>
+-  <a href="/frontend/user/{{ user.id }}/calendar" {% if S::name() == "calendars" %}class="active"{% endif %}>{% include "icons/calendar.svg" %}Calendars</a>
+-  <a href="/frontend/user/{{ user.id }}/addressbook" {% if S::name() == "addressbooks" %}class="active"{% endif %}>{% include "icons/group.svg" %}Addressbooks</a>
++  <a href="{{ base_path.as_str() }}/frontend/user/{{ user.id }}" {% if S::name() == "profile" %}class="active"{% endif %}>{% include "icons/user.svg" %}Profile</a>
++  <a href="{{ base_path.as_str() }}/frontend/user/{{ user.id }}/calendar" {% if S::name() == "calendars" %}class="active"{% endif %}>{% include "icons/calendar.svg" %}Calendars</a>
++  <a href="{{ base_path.as_str() }}/frontend/user/{{ user.id }}/addressbook" {% if S::name() == "addressbooks" %}class="active"{% endif %}>{% include "icons/group.svg" %}Addressbooks</a>
+ </nav>
+ {% endblock %}
+ 
+diff --git a/crates/frontend/src/lib.rs b/crates/frontend/src/lib.rs
+index caf270b..356061f 100644
+--- a/crates/frontend/src/lib.rs
++++ b/crates/frontend/src/lib.rs
+@@ -10,6 +10,7 @@ use axum::{
+ use headers::{ContentType, HeaderMapExt};
+ use http::{Method, StatusCode};
+ use routes::{addressbooks::route_addressbooks, calendars::route_calendars};
++use rustical_dav::BasePath;
+ use rustical_oidc::{OidcConfig, OidcServiceConfig, oidc_router};
+ use rustical_store::{
+     AddressbookStore, CalendarStore, PrefixedCalendarStore,
+@@ -45,6 +46,7 @@ pub fn frontend_router<
+     AS: AddressbookStore + PrefixedCalendarStore,
+ >(
+     prefix: &'static str,
++    base_path: &BasePath,
+     auth_provider: Arc<AP>,
+     cal_store: Arc<CS>,
+     addr_store: Arc<AS>,
+@@ -104,9 +106,10 @@ pub fn frontend_router<
+             oidc_router(
+                 oidc_config,
+                 OidcServiceConfig {
+-                    default_redirect_path: "/frontend/user",
++                    default_redirect_path: base_path.url("/frontend/user"),
+                     session_key_user_id: "user",
+-                    callback_path: "/frontend/login/oidc/callback",
++                    callback_path: base_path.url("/frontend/login/oidc/callback"),
++                    base_path: base_path.as_str().to_owned(),
+                 },
+                 OidcUserStore(auth_provider.clone()),
+             ),
+@@ -121,18 +124,24 @@ pub fn frontend_router<
+         .layer(Extension(frontend_config))
+         .layer(Extension(oidc_config));
+ 
++    let public_prefix = base_path.url(prefix);
+     Router::new()
+         .nest(prefix, router)
+-        .route("/", get(async || Redirect::to(prefix)))
++        .route("/", get(async move || Redirect::to(&public_prefix)))
+ }
+ 
+-async fn unauthorized_handler(mut request: Request, next: Next) -> Response {
++async fn unauthorized_handler(
++    Extension(base_path): Extension<BasePath>,
++    mut request: Request,
++    next: Next,
++) -> Response {
+     let meth = request.method().clone();
+     let OriginalUri(uri) = request.extract_parts().await.unwrap();
+     let resp = next.run(request).await;
+     if resp.status() == StatusCode::UNAUTHORIZED {
+         // This is a dumb hack since parsed Urls cannot be relative
+-        let mut login_url: Url = "http://github.com/frontend/login".parse().unwrap();
++        let mut login_url: Url = "https://localhost".parse().unwrap();
++        login_url.set_path(&base_path.url("/frontend/login"));
+         if meth == Method::GET {
+             login_url
+                 .query_pairs_mut()
+diff --git a/crates/frontend/src/nextcloud_login/routes.rs b/crates/frontend/src/nextcloud_login/routes.rs
+index 7b799d4..558ce18 100644
+--- a/crates/frontend/src/nextcloud_login/routes.rs
++++ b/crates/frontend/src/nextcloud_login/routes.rs
+@@ -13,12 +13,14 @@ use axum_extra::TypedHeader;
+ use chrono::{Duration, Utc};
+ use headers::{HeaderMapExt, Host, UserAgent};
+ use http::{HeaderMap, StatusCode};
++use rustical_dav::BasePath;
+ use rustical_store::auth::{AuthenticationProvider, Principal};
+ use serde::{Deserialize, Serialize};
+ use std::sync::Arc;
+ use tracing::instrument;
+ 
+ pub async fn post_nextcloud_login(
++    Extension(base_path): Extension<BasePath>,
+     Extension(state): Extension<Arc<NextcloudFlows>>,
+     TypedHeader(host): TypedHeader<Host>,
+     headers: HeaderMap,
+@@ -47,10 +49,16 @@ pub async fn post_nextcloud_login(
+         );
+     }
+     Json(NextcloudLoginResponse {
+-        login: format!("https://{host}/index.php/login/v2/flow/{flow_id}"),
++        login: format!(
++            "https://{host}{}/index.php/login/v2/flow/{flow_id}",
++            base_path.as_str()
++        ),
+         poll: NextcloudLoginPoll {
+             token,
+-            endpoint: format!("https://{host}/index.php/login/v2/poll/{flow_id}"),
++            endpoint: format!(
++                "https://{host}{}/index.php/login/v2/poll/{flow_id}",
++                base_path.as_str()
++            ),
+         },
+     })
+ }
+@@ -99,6 +107,7 @@ pub async fn post_nextcloud_poll<AP: AuthenticationProvider>(
+ #[derive(Template)]
+ #[template(path = "pages/nextcloud_login/form.html")]
+ struct NextcloudLoginPage {
++    base_path: BasePath,
+     username: String,
+     app_name: String,
+ }
+@@ -111,6 +120,7 @@ impl DefaultLayoutData for NextcloudLoginPage {
+ 
+ #[instrument(skip(state))]
+ pub async fn get_nextcloud_flow(
++    Extension(base_path): Extension<BasePath>,
+     Extension(state): Extension<Arc<NextcloudFlows>>,
+     Path(flow_id): Path<String>,
+     user: Principal,
+@@ -118,6 +128,7 @@ pub async fn get_nextcloud_flow(
+     if let Some(flow) = state.flows.read().await.get(&flow_id) {
+         Ok(Html(
+             NextcloudLoginPage {
++                base_path,
+                 username: user.displayname.unwrap_or(user.id),
+                 app_name: flow.app_name.clone(),
+             }
+@@ -138,6 +149,7 @@ pub struct NextcloudAuthorizeForm {
+ #[derive(Template)]
+ #[template(path = "pages/nextcloud_login/success.html")]
+ struct NextcloudLoginSuccessPage {
++    base_path: BasePath,
+     app_name: String,
+     user: Principal,
+ }
+@@ -150,6 +162,7 @@ impl DefaultLayoutData for NextcloudLoginSuccessPage {
+ 
+ #[instrument(skip(state))]
+ pub async fn post_nextcloud_flow(
++    Extension(base_path): Extension<BasePath>,
+     user: Principal,
+     Extension(state): Extension<Arc<NextcloudFlows>>,
+     Path(flow_id): Path<String>,
+@@ -159,12 +172,13 @@ pub async fn post_nextcloud_flow(
+     if let Some(flow) = state.flows.write().await.get_mut(&flow_id) {
+         flow.app_name = form.app_name;
+         flow.response = Some(NextcloudSuccessResponse {
+-            server: format!("https://{host}"),
++            server: format!("https://{host}{}", base_path.as_str()),
+             login_name: user.id.clone(),
+             app_password: generate_app_token(),
+         });
+         Ok(Html(
+             NextcloudLoginSuccessPage {
++                base_path,
+                 app_name: flow.app_name.clone(),
+                 user,
+             }
+diff --git a/crates/frontend/src/pages/user.rs b/crates/frontend/src/pages/user.rs
+index 32f71c7..a8f1ff9 100644
+--- a/crates/frontend/src/pages/user.rs
++++ b/crates/frontend/src/pages/user.rs
+@@ -11,6 +11,7 @@ pub trait Section: Template {
+ #[derive(Template, WebTemplate)]
+ #[template(path = "pages/user.html")]
+ pub struct UserPage<S: Section> {
++    pub base_path: rustical_dav::BasePath,
+     pub user: Principal,
+     pub section: S,
+ }
+diff --git a/crates/frontend/src/routes/addressbook.rs b/crates/frontend/src/routes/addressbook.rs
+index 4e7ee38..1c5b298 100644
+--- a/crates/frontend/src/routes/addressbook.rs
++++ b/crates/frontend/src/routes/addressbook.rs
+@@ -10,6 +10,7 @@ use axum::{
+ use axum_extra::TypedHeader;
+ use headers::Referer;
+ use http::StatusCode;
++use rustical_dav::BasePath;
+ use rustical_store::{Addressbook, AddressbookStore, auth::Principal};
+ 
+ use crate::pages::DefaultLayoutData;
+@@ -17,6 +18,7 @@ use crate::pages::DefaultLayoutData;
+ #[derive(Template, WebTemplate)]
+ #[template(path = "pages/addressbook.html")]
+ struct AddressbookPage {
++    base_path: BasePath,
+     addressbook: Addressbook,
+     user: Principal,
+ }
+@@ -28,6 +30,7 @@ impl DefaultLayoutData for AddressbookPage {
+ }
+ 
+ pub async fn route_addressbook<AS: AddressbookStore>(
++    Extension(base_path): Extension<BasePath>,
+     Path((owner, addrbook_id)): Path<(String, String)>,
+     Extension(store): Extension<Arc<AS>>,
+     user: Principal,
+@@ -36,6 +39,7 @@ pub async fn route_addressbook<AS: AddressbookStore>(
+         return Ok(StatusCode::UNAUTHORIZED.into_response());
+     }
+     Ok(AddressbookPage {
++        base_path,
+         addressbook: store.get_addressbook(&owner, &addrbook_id, true).await?,
+         user,
+     }
+diff --git a/crates/frontend/src/routes/addressbooks.rs b/crates/frontend/src/routes/addressbooks.rs
+index 393d920..d2879ca 100644
+--- a/crates/frontend/src/routes/addressbooks.rs
++++ b/crates/frontend/src/routes/addressbooks.rs
+@@ -2,6 +2,7 @@ use askama::Template;
+ use askama_web::WebTemplate;
+ use axum::{Extension, extract::Path, response::IntoResponse};
+ use http::StatusCode;
++use rustical_dav::BasePath;
+ use rustical_store::{
+     Addressbook, AddressbookStore, Calendar, CollectionMetadata, PrefixedCalendarStore,
+     auth::Principal,
+@@ -19,12 +20,14 @@ impl Section for AddressbooksSection {
+ #[derive(Template, WebTemplate)]
+ #[template(path = "components/sections/addressbooks_section.html")]
+ pub struct AddressbooksSection {
++    pub base_path: BasePath,
+     pub user: Principal,
+     pub addressbooks: Vec<(CollectionMetadata, Option<Calendar>, Addressbook)>,
+     pub deleted_addressbooks: Vec<(CollectionMetadata, Option<Calendar>, Addressbook)>,
+ }
+ 
+ pub async fn route_addressbooks<AS: AddressbookStore + PrefixedCalendarStore>(
++    Extension(base_path): Extension<BasePath>,
+     Path(user_id): Path<String>,
+     Extension(addr_store): Extension<Arc<AS>>,
+     user: Principal,
+@@ -86,7 +89,9 @@ pub async fn route_addressbooks<AS: AddressbookStore + PrefixedCalendarStore>(
+     }
+ 
+     UserPage {
++        base_path: base_path.clone(),
+         section: AddressbooksSection {
++            base_path,
+             user: user.clone(),
+             addressbooks: addressbook_infos,
+             deleted_addressbooks: deleted_addressbook_infos,
+diff --git a/crates/frontend/src/routes/app_token.rs b/crates/frontend/src/routes/app_token.rs
+index 84f2c86..e0393e6 100644
+--- a/crates/frontend/src/routes/app_token.rs
++++ b/crates/frontend/src/routes/app_token.rs
+@@ -11,7 +11,7 @@ use axum_extra::TypedHeader;
+ use headers::{ContentType, HeaderMapExt, Host};
+ use http::{HeaderValue, StatusCode, header};
+ use rand::{RngExt, distr::Alphanumeric};
+-use rustical_dav::rfc_3986_percent_encode;
++use rustical_dav::{BasePath, rfc_3986_percent_encode};
+ use rustical_store::auth::{AuthenticationProvider, Principal};
+ use serde::Deserialize;
+ 
+@@ -26,6 +26,7 @@ pub fn generate_app_token() -> String {
+ #[derive(Template)]
+ #[template(path = "apple_configuration/template.xml")]
+ pub struct AppleConfig {
++    base_path: BasePath,
+     token_name: String,
+     hostname: String,
+     user: String,
+@@ -41,6 +42,7 @@ pub struct PostAppTokenForm {
+ }
+ 
+ pub async fn route_post_app_token<AP: AuthenticationProvider>(
++    Extension(base_path): Extension<BasePath>,
+     user: Principal,
+     Extension(auth_provider): Extension<Arc<AP>>,
+     Path(user_id): Path<String>,
+@@ -61,6 +63,7 @@ pub async fn route_post_app_token<AP: AuthenticationProvider>(
+     let token = format!("{token_id}_{token}");
+     if apple {
+         let profile = AppleConfig {
++            base_path,
+             token_name: name,
+             hostname: host.to_string(),
+             user: user.id.clone(),
+@@ -94,11 +97,12 @@ pub async fn route_post_app_token<AP: AuthenticationProvider>(
+ }
+ 
+ pub async fn route_delete_app_token<AP: AuthenticationProvider>(
++    Extension(base_path): Extension<BasePath>,
+     user: Principal,
+     Extension(auth_provider): Extension<Arc<AP>>,
+     Path((user_id, token_id)): Path<(String, String)>,
+ ) -> Result<Redirect, rustical_store::Error> {
+     assert_eq!(user_id, user.id);
+     auth_provider.remove_app_token(&user.id, &token_id).await?;
+-    Ok(Redirect::to("/frontend/user"))
++    Ok(Redirect::to(&base_path.url("/frontend/user")))
+ }
+diff --git a/crates/frontend/src/routes/calendar.rs b/crates/frontend/src/routes/calendar.rs
+index 7ed9f07..f34d4d3 100644
+--- a/crates/frontend/src/routes/calendar.rs
++++ b/crates/frontend/src/routes/calendar.rs
+@@ -9,12 +9,14 @@ use axum::{
+ use axum_extra::TypedHeader;
+ use headers::Referer;
+ use http::StatusCode;
++use rustical_dav::BasePath;
+ use rustical_store::{Calendar, CalendarStore, auth::Principal};
+ use std::sync::Arc;
+ 
+ #[derive(Template, WebTemplate)]
+ #[template(path = "pages/calendar.html")]
+ struct CalendarPage {
++    base_path: BasePath,
+     calendar: Calendar,
+     user: Principal,
+ }
+@@ -26,6 +28,7 @@ impl DefaultLayoutData for CalendarPage {
+ }
+ 
+ pub async fn route_calendar<C: CalendarStore>(
++    Extension(base_path): Extension<BasePath>,
+     Path((owner, cal_id)): Path<(String, String)>,
+     Extension(store): Extension<Arc<C>>,
+     user: Principal,
+@@ -34,6 +37,7 @@ pub async fn route_calendar<C: CalendarStore>(
+         return Ok(StatusCode::UNAUTHORIZED.into_response());
+     }
+     Ok(CalendarPage {
++        base_path,
+         calendar: store.get_calendar(&owner, &cal_id, true).await?,
+         user,
+     }
+diff --git a/crates/frontend/src/routes/calendars.rs b/crates/frontend/src/routes/calendars.rs
+index b440858..0b40c06 100644
+--- a/crates/frontend/src/routes/calendars.rs
++++ b/crates/frontend/src/routes/calendars.rs
+@@ -5,6 +5,7 @@ use askama::Template;
+ use askama_web::WebTemplate;
+ use axum::{Extension, extract::Path, response::IntoResponse};
+ use http::StatusCode;
++use rustical_dav::BasePath;
+ use rustical_store::{Calendar, CalendarStore, CollectionMetadata, auth::Principal};
+ 
+ impl Section for CalendarsSection {
+@@ -16,12 +17,14 @@ impl Section for CalendarsSection {
+ #[derive(Template, WebTemplate)]
+ #[template(path = "components/sections/calendars_section.html")]
+ pub struct CalendarsSection {
++    pub base_path: BasePath,
+     pub user: Principal,
+     pub calendars: Vec<(CollectionMetadata, Calendar)>,
+     pub deleted_calendars: Vec<(CollectionMetadata, Calendar)>,
+ }
+ 
+ pub async fn route_calendars<CS: CalendarStore>(
++    Extension(base_path): Extension<BasePath>,
+     Path(user_id): Path<String>,
+     Extension(cal_store): Extension<Arc<CS>>,
+     user: Principal,
+@@ -63,7 +66,9 @@ pub async fn route_calendars<CS: CalendarStore>(
+     }
+ 
+     UserPage {
++        base_path: base_path.clone(),
+         section: CalendarsSection {
++            base_path,
+             user: user.clone(),
+             calendars: calendar_infos,
+             deleted_calendars: deleted_calendar_infos,
+diff --git a/crates/frontend/src/routes/login.rs b/crates/frontend/src/routes/login.rs
+index 7659b5a..aa210a9 100644
+--- a/crates/frontend/src/routes/login.rs
++++ b/crates/frontend/src/routes/login.rs
+@@ -9,6 +9,7 @@ use axum::{
+ use axum_extra::TypedHeader;
+ use headers::Host;
+ use http::StatusCode;
++use rustical_dav::BasePath;
+ use rustical_store::auth::AuthenticationProvider;
+ use serde::Deserialize;
+ use std::sync::Arc;
+@@ -19,6 +20,7 @@ use url::Url;
+ #[derive(Template, WebTemplate)]
+ #[template(path = "pages/login.html")]
+ struct LoginPage<'a> {
++    base_path: BasePath,
+     redirect_uri: Option<String>,
+     oidc_data: Option<OidcProviderData<'a>>,
+     allow_password_login: bool,
+@@ -42,6 +44,7 @@ pub struct GetLoginQuery {
+ 
+ #[instrument(skip(config, oidc_config))]
+ pub async fn route_get_login(
++    Extension(base_path): Extension<BasePath>,
+     Query(GetLoginQuery { redirect_uri }): Query<GetLoginQuery>,
+     Extension(config): Extension<FrontendConfig>,
+     Extension(oidc_config): Extension<Option<OidcConfig>>,
+@@ -51,9 +54,10 @@ pub async fn route_get_login(
+         .as_ref()
+         .map(|oidc_config| OidcProviderData {
+             name: &oidc_config.name,
+-            redirect_url: "/frontend/login/oidc".to_owned(),
++            redirect_url: base_path.url("/frontend/login/oidc"),
+         });
+     LoginPage {
++        base_path,
+         redirect_uri,
+         allow_password_login: config.allow_password_login,
+         oidc_data,
+@@ -70,6 +74,7 @@ pub struct PostLoginForm {
+ 
+ // #[instrument(skip(password, auth_provider, config))]
+ pub async fn route_post_login<AP: AuthenticationProvider>(
++    Extension(base_path): Extension<BasePath>,
+     Extension(auth_provider): Extension<Arc<AP>>,
+     Extension(config): Extension<FrontendConfig>,
+     session: Session,
+@@ -83,12 +88,15 @@ pub async fn route_post_login<AP: AuthenticationProvider>(
+     if !config.allow_password_login {
+         return StatusCode::METHOD_NOT_ALLOWED.into_response();
+     }
+-    let default_redirect = "/frontend/user".to_string();
++    let default_redirect = base_path.url("/frontend/user");
+     // Ensure that redirect_uri never goes cross-origin
+     let base_url: Url = format!("https://{host}").parse().unwrap();
+     let redirect_uri = if let Some(redirect_uri) = redirect_uri
+         && let Ok(redirect_url) = base_url.join(&redirect_uri)
+         && redirect_url.origin() == base_url.origin()
++        && !redirect_url.path().starts_with("//")
++        && (redirect_url.path() == base_path.as_str()
++            || redirect_url.path().starts_with(&base_path.url("/")))
+     {
+         redirect_url.path().to_owned()
+     } else {
+@@ -104,7 +112,10 @@ pub async fn route_post_login<AP: AuthenticationProvider>(
+     }
+ }
+ 
+-pub async fn route_post_logout(session: Session) -> Redirect {
++pub async fn route_post_logout(
++    Extension(base_path): Extension<BasePath>,
++    session: Session,
++) -> Redirect {
+     session.remove_value("user").await.unwrap();
+-    Redirect::to("/")
++    Redirect::to(&base_path.url("/"))
+ }
+diff --git a/crates/frontend/src/routes/user.rs b/crates/frontend/src/routes/user.rs
+index b2510b5..ac0a4cc 100644
+--- a/crates/frontend/src/routes/user.rs
++++ b/crates/frontend/src/routes/user.rs
+@@ -11,6 +11,7 @@ use axum::{
+ use axum_extra::TypedHeader;
+ use headers::{HeaderMapExt, Host, UserAgent};
+ use http::{HeaderMap, StatusCode};
++use rustical_dav::{BasePath, rfc_3986_percent_encode};
+ use rustical_store::auth::{AppToken, AuthenticationProvider, Principal};
+ 
+ impl Section for ProfileSection {
+@@ -22,12 +23,14 @@ impl Section for ProfileSection {
+ #[derive(Template, WebTemplate)]
+ #[template(path = "components/sections/profile_section.html")]
+ pub struct ProfileSection {
++    pub base_path: BasePath,
+     pub user: Principal,
+     pub app_tokens: Vec<AppToken>,
+     pub davx5_hostname: Option<String>,
+ }
+ 
+ pub async fn route_user_named<AP: AuthenticationProvider>(
++    Extension(base_path): Extension<BasePath>,
+     Path(user_id): Path<String>,
+     Extension(auth_provider): Extension<Arc<AP>>,
+     TypedHeader(host): TypedHeader<Host>,
+@@ -43,7 +46,9 @@ pub async fn route_user_named<AP: AuthenticationProvider>(
+         ua.and_then(|ua| ua.as_str().contains("Android").then_some(host.to_string()));
+ 
+     UserPage {
++        base_path: base_path.clone(),
+         section: ProfileSection {
++            base_path,
+             user: user.clone(),
+             app_tokens: auth_provider.get_app_tokens(&user.id).await.unwrap(),
+             davx5_hostname,
+@@ -53,13 +58,19 @@ pub async fn route_user_named<AP: AuthenticationProvider>(
+     .into_response()
+ }
+ 
+-pub async fn route_get_home(user: Principal) -> Redirect {
+-    Redirect::to(&format!("/frontend/user/{}", user.id))
++pub async fn route_get_home(
++    Extension(base_path): Extension<BasePath>,
++    user: Principal,
++) -> Redirect {
++    Redirect::to(&base_path.url(&format!(
++        "/frontend/user/{}",
++        rfc_3986_percent_encode(&user.id)
++    )))
+ }
+ 
+-pub async fn route_root(user: Option<Principal>) -> Redirect {
++pub async fn route_root(base_path: Extension<BasePath>, user: Option<Principal>) -> Redirect {
+     match user {
+-        Some(user) => route_get_home(user).await,
+-        None => Redirect::to("/frontend/login"),
++        Some(user) => route_get_home(base_path, user).await,
++        None => Redirect::to(&base_path.0.url("/frontend/login")),
+     }
+ }
+diff --git a/crates/oidc/src/lib.rs b/crates/oidc/src/lib.rs
+index cee2a72..ba7bcd2 100644
+--- a/crates/oidc/src/lib.rs
++++ b/crates/oidc/src/lib.rs
+@@ -27,9 +27,10 @@ struct OidcState {
+ 
+ #[derive(Debug, Clone)]
+ pub struct OidcServiceConfig {
+-    pub default_redirect_path: &'static str,
++    pub default_redirect_path: String,
++    pub base_path: String,
+     pub session_key_user_id: &'static str,
+-    pub callback_path: &'static str,
++    pub callback_path: String,
+ }
+ 
+ #[derive(Debug, Deserialize, Serialize)]
+diff --git a/crates/oidc/src/routes.rs b/crates/oidc/src/routes.rs
+index 7209a62..b6d73eb 100644
+--- a/crates/oidc/src/routes.rs
++++ b/crates/oidc/src/routes.rs
+@@ -197,7 +197,7 @@ pub async fn route_get_oidc_callback<US: UserStore>(
+     let (user_id, groups) = resolve_oidc_callback(
+         &oidc_config,
+         &host,
+-        service_config.callback_path,
++        &service_config.callback_path,
+         code,
+         oidc_state.pkce_verifier,
+         &oidc_state.nonce,
+@@ -234,11 +234,15 @@ pub async fn route_get_oidc_callback<US: UserStore>(
+         return Ok(err.into_response());
+     }
+ 
+-    let default_redirect = service_config.default_redirect_path.to_owned();
++    let default_redirect = service_config.default_redirect_path;
++    let base_dir = format!("{}/", service_config.base_path);
+     let base_url: Url = format!("https://{host}").parse().unwrap();
+     let redirect_uri = if let Some(redirect_uri) = oidc_state.redirect_uri
+         && let Ok(redirect_url) = base_url.join(&redirect_uri)
+         && redirect_url.origin() == base_url.origin()
++        && !redirect_url.path().starts_with("//")
++        && (redirect_url.path() == service_config.base_path
++            || redirect_url.path().starts_with(&base_dir))
+     {
+         redirect_url.path().to_owned()
+     } else {
+diff --git a/src/app.rs b/src/app.rs
+index 15100ef..2b8362a 100644
+--- a/src/app.rs
++++ b/src/app.rs
+@@ -1,16 +1,17 @@
+ use crate::config::NextcloudLoginConfig;
+-use axum::Router;
+ use axum::body::{Body, HttpBody};
+ use axum::extract::{DefaultBodyLimit, Request};
+ use axum::middleware::Next;
+ use axum::response::{Redirect, Response};
+ use axum::routing::{any, options};
++use axum::{Extension, Router};
+ use axum_extra::TypedHeader;
+ use headers::{HeaderMapExt, UserAgent};
+ use http::header::CONNECTION;
+ use http::{HeaderValue, StatusCode};
+ use rustical_caldav::{CalDavConfig, caldav_router};
+ use rustical_carddav::carddav_router;
++use rustical_dav::BasePath;
+ use rustical_dav_push::DavPushStore;
+ use rustical_frontend::nextcloud_login::nextcloud_login_router;
+ use rustical_frontend::{FrontendConfig, frontend_router};
+@@ -51,6 +52,7 @@ pub fn make_app<
+     dav_push_enabled: bool,
+     session_cookie_samesite_strict: bool,
+     payload_limit_mb: usize,
++    base_path: BasePath,
+ ) -> Router<()> {
+     let birthday_store = addr_store.clone();
+     let combined_cal_store =
+@@ -63,6 +65,7 @@ pub fn make_app<
+         .route("/ping", axum::routing::get(async || "Pong!"))
+         .merge(caldav_router(
+             "/caldav",
++            &base_path,
+             auth_provider.clone(),
+             combined_cal_store.clone(),
+             dav_push_store.clone(),
+@@ -71,6 +74,7 @@ pub fn make_app<
+         ))
+         .merge(caldav_router(
+             "/caldav-compat",
++            &base_path,
+             auth_provider.clone(),
+             combined_cal_store.clone(),
+             dav_push_store.clone(),
+@@ -79,25 +83,29 @@ pub fn make_app<
+         ))
+         .route(
+             "/.well-known/caldav",
+-            any(async |TypedHeader(ua): TypedHeader<UserAgent>| {
+-                // This would be a use case for Aho Corasick :)
+-                // For user agents see https://github.com/lennart-k/rustical/issues/180
+-                if ua.as_str().contains("accountsd")
+-                    || ua.as_str().contains("remindd")
+-                    || ua.as_str().contains("dataaccessd")
+-                {
+-                    // remindd is an Apple Calendar User Agent
+-                    // Even when explicitly configuring a principal URL in Apple Calendar Apple
+-                    // will not respect that configuration but call /.well-known/caldav,
+-                    // so sadly we have to do this user-agent filtering. :(
+-                    // (I should have never gotten an Apple device)
+-                    return Redirect::permanent("/caldav-compat");
+-                }
+-                Redirect::permanent("/caldav")
+-            }),
++            any(
++                async |Extension(base): Extension<BasePath>, ua: Option<TypedHeader<UserAgent>>| {
++                    // This would be a use case for Aho Corasick :)
++                    // For user agents see https://github.com/lennart-k/rustical/issues/180
++                    if ua.is_some_and(|TypedHeader(ua)| {
++                        ["accountsd", "remindd", "dataaccessd"]
++                            .iter()
++                            .any(|agent| ua.as_str().contains(agent))
++                    }) {
++                        // remindd is an Apple Calendar User Agent
++                        // Even when explicitly configuring a principal URL in Apple Calendar Apple
++                        // will not respect that configuration but call /.well-known/caldav,
++                        // so sadly we have to do this user-agent filtering. :(
++                        // (I should have never gotten an Apple device)
++                        return Redirect::permanent(&base.url("/caldav-compat"));
++                    }
++                    Redirect::permanent(&base.url("/caldav"))
++                },
++            ),
+         )
+         .merge(carddav_router(
+             "/carddav",
++            &base_path,
+             auth_provider.clone(),
+             addr_store.clone(),
+             dav_push_store.clone(),
+@@ -125,6 +133,7 @@ pub fn make_app<
+     if frontend_config.enabled {
+         router = router.merge(frontend_router(
+             "/frontend",
++            &base_path,
+             auth_provider.clone(),
+             combined_cal_store,
+             addr_store,
+@@ -141,10 +150,17 @@ pub fn make_app<
+         router = router.merge(rustical_dav_push::subscription_service(dav_push_store));
+     }
+ 
++    let router = router.layer(Extension(base_path.clone()));
++    let router = if base_path.as_str().is_empty() {
++        router
++    } else {
++        Router::new().nest(base_path.as_str(), router)
++    };
+     router
+         .layer(
+             SessionManagerLayer::new(session_store)
+                 .with_name("rustical_session")
++                .with_path(base_path.url("/"))
+                 .with_secure(true)
+                 .with_same_site(if session_cookie_samesite_strict {
+                     SameSite::Strict
+diff --git a/src/commands/health.rs b/src/commands/health.rs
+index 5a61e9e..45acbbc 100644
+--- a/src/commands/health.rs
++++ b/src/commands/health.rs
+@@ -21,7 +21,9 @@ pub async fn cmd_health(http_config: HttpConfig, _health_args: HealthArgs) -> an
+     };
+     let client = client_builder.build()?;
+ 
+-    let endpoint = format!("http://{address}/ping").parse().unwrap();
++    let endpoint = format!("http://{address}{}", http_config.base_path.url("/ping"))
++        .parse()
++        .unwrap();
+     let request = reqwest::Request::new(Method::GET, endpoint);
+ 
+     assert!(client.execute(request).await.unwrap().status().is_success());
+diff --git a/src/config.rs b/src/config.rs
+index 6a35354..63605cc 100644
+--- a/src/config.rs
++++ b/src/config.rs
+@@ -12,6 +12,7 @@ use serde::{Deserialize, Serialize};
+ #[serde(deny_unknown_fields, default)]
+ pub struct HttpConfig {
+     pub bind: Option<String>,
++    pub base_path: rustical_dav::BasePath,
+     // host, port are deprecated
+     pub host: Option<String>,
+     pub port: Option<u16>,
+@@ -173,6 +174,7 @@ impl Default for HttpConfig {
+     fn default() -> Self {
+         Self {
+             bind: Some("[::]:4000".to_owned()),
++            base_path: Default::default(),
+             host: None,
+             port: None,
+             session_cookie_samesite_strict: false,
+diff --git a/src/lib.rs b/src/lib.rs
+index 670abf0..da60df0 100644
+--- a/src/lib.rs
++++ b/src/lib.rs
+@@ -150,6 +150,7 @@ pub async fn cmd_serve(
+         config.dav_push.enabled,
+         config.http.session_cookie_samesite_strict,
+         config.http.payload_limit_mb,
++        config.http.base_path.clone(),
+     );
+     let app = ServiceExt::<Request>::into_make_service(
+         NormalizePathLayer::trim_trailing_slash().layer(app),
+diff --git a/tests/integration_tests/mod.rs b/tests/integration_tests/mod.rs
+index 555c367..4d2d2e8 100644
+--- a/tests/integration_tests/mod.rs
++++ b/tests/integration_tests/mod.rs
+@@ -32,6 +32,7 @@ pub fn get_app(context: TestStoreContext) -> axum::Router {
+         false,
+         true,
+         20,
++        Default::default(),
+     )
+ }
+ 
