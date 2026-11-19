@@ -8,9 +8,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "14aec1fa9f572aa823d618cecb59e257c9d5c104",
+      "revision": "87df3b6a9e2fff0b44e15ff2c5612c2b28f83952",
       "url": null,
-      "hash": "sha256-KQqO6aVcHhCXqaZ00W39Kf7NIo+1gKCGbVwe8ZcIYDY="
+      "hash": "sha256-RdaB3wlP4LTTISIaJBHKVXQeLTNF5IWpavP+uT7k8S0="
     },
     "sixu": {
       "type": "Git",
@@ -20,9 +20,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a4ecd12b321beb850fdddb5335f0f7598c56b7f1",
+      "revision": "82575ef3561f0965908cf0087367e25cc24ae965",
       "url": null,
-      "hash": "sha256-9mN6bWguKmNkUPhM/4K9y3ZZR3j+ol1kLBrgTeMPZg4="
+      "hash": "sha256-PFhYCjGw5Pd12rgz92YxrR/TKYIKu1yyt9xB41xO2hI="
     },
     "xingyao": {
       "type": "Git",
@@ -32,9 +32,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "089cdc405bcc4af82928f433f87c7d6eb1d8f8ff",
+      "revision": "1be2db966b8ee64b78604f10c3ef048c2914417f",
       "url": null,
-      "hash": "sha256-lNR97uj4+gewYkwtxWfzdJfd5EVxJNxaxsaJzAi5CYI="
+      "hash": "sha256-3L8QknNtbzx5pf6CtsIkB//oPIdzbZJkII6ddeZW494="
     }
   },
   "version": 8
