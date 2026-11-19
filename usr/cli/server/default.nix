@@ -1,8 +1,4 @@
-{ lib, ... }:
-let
-  # Service imports need their sources before config._module.args can be resolved.
-  global-args = import ../global-args {inherit lib;};
-in {
+{ lib, ... }: {
   imports = [
     ./authelia
     ./caddy
@@ -15,20 +11,11 @@ in {
     (lib.modules.importApply ./xingyao {
       src = (import <npins> {input=./xingyao/sources.json;}).xingyao;
     })
-
-    # TODO: reuse ../usr as much as possible
-    ../usr/cachix-push.nix
-    ../usr/yq-merge
-    ../usr/syncthing-gist-ignore.nix
-    (lib.modules.importApply ../usr/cli/basic {enableExtendedCLI = false;})
   ];
 
   options.my.server.caddyAuthelia.enable = lib.mkEnableOption "Caddy + Authelia prototype user services";
 
   config = {
-    # TODO: reuse ../usr as much as possible
-    _module.args = global-args;
-
     targets.genericLinux.enable = true;
     targets.genericLinux.gpu.enable = false;
 

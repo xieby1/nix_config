@@ -10,6 +10,7 @@
 {
   enableGraphics ? true,
   enableExtendedCLI ? true,
+  enableServer ? false,
 }: # local args
 { lib, ... }: {
   imports = [
@@ -17,7 +18,7 @@
     ./cachix-push.nix
     ./yq-merge
     ./syncthing-gist-ignore.nix
-    (lib.modules.importApply ./cli { inherit enableExtendedCLI; })
+    (lib.modules.importApply ./cli { inherit enableExtendedCLI enableServer; })
   ]
   ++ lib.optional enableGraphics ./gui;
   _module.args = {
