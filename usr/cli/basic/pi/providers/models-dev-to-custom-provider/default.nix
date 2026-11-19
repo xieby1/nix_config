@@ -7,7 +7,7 @@ in {
   yq-merge.".pi/agent/models.json" = {
     generator = builtins.toJSON;
     expr.providers.${provider.id} = {
-      baseUrl = provider.api_endpoint;
+      baseUrl = provider.api;
       api = apiByNpm.${provider.npm};
       apiKey = provider.api_key;
       models = map (model: {

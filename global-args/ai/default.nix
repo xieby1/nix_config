@@ -27,7 +27,7 @@ in {
     jw2-openai = models-dev-providers.openai // {
       id = "jw2-openai";
       name = "JW2 OpenAI";
-      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
+      api = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-openai.txt);
     };
     jw2-sub2api-pi-codex = models-dev-providers.openai // {
@@ -37,19 +37,19 @@ in {
     jw2-deepseek = models-dev-providers.deepseek // {
       id = "jw2-deepseek";
       name = "JW2 DeepSeek";
-      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt) + "/v1";
+      api = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt) + "/v1";
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-deepseek.txt);
     };
     jw2-kimi = models-dev-providers.kimi-code-plan-cn // {
       id = "jw2-kimi";
       name = "JW2 Kimi";
-      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
+      api = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/jw2-kimi.txt);
     };
     acc-gpt = models-dev-providers.openai // {
       id = "acc-openai";
       name = "ACC OpenAI";
-      api_endpoint = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/url.txt);
+      api = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/url.txt);
       api_key = lib.trim (builtins.readFile ~/Gist/Vault/AI/aacc/gpt.txt);
     };
   };

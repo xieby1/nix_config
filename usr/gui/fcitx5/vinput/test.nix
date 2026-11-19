@@ -5,7 +5,7 @@ let
     ai.default_small = {
       provider = {
         id = "jw2-deepseek";
-        api_endpoint = "https://example.test/v1";
+        api = "https://example.test/v1";
         api_key = "test-key";
       };
       model.id = "deepseek-flash";

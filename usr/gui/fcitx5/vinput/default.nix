@@ -19,7 +19,7 @@ in lib.mkIf (builtins.elem system [ "x86_64-linux" "aarch64-linux" ]) {
     };
     expr.llm.providers = [{
       id = ai.default_small.provider.id;
-      base_url = ai.default_small.provider.api_endpoint;
+      base_url = ai.default_small.provider.api;
       api_key = ai.default_small.provider.api_key;
     }];
     expr.scenes = {

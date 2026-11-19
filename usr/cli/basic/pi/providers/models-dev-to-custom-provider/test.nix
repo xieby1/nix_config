@@ -11,7 +11,7 @@ let
   };
   convert = npm: models: (import ./. {
     id = "test-provider";
-    api_endpoint = "https://example.invalid/v1";
+    api = "https://example.invalid/v1";
     api_key = "test-key";
     inherit npm models;
   }).yq-merge.".pi/agent/models.json".expr.providers.test-provider;
