@@ -1,7 +1,7 @@
 let
   pkgs = import <nixpkgs> {};
   inherit (pkgs) lib;
-  sharedArgs = (import ../../../../global-args { inherit lib; }) // {
+  sharedArgs = {
     ai.default_small = {
       provider = {
         id = "jw2-deepseek";
