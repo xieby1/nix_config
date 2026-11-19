@@ -1,3 +1,4 @@
+{ enableExtendedCLI }: # local args
 { pkgs, lib, ... }:
 let
   sysconfig = (
@@ -10,7 +11,6 @@ in
 {
   imports = [
     (lib.modules.importApply ./basic {})
-    ./extra.nix
     ./tmux.nix
     ./gdb.nix
     ./ctags.nix
@@ -33,7 +33,8 @@ in
         else builtins.toFile "empty-cachix.dhall" "";
       target = ".config/cachix/cachix.dhall";
     };
-  }];
+  }]
+  ++ lib.optional enableExtendedCLI ./extra.nix;
 
   home.packages = with pkgs; [
     # tools
