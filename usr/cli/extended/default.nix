@@ -149,6 +149,8 @@ in
 
   programs.command-not-found = {
     enable = true;
+    # NixOS channels generate programs.sqlite; nixpkgs-unstable does not.
+    # Keep the npins Nixpkgs pin on nixos-unstable for this database.
     dbPath = "${pkgs.npinsed.nixpkgs.outPath}/programs.sqlite";
   };
 
