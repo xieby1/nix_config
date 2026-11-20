@@ -22,9 +22,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "82ce401aa350502897c3f2e85f384d61cd3b0b6d",
-      "url": "https://github.com/nix-community/home-manager/archive/82ce401aa350502897c3f2e85f384d61cd3b0b6d.tar.gz",
-      "hash": "sha256-rkrJwLgLSHBnXfgoSKIDa+2LLGdTqynsV3GAxOTGhUU="
+      "revision": "2b13c9cb3aa20653e6f8ee0b7f8331a53ea9b0a9",
+      "url": "https://github.com/nix-community/home-manager/archive/2b13c9cb3aa20653e6f8ee0b7f8331a53ea9b0a9.tar.gz",
+      "hash": "sha256-+CPrP74GDJ63f7bgEFC9Av4hbxc7K9WUNv1ZVRifRe8="
     },
     "nix-on-droid": {
       "type": "Git",
@@ -55,9 +55,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "b11a0259d3db3308524336b8d880c6af2518ed75",
-      "url": "https://github.com/nix-community/NUR/archive/b11a0259d3db3308524336b8d880c6af2518ed75.tar.gz",
-      "hash": "sha256-09pfsA9TqUDL1HtmegZCC0vNdSy+l2gGrJu/olb98Dk="
+      "revision": "4900e8b66b4461958c8d950e8950be496e1e9916",
+      "url": "https://github.com/nix-community/NUR/archive/4900e8b66b4461958c8d950e8950be496e1e9916.tar.gz",
+      "hash": "sha256-N2aWhrEg79xhx6z2CtM9Eck0cnfc/DCVjJeQ8VOmFlw="
     }
   },
   "version": 8
