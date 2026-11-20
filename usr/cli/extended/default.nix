@@ -53,6 +53,7 @@ in
     poppler-utils # pdftotext
     pdfgrep
     yq-go
+    clipboard-jh
     ## compile
     gnumake
     makefile2graph
