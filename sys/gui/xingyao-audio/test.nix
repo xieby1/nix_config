@@ -15,14 +15,8 @@ let
     patch = builtins.any (p: p.name == "alc256-xingyao-speakers") c.boot.kernelPatches;
   };
 in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
-  test-driver-by-default = {
+  test-userspace-workaround = {
     expr = audioState cfg;
-    expected = { workaround = false; resumeWorkaround = false; patch = true; };
-  };
-  test-workaround-fallback = {
-    expr = if cfg.specialisation ? xingyao-speakers-workaround
-      then audioState cfg.specialisation.xingyao-speakers-workaround.configuration
-      else null;
     expected = { workaround = true; resumeWorkaround = true; patch = false; };
   };
   test-disabled-on-other-hosts = {
@@ -33,7 +27,7 @@ in pkgs.lib.debug.throwTestFailures { failures = pkgs.lib.runTests {
     };
     expected = { service = false; fallback = false; patch = false; };
   };
-  test-fallback-boot-and-stop = {
+  test-workaround-boot-and-stop = {
     expr = let service = cfg.systemd.services.xingyao-speakers; in {
       wantedBy = service.wantedBy;
       after = service.after;

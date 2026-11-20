@@ -7,7 +7,6 @@
 in lib.mkIf (config.networking.hostName == "techrevo") {
   systemd.services.xingyao-speakers = {
     description = "Enable Xingyao 14 ALC256 second speaker path";
-    enable = lib.mkDefault false;
     wantedBy = [ "multi-user.target" ];
     after = [ "sound.target" "alsa-restore.service" ];
     serviceConfig = {
@@ -17,15 +16,7 @@ in lib.mkIf (config.networking.hostName == "techrevo") {
       ExecStop = "${initialize}/bin/xingyao-speakers off";
     };
   };
-  # Keep the previous userspace workaround available as a fallback boot entry.
-  specialisation.xingyao-speakers-workaround.configuration = {
-    systemd.services.xingyao-speakers.enable = true;
-  };
-  boot.kernelPatches = lib.mkIf (!config.systemd.services.xingyao-speakers.enable) [{
-    name = "alc256-xingyao-speakers";
-    patch = ./alc256-xingyao-speakers.patch;
-  }];
-  powerManagement.resumeCommands = lib.mkIf config.systemd.services.xingyao-speakers.enable ''
+  powerManagement.resumeCommands = ''
     ${pkgs.systemd}/bin/systemctl restart xingyao-speakers.service
   '';
 }
