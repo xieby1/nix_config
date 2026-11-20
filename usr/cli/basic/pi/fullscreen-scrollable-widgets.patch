@@ -1,0 +1,60 @@
+diff --git a/packages/coding-agent/src/modes/interactive/chat-viewport.ts b/packages/coding-agent/src/modes/interactive/chat-viewport.ts
+index eff762a..42cf343 100644
+--- a/packages/coding-agent/src/modes/interactive/chat-viewport.ts
++++ b/packages/coding-agent/src/modes/interactive/chat-viewport.ts
+@@ -20,7 +20,12 @@ export interface ChatViewport {
+ 
+ /** Shared fullscreen transcript and fixed input-dock layout. */
+ export function createChatViewport(options: ChatViewportOptions): ChatViewport {
+-	const transcript = new ScrollView(options.document, {
++	const content = new VStack([
++		options.document,
++		...(options.widgetsAbove === undefined ? [] : [options.widgetsAbove]),
++		...(options.widgetsBelow === undefined ? [] : [options.widgetsBelow]),
++	]);
++	const transcript = new ScrollView(content, {
+ 		follow: "end",
+ 		primary: true,
+ 		overscroll: "chain",
+@@ -31,9 +36,7 @@ export function createChatViewport(options: ChatViewportOptions): ChatViewport {
+ 	const dock = new VStack([
+ 		{ component: options.pendingMessages, shrink: 1, minSize: 0 },
+ 		{ component: options.status, shrink: 1, minSize: 0 },
+-		...(options.widgetsAbove === undefined ? [] : [{ component: options.widgetsAbove, shrink: 1, minSize: 0 }]),
+ 		{ component: options.editor, shrink: 1, minSize: 3 },
+-		...(options.widgetsBelow === undefined ? [] : [{ component: options.widgetsBelow, shrink: 1, minSize: 0 }]),
+ 		{ component: options.footer, shrink: 1, minSize: 0 },
+ 	]);
+ 	return {
+diff --git a/packages/coding-agent/test/chat-viewport.test.ts b/packages/coding-agent/test/chat-viewport.test.ts
+index c87215d..f293f08 100644
+--- a/packages/coding-agent/test/chat-viewport.test.ts
++++ b/packages/coding-agent/test/chat-viewport.test.ts
+@@ -23,4 +23,27 @@ describe("chat viewport", () => {
+ 		expect(automatic.transcript.scrollbar).toBe("auto");
+ 		expect(hidden.transcript.scrollbar).toBe("hidden");
+ 	});
++
++	test("scrolls widgets with the transcript instead of docking them", () => {
++		const document = new Container();
++		const widgetsAbove = new Container();
++		const widgetsBelow = new Container();
++		const pendingMessages = new Container();
++		const status = new Container();
++		const editor = new Container();
++		const footer = new Container();
++		const viewport = createChatViewport({
++			document,
++			widgetsAbove,
++			widgetsBelow,
++			pendingMessages,
++			status,
++			editor,
++			footer,
++		});
++
++		expect(viewport.transcript.children[0]?.children).toEqual([document, widgetsAbove, widgetsBelow]);
++		const dock = (viewport.root as Container).children[1] as Container;
++		expect(dock.children).toEqual([pendingMessages, status, editor, footer]);
++	});
+ });

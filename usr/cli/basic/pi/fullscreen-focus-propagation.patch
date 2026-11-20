@@ -1,0 +1,82 @@
+--- a/packages/tui/src/tui.ts
++++ b/packages/tui/src/tui.ts
+@@ -1084,6 +1084,10 @@
+ 		}, delay);
+ 	}
+ 
++	protected consumeInput(_data: string): boolean {
++		return false;
++	}
++
+ 	private handleTerminalInput(data: string): void {
+ 		if (this.consumeTerminalColorResponse(data)) {
+ 			return;
+@@ -1109,6 +1113,10 @@
+ 			data = current;
+ 		}
+ 
++		if (this.consumeInput(data)) {
++			return;
++		}
++
+ 		// Consume terminal cell size responses without blocking unrelated input.
+ 		if (this.consumeCellSizeResponse(data)) {
+ 			return;
+--- a/packages/tui/src/tui-alt-screen.ts
++++ b/packages/tui/src/tui-alt-screen.ts
+@@ -691,6 +691,10 @@
+ 		this.mousePressMoved = false;
+ 	}
+ 
++	protected override consumeInput(data: string): boolean {
++		return data === FOCUS_IN || data === FOCUS_OUT;
++	}
++
+ 	private handleViewportInput(data: string): { consume?: boolean } | undefined {
+ 		if (data === FOCUS_OUT) {
+ 			const hadActiveSelection = this.selectionPressActive;
+@@ -712,9 +716,9 @@
+ 				if (hadNonEmptyActiveSelection) this.requestRender();
+ 			}
+ 			this.lastClick = undefined;
+-			return { consume: true };
++			return;
+ 		}
+-		if (data === FOCUS_IN) return { consume: true };
++		if (data === FOCUS_IN) return;
+ 
+ 		const wheelEvent = this.parseWheelEvent(data);
+ 		if (wheelEvent) {
+--- a/packages/tui/test/tui-alt-screen.test.ts
++++ b/packages/tui/test/tui-alt-screen.test.ts
+@@ -65,6 +65,30 @@
+ }
+ 
+ describe("TuiAltScreen", () => {
++	it("delivers focus reports to input listeners without forwarding them to components", () => {
++		for (const consume of [false, true]) {
++			const terminal = new VirtualTerminal(20, 4);
++			const tui = new TuiAltScreen(terminal);
++			const component = new InputOverlay();
++			const observed: string[] = [];
++			tui.addChild(component);
++			tui.setFocus(component);
++			tui.addInputListener((data) => {
++				observed.push(data);
++				return consume ? { consume: true } : undefined;
++			});
++			tui.start();
++			try {
++				terminal.sendInput("\x1b[O");
++				terminal.sendInput("\x1b[I");
++				assert.deepStrictEqual(observed, ["\x1b[O", "\x1b[I"]);
++				assert.deepStrictEqual(component.inputs, []);
++			} finally {
++				tui.stop();
++			}
++		}
++	});
++
+ 	it("does not leak cursor markers while selecting after the caret", async () => {
+ 		const terminal = new RecordingTerminal(20, 4);
+ 		const tui = new TuiAltScreen(terminal, undefined, undefined, { copyOnSelect: false });

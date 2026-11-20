@@ -1,0 +1,316 @@
+diff --git a/pkg/commands/git_commands/commit_coauthor_test.go b/pkg/commands/git_commands/commit_coauthor_test.go
+new file mode 100644
+index 0000000..51851f1
+--- /dev/null
++++ b/pkg/commands/git_commands/commit_coauthor_test.go
+@@ -0,0 +1,58 @@
++package git_commands
++
++import (
++	"os/exec"
++	"path/filepath"
++	"strings"
++	"testing"
++
++	"github.com/jesseduffield/lazygit/pkg/common"
++	"github.com/jesseduffield/lazygit/pkg/utils"
++	"github.com/stretchr/testify/assert"
++)
++
++func TestCommitCoAuthorTrailers(t *testing.T) {
++	dir := t.TempDir()
++	git := func(args ...string) string {
++		cmd := exec.Command("git", args...)
++		cmd.Dir = dir
++		cmd.Env = append(cmd.Environ(), "GIT_CONFIG_GLOBAL="+filepath.Join(dir, "no-config"), "GIT_CONFIG_NOSYSTEM=1")
++		out, err := cmd.CombinedOutput()
++		if !assert.NoError(t, err, string(out)) {
++			t.FailNow()
++		}
++		return string(out)
++	}
++	git("init", "-q")
++	loader := &CommitLoader{Common: common.NewDummyCommon()}
++	assert.Equal(t, prettyFormat, loader.commitPrettyFormat())
++	loader.UserConfig().Gui.CommitCoAuthorLongLength = 12
++	pool := &utils.StringPool{}
++	special := "special\x001234\x00Test\x00test@example.com\x00\x00>\x00\x00subject\x00with NUL\x00Jane Doe <jane@example.com>"
++	parsed := loader.extractCommitFromLine(pool, special, false)
++	assert.Equal(t, "subject\x00with NUL", parsed.Name)
++	assert.Equal(t, "Jane Doe", parsed.CoAuthors)
++	for _, s := range []struct {
++		name    string
++		message string
++		names   []string
++	}{
++		{"none", "subject", nil},
++		{"one", "subject\n\nCo-authored-by: Jane Doe <jane@example.com>", []string{"Jane Doe"}},
++		{"multiple and case insensitive", "subject\n\nCo-Authored-By: Jane, Doe <jane@example.com>\nCo-authored-by: 张三 <zhang@example.com>\nGenerated-By: pi", []string{"Jane, Doe", "张三"}},
++		{"folded", "subject\n\nCo-authored-by: Jane\n Doe <jane@example.com>", []string{"Jane Doe"}},
++		{"not a trailer", "subject\n\nCo-authored-by: Jane Doe <jane@example.com>\n\nThis is prose.", nil},
++	} {
++		t.Run(s.name, func(t *testing.T) {
++			git("-c", "user.name=Test", "-c", "user.email=test@example.com", "-c", "commit.gpgSign=false", "commit", "--allow-empty", "-qm", s.message)
++			out := strings.TrimSuffix(git("log", "-1", loader.commitPrettyFormat()), "\n")
++			assert.NotContains(t, out, "\n")
++			commit := loader.extractCommitFromLine(pool, strings.TrimPrefix(out, "+"), false)
++			if !assert.NotNil(t, commit) {
++				t.FailNow()
++			}
++			assert.Equal(t, "subject", commit.Name)
++			assert.Equal(t, strings.Join(s.names, ", "), commit.CoAuthors)
++		})
++	}
++}
+diff --git a/pkg/commands/git_commands/commit_loader.go b/pkg/commands/git_commands/commit_loader.go
+index 381dd64..3d7725f 100644
+--- a/pkg/commands/git_commands/commit_loader.go
++++ b/pkg/commands/git_commands/commit_loader.go
+@@ -215,6 +215,20 @@ func (self *CommitLoader) extractCommitFromLine(hashPool *utils.StringPool, line
+ 		message = split[7]
+ 	}
+ 
++	var coAuthorNames []string
++	if self.UserConfig().Gui.CommitCoAuthorLongLength > 0 {
++		// Split from the end so embedded NULs in the subject stay in the subject.
++		if idx := strings.LastIndex(message, "\x00"); idx >= 0 {
++			for _, trailer := range strings.Split(message[idx+1:], "\x1f") {
++				name, _, _ := strings.Cut(trailer, "<")
++				if name = strings.TrimSpace(name); name != "" {
++					coAuthorNames = append(coAuthorNames, name)
++				}
++			}
++			message = message[:idx]
++		}
++	}
++
+ 	var tags []string
+ 
+ 	if extraInfo != "" {
+@@ -246,6 +260,7 @@ func (self *CommitLoader) extractCommitFromLine(hashPool *utils.StringPool, line
+ 		UnixTimestamp: int64(unitTimestampInt),
+ 		AuthorName:    authorName,
+ 		AuthorEmail:   authorEmail,
++		CoAuthors:     strings.Join(coAuthorNames, ", "),
+ 		Parents:       parents,
+ 		Divergence:    divergence,
+ 	})
+@@ -305,7 +320,7 @@ func (self *CommitLoader) getHydratedTodoCommits(
+ 		cmdObj := self.cmd.New(
+ 			NewGitCmd("show").
+ 				Config("log.showSignature=false").
+-				Arg("--no-patch", "--oneline", "--abbrev=20", prettyFormat).
++				Arg("--no-patch", "--oneline", "--abbrev=20", self.commitPrettyFormat()).
+ 				Arg(commitHashesToFetch...).
+ 				ToArgv(),
+ 		).DontLog()
+@@ -608,7 +623,7 @@ func (self *CommitLoader) getLogCmd(opts GetCommitsOptions) *oscommands.CmdObj {
+ 		ArgIf(gitLogOrder != "default", "--"+gitLogOrder).
+ 		ArgIf(opts.All, "--all").
+ 		Arg("--oneline").
+-		Arg(prettyFormat).
++		Arg(self.commitPrettyFormat()).
+ 		Arg("--abbrev=40").
+ 		ArgIf(opts.FilterAuthor != "", "--author="+opts.FilterAuthor).
+ 		ArgIf(opts.Limit, "-300").
+@@ -623,3 +638,10 @@ func (self *CommitLoader) getLogCmd(opts GetCommitsOptions) *oscommands.CmdObj {
+ }
+ 
+ const prettyFormat = `--pretty=format:+%H%x00%at%x00%aN%x00%ae%x00%P%x00%m%x00%D%x00%s`
++
++func (self *CommitLoader) commitPrettyFormat() string {
++	if self.UserConfig().Gui.CommitCoAuthorLongLength > 0 {
++		return prettyFormat + `%x00%(trailers:key=Co-authored-by,valueonly,unfold,separator=%x1f)`
++	}
++	return prettyFormat
++}
+diff --git a/pkg/commands/git_commands/commit_loader_test.go b/pkg/commands/git_commands/commit_loader_test.go
+index d261197..21ad480 100644
+--- a/pkg/commands/git_commands/commit_loader_test.go
++++ b/pkg/commands/git_commands/commit_loader_test.go
+@@ -606,7 +606,8 @@ func TestCommitLoaderGetHydratedTodoCommitsLoadsMissingCommit(t *testing.T) {
+ 		nil,
+ 	)
+ 	loader := &CommitLoader{
+-		cmd: oscommands.NewDummyCmdObjBuilder(runner),
++		Common: common.NewDummyCommon(),
++		cmd:    oscommands.NewDummyCmdObjBuilder(runner),
+ 	}
+ 	existingCommit := models.NewCommit(hashPool, models.NewCommitOpts{
+ 		Hash:   existingHash,
+diff --git a/pkg/commands/models/commit.go b/pkg/commands/models/commit.go
+index 69aca8d..496ea73 100644
+--- a/pkg/commands/models/commit.go
++++ b/pkg/commands/models/commit.go
+@@ -49,6 +49,7 @@ type Commit struct {
+ 	ExtraInfo     string // something like 'HEAD -> master, tag: v0.15.2'
+ 	AuthorName    string // something like 'Jesse Duffield'
+ 	AuthorEmail   string // something like 'jessedduffield@gmail.com'
++	CoAuthors     string
+ 	UnixTimestamp int64
+ 
+ 	// Hashes of parent commits (will be multiple if it's a merge commit)
+@@ -74,6 +75,7 @@ type NewCommitOpts struct {
+ 	ExtraInfo     string
+ 	AuthorName    string
+ 	AuthorEmail   string
++	CoAuthors     string
+ 	UnixTimestamp int64
+ 	Divergence    Divergence
+ 	Parents       []string
+@@ -90,6 +92,7 @@ func NewCommit(hashPool *utils.StringPool, opts NewCommitOpts) *Commit {
+ 		ExtraInfo:     opts.ExtraInfo,
+ 		AuthorName:    opts.AuthorName,
+ 		AuthorEmail:   opts.AuthorEmail,
++		CoAuthors:     opts.CoAuthors,
+ 		UnixTimestamp: opts.UnixTimestamp,
+ 		Divergence:    opts.Divergence,
+ 		parents:       lo.Map(opts.Parents, func(s string, _ int) *string { return hashPool.Add(s) }),
+diff --git a/pkg/config/user_config.go b/pkg/config/user_config.go
+index 140defc..b1585ad 100644
+--- a/pkg/config/user_config.go
++++ b/pkg/config/user_config.go
+@@ -189,6 +189,8 @@ type GuiConfig struct {
+ 	CommitAuthorShortLength int `yaml:"commitAuthorShortLength"`
+ 	// Length of author name in expanded commits view. 2 means show initials only.
+ 	CommitAuthorLongLength int `yaml:"commitAuthorLongLength"`
++	// Width of co-author names in expanded commits view. 0 disables co-author display; positive values also append '&' to authors in normal view.
++	CommitCoAuthorLongLength int `yaml:"commitCoAuthorLongLength" jsonschema:"minimum=0"`
+ 	// Length of commit hash in commits view. 0 shows '*' if NF icons aren't on.
+ 	CommitHashLength int `yaml:"commitHashLength" jsonschema:"minimum=0"`
+ 	// If true, show commit hashes alongside branch names in the branches view.
+diff --git a/pkg/gui/presentation/commits.go b/pkg/gui/presentation/commits.go
+index 7be1d12..5db1180 100644
+--- a/pkg/gui/presentation/commits.go
++++ b/pkg/gui/presentation/commits.go
+@@ -524,7 +524,17 @@ func displayCommit(
+ 	}
+ 	author := authors.AuthorWithLength(commit.AuthorName, authorLength)
+ 
+-	cols := make([]string, 0, 7)
++	coAuthor := ""
++	if width := common.UserConfig().Gui.CommitCoAuthorLongLength; width > 0 {
++		if fullDescription {
++			coAuthor = authors.LongAuthor(commit.CoAuthors, width)
++		} else {
++			author += lo.Ternary(commit.CoAuthors != "",
++				authors.AuthorStyle(commit.CoAuthors).Sprint("&"), " ")
++		}
++	}
++
++	cols := make([]string, 0, 8)
+ 	cols = append(
+ 		cols,
+ 		divergenceString,
+@@ -533,6 +543,11 @@ func displayCommit(
+ 		utils.WithPadding(descriptionString, reservedWidths.description, utils.AlignLeft),
+ 		utils.WithPadding(actionString, reservedWidths.action, utils.AlignLeft),
+ 		author,
++	)
++	if coAuthor != "" {
++		cols = append(cols, coAuthor)
++	}
++	cols = append(cols,
+ 		graphLine+mark+tagString+theme.DefaultTextColor.Sprint(name),
+ 	)
+ 
+diff --git a/pkg/gui/presentation/commits_coauthor_test.go b/pkg/gui/presentation/commits_coauthor_test.go
+new file mode 100644
+index 0000000..831e052
+--- /dev/null
++++ b/pkg/gui/presentation/commits_coauthor_test.go
+@@ -0,0 +1,94 @@
++package presentation
++
++import (
++	"strings"
++	"testing"
++	"time"
++
++	"github.com/gookit/color"
++	"github.com/jesseduffield/generics/set"
++	"github.com/jesseduffield/lazygit/pkg/commands/git_commands"
++	"github.com/jesseduffield/lazygit/pkg/commands/models"
++	"github.com/jesseduffield/lazygit/pkg/common"
++	"github.com/jesseduffield/lazygit/pkg/gui/presentation/authors"
++	"github.com/jesseduffield/lazygit/pkg/gui/presentation/graph"
++	"github.com/jesseduffield/lazygit/pkg/gui/style"
++	"github.com/jesseduffield/lazygit/pkg/utils"
++	"github.com/stretchr/testify/assert"
++	"github.com/xo/terminfo"
++)
++
++func TestCommitCoAuthorColors(t *testing.T) {
++	oldColorLevel := color.ForceSetColorLevel(terminfo.ColorLevelMillions)
++	defer color.ForceSetColorLevel(oldColorLevel)
++	defer authors.SetCustomAuthors(nil)
++	for _, names := range [][]string{{"Jane Doe"}, {"Jane Doe", "John Doe"}} {
++		joined := strings.Join(names, ", ")
++		authors.SetCustomAuthors(map[string]string{"xieby1": "red", joined: "blue"})
++		cmn := common.NewDummyCommon()
++		cmn.UserConfig().Gui.CommitCoAuthorLongLength = 24
++		pool := &utils.StringPool{}
++		commits := []*models.Commit{models.NewCommit(pool, models.NewCommitOpts{
++			Hash: "abcdef123", Name: "subject", AuthorName: "xieby1", CoAuthors: joined,
++		})}
++		for _, expanded := range []bool{false, true} {
++			cols := GetCommitListDisplayStrings(cmn, commits, nil, "main", false, expanded,
++				set.New[string](), "", "", "2006-01-02", "15:04", time.Now(), false,
++				nil, 0, 1, false, graph.BoxDrawingSymbols, git_commands.NewNullBisectInfo())[0]
++			if expanded {
++				assert.Equal(t, style.FgBlue.Sprint(utils.WithPadding(joined, 24, utils.AlignLeft)), cols[len(cols)-2])
++			} else {
++				assert.Equal(t, style.FgRed.Sprint("xi")+style.FgBlue.Sprint("&"), cols[len(cols)-2])
++			}
++		}
++	}
++}
++
++func TestCommitCoAuthorDisplay(t *testing.T) {
++	for _, s := range []struct {
++		name              string
++		width             int
++		expanded          bool
++		author            string
++		coAuthors         []string
++		expectedAuthor    string
++		expectedCoAuthors string
++	}{
++		{"off", 0, false, "xieby1", []string{"Jane Doe"}, "xi", ""},
++		{"off expanded", 0, true, "xieby1", []string{"Jane Doe"}, "xieby1", ""},
++		{"indicator", 12, false, "xieby1", []string{"Jane Doe"}, "xi&", ""},
++		{"blank indicator", 12, false, "xieby1", nil, "xi ", ""},
++		{"multiple indicator", 12, false, "xieby1", []string{"Jane Doe", "John Doe"}, "xi&", ""},
++		{"expanded name", 12, true, "xieby1", []string{"Jane Doe"}, "xieby1", "Jane Doe    "},
++		{"expanded blank", 12, true, "xieby1", nil, "xieby1", "            "},
++		{"expanded multiple", 12, true, "xieby1", []string{"Jane Doe", "John Doe"}, "xieby1", "Jane Doe, J…"},
++		{"unicode width", 5, true, "xieby1", []string{"张三李四"}, "xieby1", "张三…"},
++		{"one cell width", 1, true, "xieby1", []string{"Jane Doe"}, "xieby1", "."},
++		{"two cells are not initials", 2, true, "xieby1", []string{"Jane Doe"}, "xieby1", ".."},
++		{"short author", 12, false, "X", []string{"Jane Doe"}, "X&", ""},
++	} {
++		t.Run(s.name, func(t *testing.T) {
++			cmn := common.NewDummyCommon()
++			cmn.UserConfig().Gui.CommitCoAuthorLongLength = s.width
++			cmn.UserConfig().Gui.CommitAuthorLongLength = 6
++			pool := &utils.StringPool{}
++			commits := []*models.Commit{models.NewCommit(pool, models.NewCommitOpts{
++				Hash: "abcdef123", Name: "subject", AuthorName: s.author, CoAuthors: strings.Join(s.coAuthors, ", "),
++			})}
++			cols := GetCommitListDisplayStrings(cmn, commits, nil, "main", false, s.expanded,
++				set.New[string](), "", "", "2006-01-02", "15:04", time.Now(), false,
++				nil, 0, 1, false, graph.BoxDrawingSymbols, git_commands.NewNullBisectInfo())[0]
++			authorIdx := len(cols) - 2
++			if s.width > 0 && s.expanded {
++				authorIdx--
++				assert.Equal(t, s.expectedCoAuthors, utils.Decolorise(cols[authorIdx+1]))
++				assert.Equal(t, s.width, utils.StringWidth(utils.Decolorise(cols[authorIdx+1])))
++			}
++			assert.Equal(t, s.expectedAuthor, utils.Decolorise(cols[authorIdx]))
++			if !s.expanded {
++				lines, _ := utils.RenderDisplayStrings([][]string{cols}, nil)
++				assert.True(t, strings.HasSuffix(utils.Decolorise(lines[0]), s.expectedAuthor+" subject"), lines[0])
++			}
++		})
++	}
++}
