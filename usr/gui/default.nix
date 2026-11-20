@@ -55,16 +55,12 @@
       categories = ["AudioVideo"];
       mimeTypes = ["x-scheme-handler/wemeet"];
     })
-    discord
   ] ++ [
-    transmission_4-gtk
     # text
     #wpsoffice
     libreoffice
-    meld
     # pi-attachments reads copied files via wl-paste on Wayland
     wl-clipboard
-    textsnatcher
     # draw
     #aseprite-unfree
     inkscape
@@ -76,17 +72,9 @@
     loupe
     gnome-calculator
     surfer
-  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    imhex
   ] ++ [
     vlc
     obsidian
-  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    ghidra
-  ] ++ [
-    # management
-  ] ++ pkgs.lib.optionals (builtins.currentSystem=="x86_64-linux") [
-    zotero
   ] ++ [
     keepassxc
     # entertainment
