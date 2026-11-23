@@ -13,6 +13,19 @@
       "url": "https://github.com/axkirillov/hbac.nvim/archive/2c85485ea28e5e3754650829e0bca612960e1b73.tar.gz",
       "hash": "sha256-A+C9N7xorS7DV0w8N5TjyD7OvWdxUQ4PJaKW3kwkQS0="
     },
+    "merman": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Latias94",
+        "repo": "merman"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "5c1a96cd2d80ba991b311d54271874a4c171888c",
+      "url": "https://github.com/Latias94/merman/archive/5c1a96cd2d80ba991b311d54271874a4c171888c.tar.gz",
+      "hash": "sha256-k6tEk/GpYLsMxsq1acS5P9tYaQV1yAGBYgh1f+N8uHM="
+    },
     "outline-treesitter-provider": {
       "type": "Git",
       "repository": {

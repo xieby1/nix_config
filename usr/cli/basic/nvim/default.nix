@@ -19,6 +19,7 @@ in {
     (lib.modules.importApply ./nvim-treesitter.nix {
       d2-src = npinsed.tree-sitter-d2;
       veryl-src = npinsed.tree-sitter-veryl;
+      merman-src = npinsed.merman;
     })
     ./nvim-config-local.nix
     ./leap-nvim.nix

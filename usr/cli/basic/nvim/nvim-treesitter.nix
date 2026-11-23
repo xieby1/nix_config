@@ -1,14 +1,23 @@
-{ d2-src, veryl-src }: # local-args
+{ d2-src, veryl-src, merman-src }: # local-args
 #MC # nvim-treesitter: languages parsing
-{ pkgs, ... }: {
+{ pkgs, ... }: let
+  mermaid-src = merman-src + "/distribution/tree-sitter-mermaid";
+in {
   programs.neovim = {
     plugins = [{
       # Available languages see:
       #   https://github.com/nvim-treesitter/nvim-treesitter
       # see `pkgs.tree-sitter.builtGrammars.`
       # with `tree-sitter-` prefix and `-grammar` suffix removed
-      plugin = pkgs.vimPlugins.nvim-treesitter.withPlugins (_:
-      pkgs.vimPlugins.nvim-treesitter.allGrammars ++ [
+      plugin = (pkgs.vimPlugins.nvim-treesitter.withPlugins (_:
+      (builtins.filter (grammar: grammar.language != "mermaid")
+        pkgs.vimPlugins.nvim-treesitter.allGrammars) ++ [
+        # The monaqa grammar is unmaintained and misparses continued flowchart edges.
+        (pkgs.tree-sitter.buildGrammar {
+          language = "mermaid";
+          version = "0.3.5";
+          src = mermaid-src;
+        })
         #MC When edit a large d2 file using d2-vim, the cursor movement becomes lag.
         #MC However, tree-sitter-d2 works fluently.
         #MC So I replace the d2-vim with tree-sitter-d2.
@@ -23,7 +32,19 @@
           version = "0.1.0";
           src = veryl-src;
         })
-      ]);
+      ])).overrideAttrs (old: {
+        # Merman's CST requires its own queries rather than monaqa's.
+        postInstall = (old.postInstall or "") + ''
+          mkdir -p $out/queries/mermaid
+          cat ${mermaid-src}/queries/portable/highlights.scm \
+            ${mermaid-src}/queries/neovim/highlights.scm \
+            > $out/queries/mermaid/highlights.scm
+          for query in folds indents injections; do
+            cp ${mermaid-src}/queries/neovim/$query.scm \
+              $out/queries/mermaid/$query.scm
+          done
+        '';
+      });
       type = "lua";
       config = /*lua*/''
         vim.filetype.add({ extension = { mdx = "markdown", veryl = "veryl" } })
