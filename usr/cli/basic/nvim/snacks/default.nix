@@ -15,7 +15,7 @@
         })
 
         -- by hermes + claude opus 4.6
-        vim.api.nvim_create_user_command("SnacksToggleImage", function()
+        vim.api.nvim_create_user_command("SnacksImageToggle", function()
           local cfg = Snacks.image.config
           cfg.enabled = not cfg.enabled
           if not cfg.enabled then
