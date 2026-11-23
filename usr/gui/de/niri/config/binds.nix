@@ -7,6 +7,8 @@
       "Mod+W".spawn-sh = "noctalia msg panel-open launcher '/win '";
       "Mod+Alt+L".spawn-sh = "noctalia msg session lock";
       "Mod+N".spawn-sh = "noctalia msg panel-toggle control-center notifications";
+      "Mod+C".spawn-sh = "noctalia msg panel-toggle control-center calendar";
+      "Mod+M".spawn-sh = "noctalia msg panel-toggle control-center media";
       "Mod+X".spawn-sh = "noctalia msg panel-toggle session";
       "Mod+V".spawn-sh = "noctalia msg panel-toggle clipboard";
       # Until Noctalia can toggle Smart/Off and reserve space conditionally:
@@ -159,9 +161,6 @@
       "Mod+Alt+F".fullscreen-window = {};
 
       "Mod+Ctrl+F".expand-column-to-available-width = {};
-
-      "Mod+C".center-column = {};
-      "Mod+Ctrl+C".center-visible-columns = {};
 
       "Mod+Minus".set-column-width = "50%";
       "Mod+Equal".set-column-width = "100%";
