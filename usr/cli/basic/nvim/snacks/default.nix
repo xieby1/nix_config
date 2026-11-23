@@ -5,7 +5,9 @@
   ];
   programs.neovim = {
     plugins = [{
-      plugin = pkgs.vimPlugins.snacks-nvim;
+      plugin = pkgs.vimPlugins.snacks-nvim.overrideAttrs (old: {
+        patches = (old.patches or [ ]) ++ [ ./image/inline-height.patch ];
+      });
       type = "lua";
       config = /*lua*/ ''
         require("snacks").setup({
