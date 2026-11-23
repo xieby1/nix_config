@@ -2,6 +2,7 @@
 { pkgs, ... }: {
   imports = [
     ./c.nix
+    ./ctags.nix
     # bash
     {programs.neovim={initLua="vim.lsp.enable('bashls')\n";extraPackages=[pkgs.bash-language-server];};}
     # html
@@ -69,7 +70,7 @@
           group = vim.api.nvim_create_augroup('UserLspConfig', {}),
           callback = function(_args)
             vim.lsp.inlay_hint.enable(true, { bufnr = _args.buf })
-            vim.keymap.set('n', 'gd', Snacks.picker.lsp_definitions)
+            -- gd is defined in ./ctags.nix; it tries LSP definitions, then falls back to ctags.
             vim.keymap.set('n', 'gD', Snacks.picker.lsp_declarations)
             vim.keymap.set('n', 'gt', Snacks.picker.lsp_type_definitions)
             vim.keymap.set('n', 'gr', Snacks.picker.lsp_references)

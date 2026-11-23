@@ -33,11 +33,34 @@
       set tags=./tags;
     '';
     initLua = /*lua*/''
-      vim.keymap.set("n", "g]", function()
+      local function ctags_definition()
         Snacks.picker.tags({
           search = vim.fn.expand("<cword>"),
           auto_confirm = true,
           jump = { tagstack = true, reuse_win = true },
+        })
+      end
+
+      vim.keymap.set("n", "g]", ctags_definition)
+
+      vim.keymap.set("n", "gd", function()
+        local clients = vim.lsp.get_clients({
+          bufnr = 0,
+          method = "textDocument/definition",
+        })
+
+        -- No LSP supporting definitions: use ctags immediately.
+        if #clients == 0 then
+          return ctags_definition()
+        end
+
+        Snacks.picker.lsp_definitions({
+          on_close = function(picker)
+            -- LSP returned no definitions: fall back to ctags.
+            if picker:empty() then
+              vim.schedule(ctags_definition)
+            end
+          end,
         })
       end)
     '';

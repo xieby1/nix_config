@@ -11,7 +11,6 @@ in
   imports = [
     ./tmux.nix
     ./gdb.nix
-    ./ctags.nix
     ./fzf.nix
     ./tldr.nix
     ./zellij.nix
