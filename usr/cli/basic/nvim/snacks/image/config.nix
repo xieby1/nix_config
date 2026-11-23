@@ -26,6 +26,7 @@ in {
     extraWrapperArgs = [ "--prefix" "MAGICK_CONFIGURE_PATH" ":" "${delegates}" ];
     extraPackages = [
       pkgs.imagemagick
+      pkgs.mermaid-cli
       # for drawing math.tex as images
       # TODO: Is math disabled?
       (pkgs.texliveBasic.withPackages (p: [

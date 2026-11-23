@@ -6,6 +6,10 @@
     enabled = true,
     cache = vim.fn.stdpath("cache") .. "/snacks/image-chromium",
     convert = {
+      mermaid = function()
+        local theme = vim.o.background == "light" and "redux-color" or "redux-dark-color"
+        return { "-i", "{src}", "-o", "{file}", "-b", "transparent", "-t", theme, "-s", "{scale}" }
+      end,
       ---@type table<string,snacks.image.args>
       magick = (function() -- start of a local scope
         original = {
