@@ -6,7 +6,11 @@
   programs.neovim = {
     plugins = [{
       plugin = pkgs.vimPlugins.snacks-nvim.overrideAttrs (old: {
-        patches = (old.patches or [ ]) ++ [ ./image/inline-height.patch ];
+        patches = (old.patches or [ ]) ++ [
+          ./image/inline-height.patch
+          # Upstream fix: https://github.com/folke/snacks.nvim/pull/2999
+          ./picker/tags-nomagic.patch
+        ];
       });
       type = "lua";
       config = /*lua*/ ''
