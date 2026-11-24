@@ -59,6 +59,7 @@ in
     remake
     ## draw
     graphviz
+    mermaid-cli
     figlet
     nyancat
     d2
