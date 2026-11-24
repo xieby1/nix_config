@@ -23,7 +23,7 @@ in {
     vimPlugins = prev.vimPlugins // {
       snacks-nvim = prev.vimPlugins.snacks-nvim.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
-          ./inline-height.patch
+          ./native-pixels.patch
           ./inline-detach.patch
           ./inline-defer-edit.patch
           ./mermaid-pixel-size.patch
@@ -34,7 +34,9 @@ in {
   my.nvim.snacks.setupArgs = /*lua*/ ''
     image = {
       enabled = true,
-      cache = vim.fn.stdpath("cache") .. "/snacks/image-chromium",
+      -- Ghostty at reset zoom: CSI 16 t reports 43 px tall × 22 px wide (14 pt, 2× display).
+      reset_cell = { width = 22, height = 43 },
+      cache = vim.fn.stdpath("cache") .. "/snacks/image-chromium-native",
       convert = {
         mermaid = function()
           local theme = vim.o.background == "light" and "redux-color" or "redux-dark-color"
@@ -43,7 +45,7 @@ in {
         ---@type table<string,snacks.image.args>
         magick = (function() -- start of a local scope
           original = {
-            default = { "{src}[0]", "-scale", "1920x1080>" }, -- default for raster images
+            default = { "{src}[0]" }, -- preserve the raster's pixel dimensions
             vector = { "-density", 192, "{src}[0]" }, -- used by vector images like svg
             -- math = { "-density", 192, "{src}[0]", "-trim" },
             pdf = { "-density", 192, "{src}[0]", "-background", "white", "-alpha", "remove", "-trim" },
