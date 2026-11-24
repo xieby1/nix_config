@@ -1,0 +1,41 @@
+--- a/lua/snacks/image/convert.lua
++++ b/lua/snacks/image/convert.lua
+@@ -248,6 +248,8 @@
+ local Convert = {}
+ Convert.__index = Convert
+ 
++local mermaid_scale = 2
++
+ ---@param opts snacks.image.convert.Opts
+ function Convert.new(opts)
+   vim.fn.mkdir(Snacks.image.config.cache, "p")
+@@ -262,12 +264,16 @@
+     base = self.opts.src:gsub("%?.*", ""):match("^%w%w+://(.*)$") or base
+   end
+   self.prefix = vim.fn.sha256(self.opts.src .. self.page):sub(1, 8) .. "-" .. base:gsub("[^%w%.]+", "-")
++  local mermaid = self:ft(self.src) == "mmd"
++  if mermaid then
++    self.prefix = self.prefix .. ("-%dx"):format(mermaid_scale)
++  end
+   self.meta = { src = opts.src }
+   self.steps = {}
+   self.tpl_data = {
+     cache = Snacks.image.config.cache,
+     bg = vim.o.background,
+-    scale = tostring(Snacks.image.terminal.size().scale or 1),
++    scale = tostring(mermaid and mermaid_scale or Snacks.image.terminal.size().scale or 1),
+   }
+   self:resolve()
+   return self
+@@ -369,6 +375,11 @@
+ function Convert:on_done()
+   local step = self:current()
+   self._done = true
++  if self:ft(self.src) == "mmd" and self.meta.info then
++    -- Undo Chromium's raster supersampling before applying the live terminal scale.
++    local dpi = 96 * mermaid_scale
++    self.meta.info.dpi = { width = dpi, height = dpi }
++  end
+   if self._err and Snacks.image.config.convert.notify then
+     local title = step and ("Conversion failed at step `%s`"):format(step.name) or "Conversion failed"
+     if step and step.proc then
