@@ -35,7 +35,6 @@ in {
       Type = "oneshot";
       ExecStart = fetchCalendars;
     };
-    Install.WantedBy = [ "default.target" ];
   };
   systemd.user.timers.noctalia-calendar-ics = {
     Unit.Description = "Refresh ChinaCalendar ICS feeds hourly";
