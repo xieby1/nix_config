@@ -2,6 +2,7 @@
   imports = [
     ./image
     ./picker
+    ./scroll.nix
   ];
   options = {
     my.nvim.snacks.setupArgs = lib.mkOption {
@@ -20,7 +21,6 @@
       config = /*lua*/ ''
         require("snacks").setup({
           ${config.my.nvim.snacks.setupArgs}
-          ${import ./scroll/lua.nix}
         })
       '' + config.my.nvim.snacks.extraLuaConfig;
     }];
