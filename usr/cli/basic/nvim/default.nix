@@ -15,7 +15,10 @@ in {
   imports = [
     ./fold.nix
     ./blink-cmp.nix
-    ./vim-mark
+    (lib.modules.importApply ./vim-mark {
+      mark-src = npinsed.vim-mark;
+      ingo-src = npinsed.vim-ingo-library;
+    })
     (lib.modules.importApply ./nvim-treesitter.nix {
       d2-src = npinsed.tree-sitter-d2;
       veryl-src = npinsed.tree-sitter-veryl;

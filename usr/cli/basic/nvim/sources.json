@@ -67,6 +67,32 @@
       "revision": "f38156e6fa97e7386cdfbcbcc537dc970a13c3ce",
       "url": "https://github.com/veryl-lang/tree-sitter-veryl/archive/f38156e6fa97e7386cdfbcbcc537dc970a13c3ce.tar.gz",
       "hash": "sha256-EoxR2W3Kc+U/kw7TQLPZOu8KvYZX5KcuFUfwSsP+5n0="
+    },
+    "vim-ingo-library": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "inkarkat",
+        "repo": "vim-ingo-library"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "244dc3652747300fe83084d94266d180ed21c15a",
+      "url": "https://github.com/inkarkat/vim-ingo-library/archive/244dc3652747300fe83084d94266d180ed21c15a.tar.gz",
+      "hash": "sha256-R773VXCP8sEuko27NjpYAGX1ny18nCd9X35fhmuP1GQ="
+    },
+    "vim-mark": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "inkarkat",
+        "repo": "vim-mark"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "a7df60196368cb6a6f510e003046bcb8483dec57",
+      "url": "https://github.com/inkarkat/vim-mark/archive/a7df60196368cb6a6f510e003046bcb8483dec57.tar.gz",
+      "hash": "sha256-moISQNNKzZGDM+XUD5mo7W2cWbZQaAZ1xtZ1ZjbfeuA="
     }
   },
   "version": 8
