@@ -9,6 +9,7 @@
         patches = (old.patches or [ ]) ++ [
           ./image/inline-height.patch
           ./image/inline-detach.patch
+          ./image/inline-defer-edit.patch
           # Upstream fix: https://github.com/folke/snacks.nvim/pull/2999
           ./picker/tags-nomagic.patch
         ];

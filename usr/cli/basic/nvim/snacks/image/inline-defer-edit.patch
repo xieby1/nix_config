@@ -1,0 +1,47 @@
+--- a/lua/snacks/image/inline.lua
++++ b/lua/snacks/image/inline.lua
+@@ -6,6 +6,11 @@
+ local M = {}
+ M.__index = M
+ 
++local function is_edit_mode(mode)
++  -- CTRL-O temporarily enters Normal mode without ending Insert or Replace.
++  return mode:match("^[iR]") ~= nil or mode:sub(1, 2) == "ni"
++end
++
+ function M.new(buf)
+   local self = setmetatable({}, M)
+   self.buf = buf
+@@ -31,6 +36,9 @@
+     callback = function(ev)
+       if ev.buf == self.buf and ev.buf == vim.api.nvim_get_current_buf() then
+         self:conceal()
++        if ev.event == "ModeChanged" and is_edit_mode(vim.v.event.old_mode) and not is_edit_mode(vim.v.event.new_mode) then
++          update()
++        end
+       end
+     end,
+   })
+@@ -100,8 +108,12 @@
+   return ret
+ end
+ 
++function M:editing()
++  return vim.api.nvim_get_current_buf() == self.buf and is_edit_mode(vim.api.nvim_get_mode().mode)
++end
++
+ function M:update()
+-  if not self:active() then
++  if not self:active() or self:editing() then
+     return
+   end
+   local conceal = Snacks.image.config.doc.conceal
+@@ -109,7 +121,7 @@
+     return conceal
+   end or conceal
+   Snacks.image.doc.find_visible(self.buf, function(imgs)
+-    if not self:active() then
++    if not self:active() or self:editing() then
+       return
+     end
+     local visible = self:visible()
