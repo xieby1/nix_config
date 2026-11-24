@@ -44,7 +44,7 @@
       group_by_workspace = true;
       hide_empty_workspaces = true;
       show_workspace_label = false;
-      workspace_group_inactive_border_color = "shadow";
+      workspace_group_inactive_border_color = "surface";
     };
 
     widget.clock_date = {
