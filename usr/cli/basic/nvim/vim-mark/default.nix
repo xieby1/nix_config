@@ -13,6 +13,9 @@ let
   my-vim-mark = {
     plugin = pkgs.vimUtils.buildVimPlugin {
       name = "vim-mark";
+      # TODO: Place vim-mark's [current/total] at the exact same screen position as Neovim's native search counter.
+      # Once UI2 is stable, consider using its search_cmd and search_count messages for native placement.
+      patches = [ ./inline-search-count.patch ];
       src = pkgs.fetchFromGitHub {
         owner = "inkarkat";
         repo = "vim-mark";
