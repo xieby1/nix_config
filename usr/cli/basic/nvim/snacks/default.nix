@@ -21,7 +21,7 @@
         })
 
         -- by hermes + claude opus 4.6
-        vim.api.nvim_create_user_command("SnacksImageToggle", function()
+        vim.api.nvim_create_user_command("SnacksImageToggle", function(opts)
           local cfg = Snacks.image.config
           cfg.enabled = not cfg.enabled
           if not cfg.enabled then
@@ -38,7 +38,16 @@
             -- Re-attach doc images for current buffer
             Snacks.image.doc.attach(vim.api.nvim_get_current_buf())
           end
-          vim.notify("snacks.image: " .. (cfg.enabled and "enabled" or "disabled"))
+          if not opts.bang then
+            vim.notify("snacks.image: " .. (cfg.enabled and "enabled" or "disabled"))
+          end
+        end, { bang = true })
+
+        vim.api.nvim_create_user_command("SnacksImageRefresh", function()
+          if Snacks.image.config.enabled then
+            vim.cmd("SnacksImageToggle!")
+          end
+          vim.cmd("SnacksImageToggle!")
         end, {})
       '';
     }];
