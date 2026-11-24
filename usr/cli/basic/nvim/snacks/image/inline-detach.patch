@@ -1,0 +1,71 @@
+--- a/lua/snacks/image/inline.lua
++++ b/lua/snacks/image/inline.lua
+@@ -1,5 +1,6 @@
+ ---@class snacks.image.inline
+ ---@field buf number
++---@field group number
+ ---@field imgs table<number, snacks.image.Placement>
+ ---@field idx table<number, snacks.image.Placement>
+ local M = {}
+@@ -11,6 +12,9 @@
+   self.imgs = {}
+   self.idx = {}
+   local group = vim.api.nvim_create_augroup("snacks.image.inline." .. buf, { clear = true })
++  self.group = group
++  -- Use the augroup ID to distinguish attachments across a toggle off/on.
++  vim.b[buf].snacks_image_attached = group
+ 
+   local update = Snacks.util.debounce(function()
+     self:update()
+@@ -31,12 +35,21 @@
+     end,
+   })
+   vim.api.nvim_buf_attach(buf, false, {
+-    on_lines = update,
++    on_lines = function()
++      if not self:active() then
++        return true -- detach this listener, not other buffer listeners
++      end
++      update()
++    end,
+   })
+   vim.schedule(update)
+   return self
+ end
+ 
++function M:active()
++  return vim.api.nvim_buf_is_valid(self.buf) and vim.b[self.buf].snacks_image_attached == self.group
++end
++
+ function M:conceal()
+   local mode = vim.fn.mode():sub(1, 1):lower() ---@type string
+   for _, img in pairs(self.imgs) do
+@@ -88,11 +101,17 @@
+ end
+ 
+ function M:update()
++  if not self:active() then
++    return
++  end
+   local conceal = Snacks.image.config.doc.conceal
+   conceal = type(conceal) ~= "function" and function()
+     return conceal
+   end or conceal
+   Snacks.image.doc.find_visible(self.buf, function(imgs)
++    if not self:active() then
++      return
++    end
+     local visible = self:visible()
+     local stats = { new = 0, del = 0, update = 0 }
+     for _, i in ipairs(imgs) do
+--- a/lua/snacks/image/doc.lua
++++ b/lua/snacks/image/doc.lua
+@@ -435,7 +435,7 @@
+ 
+ ---@param buf number
+ function M._attach(buf)
+-  if not vim.api.nvim_buf_is_valid(buf) then
++  if Snacks.image.config.enabled == false or not vim.api.nvim_buf_is_valid(buf) then
+     return
+   end
+   if vim.b[buf].snacks_image_attached then

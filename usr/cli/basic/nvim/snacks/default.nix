@@ -8,6 +8,7 @@
       plugin = pkgs.vimPlugins.snacks-nvim.overrideAttrs (old: {
         patches = (old.patches or [ ]) ++ [
           ./image/inline-height.patch
+          ./image/inline-detach.patch
           # Upstream fix: https://github.com/folke/snacks.nvim/pull/2999
           ./picker/tags-nomagic.patch
         ];
@@ -26,7 +27,7 @@
           cfg.enabled = not cfg.enabled
           if not cfg.enabled then
             Snacks.image.placement.clean()
-            -- Stop inline/doc autocmds so images don't get re-created
+            -- Remove doc autocmds and invalidate the inline attachment.
             for _, buf in ipairs(vim.api.nvim_list_bufs()) do
               if vim.b[buf].snacks_image_attached then
                 pcall(vim.api.nvim_del_augroup_by_name, "snacks.image.inline." .. buf)
