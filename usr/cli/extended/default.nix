@@ -59,6 +59,12 @@ in
     remake
     ## draw
     graphviz
+    ## - Pros
+    ##   - GitHub native support. (GitHub does not support d2, graphviz, etc)
+    ## - Cons
+    ##   - Not modular (no naming space, all naming are flat!)
+    ##   - Cannot control the flowchart rank by edge.
+    ##     e.g. a <-- b is same as b --> a. Thus, the layout is fragile.
     mermaid-cli
     figlet
     nyancat
