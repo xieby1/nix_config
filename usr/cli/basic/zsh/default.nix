@@ -1,10 +1,17 @@
-{ ... }: {
+{ pkgs, ... }: {
   home.shell.enableZshIntegration = true;
   programs.zsh = {
     enable = true;
     enableVteIntegration = true;
     autosuggestion.enable = true;
     syntaxHighlighting.enable = true;
+    plugins = [
+      {
+        name = "zsh-completion-sync";
+        src = pkgs.zsh-completion-sync;
+        file = "share/zsh-completion-sync/zsh-completion-sync.plugin.zsh";
+      }
+    ];
     # zsh startup split:
     # - envExtra -> .zshenv: every zsh, including ssh 'cmd'; keep tiny, quiet, and reliable.
     # - initContent -> .zshrc: interactive shells; keybindings, completion, aliases, prompts, and autostart.
