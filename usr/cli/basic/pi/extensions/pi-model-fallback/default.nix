@@ -1,5 +1,5 @@
 { src }: # local-args
-{ pkgs, lib, ... }:
+{ pkgs, ai, ... }:
 let
   # Pi injects @earendil-works/* and typebox at runtime; only proper-lockfile
   # is a real dependency, so the trimmed lockfile installs nothing else.
@@ -38,7 +38,10 @@ in {
           name = "kimi-unavailable";
           matchProviders = [ "jw2-kimi" ];
           statuses = [ 503 ];
-          fallback = { provider = "jw2-deepseek"; model = "deepseek-flash"; };
+          fallback = {
+            provider = ai.moonshot-cn.id;
+            model = ai.moonshot-cn.models."kimi-k3.1-pro".id;
+          };
         }
       ];
     };
