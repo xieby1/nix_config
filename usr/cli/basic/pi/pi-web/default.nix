@@ -11,12 +11,12 @@ let
 
   pi-web = pkgs.buildNpmPackage {
     pname = "pi-web";
-    version = "1.202611.3";
+    version = src.version;
 
     inherit src;
 
     npmDepsFetcherVersion = 2;
-    npmDepsHash = "sha256-1jDHaVtyRTB2rjtsSLXFPnhowN489pggPABqGLHuBVo=";
+    npmDepsHash = "sha256-vxpTLlWmJliTAr1swHzVIkK6YwQyN1xpwDYqc/ghCDw=";
 
     inherit nodejs;
     nativeBuildInputs = [ pkgs.makeWrapper ];

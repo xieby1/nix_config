@@ -9,9 +9,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "f6d0c65fd4bc20d15fb5c51cbe8d60fa662ab4b7",
-      "url": "https://github.com/NixOS/nixpkgs/archive/f6d0c65fd4bc20d15fb5c51cbe8d60fa662ab4b7.tar.gz",
-      "hash": "sha256-t01vnukq6bhPcza+9z2N74i1RizdrfQYBCUWKqHMj1I="
+      "revision": "596a258f51590e7b52e9ab1d36239cd35c73b12a",
+      "url": "https://github.com/NixOS/nixpkgs/archive/596a258f51590e7b52e9ab1d36239cd35c73b12a.tar.gz",
+      "hash": "sha256-E697OI21aPhu3PAHDNt5hpW7ceRjzDik3ACx84CJbOM="
     },
     "pi-context-view": {
       "type": "GitRelease",
@@ -38,9 +38,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "5e58c9c4a7ec24d2043c800dbc0e71337bcdcd9a",
-      "url": "https://github.com/bacnh85/pi-extensions/archive/5e58c9c4a7ec24d2043c800dbc0e71337bcdcd9a.tar.gz",
-      "hash": "sha256-wI4f6S2/0SMUiyFhIp35CnpS5tBK2LQQC+F0LRiJlLs="
+      "revision": "1d47daee818c24c0ed5266780edb5dedcd932226",
+      "url": "https://github.com/bacnh85/pi-extensions/archive/1d47daee818c24c0ed5266780edb5dedcd932226.tar.gz",
+      "hash": "sha256-0t68B6SoCslCMwPWJQ94HVHmv+AKbUcvw4njVTBzplI="
     },
     "pi-hermes-memory": {
       "type": "Git",
@@ -64,9 +64,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "feb3e6fd80951c2698afd965b41a476130446084",
-      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/feb3e6fd80951c2698afd965b41a476130446084.tar.gz",
-      "hash": "sha256-b5OEbZH/aZMfmgwM/iqdSoRSGJFbn1B/0pKsVpvJqYE="
+      "revision": "0c6ccd7e28c9ae12695c36896649189cd0618207",
+      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/0c6ccd7e28c9ae12695c36896649189cd0618207.tar.gz",
+      "hash": "sha256-oZf87GDM6mgSnQSB//B/LyVwIEOGcLwSb9oTi9azOgo="
     },
     "pi-language-tutor": {
       "type": "Git",
@@ -90,9 +90,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c78d685f9e7a16d27e77b38e3b224cd7b1bcb575",
-      "url": "https://github.com/monotykamary/pi-math/archive/c78d685f9e7a16d27e77b38e3b224cd7b1bcb575.tar.gz",
-      "hash": "sha256-8qbERQwMGP9q5LcqItXkVqesSlhZmfIEzKNsVEfjFPM="
+      "revision": "7c351be1854b46383761b8427bba4f02bfdfe824",
+      "url": "https://github.com/monotykamary/pi-math/archive/7c351be1854b46383761b8427bba4f02bfdfe824.tar.gz",
+      "hash": "sha256-/i3+eSRxtLewdPDlIOyYcCclaz+KTr2s6VokrPnmpNw="
     },
     "pi-model-fallback": {
       "type": "GitRelease",
@@ -147,10 +147,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v0.88.1",
-      "revision": "ec56f5c78436d8349dc9da92967288de032911b3",
-      "url": "https://api.github.com/repos/nicobailon/pi-subagents/tarball/refs/tags/v0.88.1",
-      "hash": "sha256-t/IAZHTbIG1iFF+jq9tBm2jptfIYO2mLvn7WPb1I2Qc="
+      "version": "v0.90.0",
+      "revision": "f6aadec2d069dabd61af55ef89dc1e6cbf3baf02",
+      "url": "https://api.github.com/repos/nicobailon/pi-subagents/tarball/refs/tags/v0.90.0",
+      "hash": "sha256-I8vK89gZ2o6nTL3N0vvE2/BHJVGJMS4m/VspBlsGYvE="
     },
     "pi-title": {
       "type": "Git",
@@ -176,10 +176,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v1.202611.3",
-      "revision": "3f22091bda7a8ead2a90fbd22aa6fc257c1d2380",
-      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202611.3",
-      "hash": "sha256-zf0RQQ5FNRkQ+Iuyfn48kxNmvfMBimyJect/ThKXNYI="
+      "version": "v1.202611.5",
+      "revision": "09d6e5fbb342f22f9abb32d18e83a2953ebd01d3",
+      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202611.5",
+      "hash": "sha256-NR/U7nIpu4YKwI0QPgKzY6TRJqe/ajSwQg96/BYQwms="
     },
     "pi-web-access": {
       "type": "GitRelease",
@@ -219,9 +219,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "dfc228dab8023f08b5d475ee1cb5d15c459b3ca6",
-      "url": "https://github.com/shelken/pi-extensions/archive/dfc228dab8023f08b5d475ee1cb5d15c459b3ca6.tar.gz",
-      "hash": "sha256-F3Mn3cSDlBcAQzvY3g8PFTJkZoKyu9bdj6yHTTlu9t0="
+      "revision": "f03d396d866d8bf1dbee68b0f8659a299d554b96",
+      "url": "https://github.com/shelken/pi-extensions/archive/f03d396d866d8bf1dbee68b0f8659a299d554b96.tar.gz",
+      "hash": "sha256-u88pa9nwn6okhp97bZqnRTWRmBlsBldZXZ8VBsThfPc="
     }
   },
   "version": 8
