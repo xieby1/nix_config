@@ -27,6 +27,9 @@
     notification.filter_order = [ "calendar" ];
     notification.filter.calendar = {
       match = "Calendar";
+      # Match non-lunar event titles, excluding cal_lunar titles like "十三 冬月 2025年".
+      # [^·]+ prevents the "Starts … · …" reminder body from matching after a lunar title is rejected.
+      match_content = "^(?![^ ]+ [^ ]+月 [0-9]{4}年$)[^·]+$";
       override_duration = 0;
     };
   };
