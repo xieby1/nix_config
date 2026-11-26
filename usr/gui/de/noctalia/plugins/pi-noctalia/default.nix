@@ -14,6 +14,12 @@ in {
       type = "local/pi-noctalia:widget";
       max_visible = 3;
     };
+
+    notification.filter_order = [ "pi" ];
+    notification.filter.pi = {
+      match_content = "^Pi";
+      override_duration = 0;
+    };
   };
   wayland.windowManager.niri.settings = {
     binds = {

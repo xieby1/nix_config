@@ -32,15 +32,6 @@
       ];
     };
     location.address = "shenzhen";
-    notification.filter_order = [ "pi" "calendar" ];
-    notification.filter.pi = {
-      match_content = "^Pi";
-      override_duration = 0;
-    };
-    notification.filter.calendar = {
-      match = "Calendar";
-      override_duration = 0;
-    };
 
     widget.taskbar = {
       group_by_workspace = true;

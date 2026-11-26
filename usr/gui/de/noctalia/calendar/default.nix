@@ -23,5 +23,11 @@
       name = "KXH Outlook";
       server_url = lib.trim (builtins.readFile ~/Gist/Vault/calendars/outlook_kxh.txt);
     };
+
+    notification.filter_order = [ "calendar" ];
+    notification.filter.calendar = {
+      match = "Calendar";
+      override_duration = 0;
+    };
   };
 }
