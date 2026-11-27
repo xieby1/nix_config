@@ -1,8 +1,7 @@
 { src }: # local-args
 { pkgs, lib, ai, ... }: {
   home.file.".pi/agent/extensions/pi-title".source = pkgs.buildNpmPackage {
-    pname = "pi-title";
-    version = "0.1.9";
+    name = "pi-title";
     inherit src;
     postPatch = ''
       ${lib.getExe pkgs.jq} 'del(.peerDependencies, .devDependencies, .scripts)' package.json > package.json.tmp

@@ -4,8 +4,7 @@
   # config.json and state.json live in Pi's agent dir (a sibling of this
   # extension), so `/model-fallback:*` keeps writing there.
   home.file.".pi/agent/extensions/pi-model-fallback".source = pkgs.buildNpmPackage {
-    pname = "pi-model-fallback";
-    version = "0.6.2";
+    name = "pi-model-fallback";
     inherit src;
     # Pi injects @earendil-works/* and typebox at runtime; only proper-lockfile
     # is a real dependency, so the trimmed lockfile installs nothing else.
