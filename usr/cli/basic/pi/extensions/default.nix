@@ -10,10 +10,7 @@
     # Pi's native retry owns the lifecycle; we don't need the extension's continuation or nudge features.
     (lib.modules.importApply ./pi-context-view {src = sources.pi-context-view;})
     (lib.modules.importApply ./pi-model-fallback {src = sources.pi-model-fallback;})
-    (lib.modules.importApply ./pi-model-project.nix {
-      src = sources.pi-model-project;
-      piPackage = pipkgs.pi-coding-agent;
-    })
+    (lib.modules.importApply ./pi-model-project.nix {src = sources.pi-model-project;})
     (lib.modules.importApply ./pi-skill-usage.nix {src = sources.pi-skill-usage;})
     (lib.modules.importApply ./heuristic-notify.nix {src = sources.pi-heuristic-notify;})
     (lib.modules.importApply ./pi-web-access {src = sources.pi-web-access;})
