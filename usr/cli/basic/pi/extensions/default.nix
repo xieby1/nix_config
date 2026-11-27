@@ -1,6 +1,6 @@
 { enableExtendedCLI, sources, pipkgs }: # local-args
 # My feeling: configure javascript/typescript plugins is awful.
-{ pkgs, lib, ... }: {
+{ lib, ... }: {
   imports = [
     (lib.modules.importApply ./pi-hermes-memory {src = sources.pi-hermes-memory; inherit pipkgs;})
     (lib.modules.importApply ./pi-co-authored-by.nix {src = sources.shelken-pi-extensions;})
