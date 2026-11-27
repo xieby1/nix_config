@@ -20,7 +20,6 @@
         cp ${./lockfile.json} package-lock.json
       '';
       npmDepsHash = "sha256-QmawBpJVX4jyQ4vLZOyIlo1iCUzEYNrBlOqgOMCHG5Q=";
-      forceEmptyCache = true;
       dontNpmBuild = true;
     } + /lib/node_modules/rpiv-mono/packages/rpiv-todo;
   };
