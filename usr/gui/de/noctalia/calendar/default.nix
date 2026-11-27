@@ -24,12 +24,18 @@
       server_url = lib.trim (builtins.readFile ~/Gist/Vault/calendars/outlook_kxh.txt);
     };
 
-    notification.filter_order = [ "calendar" ];
+    # Filters are evaluated in filter_order; the first matching enabled filter wins:
+    # https://docs.noctalia.dev/noctalia/v5.5.0/services/notifications/#filtering
+    notification.filter_order = [ "calendar-lunar" "calendar" ];
+    notification.filter.calendar-lunar = {
+      match = "Calendar";
+      # Match a lunar title in either a reminder summary or one line of an all-day digest body.
+      match_content = "(^|\\n)[^ \\n]+ [^ \\n]+月 [0-9]{4}年(\\n|$)";
+      # Calendar reminders are persistent by default; use the standard 6000 ms timeout for lunar ones.
+      allow_permanent = false;
+    };
     notification.filter.calendar = {
       match = "Calendar";
-      # Match non-lunar event titles, excluding cal_lunar titles like "十三 冬月 2025年".
-      # [^·]+ prevents the "Starts … · …" reminder body from matching after a lunar title is rejected.
-      match_content = "^(?![^ ]+ [^ ]+月 [0-9]{4}年$)[^·]+$";
       override_duration = 0;
     };
   };
