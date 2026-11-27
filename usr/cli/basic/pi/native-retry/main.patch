@@ -1,0 +1,14 @@
+diff --git a/packages/ai/src/utils/retry.ts b/packages/ai/src/utils/retry.ts
+index eabf6c7..22e1ac9 100644
+--- a/packages/ai/src/utils/retry.ts
++++ b/packages/ai/src/utils/retry.ts
+@@ -35,6 +35,9 @@ const NON_RETRYABLE_PROVIDER_LIMIT_ERROR_PATTERN = buildProviderErrorPattern([
+ ]);
+ 
+ const RETRYABLE_PROVIDER_ERROR_PATTERN = buildProviderErrorPattern([
++	// The gateway rejected the operation before executing tools, so retrying is safe.
++	"\\bbasispoints_protocol_error\\b[^\\r\\n]*\\bno tool was executed\\b",
++
+ 	// Generic provider load, HTTP status, and server-side transient failures.
+ 	"overloaded",
+ 	"server_busy",

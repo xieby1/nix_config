@@ -1,0 +1,20 @@
+--- a/lua/snacks/image/inline.lua
++++ b/lua/snacks/image/inline.lua
+@@ -101,7 +101,7 @@
+ end
+ 
+ function M:update()
+-  if not self:active() then
++  if not self:active() or vim.bo[self.buf].modified then
+     return
+   end
+   local conceal = Snacks.image.config.doc.conceal
+@@ -109,7 +109,7 @@
+     return conceal
+   end or conceal
+   Snacks.image.doc.find_visible(self.buf, function(imgs)
+-    if not self:active() then
++    if not self:active() or vim.bo[self.buf].modified then
+       return
+     end
+     local visible = self:visible()

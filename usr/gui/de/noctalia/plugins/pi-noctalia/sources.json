@@ -1,0 +1,18 @@
+{
+  "pins": {
+    "pi-noctalia": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-noctalia"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "faece31335e53a3a637be44297b34ff8a0e3cb39",
+      "url": "https://github.com/xieby1/pi-noctalia/archive/faece31335e53a3a637be44297b34ff8a0e3cb39.tar.gz",
+      "hash": "sha256-5sOWayUzb6OgpLB/S4tfyq2mS9VTBR4BE9tfky2R1Oc="
+    }
+  },
+  "version": 8
+}

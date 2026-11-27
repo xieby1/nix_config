@@ -1,0 +1,228 @@
+{
+  "pins": {
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "596a258f51590e7b52e9ab1d36239cd35c73b12a",
+      "url": "https://github.com/NixOS/nixpkgs/archive/596a258f51590e7b52e9ab1d36239cd35c73b12a.tar.gz",
+      "hash": "sha256-E697OI21aPhu3PAHDNt5hpW7ceRjzDik3ACx84CJbOM="
+    },
+    "pi-context-view": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "dimk90",
+        "repo": "pi-context-view"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.8.4",
+      "revision": "2592a0491a5cc3d5db855422fc6b6a3795df0ee3",
+      "url": "https://api.github.com/repos/dimk90/pi-context-view/tarball/refs/tags/v0.8.4",
+      "hash": "sha256-yHPAK9eWrOGQn55r47RqE67Ef6bYJ8ZBCb6eQj1gR0Q="
+    },
+    "pi-extensions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "bacnh85",
+        "repo": "pi-extensions"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "1d47daee818c24c0ed5266780edb5dedcd932226",
+      "url": "https://github.com/bacnh85/pi-extensions/archive/1d47daee818c24c0ed5266780edb5dedcd932226.tar.gz",
+      "hash": "sha256-0t68B6SoCslCMwPWJQ94HVHmv+AKbUcvw4njVTBzplI="
+    },
+    "pi-hermes-memory": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "chandra447",
+        "repo": "pi-hermes-memory"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "ccdae89064e52a72a1cf55043e7a21964108fa31",
+      "url": "https://github.com/chandra447/pi-hermes-memory/archive/ccdae89064e52a72a1cf55043e7a21964108fa31.tar.gz",
+      "hash": "sha256-QvKgPKnOwTZtQpSl8DCDk4gROiYRqHPfGi+/YdOWnNg="
+    },
+    "pi-heuristic-notify": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-heuristic-notify"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "0c6ccd7e28c9ae12695c36896649189cd0618207",
+      "url": "https://github.com/xieby1/pi-heuristic-notify/archive/0c6ccd7e28c9ae12695c36896649189cd0618207.tar.gz",
+      "hash": "sha256-oZf87GDM6mgSnQSB//B/LyVwIEOGcLwSb9oTi9azOgo="
+    },
+    "pi-language-tutor": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "mackt",
+        "repo": "pi-language-tutor"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e37716ef8590edf1ded03287aa854acf816d5dc6",
+      "url": "https://github.com/mackt/pi-language-tutor/archive/e37716ef8590edf1ded03287aa854acf816d5dc6.tar.gz",
+      "hash": "sha256-/XQEJYxioYdyZVMW6o9oAxV1Ur3LWteOmdjZA4DqV40="
+    },
+    "pi-math": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "monotykamary",
+        "repo": "pi-math"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "7c351be1854b46383761b8427bba4f02bfdfe824",
+      "url": "https://github.com/monotykamary/pi-math/archive/7c351be1854b46383761b8427bba4f02bfdfe824.tar.gz",
+      "hash": "sha256-/i3+eSRxtLewdPDlIOyYcCclaz+KTr2s6VokrPnmpNw="
+    },
+    "pi-model-fallback": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "eiei114",
+        "repo": "pi-model-fallback"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.6.2",
+      "revision": "8b14810dcd74649f6a81235565aebb6dfbacb891",
+      "url": "https://api.github.com/repos/eiei114/pi-model-fallback/tarball/refs/tags/v0.6.2",
+      "hash": "sha256-E3b3jIGn1fLA5ghErWWTsqLgm77d32xuK/IYM3RaJ6k="
+    },
+    "pi-model-project": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-model-project"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "e2cbb7e7405bbc663f0b6deb861afcb991b3acda",
+      "url": "https://github.com/xieby1/pi-model-project/archive/e2cbb7e7405bbc663f0b6deb861afcb991b3acda.tar.gz",
+      "hash": "sha256-UX+BYCV2xEpi0RkA9jGPA6g8x+ofZ6U4kqdhn6TX2Jo="
+    },
+    "pi-skill-usage": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "xieby1",
+        "repo": "pi-skill-usage"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "202c94ef94756842510f84bf02543b2225b1aa25",
+      "url": "https://github.com/xieby1/pi-skill-usage/archive/202c94ef94756842510f84bf02543b2225b1aa25.tar.gz",
+      "hash": "sha256-iecPmadP9DdesnLfGFw3ha+g3Yiw7D5WqJ8Yga/UVOE="
+    },
+    "pi-subagents": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-subagents"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.90.0",
+      "revision": "f6aadec2d069dabd61af55ef89dc1e6cbf3baf02",
+      "url": "https://api.github.com/repos/nicobailon/pi-subagents/tarball/refs/tags/v0.90.0",
+      "hash": "sha256-I8vK89gZ2o6nTL3N0vvE2/BHJVGJMS4m/VspBlsGYvE="
+    },
+    "pi-title": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "brettinternet",
+        "repo": "pi-extensions"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "76962bff6021ddc3f8a27dd779ed9210ca23b3b9",
+      "url": "https://github.com/brettinternet/pi-extensions/archive/76962bff6021ddc3f8a27dd779ed9210ca23b3b9.tar.gz",
+      "hash": "sha256-rFbPl3PzBjLHqi6ksFMs1X5u1ouJDmnqbBywKcrgzNY="
+    },
+    "pi-web": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "jmfederico",
+        "repo": "pi-web"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.202611.5",
+      "revision": "09d6e5fbb342f22f9abb32d18e83a2953ebd01d3",
+      "url": "https://api.github.com/repos/jmfederico/pi-web/tarball/refs/tags/v1.202611.5",
+      "hash": "sha256-NR/U7nIpu4YKwI0QPgKzY6TRJqe/ajSwQg96/BYQwms="
+    },
+    "pi-web-access": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nicobailon",
+        "repo": "pi-web-access"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.48.0",
+      "revision": "7d093151c50fdae7ae63326de5c72a43f5696b31",
+      "url": "https://api.github.com/repos/nicobailon/pi-web-access/tarball/refs/tags/v0.48.0",
+      "hash": "sha256-kvxwqQzvUEvBU8URxTCe4hGbWiUa41TbsdtdiM6+GqE="
+    },
+    "rpiv-mono": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "juicesharp",
+        "repo": "rpiv-mono"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "1a4add9dbe61597059a93dd9200bf25d51238659",
+      "url": "https://github.com/juicesharp/rpiv-mono/archive/1a4add9dbe61597059a93dd9200bf25d51238659.tar.gz",
+      "hash": "sha256-WCmi38SDOz/dmmy0/g+aIXD836bIXWXOjsbEquyKe6M="
+    },
+    "shelken-pi-extensions": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "shelken",
+        "repo": "pi-extensions"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "f03d396d866d8bf1dbee68b0f8659a299d554b96",
+      "url": "https://github.com/shelken/pi-extensions/archive/f03d396d866d8bf1dbee68b0f8659a299d554b96.tar.gz",
+      "hash": "sha256-u88pa9nwn6okhp97bZqnRTWRmBlsBldZXZ8VBsThfPc="
+    }
+  },
+  "version": 8
+}

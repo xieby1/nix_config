@@ -1,0 +1,99 @@
+{
+  "pins": {
+    "hbac": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "axkirillov",
+        "repo": "hbac.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2c85485ea28e5e3754650829e0bca612960e1b73",
+      "url": "https://github.com/axkirillov/hbac.nvim/archive/2c85485ea28e5e3754650829e0bca612960e1b73.tar.gz",
+      "hash": "sha256-A+C9N7xorS7DV0w8N5TjyD7OvWdxUQ4PJaKW3kwkQS0="
+    },
+    "merman": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Latias94",
+        "repo": "merman"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "5c1a96cd2d80ba991b311d54271874a4c171888c",
+      "url": "https://github.com/Latias94/merman/archive/5c1a96cd2d80ba991b311d54271874a4c171888c.tar.gz",
+      "hash": "sha256-k6tEk/GpYLsMxsq1acS5P9tYaQV1yAGBYgh1f+N8uHM="
+    },
+    "outline-treesitter-provider": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "epheien",
+        "repo": "outline-treesitter-provider.nvim"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "22dda7329cf608368cbf725effd43daf98c27f32",
+      "url": "https://github.com/epheien/outline-treesitter-provider.nvim/archive/22dda7329cf608368cbf725effd43daf98c27f32.tar.gz",
+      "hash": "sha256-PFRiaQPxh+PPFGF1+yMIJIM/tGDOH7CO0xyoayDn78I="
+    },
+    "tree-sitter-d2": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "ravsii",
+        "repo": "tree-sitter-d2"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v0.7.2",
+      "revision": "330542c395dd694df1e119d3bd3b506ac240ba78",
+      "url": "https://api.github.com/repos/ravsii/tree-sitter-d2/tarball/refs/tags/v0.7.2",
+      "hash": "sha256-zx6ud3uh+0Z+cYdP2KkFA27Kb6fW/CSGpC1C4YmCIo0="
+    },
+    "tree-sitter-veryl": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "veryl-lang",
+        "repo": "tree-sitter-veryl"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "f38156e6fa97e7386cdfbcbcc537dc970a13c3ce",
+      "url": "https://github.com/veryl-lang/tree-sitter-veryl/archive/f38156e6fa97e7386cdfbcbcc537dc970a13c3ce.tar.gz",
+      "hash": "sha256-EoxR2W3Kc+U/kw7TQLPZOu8KvYZX5KcuFUfwSsP+5n0="
+    },
+    "vim-ingo-library": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "inkarkat",
+        "repo": "vim-ingo-library"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "244dc3652747300fe83084d94266d180ed21c15a",
+      "url": "https://github.com/inkarkat/vim-ingo-library/archive/244dc3652747300fe83084d94266d180ed21c15a.tar.gz",
+      "hash": "sha256-R773VXCP8sEuko27NjpYAGX1ny18nCd9X35fhmuP1GQ="
+    },
+    "vim-mark": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "inkarkat",
+        "repo": "vim-mark"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "a7df60196368cb6a6f510e003046bcb8483dec57",
+      "url": "https://github.com/inkarkat/vim-mark/archive/a7df60196368cb6a6f510e003046bcb8483dec57.tar.gz",
+      "hash": "sha256-moISQNNKzZGDM+XUD5mo7W2cWbZQaAZ1xtZ1ZjbfeuA="
+    }
+  },
+  "version": 8
+}

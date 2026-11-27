@@ -1,0 +1,31 @@
+{
+  "pins": {
+    "DankPluginBingWallpaper": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "max72bra",
+        "repo": "DankPluginBingWallpaper"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "2958f72c9469c2cc2d8624036f348d4c1df4c0f2",
+      "url": "https://github.com/max72bra/DankPluginBingWallpaper/archive/2958f72c9469c2cc2d8624036f348d4c1df4c0f2.tar.gz",
+      "hash": "sha256-SYG5h0Wy34XgaGedgSwnzcU6XodOYVI6B4WO9YqzGcw="
+    },
+    "dms-unified-taskbar": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "jslandau",
+        "repo": "dms-unified-taskbar"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "eba5b385cfbbda85587fa0a4feefe293563617ff",
+      "url": "https://github.com/jslandau/dms-unified-taskbar/archive/eba5b385cfbbda85587fa0a4feefe293563617ff.tar.gz",
+      "hash": "sha256-gOLipzxMKrGqP0DZdWzEszGzgwtz2FJde+nHiU8CwZo="
+    }
+  },
+  "version": 8
+}

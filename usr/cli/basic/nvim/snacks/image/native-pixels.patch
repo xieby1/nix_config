@@ -1,0 +1,141 @@
+--- a/lua/snacks/image/init.lua
++++ b/lua/snacks/image/init.lua
+@@ -40,6 +40,7 @@
+ 
+ ---@class snacks.image.Config
+ ---@field enabled? boolean enable image viewer
++---@field reset_cell? snacks.image.Size terminal cell dimensions in physical pixels at 100% zoom
+ ---@field wo? vim.wo|{} options for windows showing the image
+ ---@field bo? vim.bo|{} options for the image buffer
+ ---@field formats? string[]
+@@ -49,6 +50,7 @@
+ ---@field resolve? fun(file: string, src: string): string?
+ ---@field convert? snacks.image.convert.Config
+ local defaults = {
++  reset_cell = { width = 8, height = 16 },
+   formats = {
+     "png",
+     "jpg",
+--- a/lua/snacks/image/convert.lua
++++ b/lua/snacks/image/convert.lua
+@@ -126,6 +126,28 @@
+       return convert:tmpfile(vim.o.background .. ".png")
+     end,
+   },
++  -- Virtual placements fit a whole-cell rectangle, even without explicit c/r.
++  -- Pad the right/bottom of the PNG rather than resampling it into that rectangle.
++  pad = {
++    file = function(convert, ctx)
++      local cell = Snacks.image.config.reset_cell
++      local stat = uv.fs_stat(convert.src)
++      local stamp = stat and (stat.mtime.sec .. "." .. stat.mtime.nsec) or "remote"
++      return convert:tmpfile(("%s.%s.%dx%d.png"):format(vim.fn.sha256(ctx.src):sub(1, 8), stamp, cell.width, cell.height))
++    end,
++    cmd = function(step)
++      local cell = Snacks.image.config.reset_cell
++      local extent = ("%%[fx:ceil(w/%d)*%d]x%%[fx:ceil(h/%d)*%d]"):format(cell.width, cell.width, cell.height, cell.height)
++      -- Publish atomically: multiple Neovim sessions can share this cache.
++      step.tmp = step.file .. "." .. vim.fn.getpid() .. ".tmp.png"
++      return { cmd = "magick", args = { "{src}[0]", "+repage", "-background", "none", "-gravity", "NorthWest", "-extent", extent, step.tmp } }
++    end,
++    on_done = function(step)
++      if step.tmp then
++        assert(uv.fs_rename(step.tmp, step.file))
++      end
++    end,
++  },
+   identify = {
+     pipe = false,
+     file = function(convert, ctx)
+@@ -337,6 +359,7 @@
+     end
+   end
+   self:_resolve("identify")
++  self:_resolve("pad")
+   self.file = self.meta.src
+ end
+ 
+--- a/lua/snacks/image/placement.lua
++++ b/lua/snacks/image/placement.lua
+@@ -428,13 +428,18 @@
+     else
+       terminal.set_cursor({ pos[1] + 1 + border.top, pos[2] + border.left })
+     end
++    local cols = math.min(state.loc.width, vim.api.nvim_win_get_width(win))
++    local rows = math.min(state.loc.height, vim.api.nvim_win_get_height(win))
++    local cell = Snacks.image.config.reset_cell
+     terminal.request({
+       a = "p",
+       i = self.img.id,
+       p = self.id,
+       C = 1,
+-      c = state.loc.width,
+-      r = state.loc.height,
++      w = cols * cell.width,
++      h = rows * cell.height,
++      c = cols,
++      r = rows,
+     })
+   end
+ end
+@@ -447,14 +452,11 @@
+ end
+ 
+ function M:state()
+-  local width, height = vim.o.columns, vim.o.lines
+   local wins = {} ---@type number[]
+   local is_fallback = not terminal.env().placeholders
+   local zindex = vim.api.nvim_win_get_config(0).zindex or 0
+ 
+   for _, win in ipairs(self:wins()) do
+-    width = math.min(width, vim.api.nvim_win_get_width(win))
+-    height = math.min(height, vim.api.nvim_win_get_height(win))
+     if is_fallback then
+       local z = vim.api.nvim_win_get_config(win).zindex or 0
+       if z >= zindex or (zindex > 0 and z > 0) then
+@@ -465,32 +467,12 @@
+     end
+   end
+ 
+-  local function minmax(value, min, max)
+-    return math.max(min or 1, math.min(value, max or value))
+-  end
+-
+-  width = minmax(self.opts.width or width, self.opts.min_width, self.opts.max_width)
+-  height = minmax(self.opts.height or height, self.opts.min_height, self.opts.max_height)
+-  local size = Snacks.image.util.fit(self.img.file, { width = width, height = height }, { info = self.img.info })
+-
++  local pixels = Snacks.image.util.dim(self.img.file)
++  -- Keep the grid footprint fixed: terminal zoom changes cell size, not the PNG.
++  local cell = Snacks.image.config.reset_cell
++  local size = { width = pixels.width / cell.width, height = pixels.height / cell.height }
+   local pos = self.opts.pos or { 1, 0 }
+ 
+-  local function is_inline()
+-    local range = self.opts.range or { pos[1], pos[2], pos[1], pos[2] }
+-    if range[1] == range[3] then
+-      local line = vim.api.nvim_buf_get_lines(self.buf, range[1] - 1, range[1], false)[1] or ""
+-      local has_before = line:sub(1, range[2]):find("%S") ~= nil
+-      local has_after = line:sub(range[4] + 1):find("%S") ~= nil
+-      return has_before or has_after
+-    end
+-  end
+-
+-  -- scale down to fit inline
+-  if size.height <= 2 and is_inline() then
+-    size.width = math.ceil(size.width / size.height) + 2
+-    size.height = 1
+-  end
+-
+   ---@class snacks.image.State
+   ---@field hidden boolean
+   ---@field loc snacks.image.Loc
+@@ -529,7 +511,7 @@
+   end
+ 
+   local state = self:state()
+-  if vim.deep_equal(state, self._state) then
++  if terminal.env().placeholders and vim.deep_equal(state, self._state) then
+     return
+   end
+   self._state = state

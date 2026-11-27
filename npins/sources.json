@@ -1,0 +1,64 @@
+{
+  "pins": {
+    "flake-compat": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "flake-compat"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
+      "url": "https://github.com/NixOS/flake-compat/archive/5edf11c44bc78a0d334f6334cdaf7d60d732daab.tar.gz",
+      "hash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns="
+    },
+    "home-manager": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "home-manager"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "2b13c9cb3aa20653e6f8ee0b7f8331a53ea9b0a9",
+      "url": "https://github.com/nix-community/home-manager/archive/2b13c9cb3aa20653e6f8ee0b7f8331a53ea9b0a9.tar.gz",
+      "hash": "sha256-+CPrP74GDJ63f7bgEFC9Av4hbxc7K9WUNv1ZVRifRe8="
+    },
+    "nix-on-droid": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-on-droid"
+      },
+      "branch": "release-24.05",
+      "submodules": false,
+      "revision": "f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25",
+      "url": "https://github.com/nix-community/nix-on-droid/archive/f3d3b8294039f2f9a8fb7ea82c320f29c6b0fe25.tar.gz",
+      "hash": "sha256-UFzk/hZWO1VkciIO5UPaSpJN8s765wsngUSvtJM6d5Q="
+    },
+    "nixpkgs": {
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "artifact": "nixexprs.tar.xz",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1124497.0bb8272318b4/nixexprs.tar.xz",
+      "hash": "sha256-kqy60mdSH4GQAv3kzSeefteaiCv9arf3P+auosZrpo0="
+    },
+    "nur": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "NUR"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "4900e8b66b4461958c8d950e8950be496e1e9916",
+      "url": "https://github.com/nix-community/NUR/archive/4900e8b66b4461958c8d950e8950be496e1e9916.tar.gz",
+      "hash": "sha256-N2aWhrEg79xhx6z2CtM9Eck0cnfc/DCVjJeQ8VOmFlw="
+    }
+  },
+  "version": 8
+}
