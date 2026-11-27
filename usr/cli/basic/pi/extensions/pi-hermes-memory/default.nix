@@ -3,23 +3,18 @@
   # The node-gyp should be backed by the same version of nodejs as pi,
   # thus we use pkgspi.
   pkgspi = pipkgs;
-  # Pi supplies @earendil-works/* at runtime; dropping devDependencies and
-  # peerDependencies also removes the nested lock entries whose missing
-  # integrity used to require lock-integrity.patch.
-  slimSrc = pkgs.applyPatches {
-    name = "pi-hermes-memory-slim";
-    inherit src;
-    nativeBuildInputs = [ pkgs.jq ];
-    postPatch = ''
-      jq 'del(.devDependencies, .peerDependencies, .scripts)' package.json > package.json.tmp && mv package.json.tmp package.json
-      cp ${./package-lock.json} package-lock.json
-    '';
-  };
 in {
   home.file.".pi/agent/extensions/pi-hermes-memory" = {
     source = pkgspi.buildNpmPackage {
       name = "pi-hermes-memory";
-      src = slimSrc;
+      inherit src;
+      # Pi supplies @earendil-works/* at runtime; dropping devDependencies and
+      # peerDependencies also removes the nested lock entries whose missing
+      # integrity used to require lock-integrity.patch.
+      postPatch = ''
+        ${lib.getExe pkgs.jq} 'del(.devDependencies, .peerDependencies, .scripts)' package.json > package.json.tmp && mv package.json.tmp package.json
+        cp ${./package-lock.json} package-lock.json
+      '';
       npmDepsFetcherVersion = 2;
       npmDepsHash = "sha256-iA9TQ21f3UcJoR3LGu6v8DR5VpSQFCXUXXyvkQpAkEc=";
       dontNpmBuild = true;

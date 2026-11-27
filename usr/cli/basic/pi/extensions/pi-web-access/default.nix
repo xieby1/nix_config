@@ -1,19 +1,6 @@
 { src }: # local-args
-{ pkgs, ai, ... }:
-let
-  # Pi injects @earendil-works/* and typebox at runtime, so drop its dev/peer
-  # deps and their transitive graph from the install.
-  slimSrc = pkgs.applyPatches {
-    name = "pi-web-access-slim";
-    inherit src;
-    nativeBuildInputs = [ pkgs.jq ];
-    postPatch = ''
-      jq 'del(.devDependencies, .peerDependencies, .peerDependenciesMeta, .scripts)' package.json > package.json.tmp
-      mv package.json.tmp package.json
-      cp ${./package-lock.json} package-lock.json
-    '';
-  };
-in {
+{ pkgs, lib, ai, ... }:
+{
   # Search-provider keys live in Pi's agent dir, not in Nix. Written by yq-merge
   # (a real file, not a store symlink) so the extension's `/websearch` edits keep
   # working; the keys still end up in the store, same as auth.json.
@@ -28,7 +15,14 @@ in {
 
   home.file.".pi/agent/extensions/pi-web-access".source = pkgs.buildNpmPackage {
     name = "pi-web-access";
-    src = slimSrc;
+    inherit src;
+    # Pi injects @earendil-works/* and typebox at runtime, so drop its dev/peer
+    # deps and their transitive graph from the install.
+    postPatch = ''
+      ${lib.getExe pkgs.jq} 'del(.devDependencies, .peerDependencies, .peerDependenciesMeta, .scripts)' package.json > package.json.tmp
+      mv package.json.tmp package.json
+      cp ${./package-lock.json} package-lock.json
+    '';
     npmDepsHash = "sha256-aoS9mSkbGjjnhm7rwWoPBgK2XWJCmg0OmUMuuwAI/yc=";
     dontNpmBuild = true;
     npmRebuildFlags = [ "--ignore-scripts" ];

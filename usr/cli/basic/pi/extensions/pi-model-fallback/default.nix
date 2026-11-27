@@ -1,25 +1,19 @@
 { src }: # local-args
-{ pkgs, ai, ... }:
-let
-  # Pi injects @earendil-works/* and typebox at runtime; only proper-lockfile
-  # is a real dependency, so the trimmed lockfile installs nothing else.
-  slimSrc = pkgs.applyPatches {
-    name = "pi-model-fallback-slim";
-    inherit src;
-    nativeBuildInputs = [ pkgs.jq ];
-    postPatch = ''
-      jq 'del(.devDependencies, .peerDependencies, .peerDependenciesMeta, .scripts)' package.json > package.json.tmp
-      mv package.json.tmp package.json
-      cp ${./package-lock.json} package-lock.json
-    '';
-  };
-in {
+{ pkgs, lib, ai, ... }:
+{
   # config.json and state.json live in Pi's agent dir (a sibling of this
   # extension), so `/model-fallback:*` keeps writing there.
   home.file.".pi/agent/extensions/pi-model-fallback".source = pkgs.buildNpmPackage {
     pname = "pi-model-fallback";
     version = "0.6.2";
-    src = slimSrc;
+    inherit src;
+    # Pi injects @earendil-works/* and typebox at runtime; only proper-lockfile
+    # is a real dependency, so the trimmed lockfile installs nothing else.
+    postPatch = ''
+      ${lib.getExe pkgs.jq} 'del(.devDependencies, .peerDependencies, .peerDependenciesMeta, .scripts)' package.json > package.json.tmp
+      mv package.json.tmp package.json
+      cp ${./package-lock.json} package-lock.json
+    '';
     npmDepsHash = "sha256-8XXxcYSeq6rPOdL0BNW8lJFfM7Kco87pqNz4C6gKNaM=";
     dontNpmBuild = true;
   } + "/lib/node_modules/pi-model-fallback";

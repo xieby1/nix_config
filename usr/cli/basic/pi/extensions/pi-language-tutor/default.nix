@@ -1,10 +1,9 @@
 { src }: # local-args
 { config, pkgs, lib, ... }:
-let
-  slimSrc = pkgs.applyPatches {
-    name = "pi-language-tutor-slim";
+{
+  home.file.".pi/agent/extensions/pi-language-tutor".source = pkgs.buildNpmPackage {
+    name = "pi-language-tutor";
     inherit src;
-    nativeBuildInputs = [ pkgs.jq ];
     postPatch = ''
       substituteInPlace src/config.ts src/flashcards.ts src/flashcard-settings.ts \
         --replace-fail "'.pi', 'agent'," "'.pi', 'agent', 'pi-language-tutor',"
@@ -13,7 +12,7 @@ let
       substituteInPlace README.md README.zh-CN.md \
         --replace-fail '~/.pi/agent/flashcards.json' '~/.pi/agent/pi-language-tutor/flashcards.json' \
         --replace-fail '~/.pi/agent/flashcards-settings.json' '~/.pi/agent/pi-language-tutor/flashcards-settings.json'
-      jq 'del(.peerDependencies, .devDependencies, .scripts)' package.json > package.json.tmp
+      ${lib.getExe pkgs.jq} 'del(.peerDependencies, .devDependencies, .scripts)' package.json > package.json.tmp
       mv package.json.tmp package.json
       cp ${./package-lock.json} package-lock.json
       substituteInPlace src/learn.ts \
@@ -21,11 +20,6 @@ let
         "window.on('message', handleMessage)
           window.on('error', (error: Error) => ctx.ui.notify(error.message, 'error'))"
     '';
-  };
-in {
-  home.file.".pi/agent/extensions/pi-language-tutor".source = pkgs.buildNpmPackage {
-    name = "pi-language-tutor";
-    src = slimSrc;
     npmDepsHash = "sha256-B/zm5R+69hvwMYLkfUGMn0oVcXkO7lVKW/wAA+YZEdQ=";
     dontNpmBuild = true;
     npmRebuildFlags = [ "--ignore-scripts" ];
